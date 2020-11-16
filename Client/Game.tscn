@@ -6,7 +6,11 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera" type="Camera2D" parent="."]
+position = Vector2( 448, 196 )
 current = true
 script = ExtResource( 2 )
+limit_horizontal_margin = 25
+limit_vertical_margin = 25
 
 [node name="Demo" parent="." instance=ExtResource( 1 )]
+position = Vector2( 280, 132 )
