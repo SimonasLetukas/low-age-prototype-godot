@@ -8,20 +8,17 @@ var map_scroll_margin: int = 5
 var map_scroll_on_boundary_enabled: bool = false
 var map_scroll_speed: int = 300
 
-var half_width: int
-var half_height: int
-
-export(int, 25, 200, 5) var limit_horizontal_margin: int = 50
-export(int, 25, 200, 5) var limit_vertical_margin: int = 100
+export(int, 5, 200, 5) var limit_horizontal_margin: int = 300
+export(int, 5, 200, 5) var limit_vertical_margin: int = 100
 export(float, 0.5, 3, 0.25) var minimum_zoom: float = 0.5
 export(float, 0.5, 3, 0.25) var maximum_zoom: float = 1.5
 
 onready var viewport_size: Vector2 = get_viewport().get_size_override()
+onready var previous_position: Vector2 = Vector2(0, 0)
+onready var camera_is_moving: bool = false
 
 func _ready() -> void:
-	half_width = (map_width / 2)
-	half_height = (map_height / 2)
-	self.position = Vector2(half_width, half_height)
+	self.position = Vector2(map_width / 2, map_height / 2)
 	
 	print("Map width: " + map_width as String)
 	print("Map height: " + map_height as String)
@@ -29,32 +26,40 @@ func _ready() -> void:
 	
 	self.limit_left = limit_horizontal_margin * -1
 	self.limit_right = map_width + limit_horizontal_margin
-	self.limit_top = limit_vertical_margin * -1.5
+	self.limit_top = limit_vertical_margin * -2.5 - 15
 	self.limit_bottom = map_height + limit_vertical_margin
 
 func _process(delta) -> void:
-	#if zoomed_in():
-	#	zoom_in()
-	#elif zoomed_out():
-	#	zoom_out()
+	
+	if zoomed_in():
+		zoom_in()
+	elif zoomed_out():
+		zoom_out()
 	
 	var move_vector: Vector2
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	
-	if moved_left(mouse_pos):
-		move_vector.x -= 1
-	if moved_right(mouse_pos):
-		move_vector.x += 1
-	if moved_up(mouse_pos):
-		move_vector.y -= 1
-	if moved_down(mouse_pos):
-		move_vector.y += 1
+	if Input.is_action_pressed("mouse_left"):
+		if camera_is_moving == false:
+			previous_position = mouse_pos
+			camera_is_moving = true
+		else:
+			self.position += (previous_position - mouse_pos) * self.zoom
+			previous_position = mouse_pos
+	elif Input.is_action_just_released("mouse_left"):
+		camera_is_moving = false
+	
+	if (camera_is_moving == false):
+		if moved_left(mouse_pos):
+			move_vector.x -= 1
+		if moved_right(mouse_pos):
+			move_vector.x += 1
+		if moved_up(mouse_pos):
+			move_vector.y -= 1
+		if moved_down(mouse_pos):
+			move_vector.y += 1
 		
-	#print("Move vector: " + move_vector.normalized() as String)
-	#print("Current viewport: " + viewport_size as String)
-	#print("Mouse position: " + mouse_pos as String)
-	#if !limits_reached():
-	global_translate(move_vector.normalized() * delta * self.zoom.x * map_scroll_speed)
+		global_translate(move_vector.normalized() * delta * self.zoom.x * map_scroll_speed)
 
 func zoom_in() -> void:
 	self.zoom.x -= 0.25
@@ -78,16 +83,24 @@ func clamp_position_to_boundaries() -> void:
 		self.position.y -= get_current_bottom_boundary() - self.limit_bottom
 
 func get_current_left_boundary() -> float:
-	return self.position.x * 2 - (viewport_size.x * self.zoom.x)
+	var boundary: float = self.position.x - ((map_width / 5) * self.zoom.x)
+	#print("Left boundary: " + boundary as String)
+	return boundary
 
 func get_current_right_boundary() -> float:
-	return self.position.x * 2 + (viewport_size.x * self.zoom.x)
+	var boundary: float = self.position.x + ((map_width / 5) * self.zoom.x)
+	#print("Right boundary: " + boundary as String)
+	return boundary
 
 func get_current_top_boundary() -> float:
-	return self.position.y * 2 - (viewport_size.y * self.zoom.y)
+	var boundary: float = self.position.y - ((map_height / 5) * self.zoom.y)
+	#print("Top boundary: " + boundary as String)
+	return boundary
 
 func get_current_bottom_boundary() -> float:
-	return self.position.y * 2 + (viewport_size.y * self.zoom.y)
+	var boundary: float = self.position.y + ((map_height / 5) * self.zoom.y)
+	#print("Bottom boundary: " + boundary as String)
+	return boundary
 
 func zoomed_in() -> bool:
 	if self.zoom.x <= minimum_zoom:

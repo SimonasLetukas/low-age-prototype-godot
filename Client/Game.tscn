@@ -12,8 +12,8 @@ limit_smoothed = true
 smoothing_enabled = true
 smoothing_speed = 20.0
 script = ExtResource( 2 )
-limit_horizontal_margin = 25
-limit_vertical_margin = 25
+limit_horizontal_margin = 30
+limit_vertical_margin = 5
 
 [node name="Demo" parent="." instance=ExtResource( 1 )]
 position = Vector2( 280, 132 )
