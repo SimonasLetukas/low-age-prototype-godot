@@ -57,8 +57,7 @@ func _ready():
 	generate()
 	
 func generate() -> void:
-	var image: Image = Image.new()
-	var _response = image.load(map_file_location)
+	var image: Image = load(map_file_location)
 	if image.is_invisible() or image.is_empty():
 		if debug_enabled:
 			print("MapCreator.generate: loaded image is not available")

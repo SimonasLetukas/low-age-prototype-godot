@@ -17,6 +17,10 @@ _global_script_class_icons={
 
 config/name="Low-age-prototype-godot"
 run/main_scene="res://Client/Game.tscn"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/bg_color=Color( 0, 0, 0, 0 )
+config/icon="res://Sprites/Units/UEE/vessel indexed 2x2.png"
 
 [autoload]
 

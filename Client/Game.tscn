@@ -18,7 +18,7 @@ tilemap_node_marsh_layer = NodePath("../Map/Marsh")
 tilemap_node_mountains_layer = NodePath("../Map/Stone")
 
 [node name="Map" parent="." instance=ExtResource( 1 )]
-[connection signal="map_size_declared" from="MapCreator" to="Map" method="_on_MapCreator_map_size_declared"]
 [connection signal="map_size_declared" from="MapCreator" to="Camera" method="_on_MapCreator_map_size_declared"]
+[connection signal="map_size_declared" from="MapCreator" to="Map" method="_on_MapCreator_map_size_declared"]
 
 [editable path="Map"]
