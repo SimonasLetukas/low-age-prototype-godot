@@ -99,7 +99,7 @@ func generate() -> void:
 	
 	image.unlock()
 	
-	var mountains_fill_offset: int = 100
+	var mountains_fill_offset: int = max(map_size.x, map_size.y)
 	for y in range(mountains_fill_offset * -1, map_size.y + mountains_fill_offset):
 		for x in range(mountains_fill_offset * -1, map_size.x + mountains_fill_offset): 
 			if x < 0 or x >= map_size.x or y < 0 or y >= map_size.y:

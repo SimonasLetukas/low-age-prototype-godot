@@ -18,6 +18,10 @@ _global_script_class_icons={
 config/name="Low-age-prototype-godot"
 run/main_scene="res://Client/Game.tscn"
 
+[autoload]
+
+Constants="*res://Client/Constants.gd"
+
 [debug]
 
 gdscript/warnings/unused_class_variable=true
