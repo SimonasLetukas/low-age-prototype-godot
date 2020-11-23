@@ -99,7 +99,13 @@ func generate() -> void:
 	
 	image.unlock()
 	
+	var mountains_fill_offset: int = 100
+	for y in range(mountains_fill_offset * -1, map_size.y + mountains_fill_offset):
+		for x in range(mountains_fill_offset * -1, map_size.x + mountains_fill_offset): 
+			if x < 0 or x >= map_size.x or y < 0 or y >= map_size.y:
+				tilemap_mountains_layer.set_cell(x, y, tilemap_mountains_index)
+	
 	tilemap_grass_celestium_layer.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
 	tilemap_scraps_layer.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
 	tilemap_marsh_layer.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
-	tilemap_mountains_layer.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
+	tilemap_mountains_layer.update_bitmask_region(Vector2(mountains_fill_offset * -1, mountains_fill_offset * -1), Vector2(map_size.x + mountains_fill_offset, map_size.y + mountains_fill_offset))
