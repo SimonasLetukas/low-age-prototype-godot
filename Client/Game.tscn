@@ -106,5 +106,6 @@ visible = false
 
 [node name="mortar 1 indexed 1x1" parent="Demo/YSort" index="0"]
 material = SubResource( 2 )
+[connection signal="map_size_declared" from="MapCreator" to="Camera" method="_on_MapCreator_map_size_declared"]
 
 [editable path="Demo"]

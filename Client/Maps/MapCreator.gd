@@ -21,6 +21,11 @@ export(NodePath) var tilemap_node_grass_celestium_layer
 export(NodePath) var tilemap_node_scraps_layer
 export(NodePath) var tilemap_node_marsh_layer
 export(NodePath) var tilemap_node_mountains_layer
+export(int) var tilemap_grass_index = 6
+export(int) var tilemap_celestium_index = 7
+export(int) var tilemap_scraps_index = 5
+export(int) var tilemap_marsh_index = 3
+export(int) var tilemap_mountains_index = 4
 
 var map_size: Vector2
 signal map_size_declared(map_size)
@@ -78,17 +83,17 @@ func generate() -> void:
 	for y in range(map_size.y):
 		for x in range(map_size.x):
 			var pixel: Color = image.get_pixel(x, y)
-			tilemap_grass_celestium_layer.set_cell(x, y, 0)
+			tilemap_grass_celestium_layer.set_cell(x, y, tilemap_grass_index)
 			if (pixel == color_grass):
-				tilemap_grass_celestium_layer.set_cell(x, y, 0)
+				tilemap_grass_celestium_layer.set_cell(x, y, tilemap_grass_index)
 			elif (pixel == color_mountains):
-				tilemap_mountains_layer.set_cell(x, y, 4)
+				tilemap_mountains_layer.set_cell(x, y, tilemap_mountains_index)
 			elif (pixel == color_marsh):
-				tilemap_marsh_layer.set_cell(x, y, 3)
+				tilemap_marsh_layer.set_cell(x, y, tilemap_marsh_index)
 			elif (pixel == color_scraps):
-				tilemap_scraps_layer.set_cell(x, y, 5)
+				tilemap_scraps_layer.set_cell(x, y, tilemap_scraps_index)
 			elif (pixel == color_celestium):
-				tilemap_grass_celestium_layer.set_cell(x, y, 2)
+				tilemap_grass_celestium_layer.set_cell(x, y, tilemap_celestium_index)
 			elif (pixel == color_start):
 				pass
 	

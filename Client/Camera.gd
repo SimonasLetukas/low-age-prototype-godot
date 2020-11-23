@@ -1,13 +1,14 @@
 extends Camera2D
 
-var map_width: int = 904
-var map_height: int = 452
+var map_width_pixels: int = 904
+var map_height_pixels: int = 452
 var tile_width: int = 16
 var tile_height: int = 8
 var map_scroll_margin: int = 5
 var map_scroll_on_boundary_enabled: bool = false
 var map_scroll_speed: int = 300
 
+export(bool) var debug_enabled = true
 export(int, 5, 200, 5) var limit_horizontal_margin: int = 300
 export(int, 5, 200, 5) var limit_vertical_margin: int = 100
 export(float, 0.5, 3, 0.25) var minimum_zoom: float = 0.5
@@ -18,16 +19,14 @@ onready var previous_position: Vector2 = Vector2(0, 0)
 onready var camera_is_moving: bool = false
 
 func _ready() -> void:
-	self.position = Vector2(map_width / 2, map_height / 2)
+	self.position = Vector2(map_width_pixels / 2, map_height_pixels / 2)
 	
-	print("Map width: " + map_width as String)
-	print("Map height: " + map_height as String)
-	print("Camera position: " + self.position as String)
+	if debug_enabled:
+		print("Map width: " + map_width_pixels as String)
+		print("Map height: " + map_height_pixels as String)
+		print("Camera position: " + self.position as String)
 	
-	self.limit_left = limit_horizontal_margin * -1
-	self.limit_right = map_width + limit_horizontal_margin
-	self.limit_top = limit_vertical_margin * -2.5 - 15
-	self.limit_bottom = map_height + limit_vertical_margin
+	set_limits()
 
 func _process(delta) -> void:
 	
@@ -61,6 +60,12 @@ func _process(delta) -> void:
 		
 		global_translate(move_vector.normalized() * delta * self.zoom.x * map_scroll_speed)
 
+func set_limits() -> void:
+	self.limit_left = limit_horizontal_margin * -1
+	self.limit_right = map_width_pixels + limit_horizontal_margin
+	self.limit_top = limit_vertical_margin * -2.5 - 15
+	self.limit_bottom = map_height_pixels + limit_vertical_margin
+
 func zoom_in() -> void:
 	self.zoom.x -= 0.25
 	self.zoom.y -= 0.25
@@ -83,22 +88,22 @@ func clamp_position_to_boundaries() -> void:
 		self.position.y -= get_current_bottom_boundary() - self.limit_bottom
 
 func get_current_left_boundary() -> float:
-	var boundary: float = self.position.x - ((map_width / 5) * self.zoom.x)
+	var boundary: float = self.position.x - ((map_width_pixels / 5) * self.zoom.x)
 	#print("Left boundary: " + boundary as String)
 	return boundary
 
 func get_current_right_boundary() -> float:
-	var boundary: float = self.position.x + ((map_width / 5) * self.zoom.x)
+	var boundary: float = self.position.x + ((map_width_pixels / 5) * self.zoom.x)
 	#print("Right boundary: " + boundary as String)
 	return boundary
 
 func get_current_top_boundary() -> float:
-	var boundary: float = self.position.y - ((map_height / 5) * self.zoom.y)
+	var boundary: float = self.position.y - ((map_height_pixels / 5) * self.zoom.y)
 	#print("Top boundary: " + boundary as String)
 	return boundary
 
 func get_current_bottom_boundary() -> float:
-	var boundary: float = self.position.y + ((map_height / 5) * self.zoom.y)
+	var boundary: float = self.position.y + ((map_height_pixels / 5) * self.zoom.y)
 	#print("Bottom boundary: " + boundary as String)
 	return boundary
 
@@ -152,3 +157,7 @@ func moved_down(var mouse_pos: Vector2) -> bool:
 		return true
 	return false
 
+func _on_MapCreator_map_size_declared(map_size: Vector2):
+	map_width_pixels = map_size.x * tile_width
+	map_height_pixels = map_size.y * tile_height
+	set_limits()
