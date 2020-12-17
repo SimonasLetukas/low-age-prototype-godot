@@ -5,6 +5,7 @@ var map_height_pixels: int = 452
 var map_scroll_margin: int = 5
 var map_scroll_on_boundary_enabled: bool = false
 var map_scroll_speed: int = 300
+var map_limit_elasticity: int = 6
 var map_limit_left: int
 var map_limit_right: int
 var map_limit_top: int
@@ -32,12 +33,12 @@ func _ready() -> void:
 	
 	set_limits()
 
-func _process(delta) -> void:
+func _process(delta: float) -> void:
 	
 	if zoomed_in():
 		zoom_in()
 	elif zoomed_out():
-		zoom_out()
+		zoom_out(delta)
 	
 	var move_vector: Vector2
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
@@ -47,13 +48,14 @@ func _process(delta) -> void:
 			previous_position = mouse_pos
 			camera_is_moving = true
 		else:
-			clamp_position_to_boundaries()
 			self.position += (previous_position - mouse_pos) * self.zoom
 			previous_position = mouse_pos
 	elif Input.is_action_just_released("mouse_left"):
 		camera_is_moving = false
 	
 	if (camera_is_moving == false):
+		clamp_position_to_boundaries(delta)
+		
 		if moved_left(mouse_pos):
 			move_vector.x -= 1
 		if moved_right(mouse_pos):
@@ -76,21 +78,21 @@ func zoom_in() -> void:
 	self.zoom.y -= 0.25
 	viewport_size = get_viewport().get_size_override()
 
-func zoom_out() -> void:
+func zoom_out(delta: float) -> void:
 	self.zoom.x += 0.25
 	self.zoom.y += 0.25
 	viewport_size = get_viewport().get_size_override()
-	clamp_position_to_boundaries()
+	clamp_position_to_boundaries(delta)
 
-func clamp_position_to_boundaries() -> void:
+func clamp_position_to_boundaries(delta: float) -> void:
 	if get_current_left_boundary() < map_limit_left:
-		self.position.x += map_limit_left - get_current_left_boundary()
+		self.position.x += (map_limit_left - get_current_left_boundary()) * delta * map_limit_elasticity
 	elif get_current_right_boundary() > map_limit_right:
-		self.position.x -= get_current_right_boundary() - map_limit_right
+		self.position.x -= (get_current_right_boundary() - map_limit_right) * delta * map_limit_elasticity
 	if get_current_top_boundary() < map_limit_top:
-		self.position.y += map_limit_top - get_current_top_boundary()
+		self.position.y += (map_limit_top - get_current_top_boundary()) * delta * map_limit_elasticity
 	elif get_current_bottom_boundary() > map_limit_bottom:
-		self.position.y -= get_current_bottom_boundary() - map_limit_bottom
+		self.position.y -= (get_current_bottom_boundary() - map_limit_bottom) * delta * map_limit_elasticity
 
 func get_current_left_boundary() -> float:
 	var boundary: float = self.position.x - ((viewport_size.x / 2) * self.zoom.x)
