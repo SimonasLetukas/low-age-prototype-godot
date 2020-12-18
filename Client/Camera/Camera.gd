@@ -20,6 +20,7 @@ export(float, 0.5, 3, 0.25) var maximum_zoom: float = 1.5
 onready var viewport_size: Vector2 = get_viewport().get_size_override()
 onready var previous_position: Vector2 = Vector2(0, 0)
 onready var camera_is_moving: bool = false
+onready var mouse_is_on_ui: bool = false
 onready var tile_width: int = Constants.tile_width
 onready var tile_height: int = Constants.tile_height
 
@@ -45,8 +46,9 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_pressed("mouse_left"):
 		if camera_is_moving == false:
-			previous_position = mouse_pos
-			camera_is_moving = true
+			if mouse_is_on_ui == false:
+				previous_position = mouse_pos
+				camera_is_moving = true
 		else:
 			self.position += (previous_position - mouse_pos) * self.zoom
 			previous_position = mouse_pos
@@ -166,3 +168,9 @@ func _on_MapCreator_map_size_declared(map_size: Vector2):
 	map_width_pixels = map_size.x * tile_width
 	map_height_pixels = map_size.y * tile_height
 	set_limits()
+
+func _on_UI_mouse_entered():
+	mouse_is_on_ui = true
+
+func _on_UI_mouse_exited():
+	mouse_is_on_ui = false

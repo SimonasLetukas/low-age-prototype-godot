@@ -1,9 +1,12 @@
 extends Node2D
 
+export(bool) var debug_enabled = true
+
 var tile_width: int
 var tile_height: int
 var map_size: Vector2
 var starting_positions: PoolVector2Array
+var tile_hovered: Vector2
 
 # TileMaps used for visual component
 onready var grass: TileMap = $Grass
@@ -17,8 +20,17 @@ onready var tilemap_marsh_index: int = 3
 onready var tilemap_mountains_index: int = 4
 
 signal starting_positions_declared(starting_positions)
+signal new_tile_hovered(tile_hovered)
 
-# world_to_map
+func _process(delta) -> void:
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	var map_pos: Vector2 = get_map_position_from_mouse_position(mouse_pos)
+	if (tile_hovered != map_pos):
+		tile_hovered = map_pos
+		emit_signal("new_tile_hovered", tile_hovered)
+
+func get_map_position_from_mouse_position(mouse_position: Vector2) -> Vector2:
+	return grass.world_to_map(mouse_position)
 
 func update_bitmasks(mountains_fill_offset: int):
 	grass.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))

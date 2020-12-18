@@ -18,6 +18,8 @@ limit_horizontal_margin = -35
 limit_vertical_margin = -10
 
 [node name="UI" parent="." instance=ExtResource( 4 )]
+debug_enabled = false
+[connection signal="new_tile_hovered" from="Map" to="UI" method="_on_Map_new_tile_hovered"]
 [connection signal="celestium_found" from="MapCreator" to="Map" method="_on_MapCreator_celestium_found"]
 [connection signal="generation_ended" from="MapCreator" to="Map" method="_on_MapCreator_generation_ended"]
 [connection signal="grass_found" from="MapCreator" to="Map" method="_on_MapCreator_grass_found"]
@@ -27,5 +29,7 @@ limit_vertical_margin = -10
 [connection signal="mountains_found" from="MapCreator" to="Map" method="_on_MapCreator_mountains_found"]
 [connection signal="scraps_found" from="MapCreator" to="Map" method="_on_MapCreator_scraps_found"]
 [connection signal="starting_position_found" from="MapCreator" to="Map" method="_on_MapCreator_starting_position_found"]
+[connection signal="mouse_entered" from="UI" to="Camera" method="_on_UI_mouse_entered"]
+[connection signal="mouse_exited" from="UI" to="Camera" method="_on_UI_mouse_exited"]
 
 [editable path="Map"]
