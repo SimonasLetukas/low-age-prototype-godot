@@ -10,35 +10,24 @@ extends Node2D
 # with tiles generated.
 
 export(bool) var debug_enabled = true
-export(String, FILE, "*.png") var map_file_location
-export(Color) var color_grass = Color.white
-export(Color) var color_mountains = Color.black
-export(Color) var color_marsh = Color.magenta
-export(Color) var color_scraps = Color.red
-export(Color) var color_celestium = Color.green
-export(Color) var color_start = Color.blue
-export(NodePath) var tilemap_node_grass_celestium_layer
-export(NodePath) var tilemap_node_scraps_layer
-export(NodePath) var tilemap_node_marsh_layer
-export(NodePath) var tilemap_node_mountains_layer
-export(int) var tilemap_grass_index = 6
-export(int) var tilemap_celestium_index = 7
-export(int) var tilemap_scraps_index = 5
-export(int) var tilemap_marsh_index = 3
-export(int) var tilemap_mountains_index = 4
+export(String, FILE, "*.png") var map_file_location: String
+export(Color) var color_grass: Color = Color.white
+export(Color) var color_mountains: Color = Color.black
+export(Color) var color_marsh: Color = Color.magenta
+export(Color) var color_scraps: Color = Color.red
+export(Color) var color_celestium: Color = Color.green
+export(Color) var color_start: Color = Color.blue
 
 var map_size: Vector2
 signal map_size_declared(map_size)
-var starting_positions: PoolVector2Array
-signal starting_positions_declared(starting_positions)
-var tilemap_grass_celestium_generated: TileMap
-signal tilemap_grass_celestium_generated(tilemap_grass_celestium_generated)
-var tilemap_scraps_generated: TileMap
-signal tilemap_scraps_generated(tilemap_scraps_generated)
-var tilemap_marsh_generated: TileMap
-signal tilemap_marsh_generated(tilemap_marsh_generated)
-var tilemap_mountains_generated: TileMap
-signal tilemap_mountains_generated(tilemap_mountains_generated)
+var coordinates: Vector2
+signal grass_found(coordinates)
+signal mountains_found(coordinates)
+signal marsh_found(coordinates)
+signal scraps_found(coordinates)
+signal celestium_found(coordinates)
+signal starting_position_found(coordinates)
+signal generation_ended()
 
 func _ready():
 	if debug_enabled:
@@ -49,10 +38,6 @@ func _ready():
 		print("MapCreator.color_scraps: " + color_scraps as String)
 		print("MapCreator.color_celestium: " + color_celestium as String)
 		print("MapCreator.color_start: " + color_start as String)
-		print("MapCreator.tilemap_node_grass_celestium_layer: " + tilemap_node_grass_celestium_layer as String)
-		print("MapCreator.tilemap_node_scraps_layer: " + tilemap_node_scraps_layer as String)
-		print("MapCreator.tilemap_node_marsh_layer: " + tilemap_node_marsh_layer as String)
-		print("MapCreator.tilemap_node_mountains_layer: " + tilemap_node_mountains_layer as String)
 	
 	generate()
 	
@@ -68,43 +53,26 @@ func generate() -> void:
 	if debug_enabled:
 		print("MapCreator.generate: signal 'map_size_declared' emitted with " + map_size as String)
 	
-	var tilemap_grass_celestium_layer: TileMap = get_node(tilemap_node_grass_celestium_layer)
-	var tilemap_scraps_layer: TileMap = get_node(tilemap_node_scraps_layer)
-	var tilemap_marsh_layer: TileMap = get_node(tilemap_node_marsh_layer)
-	var tilemap_mountains_layer: TileMap = get_node(tilemap_node_mountains_layer)
-	
-	tilemap_grass_celestium_layer.clear()
-	tilemap_scraps_layer.clear()
-	tilemap_marsh_layer.clear()
-	tilemap_mountains_layer.clear()
-	
 	image.lock()
 	for y in range(map_size.y):
 		for x in range(map_size.x):
 			var pixel: Color = image.get_pixel(x, y)
-			tilemap_grass_celestium_layer.set_cell(x, y, tilemap_grass_index)
+			
+			# By default all tiles are grass
+			emit_signal("grass_found", Vector2(x, y))
+			
 			if (pixel == color_grass):
-				tilemap_grass_celestium_layer.set_cell(x, y, tilemap_grass_index)
+				emit_signal("grass_found", Vector2(x, y))
 			elif (pixel == color_mountains):
-				tilemap_mountains_layer.set_cell(x, y, tilemap_mountains_index)
+				emit_signal("mountains_found", Vector2(x, y))
 			elif (pixel == color_marsh):
-				tilemap_marsh_layer.set_cell(x, y, tilemap_marsh_index)
+				emit_signal("marsh_found", Vector2(x, y))
 			elif (pixel == color_scraps):
-				tilemap_scraps_layer.set_cell(x, y, tilemap_scraps_index)
+				emit_signal("scraps_found", Vector2(x, y))
 			elif (pixel == color_celestium):
-				tilemap_grass_celestium_layer.set_cell(x, y, tilemap_celestium_index)
+				emit_signal("celestium_found", Vector2(x, y))
 			elif (pixel == color_start):
-				pass
+				emit_signal("starting_position_found", Vector2(x, y))
 	
 	image.unlock()
-	
-	var mountains_fill_offset: int = max(map_size.x, map_size.y)
-	for y in range(mountains_fill_offset * -1, map_size.y + mountains_fill_offset):
-		for x in range(mountains_fill_offset * -1, map_size.x + mountains_fill_offset): 
-			if x < 0 or x >= map_size.x or y < 0 or y >= map_size.y:
-				tilemap_mountains_layer.set_cell(x, y, tilemap_mountains_index)
-	
-	tilemap_grass_celestium_layer.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
-	tilemap_scraps_layer.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
-	tilemap_marsh_layer.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
-	tilemap_mountains_layer.update_bitmask_region(Vector2(mountains_fill_offset * -1, mountains_fill_offset * -1), Vector2(map_size.x + mountains_fill_offset, map_size.y + mountains_fill_offset))
+	emit_signal("generation_ended")
