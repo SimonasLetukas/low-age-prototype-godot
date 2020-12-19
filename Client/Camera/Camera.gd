@@ -1,5 +1,11 @@
 extends Camera2D
 
+export(bool) var debug_enabled = true
+export(int, -200, 100, 5) var limit_horizontal_margin: int = 30
+export(int, -200, 100, 5) var limit_vertical_margin: int = 5
+export(float, 0.5, 3, 0.25) var minimum_zoom: float = 0.5
+export(float, 0.5, 3, 0.25) var maximum_zoom: float = 1.5
+
 var map_width_pixels: int = 904
 var map_height_pixels: int = 452
 var map_scroll_margin: int = 5
@@ -11,18 +17,15 @@ var map_limit_right: int
 var map_limit_top: int
 var map_limit_bottom: int
 
-export(bool) var debug_enabled = true
-export(int, -200, 100, 5) var limit_horizontal_margin: int = 30
-export(int, -200, 100, 5) var limit_vertical_margin: int = 5
-export(float, 0.5, 3, 0.25) var minimum_zoom: float = 0.5
-export(float, 0.5, 3, 0.25) var maximum_zoom: float = 1.5
-
 onready var viewport_size: Vector2 = get_viewport().get_size_override()
 onready var previous_position: Vector2 = Vector2(0, 0)
 onready var camera_is_moving: bool = false
 onready var mouse_is_on_ui: bool = false
 onready var tile_width: int = Constants.tile_width
 onready var tile_height: int = Constants.tile_height
+
+signal dragging_started()
+signal dragging_ended()
 
 func _ready() -> void:
 	self.position = Vector2(map_width_pixels / 2, map_height_pixels / 2)
@@ -49,11 +52,13 @@ func _process(delta: float) -> void:
 			if mouse_is_on_ui == false:
 				previous_position = mouse_pos
 				camera_is_moving = true
+				emit_signal("dragging_started")
 		else:
 			self.position += (previous_position - mouse_pos) * self.zoom
 			previous_position = mouse_pos
 	elif Input.is_action_just_released("mouse_left"):
 		camera_is_moving = false
+		emit_signal("dragging_ended")
 	
 	if (camera_is_moving == false):
 		clamp_position_to_boundaries(delta)

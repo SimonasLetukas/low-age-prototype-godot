@@ -9,8 +9,11 @@
 
 [node name="Map" parent="." instance=ExtResource( 1 )]
 
+[node name="SelectedTile" parent="Map" index="5"]
+frame = 3
+
 [node name="MapCreator" parent="." instance=ExtResource( 3 )]
-map_file_location = "res://Client/Maps/Twister.png"
+map_file_location = "res://Client/Maps/Textures/Twister.png"
 
 [node name="Camera" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 0 )
@@ -29,6 +32,8 @@ debug_enabled = false
 [connection signal="mountains_found" from="MapCreator" to="Map" method="_on_MapCreator_mountains_found"]
 [connection signal="scraps_found" from="MapCreator" to="Map" method="_on_MapCreator_scraps_found"]
 [connection signal="starting_position_found" from="MapCreator" to="Map" method="_on_MapCreator_starting_position_found"]
+[connection signal="dragging_ended" from="Camera" to="Map" method="_on_Camera_dragging_ended"]
+[connection signal="dragging_started" from="Camera" to="Map" method="_on_Camera_dragging_started"]
 [connection signal="mouse_entered" from="UI" to="Camera" method="_on_UI_mouse_entered"]
 [connection signal="mouse_exited" from="UI" to="Camera" method="_on_UI_mouse_exited"]
 

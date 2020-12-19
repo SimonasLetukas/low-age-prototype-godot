@@ -5,8 +5,11 @@ export(bool) var debug_enabled = true
 var tile_width: int
 var tile_height: int
 var map_size: Vector2
+var tilemap_offset: Vector2
 var starting_positions: PoolVector2Array
 var tile_hovered: Vector2
+var point_ids_by_positions: Dictionary
+var positions_by_point_ids: Dictionary
 
 # TileMaps used for visual component
 onready var grass: TileMap = $Grass
@@ -18,8 +21,14 @@ onready var tilemap_celestium_index: int = 7
 onready var tilemap_scraps_index: int = 5
 onready var tilemap_marsh_index: int = 3
 onready var tilemap_mountains_index: int = 4
+onready var tilemap_available_tile_index: int = 8
 
 onready var selected_tile: AnimatedSprite = $SelectedTile
+
+onready var pathfinding: DijkstraMap = DijkstraMap.new()
+onready var available_tiles: TileMap = $Alpha/AvailableTiles
+
+onready var selection_blocked: bool = false
 
 signal starting_positions_declared(starting_positions)
 signal new_tile_hovered(tile_hovered)
@@ -30,14 +39,28 @@ func _ready() -> void:
 func _process(delta) -> void:
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	var map_pos: Vector2 = get_map_position_from_mouse_position(mouse_pos)
+	
 	if (tile_hovered != map_pos):
 		tile_hovered = map_pos
 		emit_signal("new_tile_hovered", tile_hovered)
 		selected_tile.enable()
-		selected_tile.move_to(grass.map_to_world(tile_hovered, true))
+		selected_tile.move_to(grass.map_to_world(tile_hovered + tilemap_offset, true))
+		
+	if Input.is_action_just_pressed("mouse_left"):
+		if selection_blocked:
+			return
+		available_tiles.clear()
+		pathfinding.recalculate(point_ids_by_positions[map_pos], {"maximum_cost": 7.5})
+		var available_point_ids: PoolIntArray = pathfinding.get_all_points_with_cost_between(0.0, 7.5)
+		for point_id in available_point_ids:
+			var position: Vector2 = positions_by_point_ids[point_id]
+			available_tiles.set_cellv(position, tilemap_available_tile_index)
+			
+			#todo optimize
+			available_tiles.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
 
 func get_map_position_from_mouse_position(mouse_position: Vector2) -> Vector2:
-	return grass.world_to_map(mouse_position)
+	return grass.world_to_map(mouse_position) - tilemap_offset
 
 func update_bitmasks(mountains_fill_offset: int):
 	grass.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
@@ -50,6 +73,7 @@ func clear_tilemaps():
 	scraps.clear()
 	marsh.clear()
 	mountains.clear()
+	available_tiles.clear()
 
 func fill_outside_mountains(fill_offset: int):
 	for y in range(fill_offset * -1, map_size.y + fill_offset):
@@ -63,6 +87,13 @@ func _on_MapCreator_map_size_declared(_map_size: Vector2):
 	tile_width = Constants.tile_width
 	tile_height = Constants.tile_height
 	self.position.x = (map_size.x * tile_width) / 2
+	tilemap_offset = Vector2(map_size.x / 2, (map_size.y / 2) * -1)
+	
+	point_ids_by_positions = pathfinding.add_square_grid(0, Rect2(0, 0, map_size.x, map_size.y), -1, 1.0, sqrt(2))
+	for position in point_ids_by_positions.keys():
+		var id: int = point_ids_by_positions[position]
+		positions_by_point_ids[id] = position
+	
 	clear_tilemaps()
 
 func _on_MapCreator_generation_ended():
@@ -88,3 +119,9 @@ func _on_MapCreator_scraps_found(coordinates: Vector2):
 
 func _on_MapCreator_starting_position_found(coordinates: Vector2):
 	starting_positions.append(coordinates)
+
+func _on_Camera_dragging_started():
+	selection_blocked = true
+
+func _on_Camera_dragging_ended():
+	selection_blocked = false
