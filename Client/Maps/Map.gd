@@ -19,8 +19,13 @@ onready var tilemap_scraps_index: int = 5
 onready var tilemap_marsh_index: int = 3
 onready var tilemap_mountains_index: int = 4
 
+onready var selected_tile: AnimatedSprite = $SelectedTile
+
 signal starting_positions_declared(starting_positions)
 signal new_tile_hovered(tile_hovered)
+
+func _ready() -> void:
+	selected_tile.disable()
 
 func _process(delta) -> void:
 	var mouse_pos: Vector2 = get_global_mouse_position()
@@ -28,6 +33,8 @@ func _process(delta) -> void:
 	if (tile_hovered != map_pos):
 		tile_hovered = map_pos
 		emit_signal("new_tile_hovered", tile_hovered)
+		selected_tile.enable()
+		selected_tile.move_to(grass.map_to_world(tile_hovered, true))
 
 func get_map_position_from_mouse_position(mouse_position: Vector2) -> Vector2:
 	return grass.world_to_map(mouse_position)
