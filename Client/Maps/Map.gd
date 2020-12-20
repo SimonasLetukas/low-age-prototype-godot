@@ -8,8 +8,8 @@ var map_size: Vector2
 var tilemap_offset: Vector2
 var starting_positions: PoolVector2Array
 var tile_hovered: Vector2
-var point_ids_by_positions: Dictionary
-var positions_by_point_ids: Dictionary
+var point_ids_by_positions: Dictionary # <Vector2, int>
+var positions_by_point_ids: Dictionary # <int, Vector2>
 
 # TileMaps used for visual component
 onready var grass: TileMap = $Grass
@@ -24,11 +24,19 @@ onready var tilemap_mountains_index: int = 4
 onready var tilemap_available_tile_index: int = 8
 
 onready var selected_tile: AnimatedSprite = $SelectedTile
-
-onready var pathfinding: DijkstraMap = DijkstraMap.new()
+onready var selection_blocked: bool = false
 onready var available_tiles: TileMap = $Alpha/AvailableTiles
 
-onready var selection_blocked: bool = false
+onready var terrain_grass_index: int = 0
+onready var terrain_mountains_index: int = 1
+onready var terrain_marsh_index: int = 2
+onready var terrain_weights: Dictionary = {
+	terrain_grass_index: 1.0,
+	terrain_mountains_index: INF,
+	terrain_marsh_index: 2.0
+}
+# Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/DOCUMENTATION.md
+onready var pathfinding: DijkstraMap = DijkstraMap.new()
 
 signal starting_positions_declared(starting_positions)
 signal new_tile_hovered(tile_hovered)
@@ -38,35 +46,44 @@ func _ready() -> void:
 
 func _process(delta) -> void:
 	var mouse_pos: Vector2 = get_global_mouse_position()
-	var map_pos: Vector2 = get_map_position_from_mouse_position(mouse_pos)
+	var map_pos: Vector2 = get_map_position_from_global_position(mouse_pos)
 	
 	if (tile_hovered != map_pos):
 		tile_hovered = map_pos
 		emit_signal("new_tile_hovered", tile_hovered)
 		selected_tile.enable()
-		selected_tile.move_to(grass.map_to_world(tile_hovered + tilemap_offset, true))
+		selected_tile.move_to(get_global_position_from_map_position(tile_hovered))
 		
 	if Input.is_action_just_pressed("mouse_left"):
 		if selection_blocked:
 			return
+		if tile_hovered.x < 0 or tile_hovered.x >= map_size.x or tile_hovered.y < 0 or tile_hovered.y >= map_size.y:
+			return
 		available_tiles.clear()
-		pathfinding.recalculate(point_ids_by_positions[map_pos], {"maximum_cost": 7.5})
-		var available_point_ids: PoolIntArray = pathfinding.get_all_points_with_cost_between(0.0, 7.5)
+		
+		var temp_size: float = 12.5
+		pathfinding.recalculate(point_ids_by_positions[map_pos], {"maximum_cost": temp_size, "terrain weights": terrain_weights})
+		var available_point_ids: PoolIntArray = pathfinding.get_all_points_with_cost_between(0.0, temp_size)
 		for point_id in available_point_ids:
 			var position: Vector2 = positions_by_point_ids[point_id]
 			available_tiles.set_cellv(position, tilemap_available_tile_index)
-			
-			#todo optimize
-			available_tiles.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
+			available_tiles.update_bitmask_region( # TODO: optimize
+				Vector2(position.x - temp_size, position.y - temp_size), 
+				Vector2(temp_size * 2, temp_size * 2))
 
-func get_map_position_from_mouse_position(mouse_position: Vector2) -> Vector2:
-	return grass.world_to_map(mouse_position) - tilemap_offset
+func get_map_position_from_global_position(global_position: Vector2) -> Vector2:
+	return grass.world_to_map(global_position) - tilemap_offset
+
+func get_global_position_from_map_position(map_position: Vector2) -> Vector2:
+	return grass.map_to_world(map_position + tilemap_offset, true)
 
 func update_bitmasks(mountains_fill_offset: int):
 	grass.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
 	scraps.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
 	marsh.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
-	mountains.update_bitmask_region(Vector2(mountains_fill_offset * -1, mountains_fill_offset * -1), Vector2(map_size.x + mountains_fill_offset, map_size.y + mountains_fill_offset))
+	mountains.update_bitmask_region(
+		Vector2(mountains_fill_offset * -1, mountains_fill_offset * -1), 
+		Vector2(map_size.x + mountains_fill_offset, map_size.y + mountains_fill_offset))
 
 func clear_tilemaps():
 	grass.clear()
@@ -81,6 +98,16 @@ func fill_outside_mountains(fill_offset: int):
 			if x < 0 or x >= map_size.x or y < 0 or y >= map_size.y:
 				mountains.set_cell(x, y, tilemap_mountains_index)
 
+func initialize_pathfinding_graph():
+	point_ids_by_positions = pathfinding.add_square_grid(
+		0,										# Point offset
+		Rect2(0, 0, map_size.x, map_size.y),	# Bounds
+		terrain_grass_index,					# Terrain
+		1.0,									# Orth-cost
+		sqrt(2))								# Diag-cost
+	for position in point_ids_by_positions.keys():
+		var id: int = point_ids_by_positions[position]
+		positions_by_point_ids[id] = position
 
 func _on_MapCreator_map_size_declared(_map_size: Vector2):
 	map_size = _map_size
@@ -88,12 +115,7 @@ func _on_MapCreator_map_size_declared(_map_size: Vector2):
 	tile_height = Constants.tile_height
 	self.position.x = (map_size.x * tile_width) / 2
 	tilemap_offset = Vector2(map_size.x / 2, (map_size.y / 2) * -1)
-	
-	point_ids_by_positions = pathfinding.add_square_grid(0, Rect2(0, 0, map_size.x, map_size.y), -1, 1.0, sqrt(2))
-	for position in point_ids_by_positions.keys():
-		var id: int = point_ids_by_positions[position]
-		positions_by_point_ids[id] = position
-	
+	initialize_pathfinding_graph()
 	clear_tilemaps()
 
 func _on_MapCreator_generation_ended():
@@ -110,9 +132,15 @@ func _on_MapCreator_grass_found(coordinates: Vector2):
 
 func _on_MapCreator_marsh_found(coordinates: Vector2):
 	marsh.set_cellv(coordinates, tilemap_marsh_index)
+	pathfinding.set_terrain_for_point(
+		point_ids_by_positions[coordinates], 
+		terrain_marsh_index)
 
 func _on_MapCreator_mountains_found(coordinates: Vector2):
 	mountains.set_cellv(coordinates, tilemap_mountains_index)
+	pathfinding.set_terrain_for_point(
+		point_ids_by_positions[coordinates], 
+		terrain_mountains_index)
 
 func _on_MapCreator_scraps_found(coordinates: Vector2):
 	scraps.set_cellv(coordinates, tilemap_scraps_index)
