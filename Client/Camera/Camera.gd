@@ -170,8 +170,8 @@ func moved_down(var mouse_pos: Vector2) -> bool:
 func _on_MapCreator_map_size_declared(map_size: Vector2):
 	tile_width = Constants.tile_width
 	tile_height = Constants.tile_height
-	map_width_pixels = map_size.x * tile_width
-	map_height_pixels = map_size.y * tile_height
+	map_width_pixels = max(map_size.x, map_size.y) * tile_width
+	map_height_pixels = max(map_size.x, map_size.y) * tile_height
 	set_limits()
 
 func _on_UI_mouse_entered():

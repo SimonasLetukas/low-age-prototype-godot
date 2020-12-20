@@ -113,7 +113,7 @@ func _on_MapCreator_map_size_declared(_map_size: Vector2):
 	map_size = _map_size
 	tile_width = Constants.tile_width
 	tile_height = Constants.tile_height
-	self.position.x = (map_size.x * tile_width) / 2
+	self.position.x = (max(map_size.x, map_size.y) * tile_width) / 2
 	tilemap_offset = Vector2(map_size.x / 2, (map_size.y / 2) * -1)
 	initialize_pathfinding_graph()
 	clear_tilemaps()
