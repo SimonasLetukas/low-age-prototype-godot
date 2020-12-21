@@ -1,24 +1,70 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Client/UI/button hover.png" type="Texture" id=1]
-[ext_resource path="res://Client/UI/button.png" type="Texture" id=2]
-[ext_resource path="res://Client/UI/button clicked.png" type="Texture" id=3]
+[ext_resource path="res://Client/UI/Images/button hover.png" type="Texture" id=1]
+[ext_resource path="res://Client/UI/Images/button.png" type="Texture" id=2]
+[ext_resource path="res://Client/UI/Images/button clicked.png" type="Texture" id=3]
 [ext_resource path="res://Client/UI/UI.gd" type="Script" id=4]
+[ext_resource path="res://Client/UI/Theme.tres" type="Theme" id=5]
+[ext_resource path="res://Client/UI/Images/bottom left debug panel.png" type="Texture" id=6]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 67, 20 )
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 4 )
 
-[node name="Label" type="Label" parent="."]
-anchor_top = 1.0
+[node name="Theme" type="Control" parent="."]
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -14.0
-margin_right = 320.0
-text = "asdaa"
+mouse_filter = 2
+theme = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureButton" parent="."]
+[node name="DebugPanel" type="Panel" parent="Theme"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -20.0
+margin_right = 67.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Coordinates" type="Label" parent="Theme/DebugPanel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 38.0
+margin_top = -9.0
+margin_right = -2.0
+margin_bottom = -3.0
+text = "(-100, -100)"
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TerrainType" type="Label" parent="Theme/DebugPanel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = -9.0
+margin_right = -30.0
+margin_bottom = -3.0
+text = "Mountains"
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="Theme"]
+visible = false
 margin_right = 31.0
 margin_bottom = 9.0
 texture_normal = ExtResource( 2 )

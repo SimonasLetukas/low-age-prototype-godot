@@ -2,6 +2,18 @@ extends Node2D
 
 export(bool) var debug_enabled = true
 
+class Tile:
+	var position: Vector2
+	var terrain: int
+	
+	func _init(_position: Vector2, _terrain: int):
+		self.position = _position
+		self.terrain = _terrain
+	
+	func set_terrain(_terrain: int):
+		self.terrain = _terrain
+
+var tiles: Array
 var tile_width: int
 var tile_height: int
 var map_size: Vector2
@@ -27,19 +39,16 @@ onready var selected_tile: AnimatedSprite = $SelectedTile
 onready var selection_blocked: bool = false
 onready var available_tiles: TileMap = $Alpha/AvailableTiles
 
-onready var terrain_grass_index: int = 0
-onready var terrain_mountains_index: int = 1
-onready var terrain_marsh_index: int = 2
 onready var terrain_weights: Dictionary = {
-	terrain_grass_index: 1.0,
-	terrain_mountains_index: INF,
-	terrain_marsh_index: 2.0
+	Constants.Terrain.GRASS: 1.0,
+	Constants.Terrain.MOUNTAINS: INF,
+	Constants.Terrain.MARSH: 2.0
 }
 # Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/DOCUMENTATION.md
 onready var pathfinding: DijkstraMap = DijkstraMap.new()
 
 signal starting_positions_declared(starting_positions)
-signal new_tile_hovered(tile_hovered)
+signal new_tile_hovered(tile_hovered, terrain_index)
 
 func _ready() -> void:
 	selected_tile.disable()
@@ -50,7 +59,7 @@ func _process(delta) -> void:
 	
 	if (tile_hovered != map_pos):
 		tile_hovered = map_pos
-		emit_signal("new_tile_hovered", tile_hovered)
+		emit_signal("new_tile_hovered", tile_hovered, get_tile(tile_hovered).terrain)
 		selected_tile.enable()
 		selected_tile.move_to(get_global_position_from_map_position(tile_hovered))
 		
@@ -77,6 +86,10 @@ func get_map_position_from_global_position(global_position: Vector2) -> Vector2:
 func get_global_position_from_map_position(map_position: Vector2) -> Vector2:
 	return grass.map_to_world(map_position + tilemap_offset, true)
 
+func get_tile(position: Vector2) -> Tile:
+	var tile: Tile = tiles[position.x][position.y]
+	return tile
+
 func update_bitmasks(mountains_fill_offset: int):
 	grass.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
 	scraps.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
@@ -102,12 +115,18 @@ func initialize_pathfinding_graph():
 	point_ids_by_positions = pathfinding.add_square_grid(
 		0,										# Point offset
 		Rect2(0, 0, map_size.x, map_size.y),	# Bounds
-		terrain_grass_index,					# Terrain
+		Constants.Terrain.GRASS,				# Terrain
 		1.0,									# Orth-cost
 		sqrt(2))								# Diag-cost
 	for position in point_ids_by_positions.keys():
 		var id: int = point_ids_by_positions[position]
 		positions_by_point_ids[id] = position
+
+func initialize_tiles():
+	for x in range(map_size.x):
+		tiles.append([])
+		for y in range(map_size.y):
+			tiles[x].append(Tile.new(Vector2(x, y), Constants.Terrain.GRASS))
 
 func _on_MapCreator_map_size_declared(_map_size: Vector2):
 	map_size = _map_size
@@ -116,6 +135,7 @@ func _on_MapCreator_map_size_declared(_map_size: Vector2):
 	self.position.x = (max(map_size.x, map_size.y) * tile_width) / 2
 	tilemap_offset = Vector2(map_size.x / 2, (map_size.y / 2) * -1)
 	initialize_pathfinding_graph()
+	initialize_tiles()
 	clear_tilemaps()
 
 func _on_MapCreator_generation_ended():
@@ -126,24 +146,29 @@ func _on_MapCreator_generation_ended():
 
 func _on_MapCreator_celestium_found(coordinates: Vector2):
 	grass.set_cellv(coordinates, tilemap_celestium_index)
+	get_tile(coordinates).set_terrain(Constants.Terrain.CELESTIUM)
 
 func _on_MapCreator_grass_found(coordinates: Vector2):
 	grass.set_cellv(coordinates, tilemap_grass_index)
+	get_tile(coordinates).set_terrain(Constants.Terrain.GRASS)
 
 func _on_MapCreator_marsh_found(coordinates: Vector2):
 	marsh.set_cellv(coordinates, tilemap_marsh_index)
+	get_tile(coordinates).set_terrain(Constants.Terrain.MARSH)
 	pathfinding.set_terrain_for_point(
 		point_ids_by_positions[coordinates], 
-		terrain_marsh_index)
+		Constants.Terrain.MARSH)
 
 func _on_MapCreator_mountains_found(coordinates: Vector2):
 	mountains.set_cellv(coordinates, tilemap_mountains_index)
+	get_tile(coordinates).set_terrain(Constants.Terrain.MOUNTAINS)
 	pathfinding.set_terrain_for_point(
 		point_ids_by_positions[coordinates], 
-		terrain_mountains_index)
+		Constants.Terrain.MOUNTAINS)
 
 func _on_MapCreator_scraps_found(coordinates: Vector2):
 	scraps.set_cellv(coordinates, tilemap_scraps_index)
+	get_tile(coordinates).set_terrain(Constants.Terrain.SCRAPS)
 
 func _on_MapCreator_starting_position_found(coordinates: Vector2):
 	starting_positions.append(coordinates)
