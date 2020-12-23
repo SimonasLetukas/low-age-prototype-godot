@@ -1,5 +1,7 @@
 extends Node2D
 
+# Responsible for handling all tile-map related visuals
+
 var map_size: Vector2
 var tilemap_offset: Vector2
 var mountains_fill_offset: int 

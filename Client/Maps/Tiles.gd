@@ -1,5 +1,8 @@
 extends Node
 
+# Handles game data for tiles. Might be moved out of Map in the
+# future multiplayer implementation.
+
 class Tile:
 	var position: Vector2
 	var terrain: int

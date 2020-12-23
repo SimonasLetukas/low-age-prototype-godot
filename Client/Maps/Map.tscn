@@ -35,6 +35,12 @@ animations = [ {
 [node name="Map" type="Node2D"]
 script = ExtResource( 2 )
 
+[node name="Tiles" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="Pathfinder" type="Node" parent="."]
+script = ExtResource( 6 )
+
 [node name="TileMap" type="Node2D" parent="."]
 script = ExtResource( 7 )
 
@@ -78,14 +84,8 @@ tile_data = PoolIntArray( 262169, 8, 0, 262170, 8, 2, 262180, 0, 0, 327704, 8, 0
 
 [node name="SelectedTile" type="AnimatedSprite" parent="TileMap"]
 frames = SubResource( 5 )
-frame = 1
+frame = 3
 playing = true
 centered = false
 offset = Vector2( -8, 0 )
 script = ExtResource( 4 )
-
-[node name="Pathfinder" type="Node" parent="."]
-script = ExtResource( 6 )
-
-[node name="Tiles" type="Node" parent="."]
-script = ExtResource( 5 )

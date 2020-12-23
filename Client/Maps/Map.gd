@@ -1,5 +1,8 @@
 extends Node2D
 
+# Master node for all map-related communications: game data, visuals,
+# pathfinding.
+
 export(bool) var debug_enabled = true
 
 var map_size: Vector2
@@ -20,7 +23,7 @@ onready var pathfinder: Node = $Pathfinder
 signal starting_positions_declared(starting_positions)
 signal new_tile_hovered(tile_hovered, terrain_index)
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(mouse_pos)
 	
