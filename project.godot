@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "DijkstraMap",
 "language": "NativeScript",
 "path": "res://Dijkstra_map_library/dijkstra_map.gdns"
+}, {
+"base": "Node",
+"class": "ExtendedVector2",
+"language": "GDScript",
+"path": "res://Client/ExtendedVector2.gd"
 } ]
 _global_script_class_icons={
-"DijkstraMap": ""
+"DijkstraMap": "",
+"ExtendedVector2": ""
 }
 
 [application]

@@ -2,6 +2,8 @@ extends CanvasLayer
 
 export(bool) var debug_enabled = true
 
+var map_size: Vector2
+
 signal mouse_entered
 signal mouse_exited
 
@@ -23,7 +25,7 @@ func _on_Control_mouse_exited(which: Control):
 func _on_Map_new_tile_hovered(tile_hovered: Vector2, terrain_index: int):
 	var coordinates_text: String
 	var terrain_text: String
-	if tile_hovered.x >= 100 or tile_hovered.x < 0 or tile_hovered.y >= 100 or tile_hovered.y < 0:
+	if ExtendedVector2.is_in_bounds(tile_hovered, map_size) == false:
 		coordinates_text = "-, -"
 		terrain_text = "Mountains"
 	else: 
@@ -44,3 +46,7 @@ func _on_Map_new_tile_hovered(tile_hovered: Vector2, terrain_index: int):
 	
 	$Theme/DebugPanel/Coordinates.text = coordinates_text
 	$Theme/DebugPanel/TerrainType.text = terrain_text
+
+
+func _on_MapCreator_map_size_declared(_map_size: Vector2):
+	self.map_size = _map_size

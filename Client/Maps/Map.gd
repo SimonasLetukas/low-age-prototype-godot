@@ -59,14 +59,21 @@ func _process(delta) -> void:
 	
 	if (tile_hovered != map_pos):
 		tile_hovered = map_pos
-		emit_signal("new_tile_hovered", tile_hovered, get_tile(tile_hovered).terrain)
+		
+		var hovered_terrain: int
+		if ExtendedVector2.is_in_bounds(tile_hovered, map_size):
+			hovered_terrain = get_tile(tile_hovered).terrain
+		else:
+			hovered_terrain = Constants.Terrain.MOUNTAINS
+		
+		emit_signal("new_tile_hovered", tile_hovered, hovered_terrain)
 		selected_tile.enable()
 		selected_tile.move_to(get_global_position_from_map_position(tile_hovered))
 		
 	if Input.is_action_just_pressed("mouse_left"):
 		if selection_blocked:
 			return
-		if tile_hovered.x < 0 or tile_hovered.x >= map_size.x or tile_hovered.y < 0 or tile_hovered.y >= map_size.y:
+		if ExtendedVector2.is_in_bounds(tile_hovered, map_size) == false:
 			return
 		available_tiles.clear()
 		
@@ -146,29 +153,34 @@ func _on_MapCreator_generation_ended():
 
 func _on_MapCreator_celestium_found(coordinates: Vector2):
 	grass.set_cellv(coordinates, tilemap_celestium_index)
-	get_tile(coordinates).set_terrain(Constants.Terrain.CELESTIUM)
+	if ExtendedVector2.is_in_bounds(coordinates, map_size):
+		get_tile(coordinates).set_terrain(Constants.Terrain.CELESTIUM)
 
 func _on_MapCreator_grass_found(coordinates: Vector2):
 	grass.set_cellv(coordinates, tilemap_grass_index)
-	get_tile(coordinates).set_terrain(Constants.Terrain.GRASS)
+	if ExtendedVector2.is_in_bounds(coordinates, map_size):
+		get_tile(coordinates).set_terrain(Constants.Terrain.GRASS)
 
 func _on_MapCreator_marsh_found(coordinates: Vector2):
 	marsh.set_cellv(coordinates, tilemap_marsh_index)
-	get_tile(coordinates).set_terrain(Constants.Terrain.MARSH)
-	pathfinding.set_terrain_for_point(
-		point_ids_by_positions[coordinates], 
-		Constants.Terrain.MARSH)
+	if ExtendedVector2.is_in_bounds(coordinates, map_size):
+		get_tile(coordinates).set_terrain(Constants.Terrain.MARSH)
+		pathfinding.set_terrain_for_point(
+			point_ids_by_positions[coordinates], 
+			Constants.Terrain.MARSH)
 
 func _on_MapCreator_mountains_found(coordinates: Vector2):
 	mountains.set_cellv(coordinates, tilemap_mountains_index)
-	get_tile(coordinates).set_terrain(Constants.Terrain.MOUNTAINS)
-	pathfinding.set_terrain_for_point(
-		point_ids_by_positions[coordinates], 
-		Constants.Terrain.MOUNTAINS)
+	if ExtendedVector2.is_in_bounds(coordinates, map_size):
+		get_tile(coordinates).set_terrain(Constants.Terrain.MOUNTAINS)
+		pathfinding.set_terrain_for_point(
+			point_ids_by_positions[coordinates], 
+			Constants.Terrain.MOUNTAINS)
 
 func _on_MapCreator_scraps_found(coordinates: Vector2):
 	scraps.set_cellv(coordinates, tilemap_scraps_index)
-	get_tile(coordinates).set_terrain(Constants.Terrain.SCRAPS)
+	if ExtendedVector2.is_in_bounds(coordinates, map_size):
+		get_tile(coordinates).set_terrain(Constants.Terrain.SCRAPS)
 
 func _on_MapCreator_starting_position_found(coordinates: Vector2):
 	starting_positions.append(coordinates)
