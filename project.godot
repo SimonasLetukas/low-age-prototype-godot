@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "ExtendedVector2",
 "language": "GDScript",
-"path": "res://Client/ExtendedVector2.gd"
+"path": "res://Client/Utilities/ExtendedVector2.gd"
 } ]
 _global_script_class_icons={
 "DijkstraMap": "",
@@ -35,7 +35,7 @@ config/icon="res://Sprites/Units/UEE/vessel indexed 2x2.png"
 
 [autoload]
 
-Constants="*res://Client/Constants.gd"
+Constants="*res://Client/Utilities/Constants.gd"
 
 [debug]
 
