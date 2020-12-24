@@ -1,6 +1,7 @@
 extends Node2D
 
-# Responsible for handling all tile-map related visuals
+# Responsible for handling all tile-map related visuals and
+# conversions between global and map positions.
 
 var map_size: Vector2
 var tilemap_offset: Vector2

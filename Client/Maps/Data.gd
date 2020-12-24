@@ -1,7 +1,7 @@
 extends Node
 
-# Handles game data for tiles. Might be moved out of Map in the
-# future multiplayer implementation.
+# Handles game data for tiles, units & structures. Might be moved out of 
+# Map in the future multiplayer implementation.
 
 class Tile:
 	var position: Vector2

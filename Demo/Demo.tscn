@@ -93,10 +93,13 @@ position = Vector2( 272, 20 )
 texture = ExtResource( 23 )
 
 [node name="Objects" type="YSort" parent="."]
+material = ExtResource( 55 )
 
 [node name="Structures" type="YSort" parent="Objects"]
+material = ExtResource( 55 )
 
 [node name="Revs" type="YSort" parent="Objects/Structures"]
+material = ExtResource( 55 )
 
 [node name="boss post front indexed 2x3" type="Sprite" parent="Objects/Structures/Revs"]
 position = Vector2( 40, 148 )
@@ -358,10 +361,13 @@ position = Vector2( 320, 100 )
 texture = ExtResource( 14 )
 
 [node name="Units" type="YSort" parent="Objects"]
+material = ExtResource( 55 )
 
 [node name="Revs" type="YSort" parent="Objects/Units"]
+material = ExtResource( 55 )
 
 [node name="leader indexed 1x1" type="Sprite" parent="Objects/Units/Revs"]
+material = ExtResource( 55 )
 position = Vector2( 16, 152 )
 texture = ExtResource( 42 )
 

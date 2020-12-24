@@ -10,10 +10,12 @@
 [node name="Map" parent="." instance=ExtResource( 1 )]
 
 [node name="MapCreator" parent="." instance=ExtResource( 3 )]
+debug_enabled = false
 map_file_location = "res://Client/Maps/Textures/Twister.png"
 
 [node name="Camera" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 0 )
+debug_enabled = false
 limit_horizontal_margin = -35
 limit_vertical_margin = -10
 
