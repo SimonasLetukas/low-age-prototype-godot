@@ -29,8 +29,12 @@ signal new_tile_hovered(tile_hovered, terrain_index)
 func _process(_delta) -> void:
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(mouse_pos)
-	
+	var entity: EntityBase = get_hovered_entity(mouse_pos, map_pos)
+	handle_selecting(entity)
+
+func get_hovered_entity(mouse_pos: Vector2, map_pos: Vector2) -> EntityBase:
 	var entity: EntityBase = entities.get_top_entity(mouse_pos)
+	
 	if entity != null:
 		var entity_map_pos: Vector2 = entities.get_entity_map_position(entity)
 		if tile_hovered != entity_map_pos:
@@ -38,23 +42,32 @@ func _process(_delta) -> void:
 			hover_tile()
 	elif tile_hovered != map_pos:
 		tile_hovered = map_pos
-		hover_tile()
+		var entity_hovered: bool = hover_tile()
+		if entity_hovered:
+			entity = entities.get_hovered_entity()
+	
+	return entity
+
+func handle_selecting(hovered_entity: EntityBase) -> void:
+	if hovered_entity == null:
+		return
+	if selection_blocked:
+		return
+	if ExtendedVector2.is_in_bounds(tile_hovered, map_size) == false:
+		return
 		
 	if Input.is_action_just_pressed("mouse_left"):
-		if selection_blocked:
-			return
-		if ExtendedVector2.is_in_bounds(tile_hovered, map_size) == false:
-			return
-		
 		var temp_range: float = 12.5
-		var available_tiles: PoolVector2Array = pathfinder.get_from_point(map_pos, temp_range)
+		var entity_position: Vector2 = entities.get_entity_map_position(hovered_entity)
+		var available_tiles: PoolVector2Array = pathfinder.get_from_point(entity_position, temp_range)
 		tile_map.set_available_tiles(available_tiles)
 
-func hover_tile() -> void:
+func hover_tile() -> bool:
 	var hovered_terrain: int = data.get_terrain(tile_hovered)
 	emit_signal("new_tile_hovered", tile_hovered, hovered_terrain)
 	tile_map.move_selected_tile_to(tile_hovered)
-	entities.try_hovering_entity(tile_hovered)
+	var entity_hovered: bool = entities.try_hovering_entity(tile_hovered)
+	return entity_hovered
 
 func _on_MapCreator_map_size_declared(_map_size: Vector2):
 	map_size = _map_size

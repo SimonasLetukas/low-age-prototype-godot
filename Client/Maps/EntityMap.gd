@@ -45,10 +45,20 @@ func get_entity_map_position(entity: EntityBase) -> Vector2:
 		return map_positions_by_entities[entity]
 	return Vector2.INF
 
+func get_entity_from_map_position(map_position: Vector2) -> EntityBase:
+	if entities_by_map_positions.has(map_position):
+		return entities_by_map_positions[map_position]
+	return null
+
+func get_hovered_entity() -> EntityBase:
+	if entities_by_map_positions.has(hovered_entity_position):
+		return entities_by_map_positions[hovered_entity_position]
+	return null
+
 func get_top_entity(global_position: Vector2) -> EntityBase:
 	var intersections: Array
 	var top_entity_area: Area2D
-	var top_z: = 1
+	var top_z: = -INF
 	var top_entity: EntityBase = null
 	
 	intersections = get_world_2d().get_direct_space_state().intersect_point(
@@ -60,7 +70,7 @@ func get_top_entity(global_position: Vector2) -> EntityBase:
 		if (area.get_parent() is EntityBase) == false:
 			continue
 			
-		if area.z_index < top_z:
+		if area.z_index > top_z:
 			top_entity_area = area
 			top_z = area.z_index
 			top_entity = area.get_parent()
