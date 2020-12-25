@@ -3,7 +3,7 @@
 [ext_resource path="res://Client/Entities/Units/UnitBase.gd" type="Script" id=1]
 [ext_resource path="res://Client/Entities/EntityBase.tscn" type="PackedScene" id=2]
 
-[node name="UnitBase" type="Node2D"]
+[node name="UnitBase" type="YSort"]
 script = ExtResource( 1 )
 
 [node name="EntityBase" parent="." instance=ExtResource( 2 )]

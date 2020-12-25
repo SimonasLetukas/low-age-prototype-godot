@@ -10,7 +10,6 @@ var starting_positions: PoolVector2Array
 var tile_hovered: Vector2
 
 onready var selection_blocked: bool = false
-onready var ignore_mouse_hovering: bool = false
 
 # TileMap used for visual components
 onready var tile_map: Node2D = $TileMap
@@ -31,7 +30,13 @@ func _process(_delta) -> void:
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(mouse_pos)
 	
-	if tile_hovered != map_pos && ignore_mouse_hovering == false:
+	var entity: EntityBase = entities.get_top_entity(mouse_pos)
+	if entity != null:
+		var entity_map_pos: Vector2 = entities.get_entity_map_position(entity)
+		if tile_hovered != entity_map_pos:
+			tile_hovered = entity_map_pos
+			hover_tile()
+	elif tile_hovered != map_pos:
 		tile_hovered = map_pos
 		hover_tile()
 		
@@ -94,16 +99,6 @@ func _on_Camera_dragging_started():
 
 func _on_Camera_dragging_ended():
 	selection_blocked = false
-
-func _on_EntityMap_entity_entered(entity: EntityBase):
-	ignore_mouse_hovering = true
-	var entity_position: Vector2 = entity.get_global_transform().get_origin()
-	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(entity_position)
-	tile_hovered = map_pos
-	hover_tile()
-
-func _on_EntityMap_entity_exited(entity: EntityBase):
-	ignore_mouse_hovering = false
 
 func _on_EntityMap_new_entity_found(entity: EntityBase):
 	var entity_position: Vector2 = entity.get_global_transform().get_origin()

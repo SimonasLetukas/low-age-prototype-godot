@@ -87,13 +87,13 @@ tile_data = PoolIntArray( 262169, 8, 0, 262170, 8, 2, 262180, 0, 0, 327704, 8, 0
 
 [node name="SelectedTile" type="AnimatedSprite" parent="TileMap"]
 frames = SubResource( 5 )
-frame = 1
+frame = 2
 playing = true
 centered = false
 offset = Vector2( -8, 0 )
 script = ExtResource( 4 )
 
-[node name="EntityMap" type="Node2D" parent="."]
+[node name="EntityMap" type="YSort" parent="."]
 script = ExtResource( 9 )
 
 [node name="Slave" parent="EntityMap" instance=ExtResource( 8 )]
@@ -101,6 +101,25 @@ position = Vector2( -16, 316 )
 
 [node name="Slave2" parent="EntityMap" instance=ExtResource( 8 )]
 position = Vector2( 0, 316 )
-[connection signal="entity_entered" from="EntityMap" to="." method="_on_EntityMap_entity_entered"]
-[connection signal="entity_exited" from="EntityMap" to="." method="_on_EntityMap_entity_exited"]
+
+[node name="Slave3" parent="EntityMap" instance=ExtResource( 8 )]
+position = Vector2( -32, 316 )
+
+[node name="Slave4" parent="EntityMap" instance=ExtResource( 8 )]
+position = Vector2( -16, 324 )
+
+[node name="Slave5" parent="EntityMap" instance=ExtResource( 8 )]
+position = Vector2( 16, 316 )
+
+[node name="Slave6" parent="EntityMap" instance=ExtResource( 8 )]
+position = Vector2( 24, 328 )
+
+[node name="Slave7" parent="EntityMap" instance=ExtResource( 8 )]
+position = Vector2( -8, 312 )
+
+[node name="Slave8" parent="EntityMap" instance=ExtResource( 8 )]
+position = Vector2( -16, 308 )
+
+[node name="Slave9" parent="EntityMap" instance=ExtResource( 8 )]
+position = Vector2( 0, 308 )
 [connection signal="new_entity_found" from="EntityMap" to="." method="_on_EntityMap_new_entity_found"]
