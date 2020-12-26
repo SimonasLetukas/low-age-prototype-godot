@@ -77,7 +77,7 @@ shader = SubResource( 1 )
 shader_param/outline_color = Color( 0, 0, 0, 1 )
 shader_param/enabled = false
 
-[node name="Slave" type="YSort"]
+[node name="Slave" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="UnitBase" parent="." instance=ExtResource( 1 )]

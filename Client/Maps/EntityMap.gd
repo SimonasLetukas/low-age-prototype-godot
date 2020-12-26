@@ -1,4 +1,4 @@
-extends Node2D
+extends YSort
 
 # Parent of all entities (units & structures) on the map.
 
@@ -57,7 +57,6 @@ func get_hovered_entity() -> EntityBase:
 
 func get_top_entity(global_position: Vector2) -> EntityBase:
 	var intersections: Array
-	var top_entity_area: Area2D
 	var top_z: = -INF
 	var top_entity: EntityBase = null
 	
@@ -69,10 +68,27 @@ func get_top_entity(global_position: Vector2) -> EntityBase:
 		
 		if (area.get_parent() is EntityBase) == false:
 			continue
-			
-		if area.z_index > top_z:
-			top_entity_area = area
-			top_z = area.z_index
-			top_entity = area.get_parent()
+		
+		var entity: EntityBase = area.get_parent()
+		
+		if entity == null: 
+			continue
+		
+		if debug_enabled:
+			print(entity.get_parent().get_parent().name as String + " " + get_absolute_z_index(entity) as String)
+		
+		if entity.z_index > top_z:
+			top_z = entity.z_index
+			top_entity = entity
 	
 	return top_entity
+
+static func get_absolute_z_index(target: Node2D) -> int:
+	var node: Node2D = target
+	var z_index: int = 0
+	while node and node.is_class("Node2D"):
+		z_index += node.z_index
+		if !node.z_as_relative:
+			break
+		node = node.get_parent()
+	return z_index
