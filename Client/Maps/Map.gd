@@ -9,8 +9,6 @@ var map_size: Vector2
 var starting_positions: PoolVector2Array
 var tile_hovered: Vector2
 
-onready var selection_blocked: bool = false
-
 # TileMap used for visual components
 onready var tile_map: Node2D = $TileMap
 
@@ -29,8 +27,7 @@ signal new_tile_hovered(tile_hovered, terrain_index)
 func _process(_delta) -> void:
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(mouse_pos)
-	var entity: EntityBase = get_hovered_entity(mouse_pos, map_pos)
-	handle_selecting(entity)
+	get_hovered_entity(mouse_pos, map_pos)
 
 func get_hovered_entity(mouse_pos: Vector2, map_pos: Vector2) -> EntityBase:
 	var entity: EntityBase = entities.get_top_entity(mouse_pos)
@@ -45,22 +42,27 @@ func get_hovered_entity(mouse_pos: Vector2, map_pos: Vector2) -> EntityBase:
 		var entity_hovered: bool = hover_tile()
 		if entity_hovered:
 			entity = entities.get_hovered_entity()
+	else:
+		entity = entities.get_hovered_entity()
 	
 	return entity
 
 func handle_selecting(hovered_entity: EntityBase) -> void:
 	if hovered_entity == null:
-		return
-	if selection_blocked:
+		handle_deselecting()
 		return
 	if ExtendedVector2.is_in_bounds(tile_hovered, map_size) == false:
 		return
-		
-	if Input.is_action_just_pressed("mouse_left"):
-		var temp_range: float = 12.5
-		var entity_position: Vector2 = entities.get_entity_map_position(hovered_entity)
-		var available_tiles: PoolVector2Array = pathfinder.get_from_point(entity_position, temp_range)
-		tile_map.set_available_tiles(available_tiles)
+
+	var temp_range: float = 12.5
+	var entity_position: Vector2 = entities.get_entity_map_position(hovered_entity)
+	var available_tiles: PoolVector2Array = pathfinder.get_from_point(entity_position, temp_range)
+	tile_map.set_available_tiles(available_tiles)
+	entities.select_entity(hovered_entity)
+
+func handle_deselecting() -> void:
+	tile_map.clear_available_tiles()
+	entities.deselect_entity()
 
 func hover_tile() -> bool:
 	var hovered_terrain: int = data.get_terrain(tile_hovered)
@@ -107,13 +109,13 @@ func _on_MapCreator_scraps_found(coordinates: Vector2):
 func _on_MapCreator_starting_position_found(coordinates: Vector2):
 	starting_positions.append(coordinates)
 
-func _on_Camera_dragging_started():
-	selection_blocked = true
-
-func _on_Camera_dragging_ended():
-	selection_blocked = false
-
 func _on_EntityMap_new_entity_found(entity: EntityBase):
 	var entity_position: Vector2 = entity.get_global_transform().get_origin()
 	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(entity_position)
 	entities.register_entity(map_pos, entity)
+
+func _on_MouseController_left_released_without_drag():
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(mouse_pos)
+	var entity: EntityBase = get_hovered_entity(mouse_pos, map_pos)
+	handle_selecting(entity)

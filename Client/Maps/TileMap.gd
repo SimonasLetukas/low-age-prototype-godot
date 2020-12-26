@@ -98,6 +98,9 @@ func update_all_bitmasks():
 		Vector2(mountains_fill_offset * -1, mountains_fill_offset * -1), 
 		Vector2(map_size.x + mountains_fill_offset, map_size.y + mountains_fill_offset))
 
+func clear_available_tiles():
+	available_tiles.clear()
+
 func clear_tilemaps():
 	grass.clear()
 	scraps.clear()

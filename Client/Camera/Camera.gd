@@ -18,9 +18,7 @@ var map_limit_top: int
 var map_limit_bottom: int
 
 onready var viewport_size: Vector2 = get_viewport().get_size_override()
-onready var previous_position: Vector2 = Vector2(0, 0)
 onready var camera_is_moving: bool = false
-onready var mouse_is_on_ui: bool = false
 onready var tile_width: int = Constants.tile_width
 onready var tile_height: int = Constants.tile_height
 
@@ -46,19 +44,6 @@ func _process(delta: float) -> void:
 	
 	var move_vector: Vector2
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-	
-	if Input.is_action_pressed("mouse_left"):
-		if camera_is_moving == false:
-			if mouse_is_on_ui == false:
-				previous_position = mouse_pos
-				camera_is_moving = true
-				emit_signal("dragging_started")
-		else:
-			self.position += (previous_position - mouse_pos) * self.zoom
-			previous_position = mouse_pos
-	elif Input.is_action_just_released("mouse_left"):
-		camera_is_moving = false
-		emit_signal("dragging_ended")
 	
 	if (camera_is_moving == false):
 		clamp_position_to_boundaries(delta)
@@ -174,8 +159,8 @@ func _on_MapCreator_map_size_declared(map_size: Vector2):
 	map_height_pixels = max(map_size.x, map_size.y) * tile_height
 	set_limits()
 
-func _on_UI_mouse_entered():
-	mouse_is_on_ui = true
+func _on_MouseController_mouse_dragged(by: Vector2):
+	self.position += by * self.zoom
 
-func _on_UI_mouse_exited():
-	mouse_is_on_ui = false
+func _on_MouseController_taking_control(flag: bool):
+	camera_is_moving = flag

@@ -5,6 +5,7 @@ extends YSort
 export(bool) var debug_enabled = true
 
 onready var hovered_entity_position: Vector2 = Vector2.INF
+onready var selected_entity: EntityBase = null
 
 var entities_by_map_positions: Dictionary # <Vector2, EntityBase>
 var map_positions_by_entities: Dictionary # <EntityBase, Vector2>
@@ -26,7 +27,21 @@ func register_entity(at: Vector2, entity: EntityBase) -> void:
 	entities_by_map_positions[at] = entity
 	map_positions_by_entities[entity] = at
 
+func select_entity(entity: EntityBase) -> void:
+	if selected_entity != null:
+		selected_entity.set_selected(false)
+	selected_entity = entity
+	selected_entity.set_selected(true)
+
+func deselect_entity() -> void:
+	if selected_entity != null:
+		selected_entity.set_selected(false)
+		selected_entity = null
+
 func try_hovering_entity(at: Vector2) -> bool:
+	if hovered_entity_position == at:
+		return true
+	
 	if hovered_entity_position != Vector2.INF:
 		var entity: EntityBase = entities_by_map_positions[hovered_entity_position]
 		entity.set_tile_hovered(false)
@@ -76,7 +91,8 @@ func get_top_entity(global_position: Vector2) -> EntityBase:
 			continue
 		
 		if debug_enabled:
-			print(entity.get_parent().get_parent().name as String + " " + get_absolute_z_index(entity) as String)
+			#print(entity.get_parent().get_parent().name as String + " " + get_absolute_z_index(entity) as String)
+			pass
 		
 		if entity.z_index > top_z:
 			top_z = entity.z_index

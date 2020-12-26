@@ -17,7 +17,7 @@ class_name EntityBase
 # attack are also active abilities so all stats connected to them are 
 # unique to units.
 
-onready var tile_hovered: bool = false
+onready var selected: bool = false
 
 signal mouse_entered_visuals(entity)
 signal mouse_exited_visuals(entity)
@@ -34,9 +34,19 @@ func _ready():
 
 	area.add_child(collision)
 	area.position.y -= visuals_size.y / 2
+	
+	$Health.rect_position.y = (visuals_size.y * -1.0) - 2
+	$Health.visible = false
 
 func set_tile_hovered(to: bool) -> void:
+	if selected:
+		return
+	set_outline(to)
+
+func set_selected(to: bool) -> void:
+	selected = to
 	set_outline(to)
 
 func set_outline(to: bool) -> void:
 	$Sprite.material.set_shader_param("enabled", to)
+	$Health.visible = to

@@ -88,7 +88,7 @@ tile_data = PoolIntArray( 262169, 8, 0, 262170, 8, 2, 262180, 0, 0, 327704, 8, 0
 
 [node name="SelectedTile" type="AnimatedSprite" parent="TileMap"]
 frames = SubResource( 5 )
-frame = 3
+frame = 2
 playing = true
 centered = false
 offset = Vector2( -8, 0 )
