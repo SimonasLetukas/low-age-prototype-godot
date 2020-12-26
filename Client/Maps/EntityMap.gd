@@ -55,6 +55,7 @@ func get_hovered_entity() -> EntityBase:
 		return entities_by_map_positions[hovered_entity_position]
 	return null
 
+# TODO: seems like each entity has z_index of 0 and so this func doesn't work
 func get_top_entity(global_position: Vector2) -> EntityBase:
 	var intersections: Array
 	var top_z: = -INF
