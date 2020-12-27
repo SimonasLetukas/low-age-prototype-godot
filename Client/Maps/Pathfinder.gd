@@ -55,3 +55,16 @@ func get_from_point(_position: Vector2, _range: float, _size: int = 1) -> PoolVe
 		available_positions.append(position)
 	
 	return available_positions
+
+func find_path(to: Vector2) -> PoolVector2Array:
+	var path: PoolVector2Array
+	path.append(to)
+	var target_point_id: int = point_ids_by_positions[to]
+	
+	var path_point_ids: PoolIntArray = pathfinding.get_shortest_path_from_point(target_point_id)
+	
+	for point_id in path_point_ids:
+		var position: Vector2 = positions_by_point_ids[point_id]
+		path.append(position)
+	
+	return path

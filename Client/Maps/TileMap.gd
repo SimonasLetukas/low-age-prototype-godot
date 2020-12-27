@@ -20,10 +20,13 @@ onready var tilemap_scraps_index: int = 5
 onready var tilemap_marsh_index: int = 3
 onready var tilemap_mountains_index: int = 4
 onready var tilemap_available_tile_index: int = 8
+onready var tilemap_path_tile_index: int = 9
 
 onready var selected_tile: AnimatedSprite = $SelectedTile
 
 onready var available_tiles: TileMap = $Alpha/AvailableTiles
+
+onready var path: TileMap = $Path
 
 func _ready() -> void:
 	selected_tile.disable()
@@ -78,11 +81,17 @@ func move_selected_tile_to(position: Vector2) -> void:
 	selected_tile.move_to(get_global_position_from_map_position(position))
 
 func set_available_tiles(available_positions: PoolVector2Array) -> void:
-	available_tiles.clear()
+	clear_available_tiles()
 	
 	for available_position in available_positions:
 		available_tiles.set_cellv(available_position, tilemap_available_tile_index)
 		available_tiles.update_bitmask_region(available_position)
+
+func set_path_tiles(path_positions: PoolVector2Array) -> void:
+	clear_path()
+	
+	for path_position in path_positions:
+		path.set_cellv(path_position, tilemap_path_tile_index)
 
 func fill_outside_mountains():
 	for y in range(mountains_fill_offset * -1, map_size.y + mountains_fill_offset):
@@ -101,9 +110,13 @@ func update_all_bitmasks():
 func clear_available_tiles():
 	available_tiles.clear()
 
+func clear_path():
+	path.clear()
+
 func clear_tilemaps():
 	grass.clear()
 	scraps.clear()
 	marsh.clear()
 	mountains.clear()
 	available_tiles.clear()
+	path.clear()

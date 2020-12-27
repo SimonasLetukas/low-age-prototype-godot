@@ -28,15 +28,18 @@ func register_entity(at: Vector2, entity: EntityBase) -> void:
 	map_positions_by_entities[entity] = at
 
 func select_entity(entity: EntityBase) -> void:
-	if selected_entity != null:
+	if is_entity_selected():
 		selected_entity.set_selected(false)
 	selected_entity = entity
 	selected_entity.set_selected(true)
 
 func deselect_entity() -> void:
-	if selected_entity != null:
+	if is_entity_selected():
 		selected_entity.set_selected(false)
 		selected_entity = null
+
+func is_entity_selected() -> bool:
+	return selected_entity != null
 
 func try_hovering_entity(at: Vector2) -> bool:
 	if hovered_entity_position == at:

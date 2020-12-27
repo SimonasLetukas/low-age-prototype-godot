@@ -28,6 +28,12 @@ func _process(_delta) -> void:
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(mouse_pos)
 	get_hovered_entity(mouse_pos, map_pos)
+	if entities.is_entity_selected():
+		# if hovered tile changed from above, display path
+		var path: PoolVector2Array = pathfinder.find_path(tile_hovered)
+		tile_map.set_path_tiles(path)
+	else:
+		tile_map.clear_path()
 
 func get_hovered_entity(mouse_pos: Vector2, map_pos: Vector2) -> EntityBase:
 	var entity: EntityBase = entities.get_top_entity(mouse_pos)
