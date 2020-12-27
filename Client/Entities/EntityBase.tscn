@@ -99,3 +99,6 @@ __meta__ = {
 material = SubResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
+
+[node name="Movement" type="Tween" parent="."]
+[connection signal="tween_all_completed" from="Movement" to="." method="_on_Movement_tween_all_completed"]

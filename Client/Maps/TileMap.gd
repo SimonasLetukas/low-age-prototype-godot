@@ -43,6 +43,12 @@ func get_map_position_from_global_position(global_position: Vector2) -> Vector2:
 func get_global_position_from_map_position(map_position: Vector2) -> Vector2:
 	return grass.map_to_world(map_position + tilemap_offset, true)
 
+func get_global_positions_from_map_positions(map_positions: PoolVector2Array) -> PoolVector2Array:
+	var global_positions: PoolVector2Array
+	for map_position in map_positions:
+		global_positions.append(grass.map_to_world(map_position + tilemap_offset, true))
+	return global_positions
+
 func get_tilemap_index_from_terrain_index(terrain_index: int) -> int:
 	match terrain_index:
 		Constants.Terrain.GRASS:
@@ -86,6 +92,9 @@ func set_available_tiles(available_positions: PoolVector2Array) -> void:
 	for available_position in available_positions:
 		available_tiles.set_cellv(available_position, tilemap_available_tile_index)
 		available_tiles.update_bitmask_region(available_position)
+
+func is_currently_available(map_position: Vector2) -> bool:
+	return available_tiles.get_cellv(map_position) == tilemap_available_tile_index
 
 func set_path_tiles(path_positions: PoolVector2Array) -> void:
 	clear_path()

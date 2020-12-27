@@ -17,10 +17,14 @@ class_name EntityBase
 # attack are also active abilities so all stats connected to them are 
 # unique to units.
 
-onready var selected: bool = false
+export(String, "Fast", "Medium", "Slow") var movement_speed = "Medium"
 
-signal mouse_entered_visuals(entity)
-signal mouse_exited_visuals(entity)
+var move_path: PoolVector2Array
+
+onready var selected: bool = false
+onready var movement_duration: float = get_duration_from_movement_speed()
+
+signal finished_moving(entity)
 
 func _ready():
 	var visuals_size: Vector2 = $Sprite.texture.get_size()
@@ -50,3 +54,34 @@ func set_selected(to: bool) -> void:
 func set_outline(to: bool) -> void:
 	$Sprite.material.set_shader_param("enabled", to)
 	$Health.visible = to
+
+func move_until_finished(path: PoolVector2Array) -> void:
+	move_path = path
+	move_to_next_target()
+
+func move_to_next_target() -> void:
+	var next_move_target: Vector2 = move_path[0]
+	move_path.remove(0)
+	move_path.resize(move_path.size())
+	var actual_unit: Node2D = self.get_parent().get_parent()
+	$Movement.interpolate_property(actual_unit, "global_position", actual_unit.global_position, 
+		next_move_target, movement_duration, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+	$Movement.start()
+
+func get_duration_from_movement_speed() -> float:
+	match movement_speed:
+		"Slow":
+			return 0.5
+		"Medium":
+			return 0.25
+		"Fast":
+			return 0.1
+		_:
+			return 0.25
+
+func _on_Movement_tween_all_completed():
+	if move_path.size() == 0:
+		emit_signal("finished_moving", self)
+		return
+	
+	move_to_next_target()

@@ -54,10 +54,17 @@ func get_hovered_entity(mouse_pos: Vector2, map_pos: Vector2) -> EntityBase:
 	return entity
 
 func handle_selecting(hovered_entity: EntityBase) -> void:
-	if hovered_entity == null:
-		handle_deselecting()
-		return
 	if ExtendedVector2.is_in_bounds(tile_hovered, map_size) == false:
+		return
+	
+	if hovered_entity == null:
+		if entities.is_entity_selected():
+			if tile_map.is_currently_available(tile_hovered):
+				var path: PoolVector2Array = pathfinder.find_path(tile_hovered)
+				var global_path: PoolVector2Array = tile_map.get_global_positions_from_map_positions(path)
+				entities.move_selected_entity(global_path)
+		
+		handle_deselecting()
 		return
 
 	var temp_range: float = 12.5
