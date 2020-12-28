@@ -29,7 +29,7 @@ func _process(_delta) -> void:
 	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(mouse_pos)
 	get_hovered_entity(mouse_pos, map_pos)
 	if entities.is_entity_selected():
-		# if hovered tile changed from above, display path
+		# TODO only if hovered tile changed from above, display path
 		var path: PoolVector2Array = pathfinder.find_path(tile_hovered)
 		tile_map.set_path_tiles(path)
 	else:
@@ -53,17 +53,19 @@ func get_hovered_entity(mouse_pos: Vector2, map_pos: Vector2) -> EntityBase:
 	
 	return entity
 
+func handle_execute(map_pos: Vector2) -> void:
+	if entities.is_entity_selected():
+		if tile_map.is_currently_available(tile_hovered):
+			var path: PoolVector2Array = pathfinder.find_path(tile_hovered)
+			var global_path: PoolVector2Array = tile_map.get_global_positions_from_map_positions(path)
+			entities.move_selected_entity(global_path, path)
+			handle_deselecting()
+
 func handle_selecting(hovered_entity: EntityBase) -> void:
 	if ExtendedVector2.is_in_bounds(tile_hovered, map_size) == false:
 		return
 	
 	if hovered_entity == null:
-		if entities.is_entity_selected():
-			if tile_map.is_currently_available(tile_hovered):
-				var path: PoolVector2Array = pathfinder.find_path(tile_hovered)
-				var global_path: PoolVector2Array = tile_map.get_global_positions_from_map_positions(path)
-				entities.move_selected_entity(global_path)
-		
 		handle_deselecting()
 		return
 
@@ -132,3 +134,8 @@ func _on_MouseController_left_released_without_drag():
 	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(mouse_pos)
 	var entity: EntityBase = get_hovered_entity(mouse_pos, map_pos)
 	handle_selecting(entity)
+
+func _on_MouseController_right_released_without_examine():
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	var map_pos: Vector2 = tile_map.get_map_position_from_global_position(mouse_pos)
+	handle_execute(map_pos)

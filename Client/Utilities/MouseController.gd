@@ -16,6 +16,7 @@ onready var start_position: Vector2 = Vector2.ZERO
 signal mouse_dragged(by)
 signal taking_control(flag)
 signal left_released_without_drag()
+signal right_released_without_examine()
 
 func _process(delta):
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
@@ -35,12 +36,20 @@ func _process(delta):
 				previous_position = mouse_pos
 			else:
 				previous_position = mouse_pos + travel_vector
+	
 	if Input.is_action_just_released("mouse_left"):
 		camera_is_moving = false
 		emit_signal("taking_control", false)
 		var travel_vector: Vector2 = previous_position - start_position
 		if travel_vector.length() <= 0.25:
 			emit_signal("left_released_without_drag")
+	
+	if Input.is_action_just_pressed("mouse_right"):
+		# track holding of key
+		pass
+	
+	if Input.is_action_just_released("mouse_right"):
+		emit_signal("right_released_without_examine")
 
 func _on_UI_mouse_entered():
 	mouse_is_on_ui = true

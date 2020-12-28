@@ -69,7 +69,7 @@ format = 1
 tile_data = PoolIntArray( 262180, 0, 0, 786447, 9, 0, 851983, 9, 0, 851984, 9, 0, 851985, 9, 0, 917521, 9, 0, 917522, 9, 0, 983058, 9, 0, 983059, 9, 0, 1048595, 9, 0, 1048596, 9, 0, 1048597, 9, 0, 1048598, 9, 0, 1048599, 9, 0, 1048600, 9, 0 )
 
 [node name="SelectedTile" parent="TileMap" instance=ExtResource( 3 )]
-frame = 3
+frame = 0
 
 [node name="EntityMap" type="YSort" parent="."]
 script = ExtResource( 9 )
