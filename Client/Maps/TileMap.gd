@@ -5,6 +5,7 @@ extends Node2D
 
 var map_size: Vector2
 var tilemap_offset: Vector2
+var tile_offset: Vector2
 var mountains_fill_offset: int 
 
 onready var tile_width: int = Constants.tile_width
@@ -35,18 +36,19 @@ func initialize(_map_size: Vector2) -> void:
 	self.map_size = _map_size
 	tilemap_offset = Vector2(map_size.x / 2, (map_size.y / 2) * -1)
 	mountains_fill_offset = max(map_size.x, map_size.y)
+	tile_offset = Vector2(0, tile_height / 2)
 	clear_tilemaps()
 
 func get_map_position_from_global_position(global_position: Vector2) -> Vector2:
 	return grass.world_to_map(global_position) - tilemap_offset
 
 func get_global_position_from_map_position(map_position: Vector2) -> Vector2:
-	return grass.map_to_world(map_position + tilemap_offset, true)
+	return grass.map_to_world(map_position + tilemap_offset, true) + tile_offset
 
 func get_global_positions_from_map_positions(map_positions: PoolVector2Array) -> PoolVector2Array:
 	var global_positions: PoolVector2Array
 	for map_position in map_positions:
-		global_positions.append(grass.map_to_world(map_position + tilemap_offset, true))
+		global_positions.append(get_global_position_from_map_position(map_position))
 	return global_positions
 
 func get_tilemap_index_from_terrain_index(terrain_index: int) -> int:

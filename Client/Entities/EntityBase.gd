@@ -56,6 +56,8 @@ func set_outline(to: bool) -> void:
 	$Health.visible = to
 
 func move_until_finished(path: PoolVector2Array) -> void:
+	path.remove(0)
+	path.resize(path.size())
 	move_path = path
 	move_to_next_target()
 
@@ -64,6 +66,11 @@ func move_to_next_target() -> void:
 	move_path.remove(0)
 	move_path.resize(move_path.size())
 	var actual_unit: Node2D = self.get_parent().get_parent()
+	
+	if actual_unit.global_position.x > next_move_target.x:
+		$Sprite.scale.x = -1
+	else:
+		$Sprite.scale.x = 1
 	$Movement.interpolate_property(actual_unit, "global_position", actual_unit.global_position, 
 		next_move_target, movement_duration, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 	$Movement.start()
