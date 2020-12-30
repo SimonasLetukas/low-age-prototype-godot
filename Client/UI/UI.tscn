@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Client/UI/Images/button hover.png" type="Texture" id=1]
 [ext_resource path="res://Client/UI/Images/button.png" type="Texture" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Client/UI/Theme.tres" type="Theme" id=5]
 [ext_resource path="res://Client/UI/Images/bottom left debug panel.png" type="Texture" id=6]
 [ext_resource path="res://Client/UI/Images/panel.png" type="Texture" id=7]
+[ext_resource path="res://Client/UI/Images/small-panel.png" type="Texture" id=8]
+[ext_resource path="res://Client/UI/Images/stats-panel.png" type="Texture" id=9]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 6 )
@@ -75,11 +77,116 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TextureRect" type="TextureRect" parent="Theme"]
+margin_left = 252.0
+margin_top = 123.0
+margin_right = 320.0
+margin_bottom = 180.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Coordinates2" type="Label" parent="Theme/TextureRect"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 35.0
+margin_top = -56.0
+margin_right = -5.0
+margin_bottom = -49.0
+hint_tooltip = "This is a name. Something something.
+
+This is a name. Something something. This is a name. 
+Something something."
+mouse_filter = 0
+text = "Slave"
+align = 2
+valign = 2
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="Theme"]
+margin_left = 307.382
+margin_top = 133.934
+margin_right = 317.382
+margin_bottom = 143.934
+texture = ExtResource( 8 )
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="Theme"]
+margin_left = 296.0
+margin_top = 134.0
+margin_right = 306.0
+margin_bottom = 144.0
+texture = ExtResource( 8 )
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect4" type="NinePatchRect" parent="Theme"]
+margin_left = 285.0
+margin_top = 134.0
+margin_right = 295.0
+margin_bottom = 144.0
+texture = ExtResource( 8 )
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect5" type="NinePatchRect" parent="Theme"]
+visible = false
+margin_left = 273.92
+margin_top = 133.785
+margin_right = 283.92
+margin_bottom = 143.785
+texture = ExtResource( 8 )
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect6" type="NinePatchRect" parent="Theme"]
+visible = false
+margin_left = 263.44
+margin_top = 133.859
+margin_right = 273.44
+margin_bottom = 143.859
+texture = ExtResource( 8 )
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="NinePatchRect" type="NinePatchRect" parent="Theme"]
-margin_left = 251.039
-margin_top = 142.371
-margin_right = 315.039
-margin_bottom = 178.371
+margin_left = 253.0
+margin_top = 144.0
+margin_right = 319.0
+margin_bottom = 180.0
 texture = ExtResource( 7 )
 patch_margin_left = 32
 patch_margin_top = 18

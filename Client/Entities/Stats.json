@@ -1,0 +1,61 @@
+{
+    "units": [
+        {
+            "name": "Slave",
+            "size": 1,
+            "faction": "revelators",
+            "types": [
+                "light",
+                "biological"
+            ],
+            "cost": [
+                {
+                    "scraps": 4,
+                    "celestium": 1,
+                    "weapons": [
+                        "melee"
+                    ]
+                }
+            ],
+            "damage": [
+                {
+                    "type": "melee",
+                    "amount": 1,
+                    "bonuses": []
+                }
+            ],
+            "meleeArmour": 0,
+            "rangeArmour": 0,
+            "attackDistance": 1,
+            "health": 6,
+            "movement": 5,
+            "initiative": 20,
+            "abilities": [
+                "slave-build",
+                "slave-repair",
+                "slave-manual-labour"
+            ]
+        }
+    ],
+    "structures": [],
+    "abilities": [
+        {
+            "id": "slave-build",
+            "name": "Build",
+            "type": "planning",
+            "description": "Start building a Revelators' structure on an adjacent tile. Multiple Slaves can build the structure, each additional one after the first provides half of the Celestium production to the construction than the previous Slave."
+        },
+        {
+            "id": "slave-repair",
+            "name": "Repair",
+            "type": "planning",
+            "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs."
+        },
+        {
+            "id": "slave-manual-labour",
+            "name": "Manual Labour",
+            "type": "planning",
+            "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut."
+        }
+    ]
+}
