@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Client/UI/Images/button hover.png" type="Texture" id=1]
 [ext_resource path="res://Client/UI/Images/button.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Client/UI/UI.gd" type="Script" id=4]
 [ext_resource path="res://Client/UI/Theme.tres" type="Theme" id=5]
 [ext_resource path="res://Client/UI/Images/bottom left debug panel.png" type="Texture" id=6]
+[ext_resource path="res://Client/UI/Images/panel.png" type="Texture" id=7]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 6 )
@@ -70,6 +71,20 @@ margin_bottom = 9.0
 texture_normal = ExtResource( 2 )
 texture_pressed = ExtResource( 3 )
 texture_hover = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Theme"]
+margin_left = 251.039
+margin_top = 142.371
+margin_right = 315.039
+margin_bottom = 178.371
+texture = ExtResource( 7 )
+patch_margin_left = 32
+patch_margin_top = 18
+patch_margin_right = 32
+patch_margin_bottom = 18
 __meta__ = {
 "_edit_use_anchors_": false
 }

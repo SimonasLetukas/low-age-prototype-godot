@@ -11,7 +11,7 @@
 [node name="Map" parent="." instance=ExtResource( 1 )]
 
 [node name="SelectedTile" parent="Map/TileMap" index="6"]
-frame = 0
+frame = 3
 
 [node name="MapCreator" parent="." instance=ExtResource( 3 )]
 debug_enabled = false
@@ -32,8 +32,8 @@ debug_enabled = false
 [connection signal="celestium_found" from="MapCreator" to="Map" method="_on_MapCreator_celestium_found"]
 [connection signal="generation_ended" from="MapCreator" to="Map" method="_on_MapCreator_generation_ended"]
 [connection signal="grass_found" from="MapCreator" to="Map" method="_on_MapCreator_grass_found"]
-[connection signal="map_size_declared" from="MapCreator" to="Camera" method="_on_MapCreator_map_size_declared"]
 [connection signal="map_size_declared" from="MapCreator" to="Map" method="_on_MapCreator_map_size_declared"]
+[connection signal="map_size_declared" from="MapCreator" to="Camera" method="_on_MapCreator_map_size_declared"]
 [connection signal="map_size_declared" from="MapCreator" to="UI" method="_on_MapCreator_map_size_declared"]
 [connection signal="marsh_found" from="MapCreator" to="Map" method="_on_MapCreator_marsh_found"]
 [connection signal="mountains_found" from="MapCreator" to="Map" method="_on_MapCreator_mountains_found"]
