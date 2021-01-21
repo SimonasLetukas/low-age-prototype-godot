@@ -17,16 +17,17 @@
                     ]
                 }
             ],
-            "damage": [
+            "attacks": [
                 {
                     "type": "melee",
-                    "amount": 1,
+                    "damage": 1,
+                    "minimumDistance": 1,
+                    "maximumDistance": 1,
                     "bonuses": []
                 }
             ],
             "meleeArmour": 0,
             "rangeArmour": 0,
-            "attackDistance": 1,
             "health": 6,
             "movement": 5,
             "initiative": 20,

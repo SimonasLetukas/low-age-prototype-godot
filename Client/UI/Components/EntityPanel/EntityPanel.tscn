@@ -1,0 +1,361 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Client/UI/Components/EntityPanel/EntityPanel.gd" type="Script" id=1]
+[ext_resource path="res://Client/UI/Images/panel-extra-small.png" type="Texture" id=2]
+[ext_resource path="res://Client/UI/Icons/icon_melee_armour_big.png" type="Texture" id=3]
+[ext_resource path="res://Client/UI/Icons/icon_ranged_armour_big.png" type="Texture" id=4]
+[ext_resource path="res://Client/UI/Icons/icon_ranged_attack.png" type="Texture" id=5]
+[ext_resource path="res://Client/UI/Icons/icon_initiative_big.png" type="Texture" id=6]
+[ext_resource path="res://Client/UI/Icons/icon_movement_big.png" type="Texture" id=7]
+[ext_resource path="res://Client/UI/Components/AbilityButton/AbilityButton.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Client/UI/Images/panel.png" type="Texture" id=9]
+[ext_resource path="res://Client/UI/Components/AttackTypeBox/AttackTypeBox.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Client/UI/Icons/icon_health_big.png" type="Texture" id=11]
+[ext_resource path="res://Client/UI/Icons/icon_shields_big.png" type="Texture" id=12]
+[ext_resource path="res://Client/UI/Images/stats-panel.png" type="Texture" id=13]
+[ext_resource path="res://Client/UI/Theme.tres" type="Theme" id=14]
+[ext_resource path="res://Client/UI/Components/ConditionBox/ConditionBox.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Client/UI/Components/StatBlock/StatBlock.tscn" type="PackedScene" id=16]
+
+[node name="EntityPanel" type="Control"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -68.0
+margin_top = -57.0
+theme = ExtResource( 14 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -68.0
+margin_top = -57.0
+texture = ExtResource( 13 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InfoDisplayBackground" type="NinePatchRect" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -67.0
+margin_top = -36.0
+margin_right = -1.0
+texture = ExtResource( 9 )
+patch_margin_left = 32
+patch_margin_top = 18
+patch_margin_right = 32
+patch_margin_bottom = 18
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Conditions" type="HBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -63.0
+margin_bottom = -57.0
+custom_constants/separation = 1
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConditionBox" parent="Conditions" instance=ExtResource( 15 )]
+margin_left = 62.0
+margin_right = 68.0
+
+[node name="Panel" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -65.0
+margin_top = -54.0
+margin_right = -3.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+custom_constants/separation = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EntityName" type="MarginContainer" parent="Panel"]
+margin_right = 63.0
+margin_bottom = 6.0
+custom_constants/margin_right = 2
+custom_constants/margin_top = 1
+custom_constants/margin_bottom = -1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameLabel" type="Label" parent="Panel/EntityName"]
+margin_top = 1.0
+margin_right = 61.0
+margin_bottom = 7.0
+rect_min_size = Vector2( 0, 4 )
+custom_constants/line_spacing = -2
+text = "Slave "
+align = 2
+valign = 2
+
+[node name="Abilities" type="HBoxContainer" parent="Panel"]
+margin_top = 9.0
+margin_right = 63.0
+margin_bottom = 19.0
+grow_horizontal = 0
+rect_min_size = Vector2( 0, 10 )
+custom_constants/separation = 1
+alignment = 2
+
+[node name="AbilityButton" parent="Panel/Abilities" instance=ExtResource( 8 )]
+margin_left = 53.0
+margin_right = 63.0
+
+[node name="InfoDisplay" type="MarginContainer" parent="Panel"]
+margin_top = 22.0
+margin_right = 63.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 1
+custom_constants/margin_top = -1
+custom_constants/margin_left = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/InfoDisplay"]
+margin_left = 1.0
+margin_top = -1.0
+margin_right = 62.0
+margin_bottom = 33.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 2
+
+[node name="TopPart" type="HBoxContainer" parent="Panel/InfoDisplay/VBoxContainer"]
+margin_right = 61.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 1
+
+[node name="LeftSide" type="MarginContainer" parent="Panel/InfoDisplay/VBoxContainer/TopPart"]
+margin_right = 50.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Rows" type="VBoxContainer" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide"]
+margin_right = 50.0
+margin_bottom = 24.0
+custom_constants/separation = 0
+
+[node name="Top" type="HBoxContainer" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows"]
+margin_right = 50.0
+margin_bottom = 8.0
+custom_constants/separation = 0
+
+[node name="StatBlock" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Top" instance=ExtResource( 16 )]
+
+[node name="Label" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Top/StatBlock/HBoxContainer/MarginContainer" index="0"]
+text = "10/12"
+
+[node name="StatBlock2" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Top" instance=ExtResource( 16 )]
+margin_left = 25.0
+margin_right = 50.0
+
+[node name="Label" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Top/StatBlock2/HBoxContainer/MarginContainer" index="0"]
+text = "10"
+
+[node name="Middle" type="HBoxContainer" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows"]
+margin_top = 8.0
+margin_right = 50.0
+margin_bottom = 16.0
+custom_constants/separation = 0
+
+[node name="StatBlock3" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Middle" instance=ExtResource( 16 )]
+
+[node name="Label" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Middle/StatBlock3/HBoxContainer/MarginContainer" index="0"]
+text = "1"
+
+[node name="StatBlock4" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Middle" instance=ExtResource( 16 )]
+margin_left = 25.0
+margin_right = 50.0
+
+[node name="Label" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Middle/StatBlock4/HBoxContainer/MarginContainer" index="0"]
+text = "4"
+
+[node name="Bottom" type="HBoxContainer" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows"]
+margin_top = 16.0
+margin_right = 50.0
+margin_bottom = 24.0
+custom_constants/separation = 0
+
+[node name="StatBlock5" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Bottom" instance=ExtResource( 16 )]
+
+[node name="StatBlock6" parent="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Bottom" instance=ExtResource( 16 )]
+margin_left = 25.0
+margin_right = 50.0
+
+[node name="RightSide" type="MarginContainer" parent="Panel/InfoDisplay/VBoxContainer/TopPart"]
+margin_left = 51.0
+margin_right = 61.0
+margin_bottom = 24.0
+
+[node name="Attacks" type="VBoxContainer" parent="Panel/InfoDisplay/VBoxContainer/TopPart/RightSide"]
+margin_right = 10.0
+margin_bottom = 24.0
+custom_constants/separation = 1
+
+[node name="AttackTypeBox" parent="Panel/InfoDisplay/VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource( 10 )]
+margin_bottom = 11.0
+
+[node name="AttackTypeBox2" parent="Panel/InfoDisplay/VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource( 10 )]
+margin_top = 12.0
+margin_bottom = 23.0
+
+[node name="EntityTypes" type="MarginContainer" parent="Panel/InfoDisplay/VBoxContainer"]
+margin_top = 26.0
+margin_right = 61.0
+margin_bottom = 34.0
+custom_constants/margin_bottom = 2
+
+[node name="Types" type="Label" parent="Panel/InfoDisplay/VBoxContainer/EntityTypes"]
+margin_right = 61.0
+margin_bottom = 6.0
+rect_min_size = Vector2( 3, 5 )
+size_flags_horizontal = 3
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 0
+text = "Light - Biological"
+align = 1
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+visible = false
+margin_left = 4.0
+margin_top = 42.0
+margin_right = 50.0
+margin_bottom = 88.0
+rect_scale = Vector2( 0.125, 0.125 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+visible = false
+margin_left = 4.0
+margin_top = 26.0
+margin_right = 50.0
+margin_bottom = 72.0
+rect_scale = Vector2( 0.125, 0.125 )
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+visible = false
+margin_left = 4.0
+margin_top = 34.0
+margin_right = 51.0
+margin_bottom = 80.0
+rect_scale = Vector2( 0.125, 0.125 )
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect5" type="TextureRect" parent="."]
+visible = false
+margin_left = 27.0
+margin_top = 42.0
+margin_right = 73.0
+margin_bottom = 88.0
+rect_scale = Vector2( 0.125, 0.125 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect6" type="TextureRect" parent="."]
+visible = false
+margin_left = 27.0
+margin_top = 26.0
+margin_right = 73.0
+margin_bottom = 72.0
+rect_scale = Vector2( 0.125, 0.125 )
+texture = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect7" type="TextureRect" parent="."]
+visible = false
+margin_left = 27.0
+margin_top = 34.0
+margin_right = 73.0
+margin_bottom = 80.0
+rect_scale = Vector2( 0.125, 0.125 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect9" type="NinePatchRect" parent="."]
+visible = false
+margin_left = 53.0
+margin_top = 37.0
+margin_right = 63.0
+margin_bottom = 47.0
+hint_tooltip = "This could be a condition"
+mouse_filter = 1
+texture = ExtResource( 2 )
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect9" type="TextureRect" parent="."]
+visible = false
+margin_left = 54.0
+margin_top = 38.0
+margin_right = 86.0
+margin_bottom = 70.0
+rect_scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[editable path="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Top/StatBlock"]
+
+[editable path="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Top/StatBlock2"]
+
+[editable path="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Middle/StatBlock3"]
+
+[editable path="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Middle/StatBlock4"]
+
+[editable path="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Bottom/StatBlock5"]
+
+[editable path="Panel/InfoDisplay/VBoxContainer/TopPart/LeftSide/Rows/Bottom/StatBlock6"]

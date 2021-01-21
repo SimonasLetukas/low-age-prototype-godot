@@ -3,11 +3,11 @@
 [ext_resource path="res://Client/UI/Fonts/SpaceGrotesk-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Client/UI/Images/small-panel.png" type="Texture" id=2]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 4
 font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxTexture" id=3]
+[sub_resource type="StyleBoxTexture" id=2]
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 10, 10 )
 margin_left = 5.0
@@ -15,16 +15,16 @@ margin_right = 5.0
 margin_top = 5.0
 margin_bottom = 5.0
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=3]
 size = 4
 font_data = ExtResource( 1 )
 
 [resource]
-default_font = SubResource( 1 )
+default_font = SubResource( 3 )
 Panel/styles/panel = null
 TooltipLabel/colors/font_color = Color( 0, 0, 0, 1 )
 TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0.1 )
 TooltipLabel/constants/shadow_offset_x = 0
 TooltipLabel/constants/shadow_offset_y = 0
-TooltipLabel/fonts/font = SubResource( 2 )
-TooltipPanel/styles/panel = SubResource( 3 )
+TooltipLabel/fonts/font = SubResource( 1 )
+TooltipPanel/styles/panel = SubResource( 2 )
