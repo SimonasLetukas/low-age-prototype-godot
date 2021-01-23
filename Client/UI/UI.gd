@@ -45,7 +45,9 @@ func _on_Map_new_tile_hovered(tile_hovered: Vector2, terrain_index: int):
 				terrain_text = "Unknown"
 	
 	$Theme/DebugPanel/Coordinates.text = coordinates_text
+	$Theme/DebugPanel/Coordinates/Shadow.text = coordinates_text
 	$Theme/DebugPanel/TerrainType.text = terrain_text
+	$Theme/DebugPanel/TerrainType/Shadow.text = terrain_text
 
 
 func _on_MapCreator_map_size_declared(_map_size: Vector2):

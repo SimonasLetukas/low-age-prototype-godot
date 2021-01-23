@@ -1,17 +1,9 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Client/UI/Components/EntityPanel/EntityPanel.gd" type="Script" id=1]
-[ext_resource path="res://Client/UI/Images/panel-extra-small.png" type="Texture" id=2]
-[ext_resource path="res://Client/UI/Icons/icon_melee_armour_big.png" type="Texture" id=3]
-[ext_resource path="res://Client/UI/Icons/icon_ranged_armour_big.png" type="Texture" id=4]
-[ext_resource path="res://Client/UI/Icons/icon_ranged_attack.png" type="Texture" id=5]
-[ext_resource path="res://Client/UI/Icons/icon_initiative_big.png" type="Texture" id=6]
-[ext_resource path="res://Client/UI/Icons/icon_movement_big.png" type="Texture" id=7]
 [ext_resource path="res://Client/UI/Components/AbilityButton/AbilityButton.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Client/UI/Images/panel.png" type="Texture" id=9]
 [ext_resource path="res://Client/UI/Components/InfoDisplay/InfoDisplay.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Client/UI/Icons/icon_health_big.png" type="Texture" id=11]
-[ext_resource path="res://Client/UI/Icons/icon_shields_big.png" type="Texture" id=12]
 [ext_resource path="res://Client/UI/Images/stats-panel.png" type="Texture" id=13]
 [ext_resource path="res://Client/UI/Theme.tres" type="Theme" id=14]
 [ext_resource path="res://Client/UI/Components/ConditionBox/ConditionBox.tscn" type="PackedScene" id=15]
@@ -21,11 +13,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -68.0
-margin_top = -57.0
+margin_left = -272.0
+margin_top = -353.0
+margin_bottom = 38.0
 theme = ExtResource( 14 )
 script = ExtResource( 1 )
 __meta__ = {
+"_edit_horizontal_guides_": [ 500.991 ],
 "_edit_use_anchors_": false
 }
 
@@ -34,23 +28,27 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -68.0
-margin_top = -57.0
+margin_left = -272.0
+margin_top = -257.0
+margin_right = -1.52588e-05
+margin_bottom = 91.0
 texture = ExtResource( 13 )
 expand = true
-stretch_mode = 2
+stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="InfoDisplayBackground" type="NinePatchRect" parent="."]
+[node name="InfoDisplayBackground" type="NinePatchRect" parent="Background"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -67.0
-margin_top = -36.0
-margin_right = -1.0
+margin_left = -268.0
+margin_top = -264.0
+margin_right = -202.0
+margin_bottom = -228.0
+rect_scale = Vector2( 4, 4 )
 texture = ExtResource( 9 )
 patch_margin_left = 32
 patch_margin_top = 18
@@ -60,170 +58,101 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Conditions" type="HBoxContainer" parent="."]
+[node name="Conditions" type="GridContainer" parent="."]
+anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -63.0
-margin_bottom = -57.0
-custom_constants/separation = 1
-alignment = 2
+margin_left = -136.0
+margin_top = -281.0
+margin_right = 6.10352e-05
+margin_bottom = -257.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 0
+custom_constants/vseparation = 4
+custom_constants/hseparation = 4
+columns = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ConditionBox" parent="Conditions" instance=ExtResource( 15 )]
-margin_left = 62.0
-margin_right = 68.0
+[node name="ConditionBox5" parent="Conditions" instance=ExtResource( 15 )]
+margin_right = 24.0
+margin_bottom = 24.0
+
+[node name="ConditionBox6" parent="Conditions" instance=ExtResource( 15 )]
+margin_left = 28.0
+margin_right = 52.0
+margin_bottom = 24.0
 
 [node name="Panel" type="VBoxContainer" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -65.0
-margin_top = -54.0
-margin_right = -3.0
+margin_left = -264.0
+margin_top = -253.0
+margin_right = -12.0
+margin_bottom = -38.0
 grow_horizontal = 0
 size_flags_horizontal = 3
 size_flags_vertical = 2
-custom_constants/separation = 3
+custom_constants/separation = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="EntityName" type="MarginContainer" parent="Panel"]
-margin_right = 63.0
-margin_bottom = 6.0
-custom_constants/margin_right = 2
-custom_constants/margin_top = 1
-custom_constants/margin_bottom = -1
+margin_right = 252.0
+margin_bottom = 36.0
+custom_constants/margin_right = 8
+custom_constants/margin_top = 9
+custom_constants/margin_bottom = 8
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="NameLabel" type="Label" parent="Panel/EntityName"]
-margin_top = 1.0
-margin_right = 61.0
-margin_bottom = 7.0
+margin_top = 9.0
+margin_right = 244.0
+margin_bottom = 28.0
 rect_min_size = Vector2( 0, 4 )
 custom_constants/line_spacing = -2
-text = "Slave "
+text = "Big Bad Bull"
 align = 2
 valign = 2
 
-[node name="Abilities" type="HBoxContainer" parent="Panel"]
-margin_top = 9.0
-margin_right = 63.0
+[node name="Shadow" type="Label" parent="Panel/EntityName/NameLabel"]
+self_modulate = Color( 0, 0, 0, 1 )
+show_behind_parent = true
+margin_left = 2.0
+margin_right = 246.0
 margin_bottom = 19.0
+rect_min_size = Vector2( 0, 4 )
+custom_constants/line_spacing = -2
+text = "Big Bad Bull"
+align = 2
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Abilities" type="HBoxContainer" parent="Panel"]
+margin_top = 40.0
+margin_right = 252.0
+margin_bottom = 80.0
 grow_horizontal = 0
 rect_min_size = Vector2( 0, 10 )
-custom_constants/separation = 1
+custom_constants/separation = 4
 alignment = 2
 
 [node name="AbilityButton" parent="Panel/Abilities" instance=ExtResource( 8 )]
-margin_left = 53.0
-margin_right = 63.0
+margin_left = 212.0
+margin_right = 252.0
+margin_bottom = 40.0
 
 [node name="InfoDisplay" parent="Panel" instance=ExtResource( 10 )]
-
-[node name="TextureRect2" type="TextureRect" parent="."]
-visible = false
-margin_left = 4.0
-margin_top = 42.0
-margin_right = 50.0
-margin_bottom = 88.0
-rect_scale = Vector2( 0.125, 0.125 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect3" type="TextureRect" parent="."]
-visible = false
-margin_left = 4.0
-margin_top = 26.0
-margin_right = 50.0
-margin_bottom = 72.0
-rect_scale = Vector2( 0.125, 0.125 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect4" type="TextureRect" parent="."]
-visible = false
-margin_left = 4.0
-margin_top = 34.0
-margin_right = 51.0
-margin_bottom = 80.0
-rect_scale = Vector2( 0.125, 0.125 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect5" type="TextureRect" parent="."]
-visible = false
-margin_left = 27.0
-margin_top = 42.0
-margin_right = 73.0
-margin_bottom = 88.0
-rect_scale = Vector2( 0.125, 0.125 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect6" type="TextureRect" parent="."]
-visible = false
-margin_left = 27.0
-margin_top = 26.0
-margin_right = 73.0
-margin_bottom = 72.0
-rect_scale = Vector2( 0.125, 0.125 )
-texture = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect7" type="TextureRect" parent="."]
-visible = false
-margin_left = 27.0
-margin_top = 34.0
-margin_right = 73.0
-margin_bottom = 80.0
-rect_scale = Vector2( 0.125, 0.125 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="NinePatchRect9" type="NinePatchRect" parent="."]
-visible = false
-margin_left = 53.0
-margin_top = 37.0
-margin_right = 63.0
-margin_bottom = 47.0
-hint_tooltip = "This could be a condition"
-mouse_filter = 1
-texture = ExtResource( 2 )
-patch_margin_left = 1
-patch_margin_top = 1
-patch_margin_right = 1
-patch_margin_bottom = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect9" type="TextureRect" parent="."]
-visible = false
-margin_left = 54.0
-margin_top = 38.0
-margin_right = 86.0
-margin_bottom = 70.0
-rect_scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_top = 84.0
+margin_right = 252.0
+margin_bottom = 215.0

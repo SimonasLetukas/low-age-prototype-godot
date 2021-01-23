@@ -3,21 +3,23 @@ extends Camera2D
 export(bool) var debug_enabled = true
 export(int, -200, 100, 5) var limit_horizontal_margin: int = 30
 export(int, -200, 100, 5) var limit_vertical_margin: int = 5
-export(float, 0.5, 3, 0.25) var minimum_zoom: float = 0.5
-export(float, 0.5, 3, 0.25) var maximum_zoom: float = 1.5
+export(float, 0.1, 0.5, 0.1) var minimum_zoom: float = 0.2
+export(float, 0.1, 0.5, 0.1) var maximum_zoom: float = 0.5
 
-var map_width_pixels: int = 904
-var map_height_pixels: int = 452
+var map_width_pixels: int = 1
+var map_height_pixels: int = 2
 var map_scroll_margin: int = 5
 var map_scroll_on_boundary_enabled: bool = false
-var map_scroll_speed: int = 300
+var map_scroll_speed: int = 1800
 var map_limit_elasticity: int = 6
 var map_limit_left: int
 var map_limit_right: int
 var map_limit_top: int
 var map_limit_bottom: int
+var map_boundaries_h: Vector2
+var map_boundaries_v: Vector2
 
-onready var viewport_size: Vector2 = get_viewport().get_size_override()
+onready var viewport_size: Vector2 = get_viewport().size
 onready var camera_is_moving: bool = false
 onready var tile_width: int = Constants.tile_width
 onready var tile_height: int = Constants.tile_height
@@ -27,6 +29,7 @@ signal dragging_ended()
 
 func _ready() -> void:
 	self.position = Vector2(map_width_pixels / 2, map_height_pixels / 2)
+	self.zoom = Vector2(maximum_zoom, maximum_zoom)
 	
 	if debug_enabled:
 		print("Map width: " + map_width_pixels as String)
@@ -66,14 +69,22 @@ func set_limits() -> void:
 	map_limit_bottom = map_height_pixels + limit_vertical_margin
 
 func zoom_in() -> void:
-	self.zoom.x -= 0.25
-	self.zoom.y -= 0.25
-	viewport_size = get_viewport().get_size_override()
+	if stepify(self.zoom.x, 0.1) == 0.4:
+		self.zoom.x -= 0.2
+		self.zoom.y -= 0.2
+	else:
+		self.zoom.x -= 0.1
+		self.zoom.y -= 0.1
+	viewport_size = get_viewport().size
 
 func zoom_out(delta: float) -> void:
-	self.zoom.x += 0.25
-	self.zoom.y += 0.25
-	viewport_size = get_viewport().get_size_override()
+	if stepify(self.zoom.x, 0.1) == 0.2:
+		self.zoom.x += 0.2
+		self.zoom.y += 0.2
+	else:
+		self.zoom.x += 0.1
+		self.zoom.y += 0.1
+	viewport_size = get_viewport().size
 	clamp_position_to_boundaries(delta)
 
 func clamp_position_to_boundaries(delta: float) -> void:
@@ -88,18 +99,22 @@ func clamp_position_to_boundaries(delta: float) -> void:
 
 func get_current_left_boundary() -> float:
 	var boundary: float = self.position.x - ((viewport_size.x / 2) * self.zoom.x)
+	map_boundaries_h.x = boundary
 	return boundary
 
 func get_current_right_boundary() -> float:
 	var boundary: float = self.position.x + ((viewport_size.x / 2) * self.zoom.x)
+	map_boundaries_h.y = boundary
 	return boundary
 
 func get_current_top_boundary() -> float:
 	var boundary: float = self.position.y - ((viewport_size.y / 2) * self.zoom.y)
+	map_boundaries_v.x = boundary
 	return boundary
 
 func get_current_bottom_boundary() -> float:
 	var boundary: float = self.position.y + ((viewport_size.y / 2) * self.zoom.y)
+	map_boundaries_v.y = boundary
 	return boundary
 
 func zoomed_in() -> bool:

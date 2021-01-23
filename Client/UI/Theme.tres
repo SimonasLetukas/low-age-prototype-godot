@@ -16,7 +16,7 @@ margin_top = 5.0
 margin_bottom = 5.0
 
 [sub_resource type="DynamicFont" id=3]
-size = 4
+size = 14
 font_data = ExtResource( 1 )
 
 [resource]
