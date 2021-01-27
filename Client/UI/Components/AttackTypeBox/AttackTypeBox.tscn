@@ -31,6 +31,7 @@ __meta__ = {
 }
 
 [node name="AttackTypeIcon" type="TextureRect" parent="AttackTypePanel"]
+self_modulate = Color( 0.756863, 0.843137, 0.87451, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
