@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_movement_big.png-bbe31eb0724f32ab49318ba2e617ac08.stex"
+path="res://.import/panel-clicked-28x28.png-d8215e7c4194ebc95e4e7800112e8308.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Client/UI/Icons/icon_movement_big.png"
-dest_files=[ "res://.import/icon_movement_big.png-bbe31eb0724f32ab49318ba2e617ac08.stex" ]
+source_file="res://Client/UI/Images/panel-clicked-28x28.png"
+dest_files=[ "res://.import/panel-clicked-28x28.png-d8215e7c4194ebc95e4e7800112e8308.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

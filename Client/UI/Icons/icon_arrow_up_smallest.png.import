@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_movement_big.png-bbe31eb0724f32ab49318ba2e617ac08.stex"
+path="res://.import/icon_arrow_up_smallest.png-534e8ed642e7ac1c5c03408f5001881f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Client/UI/Icons/icon_movement_big.png"
-dest_files=[ "res://.import/icon_movement_big.png-bbe31eb0724f32ab49318ba2e617ac08.stex" ]
+source_file="res://Client/UI/Icons/icon_arrow_up_smallest.png"
+dest_files=[ "res://.import/icon_arrow_up_smallest.png-534e8ed642e7ac1c5c03408f5001881f.stex" ]
 
 [params]
 

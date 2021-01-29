@@ -19,12 +19,12 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -272.0
-margin_top = -353.0
-margin_bottom = 38.0
+margin_top = -340.0
+margin_bottom = 41.0
 theme = ExtResource( 14 )
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_horizontal_guides_": [ 500.991 ],
+"_edit_horizontal_guides_": [ 500.0 ],
 "_edit_use_anchors_": false
 }
 
@@ -51,7 +51,7 @@ anchor_bottom = 1.0
 margin_left = -268.0
 margin_top = -264.0
 margin_right = -202.0
-margin_bottom = -228.0
+margin_bottom = -205.0
 rect_scale = Vector2( 4, 4 )
 texture = ExtResource( 9 )
 patch_margin_left = 32
@@ -142,7 +142,7 @@ anchor_bottom = 1.0
 margin_left = -264.0
 margin_top = -213.0
 margin_right = -12.0
-margin_bottom = -38.0
+margin_bottom = 59.0
 grow_horizontal = 0
 size_flags_horizontal = 3
 size_flags_vertical = 2
@@ -167,4 +167,4 @@ margin_bottom = 40.0
 [node name="InfoDisplay" parent="Panel" instance=ExtResource( 10 )]
 margin_top = 44.0
 margin_right = 252.0
-margin_bottom = 175.0
+margin_bottom = 272.0

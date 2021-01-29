@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "ExtendedVector2",
 "language": "GDScript",
 "path": "res://Client/Utilities/ExtendedVector2.gd"
+}, {
+"base": "RichTextEffect",
+"class": "MeleeDamage",
+"language": "GDScript",
+"path": "res://Client/Utilities/RichTextEffects/icon_melee_damage.gd"
 } ]
 _global_script_class_icons={
 "DijkstraMap": "",
 "EntityBase": "",
-"ExtendedVector2": ""
+"ExtendedVector2": "",
+"MeleeDamage": ""
 }
 
 [application]
