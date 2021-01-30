@@ -10,7 +10,7 @@ func set_clicked(to: bool) -> void:
 	match to:
 		true:
 			texture = image_clicked
-			$NavigationBoxIcon.modulate.a = 0.7
+			$AttackTypeIcon.modulate.a = 0.7
 		false:
 			texture = image
-			$NavigationBoxIcon.modulate.a = 1
+			$AttackTypeIcon.modulate.a = 1

@@ -13,7 +13,6 @@ func set_icon(texture: Texture) -> void:
 
 
 func _on_NavigationBoxPanel_mouse_entered():
-	print("On mouse entered")
 	$NavigationBoxPanel.material.set_shader_param("enabled", true)
 
 

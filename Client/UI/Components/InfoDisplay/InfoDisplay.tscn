@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Client/UI/Icons/icon_initiative_big.png" type="Texture" id=1]
 [ext_resource path="res://Client/UI/Icons/icon_movement_big.png" type="Texture" id=2]
@@ -20,6 +20,10 @@
 [ext_resource path="res://Client/UI/Fonts/Karla-Regular.ttf" type="DynamicFontData" id=18]
 [ext_resource path="res://Client/UI/Components/NavigationBox/NavigationBox.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Client/Utilities/RichTextEffects/icon_melee_damage.gd" type="Script" id=20]
+[ext_resource path="res://Client/UI/Components/InfoDisplay/Research.gd" type="Script" id=21]
+[ext_resource path="res://Client/UI/Components/InfoDisplay/EntityTypes.gd" type="Script" id=22]
+[ext_resource path="res://Client/UI/Components/InfoDisplay/TopText.gd" type="Script" id=23]
+[ext_resource path="res://Client/UI/Components/InfoDisplay/Type.gd" type="Script" id=24]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 9 )
@@ -121,54 +125,57 @@ script = ExtResource( 20 )
 
 [node name="InfoDisplay" type="MarginContainer"]
 margin_right = 248.0
-margin_bottom = 170.0
+margin_bottom = 223.0
 rect_min_size = Vector2( 248, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 4
 custom_constants/margin_top = 4
-custom_constants/margin_left = 4
+custom_constants/margin_left = 8
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 4.0
+margin_left = 8.0
 margin_top = 4.0
-margin_right = 248.0
-margin_bottom = 218.0
+margin_right = 244.0
+margin_bottom = 223.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 2
+custom_constants/separation = 4
 
 [node name="TopPart" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 244.0
-margin_bottom = 96.0
+margin_right = 236.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 custom_constants/separation = 4
 
 [node name="AbilityTitle" type="VBoxContainer" parent="VBoxContainer/TopPart"]
-visible = false
 margin_right = 212.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 212, 32 )
-size_flags_vertical = 0
-custom_constants/separation = -4
+custom_constants/separation = -3
+alignment = 2
 
 [node name="Top" type="HBoxContainer" parent="VBoxContainer/TopPart/AbilityTitle"]
+margin_top = 3.0
 margin_right = 212.0
-margin_bottom = 20.0
+margin_bottom = 23.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Research" type="MarginContainer" parent="VBoxContainer/TopPart/AbilityTitle/Top"]
+visible = false
 margin_right = 20.0
 margin_bottom = 20.0
-hint_tooltip = "Research needed: Hardened Matrix"
+hint_tooltip = "Research: Hardened Matrix"
+size_flags_vertical = 0
 custom_constants/margin_right = -4
 custom_constants/margin_left = 4
+script = ExtResource( 21 )
 
 [node name="Label" type="Label" parent="VBoxContainer/TopPart/AbilityTitle/Top/Research"]
 margin_left = 4.0
@@ -195,15 +202,15 @@ __meta__ = {
 }
 
 [node name="Name" type="MarginContainer" parent="VBoxContainer/TopPart/AbilityTitle/Top"]
-margin_left = 24.0
 margin_right = 212.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
+size_flags_vertical = 0
 custom_constants/margin_left = 4
 
 [node name="Label" type="Label" parent="VBoxContainer/TopPart/AbilityTitle/Top/Name"]
 margin_left = 4.0
-margin_right = 188.0
+margin_right = 212.0
 margin_bottom = 20.0
 theme = ExtResource( 6 )
 custom_fonts/font = SubResource( 1 )
@@ -223,10 +230,12 @@ __meta__ = {
 }
 
 [node name="Type" type="MarginContainer" parent="VBoxContainer/TopPart/AbilityTitle"]
-margin_top = 16.0
+margin_top = 20.0
 margin_right = 212.0
 margin_bottom = 32.0
 custom_constants/margin_left = 4
+custom_constants/margin_bottom = -4
+script = ExtResource( 24 )
 
 [node name="Label" type="Label" parent="VBoxContainer/TopPart/AbilityTitle/Type"]
 margin_left = 4.0
@@ -250,14 +259,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="NavigationBox" parent="VBoxContainer/TopPart" instance=ExtResource( 19 )]
+visible = false
+margin_left = -1.90735e-06
+size_flags_horizontal = 8
+size_flags_vertical = 0
+icon = ExtResource( 17 )
+
 [node name="LeftSide" type="MarginContainer" parent="VBoxContainer/TopPart"]
-margin_right = 200.0
-margin_bottom = 96.0
+visible = false
+margin_right = 236.0
 size_flags_horizontal = 3
 
 [node name="Rows" type="VBoxContainer" parent="VBoxContainer/TopPart/LeftSide"]
-margin_right = 200.0
-margin_bottom = 96.0
+margin_right = 236.0
 custom_constants/separation = 0
 
 [node name="Top" type="HBoxContainer" parent="VBoxContainer/TopPart/LeftSide/Rows"]
@@ -285,10 +300,12 @@ max_value = 99
 show_current_value = true
 
 [node name="TopText" type="VBoxContainer" parent="VBoxContainer/TopPart/LeftSide/Rows"]
+visible = false
 margin_right = 200.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 custom_constants/separation = -4
+script = ExtResource( 23 )
 
 [node name="Name" type="MarginContainer" parent="VBoxContainer/TopPart/LeftSide/Rows/TopText"]
 margin_right = 200.0
@@ -345,9 +362,7 @@ __meta__ = {
 }
 
 [node name="Middle" type="HBoxContainer" parent="VBoxContainer/TopPart/LeftSide/Rows"]
-margin_top = 32.0
-margin_right = 200.0
-margin_bottom = 64.0
+margin_right = 236.0
 custom_constants/separation = 0
 
 [node name="Movement" parent="VBoxContainer/TopPart/LeftSide/Rows/Middle" instance=ExtResource( 12 )]
@@ -366,74 +381,68 @@ rect_min_size = Vector2( 25, 8 )
 icon = ExtResource( 1 )
 
 [node name="Damage" parent="VBoxContainer/TopPart/LeftSide/Rows/Middle" instance=ExtResource( 12 )]
+visible = false
 margin_right = 100.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 25, 8 )
 icon = ExtResource( 15 )
 
 [node name="Distance" parent="VBoxContainer/TopPart/LeftSide/Rows/Middle" instance=ExtResource( 12 )]
-margin_left = 100.0
-margin_right = 200.0
+visible = false
+margin_right = 100.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 25, 8 )
 icon = ExtResource( 14 )
 
 [node name="Bottom" type="HBoxContainer" parent="VBoxContainer/TopPart/LeftSide/Rows"]
-margin_top = 64.0
-margin_right = 200.0
-margin_bottom = 96.0
+margin_right = 236.0
 custom_constants/separation = 0
 
 [node name="MeleeArmour" parent="VBoxContainer/TopPart/LeftSide/Rows/Bottom" instance=ExtResource( 12 )]
 visible = false
-margin_right = 100.0
+margin_right = 236.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 25, 8 )
 icon = ExtResource( 8 )
 
 [node name="RangedArmour" parent="VBoxContainer/TopPart/LeftSide/Rows/Bottom" instance=ExtResource( 12 )]
 visible = false
-margin_left = 100.0
-margin_right = 200.0
+margin_left = 118.0
+margin_right = 236.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 25, 8 )
 icon = ExtResource( 5 )
 
 [node name="StatBlockText" parent="VBoxContainer/TopPart/LeftSide/Rows/Bottom" instance=ExtResource( 16 )]
+visible = false
 icon = ExtResource( 13 )
-max_value = 5
 
 [node name="RightSide" type="MarginContainer" parent="VBoxContainer/TopPart"]
-margin_left = 204.0
-margin_right = 244.0
-margin_bottom = 96.0
+visible = false
+margin_left = 236.0
+margin_right = 236.0
+margin_bottom = 32.0
 
 [node name="Attacks" type="VBoxContainer" parent="VBoxContainer/TopPart/RightSide"]
-margin_right = 40.0
-margin_bottom = 96.0
+margin_bottom = 32.0
 custom_constants/separation = 4
 
 [node name="Melee" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource( 11 )]
+visible = false
 material = SubResource( 4 )
 
 [node name="Ranged" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource( 11 )]
+visible = false
 material = SubResource( 5 )
 margin_top = 48.0
 margin_bottom = 92.0
 icon = ExtResource( 4 )
 
-[node name="NavigationBox" parent="VBoxContainer/TopPart" instance=ExtResource( 19 )]
-visible = false
-margin_left = -1.90735e-06
-size_flags_horizontal = 8
-size_flags_vertical = 0
-icon = ExtResource( 17 )
-
 [node name="AbilityDescription" type="MarginContainer" parent="VBoxContainer"]
 visible = false
-margin_top = 34.0
+margin_top = 4.0
 margin_right = 244.0
-margin_bottom = 214.0
+margin_bottom = 219.0
 size_flags_vertical = 3
 custom_constants/margin_left = 4
 
@@ -441,7 +450,7 @@ custom_constants/margin_left = 4
 self_modulate = Color( 0.878431, 0.819608, 0.74902, 1 )
 margin_left = 4.0
 margin_right = 244.0
-margin_bottom = 180.0
+margin_bottom = 215.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 6 )
@@ -476,13 +485,15 @@ __meta__ = {
 }
 
 [node name="EntityTypes" type="MarginContainer" parent="VBoxContainer"]
-margin_top = 98.0
-margin_right = 244.0
-margin_bottom = 124.0
+visible = false
+margin_top = 4.0
+margin_right = 236.0
+margin_bottom = 30.0
 custom_constants/margin_bottom = 8
+script = ExtResource( 22 )
 
 [node name="Types" type="Label" parent="VBoxContainer/EntityTypes"]
-margin_right = 244.0
+margin_right = 236.0
 margin_bottom = 18.0
 rect_min_size = Vector2( 3, 5 )
 size_flags_horizontal = 3

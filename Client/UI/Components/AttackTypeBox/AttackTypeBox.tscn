@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Client/UI/Images/panel-extra-small-x4.png" type="Texture" id=1]
+[ext_resource path="res://Client/UI/Components/AttackTypeBox/AttackTypePanel.gd" type="Script" id=1]
 [ext_resource path="res://Client/UI/Icons/icon_melee_attack.png" type="Texture" id=2]
 [ext_resource path="res://Client/UI/Components/AttackTypeBox/AttackTypeBox.gd" type="Script" id=3]
+[ext_resource path="res://Client/Utilities/Shaders/Outline.tres" type="Material" id=4]
+[ext_resource path="res://Client/UI/Images/panel-40x40.png" type="Texture" id=5]
+[ext_resource path="res://Client/UI/Images/panel-clicked-40x40.png" type="Texture" id=6]
 
 [node name="AttackTypeBox" type="MarginContainer"]
 margin_right = 40.0
@@ -14,21 +17,16 @@ __meta__ = {
 }
 icon = ExtResource( 2 )
 
-[node name="AttackTypePanel" type="NinePatchRect" parent="."]
+[node name="AttackTypePanel" type="TextureRect" parent="."]
+material = ExtResource( 4 )
 margin_top = 4.0
 margin_right = 40.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 40, 40 )
-hint_tooltip = "This could be a condition"
-mouse_filter = 1
-texture = ExtResource( 1 )
-patch_margin_left = 4
-patch_margin_top = 4
-patch_margin_right = 4
-patch_margin_bottom = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
+texture = ExtResource( 5 )
+script = ExtResource( 1 )
+image = ExtResource( 5 )
+image_clicked = ExtResource( 6 )
 
 [node name="AttackTypeIcon" type="TextureRect" parent="AttackTypePanel"]
 self_modulate = Color( 0.756863, 0.843137, 0.87451, 1 )
@@ -36,10 +34,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 92.0
-margin_bottom = 92.0
-rect_scale = Vector2( 0.25, 0.25 )
+margin_right = -4.0
+margin_bottom = -4.0
 texture = ExtResource( 2 )
+expand = true
 stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
@@ -50,12 +48,14 @@ self_modulate = Color( 0, 0, 0, 1 )
 show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_right = 4.0
-rect_min_size = Vector2( 128, 128 )
+margin_left = 1.0
+margin_right = 1.0
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="gui_input" from="AttackTypePanel" to="." method="_on_AttackTypePanel_gui_input"]
+[connection signal="mouse_entered" from="AttackTypePanel" to="." method="_on_AttackTypePanel_mouse_entered"]
+[connection signal="mouse_exited" from="AttackTypePanel" to="." method="_on_AttackTypePanel_mouse_exited"]
