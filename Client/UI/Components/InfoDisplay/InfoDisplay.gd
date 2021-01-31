@@ -2,6 +2,7 @@ extends MarginContainer
 
 enum View {UNIT_STATS, STRUCTURE_STATS, ATTACK_MELEE, ATTACK_RANGED, ABILITY}
 var current_view: int = View.UNIT_STATS
+var previous_view: int = View.UNIT_STATS
 
 var value_current_health: int = 999
 var value_max_health: int = 999
@@ -22,7 +23,7 @@ var value_melee_bonus_damage: int = 999
 var value_melee_bonus_type: int = Constants.EntityType.BIOLOGICAL
 
 var has_ranged_attack: bool = true
-var value_ranged_name: String = "Venom Fangs"
+var value_ranged_name: String = "Monev Fangs"
 var value_ranged_distance: int = 999
 var value_ranged_damage: int = 999
 var value_ranged_bonus_damage: int = 999
@@ -36,10 +37,11 @@ var value_ability_cooldown_type: int = Constants.AbilityType.ACTION
 var value_research_text: String = "Hardened Matrix"
 
 func _ready() -> void:
-	show_view(View.ABILITY)
+	show_view(View.UNIT_STATS)
 
 func show_view(view: int) -> void:
 	assert(view in View.values(), "View is of enum type 'View'")
+	previous_view = current_view
 	current_view = view
 	match current_view:
 		View.UNIT_STATS:
@@ -247,3 +249,38 @@ func set_parameters_ability(
 	value_ability_cooldown = cooldown
 	value_ability_cooldown_type = cooldown_type
 
+func _on_Melee_clicked():
+	var button = $VBoxContainer/TopPart/RightSide/Attacks/Melee
+	if button.is_selected:
+		show_view(View.UNIT_STATS)
+		return
+	
+	$VBoxContainer/TopPart/RightSide/Attacks/Ranged.set_selected(false)
+	if current_view != View.ATTACK_MELEE:
+		show_view(View.ATTACK_MELEE)
+
+func _on_Ranged_clicked():
+	var button = $VBoxContainer/TopPart/RightSide/Attacks/Ranged
+	if button.is_selected:
+		show_view(View.UNIT_STATS)
+		return
+	
+	$VBoxContainer/TopPart/RightSide/Attacks/Melee.set_selected(false)
+	if current_view != View.ATTACK_RANGED:
+		show_view(View.ATTACK_RANGED)
+
+
+func _on_Melee_hovering(started):
+	match started:
+		true:
+			show_view(View.ATTACK_MELEE)
+		false:
+			show_view(previous_view)
+
+
+func _on_Ranged_hovering(started):
+	match started:
+		true:
+			show_view(View.ATTACK_RANGED)
+		false:
+			show_view(previous_view)

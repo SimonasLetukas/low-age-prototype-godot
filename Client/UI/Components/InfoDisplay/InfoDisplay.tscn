@@ -520,3 +520,7 @@ valign = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="clicked" from="VBoxContainer/TopPart/RightSide/Attacks/Melee" to="." method="_on_Melee_clicked"]
+[connection signal="hovering" from="VBoxContainer/TopPart/RightSide/Attacks/Melee" to="." method="_on_Melee_hovering"]
+[connection signal="clicked" from="VBoxContainer/TopPart/RightSide/Attacks/Ranged" to="." method="_on_Ranged_clicked"]
+[connection signal="hovering" from="VBoxContainer/TopPart/RightSide/Attacks/Ranged" to="." method="_on_Ranged_hovering"]
