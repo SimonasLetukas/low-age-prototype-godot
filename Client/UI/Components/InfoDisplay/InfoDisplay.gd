@@ -7,6 +7,7 @@ var current_view: int = View.UNIT_STATS
 var previous_view: int = View.UNIT_STATS
 
 signal abilities_closed()
+signal ability_text_resized()
 
 var value_current_health: int = 999
 var value_max_health: int = 999
@@ -83,7 +84,7 @@ func reset() -> void:
 	$VBoxContainer/TopPart/RightSide/Attacks/Ranged.visible = false
 	$VBoxContainer/AbilityDescription.visible = false
 	$VBoxContainer/EntityTypes.visible = false
-	
+
 func show_unit_stats() -> void:
 	$VBoxContainer/TopPart/LeftSide/Rows/Top/Health.set_value(value_current_health, value_max_health, false if value_current_health == value_max_health else true)
 	$VBoxContainer/TopPart/LeftSide/Rows/Top/Shields.set_value(value_current_shields, value_max_shields, false if value_current_shields == value_max_shields else true)
@@ -290,3 +291,7 @@ func _on_Ranged_hovering(started):
 func _on_NavigationBox_clicked():
 	show_view(previous_view)
 	emit_signal("abilities_closed")
+
+
+func _on_Text_resized():
+	emit_signal("ability_text_resized")

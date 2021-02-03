@@ -31,3 +31,9 @@ func populate(ids: PoolStringArray) -> void:
 func deselect_all() -> void:
 	for ability_button in get_children():
 		ability_button.set_selected(false)
+
+func is_any_selected() -> bool:
+	for ability_button in get_children():
+		if ability_button.is_selected:
+			return true
+	return false

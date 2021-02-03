@@ -439,9 +439,8 @@ margin_bottom = 92.0
 icon = ExtResource( 4 )
 
 [node name="AbilityDescription" type="MarginContainer" parent="VBoxContainer"]
-visible = false
-margin_top = 4.0
-margin_right = 244.0
+margin_top = 36.0
+margin_right = 236.0
 margin_bottom = 219.0
 size_flags_vertical = 3
 custom_constants/margin_left = 4
@@ -449,17 +448,32 @@ custom_constants/margin_left = 4
 [node name="Text" type="RichTextLabel" parent="VBoxContainer/AbilityDescription"]
 self_modulate = Color( 0.878431, 0.819608, 0.74902, 1 )
 margin_left = 4.0
-margin_right = 244.0
-margin_bottom = 215.0
+margin_right = 236.0
+margin_bottom = 132.0
+rect_clip_content = false
 size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 2
 theme = ExtResource( 6 )
 custom_fonts/bold_font = SubResource( 8 )
 custom_fonts/normal_font = SubResource( 6 )
 custom_constants/line_separation = -1
 bbcode_enabled = true
-bbcode_text = "Place a ghostly rendition of a selected enemy unit in [b]7[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] to an unoccupied space in a [b]3[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] from the selected target. The rendition has the same amount of [img=15x11]Client/UI/Icons/icon_health_big.png[/img], [img=15x11]Client/UI/Icons/icon_melee_armour_big.png[/img] and [img=15x11]Client/UI/Icons/icon_ranged_armour_big.png[/img] as the selected target, cannot act, can be attacked and stays for [b]2[/b] action phases. [b]50%[/b] of all [img=15x11]Client/UI/Icons/icon_damage_big.png[/img] done to the rendition is done as pure [img=15x11]Client/UI/Icons/icon_damage_big.png[/img]to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals [b]10[/b][img=15x11]Client/UI/Icons/icon_melee_attack.png[/img] and slows all adjacent enemies by [b]50%[/b] until the end of their next action."
-text = "Place a ghostly rendition of a selected enemy unit in 7  to an unoccupied space in a 3  from the selected target. The rendition has the same amount of ,  and  as the selected target, cannot act, can be attacked and stays for 2 action phases. 50% of all  done to the rendition is done as pure to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals 10 and slows all adjacent enemies by 50% until the end of their next action."
+bbcode_text = " [img=15x11]Client/UI/Icons/icon_melee_armour_big.png[/img] and [img=15x11]Client/UI/Icons/icon_ranged_armour_big.png[/img] as the selected target, cannot act, can be attacked and stays for [b]2[/b] action phases. [b]50%[/b] of all
+
+
+
+
+
+
+e_big.png[/img]to the selected target. If "
+text = "  and  as the selected target, cannot act, can be attacked and stays for 2 action phases. 50% of all
+
+
+
+
+
+
+e_big.png[/img]to the selected target. If "
 fit_content_height = true
 custom_effects = [ SubResource( 9 ) ]
 
@@ -525,3 +539,4 @@ __meta__ = {
 [connection signal="hovering" from="VBoxContainer/TopPart/RightSide/Attacks/Melee" to="." method="_on_Melee_hovering"]
 [connection signal="clicked" from="VBoxContainer/TopPart/RightSide/Attacks/Ranged" to="." method="_on_Ranged_clicked"]
 [connection signal="hovering" from="VBoxContainer/TopPart/RightSide/Attacks/Ranged" to="." method="_on_Ranged_hovering"]
+[connection signal="resized" from="VBoxContainer/AbilityDescription/Text" to="." method="_on_Text_resized"]

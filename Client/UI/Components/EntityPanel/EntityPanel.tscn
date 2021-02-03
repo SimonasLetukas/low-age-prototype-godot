@@ -254,3 +254,4 @@ margin_bottom = 272.0
 [node name="Tween" type="Tween" parent="."]
 [connection signal="abilities_populated" from="Panel/Abilities" to="." method="_on_Abilities_abilities_populated"]
 [connection signal="abilities_closed" from="Panel/InfoDisplay" to="." method="_on_InfoDisplay_abilities_closed"]
+[connection signal="ability_text_resized" from="Panel/InfoDisplay" to="." method="_on_InfoDisplay_ability_text_resized"]
