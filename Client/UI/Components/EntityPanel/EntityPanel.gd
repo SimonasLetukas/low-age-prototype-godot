@@ -9,9 +9,9 @@ onready var ability_text_box: RichTextLabel = $Panel/InfoDisplay/VBoxContainer/A
 var is_ability_selected: bool = false
 var is_switching_between_abilities: bool = false
 var biggest_previous_ability_text_size_y: int = 0
-var y_position_for_ability: int = 	460
-var y_position_for_unit: int = 		380
-var y_position_for_structure: int = 400
+var y_size_for_ability: int = 	834
+var y_size_for_unit: int = 		784
+var y_size_for_structure: int = 816
 
 var ability_descriptions_by_name: Dictionary # <String (id), String (description)>
 
@@ -47,18 +47,18 @@ func change_display(clicked_ability: AbilityButton) -> void:
 		biggest_previous_ability_text_size_y = 0
 
 func move_panel() -> void:
-	var new_position: Vector2
+	var new_size: Vector2
 	if is_ability_selected:
 		var ability_text_box_size_y: int = calculate_biggest_previous_size(
 			ability_text_box.get_size().y)
-		var new_y: int = y_position_for_ability - ability_text_box_size_y
-		if (new_y > y_position_for_unit): # TODO check if structure is selected
-			new_y = y_position_for_unit
-		new_position = Vector2(self.rect_position.x, new_y)
+		var new_y: int = y_size_for_ability - ability_text_box_size_y
+		if (new_y > y_size_for_unit): # TODO check if structure is selected
+			new_y = y_size_for_unit
+		new_size = Vector2(self.rect_size.x, new_y)
 	else:
-		new_position = Vector2(self.rect_position.x, y_position_for_unit)
+		new_size = Vector2(self.rect_size.x, y_size_for_unit)
 	
-	$Tween.interpolate_property(self, "rect_position", self.rect_position, new_position, 0.1, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property(self, "rect_size", self.rect_size, new_size, 0.1, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 	$Tween.start()
 
 func calculate_biggest_previous_size(current_size_y: int = 0) -> int:

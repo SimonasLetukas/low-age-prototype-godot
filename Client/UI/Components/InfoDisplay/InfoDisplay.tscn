@@ -140,19 +140,20 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 8.0
 margin_top = 4.0
-margin_right = 244.0
+margin_right = 252.0
 margin_bottom = 223.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 4
 
 [node name="TopPart" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 236.0
-margin_bottom = 32.0
+margin_right = 244.0
+margin_bottom = 96.0
 size_flags_horizontal = 3
 custom_constants/separation = 4
 
 [node name="AbilityTitle" type="VBoxContainer" parent="VBoxContainer/TopPart"]
+visible = false
 margin_right = 212.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 212, 32 )
@@ -267,16 +268,16 @@ size_flags_vertical = 0
 icon = ExtResource( 17 )
 
 [node name="LeftSide" type="MarginContainer" parent="VBoxContainer/TopPart"]
-visible = false
-margin_right = 236.0
+margin_right = 200.0
+margin_bottom = 96.0
 size_flags_horizontal = 3
 
 [node name="Rows" type="VBoxContainer" parent="VBoxContainer/TopPart/LeftSide"]
-margin_right = 236.0
+margin_right = 200.0
+margin_bottom = 96.0
 custom_constants/separation = 0
 
 [node name="Top" type="HBoxContainer" parent="VBoxContainer/TopPart/LeftSide/Rows"]
-visible = false
 margin_right = 200.0
 margin_bottom = 32.0
 custom_constants/separation = 0
@@ -362,20 +363,20 @@ __meta__ = {
 }
 
 [node name="Middle" type="HBoxContainer" parent="VBoxContainer/TopPart/LeftSide/Rows"]
-margin_right = 236.0
+margin_top = 32.0
+margin_right = 200.0
+margin_bottom = 64.0
 custom_constants/separation = 0
 
 [node name="Movement" parent="VBoxContainer/TopPart/LeftSide/Rows/Middle" instance=ExtResource( 12 )]
-visible = false
 margin_right = 100.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 25, 8 )
 icon = ExtResource( 2 )
 
 [node name="Initiative" parent="VBoxContainer/TopPart/LeftSide/Rows/Middle" instance=ExtResource( 12 )]
-visible = false
-margin_left = 200.0
-margin_right = 300.0
+margin_left = 100.0
+margin_right = 200.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 25, 8 )
 icon = ExtResource( 1 )
@@ -395,20 +396,20 @@ rect_min_size = Vector2( 25, 8 )
 icon = ExtResource( 14 )
 
 [node name="Bottom" type="HBoxContainer" parent="VBoxContainer/TopPart/LeftSide/Rows"]
-margin_right = 236.0
+margin_top = 64.0
+margin_right = 200.0
+margin_bottom = 96.0
 custom_constants/separation = 0
 
 [node name="MeleeArmour" parent="VBoxContainer/TopPart/LeftSide/Rows/Bottom" instance=ExtResource( 12 )]
-visible = false
-margin_right = 236.0
+margin_right = 100.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 25, 8 )
 icon = ExtResource( 8 )
 
 [node name="RangedArmour" parent="VBoxContainer/TopPart/LeftSide/Rows/Bottom" instance=ExtResource( 12 )]
-visible = false
-margin_left = 118.0
-margin_right = 236.0
+margin_left = 100.0
+margin_right = 200.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 25, 8 )
 icon = ExtResource( 5 )
@@ -418,27 +419,26 @@ visible = false
 icon = ExtResource( 13 )
 
 [node name="RightSide" type="MarginContainer" parent="VBoxContainer/TopPart"]
-visible = false
-margin_left = 236.0
-margin_right = 236.0
-margin_bottom = 32.0
+margin_left = 204.0
+margin_right = 244.0
+margin_bottom = 96.0
 
 [node name="Attacks" type="VBoxContainer" parent="VBoxContainer/TopPart/RightSide"]
-margin_bottom = 32.0
+margin_right = 40.0
+margin_bottom = 96.0
 custom_constants/separation = 4
 
 [node name="Melee" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource( 11 )]
-visible = false
 material = SubResource( 4 )
 
 [node name="Ranged" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource( 11 )]
-visible = false
 material = SubResource( 5 )
 margin_top = 48.0
 margin_bottom = 92.0
 icon = ExtResource( 4 )
 
 [node name="AbilityDescription" type="MarginContainer" parent="VBoxContainer"]
+visible = false
 margin_top = 36.0
 margin_right = 236.0
 margin_bottom = 219.0

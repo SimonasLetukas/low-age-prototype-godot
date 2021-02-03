@@ -181,6 +181,9 @@ func show_ability() -> void:
 		$VBoxContainer/TopPart/AbilityTitle/Top/Research.visible = true
 	$VBoxContainer/TopPart/NavigationBox.visible = true
 	$VBoxContainer/AbilityDescription.visible = true
+	
+	$VBoxContainer/TopPart/RightSide/Attacks/Melee.set_selected(false)
+	$VBoxContainer/TopPart/RightSide/Attacks/Ranged.set_selected(false)
 
 func set_parameters_entity_stats(
 	current_health: int, 
