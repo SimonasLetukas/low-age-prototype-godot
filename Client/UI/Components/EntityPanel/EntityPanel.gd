@@ -10,7 +10,7 @@ var is_ability_selected: bool = false
 var is_switching_between_abilities: bool = false
 var biggest_previous_ability_text_size_y: int = 0
 var y_size_for_ability: int = 	834
-var y_size_for_unit: int = 		784
+var y_size_for_unit: int = 		786
 var y_size_for_structure: int = 816
 
 var ability_descriptions_by_name: Dictionary # <String (id), String (description)>
