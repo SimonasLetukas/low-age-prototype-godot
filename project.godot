@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "NinePatchRect",
+"class": "AbilityButton",
+"language": "GDScript",
+"path": "res://Client/UI/Components/AbilityButton/AbilityButton.gd"
+}, {
+"base": "HBoxContainer",
+"class": "AbilityButtons",
+"language": "GDScript",
+"path": "res://Client/UI/Components/EntityPanel/Abilities.gd"
+}, {
 "base": "",
 "class": "DijkstraMap",
 "language": "NativeScript",
@@ -24,15 +34,23 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Client/Utilities/ExtendedVector2.gd"
 }, {
+"base": "MarginContainer",
+"class": "InfoDisplay",
+"language": "GDScript",
+"path": "res://Client/UI/Components/InfoDisplay/InfoDisplay.gd"
+}, {
 "base": "RichTextEffect",
 "class": "MeleeDamage",
 "language": "GDScript",
 "path": "res://Client/Utilities/RichTextEffects/icon_melee_damage.gd"
 } ]
 _global_script_class_icons={
+"AbilityButton": "",
+"AbilityButtons": "",
 "DijkstraMap": "",
 "EntityBase": "",
 "ExtendedVector2": "",
+"InfoDisplay": "",
 "MeleeDamage": ""
 }
 

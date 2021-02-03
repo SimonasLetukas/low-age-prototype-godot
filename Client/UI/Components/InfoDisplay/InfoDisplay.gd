@@ -1,8 +1,12 @@
 extends MarginContainer
 
+class_name InfoDisplay
+
 enum View {UNIT_STATS, STRUCTURE_STATS, ATTACK_MELEE, ATTACK_RANGED, ABILITY}
 var current_view: int = View.UNIT_STATS
 var previous_view: int = View.UNIT_STATS
+
+signal abilities_closed()
 
 var value_current_health: int = 999
 var value_max_health: int = 999
@@ -269,7 +273,6 @@ func _on_Ranged_clicked():
 	if current_view != View.ATTACK_RANGED:
 		show_view(View.ATTACK_RANGED)
 
-
 func _on_Melee_hovering(started):
 	match started:
 		true:
@@ -277,10 +280,13 @@ func _on_Melee_hovering(started):
 		false:
 			show_view(previous_view)
 
-
 func _on_Ranged_hovering(started):
 	match started:
 		true:
 			show_view(View.ATTACK_RANGED)
 		false:
 			show_view(previous_view)
+
+func _on_NavigationBox_clicked():
+	show_view(previous_view)
+	emit_signal("abilities_closed")

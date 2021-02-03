@@ -11,14 +11,13 @@ func set_icon(texture: Texture) -> void:
 	$NavigationBoxPanel/NavigationBoxIcon.texture = icon
 	$NavigationBoxPanel/NavigationBoxIcon/Shadow.texture = icon
 
-
 func _on_NavigationBoxPanel_mouse_entered():
 	$NavigationBoxPanel.material.set_shader_param("enabled", true)
 
 
 func _on_NavigationBoxPanel_mouse_exited():
-	$NavigationBoxPanel.material.set_shader_param("enabled", false)
 	$NavigationBoxPanel.set_clicked(false)
+	$NavigationBoxPanel.material.set_shader_param("enabled", false)
 
 
 func _on_NavigationBoxPanel_gui_input(event: InputEvent):
@@ -26,4 +25,5 @@ func _on_NavigationBoxPanel_gui_input(event: InputEvent):
 		$NavigationBoxPanel.set_clicked(true)
 	if event.is_action_released("mouse_left"):
 		$NavigationBoxPanel.set_clicked(false)
+		$NavigationBoxPanel.material.set_shader_param("enabled", false)
 		emit_signal("clicked")
