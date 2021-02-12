@@ -17,6 +17,7 @@ class_name EntityBase
 # attack are also active abilities so all stats connected to them are 
 # unique to units.
 
+export(String) var id = "slave"
 export(String, "Fast", "Medium", "Slow") var movement_speed = "Medium"
 
 var move_path: PoolVector2Array
