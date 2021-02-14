@@ -12,12 +12,17 @@ _global_script_classes=[ {
 "base": "NinePatchRect",
 "class": "AbilityButton",
 "language": "GDScript",
-"path": "res://Client/UI/Components/AbilityButton/AbilityButton.gd"
+"path": "res://client/game/interface/panels/entity/abilities/button/AbilityButton.gd"
 }, {
 "base": "HBoxContainer",
 "class": "AbilityButtons",
 "language": "GDScript",
-"path": "res://Client/UI/Components/EntityPanel/Abilities.gd"
+"path": "res://client/game/interface/panels/entity/abilities/Abilities.gd"
+}, {
+"base": "Map",
+"class": "ClientMap",
+"language": "GDScript",
+"path": "res://client/game/map/ClientMap.gd"
 }, {
 "base": "",
 "class": "DijkstraMap",
@@ -27,37 +32,50 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "EntityBase",
 "language": "GDScript",
-"path": "res://Client/Entities/EntityBase.gd"
+"path": "res://client/game/map/visual/entities/Entity.gd"
 }, {
 "base": "Node",
 "class": "ExtendedVector2",
 "language": "GDScript",
-"path": "res://Client/Utilities/ExtendedVector2.gd"
+"path": "res://shared/static/ExtendedVector2.gd"
 }, {
 "base": "MarginContainer",
 "class": "InfoDisplay",
 "language": "GDScript",
-"path": "res://Client/UI/Components/InfoDisplay/InfoDisplay.gd"
+"path": "res://client/game/interface/panels/entity/display/InfoDisplay.gd"
 }, {
-"base": "RichTextEffect",
-"class": "MeleeDamage",
+"base": "CanvasLayer",
+"class": "Interface",
 "language": "GDScript",
-"path": "res://Client/Utilities/RichTextEffects/icon_melee_damage.gd"
+"path": "res://client/game/interface/Interface.gd"
+}, {
+"base": "Node2D",
+"class": "Map",
+"language": "GDScript",
+"path": "res://shared/game/map/Map.gd"
+}, {
+"base": "Node2D",
+"class": "Mouse",
+"language": "GDScript",
+"path": "res://client/game/mouse/Mouse.gd"
 } ]
 _global_script_class_icons={
 "AbilityButton": "",
 "AbilityButtons": "",
+"ClientMap": "",
 "DijkstraMap": "",
 "EntityBase": "",
 "ExtendedVector2": "",
 "InfoDisplay": "",
-"MeleeDamage": ""
+"Interface": "",
+"Map": "",
+"Mouse": ""
 }
 
 [application]
 
-config/name="Low-age-prototype-godot"
-run/main_scene="res://Client/Game.tscn"
+config/name="Low Age (Prototype)"
+run/main_scene="res://startup/Startup.tscn"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 0 )
@@ -65,7 +83,11 @@ config/icon="res://Sprites/Units/UEE/vessel indexed 2x2.png"
 
 [autoload]
 
-Constants="*res://Client/Utilities/Constants.gd"
+Constants="*res://shared/static/Constants.gd"
+Data="*res://shared/static/Data.gd"
+Info="*res://shared/static/Info.gd"
+Client="*res://shared/static/network/Client.gd"
+Server="*res://shared/static/network/Server.gd"
 
 [debug]
 
