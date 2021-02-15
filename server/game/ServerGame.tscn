@@ -8,5 +8,13 @@
 script = ExtResource( 2 )
 
 [node name="Creator" parent="." index="1" instance=ExtResource( 3 )]
+[connection signal="celestium_found" from="Creator" to="." method="_on_Creator_celestium_found"]
+[connection signal="generation_ended" from="Creator" to="." method="_on_Creator_generation_ended"]
+[connection signal="grass_found" from="Creator" to="." method="_on_Creator_grass_found"]
+[connection signal="map_size_declared" from="Creator" to="." method="_on_Creator_map_size_declared"]
+[connection signal="marsh_found" from="Creator" to="." method="_on_Creator_marsh_found"]
+[connection signal="mountains_found" from="Creator" to="." method="_on_Creator_mountains_found"]
+[connection signal="scraps_found" from="Creator" to="." method="_on_Creator_scraps_found"]
+[connection signal="starting_position_found" from="Creator" to="." method="_on_Creator_starting_position_found"]
 
 [editable path="Map"]

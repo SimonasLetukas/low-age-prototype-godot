@@ -6,10 +6,14 @@ onready var mouse: Mouse = $Mouse
 onready var interface: Interface = $Interface
 
 func _ready():
+	print("ClientGame: entering")
+	get_tree().paused = true
+	
 	yield(get_tree().root, "ready")
 	_handle_client_dependency_injection()
 	
-	_initialize_fake_map()
+	#_initialize_fake_map()
+	_mark_as_loaded()
 
 func _handle_client_dependency_injection() -> void:
 	mouse.connect("left_released_without_drag", map, "_on_MouseController_left_released_without_drag")
@@ -29,28 +33,29 @@ func _initialize_fake_map() -> void:
 	camera.on_MapCreator_map_size_declared(map_size)
 	interface.on_MapCreator_map_size_declared(map_size)
 
-remotesync func _on_Creator_map_size_declared(map_size: Vector2):
+remotesync func _on_map_size_declared(map_size: Vector2):
 	map.on_MapCreator_map_size_declared(map_size)
 	camera.on_MapCreator_map_size_declared(map_size)
 	interface.on_MapCreator_map_size_declared(map_size)
 
-remotesync func _on_Creator_generation_ended():
+remotesync func _on_map_generation_ended():
 	map.on_MapCreator_generation_ended()
+	get_tree().paused = false
 
-remotesync func _on_Creator_celestium_found(coordinates: Vector2):
+remotesync func _on_celestium_found(coordinates: Vector2):
 	map.on_MapCreator_celestium_found(coordinates)
 
-remotesync func _on_Creator_grass_found(coordinates: Vector2):
+remotesync func _on_grass_found(coordinates: Vector2):
 	map.on_MapCreator_grass_found(coordinates)
 
-remotesync func _on_Creator_marsh_found(coordinates: Vector2):
+remotesync func _on_marsh_found(coordinates: Vector2):
 	map.on_MapCreator_marsh_found(coordinates)
 
-remotesync func _on_Creator_mountains_found(coordinates: Vector2):
+remotesync func _on_mountains_found(coordinates: Vector2):
 	map.on_MapCreator_mountains_found(coordinates)
 
-remotesync func _on_Creator_scraps_found(coordinates: Vector2):
+remotesync func _on_scraps_found(coordinates: Vector2):
 	map.on_MapCreator_scraps_found(coordinates)
 
-remotesync func _on_Creator_starting_position_found(coordinates: Vector2):
+remotesync func _on_starting_position_found(coordinates: Vector2):
 	map.on_MapCreator_starting_position_found(coordinates)

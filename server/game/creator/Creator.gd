@@ -1,4 +1,5 @@
 extends Node2D
+class_name Creator
 
 # Map creator encapsulates work done with .png files and any
 # other map generation.
