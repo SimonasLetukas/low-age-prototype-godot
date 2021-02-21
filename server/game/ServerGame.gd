@@ -8,7 +8,7 @@ onready var creator: Creator = $Creator
 func _ready():
 	print("ServerGame: entering")
 	
-	yield(get_tree().root, "ready")
+	yield(get_tree().root.get_child(get_tree().root.get_child_count()-1), "ready")
 	_handle_server_dependency_injection()
 	
 	for player_id in Data.players:

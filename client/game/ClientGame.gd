@@ -9,7 +9,7 @@ func _ready():
 	print("ClientGame: entering")
 	get_tree().paused = true
 	
-	yield(get_tree().root, "ready")
+	yield(get_tree().root.get_child(get_tree().root.get_child_count()-1), "ready")
 	_handle_client_dependency_injection()
 	
 	#_initialize_fake_map()

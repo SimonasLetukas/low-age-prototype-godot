@@ -6,7 +6,7 @@ func _ready():
 func _mark_as_loaded() -> void:
 	if not get_tree().is_network_server():
 		# Report that this client is done loading
-		rpc_id(Constants.SERVER_ID, "on_client_loaded", get_tree().get_network_unique_id())
+		rpc_id(Constants.server_id, "on_client_loaded", get_tree().get_network_unique_id())
 
 remotesync func _on_map_size_declared(map_size: Vector2):
 	#map.on_MapCreator_map_size_declared(map_size)
