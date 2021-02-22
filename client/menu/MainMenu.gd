@@ -27,4 +27,12 @@ func _put_connection_message(message: String) -> void:
 func _on_Connect_pressed():
 	var player_name := $Name/Input.text as String
 	var player_faction := $Faction/Input.selected as int
+	Constants.set_remote_server()
+	_connect_to_server(player_name, player_faction)
+
+
+func _on_PlayLocally_pressed():
+	var player_name := $Name/Input.text as String
+	var player_faction := $Faction/Input.selected as int
+	Constants.set_local_server()
 	_connect_to_server(player_name, player_faction)

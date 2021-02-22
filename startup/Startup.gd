@@ -10,5 +10,4 @@ func _ready():
 		get_tree().change_scene("res://client/ClientStartup.tscn")
 	else:
 		print("Unidentified startup, starting as client")
-		get_tree().change_scene("res://client/ClientStartup.tscn")
-		#get_tree().change_scene("res://server/ServerStartup.tscn")
+		get_tree().change_scene("res://startup/LocalStartup.tscn")
