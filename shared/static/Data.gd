@@ -46,6 +46,9 @@ func add_player(player_id: int, player_name: String, faction: int):
 	var new_player = _create_new_player(player_id, player_name, faction)
 	self.players[player_id] = new_player
 
+func get_player_name(player_id: int) -> String:
+	return players[player_id].name
+
 func reset_players() -> void:
 	self.players = {}
 

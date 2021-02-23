@@ -1,4 +1,5 @@
 extends YSort
+class_name Entities
 
 # Parent of all entities (units & structures) on the map.
 
@@ -82,14 +83,14 @@ func get_hovered_entity() -> EntityBase:
 		return entities_by_map_positions[hovered_entity_position]
 	return null
 
-func move_selected_entity(global_path: PoolVector2Array, path: PoolVector2Array) -> void:
+func move_entity(entity: EntityBase, global_path: PoolVector2Array, path: PoolVector2Array) -> void:
 	var target_position: Vector2 = path[path.size() - 1]
 	var start_position: Vector2 = path[0]
-	map_positions_by_entities[selected_entity] = target_position
+	map_positions_by_entities[entity] = target_position
 	entities_by_map_positions.erase(start_position)
-	entities_by_map_positions[target_position] = selected_entity
+	entities_by_map_positions[target_position] = entity
 	entity_moving = true
-	selected_entity.move_until_finished(global_path)
+	entity.move_until_finished(global_path)
 
 # TODO: seems like each entity has z_index of 0 and so this func doesn't work
 func get_top_entity(global_position: Vector2) -> EntityBase:

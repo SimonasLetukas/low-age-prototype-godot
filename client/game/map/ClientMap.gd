@@ -12,12 +12,13 @@ var tile_hovered: Vector2
 onready var tile_map: Node2D = $Visual/Tiles
 
 # Entities of all units and structures
-onready var entities: Node2D = $Visual/Entities
+onready var entities: Entities = $Visual/Entities
 
 # Node used for game data
 onready var data: Node = Data
 
 signal new_tile_hovered(tile_hovered, terrain_index)
+signal unit_movement_issued(entity_position, global_path, path)
 
 func _ready() -> void:
 	entities.connect("new_entity_found", self, "_on_EntityMap_new_entity_found")
@@ -52,11 +53,16 @@ func get_hovered_entity(mouse_pos: Vector2, map_pos: Vector2) -> EntityBase:
 	return entity
 
 func handle_execute(map_pos: Vector2) -> void:
+	if entities.entity_moving:
+		return
+	
 	if entities.is_entity_selected():
 		if tile_map.is_currently_available(tile_hovered):
 			var path: PoolVector2Array = pathfinding.find_path(tile_hovered)
 			var global_path: PoolVector2Array = tile_map.get_global_positions_from_map_positions(path)
-			entities.move_selected_entity(global_path, path)
+			var selected_entity: EntityBase = entities.selected_entity
+			var entity_position: Vector2 = entities.get_entity_map_position(selected_entity)
+			emit_signal("unit_movement_issued", entity_position, global_path, path)
 			handle_deselecting()
 
 func handle_selecting(hovered_entity: EntityBase) -> void:
@@ -66,7 +72,10 @@ func handle_selecting(hovered_entity: EntityBase) -> void:
 	if hovered_entity == null:
 		handle_deselecting()
 		return
-
+	
+	if entities.entity_moving:
+		return
+	
 	var temp_range: float = 12.5
 	var entity_position: Vector2 = entities.get_entity_map_position(hovered_entity)
 	var available_tiles: PoolVector2Array = pathfinding.get_from_point(entity_position, temp_range)
@@ -76,6 +85,10 @@ func handle_selecting(hovered_entity: EntityBase) -> void:
 func handle_deselecting() -> void:
 	tile_map.clear_available_tiles()
 	entities.deselect_entity()
+
+func move_unit(entity_position: Vector2, global_path: PoolVector2Array, path: PoolVector2Array) -> void:
+	var selected_entity = entities.get_entity_from_map_position(entity_position)
+	entities.move_entity(selected_entity, global_path, path)
 
 func hover_tile() -> bool:
 	var hovered_terrain: int = data.get_terrain(tile_hovered)

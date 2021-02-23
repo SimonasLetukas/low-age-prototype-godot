@@ -1,46 +1,35 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://client/game/map/visual/entities/units/revs/slave/Slave.gd" type="Script" id=1]
 [ext_resource path="res://client/game/map/visual/entities/units/revs/slave/Slave.tscn" type="PackedScene" id=2]
 
 [node name="Units" type="YSort"]
 
-[node name="Slave" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Slave" parent="." instance=ExtResource( 2 )]
 position = Vector2( -16, 316 )
-script = ExtResource( 1 )
 
-[node name="Slave2" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Slave2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 316 )
-script = ExtResource( 1 )
 
-[node name="Slave3" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Slave3" parent="." instance=ExtResource( 2 )]
 position = Vector2( -32, 316 )
-script = ExtResource( 1 )
 
-[node name="Slave4" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Slave4" parent="." instance=ExtResource( 2 )]
 position = Vector2( -16, 324 )
-script = ExtResource( 1 )
 
-[node name="Slave5" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Slave5" parent="." instance=ExtResource( 2 )]
 position = Vector2( 16, 316 )
-script = ExtResource( 1 )
 
-[node name="Slave6" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Slave6" parent="." instance=ExtResource( 2 )]
 position = Vector2( 24, 328 )
-script = ExtResource( 1 )
 
-[node name="Slave7" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Slave7" parent="." instance=ExtResource( 2 )]
 position = Vector2( -8, 312 )
-script = ExtResource( 1 )
 
-[node name="Slave8" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Slave8" parent="." instance=ExtResource( 2 )]
 position = Vector2( -16, 308 )
-script = ExtResource( 1 )
 
-[node name="Slave9" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Slave9" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 308 )
-script = ExtResource( 1 )
 
-[node name="Slave10" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Slave10" parent="." instance=ExtResource( 2 )]
 position = Vector2( -16, 300 )
-script = ExtResource( 1 )

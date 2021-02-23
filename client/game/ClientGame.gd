@@ -26,6 +26,7 @@ func _handle_client_dependency_injection() -> void:
 	interface.connect("mouse_exited", mouse, "_on_Interface_mouse_exited")
 	
 	map.connect("new_tile_hovered", interface, "_on_Map_new_tile_hovered")
+	map.connect("unit_movement_issued", self, "_send_new_unit_position")
 
 func _initialize_fake_map() -> void:
 	var map_size := Vector2(100, 100)
@@ -59,3 +60,6 @@ remotesync func _on_scraps_found(coordinates: Vector2):
 
 remotesync func _on_starting_position_found(coordinates: Vector2):
 	map.on_MapCreator_starting_position_found(coordinates)
+
+remotesync func _on_unit_position_updated(entity_position: Vector2, global_path: PoolVector2Array, path: PoolVector2Array):
+	map.move_unit(entity_position, global_path, path)

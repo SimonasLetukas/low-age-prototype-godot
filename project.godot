@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "NativeScript",
 "path": "res://Dijkstra_map_library/dijkstra_map.gdns"
 }, {
+"base": "YSort",
+"class": "Entities",
+"language": "GDScript",
+"path": "res://client/game/map/visual/entities/Entities.gd"
+}, {
 "base": "Node2D",
 "class": "EntityBase",
 "language": "GDScript",
@@ -70,6 +75,7 @@ _global_script_class_icons={
 "ClientMap": "",
 "Creator": "",
 "DijkstraMap": "",
+"Entities": "",
 "EntityBase": "",
 "ExtendedVector2": "",
 "InfoDisplay": "",

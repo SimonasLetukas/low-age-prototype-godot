@@ -27,6 +27,15 @@ remote func on_client_loaded(player_id: int) -> void:
 	
 	print("Still waiting for %d players" % not_loaded_players.size())
 
+remote func on_new_unit_position(player_id: int, entity_position: Vector2, global_path: PoolVector2Array, path: PoolVector2Array) -> void:
+	print("Player %s (%s) moved unit from %s to %s" % [
+		Data.get_player_name(player_id) as String, 
+		player_id as String, 
+		path[0] as String, 
+		path[path.size() - 1] as String])
+	
+	rpc("_on_unit_position_updated", entity_position, global_path, path)
+	
 
 func _on_Creator_map_size_declared(map_size):
 	rpc("_on_map_size_declared", map_size)
