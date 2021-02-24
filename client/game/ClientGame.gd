@@ -34,6 +34,10 @@ func _initialize_fake_map() -> void:
 	camera.on_MapCreator_map_size_declared(map_size)
 	interface.on_MapCreator_map_size_declared(map_size)
 
+remotesync func _game_ended():
+	Client.reset_network()
+	get_tree().change_scene("res://client/menu/MainMenu.tscn")
+
 remotesync func _on_map_size_declared(map_size: Vector2):
 	map.on_MapCreator_map_size_declared(map_size)
 	camera.on_MapCreator_map_size_declared(map_size)

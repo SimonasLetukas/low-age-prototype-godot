@@ -19,6 +19,9 @@ func _send_new_unit_position(entity_position: Vector2, global_path: PoolVector2A
 
 # Callbacks from the server
 
+remotesync func _game_ended():
+	pass
+
 remotesync func _on_map_size_declared(map_size: Vector2):
 	pass
 

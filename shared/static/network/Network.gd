@@ -16,9 +16,6 @@ func _player_disconnected(id):
 	
 	var total_players := Data.players.size()
 	print("Total players: %d" % total_players)
-	
-	if total_players < 2:
-		reset_network()
 
 # Completely reset the game state and clear the network
 func reset_network():

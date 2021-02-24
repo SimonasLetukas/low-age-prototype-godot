@@ -19,10 +19,16 @@ remote func on_register_self(player_id, player_name, player_faction):
 			Client.register_player(player_id, current_player_id, player.name, player.faction)
 
 func is_hosting() -> bool:
-	if get_tree().network_peer != null and get_tree().network_peer.get_connection_status() != NetworkedMultiplayerENet.ConnectionStatus.CONNECTION_DISCONNECTED:
-		return true
-	else:
-		return false
+	var network_peer := get_tree().network_peer
+	
+	if network_peer != null:
+		var connection_status := network_peer.get_connection_status()
+		var disconnected = NetworkedMultiplayerPeer.CONNECTION_DISCONNECTED
+		
+		if connection_status != disconnected:
+			return true
+	
+	return false
 
 func host_game() -> bool:
 	Client.reset_network()
