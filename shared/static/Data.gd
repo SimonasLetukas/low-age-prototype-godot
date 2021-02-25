@@ -31,6 +31,8 @@ var map_size: Vector2
 var units: Array
 var tiles: Array
 
+signal fully_sinchronized
+
 func reset() -> void:
 	reset_players()
 
@@ -89,3 +91,16 @@ func _create_new_player(player_id: int, player_name: String, faction: int) -> Di
 		Constants.player_name_key: player_name,
 		Constants.player_faction_key: faction
 	}
+
+func full_synchronize() -> void:
+	rpc("on_full_synchronize_requested", map_size, tiles)
+
+remote func on_full_synchronize_requested(_map_size: Vector2, _tiles: Array) -> void:
+	self.map_size = _map_size
+	
+	for x in range(map_size.x):
+		tiles.append([])
+		for y in range(map_size.y):
+			tiles[x].append(Tile.new(Vector2(x, y), _tiles[x][y].terrain))
+	
+	emit_signal("fully_sinchronized")
