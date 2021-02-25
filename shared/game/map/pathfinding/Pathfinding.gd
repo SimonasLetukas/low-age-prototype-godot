@@ -1,4 +1,5 @@
 extends Node
+class_name Pathfinding
 
 var map_size: Vector2
 var point_ids_by_positions: Dictionary # <Vector2, int>

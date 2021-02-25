@@ -1,0 +1,16 @@
+{
+	"res://tests/ClientMap.test.gd": {
+		"path": "res://tests/ClientMap.test.gd",
+		"tags": [
+
+		],
+		"passing": false
+	},
+	"res://tests/client_map.test.gd": {
+		"path": "res://tests/client_map.test.gd",
+		"tags": [
+
+		],
+		"passing": false
+	}
+}

@@ -68,6 +68,21 @@ _global_script_classes=[ {
 "class": "Mouse",
 "language": "GDScript",
 "path": "res://client/game/mouse/Mouse.gd"
+}, {
+"base": "Node",
+"class": "Pathfinding",
+"language": "GDScript",
+"path": "res://shared/game/map/pathfinding/Pathfinding.gd"
+}, {
+"base": "Reference",
+"class": "WAT",
+"language": "GDScript",
+"path": "res://addons/WAT/namespace.gd"
+}, {
+"base": "Node",
+"class": "WATTest",
+"language": "GDScript",
+"path": "res://addons/WAT/core/test/test.gd"
 } ]
 _global_script_class_icons={
 "AbilityButton": "",
@@ -81,7 +96,10 @@ _global_script_class_icons={
 "InfoDisplay": "",
 "Interface": "",
 "Map": "",
-"Mouse": ""
+"Mouse": "",
+"Pathfinding": "",
+"WAT": "",
+"WATTest": ""
 }
 
 [application]

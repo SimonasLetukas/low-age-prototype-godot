@@ -4,6 +4,7 @@ extends "res://shared/game/Game.gd"
 var not_loaded_players := {}
 
 onready var creator: Creator = $Creator
+onready var pathfinding: Pathfinding = $Map/Pathfinding
 
 func _ready():
 	print("ServerGame: entering")
@@ -49,27 +50,29 @@ func _on_player_removed(player_id: int):
 
 func _on_Creator_map_size_declared(map_size):
 	print("Sending map size %s to clients." % map_size as String)
-	rpc("_on_map_size_declared", map_size)
+	pathfinding.initialize(map_size)
+	Data.initialize(map_size)
 
 func _on_Creator_generation_ended():
 	print("Server: generation ended")
-	rpc("_on_map_generation_ended")
+	Data.full_synchronize()
 
 func _on_Creator_celestium_found(coordinates):
-	rpc("_on_celestium_found", coordinates)
+	Data.set_terrain(coordinates, Constants.Terrain.CELESTIUM)
 
 func _on_Creator_grass_found(coordinates):
-	rpc("_on_grass_found", coordinates)
+	Data.set_terrain(coordinates, Constants.Terrain.GRASS)
 
 func _on_Creator_marsh_found(coordinates):
-	rpc("_on_marsh_found", coordinates)
+	pathfinding.set_terrain_for_point(coordinates, Constants.Terrain.MARSH)
+	Data.set_terrain(coordinates, Constants.Terrain.MARSH)
 
 func _on_Creator_mountains_found(coordinates):
-	rpc("_on_mountains_found", coordinates)
+	pathfinding.set_terrain_for_point(coordinates, Constants.Terrain.MOUNTAINS)
+	Data.set_terrain(coordinates, Constants.Terrain.MOUNTAINS)
 
 func _on_Creator_scraps_found(coordinates):
-	rpc("_on_scraps_found", coordinates)
+	Data.set_terrain(coordinates, Constants.Terrain.SCRAPS)
 
 func _on_Creator_starting_position_found(coordinates):
-	print("Sending starting position %s to clients." % coordinates as String)
-	rpc("_on_starting_position_found", coordinates)
+	pass
