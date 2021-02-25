@@ -22,5 +22,6 @@ debug_enabled = true
 [node name="Mouse" parent="." index="2" instance=ExtResource( 3 )]
 
 [node name="Interface" parent="." index="3" instance=ExtResource( 5 )]
+[connection signal="starting_positions_declared" from="Map" to="." method="_on_Map_starting_positions_declared"]
 
 [editable path="Map"]

@@ -22,6 +22,7 @@ signal unit_movement_issued(entity_position, global_path, path)
 
 func _ready() -> void:
 	entities.connect("new_entity_found", self, "_on_EntityMap_new_entity_found")
+	data.connect("fully_sinchronized", self, "_on_Data_fully_sinchronized")
 
 func _process(_delta) -> void:
 	var mouse_pos: Vector2 = get_global_mouse_position()
@@ -97,40 +98,30 @@ func hover_tile() -> bool:
 	var entity_hovered: bool = entities.try_hovering_entity(tile_hovered)
 	return entity_hovered
 
+func _on_Data_fully_sinchronized():
+	on_MapCreator_map_size_declared(data.map_size)
+	
+	for x in map_size.x:
+		for y in map_size.y:
+			var coordinates := Vector2(x, y)
+			var terrain: int = data.get_terrain(coordinates)
+			tile_map.set_cell(coordinates, terrain)
+			if terrain == Constants.Terrain.MARSH or terrain == Constants.Terrain.MOUNTAINS:
+				pathfinding.set_terrain_for_point(coordinates, terrain)
+	
+	on_MapCreator_generation_ended()
+
 func on_MapCreator_map_size_declared(_map_size: Vector2):
 	map_size = _map_size
 	self.position.x = (max(map_size.x, map_size.y) * Constants.tile_width) / 2
 	tile_map.initialize(map_size)
 	pathfinding.initialize(map_size)
-	data.initialize(map_size)
 	entities.initialize()
 
 func on_MapCreator_generation_ended():
 	tile_map.fill_outside_mountains()
 	tile_map.update_all_bitmasks()
-	emit_signal("starting_positions_declared") # TODO
-
-func on_MapCreator_celestium_found(coordinates: Vector2):
-	tile_map.set_cell(coordinates, Constants.Terrain.CELESTIUM)
-	data.set_terrain(coordinates, Constants.Terrain.CELESTIUM)
-
-func on_MapCreator_grass_found(coordinates: Vector2):
-	tile_map.set_cell(coordinates, Constants.Terrain.GRASS)
-	data.set_terrain(coordinates, Constants.Terrain.GRASS)
-
-func on_MapCreator_marsh_found(coordinates: Vector2):
-	tile_map.set_cell(coordinates, Constants.Terrain.MARSH)
-	data.set_terrain(coordinates, Constants.Terrain.MARSH)
-	pathfinding.set_terrain_for_point(coordinates, Constants.Terrain.MARSH)
-
-func on_MapCreator_mountains_found(coordinates: Vector2):
-	tile_map.set_cell(coordinates, Constants.Terrain.MOUNTAINS)
-	data.set_terrain(coordinates, Constants.Terrain.MOUNTAINS)
-	pathfinding.set_terrain_for_point(coordinates, Constants.Terrain.MOUNTAINS)
-
-func on_MapCreator_scraps_found(coordinates: Vector2):
-	tile_map.set_cell(coordinates, Constants.Terrain.SCRAPS)
-	data.set_terrain(coordinates, Constants.Terrain.SCRAPS)
+	emit_signal("starting_positions_declared", starting_positions)
 
 func on_MapCreator_starting_position_found(coordinates: Vector2):
 	starting_positions.append(coordinates)
