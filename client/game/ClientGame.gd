@@ -35,15 +35,18 @@ func _initialize_fake_map() -> void:
 	interface.on_MapCreator_map_size_declared(map_size)
 
 remotesync func _game_ended():
+	print("Game ended, returning to main menu.")
 	Client.reset_network()
 	get_tree().change_scene("res://client/menu/MainMenu.tscn")
 
 remotesync func _on_map_size_declared(map_size: Vector2):
+	print("Receiving map size %s." % map_size as String)
 	map.on_MapCreator_map_size_declared(map_size)
 	camera.on_MapCreator_map_size_declared(map_size)
 	interface.on_MapCreator_map_size_declared(map_size)
 
 remotesync func _on_map_generation_ended():
+	print("Map generation ended.")
 	map.on_MapCreator_generation_ended()
 	get_tree().paused = false
 
@@ -63,6 +66,7 @@ remotesync func _on_scraps_found(coordinates: Vector2):
 	map.on_MapCreator_scraps_found(coordinates)
 
 remotesync func _on_starting_position_found(coordinates: Vector2):
+	print("Receiving starting coordinates %s." % coordinates as String)
 	map.on_MapCreator_starting_position_found(coordinates)
 
 remotesync func _on_unit_position_updated(entity_position: Vector2, global_path: PoolVector2Array, path: PoolVector2Array):

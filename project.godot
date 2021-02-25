@@ -91,7 +91,7 @@ run/main_scene="res://startup/Startup.tscn"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 0 )
-config/icon="res://Sprites/Units/UEE/vessel indexed 2x2.png"
+config/icon="res://assets/sprites/units/uee/vessel indexed 2x2.png"
 
 [autoload]
 

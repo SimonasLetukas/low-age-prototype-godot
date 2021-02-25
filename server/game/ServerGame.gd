@@ -48,9 +48,11 @@ func _on_player_removed(player_id: int):
 	print("Players remaining: %d" % Data.players.size())
 
 func _on_Creator_map_size_declared(map_size):
+	print("Sending map size %s to clients." % map_size as String)
 	rpc("_on_map_size_declared", map_size)
 
 func _on_Creator_generation_ended():
+	print("Server: generation ended")
 	rpc("_on_map_generation_ended")
 
 func _on_Creator_celestium_found(coordinates):
@@ -69,4 +71,5 @@ func _on_Creator_scraps_found(coordinates):
 	rpc("_on_scraps_found", coordinates)
 
 func _on_Creator_starting_position_found(coordinates):
+	print("Sending starting position %s to clients." % coordinates as String)
 	rpc("_on_starting_position_found", coordinates)
