@@ -50,7 +50,7 @@ func _on_player_removed(player_id: int):
 
 func _on_Creator_map_size_declared(map_size):
 	print("Sending map size %s to clients." % map_size as String)
-	pathfinding.initialize(map_size)
+	#pathfinding.initialize(map_size)
 	Data.initialize(map_size)
 
 func _on_Creator_generation_ended():
@@ -64,11 +64,11 @@ func _on_Creator_grass_found(coordinates):
 	Data.set_terrain(coordinates, Constants.Terrain.GRASS)
 
 func _on_Creator_marsh_found(coordinates):
-	pathfinding.set_terrain_for_point(coordinates, Constants.Terrain.MARSH)
+	#pathfinding.set_terrain_for_point(coordinates, Constants.Terrain.MARSH)
 	Data.set_terrain(coordinates, Constants.Terrain.MARSH)
 
 func _on_Creator_mountains_found(coordinates):
-	pathfinding.set_terrain_for_point(coordinates, Constants.Terrain.MOUNTAINS)
+	#pathfinding.set_terrain_for_point(coordinates, Constants.Terrain.MOUNTAINS)
 	Data.set_terrain(coordinates, Constants.Terrain.MOUNTAINS)
 
 func _on_Creator_scraps_found(coordinates):

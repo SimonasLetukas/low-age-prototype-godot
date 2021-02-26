@@ -96,14 +96,21 @@ func _create_new_player(player_id: int, player_name: String, faction: int) -> Di
 	}
 
 func full_synchronize() -> void:
-	rpc("on_full_synchronize_requested", map_size, tiles)
+	var _terrains: Dictionary # <String: coordinates, int: terrain>
+	for x in map_size.x: 
+		for y in map_size.y:
+			var at := Vector2(x, y)
+			_terrains[ExtendedVector2.encode_to_string(at)] = get_terrain(at)
+			
+	rpc("on_full_synchronize_requested", map_size, _terrains)
 
-remote func on_full_synchronize_requested(_map_size: Vector2, _tiles: Array) -> void:
+remote func on_full_synchronize_requested(_map_size: Vector2, _terrains: Dictionary) -> void:
 	self.map_size = _map_size
 	
 	for x in range(map_size.x):
 		tiles.append([])
 		for y in range(map_size.y):
-			tiles[x].append(Tile.new(Vector2(x, y), _tiles[x][y].terrain))
+			var at_encoded: String = ExtendedVector2.encode_to_string(Vector2(x, y))
+			tiles[x].append(Tile.new(Vector2(x, y), _terrains[at_encoded]))
 	
 	emit_signal("fully_sinchronized")

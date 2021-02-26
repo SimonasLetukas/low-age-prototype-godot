@@ -38,6 +38,10 @@ func initialize(_map_size: Vector2) -> void:
 	mountains_fill_offset = max(map_size.x, map_size.y)
 	tile_offset = Vector2(0, tile_height / 2)
 	clear_tilemaps()
+	
+	for x in map_size.x:
+		for y in map_size.y:
+			grass.set_cellv(Vector2(x, y), tilemap_grass_index)
 
 func get_map_position_from_global_position(global_position: Vector2) -> Vector2:
 	return grass.world_to_map(global_position) - tilemap_offset
