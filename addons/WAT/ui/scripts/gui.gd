@@ -12,7 +12,7 @@ onready var TestMenu: Button = $Core/Menu/TestMenu
 onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
 var instance: TestRunner
-var server: Server
+var server
 signal launched_via_editor
 signal function_selected
 
