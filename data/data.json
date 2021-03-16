@@ -1,0 +1,51 @@
+{
+  "entities": {
+    "tiles": [
+      {
+        "terrain": "Grass",
+        "movementCost": 1.0,
+        "allowsBuilding": true,
+        "name": "tile-grass",
+        "displayName": "Grass",
+        "description": ""
+      },
+      {
+        "terrain": "Mountains",
+        "movementCost": 0.0,
+        "allowsBuilding": false,
+        "name": "tile-mountains",
+        "displayName": "Mountains",
+        "description": ""
+      },
+      {
+        "terrain": "Marsh",
+        "movementCost": 2.0,
+        "allowsBuilding": false,
+        "name": "tile-marsh",
+        "displayName": "Marsh",
+        "description": ""
+      },
+      {
+        "terrain": "Scraps",
+        "movementCost": 1.0,
+        "allowsBuilding": true,
+        "name": "tile-scraps",
+        "displayName": "Scraps",
+        "description": ""
+      },
+      {
+        "terrain": "Celestium",
+        "movementCost": 1.0,
+        "allowsBuilding": true,
+        "name": "tile-celestium",
+        "displayName": "Celestium",
+        "description": ""
+      }
+    ],
+    "units": [],
+    "structures": []
+  },
+  "abilities": [],
+  "effects": [],
+  "behaviours": []
+}
