@@ -2,7 +2,7 @@
 {
     public class EntityName : Name
     {
-        public EntityName(string value) : base(value)
+        protected EntityName(string value) : base(value)
         {
         }
     }

@@ -2,7 +2,7 @@
   "entities": {
     "tiles": [
       {
-        "terrain": "Grass",
+        "terrain": "Terrains.Grass",
         "movementCost": 1.0,
         "allowsBuilding": true,
         "name": "tile-grass",
@@ -10,7 +10,7 @@
         "description": ""
       },
       {
-        "terrain": "Mountains",
+        "terrain": "Terrains.Mountains",
         "movementCost": 0.0,
         "allowsBuilding": false,
         "name": "tile-mountains",
@@ -18,7 +18,7 @@
         "description": ""
       },
       {
-        "terrain": "Marsh",
+        "terrain": "Terrains.Marsh",
         "movementCost": 2.0,
         "allowsBuilding": false,
         "name": "tile-marsh",
@@ -26,7 +26,7 @@
         "description": ""
       },
       {
-        "terrain": "Scraps",
+        "terrain": "Terrains.Scraps",
         "movementCost": 1.0,
         "allowsBuilding": true,
         "name": "tile-scraps",
@@ -34,7 +34,7 @@
         "description": ""
       },
       {
-        "terrain": "Celestium",
+        "terrain": "Terrains.Celestium",
         "movementCost": 1.0,
         "allowsBuilding": true,
         "name": "tile-celestium",
@@ -42,7 +42,59 @@
         "description": ""
       }
     ],
-    "units": [],
+    "units": [
+      {
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 6,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 5,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": null,
+            "bonusAmount": 0,
+            "maxAmount": 1,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [
+          "ability-slave-build",
+          "ability-slave-repair",
+          "ability-slave-manual-labour"
+        ],
+        "name": "unit-slave",
+        "displayName": "Slave",
+        "description": ""
+      }
+    ],
     "structures": []
   },
   "abilities": [],

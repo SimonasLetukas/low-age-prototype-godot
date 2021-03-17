@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace low_age_data
 {
-    [JsonConverter(typeof(ToStringJsonConverter))]
     public abstract class Name : ValueObject<Name>
     {
         public override string ToString()

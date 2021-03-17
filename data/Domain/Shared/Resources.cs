@@ -1,8 +1,33 @@
-﻿namespace low_age_data.Domain.Shared
+﻿using System.Collections.Generic;
+
+namespace low_age_data.Domain.Shared
 {
-    public enum Resources
+    public class Resources : ValueObject<Resources>
     {
-        Scraps = 0,
-        Celestium = 1
+        public override string ToString()
+        {
+            return $"{nameof(Resources)}.{Value}";
+        }
+
+        public static Resources Scraps => new Resources(ResourcesEnum.Scraps);
+        public static Resources Celestium => new Resources(ResourcesEnum.Celestium);
+
+        private Resources(ResourcesEnum @enum)
+        {
+            Value = @enum;
+        }
+
+        private ResourcesEnum Value { get; }
+
+        private enum ResourcesEnum
+        {
+            Scraps = 0,
+            Celestium = 1
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Value;
+        }
     }
 }

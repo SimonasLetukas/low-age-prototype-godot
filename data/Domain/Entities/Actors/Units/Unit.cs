@@ -7,7 +7,7 @@ namespace low_age_data.Domain.Entities.Actors.Units
     public class Unit : Actor
     {
         public Unit(
-            EntityName name, 
+            UnitName name, 
             string displayName, 
             string description, 
             IList<Stat> statistics, 

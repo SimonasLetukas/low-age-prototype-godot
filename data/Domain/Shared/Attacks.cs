@@ -6,7 +6,7 @@ namespace low_age_data.Domain.Shared
     {
         public override string ToString()
         {
-            return Value.ToString();
+            return $"{nameof(Attacks)}.{Value}";
         }
 
         public static Attacks Melee => new Attacks(AttacksEnum.Melee);

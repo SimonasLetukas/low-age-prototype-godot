@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace low_age_data
 {
+    [JsonConverter(typeof(ToStringJsonConverter))]
     public abstract class ValueObject<T> where T : ValueObject<T>
     {
         public override bool Equals(object? obj)

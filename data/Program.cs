@@ -24,35 +24,35 @@ namespace low_age_data
             var tiles = new List<Tile>
             {
                 new Tile(
-                    new EntityName("tile-grass"),
+                    TileName.Grass, 
                     "Grass",
                     "",
                     Terrains.Grass,
                     1.0f,
                     true),
                 new Tile(
-                    new EntityName("tile-mountains"),
+                    TileName.Mountains, 
                     "Mountains",
                     "",
                     Terrains.Mountains,
                     0.0f,
                     false),
                 new Tile(
-                    new EntityName("tile-marsh"),
+                    TileName.Marsh, 
                     "Marsh",
                     "",
                     Terrains.Marsh,
                     2.0f,
                     false),
                 new Tile(
-                    new EntityName("tile-scraps"),
+                    TileName.Scraps, 
                     "Scraps",
                     "",
                     Terrains.Scraps,
                     1.0f,
                     true),
                 new Tile(
-                    new EntityName("tile-celestium"),
+                    TileName.Celestium, 
                     "Celestium",
                     "",
                     Terrains.Celestium,
@@ -63,7 +63,7 @@ namespace low_age_data
             var units = new List<Unit>
             {
                 new Unit(
-                    new EntityName("unit-slave"),
+                    UnitName.Slave, 
                     "Slave",
                     "",
                     new List<Stat>
@@ -83,9 +83,9 @@ namespace low_age_data
                     },
                     new List<AbilityName>
                     {
-                        new AbilityName("ability-slave-build"),
-                        new AbilityName("ability-slave-repair"),
-                        new AbilityName("ability-slave-manual-labour")
+                        AbilityName.Slave.Build,
+                        AbilityName.Slave.Repair,
+                        AbilityName.Slave.ManualLabour
                     }),
             };
 

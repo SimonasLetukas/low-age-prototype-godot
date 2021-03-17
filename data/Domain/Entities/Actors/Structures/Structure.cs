@@ -7,7 +7,7 @@ namespace low_age_data.Domain.Entities.Actors.Structures
     public class Structure : Actor
     {
         public Structure(
-            EntityName name, 
+            StructureName name, 
             string displayName, 
             string description, 
             IList<Stat> statistics, 

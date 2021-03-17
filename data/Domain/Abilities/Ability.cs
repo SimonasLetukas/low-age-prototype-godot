@@ -2,6 +2,6 @@
 {
     public class Ability
     {
-        public AbilityName Name { get; set; } = new AbilityName("none");
+        public AbilityName Name { get; set; } = AbilityName.Slave.Build;
     }
 }
