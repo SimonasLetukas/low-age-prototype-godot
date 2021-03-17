@@ -7,5 +7,6 @@
         }
 
         public static UnitName Slave => new UnitName(nameof(Slave).ToLower());
+
     }
 }

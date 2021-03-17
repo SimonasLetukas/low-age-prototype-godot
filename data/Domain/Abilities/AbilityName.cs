@@ -8,9 +8,9 @@
 
         public static class Slave
         {
-            public static AbilityName Build => new AbilityName("slave-build");
-            public static AbilityName Repair => new AbilityName("slave-repair");
-            public static AbilityName ManualLabour => new AbilityName("slave-manual-labour");
+            public static AbilityName Build => new AbilityName($"{nameof(Slave)}{nameof(Build)}".ToKebabCase());
+            public static AbilityName Repair => new AbilityName($"{nameof(Slave)}{nameof(Repair)}".ToKebabCase());
+            public static AbilityName ManualLabour => new AbilityName($"{nameof(Slave)}{nameof(ManualLabour)}".ToKebabCase());
         }
     }
 }

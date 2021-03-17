@@ -4,7 +4,6 @@ using System.IO;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Tiles;
@@ -25,35 +24,35 @@ namespace low_age_data
             {
                 new Tile(
                     TileName.Grass, 
-                    "Grass",
+                    nameof(TileName.Grass),
                     "",
                     Terrains.Grass,
                     1.0f,
                     true),
                 new Tile(
-                    TileName.Mountains, 
-                    "Mountains",
+                    TileName.Mountains,
+                    nameof(TileName.Mountains),
                     "",
                     Terrains.Mountains,
                     0.0f,
                     false),
                 new Tile(
-                    TileName.Marsh, 
-                    "Marsh",
+                    TileName.Marsh,
+                    nameof(TileName.Marsh),
                     "",
                     Terrains.Marsh,
                     2.0f,
                     false),
                 new Tile(
-                    TileName.Scraps, 
-                    "Scraps",
+                    TileName.Scraps,
+                    nameof(TileName.Scraps),
                     "",
                     Terrains.Scraps,
                     1.0f,
                     true),
                 new Tile(
-                    TileName.Celestium, 
-                    "Celestium",
+                    TileName.Celestium,
+                    nameof(TileName.Celestium),
                     "",
                     Terrains.Celestium,
                     1.0f,
@@ -63,8 +62,8 @@ namespace low_age_data
             var units = new List<Unit>
             {
                 new Unit(
-                    UnitName.Slave, 
-                    "Slave",
+                    UnitName.Slave,
+                    nameof(UnitName.Slave),
                     "",
                     new List<Stat>
                     {
