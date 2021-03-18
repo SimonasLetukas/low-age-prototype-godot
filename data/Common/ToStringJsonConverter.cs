@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace low_age_data
+namespace low_age_data.Common
 {
     public class ToStringJsonConverter : JsonConverter
     {

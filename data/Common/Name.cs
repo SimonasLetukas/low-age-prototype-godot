@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace low_age_data
+namespace low_age_data.Common
 {
     public abstract class Name : ValueObject<Name>
     {

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using low_age_data.Collections;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Tiles;
-using low_age_data.Domain.Shared;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -20,93 +20,12 @@ namespace low_age_data
 
         static void Main(string[] args)
         {
-            var tiles = new List<Tile>
-            {
-                new Tile(
-                    TileName.Grass, 
-                    nameof(TileName.Grass),
-                    "",
-                    Terrains.Grass,
-                    1.0f,
-                    true),
-                new Tile(
-                    TileName.Mountains,
-                    nameof(TileName.Mountains),
-                    "",
-                    Terrains.Mountains,
-                    0.0f,
-                    false),
-                new Tile(
-                    TileName.Marsh,
-                    nameof(TileName.Marsh),
-                    "",
-                    Terrains.Marsh,
-                    2.0f,
-                    false),
-                new Tile(
-                    TileName.Scraps,
-                    nameof(TileName.Scraps),
-                    "",
-                    Terrains.Scraps,
-                    1.0f,
-                    true),
-                new Tile(
-                    TileName.Celestium,
-                    nameof(TileName.Celestium),
-                    "",
-                    Terrains.Celestium,
-                    1.0f,
-                    true)
-            };
-
-            var units = new List<Unit>
-            {
-                new Unit(
-                    UnitName.Slave,
-                    nameof(UnitName.Slave),
-                    "",
-                    new List<Stat>
-                    {
-                        new CombatStat(6, true, Stats.Health),
-                        new CombatStat(0, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(5, true, Stats.Movement),
-                        new CombatStat(20, false, Stats.Initiative),
-                        new AttackStat(1, false, Attacks.Melee, 1, 1)
-                    },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
-                    {
-                        CombatAttributes.Light,
-                        CombatAttributes.Biological
-                    },
-                    new List<AbilityName>
-                    {
-                        AbilityName.Slave.Build,
-                        AbilityName.Slave.Repair,
-                        AbilityName.Slave.ManualLabour
-                    }),
-            };
-
-            var structures = new List<Structure>
-            {
-
-            };
-
-            var abilities = new List<Ability>
-            {
-
-            };
-
-            var effects = new List<Effect>
-            {
-
-            };
-
-            var behaviours = new List<Behaviour>
-            {
-
-            };
+            var tiles = Tiles.Get();
+            var units = Units.Get();
+            var structures = Structures.Get();
+            var abilities = Abilities.Get();
+            var effects = Effects.Get();
+            var behaviours = Behaviours.Get();
 
             var outputObject = new OutputObject
             {

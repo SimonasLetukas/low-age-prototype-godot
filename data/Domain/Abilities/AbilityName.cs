@@ -1,4 +1,6 @@
-﻿namespace low_age_data.Domain.Abilities
+﻿using low_age_data.Common;
+
+namespace low_age_data.Domain.Abilities
 {
     public class AbilityName : Name
     {
