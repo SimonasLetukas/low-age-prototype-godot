@@ -7,6 +7,6 @@
         }
 
         public static UnitName Slave => new UnitName(nameof(Slave).ToLower());
-
+        public static UnitName Leader => new UnitName(nameof(Leader).ToLower());
     }
 }

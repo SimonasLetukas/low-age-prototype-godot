@@ -93,6 +93,57 @@
         "name": "unit-slave",
         "displayName": "Slave",
         "description": ""
+      },
+      {
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 50,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 5,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 3,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 28,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 2,
+            "bonusTo": "CombatAttributes.Biological",
+            "bonusAmount": 7,
+            "maxAmount": 5,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Celestial"
+        ],
+        "abilities": [
+          "ability-leader-all-for-one",
+          "ability-leader-menacing-presence",
+          "ability-leader-one-for-all"
+        ],
+        "name": "unit-leader",
+        "displayName": "Leader",
+        "description": ""
       }
     ],
     "structures": []
