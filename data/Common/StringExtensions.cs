@@ -29,5 +29,15 @@ namespace low_age_data.Common
             }
             return sb.ToString();
         }
+
+        public static string CamelCaseToWords(this string input)
+        {
+            return System.Text.RegularExpressions.Regex.Replace(
+                input, 
+                "([A-Z])", 
+                " $1", 
+                System.Text.RegularExpressions.RegexOptions.Compiled)
+                .Trim();
+        }
     }
 }

@@ -2,48 +2,49 @@
   "entities": {
     "tiles": [
       {
+        "name": "tile-grass",
         "terrain": "Terrains.Grass",
         "movementCost": 1.0,
         "allowsBuilding": true,
-        "name": "tile-grass",
         "displayName": "Grass",
         "description": ""
       },
       {
+        "name": "tile-mountains",
         "terrain": "Terrains.Mountains",
         "movementCost": 0.0,
         "allowsBuilding": false,
-        "name": "tile-mountains",
         "displayName": "Mountains",
         "description": ""
       },
       {
+        "name": "tile-marsh",
         "terrain": "Terrains.Marsh",
         "movementCost": 2.0,
         "allowsBuilding": false,
-        "name": "tile-marsh",
         "displayName": "Marsh",
         "description": ""
       },
       {
+        "name": "tile-scraps",
         "terrain": "Terrains.Scraps",
         "movementCost": 1.0,
         "allowsBuilding": true,
-        "name": "tile-scraps",
         "displayName": "Scraps",
         "description": ""
       },
       {
+        "name": "tile-celestium",
         "terrain": "Terrains.Celestium",
         "movementCost": 1.0,
         "allowsBuilding": true,
-        "name": "tile-celestium",
         "displayName": "Celestium",
         "description": ""
       }
     ],
     "units": [
       {
+        "name": "unit-slave",
         "statistics": [
           {
             "combatType": "Stats.Health",
@@ -90,11 +91,11 @@
           "ability-slave-repair",
           "ability-slave-manual-labour"
         ],
-        "name": "unit-slave",
         "displayName": "Slave",
         "description": ""
       },
       {
+        "name": "unit-leader",
         "statistics": [
           {
             "combatType": "Stats.Health",
@@ -141,14 +142,48 @@
           "ability-leader-menacing-presence",
           "ability-leader-one-for-all"
         ],
-        "name": "unit-leader",
         "displayName": "Leader",
         "description": ""
       }
     ],
     "structures": []
   },
-  "abilities": [],
-  "effects": [],
-  "behaviours": []
+  "abilities": [
+    {
+      "name": "ability-leader-all-for-one",
+      "type": "Ability.Passive",
+      "behaviour": "behaviour-leader-all-for-one-buff",
+      "source": "unit-leader",
+      "target": "unit-leader",
+      "displayName": "All For One",
+      "description": "Revelators faction loses if Leader dies."
+    }
+  ],
+  "effects": [
+    {
+      "name": "effect-leader-all-for-one-player-loses",
+      "type": "Effect.ModifyPlayer",
+      "playerFilterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "actionFlags": [
+        "Flag.EffectModifyPlayerGameLost"
+      ]
+    }
+  ],
+  "behaviours": [
+    {
+      "name": "behaviour-leader-all-for-one-buff",
+      "type": "Behaviour.Buff",
+      "initialEffects": [],
+      "finalEffects": [
+        "effect-leader-all-for-one-player-loses"
+      ],
+      "endsAt": "EndsAt.Death",
+      "conditions": [],
+      "conditionalEffects": [],
+      "displayName": "All For One Buff",
+      "description": "Revelators faction loses when this unit dies."
+    }
+  ]
 }
