@@ -1,5 +1,4 @@
-﻿using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Entities;
+﻿using low_age_data.Domain.Effects;
 
 namespace low_age_data.Domain.Abilities
 {
@@ -8,18 +7,12 @@ namespace low_age_data.Domain.Abilities
         public Passive(
             AbilityName name, 
             string displayName, 
-            string description, 
-            BehaviourName behaviour,
-            EntityName source,
-            EntityName target) : base(name, $"{nameof(Ability)}.{nameof(Passive)}", displayName, description)
+            string description,
+            EffectName effect) : base(name, $"{nameof(Ability)}.{nameof(Passive)}", displayName, description)
         {
-            Behaviour = behaviour;
-            Source = source;
-            Target = target;
+            Effect = effect;
         }
 
-        public BehaviourName Behaviour { get; }
-        public EntityName Source { get; }
-        public EntityName Target { get; }
+        public EffectName Effect { get; } // Executes effect as often as possible
     }
 }

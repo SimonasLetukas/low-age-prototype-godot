@@ -152,38 +152,113 @@
     {
       "name": "ability-leader-all-for-one",
       "type": "Ability.Passive",
-      "behaviour": "behaviour-leader-all-for-one-buff",
-      "source": "unit-leader",
-      "target": "unit-leader",
+      "effect": "effect-leader-all-for-one-apply-behaviour",
       "displayName": "All For One",
       "description": "Revelators faction loses if Leader dies."
+    },
+    {
+      "name": "ability-leader-menacing-presence",
+      "type": "Ability.Passive",
+      "effect": "effect-leader-menacing-presence-search",
+      "displayName": "Menacing Presence",
+      "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1)."
     }
   ],
   "effects": [
+    {
+      "name": "effect-leader-all-for-one-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-leader-all-for-one-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf"
+      ]
+    },
     {
       "name": "effect-leader-all-for-one-player-loses",
       "type": "Effect.ModifyPlayer",
       "playerFilterFlags": [
         "Flag.FilterSelf"
       ],
-      "actionFlags": [
+      "modifyFlags": [
         "Flag.EffectModifyPlayerGameLost"
       ]
+    },
+    {
+      "name": "effect-leader-menacing-presence-search",
+      "type": "Effect.Search",
+      "distance": 6,
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnEnter",
+        "Flag.EffectSearchAppliedOnAction",
+        "Flag.EffectSearchRemovedOnExit"
+      ],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-leader-menacing-presence-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Circle"
+    },
+    {
+      "name": "effect-leader-menacing-presence-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-leader-menacing-presence-buff"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": []
     }
   ],
   "behaviours": [
     {
       "name": "behaviour-leader-all-for-one-buff",
       "type": "Behaviour.Buff",
+      "modifications": [],
       "initialEffects": [],
       "finalEffects": [
         "effect-leader-all-for-one-player-loses"
       ],
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
       "conditions": [],
       "conditionalEffects": [],
       "displayName": "All For One Buff",
       "description": "Revelators faction loses when this unit dies."
+    },
+    {
+      "name": "behaviour-leader-menacing-presence-buff",
+      "type": "Behaviour.Buff",
+      "modifications": [
+        {
+          "type": "Modification.AttackModification",
+          "attackType": "Attacks.Melee",
+          "attribute": "AttackAttribute.MaxAmount",
+          "change": "Change.Remove",
+          "amount": 2.0
+        },
+        {
+          "type": "Modification.AttackModification",
+          "attackType": "Attacks.Ranged",
+          "attribute": "AttackAttribute.MaxAmount",
+          "change": "Change.Remove",
+          "amount": 2.0
+        }
+      ],
+      "initialEffects": [],
+      "finalEffects": [],
+      "endsAt": "EndsAt.EndOfThisAction",
+      "alignment": "Alignment.Negative",
+      "conditions": [],
+      "conditionalEffects": [],
+      "displayName": "Menacing Presence Buff",
+      "description": "Melee and Range Damage for this unit is reduced by 2."
     }
   ]
 }

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Common;
 using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Entities.Actors.Units;
+using low_age_data.Domain.Effects;
 
 namespace low_age_data.Collections
 {
@@ -16,9 +15,13 @@ namespace low_age_data.Collections
                     AbilityName.Leader.AllForOne,
                     nameof(AbilityName.Leader.AllForOne).CamelCaseToWords(),
                     "Revelators faction loses if Leader dies.",
-                    BehaviourName.Leader.AllForOneBuff,
-                    UnitName.Leader,
-                    UnitName.Leader)
+                    EffectName.Leader.AllForOneApplyBehaviour),
+                new Passive(
+                    AbilityName.Leader.MenacingPresence,
+                    nameof(AbilityName.Leader.MenacingPresence).CamelCaseToWords(),
+                    "All friendly and enemy units that enter 6 Attack Distance around Leader " +
+                    "have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1).",
+                    EffectName.Leader.MenacingPresenceSearch)
             };
         }
     }

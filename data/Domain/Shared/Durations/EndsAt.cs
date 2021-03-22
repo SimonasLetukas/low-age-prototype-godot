@@ -11,6 +11,7 @@ namespace low_age_data.Domain.Shared.Durations
         }
 
         public static EndsAt Death => new EndsAt(Durations.Death);
+        public static EndsAt Instant => new EndsAt(Durations.Instant);
 
         public static class StartOf
         {
@@ -91,6 +92,7 @@ namespace low_age_data.Domain.Shared.Durations
         private enum Durations
         {
             Death,
+            Instant,
             StartOfNextPlanning,
             StartOfNextActionPhase,
             StartOfNextAction,

@@ -8,13 +8,13 @@ namespace low_age_data.Domain.Effects
         public ModifyPlayer(
             EffectName name,
             IList<Flag> playerFilterFlags,
-            IList<Flag> actionFlags) : base(name, $"{nameof(Effect)}.{nameof(ModifyPlayer)}")
+            IList<Flag> modifyFlags) : base(name, $"{nameof(Effect)}.{nameof(ModifyPlayer)}")
         {
             PlayerFilterFlags = playerFilterFlags;
-            ActionFlags = actionFlags;
+            ModifyFlags = modifyFlags;
         }
 
         public IList<Flag> PlayerFilterFlags { get; }
-        public IList<Flag> ActionFlags { get; }
+        public IList<Flag> ModifyFlags { get; }
     }
 }
