@@ -152,6 +152,7 @@
     {
       "name": "ability-leader-all-for-one",
       "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
       "effect": "effect-leader-all-for-one-apply-behaviour",
       "displayName": "All For One",
       "description": "Revelators faction loses if Leader dies."
@@ -159,9 +160,19 @@
     {
       "name": "ability-leader-menacing-presence",
       "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
       "effect": "effect-leader-menacing-presence-search",
       "displayName": "Menacing Presence",
       "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1)."
+    },
+    {
+      "name": "ability-leader-one-for-all",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Planning",
+      "distance": 1,
+      "effect": "effect-leader-one-for-all-apply-behaviour-obelisk",
+      "displayName": "One For All",
+      "description": "Select an adjacent Obelisk and sap its energy to give all friendly units +2 Health. This Obelisk cannot be sapped again for 10 turns."
     }
   ],
   "effects": [
@@ -174,7 +185,8 @@
       "location": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf"
-      ]
+      ],
+      "conditions": []
     },
     {
       "name": "effect-leader-all-for-one-player-loses",
@@ -189,7 +201,7 @@
     {
       "name": "effect-leader-menacing-presence-search",
       "type": "Effect.Search",
-      "distance": 6,
+      "radius": 6,
       "searchFlags": [
         "Flag.EffectSearchAppliedOnEnter",
         "Flag.EffectSearchAppliedOnAction",
@@ -213,7 +225,49 @@
         "behaviour-leader-menacing-presence-buff"
       ],
       "location": "Location.Inherited",
-      "filterFlags": []
+      "filterFlags": [],
+      "conditions": []
+    },
+    {
+      "name": "effect-leader-one-for-all-apply-behaviour-obelisk",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-leader-one-for-all-obelisk-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterStructure",
+        "Flag.StructureObelisk"
+      ],
+      "conditions": [
+        "Condition.BehaviourToApplyDoesNotAlreadyExist"
+      ]
+    },
+    {
+      "name": "effect-leader-one-for-all-search",
+      "type": "Effect.Search",
+      "radius": 1,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-leader-one-for-all-apply-behaviour-heal"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Map"
+    },
+    {
+      "name": "effect-leader-one-for-all-apply-behaviour-heal",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-leader-one-for-all-heal-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "conditions": []
     }
   ],
   "behaviours": [
@@ -229,6 +283,7 @@
       "alignment": "Alignment.Neutral",
       "conditions": [],
       "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
       "displayName": "All For One Buff",
       "description": "Revelators faction loses when this unit dies."
     },
@@ -240,14 +295,14 @@
           "type": "Modification.AttackModification",
           "attackType": "Attacks.Melee",
           "attribute": "AttackAttribute.MaxAmount",
-          "change": "Change.Remove",
+          "change": "Change.RemoveMax",
           "amount": 2.0
         },
         {
           "type": "Modification.AttackModification",
           "attackType": "Attacks.Ranged",
           "attribute": "AttackAttribute.MaxAmount",
-          "change": "Change.Remove",
+          "change": "Change.RemoveMax",
           "amount": 2.0
         }
       ],
@@ -257,8 +312,46 @@
       "alignment": "Alignment.Negative",
       "conditions": [],
       "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
       "displayName": "Menacing Presence Buff",
       "description": "Melee and Range Damage for this unit is reduced by 2."
+    },
+    {
+      "name": "behaviour-leader-one-for-all-obelisk-buff",
+      "type": "Behaviour.Buff",
+      "modifications": [],
+      "initialEffects": [
+        "effect-leader-one-for-all-search"
+      ],
+      "finalEffects": [],
+      "endsAt": "EndsAt.StartOfTenthPlanning",
+      "alignment": "Alignment.Negative",
+      "conditions": [],
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "One For All Obelisk Buff",
+      "description": "This unit has recently been sapped for health."
+    },
+    {
+      "name": "behaviour-leader-one-for-all-heal-buff",
+      "type": "Behaviour.Buff",
+      "modifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Health",
+          "change": "Change.AddCurrent",
+          "amount": 2.0
+        }
+      ],
+      "initialEffects": [],
+      "finalEffects": [],
+      "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Positive",
+      "conditions": [],
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "One For All Heal Buff",
+      "description": "Heals for 2 Health."
     }
   ]
 }

@@ -42,6 +42,11 @@ namespace low_age_data.Domain.Shared.Durations
                 public static EndsAt ActionPhase => new EndsAt(Durations.StartOfFourthActionPhase);
                 public static EndsAt Action => new EndsAt(Durations.StartOfFourthAction);
             }
+
+            public static class Tenth
+            {
+                public static EndsAt Planning => new EndsAt(Durations.StartOfTenthPlanning);
+            }
         }
 
         public static class EndOf
@@ -105,6 +110,7 @@ namespace low_age_data.Domain.Shared.Durations
             StartOfFourthPlanning,
             StartOfFourthActionPhase,
             StartOfFourthAction,
+            StartOfTenthPlanning,
             EndOfThisPlanning,
             EndOfThisActionPhase,
             EndOfThisAction,

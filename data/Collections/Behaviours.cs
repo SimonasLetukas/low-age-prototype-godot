@@ -24,6 +24,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Leader.AllForOnePlayerLoses
                     }),
+
                 new Buff(
                     BehaviourName.Leader.MenacingPresenceBuff,
                     nameof(BehaviourName.Leader.MenacingPresenceBuff).CamelCaseToWords(),
@@ -31,12 +32,12 @@ namespace low_age_data.Collections
                     new List<Modification>
                     {
                         new AttackModification(
-                            Change.Remove, 
+                            Change.RemoveMax, 
                             2f,
                             Attacks.Melee, 
                             AttackAttribute.MaxAmount),
                         new AttackModification(
-                            Change.Remove, 
+                            Change.RemoveMax, 
                             2f,
                             Attacks.Ranged,
                             AttackAttribute.MaxAmount)
@@ -44,7 +45,39 @@ namespace low_age_data.Collections
                     null,
                     null,
                     EndsAt.EndOf.This.Action,
-                    Alignment.Negative)
+                    Alignment.Negative,
+                    null,
+                    null,
+                    true),
+
+                new Buff(
+                    BehaviourName.Leader.OneForAllObeliskBuff,
+                    nameof(BehaviourName.Leader.OneForAllObeliskBuff).CamelCaseToWords(),
+                    "This unit has recently been sapped for health.",
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Leader.OneForAllSearch
+                    },
+                    null,
+                    EndsAt.StartOf.Tenth.Planning,
+                    Alignment.Negative),
+
+                new Buff(
+                    BehaviourName.Leader.OneForAllHealBuff,
+                    nameof(BehaviourName.Leader.OneForAllHealBuff).CamelCaseToWords(),
+                    "Heals for 2 Health.",
+                    new List<Modification>
+                    {
+                        new StatModification(
+                            Change.AddCurrent, 
+                            2f, 
+                            Stats.Health)
+                    },
+                    null,
+                    null,
+                    EndsAt.Instant,
+                    Alignment.Positive)
             };
         }
     }

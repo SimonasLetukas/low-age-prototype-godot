@@ -31,6 +31,12 @@ namespace low_age_data.Domain.Shared.Flags
             public static Flag Ally => new Flag(Flags.FilterAlly);
             public static Flag Enemy => new Flag(Flags.FilterEnemy);
             public static Flag Unit => new Flag(Flags.FilterUnit);
+            public static Flag Structure => new Flag(Flags.FilterStructure);
+        }
+
+        public static class Structure
+        {
+            public static Flag Obelisk => new Flag(Flags.StructureObelisk);
         }
 
         private Flag(Flags @enum)
@@ -49,7 +55,9 @@ namespace low_age_data.Domain.Shared.Flags
             FilterSelf,
             FilterAlly,
             FilterEnemy,
-            FilterUnit
+            FilterUnit,
+            FilterStructure,
+            StructureObelisk
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

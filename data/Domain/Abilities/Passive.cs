@@ -1,4 +1,5 @@
 ﻿using low_age_data.Domain.Effects;
+using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Abilities
 {
@@ -8,7 +9,7 @@ namespace low_age_data.Domain.Abilities
             AbilityName name, 
             string displayName, 
             string description,
-            EffectName effect) : base(name, $"{nameof(Ability)}.{nameof(Passive)}", displayName, description)
+            EffectName effect) : base(name, $"{nameof(Ability)}.{nameof(Passive)}", TurnPhase.Passive, displayName, description)
         {
             Effect = effect;
         }

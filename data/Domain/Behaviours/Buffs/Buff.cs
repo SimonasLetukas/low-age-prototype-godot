@@ -18,7 +18,8 @@ namespace low_age_data.Domain.Behaviours.Buffs
             EndsAt? endsAt = null,
             Alignment? alignment = null,
             IList<Condition>? conditions = null,
-            IList<EffectName>? conditionalEffects = null) : base(name, $"{nameof(Behaviour)}.{nameof(Buff)}", displayName, description)
+            IList<EffectName>? conditionalEffects = null,
+            bool restoreChangesOnEnd = false) : base(name, $"{nameof(Behaviour)}.{nameof(Buff)}", displayName, description)
         {
             Modifications = modifications ?? new List<Modification>();
             InitialEffects = initialEffects ?? new List<EffectName>();
@@ -27,6 +28,7 @@ namespace low_age_data.Domain.Behaviours.Buffs
             Alignment = alignment ?? Alignment.Neutral;
             Conditions = conditions ?? new List<Condition>();
             ConditionalEffects = conditionalEffects ?? new List<EffectName>();
+            RestoreChangesOnEnd = restoreChangesOnEnd;
         }
 
         public IList<Modification> Modifications { get; }
@@ -36,5 +38,6 @@ namespace low_age_data.Domain.Behaviours.Buffs
         public Alignment Alignment { get; }
         public IList<Condition> Conditions { get; }
         public IList<EffectName> ConditionalEffects { get; } // Executed when all conditions are met
+        public bool RestoreChangesOnEnd { get; } // If true, counter-acts the modifications before expiration
     }
 }

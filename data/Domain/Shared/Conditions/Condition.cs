@@ -12,10 +12,8 @@ namespace low_age_data.Domain.Shared.Conditions
 
         public static class Behaviour
         {
-            public static class Buff
-            {
-                public static Condition SourceDied => new Condition(Conditions.SourceDied);
-            }
+            public static Condition BehaviourToApplyDoesNotAlreadyExist =>
+                new Condition(Conditions.BehaviourToApplyDoesNotAlreadyExist);
         }
 
         private Condition(Conditions @enum)
@@ -27,7 +25,7 @@ namespace low_age_data.Domain.Shared.Conditions
 
         private enum Conditions
         {
-            SourceDied
+            BehaviourToApplyDoesNotAlreadyExist
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

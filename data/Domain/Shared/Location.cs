@@ -12,6 +12,7 @@ namespace low_age_data.Domain.Shared
 
         public static Location Inherited => new Location(Locations.Inherited);
         public static Location Self => new Location(Locations.Self);
+        public static Location Actor => new Location(Locations.Actor);
 
         private Location(Locations @enum)
         {

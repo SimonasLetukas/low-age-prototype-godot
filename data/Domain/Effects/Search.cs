@@ -8,14 +8,14 @@ namespace low_age_data.Domain.Effects
     {
         public Search(
             EffectName name,
-            int distance,
+            int radius,
             IList<Flag> searchFlags,
             IList<Flag> filterFlags,
             IList<EffectName> effects,
             Location? location = null,
             Shape? shape = null) : base(name, $"{nameof(Effect)}.{nameof(Search)}")
         {
-            Distance = distance;
+            Radius = radius;
             SearchFlags = searchFlags;
             FilterFlags = filterFlags;
             Effects = effects;
@@ -23,7 +23,7 @@ namespace low_age_data.Domain.Effects
             Shape = shape ?? Shape.Circle;
         }
 
-        public int Distance { get; }
+        public int Radius { get; }
         public IList<Flag> SearchFlags { get; }
         public IList<Flag> FilterFlags { get; }
         public IList<EffectName> Effects { get; }

@@ -10,10 +10,14 @@ namespace low_age_data.Domain.Behaviours.Buffs
             return $"{nameof(Change)}.{Value}";
         }
 
-        public static Change Add => new Change(Changes.Add);
-        public static Change Remove => new Change(Changes.Remove);
-        public static Change Set => new Change(Changes.Set);
-        public static Change Multiply => new Change(Changes.Multiply);
+        public static Change AddMax => new Change(Changes.AddMax);
+        public static Change AddCurrent => new Change(Changes.AddCurrent);
+        public static Change RemoveMax => new Change(Changes.RemoveMax);
+        public static Change RemoveCurrent => new Change(Changes.RemoveCurrent);
+        public static Change SetMax => new Change(Changes.SetMax);
+        public static Change SetCurrent => new Change(Changes.SetCurrent);
+        public static Change MultiplyMax => new Change(Changes.MultiplyMax);
+        public static Change MultiplyCurrent => new Change(Changes.MultiplyCurrent);
 
         private Change(Changes @enum)
         {
@@ -24,10 +28,14 @@ namespace low_age_data.Domain.Behaviours.Buffs
 
         private enum Changes
         {
-            Add = 0,
-            Remove = 1,
-            Set = 2,
-            Multiply = 3
+            AddMax,
+            AddCurrent,
+            RemoveMax,
+            RemoveCurrent,
+            SetMax,
+            SetCurrent,
+            MultiplyMax,
+            MultiplyCurrent
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
