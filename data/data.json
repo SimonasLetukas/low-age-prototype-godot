@@ -204,6 +204,15 @@
       "effect": "effect-slave-repair-apply-behaviour-structure",
       "displayName": "Repair",
       "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs."
+    },
+    {
+      "name": "ability-slave-manual-labour",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Planning",
+      "distance": 1,
+      "effect": "effect-slave-manual-labour-apply-behaviour-hut",
+      "displayName": "Manual Labour",
+      "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut."
     }
   ],
   "effects": [
@@ -227,7 +236,8 @@
       ],
       "modifyFlags": [
         "Flag.EffectModifyPlayerGameLost"
-      ]
+      ],
+      "resourceModifications": []
     },
     {
       "name": "effect-leader-menacing-presence-search",
@@ -324,6 +334,48 @@
       "location": "Location.Origin",
       "filterFlags": [],
       "conditions": []
+    },
+    {
+      "name": "effect-slave-manual-labour-apply-behaviour-hut",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-slave-manual-labour-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterStructure",
+        "Flag.StructureHut"
+      ],
+      "conditions": [
+        "Condition.BehaviourToApplyDoesNotAlreadyExist"
+      ]
+    },
+    {
+      "name": "effect-slave-manual-labour-apply-behaviour-self",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-slave-manual-labour-wait"
+      ],
+      "location": "Location.Origin",
+      "filterFlags": [],
+      "conditions": []
+    },
+    {
+      "name": "effect-slave-manual-labour-modify-player",
+      "type": "Effect.ModifyPlayer",
+      "playerFilterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "modifyFlags": [],
+      "resourceModifications": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "Resources.Scraps",
+          "change": "Change.AddCurrent",
+          "amount": 2.0
+        }
+      ]
     }
   ],
   "behaviours": [
@@ -447,7 +499,7 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Repair Structure Buff",
-      "description": "This structure will be repaired by 1 Health at the start of the planning phase."
+      "description": "This structure will be repaired by +1 Health at the start of the planning phase."
     },
     {
       "name": "behaviour-slave-repair-wait",
@@ -455,6 +507,36 @@
       "endsAt": "EndsAt.StartOfNextPlanning",
       "displayName": "Repair Wait",
       "description": "Currently repairing a structure."
+    },
+    {
+      "name": "behaviour-slave-manual-labour-buff",
+      "type": "Behaviour.Buff",
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-slave-manual-labour-apply-behaviour-self"
+      ],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-slave-manual-labour-modify-player"
+      ],
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "canStack": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [
+        "Condition.EffectChainOriginIsDead"
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Manual Labour Buff",
+      "description": "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase."
+    },
+    {
+      "name": "behaviour-slave-manual-labour-wait",
+      "type": "Behaviour.Wait",
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "displayName": "Manual Labour Wait",
+      "description": "Currently working on a nearby Hut."
     }
   ]
 }
