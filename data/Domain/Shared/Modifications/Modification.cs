@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Behaviours.Buffs
+namespace low_age_data.Domain.Shared.Modifications
 {
     public abstract class Modification
     {

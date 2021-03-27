@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Common;
 
-namespace low_age_data.Domain.Behaviours.Buffs
+namespace low_age_data.Domain.Shared.Modifications
 {
     public class Change : ValueObject<Change>
     {

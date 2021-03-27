@@ -1,4 +1,6 @@
-﻿namespace low_age_data.Domain.Entities.Actors.Units
+﻿using low_age_data.Common;
+
+namespace low_age_data.Domain.Entities.Actors.Units
 {
     public class UnitName : EntityName
     {
@@ -6,7 +8,7 @@
         {
         }
 
-        public static UnitName Slave => new UnitName(nameof(Slave).ToLower());
-        public static UnitName Leader => new UnitName(nameof(Leader).ToLower());
+        public static UnitName Slave => new UnitName(nameof(Slave).ToKebabCase());
+        public static UnitName Leader => new UnitName(nameof(Leader).ToKebabCase());
     }
 }

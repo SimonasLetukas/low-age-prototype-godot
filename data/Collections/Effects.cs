@@ -4,6 +4,7 @@ using low_age_data.Domain.Effects;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Conditions;
 using low_age_data.Domain.Shared.Flags;
+using low_age_data.Domain.Shared.Modifications;
 
 namespace low_age_data.Collections
 {
@@ -79,7 +80,7 @@ namespace low_age_data.Collections
                     },
                     new List<Condition>
                     {
-                        Condition.Behaviour.BehaviourToApplyDoesNotAlreadyExist
+                        Condition.Behaviour.DoesNotAlreadyExist
                     }),
 
                 new Search(
@@ -104,7 +105,73 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Leader.OneForAllHealBuff
                     },
-                    Location.Self)
+                    Location.Self),
+
+                new ApplyBehaviour(
+                    EffectName.Slave.RepairApplyBehaviourStructure,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Slave.RepairStructureBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Structure
+                    },
+                    new List<Condition>
+                    {
+                        Condition.Target.DoesNotHaveFullHealth
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Slave.RepairApplyBehaviourSelf,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Slave.RepairWait
+                    },
+                    Location.Origin),
+
+                new ApplyBehaviour(
+                    EffectName.Slave.ManualLabourApplyBehaviourHut,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Slave.ManualLabourBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Structure,
+                        Flag.Structure.Hut
+                    },
+                    new List<Condition>
+                    {
+                        Condition.Behaviour.DoesNotAlreadyExist
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Slave.ManualLabourApplyBehaviourSelf,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Slave.ManualLabourWait
+                    },
+                    Location.Origin),
+
+                new ModifyPlayer(
+                    EffectName.Slave.ManualLabourModifyPlayer,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    },
+                    null,
+                    new List<ResourceModification>
+                    {
+                        new ResourceModification(
+                            Change.AddCurrent, 
+                            2.0f,
+                            Resources.Scraps)
+                    })
             };
         }
     }

@@ -12,8 +12,22 @@ namespace low_age_data.Domain.Shared.Conditions
 
         public static class Behaviour
         {
-            public static Condition BehaviourToApplyDoesNotAlreadyExist =>
+            public static Condition DoesNotAlreadyExist =>
                 new Condition(Conditions.BehaviourToApplyDoesNotAlreadyExist);
+        }
+
+        public static class Target
+        {
+            public static Condition DoesNotHaveFullHealth =>
+                new Condition(Conditions.TargetDoesNotHaveFullHealth);
+        }
+
+        public static class Effect
+        {
+            public static class Chain
+            {
+                public static Condition OriginIsDead => new Condition(Conditions.EffectChainOriginIsDead);
+            }
         }
 
         private Condition(Conditions @enum)
@@ -25,7 +39,9 @@ namespace low_age_data.Domain.Shared.Conditions
 
         private enum Conditions
         {
-            BehaviourToApplyDoesNotAlreadyExist
+            BehaviourToApplyDoesNotAlreadyExist,
+            TargetDoesNotHaveFullHealth,
+            EffectChainOriginIsDead
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
