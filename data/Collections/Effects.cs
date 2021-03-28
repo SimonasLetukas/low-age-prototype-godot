@@ -171,6 +171,31 @@ namespace low_age_data.Collections
                             Change.AddCurrent, 
                             2.0f,
                             Resources.Scraps)
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Quickdraw.DoubleshotApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Quickdraw.DoubleshotExtraAttack
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Quickdraw.CrippleApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Quickdraw.CrippleBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
                     })
             };
         }

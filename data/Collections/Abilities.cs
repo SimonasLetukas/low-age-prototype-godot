@@ -74,7 +74,30 @@ namespace low_age_data.Collections
                     "Select an adjacent Hut. At the start of the next planning phase receive +2 " +
                     "Scraps. Maximum of one Slave per Hut.",
                     1,
-                    EffectName.Slave.ManualLabourApplyBehaviourHut)
+                    EffectName.Slave.ManualLabourApplyBehaviourHut),
+
+                new Passive(
+                    AbilityName.Quickdraw.Doubleshot,
+                    nameof(AbilityName.Quickdraw.Doubleshot).CamelCaseToWords(),
+                    "Ranged attacks twice.",
+                    EffectName.Quickdraw.DoubleshotApplyBehaviour),
+
+                new Passive(
+                    AbilityName.Quickdraw.Cripple,
+                    nameof(AbilityName.Quickdraw.Cripple).CamelCaseToWords(),
+                    "Each ranged attack cripples the target until the end of their action. During " +
+                    "this time target has 60% of their maximum Movement (rounded up) and cannot receive healing " +
+                    "from any sources. Multiple attacks on a crippled target have no additional effects.",
+                    null,
+                    new List<Research>
+                    {
+                        Research.Revelators.PoisonedSlits
+                    },
+                    EffectName.Quickdraw.CrippleApplyBehaviour,
+                    new List<Attacks>
+                    {
+                        Attacks.Ranged
+                    })
             };
         }
     }

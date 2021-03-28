@@ -45,6 +45,7 @@
     "units": [
       {
         "name": "unit-slave",
+        "size": 1,
         "statistics": [
           {
             "combatType": "Stats.Health",
@@ -96,6 +97,7 @@
       },
       {
         "name": "unit-leader",
+        "size": 1,
         "statistics": [
           {
             "combatType": "Stats.Health",
@@ -144,6 +146,67 @@
         ],
         "displayName": "Leader",
         "description": ""
+      },
+      {
+        "name": "unit-quickdraw",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 13,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 4,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 18,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": null,
+            "bonusAmount": 0,
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Ranged",
+            "minimumDistance": 2,
+            "maximumDistance": 6,
+            "bonusTo": "CombatAttributes.Light",
+            "bonusAmount": 2,
+            "maxAmount": 3,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Biological",
+          "CombatAttributes.Ranged"
+        ],
+        "abilities": [
+          "ability-quickdraw-doubleshot",
+          "ability-quickdraw-cripple"
+        ],
+        "displayName": "Quickdraw",
+        "description": ""
       }
     ],
     "structures": []
@@ -153,7 +216,10 @@
       "name": "ability-leader-all-for-one",
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
-      "effect": "effect-leader-all-for-one-apply-behaviour",
+      "researchNeeded": [],
+      "periodicEffect": "effect-leader-all-for-one-apply-behaviour",
+      "onHitEffect": null,
+      "onHitAttackTypes": [],
       "displayName": "All For One",
       "description": "Revelators faction loses if Leader dies."
     },
@@ -161,7 +227,10 @@
       "name": "ability-leader-menacing-presence",
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
-      "effect": "effect-leader-menacing-presence-search",
+      "researchNeeded": [],
+      "periodicEffect": "effect-leader-menacing-presence-search",
+      "onHitEffect": null,
+      "onHitAttackTypes": [],
       "displayName": "Menacing Presence",
       "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1)."
     },
@@ -169,6 +238,7 @@
       "name": "ability-leader-one-for-all",
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
       "distance": 1,
       "effect": "effect-leader-one-for-all-apply-behaviour-obelisk",
       "displayName": "One For All",
@@ -178,6 +248,7 @@
       "name": "ability-slave-build",
       "type": "Ability.Build",
       "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
       "distance": 1,
       "selection": [
         "structure-hut",
@@ -200,6 +271,7 @@
       "name": "ability-slave-repair",
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
       "distance": 1,
       "effect": "effect-slave-repair-apply-behaviour-structure",
       "displayName": "Repair",
@@ -209,10 +281,37 @@
       "name": "ability-slave-manual-labour",
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
       "distance": 1,
       "effect": "effect-slave-manual-labour-apply-behaviour-hut",
       "displayName": "Manual Labour",
       "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut."
+    },
+    {
+      "name": "ability-quickdraw-doubleshot",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": "effect-quickdraw-doubleshot-apply-behaviour",
+      "onHitEffect": null,
+      "onHitAttackTypes": [],
+      "displayName": "Doubleshot",
+      "description": "Ranged attacks twice."
+    },
+    {
+      "name": "ability-quickdraw-cripple",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [
+        "Research.PoisonedSlits"
+      ],
+      "periodicEffect": null,
+      "onHitEffect": "effect-quickdraw-cripple-apply-behaviour",
+      "onHitAttackTypes": [
+        "Attacks.Ranged"
+      ],
+      "displayName": "Cripple",
+      "description": "Each ranged attack cripples the target until the end of their action. During this time target has 60% of their maximum Movement (rounded up) and cannot receive healing from any sources. Multiple attacks on a crippled target have no additional effects."
     }
   ],
   "effects": [
@@ -376,12 +475,38 @@
           "amount": 2.0
         }
       ]
+    },
+    {
+      "name": "effect-quickdraw-doubleshot-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-quickdraw-doubleshot-extra-attack"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "conditions": []
+    },
+    {
+      "name": "effect-quickdraw-cripple-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-quickdraw-cripple-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "conditions": []
     }
   ],
   "behaviours": [
     {
       "name": "behaviour-leader-all-for-one-buff",
       "type": "Behaviour.Buff",
+      "modificationFlags": [],
       "initialModifications": [],
       "initialEffects": [],
       "finalModifications": [],
@@ -401,6 +526,7 @@
     {
       "name": "behaviour-leader-menacing-presence-buff",
       "type": "Behaviour.Buff",
+      "modificationFlags": [],
       "initialModifications": [
         {
           "type": "Modification.AttackModification",
@@ -433,6 +559,7 @@
     {
       "name": "behaviour-leader-one-for-all-obelisk-buff",
       "type": "Behaviour.Buff",
+      "modificationFlags": [],
       "initialModifications": [],
       "initialEffects": [
         "effect-leader-one-for-all-search"
@@ -452,6 +579,7 @@
     {
       "name": "behaviour-leader-one-for-all-heal-buff",
       "type": "Behaviour.Buff",
+      "modificationFlags": [],
       "initialModifications": [
         {
           "type": "Modification.StatModification",
@@ -476,6 +604,7 @@
     {
       "name": "behaviour-slave-repair-structure-buff",
       "type": "Behaviour.Buff",
+      "modificationFlags": [],
       "initialModifications": [],
       "initialEffects": [
         "effect-slave-repair-apply-behaviour-self"
@@ -511,6 +640,7 @@
     {
       "name": "behaviour-slave-manual-labour-buff",
       "type": "Behaviour.Buff",
+      "modificationFlags": [],
       "initialModifications": [],
       "initialEffects": [
         "effect-slave-manual-labour-apply-behaviour-self"
@@ -537,6 +667,44 @@
       "endsAt": "EndsAt.StartOfNextPlanning",
       "displayName": "Manual Labour Wait",
       "description": "Currently working on a nearby Hut."
+    },
+    {
+      "name": "behaviour-quickdraw-doubleshot-extra-attack",
+      "type": "Behaviour.ExtraAttack",
+      "attackTypes": [
+        "Attacks.Ranged"
+      ],
+      "endsAt": "EndsAt.Death",
+      "canStack": false,
+      "displayName": "Doubleshot Extra Attack",
+      "description": "Ranged attacks twice."
+    },
+    {
+      "name": "behaviour-quickdraw-cripple-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationCannotBeHealed"
+      ],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Movement",
+          "change": "Change.MultiplyMax",
+          "amount": 0.6
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "endsAt": "EndsAt.EndOfThisAction",
+      "canStack": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Cripple Buff",
+      "description": "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing from any sources until the end of its action."
     }
   ]
 }

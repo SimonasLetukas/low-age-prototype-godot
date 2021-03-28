@@ -41,6 +41,7 @@ namespace low_age_data.Collections
                         AbilityName.Slave.Repair,
                         AbilityName.Slave.ManualLabour
                     }),
+
                 new Unit(
                     UnitName.Leader,
                     nameof(UnitName.Leader),
@@ -73,6 +74,45 @@ namespace low_age_data.Collections
                         AbilityName.Leader.MenacingPresence,
                         AbilityName.Leader.OneForAll
                     }),
+
+                new Unit(
+                    UnitName.Quickdraw,
+                    nameof(UnitName.Quickdraw),
+                    "",
+                    new List<Stat>
+                    {
+                        new CombatStat(13, true, Stats.Health),
+                        new CombatStat(1, false, Stats.MeleeArmour),
+                        new CombatStat(0, false, Stats.RangedArmour),
+                        new CombatStat(4, true, Stats.Movement),
+                        new CombatStat(18, false, Stats.Initiative),
+                        new AttackStat(
+                            1,
+                            false,
+                            Attacks.Melee,
+                            1,
+                            1),
+                        new AttackStat(
+                            3,
+                            false,
+                            Attacks.Ranged, 
+                            2,
+                            6,
+                            CombatAttributes.Light,
+                            2)
+                    },
+                    Factions.Revelators, 
+                    new List<CombatAttributes>
+                    {
+                        CombatAttributes.Light,
+                        CombatAttributes.Biological,
+                        CombatAttributes.Ranged
+                    },
+                    new List<AbilityName>
+                    {
+                        AbilityName.Quickdraw.Doubleshot,
+                        AbilityName.Quickdraw.Cripple
+                    })
             };
         }
     }

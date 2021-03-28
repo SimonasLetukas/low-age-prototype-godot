@@ -5,6 +5,7 @@ using low_age_data.Domain.Effects;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Conditions;
 using low_age_data.Domain.Shared.Durations;
+using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 
 namespace low_age_data.Collections
@@ -22,6 +23,7 @@ namespace low_age_data.Collections
                     null,
                     null,
                     null,
+                    null,
                     new List<EffectName>
                     {
                         EffectName.Leader.AllForOnePlayerLoses
@@ -31,6 +33,7 @@ namespace low_age_data.Collections
                     BehaviourName.Leader.MenacingPresenceBuff,
                     nameof(BehaviourName.Leader.MenacingPresenceBuff).CamelCaseToWords(),
                     "Melee and Range Damage for this unit is reduced by 2.",
+                    null,
                     new List<Modification>
                     {
                         new AttackModification(
@@ -60,6 +63,7 @@ namespace low_age_data.Collections
                     nameof(BehaviourName.Leader.OneForAllObeliskBuff).CamelCaseToWords(),
                     "This unit has recently been sapped for health.",
                     null,
+                    null,
                     new List<EffectName>
                     {
                         EffectName.Leader.OneForAllSearch
@@ -74,6 +78,7 @@ namespace low_age_data.Collections
                     BehaviourName.Leader.OneForAllHealBuff,
                     nameof(BehaviourName.Leader.OneForAllHealBuff).CamelCaseToWords(),
                     "Heals for 2 Health.",
+                    null,
                     new List<Modification>
                     {
                         new StatModification(
@@ -92,6 +97,7 @@ namespace low_age_data.Collections
                     BehaviourName.Slave.RepairStructureBuff,
                     nameof(BehaviourName.Slave.RepairStructureBuff).CamelCaseToWords(),
                     "This structure will be repaired by +1 Health at the start of the planning phase.",
+                    null,
                     null,
                     new List<EffectName>
                     {
@@ -125,6 +131,7 @@ namespace low_age_data.Collections
                     nameof(BehaviourName.Slave.ManualLabourBuff).CamelCaseToWords(),
                     "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
                     null,
+                    null,
                     new List<EffectName>
                     {
                         EffectName.Slave.ManualLabourApplyBehaviourSelf
@@ -147,7 +154,43 @@ namespace low_age_data.Collections
                     BehaviourName.Slave.ManualLabourWait,
                     nameof(BehaviourName.Slave.ManualLabourWait).CamelCaseToWords(),
                     "Currently working on a nearby Hut.",
-                    EndsAt.StartOf.Next.Planning)
+                    EndsAt.StartOf.Next.Planning),
+
+                new ExtraAttack(
+                    BehaviourName.Quickdraw.DoubleshotExtraAttack,
+                    nameof(BehaviourName.Quickdraw.DoubleshotExtraAttack).CamelCaseToWords(),
+                    "Ranged attacks twice.",
+                    new List<Attacks>
+                    {
+                        Attacks.Ranged
+                    }),
+
+                new Buff(
+                    BehaviourName.Quickdraw.CrippleBuff,
+                    nameof(BehaviourName.Quickdraw.CrippleBuff).CamelCaseToWords(),
+                    "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing " +
+                    "from any sources until the end of its action.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.CannotBeHealed
+                    },
+                    new List<Modification>
+                    {
+                        new StatModification(
+                            Change.MultiplyMax,
+                            0.6f,
+                            Stats.Movement)
+                    },
+                    null,
+                    null,
+                    null,
+                    EndsAt.EndOf.This.Action,
+                    false,
+                    Alignment.Negative,
+                    null,
+                    false,
+                    null,
+                    true)
             };
         }
     }

@@ -3,6 +3,7 @@ using low_age_data.Domain.Effects;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Conditions;
 using low_age_data.Domain.Shared.Durations;
+using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 
 namespace low_age_data.Domain.Behaviours
@@ -13,6 +14,7 @@ namespace low_age_data.Domain.Behaviours
             BehaviourName name,
             string displayName, 
             string description,
+            IList<Flag>? modificationFlags = null,
             IList<Modification>? initialModifications = null,
             IList<EffectName>? initialEffects = null,
             IList<Modification>? finalModifications = null,
@@ -25,6 +27,7 @@ namespace low_age_data.Domain.Behaviours
             IList<EffectName>? conditionalEffects = null,
             bool restoreChangesOnEnd = false) : base(name, $"{nameof(Behaviour)}.{nameof(Buff)}", displayName, description)
         {
+            ModificationFlags = modificationFlags ?? new List<Flag>();
             InitialModifications = initialModifications ?? new List<Modification>();
             InitialEffects = initialEffects ?? new List<EffectName>();
             FinalModifications = finalModifications ?? new List<Modification>();
@@ -38,6 +41,7 @@ namespace low_age_data.Domain.Behaviours
             RestoreChangesOnEnd = restoreChangesOnEnd;
         }
 
+        public IList<Flag> ModificationFlags { get; }
         public IList<Modification> InitialModifications { get; } // Added at the start of behaviour
         public IList<EffectName> InitialEffects { get; } // Executed when behaviour is added
         public IList<Modification> FinalModifications { get; } // Added right before the end of behaviour
