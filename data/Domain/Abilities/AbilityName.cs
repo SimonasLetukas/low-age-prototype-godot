@@ -33,5 +33,12 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName FanaticSuicide => new AbilityName($"{nameof(Gorger)}{nameof(FanaticSuicide)}".ToKebabCase());
             public static AbilityName FanaticSuicidePassive => new AbilityName($"{nameof(Gorger)}{nameof(FanaticSuicidePassive)}".ToKebabCase());
         }
+
+        public static class Camou
+        {
+            public static AbilityName SilentAssassin => new AbilityName($"{nameof(Camou)}{nameof(SilentAssassin)}".ToKebabCase());
+            public static AbilityName Climb => new AbilityName($"{nameof(Camou)}{nameof(Climb)}".ToKebabCase());
+            public static AbilityName ClimbPassive => new AbilityName($"{nameof(Camou)}{nameof(ClimbPassive)}".ToKebabCase());
+        }
     }
 }

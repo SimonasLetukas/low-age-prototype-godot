@@ -144,6 +144,38 @@ namespace low_age_data.Collections
                     {
                         AbilityName.Gorger.FanaticSuicide,
                         AbilityName.Gorger.FanaticSuicidePassive
+                    }),
+
+                new Unit(
+                    UnitName.Camou,
+                    nameof(UnitName.Camou),
+                    "",
+                    new List<Stat>
+                    {
+                        new CombatStat(19, true, Stats.Health),
+                        new CombatStat(0, false, Stats.MeleeArmour),
+                        new CombatStat(1, false, Stats.RangedArmour),
+                        new CombatStat(4, true, Stats.Movement),
+                        new CombatStat(23, false, Stats.Initiative),
+                        new AttackStat(
+                            6,
+                            false,
+                            Attacks.Melee,
+                            1,
+                            1,
+                            CombatAttributes.Armoured,
+                            4)
+                    },
+                    Factions.Revelators,
+                    new List<CombatAttributes>
+                    {
+                        CombatAttributes.Light,
+                        CombatAttributes.Biological
+                    },
+                    new List<AbilityName>
+                    {
+                        AbilityName.Camou.SilentAssassin,
+                        AbilityName.Camou.Climb
                     })
             };
         }

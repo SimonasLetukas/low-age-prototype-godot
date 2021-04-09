@@ -258,6 +258,57 @@
         ],
         "displayName": "Gorger",
         "description": ""
+      },
+      {
+        "name": "unit-camou",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 19,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 4,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 23,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Armoured",
+            "bonusAmount": 4,
+            "maxAmount": 6,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [
+          "ability-camou-silent-assassin",
+          "ability-camou-climb"
+        ],
+        "displayName": "Camou",
+        "description": ""
       }
     ],
     "structures": []
@@ -398,6 +449,47 @@
       "hasButton": true,
       "displayName": "Fanatic Suicide",
       "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, killing itself in the process."
+    },
+    {
+      "name": "ability-camou-silent-assassin",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffect": null,
+      "onHitAttackTypes": [
+        "Attacks.Melee"
+      ],
+      "hasButton": true,
+      "displayName": "Silent Assassin",
+      "description": "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly units around Camou in 4 Attack Distance. Additionally, if the target has none of its allies in the same radius, Camou silences the target for 2 of its actions, disabling the use of any abilities or passives."
+    },
+    {
+      "name": "ability-camou-climb",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [
+        "Research.SpikedRope"
+      ],
+      "distance": 1,
+      "effect": "effect-gorger-fanatic-suicide-apply-behaviour-destroy",
+      "hasButton": true,
+      "displayName": "Climb",
+      "description": "Select an adjacent unoccupied space on a high ground. This space is considered occupied until the end of the action phase at which point Camou moves to it. Passively, Camou can move down from high ground at the additional cost of 1 Movement."
+    },
+    {
+      "name": "ability-camou-climb-passive",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [
+        "Research.SpikedRope"
+      ],
+      "periodicEffect": null,
+      "onHitEffect": null,
+      "onHitAttackTypes": [],
+      "hasButton": false,
+      "displayName": "Climb Passive",
+      "description": ""
     }
   ],
   "effects": [

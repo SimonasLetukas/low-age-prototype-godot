@@ -127,6 +127,47 @@ namespace low_age_data.Collections
                     {
                         EffectName.Gorger.FanaticSuicideSearch,
                         EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy
+                    }),
+
+                new Passive(
+                    AbilityName.Camou.SilentAssassin,
+                    nameof(AbilityName.Camou.SilentAssassin).CamelCaseToWords(),
+                    "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly " +
+                    "units around Camou in 4 Attack Distance. Additionally, if the target has none of its allies " +
+                    "in the same radius, Camou silences the target for 2 of its actions, disabling the use of any " +
+                    "abilities or passives.",
+                    true,
+                    null,
+                    null,
+                    null, //TODO on-hit effect
+                    new List<Attacks>
+                    {
+                        Attacks.Melee
+                    }),
+
+                new Target(
+                    AbilityName.Camou.Climb,
+                    TurnPhase.Action, 
+                    nameof(AbilityName.Camou.Climb).CamelCaseToWords(),
+                    "Select an adjacent unoccupied space on a high ground. This space is considered " +
+                    "occupied until the end of the action phase at which point Camou moves to it. Passively, " +
+                    "Camou can move down from high ground at the additional cost of 1 Movement.",
+                    1,
+                    EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy, // TODO add effect
+                    new List<Research>
+                    {
+                        Research.Revelators.SpikedRope
+                    }),
+
+                new Passive(
+                    AbilityName.Camou.ClimbPassive,
+                    nameof(AbilityName.Camou.ClimbPassive).CamelCaseToWords(),
+                    "",
+                    false,
+                    null, // TODO add effect
+                    new List<Research>
+                    {
+                        Research.Revelators.SpikedRope
                     })
             };
         }
