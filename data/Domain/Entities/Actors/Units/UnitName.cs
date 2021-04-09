@@ -11,5 +11,6 @@ namespace low_age_data.Domain.Entities.Actors.Units
         public static UnitName Slave => new UnitName(nameof(Slave).ToKebabCase());
         public static UnitName Leader => new UnitName(nameof(Leader).ToKebabCase());
         public static UnitName Quickdraw => new UnitName(nameof(Quickdraw).ToKebabCase());
+        public static UnitName Gorger => new UnitName(nameof(Gorger).ToKebabCase());
     }
 }

@@ -27,5 +27,11 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName Doubleshot => new AbilityName($"{nameof(Quickdraw)}{nameof(Doubleshot)}".ToKebabCase());
             public static AbilityName Cripple => new AbilityName($"{nameof(Quickdraw)}{nameof(Cripple)}".ToKebabCase());
         }
+
+        public static class Gorger
+        {
+            public static AbilityName FanaticSuicide => new AbilityName($"{nameof(Gorger)}{nameof(FanaticSuicide)}".ToKebabCase());
+            public static AbilityName FanaticSuicidePassive => new AbilityName($"{nameof(Gorger)}{nameof(FanaticSuicidePassive)}".ToKebabCase());
+        }
     }
 }

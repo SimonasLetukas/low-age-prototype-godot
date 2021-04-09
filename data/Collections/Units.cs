@@ -112,6 +112,38 @@ namespace low_age_data.Collections
                     {
                         AbilityName.Quickdraw.Doubleshot,
                         AbilityName.Quickdraw.Cripple
+                    }),
+
+                new Unit(
+                    UnitName.Gorger,
+                    nameof(UnitName.Gorger),
+                    "",
+                    new List<Stat>
+                    {
+                        new CombatStat(7, true, Stats.Health),
+                        new CombatStat(2, false, Stats.MeleeArmour),
+                        new CombatStat(0, false, Stats.RangedArmour),
+                        new CombatStat(4, true, Stats.Movement),
+                        new CombatStat(26, false, Stats.Initiative),
+                        new AttackStat(
+                            3,
+                            false,
+                            Attacks.Melee,
+                            1,
+                            1,
+                            CombatAttributes.Biological,
+                            3)
+                    },
+                    Factions.Revelators,
+                    new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Biological
+                    },
+                    new List<AbilityName>
+                    {
+                        AbilityName.Gorger.FanaticSuicide,
+                        AbilityName.Gorger.FanaticSuicidePassive
                     })
             };
         }

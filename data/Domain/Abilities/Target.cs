@@ -13,7 +13,7 @@ namespace low_age_data.Domain.Abilities
             string description,
             int distance,
             EffectName effect,
-            IList<Research>? researchNeeded = null) : base(name, $"{nameof(Ability)}.{nameof(Target)}", turnPhase, researchNeeded ?? new List<Research>(), displayName, description)
+            IList<Research>? researchNeeded = null) : base(name, $"{nameof(Ability)}.{nameof(Target)}", turnPhase, researchNeeded ?? new List<Research>(), true, displayName, description)
         {
             Distance = distance;
             Effect = effect;

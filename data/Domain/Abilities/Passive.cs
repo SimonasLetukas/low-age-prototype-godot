@@ -10,10 +10,11 @@ namespace low_age_data.Domain.Abilities
             AbilityName name, 
             string displayName, 
             string description,
+            bool hasButton = false,
             EffectName? periodicEffect = null,
             IList<Research>? researchNeeded = null,
             EffectName? onHitEffect = null,
-            IList<Attacks>? onHitAttackTypes = null) : base(name, $"{nameof(Ability)}.{nameof(Passive)}", TurnPhase.Passive, researchNeeded ?? new List<Research>(), displayName, description)
+            IList<Attacks>? onHitAttackTypes = null) : base(name, $"{nameof(Ability)}.{nameof(Passive)}", TurnPhase.Passive, researchNeeded ?? new List<Research>(), hasButton, displayName, description)
         {
             PeriodicEffect = periodicEffect;
             OnHitEffect = onHitEffect;

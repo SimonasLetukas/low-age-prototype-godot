@@ -33,5 +33,13 @@ namespace low_age_data.Domain.Effects
             public static EffectName DoubleshotApplyBehaviour => new EffectName($"{nameof(Quickdraw)}{nameof(DoubleshotApplyBehaviour)}".ToKebabCase());
             public static EffectName CrippleApplyBehaviour => new EffectName($"{nameof(Quickdraw)}{nameof(CrippleApplyBehaviour)}".ToKebabCase());
         }
+
+        public static class Gorger
+        {
+            public static EffectName FanaticSuicideApplyBehaviourBuff => new EffectName($"{nameof(Gorger)}{nameof(FanaticSuicideApplyBehaviourBuff)}".ToKebabCase());
+            public static EffectName FanaticSuicideApplyBehaviourDestroy => new EffectName($"{nameof(Gorger)}{nameof(FanaticSuicideApplyBehaviourDestroy)}".ToKebabCase());
+            public static EffectName FanaticSuicideSearch => new EffectName($"{nameof(Gorger)}{nameof(FanaticSuicideSearch)}".ToKebabCase());
+            public static EffectName FanaticSuicideDamage => new EffectName($"{nameof(Gorger)}{nameof(FanaticSuicideDamage)}".ToKebabCase());
+        }
     }
 }

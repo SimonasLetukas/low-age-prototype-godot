@@ -10,7 +10,8 @@ namespace low_age_data.Domain.Abilities
             AbilityName name, 
             string type, 
             TurnPhase turnPhase, 
-            IList<Research> researchNeeded, 
+            IList<Research> researchNeeded,
+            bool hasButton,
             string displayName, 
             string description)
         {
@@ -18,6 +19,7 @@ namespace low_age_data.Domain.Abilities
             Type = type;
             TurnPhase = turnPhase;
             ResearchNeeded = researchNeeded;
+            HasButton = hasButton;
             DisplayName = displayName;
             Description = description;
         }
@@ -30,6 +32,7 @@ namespace low_age_data.Domain.Abilities
         public TurnPhase TurnPhase { get; }
         [JsonProperty(Order = -2)]
         public IList<Research> ResearchNeeded { get; }
+        public bool HasButton { get; }
         public string DisplayName { get; }
         public string Description { get; }
     }

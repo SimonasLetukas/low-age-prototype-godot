@@ -190,7 +190,26 @@ namespace low_age_data.Collections
                     null,
                     false,
                     null,
-                    true)
+                    true),
+
+                new Buff(
+                    BehaviourName.Gorger.FanaticSuicideBuff,
+                    nameof(BehaviourName.Gorger.FanaticSuicideBuff).CamelCaseToWords(),
+                    "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage " +
+                    "to all friendly and enemy units in 1 Distance.",
+                    null,
+                    null,
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Gorger.FanaticSuicideSearch
+                    }),
+
+                new Destroy(
+                    BehaviourName.Gorger.FanaticSuicideDestroy,
+                    nameof(BehaviourName.Gorger.FanaticSuicideDestroy).CamelCaseToWords(),
+                    "")
             };
         }
     }

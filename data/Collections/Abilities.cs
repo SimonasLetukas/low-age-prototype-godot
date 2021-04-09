@@ -17,6 +17,7 @@ namespace low_age_data.Collections
                     AbilityName.Leader.AllForOne,
                     nameof(AbilityName.Leader.AllForOne).CamelCaseToWords(),
                     "Revelators faction loses if Leader dies.",
+                    true,
                     EffectName.Leader.AllForOneApplyBehaviour),
 
                 new Passive(
@@ -24,6 +25,7 @@ namespace low_age_data.Collections
                     nameof(AbilityName.Leader.MenacingPresence).CamelCaseToWords(),
                     "All friendly and enemy units that enter 6 Attack Distance around Leader " +
                     "have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1).",
+                    true,
                     EffectName.Leader.MenacingPresenceSearch),
 
                 new Target(
@@ -80,6 +82,7 @@ namespace low_age_data.Collections
                     AbilityName.Quickdraw.Doubleshot,
                     nameof(AbilityName.Quickdraw.Doubleshot).CamelCaseToWords(),
                     "Ranged attacks twice.",
+                    true,
                     EffectName.Quickdraw.DoubleshotApplyBehaviour),
 
                 new Passive(
@@ -88,6 +91,7 @@ namespace low_age_data.Collections
                     "Each ranged attack cripples the target until the end of their action. During " +
                     "this time target has 60% of their maximum Movement (rounded up) and cannot receive healing " +
                     "from any sources. Multiple attacks on a crippled target have no additional effects.",
+                    true,
                     null,
                     new List<Research>
                     {
@@ -97,6 +101,32 @@ namespace low_age_data.Collections
                     new List<Attacks>
                     {
                         Attacks.Ranged
+                    }),
+
+                new Passive(
+                    AbilityName.Gorger.FanaticSuicidePassive,
+                    nameof(AbilityName.Gorger.FanaticSuicidePassive).CamelCaseToWords(),
+                    "",
+                    false,
+                    EffectName.Gorger.FanaticSuicideApplyBehaviourBuff,
+                    null,
+                    EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy,
+                    new List<Attacks>
+                    {
+                        Attacks.Melee
+                    }),
+
+                new Instant(
+                    AbilityName.Gorger.FanaticSuicide,
+                    TurnPhase.Action, 
+                    nameof(AbilityName.Gorger.FanaticSuicide).CamelCaseToWords(),
+                    "Either as an action, or instead of attacking, or upon getting killed Gorger " +
+                    "detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, " +
+                    "killing itself in the process.",
+                    new List<EffectName>
+                    {
+                        EffectName.Gorger.FanaticSuicideSearch,
+                        EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy
                     })
             };
         }

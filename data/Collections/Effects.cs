@@ -196,7 +196,48 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
-                    })
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Gorger.FanaticSuicideApplyBehaviourBuff,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Gorger.FanaticSuicideBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Gorger.FanaticSuicideDestroy
+                    },
+                    Location.Origin),
+
+                new Search(
+                    EffectName.Gorger.FanaticSuicideSearch,
+                    1,
+                    new List<Flag>(),
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Structure,
+                        Flag.Filter.Unit
+                    },
+                    new List<EffectName>
+                    {
+                        EffectName.Gorger.FanaticSuicideDamage
+                    },
+                    Location.Self),
+
+                new Damage(
+                    EffectName.Gorger.FanaticSuicideDamage,
+                    DamageType.CurrentMelee)
             };
         }
     }

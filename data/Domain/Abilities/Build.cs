@@ -13,7 +13,7 @@ namespace low_age_data.Domain.Abilities
             int distance,
             IList<StructureName> selection,
             bool casterConsumesAction = false,
-            bool canHelp = false) : base(name, $"{nameof(Ability)}.{nameof(Build)}", TurnPhase.Planning, new List<Research>(), displayName, description)
+            bool canHelp = false) : base(name, $"{nameof(Ability)}.{nameof(Build)}", TurnPhase.Planning, new List<Research>(), true, displayName, description)
         {
             Distance = distance;
             Selection = selection;

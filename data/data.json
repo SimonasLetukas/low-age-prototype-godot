@@ -207,6 +207,57 @@
         ],
         "displayName": "Quickdraw",
         "description": ""
+      },
+      {
+        "name": "unit-gorger",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 7,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 2,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 4,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 26,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Biological",
+            "bonusAmount": 3,
+            "maxAmount": 3,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [
+          "ability-gorger-fanatic-suicide",
+          "ability-gorger-fanatic-suicide-passive"
+        ],
+        "displayName": "Gorger",
+        "description": ""
       }
     ],
     "structures": []
@@ -220,6 +271,7 @@
       "periodicEffect": "effect-leader-all-for-one-apply-behaviour",
       "onHitEffect": null,
       "onHitAttackTypes": [],
+      "hasButton": true,
       "displayName": "All For One",
       "description": "Revelators faction loses if Leader dies."
     },
@@ -231,6 +283,7 @@
       "periodicEffect": "effect-leader-menacing-presence-search",
       "onHitEffect": null,
       "onHitAttackTypes": [],
+      "hasButton": true,
       "displayName": "Menacing Presence",
       "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1)."
     },
@@ -241,6 +294,7 @@
       "researchNeeded": [],
       "distance": 1,
       "effect": "effect-leader-one-for-all-apply-behaviour-obelisk",
+      "hasButton": true,
       "displayName": "One For All",
       "description": "Select an adjacent Obelisk and sap its energy to give all friendly units +2 Health. This Obelisk cannot be sapped again for 10 turns."
     },
@@ -264,6 +318,7 @@
       ],
       "casterConsumesAction": true,
       "canHelp": true,
+      "hasButton": true,
       "displayName": "Build",
       "description": "Start building a Revelators' structure on an adjacent tile. Multiple Slaves can build the structure, each additional one after the first provides half of the Celestium production to the construction than the previous Slave."
     },
@@ -274,6 +329,7 @@
       "researchNeeded": [],
       "distance": 1,
       "effect": "effect-slave-repair-apply-behaviour-structure",
+      "hasButton": true,
       "displayName": "Repair",
       "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs."
     },
@@ -284,6 +340,7 @@
       "researchNeeded": [],
       "distance": 1,
       "effect": "effect-slave-manual-labour-apply-behaviour-hut",
+      "hasButton": true,
       "displayName": "Manual Labour",
       "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut."
     },
@@ -295,6 +352,7 @@
       "periodicEffect": "effect-quickdraw-doubleshot-apply-behaviour",
       "onHitEffect": null,
       "onHitAttackTypes": [],
+      "hasButton": true,
       "displayName": "Doubleshot",
       "description": "Ranged attacks twice."
     },
@@ -310,8 +368,36 @@
       "onHitAttackTypes": [
         "Attacks.Ranged"
       ],
+      "hasButton": true,
       "displayName": "Cripple",
       "description": "Each ranged attack cripples the target until the end of their action. During this time target has 60% of their maximum Movement (rounded up) and cannot receive healing from any sources. Multiple attacks on a crippled target have no additional effects."
+    },
+    {
+      "name": "ability-gorger-fanatic-suicide-passive",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": "effect-gorger-fanatic-suicide-apply-behaviour-buff",
+      "onHitEffect": "effect-gorger-fanatic-suicide-apply-behaviour-destroy",
+      "onHitAttackTypes": [
+        "Attacks.Melee"
+      ],
+      "hasButton": false,
+      "displayName": "Fanatic Suicide Passive",
+      "description": ""
+    },
+    {
+      "name": "ability-gorger-fanatic-suicide",
+      "type": "Ability.Instant",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "effects": [
+        "effect-gorger-fanatic-suicide-search",
+        "effect-gorger-fanatic-suicide-apply-behaviour-destroy"
+      ],
+      "hasButton": true,
+      "displayName": "Fanatic Suicide",
+      "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, killing itself in the process."
     }
   ],
   "effects": [
@@ -500,6 +586,53 @@
         "Flag.FilterUnit"
       ],
       "conditions": []
+    },
+    {
+      "name": "effect-gorger-fanatic-suicide-apply-behaviour-buff",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-gorger-fanatic-suicide-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "conditions": []
+    },
+    {
+      "name": "effect-gorger-fanatic-suicide-apply-behaviour-destroy",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-gorger-fanatic-suicide-destroy"
+      ],
+      "location": "Location.Origin",
+      "filterFlags": [],
+      "conditions": []
+    },
+    {
+      "name": "effect-gorger-fanatic-suicide-search",
+      "type": "Effect.Search",
+      "radius": 1,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterStructure",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-gorger-fanatic-suicide-damage"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Circle"
+    },
+    {
+      "name": "effect-gorger-fanatic-suicide-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.CurrentMelee",
+      "amount": 0,
+      "bonusTo": null,
+      "bonusAmount": 0
     }
   ],
   "behaviours": [
@@ -705,6 +838,33 @@
       "restoreChangesOnEnd": true,
       "displayName": "Cripple Buff",
       "description": "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing from any sources until the end of its action."
+    },
+    {
+      "name": "behaviour-gorger-fanatic-suicide-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-gorger-fanatic-suicide-search"
+      ],
+      "endsAt": "EndsAt.Death",
+      "canStack": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Fanatic Suicide Buff",
+      "description": "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage to all friendly and enemy units in 1 Distance."
+    },
+    {
+      "name": "behaviour-gorger-fanatic-suicide-destroy",
+      "type": "Behaviour.Destroy",
+      "blocksOtherBehaviours": false,
+      "displayName": "Fanatic Suicide Destroy",
+      "description": ""
     }
   ]
 }
