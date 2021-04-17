@@ -329,7 +329,31 @@ namespace low_age_data.Collections
                     Location.Actor,
                     Shape.Circle,
                     null,
-                    true)
+                    true),
+
+                new Teleport(
+                    EffectName.Camou.ClimbTeleport,
+                    BehaviourName.Camou.ClimbWait,
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            Condition.TargetIsHighGround,
+                            Condition.TargetIsUnoccupied
+                        })
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Camou.ClimbApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Camou.ClimbBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    })
             };
         }
     }

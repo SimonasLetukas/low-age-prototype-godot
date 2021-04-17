@@ -48,6 +48,8 @@ namespace low_age_data.Domain.Effects
             public static EffectName SilentAssassinOnHitSilence => new EffectName($"{nameof(Camou)}{nameof(SilentAssassinOnHitSilence)}".ToKebabCase());
             public static EffectName SilentAssassinSearchFriendly => new EffectName($"{nameof(Camou)}{nameof(SilentAssassinSearchFriendly)}".ToKebabCase());
             public static EffectName SilentAssassinSearchEnemy => new EffectName($"{nameof(Camou)}{nameof(SilentAssassinSearchEnemy)}".ToKebabCase());
+            public static EffectName ClimbTeleport => new EffectName($"{nameof(Camou)}{nameof(ClimbTeleport)}".ToKebabCase());
+            public static EffectName ClimbApplyBehaviour => new EffectName($"{nameof(Camou)}{nameof(ClimbApplyBehaviour)}".ToKebabCase());
         }
     }
 }

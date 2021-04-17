@@ -479,7 +479,7 @@
         "Research.SpikedRope"
       ],
       "distance": 1,
-      "effect": "effect-gorger-fanatic-suicide-apply-behaviour-destroy",
+      "effect": "effect-camou-climb-teleport",
       "hasButton": true,
       "displayName": "Climb",
       "description": "Select an adjacent unoccupied space on a high ground. This space is considered occupied until the end of the action phase at which point Camou moves to it. Passively, Camou can move down from high ground at the additional cost of 1 Movement."
@@ -491,7 +491,7 @@
       "researchNeeded": [
         "Research.SpikedRope"
       ],
-      "periodicEffect": null,
+      "periodicEffect": "effect-camou-climb-apply-behaviour",
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "hasButton": false,
@@ -854,6 +854,32 @@
       "shape": "Shape.Circle",
       "usedForValidator": true,
       "validators": []
+    },
+    {
+      "name": "effect-camou-climb-teleport",
+      "type": "Effect.Teleport",
+      "waitBefore": "behaviour-camou-climb-wait",
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            "Condition.TargetIsHighGround",
+            "Condition.TargetIsUnoccupied"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "effect-camou-climb-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-camou-climb-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "validators": []
     }
   ],
   "behaviours": [
@@ -1105,7 +1131,34 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Silent Assassin Buff",
-      "description": "This unit is silenced."
+      "description": "This unit is silenced (use of any abilities is disabled)."
+    },
+    {
+      "name": "behaviour-camou-climb-wait",
+      "type": "Behaviour.Wait",
+      "endsAt": "EndsAt.EndOfThisActionPhase",
+      "displayName": "Climb Wait",
+      "description": "Camou will complete climbing on an adjacent high ground space at the end of this action phase."
+    },
+    {
+      "name": "behaviour-camou-climb-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationClimbsDown"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "endsAt": "EndsAt.Death",
+      "canStack": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Climb Buff",
+      "description": "Camou can move down from high ground at the additional cost of 1 Movement."
     }
   ]
 }

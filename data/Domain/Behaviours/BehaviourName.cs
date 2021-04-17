@@ -39,6 +39,8 @@ namespace low_age_data.Domain.Behaviours
         public static class Camou
         {
             public static BehaviourName SilentAssassinBuff => new BehaviourName($"{nameof(Camou)}{nameof(SilentAssassinBuff)}".ToKebabCase());
+            public static BehaviourName ClimbWait => new BehaviourName($"{nameof(Camou)}{nameof(ClimbWait)}".ToKebabCase());
+            public static BehaviourName ClimbBuff => new BehaviourName($"{nameof(Camou)}{nameof(ClimbBuff)}".ToKebabCase());
         }
     }
 }

@@ -5,10 +5,17 @@ namespace low_age_data.Domain.Logic
     public class Validator
     {
         public Validator(
-            IList<Condition> conditions,
-            string? type = null)
+            IList<Condition> conditions)
         {
-            Type = type ?? $"{nameof(Validator)}";
+            Conditions = conditions;
+            Type = $"{nameof(Validator)}";
+        }
+
+        protected Validator(
+            IList<Condition> conditions,
+            string type)
+        {
+            Type = type;
             Conditions = conditions;
         }
 

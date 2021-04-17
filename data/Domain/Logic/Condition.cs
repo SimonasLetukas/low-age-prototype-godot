@@ -13,6 +13,8 @@ namespace low_age_data.Domain.Logic
         public static Condition BehaviourToApplyDoesNotAlreadyExist => new Condition(Conditions.BehaviourToApplyDoesNotAlreadyExist);
         public static Condition TargetDoesNotHaveFullHealth => new Condition(Conditions.TargetDoesNotHaveFullHealth);
         public static Condition NoActorsFoundFromEffect => new Condition(Conditions.NoActorsFoundFromEffect);
+        public static Condition TargetIsHighGround => new Condition(Conditions.TargetIsHighGround);
+        public static Condition TargetIsUnoccupied => new Condition(Conditions.TargetIsUnoccupied);
 
         private Condition(Conditions @enum)
         {
@@ -25,7 +27,9 @@ namespace low_age_data.Domain.Logic
         {
             BehaviourToApplyDoesNotAlreadyExist,
             TargetDoesNotHaveFullHealth,
-            NoActorsFoundFromEffect
+            NoActorsFoundFromEffect,
+            TargetIsHighGround,
+            TargetIsUnoccupied
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

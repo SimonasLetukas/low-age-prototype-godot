@@ -229,7 +229,29 @@ namespace low_age_data.Collections
                     null,
                     false,
                     null,
-                    true)
+                    true),
+
+                new Wait(
+                    BehaviourName.Camou.ClimbWait,
+                    nameof(BehaviourName.Camou.ClimbWait).CamelCaseToWords(),
+                    "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
+                    EndsAt.EndOf.This.ActionPhase),
+
+                new Buff(
+                    BehaviourName.Camou.ClimbBuff,
+                    nameof(BehaviourName.Camou.ClimbBuff).CamelCaseToWords(),
+                    "Camou can move down from high ground at the additional cost of 1 Movement.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.ClimbsDown
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    EndsAt.Death,
+                    false,
+                    Alignment.Positive)
             };
         }
     }

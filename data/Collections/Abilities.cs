@@ -163,7 +163,7 @@ namespace low_age_data.Collections
                     "occupied until the end of the action phase at which point Camou moves to it. Passively, " +
                     "Camou can move down from high ground at the additional cost of 1 Movement.",
                     1,
-                    EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy, // TODO add effect
+                    EffectName.Camou.ClimbTeleport,
                     new List<Research>
                     {
                         Research.Revelators.SpikedRope
@@ -174,7 +174,7 @@ namespace low_age_data.Collections
                     nameof(AbilityName.Camou.ClimbPassive).CamelCaseToWords(),
                     "",
                     false,
-                    null, // TODO add effect
+                    EffectName.Camou.ClimbApplyBehaviour,
                     new List<Research>
                     {
                         Research.Revelators.SpikedRope
