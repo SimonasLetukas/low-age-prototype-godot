@@ -35,5 +35,10 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName FanaticSuicideBuff => new BehaviourName($"{nameof(Gorger)}{nameof(FanaticSuicideBuff)}".ToKebabCase());
             public static BehaviourName FanaticSuicideDestroy => new BehaviourName($"{nameof(Gorger)}{nameof(FanaticSuicideDestroy)}".ToKebabCase());
         }
+
+        public static class Camou
+        {
+            public static BehaviourName SilentAssassinBuff => new BehaviourName($"{nameof(Camou)}{nameof(SilentAssassinBuff)}".ToKebabCase());
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using low_age_data.Domain.Shared;
+﻿using System.Collections.Generic;
+using low_age_data.Domain.Logic;
+using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Effects
 {
@@ -7,19 +9,20 @@ namespace low_age_data.Domain.Effects
         public Damage(
             EffectName name,
             DamageType damageType,
-            int amount = 0,
+            Amount? amount = null,
             CombatAttributes? bonusTo = null,
-            int bonusAmount = 0) : base(name, $"{nameof(Effect)}.{nameof(Damage)}")
+            Amount? bonusAmount = null,
+            IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(Damage)}", validators ?? new List<Validator>())
         {
             DamageType = damageType;
-            Amount = amount;
+            Amount = amount ?? new Amount(0);
             BonusTo = bonusTo;
-            BonusAmount = bonusAmount;
+            BonusAmount = bonusAmount ?? new Amount(0);
         }
 
         public DamageType DamageType { get; }
-        public int Amount { get; }
+        public Amount Amount { get; }
         public CombatAttributes? BonusTo { get; }
-        public int BonusAmount { get; }
+        public Amount BonusAmount { get; }
     }
 }

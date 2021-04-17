@@ -320,7 +320,7 @@
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
       "periodicEffect": "effect-leader-all-for-one-apply-behaviour",
-      "onHitEffect": null,
+      "onHitEffects": [],
       "onHitAttackTypes": [],
       "hasButton": true,
       "displayName": "All For One",
@@ -332,7 +332,7 @@
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
       "periodicEffect": "effect-leader-menacing-presence-search",
-      "onHitEffect": null,
+      "onHitEffects": [],
       "onHitAttackTypes": [],
       "hasButton": true,
       "displayName": "Menacing Presence",
@@ -401,7 +401,7 @@
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
       "periodicEffect": "effect-quickdraw-doubleshot-apply-behaviour",
-      "onHitEffect": null,
+      "onHitEffects": [],
       "onHitAttackTypes": [],
       "hasButton": true,
       "displayName": "Doubleshot",
@@ -415,7 +415,9 @@
         "Research.PoisonedSlits"
       ],
       "periodicEffect": null,
-      "onHitEffect": "effect-quickdraw-cripple-apply-behaviour",
+      "onHitEffects": [
+        "effect-quickdraw-cripple-apply-behaviour"
+      ],
       "onHitAttackTypes": [
         "Attacks.Ranged"
       ],
@@ -429,7 +431,9 @@
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
       "periodicEffect": "effect-gorger-fanatic-suicide-apply-behaviour-buff",
-      "onHitEffect": "effect-gorger-fanatic-suicide-apply-behaviour-destroy",
+      "onHitEffects": [
+        "effect-gorger-fanatic-suicide-apply-behaviour-destroy"
+      ],
       "onHitAttackTypes": [
         "Attacks.Melee"
       ],
@@ -456,7 +460,10 @@
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
       "periodicEffect": null,
-      "onHitEffect": null,
+      "onHitEffects": [
+        "effect-camou-silent-assassin-on-hit-damage",
+        "effect-camou-silent-assassin-on-hit-silence"
+      ],
       "onHitAttackTypes": [
         "Attacks.Melee"
       ],
@@ -485,7 +492,7 @@
         "Research.SpikedRope"
       ],
       "periodicEffect": null,
-      "onHitEffect": null,
+      "onHitEffects": [],
       "onHitAttackTypes": [],
       "hasButton": false,
       "displayName": "Climb Passive",
@@ -503,7 +510,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
-      "conditions": []
+      "validators": []
     },
     {
       "name": "effect-leader-all-for-one-player-loses",
@@ -514,7 +521,8 @@
       "modifyFlags": [
         "Flag.EffectModifyPlayerGameLost"
       ],
-      "resourceModifications": []
+      "resourceModifications": [],
+      "validators": []
     },
     {
       "name": "effect-leader-menacing-presence-search",
@@ -534,7 +542,9 @@
         "effect-leader-menacing-presence-apply-behaviour"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle"
+      "shape": "Shape.Circle",
+      "usedForValidator": false,
+      "validators": []
     },
     {
       "name": "effect-leader-menacing-presence-apply-behaviour",
@@ -544,7 +554,7 @@
       ],
       "location": "Location.Inherited",
       "filterFlags": [],
-      "conditions": []
+      "validators": []
     },
     {
       "name": "effect-leader-one-for-all-apply-behaviour-obelisk",
@@ -558,8 +568,13 @@
         "Flag.FilterStructure",
         "Flag.StructureObelisk"
       ],
-      "conditions": [
-        "Condition.BehaviourToApplyDoesNotAlreadyExist"
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            "Condition.BehaviourToApplyDoesNotAlreadyExist"
+          ]
+        }
       ]
     },
     {
@@ -575,7 +590,9 @@
         "effect-leader-one-for-all-apply-behaviour-heal"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Map"
+      "shape": "Shape.Map",
+      "usedForValidator": false,
+      "validators": []
     },
     {
       "name": "effect-leader-one-for-all-apply-behaviour-heal",
@@ -585,7 +602,7 @@
       ],
       "location": "Location.Self",
       "filterFlags": [],
-      "conditions": []
+      "validators": []
     },
     {
       "name": "effect-slave-repair-apply-behaviour-structure",
@@ -598,8 +615,13 @@
         "Flag.FilterAlly",
         "Flag.FilterStructure"
       ],
-      "conditions": [
-        "Condition.TargetDoesNotHaveFullHealth"
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            "Condition.TargetDoesNotHaveFullHealth"
+          ]
+        }
       ]
     },
     {
@@ -610,7 +632,7 @@
       ],
       "location": "Location.Origin",
       "filterFlags": [],
-      "conditions": []
+      "validators": []
     },
     {
       "name": "effect-slave-manual-labour-apply-behaviour-hut",
@@ -624,8 +646,13 @@
         "Flag.FilterStructure",
         "Flag.StructureHut"
       ],
-      "conditions": [
-        "Condition.BehaviourToApplyDoesNotAlreadyExist"
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            "Condition.BehaviourToApplyDoesNotAlreadyExist"
+          ]
+        }
       ]
     },
     {
@@ -636,7 +663,7 @@
       ],
       "location": "Location.Origin",
       "filterFlags": [],
-      "conditions": []
+      "validators": []
     },
     {
       "name": "effect-slave-manual-labour-modify-player",
@@ -652,7 +679,8 @@
           "change": "Change.AddCurrent",
           "amount": 2.0
         }
-      ]
+      ],
+      "validators": []
     },
     {
       "name": "effect-quickdraw-doubleshot-apply-behaviour",
@@ -664,7 +692,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
-      "conditions": []
+      "validators": []
     },
     {
       "name": "effect-quickdraw-cripple-apply-behaviour",
@@ -677,7 +705,7 @@
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
       ],
-      "conditions": []
+      "validators": []
     },
     {
       "name": "effect-gorger-fanatic-suicide-apply-behaviour-buff",
@@ -689,7 +717,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
-      "conditions": []
+      "validators": []
     },
     {
       "name": "effect-gorger-fanatic-suicide-apply-behaviour-destroy",
@@ -699,7 +727,7 @@
       ],
       "location": "Location.Origin",
       "filterFlags": [],
-      "conditions": []
+      "validators": []
     },
     {
       "name": "effect-gorger-fanatic-suicide-search",
@@ -716,15 +744,116 @@
         "effect-gorger-fanatic-suicide-damage"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle"
+      "shape": "Shape.Circle",
+      "usedForValidator": false,
+      "validators": []
     },
     {
       "name": "effect-gorger-fanatic-suicide-damage",
       "type": "Effect.Damage",
-      "damageType": "DamageType.CurrentMelee",
-      "amount": 0,
+      "damageType": "DamageType.OverrideMelee",
+      "amount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
       "bonusTo": null,
-      "bonusAmount": 0
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "validators": []
+    },
+    {
+      "name": "effect-camou-silent-assassin-on-hit-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.CurrentMelee",
+      "amount": {
+        "flat": 0,
+        "multiplier": 0.5,
+        "multiplierOf": "Flag.AmountFromMissingHealth",
+        "multiplierFlags": [
+          "Flag.FilterEnemy",
+          "Flag.FilterUnit"
+        ]
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "validators": [
+        {
+          "effect": "effect-camou-silent-assassin-search-friendly",
+          "type": "Validator.ResultValidator",
+          "conditions": [
+            "Condition.NoActorsFoundFromEffect"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "effect-camou-silent-assassin-on-hit-silence",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-camou-silent-assassin-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "validators": [
+        {
+          "effect": "effect-camou-silent-assassin-search-friendly",
+          "type": "Validator.ResultValidator",
+          "conditions": [
+            "Condition.NoActorsFoundFromEffect"
+          ]
+        },
+        {
+          "effect": "effect-camou-silent-assassin-search-enemy",
+          "type": "Validator.ResultValidator",
+          "conditions": [
+            "Condition.NoActorsFoundFromEffect"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "effect-camou-silent-assassin-search-friendly",
+      "type": "Effect.Search",
+      "radius": 4,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterUnit",
+        "Flag.FilterAlly"
+      ],
+      "effects": [],
+      "location": "Location.Origin",
+      "shape": "Shape.Circle",
+      "usedForValidator": true,
+      "validators": []
+    },
+    {
+      "name": "effect-camou-silent-assassin-search-enemy",
+      "type": "Effect.Search",
+      "radius": 4,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterUnit",
+        "Flag.FilterEnemy"
+      ],
+      "effects": [],
+      "location": "Location.Actor",
+      "shape": "Shape.Circle",
+      "usedForValidator": true,
+      "validators": []
     }
   ],
   "behaviours": [
@@ -847,7 +976,7 @@
       "canStack": true,
       "alignment": "Alignment.Positive",
       "triggers": [
-        "Condition.EffectChainOriginIsDead"
+        "Trigger.OriginIsDead"
       ],
       "destroyOnConditionsMet": true,
       "conditionalEffects": [],
@@ -878,7 +1007,7 @@
       "canStack": false,
       "alignment": "Alignment.Positive",
       "triggers": [
-        "Condition.EffectChainOriginIsDead"
+        "Trigger.OriginIsDead"
       ],
       "destroyOnConditionsMet": true,
       "conditionalEffects": [],
@@ -957,6 +1086,26 @@
       "blocksOtherBehaviours": false,
       "displayName": "Fanatic Suicide Destroy",
       "description": ""
+    },
+    {
+      "name": "behaviour-camou-silent-assassin-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationAbilitiesDisabled"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "endsAt": "EndsAt.EndOfSecondAction",
+      "canStack": true,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Silent Assassin Buff",
+      "description": "This unit is silenced."
     }
   ]
 }

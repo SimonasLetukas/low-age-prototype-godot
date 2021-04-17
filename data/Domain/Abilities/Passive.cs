@@ -13,16 +13,16 @@ namespace low_age_data.Domain.Abilities
             bool hasButton = false,
             EffectName? periodicEffect = null,
             IList<Research>? researchNeeded = null,
-            EffectName? onHitEffect = null,
+            IList<EffectName>? onHitEffects = null,
             IList<Attacks>? onHitAttackTypes = null) : base(name, $"{nameof(Ability)}.{nameof(Passive)}", TurnPhase.Passive, researchNeeded ?? new List<Research>(), hasButton, displayName, description)
         {
             PeriodicEffect = periodicEffect;
-            OnHitEffect = onHitEffect;
+            OnHitEffects = onHitEffects ?? new List<EffectName>();
             OnHitAttackTypes = onHitAttackTypes ?? new List<Attacks>();
         }
 
         public EffectName? PeriodicEffect { get; } // Executes effect as often as possible
-        public EffectName? OnHitEffect { get; } // Executes effect on each attack
+        public IList<EffectName> OnHitEffects { get; } // Executes effects on each attack
         public IList<Attacks> OnHitAttackTypes { get; } // Determines which attack types trigger the on-hit effect
     }
 }

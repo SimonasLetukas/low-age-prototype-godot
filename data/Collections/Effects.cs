@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using low_age_data.Domain.Behaviours;
+﻿using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
+using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Conditions;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
+using System.Collections.Generic;
 
 namespace low_age_data.Collections
 {
@@ -51,7 +51,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
-                    }, 
+                    },
                     new List<EffectName>
                     {
                         EffectName.Leader.MenacingPresenceApplyBehaviour
@@ -78,9 +78,12 @@ namespace low_age_data.Collections
                         Flag.Filter.Structure,
                         Flag.Structure.Obelisk
                     },
-                    new List<Condition>
+                    new List<Validator>
                     {
-                        Condition.Behaviour.DoesNotAlreadyExist
+                        new Validator(new List<Condition>
+                        {
+                            Condition.BehaviourToApplyDoesNotAlreadyExist
+                        })
                     }),
 
                 new Search(
@@ -119,9 +122,12 @@ namespace low_age_data.Collections
                         Flag.Filter.Ally,
                         Flag.Filter.Structure
                     },
-                    new List<Condition>
+                    new List<Validator>
                     {
-                        Condition.Target.DoesNotHaveFullHealth
+                        new Validator(new List<Condition>
+                        {
+                            Condition.TargetDoesNotHaveFullHealth
+                        })
                     }),
 
                 new ApplyBehaviour(
@@ -145,9 +151,12 @@ namespace low_age_data.Collections
                         Flag.Filter.Structure,
                         Flag.Structure.Hut
                     },
-                    new List<Condition>
+                    new List<Validator>
                     {
-                        Condition.Behaviour.DoesNotAlreadyExist
+                        new Validator(new List<Condition>
+                        {
+                            Condition.BehaviourToApplyDoesNotAlreadyExist
+                        })
                     }),
 
                 new ApplyBehaviour(
@@ -168,7 +177,7 @@ namespace low_age_data.Collections
                     new List<ResourceModification>
                     {
                         new ResourceModification(
-                            Change.AddCurrent, 
+                            Change.AddCurrent,
                             2.0f,
                             Resources.Scraps)
                     }),
@@ -237,7 +246,90 @@ namespace low_age_data.Collections
 
                 new Damage(
                     EffectName.Gorger.FanaticSuicideDamage,
-                    DamageType.CurrentMelee)
+                    DamageType.OverrideMelee),
+
+                new Damage(
+                    EffectName.Camou.SilentAssassinOnHitDamage,
+                    DamageType.CurrentMelee,
+                    new Amount(
+                        0,
+                        0.5f,
+                        Flag.Amount.FromMissingHealth,
+                        new List<Flag>
+                        {
+                            Flag.Filter.Enemy,
+                            Flag.Filter.Unit
+                        }),
+                    null,
+                    null,
+                    new List<Validator>
+                    {
+                        new ResultValidator(
+                            EffectName.Camou.SilentAssassinSearchFriendly,
+                            new List<Condition>
+                            {
+                                Condition.NoActorsFoundFromEffect
+                            })
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Camou.SilentAssassinOnHitSilence,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Camou.SilentAssassinBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    new List<Validator>
+                    {
+                        new ResultValidator(
+                            EffectName.Camou.SilentAssassinSearchFriendly,
+                            new List<Condition>
+                            {
+                                Condition.NoActorsFoundFromEffect
+                            }),
+
+                        new ResultValidator(
+                            EffectName.Camou.SilentAssassinSearchEnemy,
+                            new List<Condition>
+                            {
+                                Condition.NoActorsFoundFromEffect
+                            })
+                    }),
+
+                new Search(
+                    EffectName.Camou.SilentAssassinSearchFriendly,
+                    4,
+                    new List<Flag>(),
+                    new List<Flag>
+                    {
+                        Flag.Filter.Unit,
+                        Flag.Filter.Ally
+                    },
+                    null,
+                    Location.Origin,
+                    Shape.Circle,
+                    null,
+                    true),
+
+                new Search(
+                    EffectName.Camou.SilentAssassinSearchEnemy,
+                    4,
+                    new List<Flag>(),
+                    new List<Flag>
+                    {
+                        Flag.Filter.Unit,
+                        Flag.Filter.Enemy
+                    },
+                    null,
+                    Location.Actor,
+                    Shape.Circle,
+                    null,
+                    true)
             };
         }
     }

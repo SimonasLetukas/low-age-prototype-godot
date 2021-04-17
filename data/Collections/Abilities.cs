@@ -97,7 +97,10 @@ namespace low_age_data.Collections
                     {
                         Research.Revelators.PoisonedSlits
                     },
-                    EffectName.Quickdraw.CrippleApplyBehaviour,
+                    new List<EffectName>
+                    {
+                        EffectName.Quickdraw.CrippleApplyBehaviour
+                    },
                     new List<Attacks>
                     {
                         Attacks.Ranged
@@ -110,7 +113,10 @@ namespace low_age_data.Collections
                     false,
                     EffectName.Gorger.FanaticSuicideApplyBehaviourBuff,
                     null,
-                    EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy,
+                    new List<EffectName>
+                    {
+                        EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy
+                    },
                     new List<Attacks>
                     {
                         Attacks.Melee
@@ -139,7 +145,11 @@ namespace low_age_data.Collections
                     true,
                     null,
                     null,
-                    null, //TODO on-hit effect
+                    new List<EffectName>
+                    {
+                        EffectName.Camou.SilentAssassinOnHitDamage,
+                        EffectName.Camou.SilentAssassinOnHitSilence
+                    },
                     new List<Attacks>
                     {
                         Attacks.Melee

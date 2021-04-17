@@ -10,9 +10,15 @@ namespace low_age_data.Domain.Shared.Flags
             return $"{nameof(Flag)}.{Value}";
         }
 
+        public static class Amount
+        {
+            public static Flag FromMissingHealth => new Flag(Flags.AmountFromMissingHealth);
+        }
+
         public static class Modification
         {
             public static Flag CannotBeHealed => new Flag(Flags.ModificationCannotBeHealed);
+            public static Flag AbilitiesDisabled => new Flag(Flags.ModificationAbilitiesDisabled);
         }
 
         public static class Effect
@@ -54,7 +60,9 @@ namespace low_age_data.Domain.Shared.Flags
 
         private enum Flags
         {
+            AmountFromMissingHealth,
             ModificationCannotBeHealed,
+            ModificationAbilitiesDisabled,
             EffectModifyPlayerGameLost,
             EffectSearchAppliedOnEnter,
             EffectSearchAppliedOnAction,

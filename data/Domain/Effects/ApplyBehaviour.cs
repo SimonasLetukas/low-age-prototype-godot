@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using low_age_data.Domain.Behaviours;
+﻿using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Conditions;
 using low_age_data.Domain.Shared.Flags;
+using System.Collections.Generic;
+using low_age_data.Domain.Logic;
 
 namespace low_age_data.Domain.Effects
 {
@@ -13,17 +13,15 @@ namespace low_age_data.Domain.Effects
             IList<BehaviourName> behavioursToApply,
             Location? location = null,
             IList<Flag>? filterFlags = null,
-            IList<Condition>? conditions = null) : base(name, $"{nameof(Effect)}.{nameof(ApplyBehaviour)}")
+            IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(ApplyBehaviour)}", validators ?? new List<Validator>())
         {
             BehavioursToApply = behavioursToApply;
             Location = location ?? Location.Inherited;
             FilterFlags = filterFlags ?? new List<Flag>();
-            Conditions = conditions ?? new List<Condition>();
         }
 
         public IList<BehaviourName> BehavioursToApply { get; }
         public Location Location { get; }
         public IList<Flag> FilterFlags { get; }
-        public IList<Condition> Conditions { get; }
     }
 }

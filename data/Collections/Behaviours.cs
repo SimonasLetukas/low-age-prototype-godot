@@ -2,8 +2,8 @@
 using low_age_data.Common;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
+using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Conditions;
 using low_age_data.Domain.Shared.Durations;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
@@ -114,9 +114,9 @@ namespace low_age_data.Collections
                     EndsAt.StartOf.Next.Planning,
                     true,
                     Alignment.Positive,
-                    new List<Condition>
+                    new List<Trigger>
                     {
-                        Condition.Effect.Chain.OriginIsDead
+                        Trigger.OriginIsDead
                     },
                     true),
 
@@ -144,9 +144,9 @@ namespace low_age_data.Collections
                     EndsAt.StartOf.Next.Planning,
                     false,
                     Alignment.Positive,
-                    new List<Condition>
+                    new List<Trigger>
                     {
-                        Condition.Effect.Chain.OriginIsDead
+                        Trigger.OriginIsDead
                     },
                     true),
 
@@ -209,7 +209,27 @@ namespace low_age_data.Collections
                 new Destroy(
                     BehaviourName.Gorger.FanaticSuicideDestroy,
                     nameof(BehaviourName.Gorger.FanaticSuicideDestroy).CamelCaseToWords(),
-                    "")
+                    ""),
+
+                new Buff(
+                    BehaviourName.Camou.SilentAssassinBuff,
+                    nameof(BehaviourName.Camou.SilentAssassinBuff).CamelCaseToWords(),
+                    "This unit is silenced (use of any abilities is disabled).",
+                    new List<Flag>
+                    {
+                        Flag.Modification.AbilitiesDisabled
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    EndsAt.EndOf.Second.Action,
+                    true,
+                    Alignment.Negative,
+                    null,
+                    false,
+                    null,
+                    true)
             };
         }
     }

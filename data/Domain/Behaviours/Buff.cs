@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Effects;
+using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Conditions;
 using low_age_data.Domain.Shared.Durations;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
@@ -22,7 +22,7 @@ namespace low_age_data.Domain.Behaviours
             EndsAt? endsAt = null,
             bool canStack = false,
             Alignment? alignment = null,
-            IList<Condition>? triggers = null,
+            IList<Trigger>? triggers = null,
             bool destroyOnConditionsMet = false,
             IList<EffectName>? conditionalEffects = null,
             bool restoreChangesOnEnd = false) : base(name, $"{nameof(Behaviour)}.{nameof(Buff)}", displayName, description)
@@ -35,7 +35,7 @@ namespace low_age_data.Domain.Behaviours
             EndsAt = endsAt ?? EndsAt.Death;
             CanStack = canStack;
             Alignment = alignment ?? Alignment.Neutral;
-            Triggers = triggers ?? new List<Condition>();
+            Triggers = triggers ?? new List<Trigger>();
             DestroyOnConditionsMet = destroyOnConditionsMet;
             ConditionalEffects = conditionalEffects ?? new List<EffectName>();
             RestoreChangesOnEnd = restoreChangesOnEnd;
@@ -49,7 +49,7 @@ namespace low_age_data.Domain.Behaviours
         public EndsAt EndsAt { get; }
         public bool CanStack { get; }
         public Alignment Alignment { get; }
-        public IList<Condition> Triggers { get; }
+        public IList<Trigger> Triggers { get; }
         public bool DestroyOnConditionsMet { get; } // If true, behaviour is removed (without triggering final
                                                     // modifications or effects) when all trigger conditions are met
         public IList<EffectName> ConditionalEffects { get; } // Executed when all trigger conditions are met (before destroy)
