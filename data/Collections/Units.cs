@@ -176,6 +176,44 @@ namespace low_age_data.Collections
                     {
                         AbilityName.Camou.SilentAssassin,
                         AbilityName.Camou.Climb
+                    }),
+
+                new Unit(
+                    UnitName.Shaman, 
+                    nameof(UnitName.Shaman),
+                    "",
+                    new List<Stat>
+                    {
+                        new CombatStat(18, true, Stats.Health),
+                        new CombatStat(1, false, Stats.MeleeArmour),
+                        new CombatStat(1, false, Stats.RangedArmour),
+                        new CombatStat(4, true, Stats.Movement),
+                        new CombatStat(19, false, Stats.Initiative),
+                        new AttackStat(
+                            1,
+                            false,
+                            Attacks.Melee,
+                            1,
+                            1),
+                        new AttackStat(
+                            2,
+                            false,
+                            Attacks.Ranged,
+                            2,
+                            4,
+                            CombatAttributes.Ranged,
+                            9)
+                    },
+                    Factions.Revelators,
+                    new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Biological,
+                        CombatAttributes.Ranged
+                    },
+                    new List<AbilityName>
+                    {
+                        AbilityName.Shaman.WondrousGoo
                     })
             };
         }

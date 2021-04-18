@@ -309,6 +309,66 @@
         ],
         "displayName": "Camou",
         "description": ""
+      },
+      {
+        "name": "unit-shaman",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 18,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 4,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 19,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": null,
+            "bonusAmount": 0,
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Ranged",
+            "minimumDistance": 2,
+            "maximumDistance": 4,
+            "bonusTo": "CombatAttributes.Ranged",
+            "bonusAmount": 9,
+            "maxAmount": 2,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Biological",
+          "CombatAttributes.Ranged"
+        ],
+        "abilities": [
+          "ability-shaman-wondrous-goo"
+        ],
+        "displayName": "Shaman",
+        "description": ""
       }
     ],
     "structures": []
