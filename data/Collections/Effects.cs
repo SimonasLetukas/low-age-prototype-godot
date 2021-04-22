@@ -5,6 +5,7 @@ using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
+using low_age_data.Domain.Entities.Features;
 
 namespace low_age_data.Collections
 {
@@ -219,12 +220,8 @@ namespace low_age_data.Collections
                         Flag.Filter.Self
                     }),
 
-                new ApplyBehaviour(
-                    EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy,
-                    new List<BehaviourName>
-                    {
-                        BehaviourName.Gorger.FanaticSuicideDestroy
-                    },
+                new Destroy(
+                    EffectName.Gorger.FanaticSuicideDestroy,
                     Location.Origin),
 
                 new Search(
@@ -353,7 +350,50 @@ namespace low_age_data.Collections
                     new List<Flag>
                     {
                         Flag.Filter.Self
-                    })
+                    }),
+
+                new CreateEntity(
+                    EffectName.Shaman.WondrousGooCreateEntity,
+                    FeatureName.WondrousGoo,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Shaman.WondrousGooFeatureWait
+                    }),
+
+                new Search(
+                    EffectName.Shaman.WondrousGooSearch,
+                    0,
+                    new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnAction,
+                        Flag.Effect.Search.AppliedOnEnter
+                    },
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    new List<EffectName>
+                    {
+                        EffectName.Shaman.WondrousGooApplyBehaviour
+                    },
+                    Location.Self),
+
+                new ApplyBehaviour(
+                    EffectName.Shaman.WondrousGooApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Shaman.WondrousGooBuff
+                    }),
+
+                new Destroy(
+                    EffectName.Shaman.WondrousGooDestroy),
+
+                new Damage(
+                    EffectName.Shaman.WondrousGooDamage,
+                    DamageType.Pure,
+                    new Amount(1))
             };
         }
     }

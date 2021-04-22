@@ -371,7 +371,19 @@
         "description": ""
       }
     ],
-    "structures": []
+    "structures": [],
+    "features": [
+      {
+        "name": "feature-wondrous-goo",
+        "onCollisionEffect": "effect-shaman-wondrous-goo-search",
+        "collisionFilters": [
+          "Flag.FilterUnit"
+        ],
+        "size": 1,
+        "displayName": "Wondrous Goo",
+        "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn."
+      }
+    ]
   },
   "abilities": [
     {
@@ -383,6 +395,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "All For One",
       "description": "Revelators faction loses if Leader dies."
     },
@@ -395,6 +408,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Menacing Presence",
       "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1)."
     },
@@ -406,6 +420,7 @@
       "distance": 1,
       "effect": "effect-leader-one-for-all-apply-behaviour-obelisk",
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "One For All",
       "description": "Select an adjacent Obelisk and sap its energy to give all friendly units +2 Health. This Obelisk cannot be sapped again for 10 turns."
     },
@@ -430,6 +445,7 @@
       "casterConsumesAction": true,
       "canHelp": true,
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Build",
       "description": "Start building a Revelators' structure on an adjacent tile. Multiple Slaves can build the structure, each additional one after the first provides half of the Celestium production to the construction than the previous Slave."
     },
@@ -441,6 +457,7 @@
       "distance": 1,
       "effect": "effect-slave-repair-apply-behaviour-structure",
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Repair",
       "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs."
     },
@@ -452,6 +469,7 @@
       "distance": 1,
       "effect": "effect-slave-manual-labour-apply-behaviour-hut",
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Manual Labour",
       "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut."
     },
@@ -464,6 +482,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Doubleshot",
       "description": "Ranged attacks twice."
     },
@@ -482,6 +501,7 @@
         "Attacks.Ranged"
       ],
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Cripple",
       "description": "Each ranged attack cripples the target until the end of their action. During this time target has 60% of their maximum Movement (rounded up) and cannot receive healing from any sources. Multiple attacks on a crippled target have no additional effects."
     },
@@ -492,12 +512,13 @@
       "researchNeeded": [],
       "periodicEffect": "effect-gorger-fanatic-suicide-apply-behaviour-buff",
       "onHitEffects": [
-        "effect-gorger-fanatic-suicide-apply-behaviour-destroy"
+        "effect-gorger-fanatic-suicide-destroy"
       ],
       "onHitAttackTypes": [
         "Attacks.Melee"
       ],
       "hasButton": false,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Fanatic Suicide Passive",
       "description": ""
     },
@@ -508,9 +529,10 @@
       "researchNeeded": [],
       "effects": [
         "effect-gorger-fanatic-suicide-search",
-        "effect-gorger-fanatic-suicide-apply-behaviour-destroy"
+        "effect-gorger-fanatic-suicide-destroy"
       ],
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Fanatic Suicide",
       "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, killing itself in the process."
     },
@@ -528,6 +550,7 @@
         "Attacks.Melee"
       ],
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Silent Assassin",
       "description": "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly units around Camou in 4 Attack Distance. Additionally, if the target has none of its allies in the same radius, Camou silences the target for 2 of its actions, disabling the use of any abilities or passives."
     },
@@ -541,6 +564,7 @@
       "distance": 1,
       "effect": "effect-camou-climb-teleport",
       "hasButton": true,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Climb",
       "description": "Select an adjacent unoccupied space on a high ground. This space is considered occupied until the end of the action phase at which point Camou moves to it. Passively, Camou can move down from high ground at the additional cost of 1 Movement."
     },
@@ -555,8 +579,21 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "hasButton": false,
+      "cooldown": "EndsAt.Instant",
       "displayName": "Climb Passive",
       "description": ""
+    },
+    {
+      "name": "ability-shaman-wondrous-goo",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 4,
+      "effect": "effect-shaman-wondrous-goo-create-entity",
+      "hasButton": true,
+      "cooldown": "EndsAt.EndOfNextActionPhase",
+      "displayName": "Wondrous Goo",
+      "description": "Select a tile in 4 Attack Distance, which gets contaminated. Any unit in the contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase."
     }
   ],
   "effects": [
@@ -780,13 +817,10 @@
       "validators": []
     },
     {
-      "name": "effect-gorger-fanatic-suicide-apply-behaviour-destroy",
-      "type": "Effect.ApplyBehaviour",
-      "behavioursToApply": [
-        "behaviour-gorger-fanatic-suicide-destroy"
-      ],
-      "location": "Location.Origin",
-      "filterFlags": [],
+      "name": "effect-gorger-fanatic-suicide-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Origin",
+      "blocksBehaviours": false,
       "validators": []
     },
     {
@@ -940,6 +974,72 @@
         "Flag.FilterSelf"
       ],
       "validators": []
+    },
+    {
+      "name": "effect-shaman-wondrous-goo-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "feature-wondrous-goo",
+      "initialEntityBehaviours": [
+        "behaviour-shaman-wondrous-goo-feature-wait"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-shaman-wondrous-goo-search",
+      "type": "Effect.Search",
+      "radius": 0,
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnAction",
+        "Flag.EffectSearchAppliedOnEnter"
+      ],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-shaman-wondrous-goo-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Circle",
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-shaman-wondrous-goo-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-shaman-wondrous-goo-buff"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-shaman-wondrous-goo-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Self",
+      "blocksBehaviours": false,
+      "validators": []
+    },
+    {
+      "name": "effect-shaman-wondrous-goo-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Pure",
+      "amount": {
+        "flat": 1,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "validators": []
     }
   ],
   "behaviours": [
@@ -972,14 +1072,14 @@
           "type": "Modification.AttackModification",
           "attackType": "Attacks.Melee",
           "attribute": "AttackAttribute.MaxAmount",
-          "change": "Change.RemoveMax",
+          "change": "Change.SubtractMax",
           "amount": 2.0
         },
         {
           "type": "Modification.AttackModification",
           "attackType": "Attacks.Ranged",
           "attribute": "AttackAttribute.MaxAmount",
-          "change": "Change.RemoveMax",
+          "change": "Change.SubtractMax",
           "amount": 2.0
         }
       ],
@@ -1074,6 +1174,7 @@
       "name": "behaviour-slave-repair-wait",
       "type": "Behaviour.Wait",
       "endsAt": "EndsAt.StartOfNextPlanning",
+      "nextBehaviour": null,
       "displayName": "Repair Wait",
       "description": "Currently repairing a structure."
     },
@@ -1105,6 +1206,7 @@
       "name": "behaviour-slave-manual-labour-wait",
       "type": "Behaviour.Wait",
       "endsAt": "EndsAt.StartOfNextPlanning",
+      "nextBehaviour": null,
       "displayName": "Manual Labour Wait",
       "description": "Currently working on a nearby Hut."
     },
@@ -1167,13 +1269,6 @@
       "description": "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage to all friendly and enemy units in 1 Distance."
     },
     {
-      "name": "behaviour-gorger-fanatic-suicide-destroy",
-      "type": "Behaviour.Destroy",
-      "blocksOtherBehaviours": false,
-      "displayName": "Fanatic Suicide Destroy",
-      "description": ""
-    },
-    {
       "name": "behaviour-camou-silent-assassin-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
@@ -1197,6 +1292,7 @@
       "name": "behaviour-camou-climb-wait",
       "type": "Behaviour.Wait",
       "endsAt": "EndsAt.EndOfThisActionPhase",
+      "nextBehaviour": null,
       "displayName": "Climb Wait",
       "description": "Camou will complete climbing on an adjacent high ground space at the end of this action phase."
     },
@@ -1219,6 +1315,76 @@
       "restoreChangesOnEnd": false,
       "displayName": "Climb Buff",
       "description": "Camou can move down from high ground at the additional cost of 1 Movement."
+    },
+    {
+      "name": "behaviour-shaman-wondrous-goo-feature-wait",
+      "type": "Behaviour.Wait",
+      "endsAt": "EndsAt.EndOfThisActionPhase",
+      "nextBehaviour": "behaviour-shaman-wondrous-goo-feature-buff",
+      "displayName": "Wondrous Goo Feature Wait",
+      "description": "Effect area will expand at the end of this action phase."
+    },
+    {
+      "name": "behaviour-shaman-wondrous-goo-feature-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.SizeModification",
+          "keepCentered": true,
+          "change": "Change.SetMax",
+          "amount": 3.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-shaman-wondrous-goo-destroy"
+      ],
+      "endsAt": "EndsAt.EndOfThisActionPhase",
+      "canStack": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Wondrous Goo Feature Buff",
+      "description": "Effect area will disappear at the end of this action phase."
+    },
+    {
+      "name": "behaviour-shaman-wondrous-goo-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.AttackModification",
+          "attackType": "Attacks.Melee",
+          "attribute": "AttackAttribute.MaxDistance",
+          "change": "Change.SubtractMax",
+          "amount": 3.0
+        },
+        {
+          "type": "Modification.AttackModification",
+          "attackType": "Attacks.Ranged",
+          "attribute": "AttackAttribute.MaxDistance",
+          "change": "Change.SubtractMax",
+          "amount": 3.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-shaman-wondrous-goo-damage"
+      ],
+      "endsAt": "EndsAt.StartOfNextAction",
+      "canStack": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Wondrous Goo Buff",
+      "description": "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn, at which point the effect ends."
     }
   ]
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Shared;
+using low_age_data.Domain.Shared.Durations;
 using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Abilities
@@ -13,13 +14,15 @@ namespace low_age_data.Domain.Abilities
             IList<Research> researchNeeded,
             bool hasButton,
             string displayName, 
-            string description)
+            string description,
+            EndsAt? cooldown = null)
         {
             Name = name;
             Type = type;
             TurnPhase = turnPhase;
             ResearchNeeded = researchNeeded;
             HasButton = hasButton;
+            Cooldown = cooldown ?? EndsAt.Instant;
             DisplayName = displayName;
             Description = description;
         }
@@ -33,6 +36,7 @@ namespace low_age_data.Domain.Abilities
         [JsonProperty(Order = -2)]
         public IList<Research> ResearchNeeded { get; }
         public bool HasButton { get; }
+        public EndsAt Cooldown { get; }
         public string DisplayName { get; }
         public string Description { get; }
     }

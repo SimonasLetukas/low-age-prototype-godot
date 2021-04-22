@@ -33,7 +33,6 @@ namespace low_age_data.Domain.Behaviours
         public static class Gorger
         {
             public static BehaviourName FanaticSuicideBuff => new BehaviourName($"{nameof(Gorger)}{nameof(FanaticSuicideBuff)}".ToKebabCase());
-            public static BehaviourName FanaticSuicideDestroy => new BehaviourName($"{nameof(Gorger)}{nameof(FanaticSuicideDestroy)}".ToKebabCase());
         }
 
         public static class Camou
@@ -41,6 +40,13 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName SilentAssassinBuff => new BehaviourName($"{nameof(Camou)}{nameof(SilentAssassinBuff)}".ToKebabCase());
             public static BehaviourName ClimbWait => new BehaviourName($"{nameof(Camou)}{nameof(ClimbWait)}".ToKebabCase());
             public static BehaviourName ClimbBuff => new BehaviourName($"{nameof(Camou)}{nameof(ClimbBuff)}".ToKebabCase());
+        }
+
+        public static class Shaman
+        {
+            public static BehaviourName WondrousGooFeatureWait => new BehaviourName($"{nameof(Shaman)}{nameof(WondrousGooFeatureWait)}".ToKebabCase());
+            public static BehaviourName WondrousGooFeatureBuff => new BehaviourName($"{nameof(Shaman)}{nameof(WondrousGooFeatureBuff)}".ToKebabCase());
+            public static BehaviourName WondrousGooBuff => new BehaviourName($"{nameof(Shaman)}{nameof(WondrousGooBuff)}".ToKebabCase());
         }
     }
 }

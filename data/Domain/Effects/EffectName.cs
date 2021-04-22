@@ -37,7 +37,7 @@ namespace low_age_data.Domain.Effects
         public static class Gorger
         {
             public static EffectName FanaticSuicideApplyBehaviourBuff => new EffectName($"{nameof(Gorger)}{nameof(FanaticSuicideApplyBehaviourBuff)}".ToKebabCase());
-            public static EffectName FanaticSuicideApplyBehaviourDestroy => new EffectName($"{nameof(Gorger)}{nameof(FanaticSuicideApplyBehaviourDestroy)}".ToKebabCase());
+            public static EffectName FanaticSuicideDestroy => new EffectName($"{nameof(Gorger)}{nameof(FanaticSuicideDestroy)}".ToKebabCase());
             public static EffectName FanaticSuicideSearch => new EffectName($"{nameof(Gorger)}{nameof(FanaticSuicideSearch)}".ToKebabCase());
             public static EffectName FanaticSuicideDamage => new EffectName($"{nameof(Gorger)}{nameof(FanaticSuicideDamage)}".ToKebabCase());
         }
@@ -50,6 +50,15 @@ namespace low_age_data.Domain.Effects
             public static EffectName SilentAssassinSearchEnemy => new EffectName($"{nameof(Camou)}{nameof(SilentAssassinSearchEnemy)}".ToKebabCase());
             public static EffectName ClimbTeleport => new EffectName($"{nameof(Camou)}{nameof(ClimbTeleport)}".ToKebabCase());
             public static EffectName ClimbApplyBehaviour => new EffectName($"{nameof(Camou)}{nameof(ClimbApplyBehaviour)}".ToKebabCase());
+        }
+
+        public static class Shaman
+        {
+            public static EffectName WondrousGooCreateEntity => new EffectName($"{nameof(Shaman)}{nameof(WondrousGooCreateEntity)}".ToKebabCase());
+            public static EffectName WondrousGooSearch => new EffectName($"{nameof(Shaman)}{nameof(WondrousGooSearch)}".ToKebabCase());
+            public static EffectName WondrousGooApplyBehaviour => new EffectName($"{nameof(Shaman)}{nameof(WondrousGooApplyBehaviour)}".ToKebabCase());
+            public static EffectName WondrousGooDestroy => new EffectName($"{nameof(Shaman)}{nameof(WondrousGooDestroy)}".ToKebabCase());
+            public static EffectName WondrousGooDamage => new EffectName($"{nameof(Shaman)}{nameof(WondrousGooDamage)}".ToKebabCase());
         }
     }
 }

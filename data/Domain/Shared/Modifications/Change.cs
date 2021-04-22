@@ -12,8 +12,8 @@ namespace low_age_data.Domain.Shared.Modifications
 
         public static Change AddMax => new Change(Changes.AddMax);
         public static Change AddCurrent => new Change(Changes.AddCurrent);
-        public static Change RemoveMax => new Change(Changes.RemoveMax);
-        public static Change RemoveCurrent => new Change(Changes.RemoveCurrent);
+        public static Change SubtractMax => new Change(Changes.SubtractMax);
+        public static Change SubtractCurrent => new Change(Changes.SubtractCurrent);
         public static Change SetMax => new Change(Changes.SetMax);
         public static Change SetCurrent => new Change(Changes.SetCurrent);
         public static Change MultiplyMax => new Change(Changes.MultiplyMax);
@@ -30,8 +30,8 @@ namespace low_age_data.Domain.Shared.Modifications
         {
             AddMax,
             AddCurrent,
-            RemoveMax,
-            RemoveCurrent,
+            SubtractMax,
+            SubtractCurrent,
             SetMax,
             SetCurrent,
             MultiplyMax,

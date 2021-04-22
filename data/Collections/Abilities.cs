@@ -4,6 +4,7 @@ using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Shared;
+using low_age_data.Domain.Shared.Durations;
 
 namespace low_age_data.Collections
 {
@@ -115,7 +116,7 @@ namespace low_age_data.Collections
                     null,
                     new List<EffectName>
                     {
-                        EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy
+                        EffectName.Gorger.FanaticSuicideDestroy
                     },
                     new List<Attacks>
                     {
@@ -132,7 +133,7 @@ namespace low_age_data.Collections
                     new List<EffectName>
                     {
                         EffectName.Gorger.FanaticSuicideSearch,
-                        EffectName.Gorger.FanaticSuicideApplyBehaviourDestroy
+                        EffectName.Gorger.FanaticSuicideDestroy
                     }),
 
                 new Passive(
@@ -178,7 +179,20 @@ namespace low_age_data.Collections
                     new List<Research>
                     {
                         Research.Revelators.SpikedRope
-                    })
+                    }),
+
+                new Target(
+                    AbilityName.Shaman.WondrousGoo,
+                    TurnPhase.Action,
+                    nameof(AbilityName.Shaman.WondrousGoo).CamelCaseToWords(),
+                    "Select a tile in 4 Attack Distance, which gets contaminated. Any unit in the " +
+                    "contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and " +
+                    "receives 1 Pure Damage at the start of its turn. At the end of this action phase, the " +
+                    "contamination area expands to adjacent tiles and stays until the end of the next action phase.",
+                    4,
+                    EffectName.Shaman.WondrousGooCreateEntity,
+                    null,
+                    EndsAt.EndOf.Next.ActionPhase)
             };
         }
     }

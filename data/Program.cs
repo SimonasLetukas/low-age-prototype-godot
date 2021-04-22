@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using low_age_data.Collections;
+﻿using low_age_data.Collections;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
+using low_age_data.Domain.Entities.Features;
 using low_age_data.Domain.Entities.Tiles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace low_age_data
 {
@@ -23,6 +24,7 @@ namespace low_age_data
             var tiles = Tiles.Get();
             var units = Units.Get();
             var structures = Structures.Get();
+            var features = Features.Get();
             var abilities = Abilities.Get();
             var effects = Effects.Get();
             var behaviours = Behaviours.Get();
@@ -33,7 +35,8 @@ namespace low_age_data
                 {
                     Tiles = tiles,
                     Units = units,
-                    Structures = structures
+                    Structures = structures,
+                    Features = features
                 },
                 Abilities = abilities,
                 Effects = effects,
@@ -76,5 +79,6 @@ namespace low_age_data
         public IList<Tile> Tiles { get; set; } = new List<Tile>();
         public IList<Unit> Units { get; set; } = new List<Unit>();
         public IList<Structure> Structures { get; set; } = new List<Structure>();
+        public IList<Feature> Features { get; set; } = new List<Feature>();
     }
 }

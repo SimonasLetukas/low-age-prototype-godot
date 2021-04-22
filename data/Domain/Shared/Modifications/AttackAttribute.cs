@@ -11,6 +11,7 @@ namespace low_age_data.Domain.Shared.Modifications
         }
 
         public static AttackAttribute MaxAmount => new AttackAttribute(AttackAttributes.MaxAmount);
+        public static AttackAttribute MaxDistance => new AttackAttribute(AttackAttributes.MaxDistance);
 
         private AttackAttribute(AttackAttributes @enum)
         {
@@ -21,10 +22,10 @@ namespace low_age_data.Domain.Shared.Modifications
 
         private enum AttackAttributes
         {
-            MaxAmount = 0,
-            MinimumDistance = 1,
-            MaximumDistance = 2,
-            BonusAmount = 3,
+            MaxAmount,
+            MinDistance,
+            MaxDistance,
+            BonusAmount,
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

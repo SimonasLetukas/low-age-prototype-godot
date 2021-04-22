@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using low_age_data.Common;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Logic;
@@ -7,6 +6,7 @@ using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
+using System.Collections.Generic;
 
 namespace low_age_data.Collections
 {
@@ -37,13 +37,13 @@ namespace low_age_data.Collections
                     new List<Modification>
                     {
                         new AttackModification(
-                            Change.RemoveMax, 
-                            2f,
+                            Change.SubtractMax, 
+                            2,
                             Attacks.Melee, 
                             AttackAttribute.MaxAmount),
                         new AttackModification(
-                            Change.RemoveMax, 
-                            2f,
+                            Change.SubtractMax, 
+                            2,
                             Attacks.Ranged,
                             AttackAttribute.MaxAmount)
                     },
@@ -83,7 +83,7 @@ namespace low_age_data.Collections
                     {
                         new StatModification(
                             Change.AddCurrent, 
-                            2f, 
+                            2, 
                             Stats.Health)
                     },
                     null,
@@ -107,7 +107,7 @@ namespace low_age_data.Collections
                     {
                         new StatModification(
                             Change.AddCurrent, 
-                            1f,
+                            1,
                             Stats.Health)
                     },
                     null,
@@ -206,11 +206,6 @@ namespace low_age_data.Collections
                         EffectName.Gorger.FanaticSuicideSearch
                     }),
 
-                new Destroy(
-                    BehaviourName.Gorger.FanaticSuicideDestroy,
-                    nameof(BehaviourName.Gorger.FanaticSuicideDestroy).CamelCaseToWords(),
-                    ""),
-
                 new Buff(
                     BehaviourName.Camou.SilentAssassinBuff,
                     nameof(BehaviourName.Camou.SilentAssassinBuff).CamelCaseToWords(),
@@ -251,7 +246,66 @@ namespace low_age_data.Collections
                     null,
                     EndsAt.Death,
                     false,
-                    Alignment.Positive)
+                    Alignment.Positive),
+
+                new Wait(
+                    BehaviourName.Shaman.WondrousGooFeatureWait,
+                    nameof(BehaviourName.Shaman.WondrousGooFeatureWait).CamelCaseToWords(),
+                    "Effect area will expand at the end of this action phase.",
+                    EndsAt.EndOf.This.ActionPhase,
+                    BehaviourName.Shaman.WondrousGooFeatureBuff),
+
+                new Buff(
+                    BehaviourName.Shaman.WondrousGooFeatureBuff,
+                    nameof(BehaviourName.Shaman.WondrousGooFeatureBuff).CamelCaseToWords(),
+                    "Effect area will disappear at the end of this action phase.",
+                    null,
+                    new List<Modification>
+                    {
+                        new SizeModification(
+                            Change.SetMax, 
+                            3)
+                    },
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Shaman.WondrousGooDestroy
+                    },
+                    EndsAt.EndOf.This.ActionPhase),
+
+                new Buff(
+                    BehaviourName.Shaman.WondrousGooBuff,
+                    nameof(BehaviourName.Shaman.WondrousGooBuff).CamelCaseToWords(),
+                    "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) " +
+                    "and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
+                    null,
+                    new List<Modification>
+                    {
+                        new AttackModification(
+                            Change.SubtractMax,
+                            3,
+                            Attacks.Melee, 
+                            AttackAttribute.MaxDistance),
+                        new AttackModification(
+                            Change.SubtractMax,
+                            3,
+                            Attacks.Ranged, 
+                            AttackAttribute.MaxDistance)
+                    },
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Shaman.WondrousGooDamage
+                    },
+                    EndsAt.StartOf.Next.Action,
+                    false,
+                    Alignment.Negative,
+                    null,
+                    false,
+                    null,
+                    true)
             };
         }
     }
