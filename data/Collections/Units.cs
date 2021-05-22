@@ -24,7 +24,6 @@ namespace low_age_data.Collections
                         new CombatStat(20, false, Stats.Initiative),
                         new AttackStat(
                             1, 
-                            false, 
                             Attacks.Melee, 
                             1, 
                             1)
@@ -55,7 +54,6 @@ namespace low_age_data.Collections
                         new CombatStat(28, false, Stats.Initiative),
                         new AttackStat(
                             5, 
-                            false, 
                             Attacks.Melee, 
                             1, 
                             2, 
@@ -88,13 +86,11 @@ namespace low_age_data.Collections
                         new CombatStat(18, false, Stats.Initiative),
                         new AttackStat(
                             1,
-                            false,
                             Attacks.Melee,
                             1,
                             1),
                         new AttackStat(
                             3,
-                            false,
                             Attacks.Ranged, 
                             2,
                             6,
@@ -127,7 +123,6 @@ namespace low_age_data.Collections
                         new CombatStat(26, false, Stats.Initiative),
                         new AttackStat(
                             3,
-                            false,
                             Attacks.Melee,
                             1,
                             1,
@@ -159,7 +154,6 @@ namespace low_age_data.Collections
                         new CombatStat(23, false, Stats.Initiative),
                         new AttackStat(
                             6,
-                            false,
                             Attacks.Melee,
                             1,
                             1,
@@ -191,13 +185,11 @@ namespace low_age_data.Collections
                         new CombatStat(19, false, Stats.Initiative),
                         new AttackStat(
                             1,
-                            false,
                             Attacks.Melee,
                             1,
                             1),
                         new AttackStat(
                             2,
-                            false,
                             Attacks.Ranged,
                             2,
                             4,
@@ -214,7 +206,44 @@ namespace low_age_data.Collections
                     new List<AbilityName>
                     {
                         AbilityName.Shaman.WondrousGoo
-                    })
+                    }),
+
+                new Unit(
+                    UnitName.Pyre,
+                    nameof(UnitName.Pyre),
+                    "",
+                    new List<Stat>
+                    {
+                        new CombatStat(22, true, Stats.Health),
+                        new CombatStat(1, false, Stats.MeleeArmour),
+                        new CombatStat(0, false, Stats.RangedArmour),
+                        new CombatStat(5, true, Stats.Movement),
+                        new CombatStat(12, false, Stats.Initiative),
+                        new AttackStat(
+                            1,
+                            Attacks.Melee,
+                            1,
+                            1),
+                        new AttackStat(
+                            6,
+                            Attacks.Ranged,
+                            2,
+                            5,
+                            CombatAttributes.Armoured,
+                            8)
+                    },
+                    Factions.Revelators,
+                    new List<CombatAttributes>
+                    {
+                        CombatAttributes.Light,
+                        CombatAttributes.Mechanical,
+                        CombatAttributes.Ranged
+                    },
+                    new List<AbilityName>
+                    {
+                        AbilityName.Pyre.WallOfFlames,
+                        AbilityName.Pyre.PhantomMenace
+                    }),
             };
         }
     }

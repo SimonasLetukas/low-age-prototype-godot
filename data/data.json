@@ -369,6 +369,67 @@
         ],
         "displayName": "Shaman",
         "description": ""
+      },
+      {
+        "name": "unit-pyre",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 22,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 5,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 12,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": null,
+            "bonusAmount": 0,
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Ranged",
+            "minimumDistance": 2,
+            "maximumDistance": 5,
+            "bonusTo": "CombatAttributes.Armoured",
+            "bonusAmount": 8,
+            "maxAmount": 6,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Mechanical",
+          "CombatAttributes.Ranged"
+        ],
+        "abilities": [
+          "ability-pyre-wall-of-flames",
+          "ability-pyre-phantom-menace"
+        ],
+        "displayName": "Pyre",
+        "description": ""
       }
     ],
     "structures": [],
@@ -594,6 +655,34 @@
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "displayName": "Wondrous Goo",
       "description": "Select a tile in 4 Attack Distance, which gets contaminated. Any unit in the contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase."
+    },
+    {
+      "name": "ability-pyre-wall-of-flames",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Wall Of Flames",
+      "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
+    },
+    {
+      "name": "ability-pyre-phantom-menace",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [
+        "Research.QuestionableCargo"
+      ],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Phantom Menace",
+      "description": "Can move through enemy units (but not buildings)."
     }
   ],
   "effects": [

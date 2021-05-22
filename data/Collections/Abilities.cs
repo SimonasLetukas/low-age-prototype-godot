@@ -192,7 +192,28 @@ namespace low_age_data.Collections
                     4,
                     EffectName.Shaman.WondrousGooCreateEntity,
                     null,
-                    EndsAt.EndOf.Next.ActionPhase)
+                    EndsAt.EndOf.Next.ActionPhase),
+
+                new Passive(
+                    AbilityName.Pyre.WallOfFlames,
+                    nameof(AbilityName.Pyre.WallOfFlames).CamelCaseToWords(),
+                    "The cargo leaves a path of flames when moved, which stay until the start of the " +
+                    "next Pyre's action or until death. Any unit which starts its turn or moves onto the flames " +
+                    "receives 5 Melee Damage.",
+                    true,
+                    null,
+                    null),
+
+                new Passive(
+                    AbilityName.Pyre.PhantomMenace,
+                    nameof(AbilityName.Pyre.PhantomMenace).CamelCaseToWords(),
+                    "Can move through enemy units (but not buildings).",
+                    true,
+                    null,
+                    new List<Research>
+                    {
+                        Research.Revelators.QuestionableCargo
+                    })
             };
         }
     }

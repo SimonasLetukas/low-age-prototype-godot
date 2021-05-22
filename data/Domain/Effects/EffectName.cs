@@ -60,5 +60,10 @@ namespace low_age_data.Domain.Effects
             public static EffectName WondrousGooDestroy => new EffectName($"{nameof(Shaman)}{nameof(WondrousGooDestroy)}".ToKebabCase());
             public static EffectName WondrousGooDamage => new EffectName($"{nameof(Shaman)}{nameof(WondrousGooDamage)}".ToKebabCase());
         }
+
+        public static class Pyre
+        {
+            public static EffectName WondrousGooCreateEntity => new EffectName($"{nameof(Pyre)}{nameof(WondrousGooCreateEntity)}".ToKebabCase());
+        }
     }
 }

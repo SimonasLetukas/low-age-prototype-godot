@@ -3,13 +3,12 @@
     public class AttackStat : Stat
     {
         public AttackStat(
-            int maxAmount, 
-            bool hasCurrent, 
+            int maxAmount,
             Attacks attackType, 
             int minimumDistance, 
             int maximumDistance, 
             CombatAttributes? bonusTo = null, 
-            int bonusAmount = 0) : base(maxAmount, hasCurrent)
+            int bonusAmount = 0) : base(maxAmount, false)
         {
             AttackType = attackType;
             MinimumDistance = minimumDistance;
