@@ -21,6 +21,22 @@ namespace low_age_data.Collections
                     new List<Flag>
                     {
                         Flag.Filter.Unit
+                    }),
+
+                new Feature(
+                    FeatureName.PyreCargo,
+                    nameof(FeatureName.PyreCargo).CamelCaseToWords(),
+                    "The cargo which is attached to Pyre leaves a path of flames when moved, which " +
+                    "stay until the start of the next Pyre's action or until death."),
+
+                new Feature(
+                    FeatureName.PyreFlames,
+                    nameof(FeatureName.PyreFlames).CamelCaseToWords(),
+                    "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
+                    EffectName.Pyre.WallOfFlamesDamage,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Unit
                     })
             };
         }

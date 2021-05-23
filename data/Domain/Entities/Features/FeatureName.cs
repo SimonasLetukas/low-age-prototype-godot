@@ -9,5 +9,7 @@ namespace low_age_data.Domain.Entities.Features
         }
 
         public static FeatureName WondrousGoo => new FeatureName(nameof(WondrousGoo).ToKebabCase());
+        public static FeatureName PyreCargo => new FeatureName(nameof(PyreCargo).ToKebabCase());
+        public static FeatureName PyreFlames => new FeatureName(nameof(PyreFlames).ToKebabCase());
     }
 }

@@ -10,7 +10,7 @@ namespace low_age_data.Domain.Entities.Features
             FeatureName name, 
             string displayName, 
             string description,
-            EffectName onCollisionEffect,
+            EffectName? onCollisionEffect = null,
             IList<Flag>? collisionFilters = null,
             int? size = null) : base(name, displayName, description)
         {
@@ -19,7 +19,7 @@ namespace low_age_data.Domain.Entities.Features
             Size = size ?? 1;
         }
 
-        public EffectName OnCollisionEffect { get; }
+        public EffectName? OnCollisionEffect { get; }
         public IList<Flag> CollisionFilters { get; }
         public int Size { get; }
     }

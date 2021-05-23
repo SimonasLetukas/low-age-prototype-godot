@@ -393,7 +393,40 @@ namespace low_age_data.Collections
                 new Damage(
                     EffectName.Shaman.WondrousGooDamage,
                     DamageType.Pure,
-                    new Amount(1))
+                    new Amount(1)),
+
+                new CreateEntity(
+                    EffectName.Pyre.CargoCreateEntity,
+                    FeatureName.PyreCargo,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Pyre.CargoTether,
+                        BehaviourName.Pyre.CargoWallOfFlamesBuff
+                    }),
+
+                new CreateEntity(
+                    EffectName.Pyre.WallOfFlamesCreateEntity,
+                    FeatureName.PyreFlames),
+
+                new Destroy(
+                    EffectName.Pyre.WallOfFlamesDestroy),
+
+                new Damage(
+                    EffectName.Pyre.WallOfFlamesDamage,
+                    DamageType.Melee,
+                    new Amount(5)),
+
+                new ApplyBehaviour(
+                    EffectName.Pyre.PhantomMenaceApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Pyre.PhantomMenaceBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    })
             };
         }
     }

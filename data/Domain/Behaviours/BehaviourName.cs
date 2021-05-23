@@ -48,5 +48,13 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName WondrousGooFeatureBuff => new BehaviourName($"{nameof(Shaman)}{nameof(WondrousGooFeatureBuff)}".ToKebabCase());
             public static BehaviourName WondrousGooBuff => new BehaviourName($"{nameof(Shaman)}{nameof(WondrousGooBuff)}".ToKebabCase());
         }
+
+        public static class Pyre
+        {
+            public static BehaviourName CargoTether => new BehaviourName($"{nameof(Pyre)}{nameof(CargoTether)}".ToKebabCase());
+            public static BehaviourName CargoWallOfFlamesBuff => new BehaviourName($"{nameof(Pyre)}{nameof(CargoWallOfFlamesBuff)}".ToKebabCase());
+            public static BehaviourName WallOfFlamesBuff => new BehaviourName($"{nameof(Pyre)}{nameof(WallOfFlamesBuff)}".ToKebabCase());
+            public static BehaviourName PhantomMenaceBuff => new BehaviourName($"{nameof(Pyre)}{nameof(PhantomMenaceBuff)}".ToKebabCase());
+        }
     }
 }

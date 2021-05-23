@@ -10,7 +10,8 @@ namespace low_age_data.Domain.Logic
             return $"{nameof(Trigger)}.{Value}";
         }
 
-        public static Trigger OriginIsDead => new Trigger(Triggers.OriginIsDead); 
+        public static Trigger OriginIsDead => new Trigger(Triggers.OriginIsDead);
+        public static Trigger EntityIsAboutToMove => new Trigger(Triggers.EntityIsAboutToMove);
 
         private Trigger(Triggers @enum)
         {
@@ -21,7 +22,8 @@ namespace low_age_data.Domain.Logic
 
         private enum Triggers
         {
-            OriginIsDead
+            OriginIsDead,
+            EntityIsAboutToMove
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

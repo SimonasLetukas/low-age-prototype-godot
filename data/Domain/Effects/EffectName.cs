@@ -63,7 +63,11 @@ namespace low_age_data.Domain.Effects
 
         public static class Pyre
         {
-            public static EffectName WondrousGooCreateEntity => new EffectName($"{nameof(Pyre)}{nameof(WondrousGooCreateEntity)}".ToKebabCase());
+            public static EffectName CargoCreateEntity => new EffectName($"{nameof(Pyre)}{nameof(CargoCreateEntity)}".ToKebabCase());
+            public static EffectName WallOfFlamesCreateEntity => new EffectName($"{nameof(Pyre)}{nameof(WallOfFlamesCreateEntity)}".ToKebabCase());
+            public static EffectName WallOfFlamesDestroy => new EffectName($"{nameof(Pyre)}{nameof(WallOfFlamesDestroy)}".ToKebabCase());
+            public static EffectName WallOfFlamesDamage => new EffectName($"{nameof(Pyre)}{nameof(WallOfFlamesDamage)}".ToKebabCase());
+            public static EffectName PhantomMenaceApplyBehaviour => new EffectName($"{nameof(Pyre)}{nameof(PhantomMenaceApplyBehaviour)}".ToKebabCase());
         }
     }
 }

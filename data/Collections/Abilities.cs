@@ -19,6 +19,10 @@ namespace low_age_data.Collections
                     nameof(AbilityName.Leader.AllForOne).CamelCaseToWords(),
                     "Revelators faction loses if Leader dies.",
                     true,
+                    null,
+                    null,
+                    null,
+                    null,
                     EffectName.Leader.AllForOneApplyBehaviour),
 
                 new Passive(
@@ -84,6 +88,10 @@ namespace low_age_data.Collections
                     nameof(AbilityName.Quickdraw.Doubleshot).CamelCaseToWords(),
                     "Ranged attacks twice.",
                     true,
+                    null,
+                    null,
+                    null,
+                    null,
                     EffectName.Quickdraw.DoubleshotApplyBehaviour),
 
                 new Passive(
@@ -112,7 +120,7 @@ namespace low_age_data.Collections
                     nameof(AbilityName.Gorger.FanaticSuicidePassive).CamelCaseToWords(),
                     "",
                     false,
-                    EffectName.Gorger.FanaticSuicideApplyBehaviourBuff,
+                    null,
                     null,
                     new List<EffectName>
                     {
@@ -121,7 +129,8 @@ namespace low_age_data.Collections
                     new List<Attacks>
                     {
                         Attacks.Melee
-                    }),
+                    },
+                    EffectName.Gorger.FanaticSuicideApplyBehaviourBuff),
 
                 new Instant(
                     AbilityName.Gorger.FanaticSuicide,
@@ -175,11 +184,14 @@ namespace low_age_data.Collections
                     nameof(AbilityName.Camou.ClimbPassive).CamelCaseToWords(),
                     "",
                     false,
-                    EffectName.Camou.ClimbApplyBehaviour,
+                    null,
                     new List<Research>
                     {
                         Research.Revelators.SpikedRope
-                    }),
+                    },
+                    null,
+                    null,
+                    EffectName.Camou.ClimbApplyBehaviour),
 
                 new Target(
                     AbilityName.Shaman.WondrousGoo,
@@ -202,7 +214,10 @@ namespace low_age_data.Collections
                     "receives 5 Melee Damage.",
                     true,
                     null,
-                    null),
+                    null,
+                    null,
+                    null,
+                    EffectName.Pyre.CargoCreateEntity),
 
                 new Passive(
                     AbilityName.Pyre.PhantomMenace,
@@ -213,7 +228,10 @@ namespace low_age_data.Collections
                     new List<Research>
                     {
                         Research.Revelators.QuestionableCargo
-                    })
+                    },
+                    null,
+                    null,
+                    EffectName.Pyre.PhantomMenaceApplyBehaviour)
             };
         }
     }

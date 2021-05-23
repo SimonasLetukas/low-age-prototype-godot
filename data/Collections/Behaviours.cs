@@ -305,7 +305,72 @@ namespace low_age_data.Collections
                     null,
                     false,
                     null,
-                    true)
+                    true),
+
+                new Tether(
+                    BehaviourName.Pyre.CargoTether,
+                    nameof(BehaviourName.Pyre.CargoTether).CamelCaseToWords(),
+                    "The cargo follows Pyre.",
+                    Location.Origin,
+                    true),
+
+                new Buff(
+                    BehaviourName.Pyre.CargoWallOfFlamesBuff,
+                    nameof(BehaviourName.Pyre.CargoWallOfFlamesBuff).CamelCaseToWords(),
+                    "The cargo leaves a path of flames when moved, which stay until the start of the next " +
+                    "Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives " +
+                    "5 Melee Damage.",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    false,
+                    null,
+                    new List<Trigger>
+                    {
+                        Trigger.EntityIsAboutToMove
+                    },
+                    false,
+                    new List<EffectName>
+                    {
+                        EffectName.Pyre.WallOfFlamesCreateEntity
+                    }),
+
+                new Buff(
+                    BehaviourName.Pyre.WallOfFlamesBuff,
+                    nameof(BehaviourName.Pyre.WallOfFlamesBuff).CamelCaseToWords(),
+                    "",
+                    null,
+                    null,
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Pyre.WallOfFlamesDestroy
+                    },
+                    EndsAt.StartOf.Next.Action,
+                    false,
+                    Alignment.Negative,
+                    new List<Trigger>
+                    {
+                        Trigger.OriginIsDead
+                    },
+                    true,
+                    new List<EffectName>
+                    {
+                        EffectName.Pyre.WallOfFlamesDestroy
+                    }),
+
+                new Buff(
+                    BehaviourName.Pyre.PhantomMenaceBuff,
+                    nameof(BehaviourName.Pyre.PhantomMenaceBuff).CamelCaseToWords(),
+                    "Pyre can move through enemy units (but not buildings).",
+                    new List<Flag>
+                    {
+                        Flag.Modification.MovesThroughEnemyUnits
+                    })
             };
         }
     }

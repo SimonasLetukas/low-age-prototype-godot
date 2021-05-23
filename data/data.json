@@ -443,6 +443,24 @@
         "size": 1,
         "displayName": "Wondrous Goo",
         "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn."
+      },
+      {
+        "name": "feature-pyre-cargo",
+        "onCollisionEffect": null,
+        "collisionFilters": [],
+        "size": 1,
+        "displayName": "Pyre Cargo",
+        "description": "The cargo which is attached to Pyre leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death."
+      },
+      {
+        "name": "feature-pyre-flames",
+        "onCollisionEffect": "effect-pyre-wall-of-flames-damage",
+        "collisionFilters": [
+          "Flag.FilterUnit"
+        ],
+        "size": 1,
+        "displayName": "Pyre Flames",
+        "description": "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
       }
     ]
   },
@@ -452,9 +470,10 @@
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-leader-all-for-one-apply-behaviour",
+      "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
+      "onBirthEffect": "effect-leader-all-for-one-apply-behaviour",
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "All For One",
@@ -468,6 +487,7 @@
       "periodicEffect": "effect-leader-menacing-presence-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
+      "onBirthEffect": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Menacing Presence",
@@ -539,9 +559,10 @@
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-quickdraw-doubleshot-apply-behaviour",
+      "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
+      "onBirthEffect": "effect-quickdraw-doubleshot-apply-behaviour",
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Doubleshot",
@@ -561,6 +582,7 @@
       "onHitAttackTypes": [
         "Attacks.Ranged"
       ],
+      "onBirthEffect": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Cripple",
@@ -571,13 +593,14 @@
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-gorger-fanatic-suicide-apply-behaviour-buff",
+      "periodicEffect": null,
       "onHitEffects": [
         "effect-gorger-fanatic-suicide-destroy"
       ],
       "onHitAttackTypes": [
         "Attacks.Melee"
       ],
+      "onBirthEffect": "effect-gorger-fanatic-suicide-apply-behaviour-buff",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
       "displayName": "Fanatic Suicide Passive",
@@ -610,6 +633,7 @@
       "onHitAttackTypes": [
         "Attacks.Melee"
       ],
+      "onBirthEffect": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Silent Assassin",
@@ -636,9 +660,10 @@
       "researchNeeded": [
         "Research.SpikedRope"
       ],
-      "periodicEffect": "effect-camou-climb-apply-behaviour",
+      "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
+      "onBirthEffect": "effect-camou-climb-apply-behaviour",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
       "displayName": "Climb Passive",
@@ -664,6 +689,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
+      "onBirthEffect": "effect-pyre-cargo-create-entity",
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Wall Of Flames",
@@ -679,6 +705,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
+      "onBirthEffect": "effect-pyre-phantom-menace-apply-behaviour",
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Phantom Menace",
@@ -1129,6 +1156,61 @@
         "multiplierFlags": []
       },
       "validators": []
+    },
+    {
+      "name": "effect-pyre-cargo-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "feature-pyre-cargo",
+      "initialEntityBehaviours": [
+        "behaviour-pyre-cargo-tether",
+        "behaviour-pyre-cargo-wall-of-flames-buff"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-pyre-wall-of-flames-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "feature-pyre-flames",
+      "initialEntityBehaviours": [],
+      "validators": []
+    },
+    {
+      "name": "effect-pyre-wall-of-flames-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Self",
+      "blocksBehaviours": false,
+      "validators": []
+    },
+    {
+      "name": "effect-pyre-wall-of-flames-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Melee",
+      "amount": {
+        "flat": 5,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "validators": []
+    },
+    {
+      "name": "effect-pyre-phantom-menace-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-pyre-phantom-menace-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "validators": []
     }
   ],
   "behaviours": [
@@ -1474,6 +1556,82 @@
       "restoreChangesOnEnd": true,
       "displayName": "Wondrous Goo Buff",
       "description": "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn, at which point the effect ends."
+    },
+    {
+      "name": "behaviour-pyre-cargo-tether",
+      "type": "Behaviour.Tether",
+      "source": "Location.Origin",
+      "extendsSource": true,
+      "maximumLeashRange": 1,
+      "calculatedForSourcePathfinding": true,
+      "displayName": "Cargo Tether",
+      "description": "The cargo follows Pyre."
+    },
+    {
+      "name": "behaviour-pyre-cargo-wall-of-flames-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "endsAt": "EndsAt.Death",
+      "canStack": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [
+        "Trigger.EntityIsAboutToMove"
+      ],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [
+        "effect-pyre-wall-of-flames-create-entity"
+      ],
+      "restoreChangesOnEnd": false,
+      "displayName": "Cargo Wall Of Flames Buff",
+      "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
+    },
+    {
+      "name": "behaviour-pyre-wall-of-flames-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-pyre-wall-of-flames-destroy"
+      ],
+      "endsAt": "EndsAt.StartOfNextAction",
+      "canStack": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [
+        "Trigger.OriginIsDead"
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [
+        "effect-pyre-wall-of-flames-destroy"
+      ],
+      "restoreChangesOnEnd": false,
+      "displayName": "Wall Of Flames Buff",
+      "description": ""
+    },
+    {
+      "name": "behaviour-pyre-phantom-menace-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationMovesThroughEnemyUnits"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "endsAt": "EndsAt.Death",
+      "canStack": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Phantom Menace Buff",
+      "description": "Pyre can move through enemy units (but not buildings)."
     }
   ]
 }

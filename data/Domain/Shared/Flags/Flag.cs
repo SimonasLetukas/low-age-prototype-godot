@@ -20,6 +20,7 @@ namespace low_age_data.Domain.Shared.Flags
             public static Flag CannotBeHealed => new Flag(Flags.ModificationCannotBeHealed);
             public static Flag AbilitiesDisabled => new Flag(Flags.ModificationAbilitiesDisabled);
             public static Flag ClimbsDown => new Flag(Flags.ModificationClimbsDown);
+            public static Flag MovesThroughEnemyUnits => new Flag(Flags.ModificationMovesThroughEnemyUnits);
         }
 
         public static class Effect
@@ -65,6 +66,7 @@ namespace low_age_data.Domain.Shared.Flags
             ModificationCannotBeHealed,
             ModificationAbilitiesDisabled,
             ModificationClimbsDown,
+            ModificationMovesThroughEnemyUnits,
             EffectModifyPlayerGameLost,
             EffectSearchAppliedOnEnter,
             EffectSearchAppliedOnAction,
