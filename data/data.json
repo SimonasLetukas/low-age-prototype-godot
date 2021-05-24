@@ -430,6 +430,56 @@
         ],
         "displayName": "Pyre",
         "description": ""
+      },
+      {
+        "name": "unit-big-bad-bull",
+        "size": 2,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 40,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 4,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 25,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Structure",
+            "bonusAmount": 6,
+            "maxAmount": 8,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Giant",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [
+          "ability-big-bad-bull-unleash-the-rage"
+        ],
+        "displayName": "Big Bad Bull",
+        "description": ""
       }
     ],
     "structures": [],
@@ -710,6 +760,18 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Phantom Menace",
       "description": "Can move through enemy units (but not buildings)."
+    },
+    {
+      "name": "ability-big-bad-bull-unleash-the-rage",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 1,
+      "effect": "effect-big-bad-bull-unleash-the-rage-search",
+      "hasButton": true,
+      "cooldown": "EndsAt.EndOfNextActionPhase",
+      "displayName": "Unleash The Rage",
+      "description": "Select a direction (1 out of 4) originating from Big Bad Bull. Any two adjacent units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage."
     }
   ],
   "effects": [
@@ -1210,6 +1272,73 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
+      "validators": []
+    },
+    {
+      "name": "effect-big-bad-bull-unleash-the-rage-search",
+      "type": "Effect.Search",
+      "radius": 1,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-big-bad-bull-unleash-the-rage-damage",
+        "effect-big-bad-bull-unleash-the-rage-force"
+      ],
+      "location": "Location.Point",
+      "shape": "Shape.Line",
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-big-bad-bull-unleash-the-rage-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.OverrideMelee",
+      "amount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "validators": []
+    },
+    {
+      "name": "effect-big-bad-bull-unleash-the-rage-force",
+      "type": "Effect.Force",
+      "from": "Location.Origin",
+      "amount": 1,
+      "onCollisionEffects": [
+        "effect-big-bad-bull-unleash-the-rage-force-damage"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-big-bad-bull-unleash-the-rage-force-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Melee",
+      "amount": {
+        "flat": 5,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
       "validators": []
     }
   ],

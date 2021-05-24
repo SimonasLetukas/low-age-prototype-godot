@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Common;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Shared;
@@ -244,6 +245,37 @@ namespace low_age_data.Collections
                         AbilityName.Pyre.WallOfFlames,
                         AbilityName.Pyre.PhantomMenace
                     }),
+
+                new Unit(
+                    UnitName.BigBadBull,
+                    nameof(UnitName.BigBadBull).CamelCaseToWords(),
+                    "",
+                    new List<Stat>
+                    {
+                        new CombatStat(40, true, Stats.Health),
+                        new CombatStat(1, false, Stats.MeleeArmour),
+                        new CombatStat(0, false, Stats.RangedArmour),
+                        new CombatStat(4, true, Stats.Movement),
+                        new CombatStat(25, false, Stats.Initiative),
+                        new AttackStat(
+                            8,
+                            Attacks.Melee,
+                            1,
+                            1,
+                            CombatAttributes.Structure,
+                            6)
+                    },
+                    Factions.Revelators,
+                    new List<CombatAttributes>
+                    {
+                        CombatAttributes.Giant,
+                        CombatAttributes.Biological
+                    },
+                    new List<AbilityName>
+                    {
+                        AbilityName.BigBadBull.UnleashTheRage
+                    },
+                    2),
             };
         }
     }

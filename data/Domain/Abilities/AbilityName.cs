@@ -51,5 +51,10 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName WallOfFlames => new AbilityName($"{nameof(Pyre)}{nameof(WallOfFlames)}".ToKebabCase());
             public static AbilityName PhantomMenace => new AbilityName($"{nameof(Pyre)}{nameof(PhantomMenace)}".ToKebabCase());
         }
+
+        public static class BigBadBull
+        {
+            public static AbilityName UnleashTheRage => new AbilityName($"{nameof(BigBadBull)}{nameof(UnleashTheRage)}".ToKebabCase());
+        }
     }
 }

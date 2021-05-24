@@ -231,7 +231,19 @@ namespace low_age_data.Collections
                     },
                     null,
                     null,
-                    EffectName.Pyre.PhantomMenaceApplyBehaviour)
+                    EffectName.Pyre.PhantomMenaceApplyBehaviour),
+
+                new Target(
+                    AbilityName.BigBadBull.UnleashTheRage,
+                    TurnPhase.Action,
+                    nameof(AbilityName.BigBadBull.UnleashTheRage).CamelCaseToWords(),
+                    "Select a direction (1 out of 4) originating from Big Bad Bull. Any two adjacent " +
+                    "units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. " +
+                    "If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage.",
+                    1,
+                    EffectName.BigBadBull.UnleashTheRageSearch,
+                    null,
+                    EndsAt.EndOf.Next.ActionPhase)
             };
         }
     }

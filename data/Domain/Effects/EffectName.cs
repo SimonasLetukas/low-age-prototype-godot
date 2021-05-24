@@ -69,5 +69,13 @@ namespace low_age_data.Domain.Effects
             public static EffectName WallOfFlamesDamage => new EffectName($"{nameof(Pyre)}{nameof(WallOfFlamesDamage)}".ToKebabCase());
             public static EffectName PhantomMenaceApplyBehaviour => new EffectName($"{nameof(Pyre)}{nameof(PhantomMenaceApplyBehaviour)}".ToKebabCase());
         }
+
+        public static class BigBadBull
+        {
+            public static EffectName UnleashTheRageSearch => new EffectName($"{nameof(BigBadBull)}{nameof(UnleashTheRageSearch)}".ToKebabCase());
+            public static EffectName UnleashTheRageDamage => new EffectName($"{nameof(BigBadBull)}{nameof(UnleashTheRageDamage)}".ToKebabCase());
+            public static EffectName UnleashTheRageForce => new EffectName($"{nameof(BigBadBull)}{nameof(UnleashTheRageForce)}".ToKebabCase());
+            public static EffectName UnleashTheRageForceDamage => new EffectName($"{nameof(BigBadBull)}{nameof(UnleashTheRageForceDamage)}".ToKebabCase());
+        }
     }
 }

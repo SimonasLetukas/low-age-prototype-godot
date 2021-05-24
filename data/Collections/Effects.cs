@@ -426,7 +426,43 @@ namespace low_age_data.Collections
                     new List<Flag>
                     {
                         Flag.Filter.Self
-                    })
+                    }),
+
+                new Search(
+                    EffectName.BigBadBull.UnleashTheRageSearch,
+                    1,
+                    new List<Flag>(),
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    new List<EffectName>
+                    {
+                        EffectName.BigBadBull.UnleashTheRageDamage,
+                        EffectName.BigBadBull.UnleashTheRageForce
+                    },
+                    Location.Point,
+                    Shape.Line),
+
+                new Damage(
+                    EffectName.BigBadBull.UnleashTheRageDamage,
+                    DamageType.OverrideMelee),
+
+                new Force(
+                    EffectName.BigBadBull.UnleashTheRageForce,
+                    Location.Origin, 
+                    1,
+                    new List<EffectName>
+                    {
+                        EffectName.BigBadBull.UnleashTheRageForceDamage
+                    }),
+
+                new Damage(
+                    EffectName.BigBadBull.UnleashTheRageForceDamage,
+                    DamageType.Melee,
+                    new Amount(5))
             };
         }
     }

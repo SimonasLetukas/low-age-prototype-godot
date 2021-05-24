@@ -11,6 +11,7 @@ namespace low_age_data.Domain.Shared
         }
 
         public static Shape Circle => new Shape(Shapes.Circle);
+        public static Shape Line => new Shape(Shapes.Line);
         public static Shape Map => new Shape(Shapes.Map);
 
         private Shape(Shapes @enum)
@@ -23,6 +24,7 @@ namespace low_age_data.Domain.Shared
         private enum Shapes
         {
             Circle,
+            Line,
             Map
         }
 
