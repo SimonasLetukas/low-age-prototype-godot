@@ -480,6 +480,158 @@
         ],
         "displayName": "Big Bad Bull",
         "description": ""
+      },
+      {
+        "name": "unit-mummy",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 39,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 2,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 16,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": null,
+            "bonusAmount": 0,
+            "maxAmount": 3,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [
+          "ability-mummy-spawn-roach",
+          "ability-mummy-leap-of-hunger"
+        ],
+        "displayName": "Mummy",
+        "description": ""
+      },
+      {
+        "name": "unit-roach",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 5,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 2,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 5,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 15,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Giant",
+            "bonusAmount": 1,
+            "maxAmount": 6,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [
+          "ability-roach-degrading-carapace",
+          "ability-roach-corrosive-spit"
+        ],
+        "displayName": "Roach",
+        "description": ""
+      },
+      {
+        "name": "unit-parasite",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 36,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 6,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 14,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": null,
+            "bonusAmount": 0,
+            "maxAmount": 0,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.Revelators",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Celestial"
+        ],
+        "abilities": [
+          "ability-parasite-paralysing-grasp"
+        ],
+        "displayName": "Parasite",
+        "description": ""
       }
     ],
     "structures": [],
@@ -727,7 +879,7 @@
       "distance": 4,
       "effect": "effect-shaman-wondrous-goo-create-entity",
       "hasButton": true,
-      "cooldown": "EndsAt.EndOfNextActionPhase",
+      "cooldown": "EndsAt.EndOfSecondActionPhase",
       "displayName": "Wondrous Goo",
       "description": "Select a tile in 4 Attack Distance, which gets contaminated. Any unit in the contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase."
     },
@@ -772,6 +924,74 @@
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "displayName": "Unleash The Rage",
       "description": "Select a direction (1 out of 4) originating from Big Bad Bull. Any two adjacent units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage."
+    },
+    {
+      "name": "ability-mummy-spawn-roach",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 1,
+      "effect": "effect-mummy-spawn-roach-create-entity",
+      "hasButton": true,
+      "cooldown": "EndsAt.EndOfNextActionPhase",
+      "displayName": "Spawn Roach",
+      "description": "Select an adjacent tile in which Roach is created."
+    },
+    {
+      "name": "ability-mummy-leap-of-hunger",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [
+        "Research.HumanfleshRations"
+      ],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-mummy-leap-of-hunger-modify-ability",
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Leap Of Hunger",
+      "description": "Roach creation range is increased to 4 Distance."
+    },
+    {
+      "name": "ability-mummy-spawn-roach-modified",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 4,
+      "effect": "effect-mummy-spawn-roach-create-entity",
+      "hasButton": true,
+      "cooldown": "EndsAt.EndOfNextActionPhase",
+      "displayName": "Spawn Roach",
+      "description": "Select a tile in 4 Distance in which Roach is created."
+    },
+    {
+      "name": "ability-roach-degrading-carapace",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-roach-degrading-carapace-apply-behaviour",
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Degrading Carapace",
+      "description": "At the start of each action loses 1 Health more than the previous action."
+    },
+    {
+      "name": "ability-roach-corrosive-spit",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [
+        "Research.AdaptiveDigestion"
+      ],
+      "distance": 4,
+      "effect": "effect-roach-corrosive-spit-damage",
+      "hasButton": true,
+      "cooldown": "EndsAt.EndOfSecondActionPhase",
+      "displayName": "Corrosive Spit",
+      "description": "Perform a ranged attack in 4 Distance dealing 6 Range Damage."
     }
   ],
   "effects": [
@@ -1037,6 +1257,8 @@
         "multiplierOf": null,
         "multiplierFlags": []
       },
+      "location": "Location.Inherited",
+      "filterFlags": [],
       "validators": []
     },
     {
@@ -1059,6 +1281,8 @@
         "multiplierOf": null,
         "multiplierFlags": []
       },
+      "location": "Location.Inherited",
+      "filterFlags": [],
       "validators": [
         {
           "effect": "effect-camou-silent-assassin-search-friendly",
@@ -1217,6 +1441,8 @@
         "multiplierOf": null,
         "multiplierFlags": []
       },
+      "location": "Location.Inherited",
+      "filterFlags": [],
       "validators": []
     },
     {
@@ -1260,6 +1486,8 @@
         "multiplierOf": null,
         "multiplierFlags": []
       },
+      "location": "Location.Inherited",
+      "filterFlags": [],
       "validators": []
     },
     {
@@ -1310,6 +1538,8 @@
         "multiplierOf": null,
         "multiplierFlags": []
       },
+      "location": "Location.Inherited",
+      "filterFlags": [],
       "validators": []
     },
     {
@@ -1339,6 +1569,92 @@
         "multiplierOf": null,
         "multiplierFlags": []
       },
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-mummy-spawn-roach-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "unit-roach",
+      "initialEntityBehaviours": [],
+      "validators": []
+    },
+    {
+      "name": "effect-mummy-leap-of-hunger-modify-ability",
+      "type": "Effect.ModifyAbility",
+      "abilityToModify": "ability-mummy-spawn-roach",
+      "modifiedAbility": "ability-mummy-spawn-roach-modified",
+      "validators": []
+    },
+    {
+      "name": "effect-roach-degrading-carapace-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-roach-degrading-carapace-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-roach-degrading-carapace-periodic-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-roach-degrading-carapace-periodic-damage-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-roach-degrading-carapace-self-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Pure",
+      "amount": {
+        "flat": 1,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-roach-corrosive-spit-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Ranged",
+      "amount": {
+        "flat": 6,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterStructure",
+        "Flag.FilterUnit"
+      ],
       "validators": []
     }
   ],
@@ -1761,6 +2077,49 @@
       "restoreChangesOnEnd": false,
       "displayName": "Phantom Menace Buff",
       "description": "Pyre can move through enemy units (but not buildings)."
+    },
+    {
+      "name": "behaviour-roach-degrading-carapace-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-roach-degrading-carapace-periodic-apply-behaviour",
+        "effect-roach-degrading-carapace-apply-behaviour"
+      ],
+      "endsAt": "EndsAt.StartOfNextAction",
+      "canStack": true,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Degrading Carapace Buff",
+      "description": "Increases periodic damage by 1 at the start of each action."
+    },
+    {
+      "name": "behaviour-roach-degrading-carapace-periodic-damage-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-roach-degrading-carapace-self-damage"
+      ],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-roach-degrading-carapace-periodic-apply-behaviour"
+      ],
+      "endsAt": "EndsAt.StartOfNextAction",
+      "canStack": true,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Degrading Carapace Periodic Damage Buff",
+      "description": "This unit will continue to receive 1 damage at every start of its action."
     }
   ]
 }

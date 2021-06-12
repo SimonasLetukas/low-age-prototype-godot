@@ -204,7 +204,7 @@ namespace low_age_data.Collections
                     4,
                     EffectName.Shaman.WondrousGooCreateEntity,
                     null,
-                    EndsAt.EndOf.Next.ActionPhase),
+                    EndsAt.EndOf.Second.ActionPhase),
 
                 new Passive(
                     AbilityName.Pyre.WallOfFlames,
@@ -243,7 +243,65 @@ namespace low_age_data.Collections
                     1,
                     EffectName.BigBadBull.UnleashTheRageSearch,
                     null,
-                    EndsAt.EndOf.Next.ActionPhase)
+                    EndsAt.EndOf.Next.ActionPhase),
+
+                new Target(
+                    AbilityName.Mummy.SpawnRoach,
+                    TurnPhase.Action,
+                    nameof(AbilityName.Mummy.SpawnRoach).CamelCaseToWords(),
+                    "Select an adjacent tile in which Roach is created.",
+                    1,
+                    EffectName.Mummy.SpawnRoachCreateEntity,
+                    null,
+                    EndsAt.EndOf.Next.ActionPhase),
+
+                new Passive(
+                    AbilityName.Mummy.LeapOfHunger,
+                    nameof(AbilityName.Mummy.LeapOfHunger).CamelCaseToWords(),
+                    "Roach creation range is increased to 4 Distance.",
+                    true,
+                    null,
+                    new List<Research>
+                    {
+                        Research.Revelators.HumanfleshRations
+                    },
+                    null,
+                    null,
+                    EffectName.Mummy.LeapOfHungerModifyAbility),
+
+                new Target(
+                    AbilityName.Mummy.SpawnRoachModified,
+                    TurnPhase.Action,
+                    nameof(AbilityName.Mummy.SpawnRoach).CamelCaseToWords(),
+                    "Select a tile in 4 Distance in which Roach is created.",
+                    4,
+                    EffectName.Mummy.SpawnRoachCreateEntity,
+                    null,
+                    EndsAt.EndOf.Next.ActionPhase),
+
+                new Passive(
+                    AbilityName.Roach.DegradingCarapace,
+                    nameof(AbilityName.Roach.DegradingCarapace).CamelCaseToWords(),
+                    "At the start of each action loses 1 Health more than the previous action.",
+                    true,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EffectName.Roach.DegradingCarapaceApplyBehaviour),
+
+                new Target(
+                    AbilityName.Roach.CorrosiveSpit,
+                    TurnPhase.Action, 
+                    nameof(AbilityName.Roach.CorrosiveSpit).CamelCaseToWords(),
+                    "Perform a ranged attack in 4 Distance dealing 6 Range Damage.",
+                    4,
+                    EffectName.Roach.CorrosiveSpitDamage,
+                    new List<Research>
+                    {
+                        Research.Revelators.AdaptiveDigestion
+                    },
+                    EndsAt.EndOf.Second.ActionPhase)
             };
         }
     }

@@ -56,5 +56,26 @@ namespace low_age_data.Domain.Abilities
         {
             public static AbilityName UnleashTheRage => new AbilityName($"{nameof(BigBadBull)}{nameof(UnleashTheRage)}".ToKebabCase());
         }
+
+        public static class Mummy
+        {
+            public static AbilityName SpawnRoach => new AbilityName($"{nameof(Mummy)}{nameof(SpawnRoach)}".ToKebabCase());
+            public static AbilityName SpawnRoachModified => new AbilityName($"{nameof(Mummy)}{nameof(SpawnRoachModified)}".ToKebabCase());
+            public static AbilityName LeapOfHunger => new AbilityName($"{nameof(Mummy)}{nameof(LeapOfHunger)}".ToKebabCase());
+
+        }
+
+        public static class Roach
+        {
+            public static AbilityName DegradingCarapace => new AbilityName($"{nameof(Roach)}{nameof(DegradingCarapace)}".ToKebabCase());
+            public static AbilityName CorrosiveSpit => new AbilityName($"{nameof(Roach)}{nameof(CorrosiveSpit)}".ToKebabCase());
+
+        }
+
+        public static class Parasite
+        {
+            public static AbilityName ParalysingGrasp => new AbilityName($"{nameof(Parasite)}{nameof(ParalysingGrasp)}".ToKebabCase());
+
+        }
     }
 }

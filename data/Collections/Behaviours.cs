@@ -370,7 +370,43 @@ namespace low_age_data.Collections
                     new List<Flag>
                     {
                         Flag.Modification.MovesThroughEnemyUnits
-                    })
+                    }),
+
+                new Buff(
+                    BehaviourName.Roach.DegradingCarapaceBuff,
+                    nameof(BehaviourName.Roach.DegradingCarapaceBuff).CamelCaseToWords(),
+                    "Increases periodic damage by 1 at the start of each action.",
+                    null,
+                    null,
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Roach.DegradingCarapacePeriodicApplyBehaviour,
+                        EffectName.Roach.DegradingCarapaceApplyBehaviour
+                    },
+                    EndsAt.StartOf.Next.Action,
+                    true,
+                    Alignment.Negative),
+
+                new Buff(
+                    BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff,
+                    nameof(BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff).CamelCaseToWords(),
+                    "This unit will continue to receive 1 damage at every start of its action.",
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Roach.DegradingCarapaceSelfDamage
+                    },
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Roach.DegradingCarapacePeriodicApplyBehaviour
+                    },
+                    EndsAt.StartOf.Next.Action,
+                    true,
+                    Alignment.Negative)
             };
         }
     }

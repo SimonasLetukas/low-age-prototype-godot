@@ -276,6 +276,94 @@ namespace low_age_data.Collections
                         AbilityName.BigBadBull.UnleashTheRage
                     },
                     2),
+
+                new Unit(
+                    UnitName.Mummy,
+                    nameof(UnitName.Mummy),
+                    "",
+                    new List<Stat>
+                    {
+                        new CombatStat(39, true, Stats.Health),
+                        new CombatStat(0, false, Stats.MeleeArmour),
+                        new CombatStat(0, false, Stats.RangedArmour),
+                        new CombatStat(2, true, Stats.Movement),
+                        new CombatStat(16, false, Stats.Initiative),
+                        new AttackStat(
+                            3,
+                            Attacks.Melee,
+                            1,
+                            1)
+                    },
+                    Factions.Revelators,
+                    new List<CombatAttributes>
+                    {
+                        CombatAttributes.Light,
+                        CombatAttributes.Biological
+                    },
+                    new List<AbilityName>
+                    {
+                        AbilityName.Mummy.SpawnRoach,
+                        AbilityName.Mummy.LeapOfHunger
+                    }),
+
+                new Unit(
+                    UnitName.Roach,
+                    nameof(UnitName.Roach),
+                    "",
+                    new List<Stat>
+                    {
+                        new CombatStat(5, true, Stats.Health),
+                        new CombatStat(0, false, Stats.MeleeArmour),
+                        new CombatStat(2, false, Stats.RangedArmour),
+                        new CombatStat(5, true, Stats.Movement),
+                        new CombatStat(15, false, Stats.Initiative),
+                        new AttackStat(
+                            6,
+                            Attacks.Melee,
+                            1,
+                            1,
+                            CombatAttributes.Giant,
+                            1)
+                    },
+                    Factions.Revelators,
+                    new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Biological
+                    },
+                    new List<AbilityName>
+                    {
+                        AbilityName.Roach.DegradingCarapace,
+                        AbilityName.Roach.CorrosiveSpit
+                    }),
+
+                new Unit(
+                    UnitName.Parasite,
+                    nameof(UnitName.Parasite),
+                    "",
+                    new List<Stat>
+                    {
+                        new CombatStat(36, true, Stats.Health),
+                        new CombatStat(1, false, Stats.MeleeArmour),
+                        new CombatStat(1, false, Stats.RangedArmour),
+                        new CombatStat(6, true, Stats.Movement),
+                        new CombatStat(14, false, Stats.Initiative),
+                        new AttackStat(
+                            0,
+                            Attacks.Melee,
+                            1,
+                            1)
+                    },
+                    Factions.Revelators,
+                    new List<CombatAttributes>
+                    {
+                        CombatAttributes.Light,
+                        CombatAttributes.Celestial
+                    },
+                    new List<AbilityName>
+                    {
+                        AbilityName.Parasite.ParalysingGrasp
+                    }),
             };
         }
     }

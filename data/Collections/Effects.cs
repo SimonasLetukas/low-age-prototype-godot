@@ -5,6 +5,8 @@ using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
+using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Features;
 
 namespace low_age_data.Collections
@@ -259,6 +261,8 @@ namespace low_age_data.Collections
                         }),
                     null,
                     null,
+                    null,
+                    null,
                     new List<Validator>
                     {
                         new ResultValidator(
@@ -462,7 +466,59 @@ namespace low_age_data.Collections
                 new Damage(
                     EffectName.BigBadBull.UnleashTheRageForceDamage,
                     DamageType.Melee,
-                    new Amount(5))
+                    new Amount(5)),
+
+                new CreateEntity(
+                    EffectName.Mummy.SpawnRoachCreateEntity,
+                    UnitName.Roach),
+
+                new ModifyAbility(
+                    EffectName.Mummy.LeapOfHungerModifyAbility,
+                    AbilityName.Mummy.SpawnRoach,
+                    AbilityName.Mummy.SpawnRoachModified),
+
+                new ApplyBehaviour(
+                    EffectName.Roach.DegradingCarapaceApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Roach.DegradingCarapaceBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Roach.DegradingCarapacePeriodicApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    }),
+
+                new Damage(
+                    EffectName.Roach.DegradingCarapaceSelfDamage,
+                    DamageType.Pure,
+                    new Amount(1)),
+
+                new Damage(
+                    EffectName.Roach.CorrosiveSpitDamage,
+                    DamageType.Ranged,
+                    new Amount(6),
+                    null,
+                    null,
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Structure,
+                        Flag.Filter.Unit
+                    })
             };
         }
     }

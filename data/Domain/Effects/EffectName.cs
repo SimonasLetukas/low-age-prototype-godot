@@ -77,5 +77,20 @@ namespace low_age_data.Domain.Effects
             public static EffectName UnleashTheRageForce => new EffectName($"{nameof(BigBadBull)}{nameof(UnleashTheRageForce)}".ToKebabCase());
             public static EffectName UnleashTheRageForceDamage => new EffectName($"{nameof(BigBadBull)}{nameof(UnleashTheRageForceDamage)}".ToKebabCase());
         }
+
+        public static class Mummy
+        {
+            public static EffectName SpawnRoachCreateEntity => new EffectName($"{nameof(Mummy)}{nameof(SpawnRoachCreateEntity)}".ToKebabCase());
+            public static EffectName LeapOfHungerModifyAbility => new EffectName($"{nameof(Mummy)}{nameof(LeapOfHungerModifyAbility)}".ToKebabCase());
+        }
+
+        public static class Roach
+        {
+            public static EffectName DegradingCarapaceApplyBehaviour => new EffectName($"{nameof(Roach)}{nameof(DegradingCarapaceApplyBehaviour)}".ToKebabCase());
+            public static EffectName DegradingCarapacePeriodicApplyBehaviour => new EffectName($"{nameof(Roach)}{nameof(DegradingCarapacePeriodicApplyBehaviour)}".ToKebabCase());
+            public static EffectName DegradingCarapaceSelfDamage => new EffectName($"{nameof(Roach)}{nameof(DegradingCarapaceSelfDamage)}".ToKebabCase());
+            public static EffectName CorrosiveSpitDamage => new EffectName($"{nameof(Roach)}{nameof(CorrosiveSpitDamage)}".ToKebabCase());
+
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace low_age_data.Domain.Shared
             public static Research PoisonedSlits => new Research(Researches.PoisonedSlits);
             public static Research SpikedRope => new Research(Researches.SpikedRope);
             public static Research QuestionableCargo => new Research(Researches.QuestionableCargo);
+            public static Research HumanfleshRations => new Research(Researches.HumanfleshRations);
+            public static Research AdaptiveDigestion => new Research(Researches.AdaptiveDigestion);
         }
 
         private Research(Researches @enum)
@@ -28,7 +30,9 @@ namespace low_age_data.Domain.Shared
         {
             PoisonedSlits,
             SpikedRope,
-            QuestionableCargo
+            QuestionableCargo,
+            HumanfleshRations,
+            AdaptiveDigestion
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

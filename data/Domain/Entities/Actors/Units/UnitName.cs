@@ -16,5 +16,8 @@ namespace low_age_data.Domain.Entities.Actors.Units
         public static UnitName Shaman => new UnitName(nameof(Shaman).ToKebabCase());
         public static UnitName Pyre => new UnitName(nameof(Pyre).ToKebabCase());
         public static UnitName BigBadBull => new UnitName(nameof(BigBadBull).ToKebabCase());
+        public static UnitName Mummy => new UnitName(nameof(Mummy).ToKebabCase());
+        public static UnitName Roach => new UnitName(nameof(Roach).ToKebabCase());
+        public static UnitName Parasite => new UnitName(nameof(Parasite).ToKebabCase());
     }
 }
