@@ -510,8 +510,8 @@ namespace low_age_data.Collections
                     EffectName.Roach.CorrosiveSpitDamage,
                     DamageType.Ranged,
                     new Amount(6),
-                    null,
-                    null,
+                    CombatAttributes.Structure,
+                    new Amount(8),
                     Location.Actor,
                     new List<Flag>
                     {

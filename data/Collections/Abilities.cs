@@ -294,7 +294,7 @@ namespace low_age_data.Collections
                     AbilityName.Roach.CorrosiveSpit,
                     TurnPhase.Action, 
                     nameof(AbilityName.Roach.CorrosiveSpit).CamelCaseToWords(),
-                    "Perform a ranged attack in 4 Distance dealing 6 Range Damage.",
+                    "Perform a ranged attack in 4 Distance dealing 6 (+8 to structures) Range Damage.",
                     4,
                     EffectName.Roach.CorrosiveSpitDamage,
                     new List<Research>

@@ -464,7 +464,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Structure",
+            "bonusTo": "CombatAttributes.Giant",
             "bonusAmount": 6,
             "maxAmount": 8,
             "hasCurrent": false
@@ -565,8 +565,8 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Giant",
-            "bonusAmount": 1,
+            "bonusTo": "CombatAttributes.Structure",
+            "bonusAmount": 4,
             "maxAmount": 6,
             "hasCurrent": false
           }
@@ -631,6 +631,611 @@
           "ability-parasite-paralysing-grasp"
         ],
         "displayName": "Parasite",
+        "description": ""
+      },
+      {
+        "name": "unit-horrior",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 25,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 12,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 3,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 2,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 32,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Armoured",
+            "bonusAmount": 4,
+            "maxAmount": 9,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [],
+        "displayName": "Horrior",
+        "description": ""
+      },
+      {
+        "name": "unit-surfer",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 2,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 2,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 5,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 30,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Light",
+            "bonusAmount": 4,
+            "maxAmount": 5,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [],
+        "displayName": "Surfer",
+        "description": ""
+      },
+      {
+        "name": "unit-marksman",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 7,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 4,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 5,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 17,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": null,
+            "bonusAmount": 0,
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Ranged",
+            "minimumDistance": 2,
+            "maximumDistance": 7,
+            "bonusTo": "CombatAttributes.Ranged",
+            "bonusAmount": 3,
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Biological",
+          "CombatAttributes.Ranged"
+        ],
+        "abilities": [],
+        "displayName": "Marksman",
+        "description": ""
+      },
+      {
+        "name": "unit-mortar",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 10,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 10,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 4,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 21,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": null,
+            "bonusAmount": 0,
+            "maxAmount": 2,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Ranged",
+            "minimumDistance": 2,
+            "maximumDistance": 5,
+            "bonusTo": "CombatAttributes.Armoured",
+            "bonusAmount": 9,
+            "maxAmount": 8,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Biological",
+          "CombatAttributes.Ranged"
+        ],
+        "abilities": [],
+        "displayName": "Mortar",
+        "description": ""
+      },
+      {
+        "name": "unit-hawk",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 9,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 5,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 4,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 45,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Celestial",
+            "bonusAmount": 3,
+            "maxAmount": 3,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [],
+        "displayName": "Hawk",
+        "description": ""
+      },
+      {
+        "name": "unit-engineer",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 8,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 4,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 4,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 11,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Mechanical",
+            "bonusAmount": 5,
+            "maxAmount": 1,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [],
+        "displayName": "Engineer",
+        "description": ""
+      },
+      {
+        "name": "unit-cannon",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 30,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 8,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 3,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 1,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 8,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Ranged",
+            "minimumDistance": 1,
+            "maximumDistance": 10,
+            "bonusTo": "CombatAttributes.Structure",
+            "bonusAmount": 20,
+            "maxAmount": 20,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Mechanical",
+          "CombatAttributes.Ranged"
+        ],
+        "abilities": [],
+        "displayName": "Cannon",
+        "description": ""
+      },
+      {
+        "name": "unit-ballista",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 14,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 10,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 0,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 27,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Ranged",
+            "minimumDistance": 1,
+            "maximumDistance": 9,
+            "bonusTo": "CombatAttributes.Giant",
+            "bonusAmount": 6,
+            "maxAmount": 9,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Mechanical",
+          "CombatAttributes.Ranged"
+        ],
+        "abilities": [],
+        "displayName": "Ballista",
+        "description": ""
+      },
+      {
+        "name": "unit-radar",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 10,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 12,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 2,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 5,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 0,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 8,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Mechanical"
+        ],
+        "abilities": [],
+        "displayName": "Radar",
+        "description": ""
+      },
+      {
+        "name": "unit-vessel",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 50,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 10,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 2,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 2,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 3,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 29,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Mechanical",
+            "bonusAmount": 8,
+            "maxAmount": 2,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Giant",
+          "CombatAttributes.Mechanical"
+        ],
+        "abilities": [],
+        "displayName": "Vessel",
+        "description": ""
+      },
+      {
+        "name": "unit-omen",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 5,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 20,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 5,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 13,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Biological",
+            "bonusAmount": 10,
+            "maxAmount": 10,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Ranged",
+            "minimumDistance": 2,
+            "maximumDistance": 4,
+            "bonusTo": "CombatAttributes.Biological",
+            "bonusAmount": 5,
+            "maxAmount": 5,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Celestial",
+          "CombatAttributes.Ranged"
+        ],
+        "abilities": [],
+        "displayName": "Omen",
         "description": ""
       }
     ],
@@ -991,7 +1596,7 @@
       "hasButton": true,
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "displayName": "Corrosive Spit",
-      "description": "Perform a ranged attack in 4 Distance dealing 6 Range Damage."
+      "description": "Perform a ranged attack in 4 Distance dealing 6 (+8 to structures) Range Damage."
     },
     {
       "name": "ability-parasite-paralysing-grasp",
@@ -1661,9 +2266,9 @@
         "multiplierOf": null,
         "multiplierFlags": []
       },
-      "bonusTo": null,
+      "bonusTo": "CombatAttributes.Structure",
       "bonusAmount": {
-        "flat": 0,
+        "flat": 8,
         "multiplier": null,
         "multiplierOf": null,
         "multiplierFlags": []
