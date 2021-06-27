@@ -322,7 +322,7 @@ namespace low_age_data.Collections
                             Attacks.Melee,
                             1,
                             1,
-                            CombatAttributes.Structure,
+                            CombatAttributes.Mechanical,
                             4)
                     },
                     Factions.Revelators,
