@@ -116,7 +116,7 @@ namespace low_age_data.Collections
                     Alignment.Positive,
                     new List<Trigger>
                     {
-                        Trigger.OriginIsDead
+                        Trigger.OriginIsDestroyed
                     },
                     true),
 
@@ -146,7 +146,7 @@ namespace low_age_data.Collections
                     Alignment.Positive,
                     new List<Trigger>
                     {
-                        Trigger.OriginIsDead
+                        Trigger.OriginIsDestroyed
                     },
                     true),
 
@@ -312,6 +312,9 @@ namespace low_age_data.Collections
                     nameof(BehaviourName.Pyre.CargoTether).CamelCaseToWords(),
                     "The cargo follows Pyre.",
                     Location.Origin,
+                    true,
+                    true,
+                    1,
                     true),
 
                 new Buff(
@@ -355,7 +358,7 @@ namespace low_age_data.Collections
                     Alignment.Negative,
                     new List<Trigger>
                     {
-                        Trigger.OriginIsDead
+                        Trigger.OriginIsDestroyed
                     },
                     true,
                     new List<EffectName>
@@ -406,7 +409,79 @@ namespace low_age_data.Collections
                     },
                     EndsAt.StartOf.Next.Action,
                     true,
-                    Alignment.Negative)
+                    Alignment.Negative),
+
+                new Tether(
+                    BehaviourName.Parasite.ParalysingGraspTether,
+                    nameof(BehaviourName.Parasite.ParalysingGraspTether).CamelCaseToWords(),
+                    "This unit is possessed by Parasite. On Parasite turn, it moves both units using the movement " +
+                    "speed that the possessed unit has. Any damage received is shared between both.",
+                    Location.Inherited,
+                    false,
+                    true,
+                    0,
+                    true),
+
+                new Buff(
+                    BehaviourName.Parasite.ParalysingGraspBuff,
+                    nameof(BehaviourName.Parasite.ParalysingGraspBuff).CamelCaseToWords(),
+                    "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it " +
+                    "must do unless there are no legal targets.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.CanAttackAnyTeam,
+                        Flag.Modification.MovementDisabled,
+                        Flag.Modification.MustExecuteAttack
+                    },
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Parasite.ParalysingGraspApplySelfBehaviour
+                    },
+                    null,
+                    null,
+                    null,
+                    false,
+                    Alignment.Negative,
+                    new List<Trigger>
+                    {
+                        Trigger.OriginIsDestroyed
+                    },
+                    true,
+                    null,
+                    true),
+
+                new Buff(
+                    BehaviourName.Parasite.ParalysingGraspSelfBuff,
+                    nameof(BehaviourName.Parasite.ParalysingGraspSelfBuff).CamelCaseToWords(),
+                    "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both " +
+                    "units on Parasite's turn.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.AbilitiesDisabled,
+                        Flag.Modification.CannotAttack
+                    },
+                    new List<Modification>
+                    {
+                        new StatCopyModification(
+                            Change.SetMax,
+                            Location.Source, 
+                            0,
+                            Stats.Movement)
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    false,
+                    Alignment.Positive,
+                    new List<Trigger>
+                    {
+                        Trigger.SourceIsDestroyed
+                    },
+                    true,
+                    null,
+                    true)
             };
         }
     }

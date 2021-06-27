@@ -301,7 +301,29 @@ namespace low_age_data.Collections
                     {
                         Research.Revelators.AdaptiveDigestion
                     },
-                    EndsAt.EndOf.Second.ActionPhase)
+                    EndsAt.EndOf.Second.ActionPhase),
+
+                new Passive(
+                    AbilityName.Parasite.ParalysingGrasp,
+                    nameof(AbilityName.Parasite.ParalysingGrasp).CamelCaseToWords(),
+                    "Instead of attacking, Parasite attaches to the target. Both units occupy the same space and " +
+                    "are considered enemy to all players. Parasite can only detach when the target is killed. All units who " +
+                    "attack this combined unit do damage to both. On its turn, Parasite can move the target, using target's " +
+                    "Movement. On target's turn, it must execute attack action to any friendly or enemy unit in range, " +
+                    "otherwise skip turn.",
+                    true,
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Parasite.ParalysingGraspApplyTetherBehaviour,
+                        EffectName.Parasite.ParalysingGraspApplyAttackBehaviour,
+                        //EffectName.Parasite.ParalysingGraspApplySelfBehaviour,
+                    },
+                    new List<Attacks>
+                    {
+                        Attacks.Melee
+                    })
             };
         }
     }

@@ -25,14 +25,13 @@ namespace low_age_data.Domain.Behaviours
             IList<Trigger>? triggers = null,
             bool destroyOnConditionsMet = false,
             IList<EffectName>? conditionalEffects = null,
-            bool restoreChangesOnEnd = false) : base(name, $"{nameof(Behaviour)}.{nameof(Buff)}", displayName, description)
+            bool restoreChangesOnEnd = false) : base(name, $"{nameof(Behaviour)}.{nameof(Buff)}", displayName, description, endsAt ?? EndsAt.Death)
         {
             ModificationFlags = modificationFlags ?? new List<Flag>();
             InitialModifications = initialModifications ?? new List<Modification>();
             InitialEffects = initialEffects ?? new List<EffectName>();
             FinalModifications = finalModifications ?? new List<Modification>();
             FinalEffects = finalEffects ?? new List<EffectName>();
-            EndsAt = endsAt ?? EndsAt.Death;
             CanStack = canStack;
             Alignment = alignment ?? Alignment.Neutral;
             Triggers = triggers ?? new List<Trigger>();
@@ -46,7 +45,6 @@ namespace low_age_data.Domain.Behaviours
         public IList<EffectName> InitialEffects { get; } // Executed when behaviour is added
         public IList<Modification> FinalModifications { get; } // Added right before the end of behaviour
         public IList<EffectName> FinalEffects { get; } // Executed right before behaviour ends
-        public EndsAt EndsAt { get; }
         public bool CanStack { get; }
         public Alignment Alignment { get; }
         public IList<Trigger> Triggers { get; }

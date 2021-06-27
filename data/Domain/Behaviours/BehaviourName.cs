@@ -62,5 +62,12 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName DegradingCarapaceBuff => new BehaviourName($"{nameof(Roach)}{nameof(DegradingCarapaceBuff)}".ToKebabCase());
             public static BehaviourName DegradingCarapacePeriodicDamageBuff => new BehaviourName($"{nameof(Roach)}{nameof(DegradingCarapacePeriodicDamageBuff)}".ToKebabCase());
         }
+
+        public static class Parasite
+        {
+            public static BehaviourName ParalysingGraspTether => new BehaviourName($"{nameof(Parasite)}{nameof(ParalysingGraspTether)}".ToKebabCase());
+            public static BehaviourName ParalysingGraspBuff => new BehaviourName($"{nameof(Parasite)}{nameof(ParalysingGraspBuff)}".ToKebabCase());
+            public static BehaviourName ParalysingGraspSelfBuff => new BehaviourName($"{nameof(Parasite)}{nameof(ParalysingGraspSelfBuff)}".ToKebabCase());
+        }
     }
 }

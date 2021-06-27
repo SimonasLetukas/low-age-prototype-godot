@@ -992,6 +992,25 @@
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "displayName": "Corrosive Spit",
       "description": "Perform a ranged attack in 4 Distance dealing 6 Range Damage."
+    },
+    {
+      "name": "ability-parasite-paralysing-grasp",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [
+        "effect-parasite-paralysing-grasp-apply-tether-behaviour",
+        "effect-parasite-paralysing-grasp-apply-attack-behaviour"
+      ],
+      "onHitAttackTypes": [
+        "Attacks.Melee"
+      ],
+      "onBirthEffect": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Paralysing Grasp",
+      "description": "Instead of attacking, Parasite attaches to the target. Both units occupy the same space and are considered enemy to all players. Parasite can only detach when the target is killed. All units who attack this combined unit do damage to both. On its turn, Parasite can move the target, using target's Movement. On target's turn, it must execute attack action to any friendly or enemy unit in range, otherwise skip turn."
     }
   ],
   "effects": [
@@ -1656,6 +1675,65 @@
         "Flag.FilterUnit"
       ],
       "validators": []
+    },
+    {
+      "name": "effect-parasite-paralysing-grasp-apply-tether-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-parasite-paralysing-grasp-tether"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            "Condition.BehaviourToApplyDoesNotAlreadyExist"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "effect-parasite-paralysing-grasp-apply-attack-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-parasite-paralysing-grasp-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            "Condition.BehaviourToApplyDoesNotAlreadyExist"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "effect-parasite-paralysing-grasp-apply-self-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-parasite-paralysing-grasp-self-buff"
+      ],
+      "location": "Location.Source",
+      "filterFlags": [
+        "Flag.FilterUnit"
+      ],
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            "Condition.BehaviourToApplyDoesNotAlreadyExist"
+          ]
+        }
+      ]
     }
   ],
   "behaviours": [
@@ -1669,7 +1747,6 @@
       "finalEffects": [
         "effect-leader-all-for-one-player-loses"
       ],
-      "endsAt": "EndsAt.Death",
       "canStack": false,
       "alignment": "Alignment.Neutral",
       "triggers": [],
@@ -1677,7 +1754,8 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "All For One Buff",
-      "description": "Revelators faction loses when this unit dies."
+      "description": "Revelators faction loses when this unit dies.",
+      "endsAt": "EndsAt.Death"
     },
     {
       "name": "behaviour-leader-menacing-presence-buff",
@@ -1702,7 +1780,6 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "endsAt": "EndsAt.EndOfThisAction",
       "canStack": false,
       "alignment": "Alignment.Negative",
       "triggers": [],
@@ -1710,7 +1787,8 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Menacing Presence Buff",
-      "description": "Melee and Range Damage for this unit is reduced by 2."
+      "description": "Melee and Range Damage for this unit is reduced by 2.",
+      "endsAt": "EndsAt.EndOfThisAction"
     },
     {
       "name": "behaviour-leader-one-for-all-obelisk-buff",
@@ -1722,7 +1800,6 @@
       ],
       "finalModifications": [],
       "finalEffects": [],
-      "endsAt": "EndsAt.StartOfTenthPlanning",
       "canStack": false,
       "alignment": "Alignment.Negative",
       "triggers": [],
@@ -1730,7 +1807,8 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "One For All Obelisk Buff",
-      "description": "This unit has recently been sapped for health."
+      "description": "This unit has recently been sapped for health.",
+      "endsAt": "EndsAt.StartOfTenthPlanning"
     },
     {
       "name": "behaviour-leader-one-for-all-heal-buff",
@@ -1747,7 +1825,6 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "endsAt": "EndsAt.Instant",
       "canStack": false,
       "alignment": "Alignment.Positive",
       "triggers": [],
@@ -1755,7 +1832,8 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "One For All Heal Buff",
-      "description": "Heals for 2 Health."
+      "description": "Heals for 2 Health.",
+      "endsAt": "EndsAt.Instant"
     },
     {
       "name": "behaviour-slave-repair-structure-buff",
@@ -1774,25 +1852,25 @@
         }
       ],
       "finalEffects": [],
-      "endsAt": "EndsAt.StartOfNextPlanning",
       "canStack": true,
       "alignment": "Alignment.Positive",
       "triggers": [
-        "Trigger.OriginIsDead"
+        "Trigger.OriginIsDestroyed"
       ],
       "destroyOnConditionsMet": true,
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Repair Structure Buff",
-      "description": "This structure will be repaired by +1 Health at the start of the planning phase."
+      "description": "This structure will be repaired by +1 Health at the start of the planning phase.",
+      "endsAt": "EndsAt.StartOfNextPlanning"
     },
     {
       "name": "behaviour-slave-repair-wait",
       "type": "Behaviour.Wait",
-      "endsAt": "EndsAt.StartOfNextPlanning",
       "nextBehaviour": null,
       "displayName": "Repair Wait",
-      "description": "Currently repairing a structure."
+      "description": "Currently repairing a structure.",
+      "endsAt": "EndsAt.StartOfNextPlanning"
     },
     {
       "name": "behaviour-slave-manual-labour-buff",
@@ -1806,25 +1884,25 @@
       "finalEffects": [
         "effect-slave-manual-labour-modify-player"
       ],
-      "endsAt": "EndsAt.StartOfNextPlanning",
       "canStack": false,
       "alignment": "Alignment.Positive",
       "triggers": [
-        "Trigger.OriginIsDead"
+        "Trigger.OriginIsDestroyed"
       ],
       "destroyOnConditionsMet": true,
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Manual Labour Buff",
-      "description": "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase."
+      "description": "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
+      "endsAt": "EndsAt.StartOfNextPlanning"
     },
     {
       "name": "behaviour-slave-manual-labour-wait",
       "type": "Behaviour.Wait",
-      "endsAt": "EndsAt.StartOfNextPlanning",
       "nextBehaviour": null,
       "displayName": "Manual Labour Wait",
-      "description": "Currently working on a nearby Hut."
+      "description": "Currently working on a nearby Hut.",
+      "endsAt": "EndsAt.StartOfNextPlanning"
     },
     {
       "name": "behaviour-quickdraw-doubleshot-extra-attack",
@@ -1832,10 +1910,10 @@
       "attackTypes": [
         "Attacks.Ranged"
       ],
-      "endsAt": "EndsAt.Death",
       "canStack": false,
       "displayName": "Doubleshot Extra Attack",
-      "description": "Ranged attacks twice."
+      "description": "Ranged attacks twice.",
+      "endsAt": "EndsAt.Death"
     },
     {
       "name": "behaviour-quickdraw-cripple-buff",
@@ -1854,7 +1932,6 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "endsAt": "EndsAt.EndOfThisAction",
       "canStack": false,
       "alignment": "Alignment.Negative",
       "triggers": [],
@@ -1862,7 +1939,8 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Cripple Buff",
-      "description": "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing from any sources until the end of its action."
+      "description": "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing from any sources until the end of its action.",
+      "endsAt": "EndsAt.EndOfThisAction"
     },
     {
       "name": "behaviour-gorger-fanatic-suicide-buff",
@@ -1874,7 +1952,6 @@
       "finalEffects": [
         "effect-gorger-fanatic-suicide-search"
       ],
-      "endsAt": "EndsAt.Death",
       "canStack": false,
       "alignment": "Alignment.Neutral",
       "triggers": [],
@@ -1882,7 +1959,8 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Fanatic Suicide Buff",
-      "description": "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage to all friendly and enemy units in 1 Distance."
+      "description": "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage to all friendly and enemy units in 1 Distance.",
+      "endsAt": "EndsAt.Death"
     },
     {
       "name": "behaviour-camou-silent-assassin-buff",
@@ -1894,7 +1972,6 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "endsAt": "EndsAt.EndOfSecondAction",
       "canStack": true,
       "alignment": "Alignment.Negative",
       "triggers": [],
@@ -1902,15 +1979,16 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Silent Assassin Buff",
-      "description": "This unit is silenced (use of any abilities is disabled)."
+      "description": "This unit is silenced (use of any abilities is disabled).",
+      "endsAt": "EndsAt.EndOfSecondAction"
     },
     {
       "name": "behaviour-camou-climb-wait",
       "type": "Behaviour.Wait",
-      "endsAt": "EndsAt.EndOfThisActionPhase",
       "nextBehaviour": null,
       "displayName": "Climb Wait",
-      "description": "Camou will complete climbing on an adjacent high ground space at the end of this action phase."
+      "description": "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
+      "endsAt": "EndsAt.EndOfThisActionPhase"
     },
     {
       "name": "behaviour-camou-climb-buff",
@@ -1922,7 +2000,6 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "endsAt": "EndsAt.Death",
       "canStack": false,
       "alignment": "Alignment.Positive",
       "triggers": [],
@@ -1930,15 +2007,16 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Climb Buff",
-      "description": "Camou can move down from high ground at the additional cost of 1 Movement."
+      "description": "Camou can move down from high ground at the additional cost of 1 Movement.",
+      "endsAt": "EndsAt.Death"
     },
     {
       "name": "behaviour-shaman-wondrous-goo-feature-wait",
       "type": "Behaviour.Wait",
-      "endsAt": "EndsAt.EndOfThisActionPhase",
       "nextBehaviour": "behaviour-shaman-wondrous-goo-feature-buff",
       "displayName": "Wondrous Goo Feature Wait",
-      "description": "Effect area will expand at the end of this action phase."
+      "description": "Effect area will expand at the end of this action phase.",
+      "endsAt": "EndsAt.EndOfThisActionPhase"
     },
     {
       "name": "behaviour-shaman-wondrous-goo-feature-buff",
@@ -1957,7 +2035,6 @@
       "finalEffects": [
         "effect-shaman-wondrous-goo-destroy"
       ],
-      "endsAt": "EndsAt.EndOfThisActionPhase",
       "canStack": false,
       "alignment": "Alignment.Neutral",
       "triggers": [],
@@ -1965,7 +2042,8 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Wondrous Goo Feature Buff",
-      "description": "Effect area will disappear at the end of this action phase."
+      "description": "Effect area will disappear at the end of this action phase.",
+      "endsAt": "EndsAt.EndOfThisActionPhase"
     },
     {
       "name": "behaviour-shaman-wondrous-goo-buff",
@@ -1992,7 +2070,6 @@
       "finalEffects": [
         "effect-shaman-wondrous-goo-damage"
       ],
-      "endsAt": "EndsAt.StartOfNextAction",
       "canStack": false,
       "alignment": "Alignment.Negative",
       "triggers": [],
@@ -2000,17 +2077,20 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Wondrous Goo Buff",
-      "description": "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn, at which point the effect ends."
+      "description": "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
+      "endsAt": "EndsAt.StartOfNextAction"
     },
     {
       "name": "behaviour-pyre-cargo-tether",
       "type": "Behaviour.Tether",
       "source": "Location.Origin",
-      "extendsSource": true,
+      "extendsSelection": true,
+      "sharedDamage": true,
       "maximumLeashRange": 1,
       "calculatedForSourcePathfinding": true,
       "displayName": "Cargo Tether",
-      "description": "The cargo follows Pyre."
+      "description": "The cargo follows Pyre.",
+      "endsAt": "EndsAt.Death"
     },
     {
       "name": "behaviour-pyre-cargo-wall-of-flames-buff",
@@ -2020,7 +2100,6 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "endsAt": "EndsAt.Death",
       "canStack": false,
       "alignment": "Alignment.Neutral",
       "triggers": [
@@ -2032,7 +2111,8 @@
       ],
       "restoreChangesOnEnd": false,
       "displayName": "Cargo Wall Of Flames Buff",
-      "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
+      "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
+      "endsAt": "EndsAt.Death"
     },
     {
       "name": "behaviour-pyre-wall-of-flames-buff",
@@ -2044,11 +2124,10 @@
       "finalEffects": [
         "effect-pyre-wall-of-flames-destroy"
       ],
-      "endsAt": "EndsAt.StartOfNextAction",
       "canStack": false,
       "alignment": "Alignment.Negative",
       "triggers": [
-        "Trigger.OriginIsDead"
+        "Trigger.OriginIsDestroyed"
       ],
       "destroyOnConditionsMet": true,
       "conditionalEffects": [
@@ -2056,7 +2135,8 @@
       ],
       "restoreChangesOnEnd": false,
       "displayName": "Wall Of Flames Buff",
-      "description": ""
+      "description": "",
+      "endsAt": "EndsAt.StartOfNextAction"
     },
     {
       "name": "behaviour-pyre-phantom-menace-buff",
@@ -2068,7 +2148,6 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "endsAt": "EndsAt.Death",
       "canStack": false,
       "alignment": "Alignment.Neutral",
       "triggers": [],
@@ -2076,7 +2155,8 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Phantom Menace Buff",
-      "description": "Pyre can move through enemy units (but not buildings)."
+      "description": "Pyre can move through enemy units (but not buildings).",
+      "endsAt": "EndsAt.Death"
     },
     {
       "name": "behaviour-roach-degrading-carapace-buff",
@@ -2089,7 +2169,6 @@
         "effect-roach-degrading-carapace-periodic-apply-behaviour",
         "effect-roach-degrading-carapace-apply-behaviour"
       ],
-      "endsAt": "EndsAt.StartOfNextAction",
       "canStack": true,
       "alignment": "Alignment.Negative",
       "triggers": [],
@@ -2097,7 +2176,8 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Degrading Carapace Buff",
-      "description": "Increases periodic damage by 1 at the start of each action."
+      "description": "Increases periodic damage by 1 at the start of each action.",
+      "endsAt": "EndsAt.StartOfNextAction"
     },
     {
       "name": "behaviour-roach-degrading-carapace-periodic-damage-buff",
@@ -2111,7 +2191,6 @@
       "finalEffects": [
         "effect-roach-degrading-carapace-periodic-apply-behaviour"
       ],
-      "endsAt": "EndsAt.StartOfNextAction",
       "canStack": true,
       "alignment": "Alignment.Negative",
       "triggers": [],
@@ -2119,7 +2198,77 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Degrading Carapace Periodic Damage Buff",
-      "description": "This unit will continue to receive 1 damage at every start of its action."
+      "description": "This unit will continue to receive 1 damage at every start of its action.",
+      "endsAt": "EndsAt.StartOfNextAction"
+    },
+    {
+      "name": "behaviour-parasite-paralysing-grasp-tether",
+      "type": "Behaviour.Tether",
+      "source": "Location.Inherited",
+      "extendsSelection": false,
+      "sharedDamage": true,
+      "maximumLeashRange": 0,
+      "calculatedForSourcePathfinding": true,
+      "displayName": "Paralysing Grasp Tether",
+      "description": "This unit is possessed by Parasite. On Parasite turn, it moves both units using the movement speed that the possessed unit has. Any damage received is shared between both.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-parasite-paralysing-grasp-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationCanAttackAnyTeam",
+        "Flag.ModificationMovementDisabled",
+        "Flag.ModificationMustExecuteAttack"
+      ],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-parasite-paralysing-grasp-apply-self-behaviour"
+      ],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [
+        "Trigger.OriginIsDestroyed"
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Paralysing Grasp Buff",
+      "description": "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it must do unless there are no legal targets.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-parasite-paralysing-grasp-self-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationAbilitiesDisabled",
+        "Flag.ModificationCannotAttack"
+      ],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "copyFrom": "Location.Source",
+          "stat": "Stats.Movement",
+          "change": "Change.SetMax",
+          "amount": 0.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [
+        "Trigger.SourceIsDestroyed"
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Paralysing Grasp Self Buff",
+      "description": "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both units on Parasite's turn.",
+      "endsAt": "EndsAt.Death"
     }
   ]
 }

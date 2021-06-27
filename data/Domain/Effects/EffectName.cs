@@ -90,7 +90,13 @@ namespace low_age_data.Domain.Effects
             public static EffectName DegradingCarapacePeriodicApplyBehaviour => new EffectName($"{nameof(Roach)}{nameof(DegradingCarapacePeriodicApplyBehaviour)}".ToKebabCase());
             public static EffectName DegradingCarapaceSelfDamage => new EffectName($"{nameof(Roach)}{nameof(DegradingCarapaceSelfDamage)}".ToKebabCase());
             public static EffectName CorrosiveSpitDamage => new EffectName($"{nameof(Roach)}{nameof(CorrosiveSpitDamage)}".ToKebabCase());
+        }
 
+        public static class Parasite
+        {
+            public static EffectName ParalysingGraspApplyTetherBehaviour => new EffectName($"{nameof(Parasite)}{nameof(ParalysingGraspApplyTetherBehaviour)}".ToKebabCase());
+            public static EffectName ParalysingGraspApplyAttackBehaviour => new EffectName($"{nameof(Parasite)}{nameof(ParalysingGraspApplyAttackBehaviour)}".ToKebabCase());
+            public static EffectName ParalysingGraspApplySelfBehaviour => new EffectName($"{nameof(Parasite)}{nameof(ParalysingGraspApplySelfBehaviour)}".ToKebabCase());
         }
     }
 }

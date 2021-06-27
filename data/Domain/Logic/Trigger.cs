@@ -10,7 +10,8 @@ namespace low_age_data.Domain.Logic
             return $"{nameof(Trigger)}.{Value}";
         }
 
-        public static Trigger OriginIsDead => new Trigger(Triggers.OriginIsDead);
+        public static Trigger OriginIsDestroyed => new Trigger(Triggers.OriginIsDestroyed);
+        public static Trigger SourceIsDestroyed => new Trigger(Triggers.SourceIsDestroyed);
         public static Trigger EntityIsAboutToMove => new Trigger(Triggers.EntityIsAboutToMove);
 
         private Trigger(Triggers @enum)
@@ -22,7 +23,8 @@ namespace low_age_data.Domain.Logic
 
         private enum Triggers
         {
-            OriginIsDead,
+            OriginIsDestroyed,
+            SourceIsDestroyed,
             EntityIsAboutToMove
         }
 

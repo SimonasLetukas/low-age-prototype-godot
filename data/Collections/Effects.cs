@@ -518,6 +518,65 @@ namespace low_age_data.Collections
                         Flag.Filter.Enemy,
                         Flag.Filter.Structure,
                         Flag.Filter.Unit
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Parasite.ParalysingGraspApplyTetherBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Parasite.ParalysingGraspTether
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            Condition.BehaviourToApplyDoesNotAlreadyExist
+                        })
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Parasite.ParalysingGraspApplyAttackBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Parasite.ParalysingGraspBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            Condition.BehaviourToApplyDoesNotAlreadyExist
+                        })
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Parasite.ParalysingGraspApplySelfBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Parasite.ParalysingGraspSelfBuff
+                    },
+                    Location.Source,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Unit
+                    },
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            Condition.BehaviourToApplyDoesNotAlreadyExist
+                        })
                     })
             };
         }

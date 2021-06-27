@@ -21,6 +21,10 @@ namespace low_age_data.Domain.Shared.Flags
             public static Flag AbilitiesDisabled => new Flag(Flags.ModificationAbilitiesDisabled);
             public static Flag ClimbsDown => new Flag(Flags.ModificationClimbsDown);
             public static Flag MovesThroughEnemyUnits => new Flag(Flags.ModificationMovesThroughEnemyUnits);
+            public static Flag MustExecuteAttack => new Flag(Flags.ModificationMustExecuteAttack);
+            public static Flag CannotAttack => new Flag(Flags.ModificationCannotAttack);
+            public static Flag MovementDisabled => new Flag(Flags.ModificationMovementDisabled);
+            public static Flag CanAttackAnyTeam => new Flag(Flags.ModificationCanAttackAnyTeam);
         }
 
         public static class Effect
@@ -67,6 +71,10 @@ namespace low_age_data.Domain.Shared.Flags
             ModificationAbilitiesDisabled,
             ModificationClimbsDown,
             ModificationMovesThroughEnemyUnits,
+            ModificationMustExecuteAttack,
+            ModificationCannotAttack,
+            ModificationMovementDisabled,
+            ModificationCanAttackAnyTeam,
             EffectModifyPlayerGameLost,
             EffectSearchAppliedOnEnter,
             EffectSearchAppliedOnAction,

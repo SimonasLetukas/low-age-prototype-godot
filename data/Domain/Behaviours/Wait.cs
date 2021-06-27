@@ -9,13 +9,11 @@ namespace low_age_data.Domain.Behaviours
             string displayName, 
             string description,
             EndsAt endsAt,
-            BehaviourName? nextBehaviour = null) : base(name, $"{nameof(Behaviour)}.{nameof(Wait)}", displayName, description)
+            BehaviourName? nextBehaviour = null) : base(name, $"{nameof(Behaviour)}.{nameof(Wait)}", displayName, description, endsAt)
         {
-            EndsAt = endsAt;
             NextBehaviour = nextBehaviour;
         }
 
-        public EndsAt EndsAt { get; }
         public BehaviourName? NextBehaviour { get; }
     }
 }

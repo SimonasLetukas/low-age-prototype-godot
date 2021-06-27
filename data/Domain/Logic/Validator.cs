@@ -4,8 +4,7 @@ namespace low_age_data.Domain.Logic
 {
     public class Validator
     {
-        public Validator(
-            IList<Condition> conditions)
+        public Validator(IList<Condition> conditions)
         {
             Conditions = conditions;
             Type = $"{nameof(Validator)}";
