@@ -565,7 +565,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Structure",
+            "bonusTo": "CombatAttributes.Mechanical",
             "bonusAmount": 4,
             "maxAmount": 6,
             "hasCurrent": false
@@ -1596,7 +1596,7 @@
       "hasButton": true,
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "displayName": "Corrosive Spit",
-      "description": "Perform a ranged attack in 4 Distance dealing 6 (+8 to structures) Range Damage."
+      "description": "Perform a ranged attack in 4 Distance dealing 6 (+8 to mechanical) Range Damage."
     },
     {
       "name": "ability-parasite-paralysing-grasp",
@@ -2266,7 +2266,7 @@
         "multiplierOf": null,
         "multiplierFlags": []
       },
-      "bonusTo": "CombatAttributes.Structure",
+      "bonusTo": "CombatAttributes.Mechanical",
       "bonusAmount": {
         "flat": 8,
         "multiplier": null,
