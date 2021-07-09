@@ -481,7 +481,54 @@ namespace low_age_data.Collections
                     },
                     true,
                     null,
-                    true)
+                    true),
+
+                new Buff(
+                    BehaviourName.Horrior.ExpertFormationBuff,
+                    nameof(BehaviourName.Horrior.ExpertFormationBuff).CamelCaseToWords(),
+                    "Range Armour for this unit is increased by 2 because it is in formation with an adjacent Horrior.",
+                    null,
+                    new List<Modification>
+                    {
+                        new StatModification(
+                            Change.AddMax,
+                            2,
+                            Stats.RangedArmour)
+                    },
+                    null,
+                    null,
+                    null,
+                    EndsAt.EndOf.This.Action,
+                    false,
+                    Alignment.Negative,
+                    null,
+                    false,
+                    null,
+                    true),
+
+                new Wait(
+                    BehaviourName.Horrior.MountWait,
+                    nameof(BehaviourName.Horrior.MountWait).CamelCaseToWords(),
+                    "This unit is mounting up to transform into Surfer.",
+                    EndsAt.StartOf.Fourth.Planning,
+                    BehaviourName.Horrior.MountBuff),
+
+                new Buff(
+                    BehaviourName.Horrior.MountBuff,
+                    nameof(BehaviourName.Horrior.MountBuff).CamelCaseToWords(),
+                    "",
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Horrior.MountCreateEntity
+                    },
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Horrior.MountDestroy
+                    },
+                    EndsAt.Instant)
             };
         }
     }

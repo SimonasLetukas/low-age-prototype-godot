@@ -19,6 +19,15 @@ namespace low_age_data.Domain.Shared
             public static Research AdaptiveDigestion => new Research(Researches.AdaptiveDigestion);
         }
 
+        public static class Uee
+        {
+            public static Research HoverboardReignition => new Research(Researches.HoverboardReignition);
+            public static Research ExplosiveShrapnel => new Research(Researches.ExplosiveShrapnel);
+            public static Research MDPractice => new Research(Researches.MDPractice);
+            public static Research CelestiumCoatedMaterials => new Research(Researches.CelestiumCoatedMaterials);
+            public static Research HardenedMatrix => new Research(Researches.HardenedMatrix);
+        }
+
         private Research(Researches @enum)
         {
             Value = @enum;
@@ -32,7 +41,12 @@ namespace low_age_data.Domain.Shared
             SpikedRope,
             QuestionableCargo,
             HumanfleshRations,
-            AdaptiveDigestion
+            AdaptiveDigestion,
+            HoverboardReignition,
+            ExplosiveShrapnel,
+            MDPractice,
+            CelestiumCoatedMaterials,
+            HardenedMatrix
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

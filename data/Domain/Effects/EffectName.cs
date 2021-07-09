@@ -98,5 +98,14 @@ namespace low_age_data.Domain.Effects
             public static EffectName ParalysingGraspApplyAttackBehaviour => new EffectName($"{nameof(Parasite)}{nameof(ParalysingGraspApplyAttackBehaviour)}".ToKebabCase());
             public static EffectName ParalysingGraspApplySelfBehaviour => new EffectName($"{nameof(Parasite)}{nameof(ParalysingGraspApplySelfBehaviour)}".ToKebabCase());
         }
+
+        public static class Horrior
+        {
+            public static EffectName ExpertFormationSearch => new EffectName($"{nameof(Horrior)}{nameof(ExpertFormationSearch)}".ToKebabCase());
+            public static EffectName ExpertFormationApplyBehaviour => new EffectName($"{nameof(Horrior)}{nameof(ExpertFormationApplyBehaviour)}".ToKebabCase());
+            public static EffectName MountApplyBehaviour => new EffectName($"{nameof(Horrior)}{nameof(MountApplyBehaviour)}".ToKebabCase());
+            public static EffectName MountCreateEntity => new EffectName($"{nameof(Horrior)}{nameof(MountCreateEntity)}".ToKebabCase());
+            public static EffectName MountDestroy => new EffectName($"{nameof(Horrior)}{nameof(MountDestroy)}".ToKebabCase());
+        }
     }
 }

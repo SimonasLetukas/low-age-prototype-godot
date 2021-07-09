@@ -682,7 +682,10 @@
           "CombatAttributes.Armoured",
           "CombatAttributes.Biological"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-horrior-expert-formation",
+          "ability-horrior-mount"
+        ],
         "displayName": "Horrior",
         "description": ""
       },
@@ -1616,6 +1619,35 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Paralysing Grasp",
       "description": "Instead of attacking, Parasite attaches to the target. Both units occupy the same space and are considered enemy to all players. Parasite can only detach when the target is killed. All units who attack this combined unit do damage to both. On its turn, Parasite can move the target, using target's Movement. On target's turn, it must execute attack action to any friendly or enemy unit in range, otherwise skip turn."
+    },
+    {
+      "name": "ability-horrior-expert-formation",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": "effect-horrior-expert-formation-search",
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Expert Formation",
+      "description": "Gains +2 Range Armour if at least one other Horrior is adjacent."
+    },
+    {
+      "name": "ability-horrior-mount",
+      "type": "Ability.Instant",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [
+        "Research.HoverboardReignition"
+      ],
+      "effects": [
+        "effect-horrior-mount-apply-behaviour"
+      ],
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Mount",
+      "description": "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase transform into Surfer."
     }
   ],
   "effects": [
@@ -2339,6 +2371,64 @@
           ]
         }
       ]
+    },
+    {
+      "name": "effect-horrior-expert-formation-search",
+      "type": "Effect.Search",
+      "radius": 1,
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnEnter",
+        "Flag.EffectSearchAppliedOnAction",
+        "Flag.EffectSearchRemovedOnExit"
+      ],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit",
+        "Flag.UnitHorrior"
+      ],
+      "effects": [
+        "effect-horrior-expert-formation-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Circle",
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-horrior-expert-formation-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-horrior-expert-formation-buff"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-horrior-mount-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-horrior-mount-wait"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-horrior-mount-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "unit-surfer",
+      "initialEntityBehaviours": [],
+      "validators": []
+    },
+    {
+      "name": "effect-horrior-mount-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Self",
+      "blocksBehaviours": false,
+      "validators": []
     }
   ],
   "behaviours": [
@@ -2874,6 +2964,61 @@
       "displayName": "Paralysing Grasp Self Buff",
       "description": "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both units on Parasite's turn.",
       "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-horrior-expert-formation-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.RangedArmour",
+          "change": "Change.AddMax",
+          "amount": 2.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Expert Formation Buff",
+      "description": "Range Armour for this unit is increased by 2 because it is in formation with an adjacent Horrior.",
+      "endsAt": "EndsAt.EndOfThisAction"
+    },
+    {
+      "name": "behaviour-horrior-mount-wait",
+      "type": "Behaviour.Wait",
+      "nextBehaviour": "behaviour-horrior-mount-buff",
+      "displayName": "Mount Wait",
+      "description": "This unit is mounting up to transform into Surfer.",
+      "endsAt": "EndsAt.StartOfFourthPlanning"
+    },
+    {
+      "name": "behaviour-horrior-mount-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-horrior-mount-create-entity"
+      ],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-horrior-mount-destroy"
+      ],
+      "canStack": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Mount Buff",
+      "description": "",
+      "endsAt": "EndsAt.Instant"
     }
   ]
 }

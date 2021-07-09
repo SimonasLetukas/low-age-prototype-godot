@@ -323,6 +323,28 @@ namespace low_age_data.Collections
                     new List<Attacks>
                     {
                         Attacks.Melee
+                    }),
+
+                new Passive(
+                    AbilityName.Horrior.ExpertFormation,
+                    nameof(AbilityName.Horrior.ExpertFormation).CamelCaseToWords(),
+                    "Gains +2 Range Armour if at least one other Horrior is adjacent.",
+                    true,
+                    EffectName.Horrior.ExpertFormationSearch),
+
+                new Instant(
+                    AbilityName.Horrior.Mount,
+                    TurnPhase.Planning,
+                    nameof(AbilityName.Horrior.Mount).CamelCaseToWords(),
+                    "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase " +
+                    "transform into Surfer.",
+                    new List<EffectName>
+                    {
+                        EffectName.Horrior.MountApplyBehaviour
+                    },
+                    new List<Research>
+                    {
+                        Research.Uee.HoverboardReignition
                     })
             };
         }

@@ -577,7 +577,55 @@ namespace low_age_data.Collections
                         {
                             Condition.BehaviourToApplyDoesNotAlreadyExist
                         })
-                    })
+                    }),
+
+                new Search(
+                    EffectName.Horrior.ExpertFormationSearch,
+                    1,
+                    new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnEnter,
+                        Flag.Effect.Search.AppliedOnAction,
+                        Flag.Effect.Search.RemovedOnExit
+                    },
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit,
+                        Flag.Unit.Horrior
+                    },
+                    new List<EffectName>
+                    {
+                        EffectName.Horrior.ExpertFormationApplyBehaviour
+                    },
+                    Location.Self),
+
+                new ApplyBehaviour(
+                    EffectName.Horrior.ExpertFormationApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Horrior.ExpertFormationBuff
+                    }),
+
+                new ApplyBehaviour(
+                    EffectName.Horrior.MountApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Horrior.MountWait
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    }),
+
+                new CreateEntity(
+                    EffectName.Horrior.MountCreateEntity,
+                    UnitName.Surfer),
+
+                new Destroy(
+                    EffectName.Horrior.MountDestroy,
+                    Location.Self)
             };
         }
     }
