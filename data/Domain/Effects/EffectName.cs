@@ -107,5 +107,11 @@ namespace low_age_data.Domain.Effects
             public static EffectName MountCreateEntity => new EffectName($"{nameof(Horrior)}{nameof(MountCreateEntity)}".ToKebabCase());
             public static EffectName MountDestroy => new EffectName($"{nameof(Horrior)}{nameof(MountDestroy)}".ToKebabCase());
         }
+
+        public static class Marksman
+        {
+            public static EffectName CriticalMarkApplyBehaviour => new EffectName($"{nameof(Marksman)}{nameof(CriticalMarkApplyBehaviour)}".ToKebabCase());
+            public static EffectName CriticalMarkDamage => new EffectName($"{nameof(Marksman)}{nameof(CriticalMarkDamage)}".ToKebabCase());
+        }
     }
 }

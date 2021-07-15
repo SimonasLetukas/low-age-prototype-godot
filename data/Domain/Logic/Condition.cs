@@ -15,6 +15,7 @@ namespace low_age_data.Domain.Logic
         public static Condition NoActorsFoundFromEffect => new Condition(Conditions.NoActorsFoundFromEffect);
         public static Condition TargetIsHighGround => new Condition(Conditions.TargetIsHighGround);
         public static Condition TargetIsUnoccupied => new Condition(Conditions.TargetIsUnoccupied);
+        public static Condition TargetIsDifferentTypeThanOrigin => new Condition(Conditions.TargetIsDifferentTypeThanOrigin);
 
         private Condition(Conditions @enum)
         {
@@ -29,7 +30,8 @@ namespace low_age_data.Domain.Logic
             TargetDoesNotHaveFullHealth,
             NoActorsFoundFromEffect,
             TargetIsHighGround,
-            TargetIsUnoccupied
+            TargetIsUnoccupied,
+            TargetIsDifferentTypeThanOrigin,
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

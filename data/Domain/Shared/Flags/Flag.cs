@@ -37,6 +37,9 @@ namespace low_age_data.Domain.Shared.Flags
             public static class Search
             {
                 public static Flag AppliedOnEnter => new Flag(Flags.EffectSearchAppliedOnEnter);
+                /// <summary>
+                /// Applies <see cref="Effects.Search"/> after <see cref="Durations.EndsAt"/>
+                /// </summary>
                 public static Flag AppliedOnAction => new Flag(Flags.EffectSearchAppliedOnAction);
                 public static Flag RemovedOnExit => new Flag(Flags.EffectSearchRemovedOnExit);
             }

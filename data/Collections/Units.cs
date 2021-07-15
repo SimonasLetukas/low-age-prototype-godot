@@ -398,37 +398,6 @@ namespace low_age_data.Collections
                     }),
 
                 new Unit(
-                    UnitName.Surfer,
-                    nameof(UnitName.Surfer),
-                    "",
-                    new List<Stat>
-                    {
-                        new CombatStat(2, true, Stats.Health),
-                        new CombatStat(2, true, Stats.Shields),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(5, true, Stats.Movement),
-                        new CombatStat(30, false, Stats.Initiative),
-                        new AttackStat(
-                            5,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Light,
-                            4)
-                    },
-                    Factions.UEE,
-                    new List<CombatAttributes>
-                    {
-                        CombatAttributes.Light,
-                        CombatAttributes.Biological
-                    },
-                    new List<AbilityName>
-                    {
-
-                    }),
-
-                new Unit(
                     UnitName.Marksman,
                     nameof(UnitName.Marksman),
                     "",
@@ -459,6 +428,37 @@ namespace low_age_data.Collections
                         CombatAttributes.Light,
                         CombatAttributes.Biological,
                         CombatAttributes.Ranged
+                    },
+                    new List<AbilityName>
+                    {
+                        AbilityName.Marksman.CriticalMark
+                    }),
+
+                new Unit(
+                    UnitName.Surfer,
+                    nameof(UnitName.Surfer),
+                    "",
+                    new List<Stat>
+                    {
+                        new CombatStat(2, true, Stats.Health),
+                        new CombatStat(2, true, Stats.Shields),
+                        new CombatStat(1, false, Stats.MeleeArmour),
+                        new CombatStat(0, false, Stats.RangedArmour),
+                        new CombatStat(5, true, Stats.Movement),
+                        new CombatStat(30, false, Stats.Initiative),
+                        new AttackStat(
+                            5,
+                            Attacks.Melee,
+                            1,
+                            1,
+                            CombatAttributes.Light,
+                            4)
+                    },
+                    Factions.UEE,
+                    new List<CombatAttributes>
+                    {
+                        CombatAttributes.Light,
+                        CombatAttributes.Biological
                     },
                     new List<AbilityName>
                     {

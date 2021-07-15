@@ -37,12 +37,12 @@ namespace low_age_data.Collections
                     new List<Modification>
                     {
                         new AttackModification(
-                            Change.SubtractMax, 
+                            Change.SubtractMax,
                             2,
-                            Attacks.Melee, 
+                            Attacks.Melee,
                             AttackAttribute.MaxAmount),
                         new AttackModification(
-                            Change.SubtractMax, 
+                            Change.SubtractMax,
                             2,
                             Attacks.Ranged,
                             AttackAttribute.MaxAmount)
@@ -52,6 +52,7 @@ namespace low_age_data.Collections
                     null,
                     EndsAt.EndOf.This.Action,
                     false,
+                    true,
                     Alignment.Negative,
                     null,
                     false,
@@ -72,6 +73,7 @@ namespace low_age_data.Collections
                     null,
                     EndsAt.StartOf.Tenth.Planning,
                     false,
+                    false,
                     Alignment.Negative),
 
                 new Buff(
@@ -82,14 +84,15 @@ namespace low_age_data.Collections
                     new List<Modification>
                     {
                         new StatModification(
-                            Change.AddCurrent, 
-                            2, 
+                            Change.AddCurrent,
+                            2,
                             Stats.Health)
                     },
                     null,
                     null,
                     null,
                     EndsAt.Instant,
+                    false,
                     false,
                     Alignment.Positive),
 
@@ -106,17 +109,21 @@ namespace low_age_data.Collections
                     new List<Modification>
                     {
                         new StatModification(
-                            Change.AddCurrent, 
+                            Change.AddCurrent,
                             1,
                             Stats.Health)
                     },
                     null,
                     EndsAt.StartOf.Next.Planning,
                     true,
+                    false,
                     Alignment.Positive,
                     new List<Trigger>
                     {
-                        Trigger.OriginIsDestroyed
+                        new Trigger(new List<Event>
+                        {
+                            Event.OriginIsDestroyed
+                        })
                     },
                     true),
 
@@ -143,10 +150,14 @@ namespace low_age_data.Collections
                     },
                     EndsAt.StartOf.Next.Planning,
                     false,
+                    false,
                     Alignment.Positive,
                     new List<Trigger>
                     {
-                        Trigger.OriginIsDestroyed
+                        new Trigger(new List<Event>
+                        {
+                            Event.OriginIsDestroyed
+                        })
                     },
                     true),
 
@@ -186,6 +197,7 @@ namespace low_age_data.Collections
                     null,
                     EndsAt.EndOf.This.Action,
                     false,
+                    true,
                     Alignment.Negative,
                     null,
                     false,
@@ -219,6 +231,7 @@ namespace low_age_data.Collections
                     null,
                     null,
                     EndsAt.EndOf.Second.Action,
+                    false,
                     true,
                     Alignment.Negative,
                     null,
@@ -246,6 +259,7 @@ namespace low_age_data.Collections
                     null,
                     EndsAt.Death,
                     false,
+                    false,
                     Alignment.Positive),
 
                 new Wait(
@@ -263,7 +277,7 @@ namespace low_age_data.Collections
                     new List<Modification>
                     {
                         new SizeModification(
-                            Change.SetMax, 
+                            Change.SetMax,
                             3)
                     },
                     null,
@@ -285,12 +299,12 @@ namespace low_age_data.Collections
                         new AttackModification(
                             Change.SubtractMax,
                             3,
-                            Attacks.Melee, 
+                            Attacks.Melee,
                             AttackAttribute.MaxDistance),
                         new AttackModification(
                             Change.SubtractMax,
                             3,
-                            Attacks.Ranged, 
+                            Attacks.Ranged,
                             AttackAttribute.MaxDistance)
                     },
                     null,
@@ -300,6 +314,7 @@ namespace low_age_data.Collections
                         EffectName.Shaman.WondrousGooDamage
                     },
                     EndsAt.StartOf.Next.Action,
+                    false,
                     false,
                     Alignment.Negative,
                     null,
@@ -330,10 +345,14 @@ namespace low_age_data.Collections
                     null,
                     null,
                     false,
+                    false,
                     null,
                     new List<Trigger>
                     {
-                        Trigger.EntityIsAboutToMove
+                        new Trigger(new List<Event>
+                        {
+                            Event.EntityIsAboutToMove
+                        })
                     },
                     false,
                     new List<EffectName>
@@ -355,10 +374,14 @@ namespace low_age_data.Collections
                     },
                     EndsAt.StartOf.Next.Action,
                     false,
+                    false,
                     Alignment.Negative,
                     new List<Trigger>
                     {
-                        Trigger.OriginIsDestroyed
+                        new Trigger(new List<Event>
+                        {
+                            Event.OriginIsDestroyed
+                        })
                     },
                     true,
                     new List<EffectName>
@@ -390,6 +413,7 @@ namespace low_age_data.Collections
                     },
                     EndsAt.StartOf.Next.Action,
                     true,
+                    false,
                     Alignment.Negative),
 
                 new Buff(
@@ -409,6 +433,7 @@ namespace low_age_data.Collections
                     },
                     EndsAt.StartOf.Next.Action,
                     true,
+                    false,
                     Alignment.Negative),
 
                 new Tether(
@@ -441,11 +466,15 @@ namespace low_age_data.Collections
                     null,
                     null,
                     null,
-                    false,
+                    null,
+                    null,
                     Alignment.Negative,
                     new List<Trigger>
                     {
-                        Trigger.OriginIsDestroyed
+                        new Trigger(new List<Event>
+                        {
+                            Event.OriginIsDestroyed
+                        })
                     },
                     true,
                     null,
@@ -465,7 +494,7 @@ namespace low_age_data.Collections
                     {
                         new StatCopyModification(
                             Change.SetMax,
-                            Location.Source, 
+                            Location.Source,
                             0,
                             Stats.Movement)
                     },
@@ -474,10 +503,14 @@ namespace low_age_data.Collections
                     null,
                     null,
                     false,
+                    false,
                     Alignment.Positive,
                     new List<Trigger>
                     {
-                        Trigger.SourceIsDestroyed
+                        new Trigger(new List<Event>
+                        {
+                            Event.SourceIsDestroyed
+                        })
                     },
                     true,
                     null,
@@ -500,6 +533,7 @@ namespace low_age_data.Collections
                     null,
                     EndsAt.EndOf.This.Action,
                     false,
+                    true,
                     Alignment.Negative,
                     null,
                     false,
@@ -528,7 +562,47 @@ namespace low_age_data.Collections
                     {
                         EffectName.Horrior.MountDestroy
                     },
-                    EndsAt.Instant)
+                    EndsAt.Instant),
+
+                new Buff(
+                    BehaviourName.Marksman.CriticalMarkBuff,
+                    nameof(BehaviourName.Marksman.CriticalMarkBuff).CamelCaseToWords(),
+                    "Marksman has marked this target until the end of the next action phase. The mark " +
+                    "is consumed dealing 5 Melee Damage, when an ally of Marksman attacks this unit.",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EndsAt.EndOf.Next.ActionPhase,
+                    false,
+                    true,
+                    Alignment.Negative,
+                    new List<Trigger>
+                    {
+                        new Trigger(new List<Event>
+                        {
+                            Event.EntityIsAttacked
+                        }, new List<Validator>
+                        {
+                            new Validator(
+                                new List<Condition>
+                                {
+                                    Condition.TargetIsDifferentTypeThanOrigin
+                                },
+                                new List<Flag>
+                                {
+                                    Flag.Filter.Enemy,
+                                    Flag.Filter.Unit
+                                })
+                        })
+                    },
+                    true,
+                    new List<EffectName>
+                    {
+                        EffectName.Marksman.CriticalMarkDamage
+                    },
+                    false)
             };
         }
     }

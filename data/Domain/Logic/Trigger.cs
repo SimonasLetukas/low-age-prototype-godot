@@ -1,36 +1,17 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Common;
 
 namespace low_age_data.Domain.Logic
 {
-    public class Trigger : ValueObject<Trigger>
+    public class Trigger
     {
-        public override string ToString()
+        public Trigger(IList<Event> events, IList<Validator>? validators = null)
         {
-            return $"{nameof(Trigger)}.{Value}";
+            Events = events;
+            Validators = validators ?? new List<Validator>();
         }
 
-        public static Trigger OriginIsDestroyed => new Trigger(Triggers.OriginIsDestroyed);
-        public static Trigger SourceIsDestroyed => new Trigger(Triggers.SourceIsDestroyed);
-        public static Trigger EntityIsAboutToMove => new Trigger(Triggers.EntityIsAboutToMove);
-
-        private Trigger(Triggers @enum)
-        {
-            Value = @enum;
-        }
-
-        private Triggers Value { get; }
-
-        private enum Triggers
-        {
-            OriginIsDestroyed,
-            SourceIsDestroyed,
-            EntityIsAboutToMove
-        }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
-        }
+        public IList<Event> Events { get; } // Events to wait for (logical AND between the events
+                                            // for the trigger to be considered fired)
+        public IList<Validator> Validators { get; } // More options to validate the events
     }
 }

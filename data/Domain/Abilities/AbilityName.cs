@@ -80,5 +80,15 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName ExpertFormation => new AbilityName($"{nameof(Horrior)}{nameof(ExpertFormation)}".ToKebabCase());
             public static AbilityName Mount => new AbilityName($"{nameof(Horrior)}{nameof(Mount)}".ToKebabCase());
         }
+
+        public static class Marksman
+        {
+            public static AbilityName CriticalMark => new AbilityName($"{nameof(Marksman)}{nameof(CriticalMark)}".ToKebabCase());
+        }
+
+        public static class Surfer
+        {
+
+        }
     }
 }

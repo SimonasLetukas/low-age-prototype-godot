@@ -690,59 +690,6 @@
         "description": ""
       },
       {
-        "name": "unit-surfer",
-        "size": 1,
-        "statistics": [
-          {
-            "combatType": "Stats.Health",
-            "maxAmount": 2,
-            "hasCurrent": true
-          },
-          {
-            "combatType": "Stats.Shields",
-            "maxAmount": 2,
-            "hasCurrent": true
-          },
-          {
-            "combatType": "Stats.MeleeArmour",
-            "maxAmount": 1,
-            "hasCurrent": false
-          },
-          {
-            "combatType": "Stats.RangedArmour",
-            "maxAmount": 0,
-            "hasCurrent": false
-          },
-          {
-            "combatType": "Stats.Movement",
-            "maxAmount": 5,
-            "hasCurrent": true
-          },
-          {
-            "combatType": "Stats.Initiative",
-            "maxAmount": 30,
-            "hasCurrent": false
-          },
-          {
-            "attackType": "Attacks.Melee",
-            "minimumDistance": 1,
-            "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Light",
-            "bonusAmount": 4,
-            "maxAmount": 5,
-            "hasCurrent": false
-          }
-        ],
-        "originalFaction": "Factions.UEE",
-        "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Biological"
-        ],
-        "abilities": [],
-        "displayName": "Surfer",
-        "description": ""
-      },
-      {
         "name": "unit-marksman",
         "size": 1,
         "statistics": [
@@ -801,8 +748,63 @@
           "CombatAttributes.Biological",
           "CombatAttributes.Ranged"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-marksman-critical-mark"
+        ],
         "displayName": "Marksman",
+        "description": ""
+      },
+      {
+        "name": "unit-surfer",
+        "size": 1,
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 2,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 2,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Movement",
+            "maxAmount": 5,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Initiative",
+            "maxAmount": 30,
+            "hasCurrent": false
+          },
+          {
+            "attackType": "Attacks.Melee",
+            "minimumDistance": 1,
+            "maximumDistance": 1,
+            "bonusTo": "CombatAttributes.Light",
+            "bonusAmount": 4,
+            "maxAmount": 5,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "Factions.UEE",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Biological"
+        ],
+        "abilities": [],
+        "displayName": "Surfer",
         "description": ""
       },
       {
@@ -1648,6 +1650,24 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Mount",
       "description": "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase transform into Surfer."
+    },
+    {
+      "name": "ability-marksman-critical-mark",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [
+        "effect-marksman-critical-mark-apply-behaviour"
+      ],
+      "onHitAttackTypes": [
+        "Attacks.Ranged"
+      ],
+      "onBirthEffect": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Critical Mark",
+      "description": "Each ranged attack marks the target unit. If a friendly non-Marksman unit attacks the marked target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end of the next action phase."
     }
   ],
   "effects": [
@@ -1724,7 +1744,8 @@
           "type": "Validator",
           "conditions": [
             "Condition.BehaviourToApplyDoesNotAlreadyExist"
-          ]
+          ],
+          "filterFlags": []
         }
       ]
     },
@@ -1771,7 +1792,8 @@
           "type": "Validator",
           "conditions": [
             "Condition.TargetDoesNotHaveFullHealth"
-          ]
+          ],
+          "filterFlags": []
         }
       ]
     },
@@ -1802,7 +1824,8 @@
           "type": "Validator",
           "conditions": [
             "Condition.BehaviourToApplyDoesNotAlreadyExist"
-          ]
+          ],
+          "filterFlags": []
         }
       ]
     },
@@ -1945,7 +1968,8 @@
           "type": "Validator.ResultValidator",
           "conditions": [
             "Condition.NoActorsFoundFromEffect"
-          ]
+          ],
+          "filterFlags": []
         }
       ]
     },
@@ -1966,14 +1990,16 @@
           "type": "Validator.ResultValidator",
           "conditions": [
             "Condition.NoActorsFoundFromEffect"
-          ]
+          ],
+          "filterFlags": []
         },
         {
           "effect": "effect-camou-silent-assassin-search-enemy",
           "type": "Validator.ResultValidator",
           "conditions": [
             "Condition.NoActorsFoundFromEffect"
-          ]
+          ],
+          "filterFlags": []
         }
       ]
     },
@@ -2017,7 +2043,8 @@
           "conditions": [
             "Condition.TargetIsHighGround",
             "Condition.TargetIsUnoccupied"
-          ]
+          ],
+          "filterFlags": []
         }
       ]
     },
@@ -2329,7 +2356,8 @@
           "type": "Validator",
           "conditions": [
             "Condition.BehaviourToApplyDoesNotAlreadyExist"
-          ]
+          ],
+          "filterFlags": []
         }
       ]
     },
@@ -2349,7 +2377,8 @@
           "type": "Validator",
           "conditions": [
             "Condition.BehaviourToApplyDoesNotAlreadyExist"
-          ]
+          ],
+          "filterFlags": []
         }
       ]
     },
@@ -2368,7 +2397,8 @@
           "type": "Validator",
           "conditions": [
             "Condition.BehaviourToApplyDoesNotAlreadyExist"
-          ]
+          ],
+          "filterFlags": []
         }
       ]
     },
@@ -2429,6 +2459,43 @@
       "target": "Location.Self",
       "blocksBehaviours": false,
       "validators": []
+    },
+    {
+      "name": "effect-marksman-critical-mark-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-marksman-critical-mark-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-marksman-critical-mark-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Melee",
+      "amount": {
+        "flat": 5,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
     }
   ],
   "behaviours": [
@@ -2443,6 +2510,7 @@
         "effect-leader-all-for-one-player-loses"
       ],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Neutral",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2476,6 +2544,7 @@
       "finalModifications": [],
       "finalEffects": [],
       "canStack": false,
+      "canResetDuration": true,
       "alignment": "Alignment.Negative",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2496,6 +2565,7 @@
       "finalModifications": [],
       "finalEffects": [],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Negative",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2521,6 +2591,7 @@
       "finalModifications": [],
       "finalEffects": [],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Positive",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2548,9 +2619,15 @@
       ],
       "finalEffects": [],
       "canStack": true,
+      "canResetDuration": false,
       "alignment": "Alignment.Positive",
       "triggers": [
-        "Trigger.OriginIsDestroyed"
+        {
+          "events": [
+            "Event.OriginIsDestroyed"
+          ],
+          "validators": []
+        }
       ],
       "destroyOnConditionsMet": true,
       "conditionalEffects": [],
@@ -2580,9 +2657,15 @@
         "effect-slave-manual-labour-modify-player"
       ],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Positive",
       "triggers": [
-        "Trigger.OriginIsDestroyed"
+        {
+          "events": [
+            "Event.OriginIsDestroyed"
+          ],
+          "validators": []
+        }
       ],
       "destroyOnConditionsMet": true,
       "conditionalEffects": [],
@@ -2628,6 +2711,7 @@
       "finalModifications": [],
       "finalEffects": [],
       "canStack": false,
+      "canResetDuration": true,
       "alignment": "Alignment.Negative",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2648,6 +2732,7 @@
         "effect-gorger-fanatic-suicide-search"
       ],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Neutral",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2667,7 +2752,8 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": true,
+      "canStack": false,
+      "canResetDuration": true,
       "alignment": "Alignment.Negative",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2696,6 +2782,7 @@
       "finalModifications": [],
       "finalEffects": [],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Positive",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2731,6 +2818,7 @@
         "effect-shaman-wondrous-goo-destroy"
       ],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Neutral",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2766,6 +2854,7 @@
         "effect-shaman-wondrous-goo-damage"
       ],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Negative",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2796,9 +2885,15 @@
       "finalModifications": [],
       "finalEffects": [],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Neutral",
       "triggers": [
-        "Trigger.EntityIsAboutToMove"
+        {
+          "events": [
+            "Event.EntityIsAboutToMove"
+          ],
+          "validators": []
+        }
       ],
       "destroyOnConditionsMet": false,
       "conditionalEffects": [
@@ -2820,9 +2915,15 @@
         "effect-pyre-wall-of-flames-destroy"
       ],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Negative",
       "triggers": [
-        "Trigger.OriginIsDestroyed"
+        {
+          "events": [
+            "Event.OriginIsDestroyed"
+          ],
+          "validators": []
+        }
       ],
       "destroyOnConditionsMet": true,
       "conditionalEffects": [
@@ -2844,6 +2945,7 @@
       "finalModifications": [],
       "finalEffects": [],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Neutral",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2865,6 +2967,7 @@
         "effect-roach-degrading-carapace-apply-behaviour"
       ],
       "canStack": true,
+      "canResetDuration": false,
       "alignment": "Alignment.Negative",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2887,6 +2990,7 @@
         "effect-roach-degrading-carapace-periodic-apply-behaviour"
       ],
       "canStack": true,
+      "canResetDuration": false,
       "alignment": "Alignment.Negative",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -2923,9 +3027,15 @@
       "finalModifications": [],
       "finalEffects": [],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Negative",
       "triggers": [
-        "Trigger.OriginIsDestroyed"
+        {
+          "events": [
+            "Event.OriginIsDestroyed"
+          ],
+          "validators": []
+        }
       ],
       "destroyOnConditionsMet": true,
       "conditionalEffects": [],
@@ -2954,9 +3064,15 @@
       "finalModifications": [],
       "finalEffects": [],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Positive",
       "triggers": [
-        "Trigger.SourceIsDestroyed"
+        {
+          "events": [
+            "Event.SourceIsDestroyed"
+          ],
+          "validators": []
+        }
       ],
       "destroyOnConditionsMet": true,
       "conditionalEffects": [],
@@ -2981,6 +3097,7 @@
       "finalModifications": [],
       "finalEffects": [],
       "canStack": false,
+      "canResetDuration": true,
       "alignment": "Alignment.Negative",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -3011,6 +3128,7 @@
         "effect-horrior-mount-destroy"
       ],
       "canStack": false,
+      "canResetDuration": false,
       "alignment": "Alignment.Neutral",
       "triggers": [],
       "destroyOnConditionsMet": false,
@@ -3019,6 +3137,45 @@
       "displayName": "Mount Buff",
       "description": "",
       "endsAt": "EndsAt.Instant"
+    },
+    {
+      "name": "behaviour-marksman-critical-mark-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": true,
+      "alignment": "Alignment.Negative",
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityIsAttacked"
+          ],
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                "Condition.TargetIsDifferentTypeThanOrigin"
+              ],
+              "filterFlags": [
+                "Flag.FilterEnemy",
+                "Flag.FilterUnit"
+              ]
+            }
+          ]
+        }
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [
+        "effect-marksman-critical-mark-damage"
+      ],
+      "restoreChangesOnEnd": false,
+      "displayName": "Critical Mark Buff",
+      "description": "Marksman has marked this target until the end of the next action phase. The mark is consumed dealing 5 Melee Damage, when an ally of Marksman attacks this unit.",
+      "endsAt": "EndsAt.EndOfNextActionPhase"
     }
   ]
 }

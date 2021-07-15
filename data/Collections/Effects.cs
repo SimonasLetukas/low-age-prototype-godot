@@ -625,7 +625,33 @@ namespace low_age_data.Collections
 
                 new Destroy(
                     EffectName.Horrior.MountDestroy,
-                    Location.Self)
+                    Location.Self),
+
+                new ApplyBehaviour(
+                    EffectName.Marksman.CriticalMarkApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Marksman.CriticalMarkBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    }),
+                
+                new Damage(
+                    EffectName.Marksman.CriticalMarkDamage,
+                    DamageType.Melee,
+                    new Amount(5),
+                    null,
+                    null,
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    })
             };
         }
     }

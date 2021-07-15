@@ -76,5 +76,10 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName MountWait => new BehaviourName($"{nameof(Horrior)}{nameof(MountWait)}".ToKebabCase());
             public static BehaviourName MountBuff => new BehaviourName($"{nameof(Horrior)}{nameof(MountBuff)}".ToKebabCase());
         }
+
+        public static class Marksman
+        {
+            public static BehaviourName CriticalMarkBuff => new BehaviourName($"{nameof(Marksman)}{nameof(CriticalMarkBuff)}".ToKebabCase());
+        }
     }
 }

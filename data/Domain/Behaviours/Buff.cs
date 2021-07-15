@@ -20,7 +20,8 @@ namespace low_age_data.Domain.Behaviours
             IList<Modification>? finalModifications = null,
             IList<EffectName>? finalEffects = null,
             EndsAt? endsAt = null,
-            bool canStack = false,
+            bool? canStack = null,
+            bool? canResetDuration = null,
             Alignment? alignment = null,
             IList<Trigger>? triggers = null,
             bool destroyOnConditionsMet = false,
@@ -32,7 +33,8 @@ namespace low_age_data.Domain.Behaviours
             InitialEffects = initialEffects ?? new List<EffectName>();
             FinalModifications = finalModifications ?? new List<Modification>();
             FinalEffects = finalEffects ?? new List<EffectName>();
-            CanStack = canStack;
+            CanStack = canStack ?? false;
+            CanResetDuration = canResetDuration ?? false;
             Alignment = alignment ?? Alignment.Neutral;
             Triggers = triggers ?? new List<Trigger>();
             DestroyOnConditionsMet = destroyOnConditionsMet;
@@ -46,10 +48,12 @@ namespace low_age_data.Domain.Behaviours
         public IList<Modification> FinalModifications { get; } // Added right before the end of behaviour
         public IList<EffectName> FinalEffects { get; } // Executed right before behaviour ends
         public bool CanStack { get; }
+        public bool CanResetDuration { get; } // If true, applying the same buff will reset the duration (to all stacks,
+                                              // if CanStack is true).
         public Alignment Alignment { get; }
-        public IList<Trigger> Triggers { get; }
-        public bool DestroyOnConditionsMet { get; } // If true, behaviour is removed (without triggering final
-                                                    // modifications or effects) when all trigger conditions are met
+        public IList<Trigger> Triggers { get; } // Logic OR between the triggers, but AND between events inside.
+        public bool DestroyOnConditionsMet { get; } // If true, behaviour is removed (without triggering final modifications
+                                                    // or effects) when all events & their conditions are met in any of the trigger
         public IList<EffectName> ConditionalEffects { get; } // Executed when all trigger conditions are met (before destroy)
         public bool RestoreChangesOnEnd { get; } // If true, counter-acts the initial modifications before end or destroy
     }

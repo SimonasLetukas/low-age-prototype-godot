@@ -345,6 +345,24 @@ namespace low_age_data.Collections
                     new List<Research>
                     {
                         Research.Uee.HoverboardReignition
+                    }),
+
+                new Passive(
+                    AbilityName.Marksman.CriticalMark,
+                    nameof(AbilityName.Marksman.CriticalMark).CamelCaseToWords(),
+                    "Each ranged attack marks the target unit. If a friendly non-Marksman unit attacks the marked " +
+                    "target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end " +
+                    "of the next action phase.",
+                    true,
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Marksman.CriticalMarkApplyBehaviour
+                    },
+                    new List<Attacks>
+                    {
+                        Attacks.Ranged
                     })
             };
         }
