@@ -363,7 +363,18 @@ namespace low_age_data.Collections
                     new List<Attacks>
                     {
                         Attacks.Ranged
-                    })
+                    }),
+                
+                new Passive(
+                    AbilityName.Surfer.Dismount,
+                    nameof(AbilityName.Surfer.Dismount).CamelCaseToWords(),
+                    "Upon death, reemerges as Horrior.",
+                    true,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EffectName.Surfer.DismountApplyBehaviour)
             };
         }
     }

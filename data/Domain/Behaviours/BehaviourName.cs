@@ -81,5 +81,10 @@ namespace low_age_data.Domain.Behaviours
         {
             public static BehaviourName CriticalMarkBuff => new BehaviourName($"{nameof(Marksman)}{nameof(CriticalMarkBuff)}".ToKebabCase());
         }
+        
+        public static class Surfer
+        {
+            public static BehaviourName DismountBuff => new BehaviourName($"{nameof(Surfer)}{nameof(DismountBuff)}".ToKebabCase());
+        }
     }
 }

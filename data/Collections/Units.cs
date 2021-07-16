@@ -462,7 +462,7 @@ namespace low_age_data.Collections
                     },
                     new List<AbilityName>
                     {
-
+                        AbilityName.Surfer.Dismount
                     }),
 
                 new Unit(

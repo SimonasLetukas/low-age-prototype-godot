@@ -88,7 +88,7 @@ namespace low_age_data.Domain.Abilities
 
         public static class Surfer
         {
-
+            public static AbilityName Dismount => new AbilityName($"{nameof(Surfer)}{nameof(Dismount)}".ToKebabCase());
         }
     }
 }

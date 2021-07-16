@@ -602,7 +602,24 @@ namespace low_age_data.Collections
                     {
                         EffectName.Marksman.CriticalMarkDamage
                     },
-                    false)
+                    false),
+                
+                new Buff(
+                    BehaviourName.Surfer.DismountBuff,
+                    nameof(BehaviourName.Surfer.DismountBuff).CamelCaseToWords(),
+                    "Upon death, reemerges as Horrior.",
+                    null,
+                    null,
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Surfer.DismountCreateEntity
+                    },
+                    EndsAt.Death,
+                    false,
+                    false,
+                    Alignment.Positive)
             };
         }
     }

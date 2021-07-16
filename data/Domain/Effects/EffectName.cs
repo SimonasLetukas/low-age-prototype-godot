@@ -113,5 +113,11 @@ namespace low_age_data.Domain.Effects
             public static EffectName CriticalMarkApplyBehaviour => new EffectName($"{nameof(Marksman)}{nameof(CriticalMarkApplyBehaviour)}".ToKebabCase());
             public static EffectName CriticalMarkDamage => new EffectName($"{nameof(Marksman)}{nameof(CriticalMarkDamage)}".ToKebabCase());
         }
+
+        public static class Surfer
+        {
+            public static EffectName DismountApplyBehaviour => new EffectName($"{nameof(Surfer)}{nameof(DismountApplyBehaviour)}".ToKebabCase());
+            public static EffectName DismountCreateEntity => new EffectName($"{nameof(Surfer)}{nameof(DismountCreateEntity)}".ToKebabCase());
+        }
     }
 }

@@ -6,6 +6,7 @@ using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Features;
 
@@ -651,7 +652,23 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
-                    })
+                    }),
+                
+                new ApplyBehaviour(
+                    EffectName.Surfer.DismountApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Surfer.DismountBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    }),
+                
+                new CreateEntity(
+                    EffectName.Surfer.DismountCreateEntity,
+                    UnitName.Horrior),
             };
         }
     }

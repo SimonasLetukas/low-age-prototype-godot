@@ -803,7 +803,9 @@
           "CombatAttributes.Light",
           "CombatAttributes.Biological"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-surfer-dismount"
+        ],
         "displayName": "Surfer",
         "description": ""
       },
@@ -1668,6 +1670,20 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Critical Mark",
       "description": "Each ranged attack marks the target unit. If a friendly non-Marksman unit attacks the marked target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end of the next action phase."
+    },
+    {
+      "name": "ability-surfer-dismount",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-surfer-dismount-apply-behaviour",
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Dismount",
+      "description": "Upon death, reemerges as Horrior."
     }
   ],
   "effects": [
@@ -2496,6 +2512,25 @@
         "Flag.FilterUnit"
       ],
       "validators": []
+    },
+    {
+      "name": "effect-surfer-dismount-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-surfer-dismount-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-surfer-dismount-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "unit-horrior",
+      "initialEntityBehaviours": [],
+      "validators": []
     }
   ],
   "behaviours": [
@@ -3176,6 +3211,27 @@
       "displayName": "Critical Mark Buff",
       "description": "Marksman has marked this target until the end of the next action phase. The mark is consumed dealing 5 Melee Damage, when an ally of Marksman attacks this unit.",
       "endsAt": "EndsAt.EndOfNextActionPhase"
+    },
+    {
+      "name": "behaviour-surfer-dismount-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-surfer-dismount-create-entity"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Dismount Buff",
+      "description": "Upon death, reemerges as Horrior.",
+      "endsAt": "EndsAt.Death"
     }
   ]
 }
