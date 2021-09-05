@@ -30,12 +30,12 @@ namespace low_age_data.Domain.Shared
             Melee, // Deals damage subtracted by melee armour of the target
             Ranged, // Deals damage subtracted by ranged armour of the target
             Pure, // Deals damage directly to health
-            CurrentMelee, // Any damage amount is added by the source's current melee attack damage
-            CurrentRanged, // Any damage amount is added by the source's current ranged attack damage
-            OverrideMelee, // Any damage amount is overwritten by the source's current melee attack damage
-            OverrideRanged, // Any damage amount is overwritten by the source's current ranged attack damage
-            TargetMelee, // Any damage amount is overwritten by the target's current melee attack damage
-            TargetRanged // Any damage amount is overwritten by the target's current ranged attack damage
+            CurrentMelee, // Any damage amount is added by the source's current melee attack damage (includes bonus)
+            CurrentRanged, // Any damage amount is added by the source's current ranged attack damage (includes bonus)
+            OverrideMelee, // Any damage amount is overwritten by the source's current melee attack damage (includes bonus)
+            OverrideRanged, // Any damage amount is overwritten by the source's current ranged attack damage (includes bonus)
+            TargetMelee, // Any damage amount is overwritten by the target's current melee attack damage (includes bonus)
+            TargetRanged // Any damage amount is overwritten by the target's current ranged attack damage (includes bonus)
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

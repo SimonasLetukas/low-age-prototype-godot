@@ -316,6 +316,7 @@ namespace low_age_data.Collections
                     Location.Origin,
                     Shape.Circle,
                     null,
+                    null,
                     true),
 
                 new Search(
@@ -330,6 +331,7 @@ namespace low_age_data.Collections
                     null,
                     Location.Actor,
                     Shape.Circle,
+                    null,
                     null,
                     true),
 
@@ -669,6 +671,72 @@ namespace low_age_data.Collections
                 new CreateEntity(
                     EffectName.Surfer.DismountCreateEntity,
                     UnitName.Horrior),
+                
+                new ApplyBehaviour(
+                    EffectName.Mortar.DeadlyAmmunitionApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Mortar.DeadlyAmmunitionAmmunition
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
+                
+                new Search(
+                    EffectName.Mortar.DeadlyAmmunitionSearch,
+                    1,
+                    new List<Flag>(),
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    new List<EffectName>
+                    {
+                        EffectName.Mortar.DeadlyAmmunitionDamage
+                    },
+                    Location.Inherited,
+                    Shape.Circle,
+                    true),
+                
+                new Damage(
+                    EffectName.Mortar.DeadlyAmmunitionDamage,
+                    DamageType.OverrideRanged),
+                
+                new ApplyBehaviour(
+                    EffectName.Mortar.ReloadApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Mortar.ReloadWait
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
+                
+                new Reload(
+                    EffectName.Mortar.ReloadReload,
+                    BehaviourName.Mortar.DeadlyAmmunitionAmmunition,
+                    Location.Self),
+                
+                new ApplyBehaviour(
+                    EffectName.Mortar.PiercingBlastApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Mortar.PiercingBlastBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    })
             };
         }
     }

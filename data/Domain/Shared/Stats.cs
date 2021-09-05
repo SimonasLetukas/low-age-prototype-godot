@@ -16,6 +16,7 @@ namespace low_age_data.Domain.Shared
         public static Stats RangedArmour => new Stats(StatsEnum.RangedArmour);
         public static Stats Movement => new Stats(StatsEnum.Movement);
         public static Stats Initiative => new Stats(StatsEnum.Initiative);
+        public static Stats Vision => new Stats(StatsEnum.Vision);
 
         private Stats(StatsEnum @enum)
         {
@@ -26,12 +27,13 @@ namespace low_age_data.Domain.Shared
 
         private enum StatsEnum
         {
-            Health = 0,
-            Shields = 1,
-            MeleeArmour = 2,
-            RangedArmour = 3,
-            Movement = 4,
-            Initiative = 5
+            Health,
+            Shields,
+            MeleeArmour,
+            RangedArmour,
+            Movement,
+            Initiative,
+            Vision
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

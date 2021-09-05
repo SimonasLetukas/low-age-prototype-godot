@@ -7,6 +7,7 @@ using low_age_data.Domain.Shared.Durations;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace low_age_data.Collections
 {
@@ -619,6 +620,67 @@ namespace low_age_data.Collections
                     EndsAt.Death,
                     false,
                     false,
+                    Alignment.Positive),
+                
+                new Ammunition(
+                    BehaviourName.Mortar.DeadlyAmmunitionAmmunition,
+                    nameof(BehaviourName.Mortar.DeadlyAmmunitionAmmunition).CamelCaseToWords(),
+                    "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out " +
+                    "of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
+                    2, 
+                    new List<Attacks>
+                    {
+                        Attacks.Ranged
+                    },
+                    1,
+                    new List<EffectName>
+                    {
+                        EffectName.Mortar.DeadlyAmmunitionSearch
+                    },
+                    2,
+                    false),
+                
+                new Wait(
+                    BehaviourName.Mortar.ReloadWait,
+                    nameof(BehaviourName.Mortar.ReloadWait).CamelCaseToWords(),
+                    "Mortar will reload its ammunition at the end of this action.",
+                    EndsAt.EndOf.This.Action,
+                    BehaviourName.Mortar.ReloadBuff),
+                
+                new Buff(
+                    BehaviourName.Mortar.ReloadBuff,
+                    nameof(BehaviourName.Mortar.ReloadBuff).CamelCaseToWords(),
+                    "",
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Mortar.ReloadReload
+                    },
+                    null,
+                    null,
+                    EndsAt.Instant),
+                
+                new Buff(
+                    BehaviourName.Mortar.PiercingBlastBuff,
+                    nameof(BehaviourName.Mortar.PiercingBlastBuff).CamelCaseToWords(),
+                    "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
+                    null,
+                    new List<Modification>
+                    {
+                        new AttackModification(
+                            Attacks.Ranged, 
+                            new List<Flag>
+                            {
+                                Flag.Modification.IgnoreArmour
+                            })
+                    },
+                    null,
+                    null,
+                    null,
+                    EndsAt.Death,
+                    null,
+                    null,
                     Alignment.Positive)
             };
         }

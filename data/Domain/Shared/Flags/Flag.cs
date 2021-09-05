@@ -25,6 +25,7 @@ namespace low_age_data.Domain.Shared.Flags
             public static Flag CannotAttack => new Flag(Flags.ModificationCannotAttack);
             public static Flag MovementDisabled => new Flag(Flags.ModificationMovementDisabled);
             public static Flag CanAttackAnyTeam => new Flag(Flags.ModificationCanAttackAnyTeam);
+            public static Flag IgnoreArmour => new Flag(Flags.ModificationIgnoreArmour);
         }
 
         public static class Effect
@@ -83,6 +84,7 @@ namespace low_age_data.Domain.Shared.Flags
             ModificationCannotAttack,
             ModificationMovementDisabled,
             ModificationCanAttackAnyTeam,
+            ModificationIgnoreArmour,
             EffectModifyPlayerGameLost,
             EffectSearchAppliedOnEnter,
             EffectSearchAppliedOnAction,

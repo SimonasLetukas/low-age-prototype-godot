@@ -15,8 +15,9 @@ namespace low_age_data.Domain.Effects
             IList<EffectName>? effects = null,
             Location? location = null,
             Shape? shape = null,
+            bool? ignoreCenter = null,
             IList<Validator>? validators = null,
-            bool usedForValidator = false) : base(name, $"{nameof(Effect)}.{nameof(Search)}", validators ?? new List<Validator>())
+            bool? usedForValidator = null) : base(name, $"{nameof(Effect)}.{nameof(Search)}", validators ?? new List<Validator>())
         {
             Radius = radius;
             SearchFlags = searchFlags;
@@ -24,7 +25,8 @@ namespace low_age_data.Domain.Effects
             Effects = effects ?? new List<EffectName>();
             Location = location ?? Location.Inherited;
             Shape = shape ?? Shape.Circle;
-            UsedForValidator = usedForValidator;
+            IgnoreCenter = ignoreCenter ?? false;
+            UsedForValidator = usedForValidator ?? false;
         }
 
         public int Radius { get; }
@@ -33,6 +35,7 @@ namespace low_age_data.Domain.Effects
         public IList<EffectName> Effects { get; } // Effects executed on each entity found
         public Location Location { get; }
         public Shape Shape { get; }
+        public bool IgnoreCenter { get; }
         public bool UsedForValidator { get; }
     }
 }

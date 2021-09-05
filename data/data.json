@@ -868,7 +868,11 @@
           "CombatAttributes.Biological",
           "CombatAttributes.Ranged"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-mortar-deadly-ammunition",
+          "ability-mortar-reload",
+          "ability-mortar-piercing-blast"
+        ],
         "displayName": "Mortar",
         "description": ""
       },
@@ -1684,6 +1688,49 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Dismount",
       "description": "Upon death, reemerges as Horrior."
+    },
+    {
+      "name": "ability-mortar-deadly-ammunition",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-mortar-deadly-ammunition-apply-behaviour",
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Deadly Ammunition",
+      "description": "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target."
+    },
+    {
+      "name": "ability-mortar-reload",
+      "type": "Ability.Instant",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "effects": [
+        "effect-mortar-reload-apply-behaviour"
+      ],
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Reload",
+      "description": "Spend this action phase reloading to full ammo."
+    },
+    {
+      "name": "ability-mortar-piercing-blast",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [
+        "Research.ExplosiveShrapnel"
+      ],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-mortar-piercing-blast-apply-behaviour",
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Piercing Blast",
+      "description": "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition."
     }
   ],
   "effects": [
@@ -1730,6 +1777,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
+      "ignoreCenter": false,
       "usedForValidator": false,
       "validators": []
     },
@@ -1779,6 +1827,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Map",
+      "ignoreCenter": false,
       "usedForValidator": false,
       "validators": []
     },
@@ -1932,6 +1981,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
+      "ignoreCenter": false,
       "usedForValidator": false,
       "validators": []
     },
@@ -2031,6 +2081,7 @@
       "effects": [],
       "location": "Location.Origin",
       "shape": "Shape.Circle",
+      "ignoreCenter": false,
       "usedForValidator": true,
       "validators": []
     },
@@ -2046,6 +2097,7 @@
       "effects": [],
       "location": "Location.Actor",
       "shape": "Shape.Circle",
+      "ignoreCenter": false,
       "usedForValidator": true,
       "validators": []
     },
@@ -2103,6 +2155,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
+      "ignoreCenter": false,
       "usedForValidator": false,
       "validators": []
     },
@@ -2217,6 +2270,7 @@
       ],
       "location": "Location.Point",
       "shape": "Shape.Line",
+      "ignoreCenter": false,
       "usedForValidator": false,
       "validators": []
     },
@@ -2437,6 +2491,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
+      "ignoreCenter": false,
       "usedForValidator": false,
       "validators": []
     },
@@ -2531,6 +2586,92 @@
       "entityToCreate": "unit-horrior",
       "initialEntityBehaviours": [],
       "validators": []
+    },
+    {
+      "name": "effect-mortar-deadly-ammunition-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-mortar-deadly-ammunition-ammunition"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-mortar-deadly-ammunition-search",
+      "type": "Effect.Search",
+      "radius": 1,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-mortar-deadly-ammunition-damage"
+      ],
+      "location": "Location.Inherited",
+      "shape": "Shape.Circle",
+      "ignoreCenter": true,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-mortar-deadly-ammunition-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.OverrideRanged",
+      "amount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-mortar-reload-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-mortar-reload-wait"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-mortar-reload-reload",
+      "type": "Effect.Reload",
+      "ammunitionToTarget": "behaviour-mortar-deadly-ammunition-ammunition",
+      "location": "Location.Self",
+      "validators": []
+    },
+    {
+      "name": "effect-mortar-piercing-blast-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-mortar-piercing-blast-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
     }
   ],
   "behaviours": [
@@ -2564,6 +2705,7 @@
           "type": "Modification.AttackModification",
           "attackType": "Attacks.Melee",
           "attribute": "AttackAttribute.MaxAmount",
+          "modificationFlags": [],
           "change": "Change.SubtractMax",
           "amount": 2.0
         },
@@ -2571,6 +2713,7 @@
           "type": "Modification.AttackModification",
           "attackType": "Attacks.Ranged",
           "attribute": "AttackAttribute.MaxAmount",
+          "modificationFlags": [],
           "change": "Change.SubtractMax",
           "amount": 2.0
         }
@@ -2872,6 +3015,7 @@
           "type": "Modification.AttackModification",
           "attackType": "Attacks.Melee",
           "attribute": "AttackAttribute.MaxDistance",
+          "modificationFlags": [],
           "change": "Change.SubtractMax",
           "amount": 3.0
         },
@@ -2879,6 +3023,7 @@
           "type": "Modification.AttackModification",
           "attackType": "Attacks.Ranged",
           "attribute": "AttackAttribute.MaxDistance",
+          "modificationFlags": [],
           "change": "Change.SubtractMax",
           "amount": 3.0
         }
@@ -3231,6 +3376,82 @@
       "restoreChangesOnEnd": false,
       "displayName": "Dismount Buff",
       "description": "Upon death, reemerges as Horrior.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-mortar-deadly-ammunition-ammunition",
+      "type": "Behaviour.Ammunition",
+      "maxAmmunitionAmount": 2,
+      "ammunitionAmountLostOnHit": 1,
+      "ammunitionRecoveredOnReload": 2,
+      "applyOriginalAttackToTarget": false,
+      "ammunitionAttackTypes": [
+        "Attacks.Ranged"
+      ],
+      "onHitEffects": [
+        "effect-mortar-deadly-ammunition-search"
+      ],
+      "displayName": "Deadly Ammunition Ammunition",
+      "description": "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-mortar-reload-wait",
+      "type": "Behaviour.Wait",
+      "nextBehaviour": "behaviour-mortar-reload-buff",
+      "displayName": "Reload Wait",
+      "description": "Mortar will reload its ammunition at the end of this action.",
+      "endsAt": "EndsAt.EndOfThisAction"
+    },
+    {
+      "name": "behaviour-mortar-reload-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-mortar-reload-reload"
+      ],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Reload Buff",
+      "description": "",
+      "endsAt": "EndsAt.Instant"
+    },
+    {
+      "name": "behaviour-mortar-piercing-blast-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.AttackModification",
+          "attackType": "Attacks.Ranged",
+          "attribute": "AttackAttribute.MaxAmount",
+          "modificationFlags": [
+            "Flag.ModificationIgnoreArmour"
+          ],
+          "change": "Change.AddCurrent",
+          "amount": 0.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Piercing Blast Buff",
+      "description": "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
       "endsAt": "EndsAt.Death"
     }
   ]

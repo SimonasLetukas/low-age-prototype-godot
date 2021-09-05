@@ -90,5 +90,12 @@ namespace low_age_data.Domain.Abilities
         {
             public static AbilityName Dismount => new AbilityName($"{nameof(Surfer)}{nameof(Dismount)}".ToKebabCase());
         }
+
+        public static class Mortar
+        {
+            public static AbilityName DeadlyAmmunition => new AbilityName($"{nameof(Mortar)}{nameof(DeadlyAmmunition)}".ToKebabCase());
+            public static AbilityName Reload => new AbilityName($"{nameof(Mortar)}{nameof(Reload)}".ToKebabCase());
+            public static AbilityName PiercingBlast => new AbilityName($"{nameof(Mortar)}{nameof(PiercingBlast)}".ToKebabCase());
+        }
     }
 }

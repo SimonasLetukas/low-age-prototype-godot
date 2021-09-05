@@ -23,6 +23,7 @@ namespace low_age_data.Collections
                         new CombatStat(0, false, Stats.RangedArmour),
                         new CombatStat(5, true, Stats.Movement),
                         new CombatStat(20, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             1, 
                             Attacks.Melee, 
@@ -53,6 +54,7 @@ namespace low_age_data.Collections
                         new CombatStat(5, false, Stats.RangedArmour),
                         new CombatStat(3, true, Stats.Movement),
                         new CombatStat(28, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             5, 
                             Attacks.Melee, 
@@ -85,6 +87,7 @@ namespace low_age_data.Collections
                         new CombatStat(0, false, Stats.RangedArmour),
                         new CombatStat(4, true, Stats.Movement),
                         new CombatStat(18, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             1,
                             Attacks.Melee,
@@ -122,6 +125,7 @@ namespace low_age_data.Collections
                         new CombatStat(0, false, Stats.RangedArmour),
                         new CombatStat(4, true, Stats.Movement),
                         new CombatStat(26, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             3,
                             Attacks.Melee,
@@ -153,6 +157,7 @@ namespace low_age_data.Collections
                         new CombatStat(1, false, Stats.RangedArmour),
                         new CombatStat(4, true, Stats.Movement),
                         new CombatStat(23, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             6,
                             Attacks.Melee,
@@ -184,6 +189,7 @@ namespace low_age_data.Collections
                         new CombatStat(1, false, Stats.RangedArmour),
                         new CombatStat(4, true, Stats.Movement),
                         new CombatStat(19, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             1,
                             Attacks.Melee,
@@ -220,6 +226,7 @@ namespace low_age_data.Collections
                         new CombatStat(0, false, Stats.RangedArmour),
                         new CombatStat(5, true, Stats.Movement),
                         new CombatStat(12, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             1,
                             Attacks.Melee,
@@ -257,6 +264,7 @@ namespace low_age_data.Collections
                         new CombatStat(0, false, Stats.RangedArmour),
                         new CombatStat(4, true, Stats.Movement),
                         new CombatStat(25, false, Stats.Initiative),
+                        new CombatStat(6, false, Stats.Vision),
                         new AttackStat(
                             8,
                             Attacks.Melee,
@@ -288,6 +296,7 @@ namespace low_age_data.Collections
                         new CombatStat(0, false, Stats.RangedArmour),
                         new CombatStat(2, true, Stats.Movement),
                         new CombatStat(16, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             3,
                             Attacks.Melee,
@@ -317,6 +326,7 @@ namespace low_age_data.Collections
                         new CombatStat(2, false, Stats.RangedArmour),
                         new CombatStat(5, true, Stats.Movement),
                         new CombatStat(15, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             6,
                             Attacks.Melee,
@@ -348,6 +358,7 @@ namespace low_age_data.Collections
                         new CombatStat(1, false, Stats.RangedArmour),
                         new CombatStat(6, true, Stats.Movement),
                         new CombatStat(14, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             0,
                             Attacks.Melee,
@@ -377,6 +388,7 @@ namespace low_age_data.Collections
                         new CombatStat(1, false, Stats.RangedArmour),
                         new CombatStat(2, true, Stats.Movement),
                         new CombatStat(32, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             9,
                             Attacks.Melee,
@@ -409,6 +421,7 @@ namespace low_age_data.Collections
                         new CombatStat(1, false, Stats.RangedArmour),
                         new CombatStat(5, true, Stats.Movement),
                         new CombatStat(17, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             1,
                             Attacks.Melee,
@@ -446,6 +459,7 @@ namespace low_age_data.Collections
                         new CombatStat(0, false, Stats.RangedArmour),
                         new CombatStat(5, true, Stats.Movement),
                         new CombatStat(30, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             5,
                             Attacks.Melee,
@@ -477,6 +491,7 @@ namespace low_age_data.Collections
                         new CombatStat(0, false, Stats.RangedArmour),
                         new CombatStat(4, true, Stats.Movement),
                         new CombatStat(21, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             2,
                             Attacks.Melee,
@@ -499,7 +514,9 @@ namespace low_age_data.Collections
                     },
                     new List<AbilityName>
                     {
-
+                        AbilityName.Mortar.DeadlyAmmunition,
+                        AbilityName.Mortar.Reload,
+                        AbilityName.Mortar.PiercingBlast
                     }),
 
                 new Unit(
@@ -514,6 +531,7 @@ namespace low_age_data.Collections
                         new CombatStat(0, false, Stats.RangedArmour),
                         new CombatStat(4, true, Stats.Movement),
                         new CombatStat(45, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             3,
                             Attacks.Melee,
@@ -545,6 +563,7 @@ namespace low_age_data.Collections
                         new CombatStat(1, false, Stats.RangedArmour),
                         new CombatStat(4, true, Stats.Movement),
                         new CombatStat(11, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             1,
                             Attacks.Melee,
@@ -576,6 +595,7 @@ namespace low_age_data.Collections
                         new CombatStat(3, false, Stats.RangedArmour),
                         new CombatStat(1, true, Stats.Movement),
                         new CombatStat(8, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             20,
                             Attacks.Ranged,
@@ -608,6 +628,7 @@ namespace low_age_data.Collections
                         new CombatStat(1, false, Stats.RangedArmour),
                         new CombatStat(0, true, Stats.Movement),
                         new CombatStat(27, false, Stats.Initiative),
+                        new CombatStat(6, false, Stats.Vision),
                         new AttackStat(
                             9,
                             Attacks.Ranged,
@@ -639,7 +660,8 @@ namespace low_age_data.Collections
                         new CombatStat(2, false, Stats.MeleeArmour),
                         new CombatStat(5, false, Stats.RangedArmour),
                         new CombatStat(0, true, Stats.Movement),
-                        new CombatStat(8, false, Stats.Initiative)
+                        new CombatStat(8, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision)
                     },
                     Factions.UEE,
                     new List<CombatAttributes>
@@ -664,6 +686,7 @@ namespace low_age_data.Collections
                         new CombatStat(2, false, Stats.RangedArmour),
                         new CombatStat(3, true, Stats.Movement),
                         new CombatStat(29, false, Stats.Initiative),
+                        new CombatStat(6, false, Stats.Vision),
                         new AttackStat(
                             2,
                             Attacks.Melee,
@@ -695,6 +718,7 @@ namespace low_age_data.Collections
                         new CombatStat(1, false, Stats.RangedArmour),
                         new CombatStat(5, true, Stats.Movement),
                         new CombatStat(13, false, Stats.Initiative),
+                        new CombatStat(5, false, Stats.Vision),
                         new AttackStat(
                             10,
                             Attacks.Melee,

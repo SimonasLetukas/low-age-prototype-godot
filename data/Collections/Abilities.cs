@@ -374,7 +374,43 @@ namespace low_age_data.Collections
                     null,
                     null,
                     null,
-                    EffectName.Surfer.DismountApplyBehaviour)
+                    EffectName.Surfer.DismountApplyBehaviour),
+                
+                new Passive(
+                    AbilityName.Mortar.DeadlyAmmunition,
+                    nameof(AbilityName.Mortar.DeadlyAmmunition).CamelCaseToWords(),
+                    "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. " +
+                    "Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
+                    true,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EffectName.Mortar.DeadlyAmmunitionApplyBehaviour),
+                
+                new Instant(
+                    AbilityName.Mortar.Reload,
+                    TurnPhase.Action,
+                    nameof(AbilityName.Mortar.Reload).CamelCaseToWords(),
+                    "Spend this action phase reloading to full ammo.",
+                    new List<EffectName>
+                    {
+                        EffectName.Mortar.ReloadApplyBehaviour
+                    }),
+                
+                new Passive(
+                    AbilityName.Mortar.PiercingBlast,
+                    nameof(AbilityName.Mortar.PiercingBlast).CamelCaseToWords(),
+                    "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
+                    true,
+                    null,
+                    new List<Research>
+                    {
+                        Research.Uee.ExplosiveShrapnel
+                    },
+                    null,
+                    null,
+                    EffectName.Mortar.PiercingBlastApplyBehaviour)
             };
         }
     }

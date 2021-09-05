@@ -119,5 +119,15 @@ namespace low_age_data.Domain.Effects
             public static EffectName DismountApplyBehaviour => new EffectName($"{nameof(Surfer)}{nameof(DismountApplyBehaviour)}".ToKebabCase());
             public static EffectName DismountCreateEntity => new EffectName($"{nameof(Surfer)}{nameof(DismountCreateEntity)}".ToKebabCase());
         }
+        
+        public static class Mortar
+        {
+            public static EffectName DeadlyAmmunitionApplyBehaviour => new EffectName($"{nameof(Mortar)}{nameof(DeadlyAmmunitionApplyBehaviour)}".ToKebabCase());
+            public static EffectName DeadlyAmmunitionSearch => new EffectName($"{nameof(Mortar)}{nameof(DeadlyAmmunitionSearch)}".ToKebabCase());
+            public static EffectName DeadlyAmmunitionDamage => new EffectName($"{nameof(Mortar)}{nameof(DeadlyAmmunitionDamage)}".ToKebabCase());
+            public static EffectName ReloadApplyBehaviour => new EffectName($"{nameof(Mortar)}{nameof(ReloadApplyBehaviour)}".ToKebabCase());
+            public static EffectName ReloadReload => new EffectName($"{nameof(Mortar)}{nameof(ReloadReload)}".ToKebabCase());
+            public static EffectName PiercingBlastApplyBehaviour => new EffectName($"{nameof(Mortar)}{nameof(PiercingBlastApplyBehaviour)}".ToKebabCase());
+        }
     }
 }

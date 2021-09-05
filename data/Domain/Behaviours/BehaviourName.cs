@@ -86,5 +86,13 @@ namespace low_age_data.Domain.Behaviours
         {
             public static BehaviourName DismountBuff => new BehaviourName($"{nameof(Surfer)}{nameof(DismountBuff)}".ToKebabCase());
         }
+
+        public static class Mortar
+        {
+            public static BehaviourName DeadlyAmmunitionAmmunition => new BehaviourName($"{nameof(Mortar)}{nameof(DeadlyAmmunitionAmmunition)}".ToKebabCase());
+            public static BehaviourName ReloadWait => new BehaviourName($"{nameof(Mortar)}{nameof(ReloadWait)}".ToKebabCase());
+            public static BehaviourName ReloadBuff => new BehaviourName($"{nameof(Mortar)}{nameof(ReloadBuff)}".ToKebabCase());
+            public static BehaviourName PiercingBlastBuff => new BehaviourName($"{nameof(Mortar)}{nameof(PiercingBlastBuff)}".ToKebabCase());
+        }
     }
 }
