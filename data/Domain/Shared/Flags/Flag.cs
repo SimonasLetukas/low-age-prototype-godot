@@ -10,6 +10,17 @@ namespace low_age_data.Domain.Shared.Flags
             return $"{nameof(Flag)}.{Value}";
         }
 
+        public static class Condition
+        {
+            public static Flag BehaviourDoesNotExist => new Flag(Flags.ConditionBehaviourDoesNotExist);
+            public static Flag BehaviourExists => new Flag(Flags.ConditionBehaviourExists);
+            public static Flag TargetDoesNotHaveFullHealth => new Flag(Flags.ConditionTargetDoesNotHaveFullHealth);
+            public static Flag NoActorsFoundFromEffect => new Flag(Flags.ConditionNoActorsFoundFromEffect);
+            public static Flag TargetIsHighGround => new Flag(Flags.ConditionTargetIsHighGround);
+            public static Flag TargetIsUnoccupied => new Flag(Flags.ConditionTargetIsUnoccupied);
+            public static Flag TargetIsDifferentTypeThanOrigin => new Flag(Flags.ConditionTargetIsDifferentTypeThanOrigin);
+        }
+
         public static class Amount
         {
             public static Flag FromMissingHealth => new Flag(Flags.AmountFromMissingHealth);
@@ -26,6 +37,7 @@ namespace low_age_data.Domain.Shared.Flags
             public static Flag MovementDisabled => new Flag(Flags.ModificationMovementDisabled);
             public static Flag CanAttackAnyTeam => new Flag(Flags.ModificationCanAttackAnyTeam);
             public static Flag IgnoreArmour => new Flag(Flags.ModificationIgnoreArmour);
+            public static Flag IncreaseMachineOperators => new Flag(Flags.ModificationIncreaseMachineOperators);
         }
 
         public static class Effect
@@ -69,6 +81,10 @@ namespace low_age_data.Domain.Shared.Flags
         public static class Unit
         {
             public static Flag Horrior => new Flag(Flags.UnitHorrior);
+            public static Flag Cannon => new Flag(Flags.UnitCannon);
+            public static Flag Ballista => new Flag(Flags.UnitBallista);
+            public static Flag Radar => new Flag(Flags.UnitRadar);
+            public static Flag Vessel => new Flag(Flags.UnitVessel);
         }
 
         private Flag(Flags @enum)
@@ -80,6 +96,13 @@ namespace low_age_data.Domain.Shared.Flags
 
         private enum Flags
         {
+            ConditionBehaviourDoesNotExist,
+            ConditionBehaviourExists,
+            ConditionTargetDoesNotHaveFullHealth,
+            ConditionNoActorsFoundFromEffect,
+            ConditionTargetIsHighGround,
+            ConditionTargetIsUnoccupied,
+            ConditionTargetIsDifferentTypeThanOrigin,
             AmountFromMissingHealth,
             ModificationCannotBeHealed,
             ModificationAbilitiesDisabled,
@@ -90,6 +113,7 @@ namespace low_age_data.Domain.Shared.Flags
             ModificationMovementDisabled,
             ModificationCanAttackAnyTeam,
             ModificationIgnoreArmour,
+            ModificationIncreaseMachineOperators,
             EffectModifyPlayerGameLost,
             EffectSearchAppliedOnEnter,
             EffectSearchAppliedOnAction,
@@ -102,7 +126,11 @@ namespace low_age_data.Domain.Shared.Flags
             FilterAttributeRanged,
             StructureObelisk,
             StructureHut,
-            UnitHorrior
+            UnitHorrior,
+            UnitCannon,
+            UnitBallista,
+            UnitRadar,
+            UnitVessel
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

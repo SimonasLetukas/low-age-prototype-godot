@@ -1431,7 +1431,9 @@
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
       "distance": 1,
-      "effect": "effect-leader-one-for-all-apply-behaviour-obelisk",
+      "effects": [
+        "effect-leader-one-for-all-apply-behaviour-obelisk"
+      ],
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "One For All",
@@ -1457,6 +1459,7 @@
       ],
       "casterConsumesAction": true,
       "canHelp": true,
+      "helpEfficiency": 0.5,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Build",
@@ -1468,11 +1471,13 @@
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
       "distance": 1,
-      "effect": "effect-slave-repair-apply-behaviour-structure",
+      "effects": [
+        "effect-slave-repair-apply-behaviour-structure"
+      ],
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Repair",
-      "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs."
+      "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be interrupted."
     },
     {
       "name": "ability-slave-manual-labour",
@@ -1480,7 +1485,9 @@
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
       "distance": 1,
-      "effect": "effect-slave-manual-labour-apply-behaviour-hut",
+      "effects": [
+        "effect-slave-manual-labour-apply-behaviour-hut"
+      ],
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Manual Labour",
@@ -1579,7 +1586,9 @@
         "Research.SpikedRope"
       ],
       "distance": 1,
-      "effect": "effect-camou-climb-teleport",
+      "effects": [
+        "effect-camou-climb-teleport"
+      ],
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Climb",
@@ -1607,7 +1616,9 @@
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
       "distance": 4,
-      "effect": "effect-shaman-wondrous-goo-create-entity",
+      "effects": [
+        "effect-shaman-wondrous-goo-create-entity"
+      ],
       "hasButton": true,
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "displayName": "Wondrous Goo",
@@ -1649,7 +1660,9 @@
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
       "distance": 1,
-      "effect": "effect-big-bad-bull-unleash-the-rage-search",
+      "effects": [
+        "effect-big-bad-bull-unleash-the-rage-search"
+      ],
       "hasButton": true,
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "displayName": "Unleash The Rage",
@@ -1661,7 +1674,9 @@
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
       "distance": 1,
-      "effect": "effect-mummy-spawn-roach-create-entity",
+      "effects": [
+        "effect-mummy-spawn-roach-create-entity"
+      ],
       "hasButton": true,
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "displayName": "Spawn Roach",
@@ -1689,7 +1704,9 @@
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
       "distance": 4,
-      "effect": "effect-mummy-spawn-roach-create-entity",
+      "effects": [
+        "effect-mummy-spawn-roach-create-entity"
+      ],
       "hasButton": true,
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "displayName": "Spawn Roach",
@@ -1717,7 +1734,9 @@
         "Research.AdaptiveDigestion"
       ],
       "distance": 4,
-      "effect": "effect-roach-corrosive-spit-damage",
+      "effects": [
+        "effect-roach-corrosive-spit-damage"
+      ],
       "hasButton": true,
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "displayName": "Corrosive Spit",
@@ -1866,7 +1885,9 @@
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
       "distance": 1,
-      "effect": "effect-hawk-leadership-apply-behaviour",
+      "effects": [
+        "effect-hawk-leadership-apply-behaviour"
+      ],
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Leadership",
@@ -1887,6 +1908,55 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Health Kit",
       "description": "Restores 1 Health to all adjacent friendly units at the start of each planning phase."
+    },
+    {
+      "name": "ability-engineer-assemble-machine",
+      "type": "Ability.Build",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "distance": 1,
+      "selection": [
+        "unit-cannon",
+        "unit-ballista",
+        "unit-radar"
+      ],
+      "casterConsumesAction": true,
+      "canHelp": true,
+      "helpEfficiency": 1.0,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Assemble Machine",
+      "description": "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, up to a number needed to operate the Machine. Each Engineer provides current Celestium production to the construction."
+    },
+    {
+      "name": "ability-engineer-operate",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 1,
+      "effects": [
+        "effect-engineer-operate-apply-behaviour"
+      ],
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Operate",
+      "description": "Select an adjacent Machine and start operating it if the Machine is built and does not have the maximum number of operating Engineers already."
+    },
+    {
+      "name": "ability-engineer-repair",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "distance": 1,
+      "effects": [
+        "effect-engineer-repair-structure-apply-behaviour",
+        "effect-engineer-repair-machine-apply-behaviour",
+        "effect-engineer-repair-horrior-apply-behaviour"
+      ],
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Repair",
+      "description": "Select an adjacent structure, Machine or Horrior. At the start of the next planning phase the selected structure or Machine receives +2 Health and selected Horrior's mounting time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be interrupted."
     }
   ],
   "effects": [
@@ -1963,7 +2033,11 @@
         {
           "type": "Validator",
           "conditions": [
-            "Condition.BehaviourToApplyDoesNotAlreadyExist"
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "conditionedBehaviour": "behaviour-leader-one-for-all-obelisk-buff"
+            }
           ],
           "filterFlags": []
         }
@@ -2012,7 +2086,11 @@
         {
           "type": "Validator",
           "conditions": [
-            "Condition.TargetDoesNotHaveFullHealth"
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth",
+              "conditionedBehaviour": null
+            }
           ],
           "filterFlags": []
         }
@@ -2044,7 +2122,11 @@
         {
           "type": "Validator",
           "conditions": [
-            "Condition.BehaviourToApplyDoesNotAlreadyExist"
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "conditionedBehaviour": "behaviour-slave-manual-labour-buff"
+            }
           ],
           "filterFlags": []
         }
@@ -2189,7 +2271,11 @@
           "effect": "effect-camou-silent-assassin-search-friendly",
           "type": "Validator.ResultValidator",
           "conditions": [
-            "Condition.NoActorsFoundFromEffect"
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
+              "conditionedBehaviour": null
+            }
           ],
           "filterFlags": []
         }
@@ -2211,7 +2297,11 @@
           "effect": "effect-camou-silent-assassin-search-friendly",
           "type": "Validator.ResultValidator",
           "conditions": [
-            "Condition.NoActorsFoundFromEffect"
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
+              "conditionedBehaviour": null
+            }
           ],
           "filterFlags": []
         },
@@ -2219,7 +2309,11 @@
           "effect": "effect-camou-silent-assassin-search-enemy",
           "type": "Validator.ResultValidator",
           "conditions": [
-            "Condition.NoActorsFoundFromEffect"
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
+              "conditionedBehaviour": null
+            }
           ],
           "filterFlags": []
         }
@@ -2265,8 +2359,16 @@
         {
           "type": "Validator",
           "conditions": [
-            "Condition.TargetIsHighGround",
-            "Condition.TargetIsUnoccupied"
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsHighGround",
+              "conditionedBehaviour": null
+            },
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsUnoccupied",
+              "conditionedBehaviour": null
+            }
           ],
           "filterFlags": []
         }
@@ -2581,7 +2683,11 @@
         {
           "type": "Validator",
           "conditions": [
-            "Condition.BehaviourToApplyDoesNotAlreadyExist"
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-tether"
+            }
           ],
           "filterFlags": []
         }
@@ -2602,7 +2708,11 @@
         {
           "type": "Validator",
           "conditions": [
-            "Condition.BehaviourToApplyDoesNotAlreadyExist"
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-buff"
+            }
           ],
           "filterFlags": []
         }
@@ -2622,7 +2732,11 @@
         {
           "type": "Validator",
           "conditions": [
-            "Condition.BehaviourToApplyDoesNotAlreadyExist"
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-self-buff"
+            }
           ],
           "filterFlags": []
         }
@@ -2896,6 +3010,119 @@
       "location": "Location.Inherited",
       "filterFlags": [],
       "validators": []
+    },
+    {
+      "name": "effect-engineer-operate-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-engineer-operate-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterUnit",
+        "Flag.UnitCannon",
+        "Flag.UnitBallista",
+        "Flag.UnitRadar",
+        "Flag.UnitVessel"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-engineer-operate-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Origin",
+      "blocksBehaviours": false,
+      "validators": []
+    },
+    {
+      "name": "effect-engineer-repair-structure-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-engineer-repair-structure-or-machine-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterStructure"
+      ],
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth",
+              "conditionedBehaviour": null
+            }
+          ],
+          "filterFlags": []
+        }
+      ]
+    },
+    {
+      "name": "effect-engineer-repair-machine-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-engineer-repair-structure-or-machine-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit",
+        "Flag.UnitCannon",
+        "Flag.UnitBallista",
+        "Flag.UnitRadar",
+        "Flag.UnitVessel"
+      ],
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth",
+              "conditionedBehaviour": null
+            }
+          ],
+          "filterFlags": []
+        }
+      ]
+    },
+    {
+      "name": "effect-engineer-repair-horrior-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-engineer-repair-horrior-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit",
+        "Flag.UnitHorrior"
+      ],
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourExists",
+              "conditionedBehaviour": "behaviour-horrior-mount-wait"
+            }
+          ],
+          "filterFlags": []
+        }
+      ]
+    },
+    {
+      "name": "effect-engineer-repair-apply-behaviour-self",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-engineer-repair-wait"
+      ],
+      "location": "Location.Origin",
+      "filterFlags": [],
+      "validators": []
     }
   ],
   "behaviours": [
@@ -3026,7 +3253,7 @@
       "triggers": [
         {
           "events": [
-            "Event.OriginIsDestroyed"
+            "Event.OriginIsInterrupted"
           ],
           "validators": []
         }
@@ -3562,7 +3789,11 @@
             {
               "type": "Validator",
               "conditions": [
-                "Condition.TargetIsDifferentTypeThanOrigin"
+                {
+                  "type": "Condition",
+                  "conditionFlag": "Flag.ConditionTargetIsDifferentTypeThanOrigin",
+                  "conditionedBehaviour": null
+                }
               ],
               "filterFlags": [
                 "Flag.FilterEnemy",
@@ -3786,6 +4017,107 @@
       "displayName": "Health Kit Heal Buff",
       "description": "Heals for 1 Health.",
       "endsAt": "EndsAt.Instant"
+    },
+    {
+      "name": "behaviour-engineer-operate-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationIncreaseMachineOperators"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-engineer-operate-destroy"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Operate Buff",
+      "description": "",
+      "endsAt": "EndsAt.Instant"
+    },
+    {
+      "name": "behaviour-engineer-repair-structure-or-machine-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-engineer-repair-apply-behaviour-self"
+      ],
+      "finalModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Health",
+          "change": "Change.AddCurrent",
+          "amount": 1.0
+        }
+      ],
+      "finalEffects": [],
+      "canStack": true,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [
+        {
+          "events": [
+            "Event.OriginIsInterrupted"
+          ],
+          "validators": []
+        }
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Repair Structure Or Machine Buff",
+      "description": "This structure or machine will be repaired by +2 Health at the start of the planning phase.",
+      "endsAt": "EndsAt.StartOfNextPlanning"
+    },
+    {
+      "name": "behaviour-engineer-repair-horrior-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-engineer-repair-apply-behaviour-self"
+      ],
+      "finalModifications": [
+        {
+          "type": "Modification.DurationModification",
+          "behaviourToModify": "behaviour-horrior-mount-wait",
+          "change": "Change.SubtractCurrent",
+          "amount": 1.0
+        }
+      ],
+      "finalEffects": [],
+      "canStack": true,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [
+        {
+          "events": [
+            "Event.OriginIsInterrupted"
+          ],
+          "validators": []
+        }
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Repair Horrior Buff",
+      "description": "This Horrior will have their Mount duration reduced by one turn at the start of the planning phase.",
+      "endsAt": "EndsAt.StartOfNextPlanning"
+    },
+    {
+      "name": "behaviour-engineer-repair-wait",
+      "type": "Behaviour.Wait",
+      "nextBehaviour": null,
+      "displayName": "Repair Wait",
+      "description": "Currently repairing.",
+      "endsAt": "EndsAt.StartOfNextPlanning"
     }
   ]
 }

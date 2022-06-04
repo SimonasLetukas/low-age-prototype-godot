@@ -138,5 +138,15 @@ namespace low_age_data.Domain.Effects
             public static EffectName HealthKitSearch => new EffectName($"{nameof(Hawk)}{nameof(HealthKitSearch)}".ToKebabCase());
             public static EffectName HealthKitHealApplyBehaviour => new EffectName($"{nameof(Hawk)}{nameof(HealthKitHealApplyBehaviour)}".ToKebabCase());
         }
+
+        public static class Engineer
+        {
+            public static EffectName OperateApplyBehaviour => new EffectName($"{nameof(Engineer)}{nameof(OperateApplyBehaviour)}".ToKebabCase());
+            public static EffectName OperateDestroy => new EffectName($"{nameof(Engineer)}{nameof(OperateDestroy)}".ToKebabCase());
+            public static EffectName RepairStructureApplyBehaviour => new EffectName($"{nameof(Engineer)}{nameof(RepairStructureApplyBehaviour)}".ToKebabCase());
+            public static EffectName RepairMachineApplyBehaviour => new EffectName($"{nameof(Engineer)}{nameof(RepairMachineApplyBehaviour)}".ToKebabCase());
+            public static EffectName RepairHorriorApplyBehaviour => new EffectName($"{nameof(Engineer)}{nameof(RepairHorriorApplyBehaviour)}".ToKebabCase());
+            public static EffectName RepairApplyBehaviourSelf => new EffectName($"{nameof(Engineer)}{nameof(RepairApplyBehaviourSelf)}".ToKebabCase());
+        }
     }
 }

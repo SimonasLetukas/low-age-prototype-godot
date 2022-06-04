@@ -123,7 +123,7 @@ namespace low_age_data.Collections
                     {
                         new Trigger(new List<Event>
                         {
-                            Event.OriginIsDestroyed
+                            Event.OriginIsInterrupted
                         })
                     },
                     true),
@@ -589,7 +589,7 @@ namespace low_age_data.Collections
                             new Validator(
                                 new List<Condition>
                                 {
-                                    Condition.TargetIsDifferentTypeThanOrigin
+                                    new Condition(Flag.Condition.TargetIsDifferentTypeThanOrigin)
                                 },
                                 new List<Flag>
                                 {
@@ -769,6 +769,92 @@ namespace low_age_data.Collections
                     false,
                     false,
                     Alignment.Positive),
+                
+                new Buff(
+                    BehaviourName.Engineer.OperateBuff,
+                    nameof(BehaviourName.Engineer.OperateBuff).CamelCaseToWords(),
+                    "",
+                    new List<Flag>
+                    {
+                        Flag.Modification.IncreaseMachineOperators
+                    },
+                    null,
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Engineer.OperateDestroy
+                    },
+                    EndsAt.Instant),
+                
+                new Buff(
+                    BehaviourName.Engineer.RepairStructureOrMachineBuff,
+                    nameof(BehaviourName.Engineer.RepairStructureOrMachineBuff).CamelCaseToWords(),
+                    "This structure or machine will be repaired by +2 Health at the start of the planning phase.",
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Engineer.RepairApplyBehaviourSelf
+                    },
+                    new List<Modification>
+                    {
+                        new StatModification(
+                            Change.AddCurrent,
+                            1,
+                            Stats.Health)
+                    },
+                    null,
+                    EndsAt.StartOf.Next.Planning,
+                    true,
+                    false,
+                    Alignment.Positive,
+                    new List<Trigger>
+                    {
+                        new Trigger(new List<Event>
+                        {
+                            Event.OriginIsInterrupted
+                        })
+                    },
+                    true),
+                
+                new Buff(
+                    BehaviourName.Engineer.RepairHorriorBuff,
+                    nameof(BehaviourName.Engineer.RepairHorriorBuff).CamelCaseToWords(),
+                    "This Horrior will have their Mount duration reduced by one turn at the start of the " +
+                    "planning phase.",
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Engineer.RepairApplyBehaviourSelf
+                    },
+                    new List<Modification>
+                    {
+                        new DurationModification(
+                            Change.SubtractCurrent, 
+                            1f,
+                            BehaviourName.Horrior.MountWait)
+                    },
+                    null,
+                    EndsAt.StartOf.Next.Planning,
+                    true,
+                    false,
+                    Alignment.Positive,
+                    new List<Trigger>
+                    {
+                        new Trigger(new List<Event>
+                        {
+                            Event.OriginIsInterrupted
+                        })
+                    },
+                    true),
+
+                new Wait(
+                    BehaviourName.Engineer.RepairWait,
+                    nameof(BehaviourName.Engineer.RepairWait).CamelCaseToWords(),
+                    "Currently repairing.",
+                    EndsAt.StartOf.Next.Planning),
             };
         }
     }

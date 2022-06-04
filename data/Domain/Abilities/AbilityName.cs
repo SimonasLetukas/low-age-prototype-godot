@@ -104,5 +104,12 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName Leadership => new AbilityName($"{nameof(Hawk)}{nameof(Leadership)}".ToKebabCase());
             public static AbilityName HealthKit => new AbilityName($"{nameof(Hawk)}{nameof(HealthKit)}".ToKebabCase());
         }
+
+        public static class Engineer
+        {
+            public static AbilityName AssembleMachine => new AbilityName($"{nameof(Engineer)}{nameof(AssembleMachine)}".ToKebabCase());
+            public static AbilityName Operate => new AbilityName($"{nameof(Engineer)}{nameof(Operate)}".ToKebabCase());
+            public static AbilityName Repair => new AbilityName($"{nameof(Engineer)}{nameof(Repair)}".ToKebabCase());
+        }
     }
 }

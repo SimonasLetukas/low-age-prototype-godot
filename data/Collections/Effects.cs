@@ -86,7 +86,7 @@ namespace low_age_data.Collections
                     {
                         new Validator(new List<Condition>
                         {
-                            Condition.BehaviourToApplyDoesNotAlreadyExist
+                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Leader.OneForAllObeliskBuff)
                         })
                     }),
 
@@ -130,7 +130,7 @@ namespace low_age_data.Collections
                     {
                         new Validator(new List<Condition>
                         {
-                            Condition.TargetDoesNotHaveFullHealth
+                            new Condition(Flag.Condition.TargetDoesNotHaveFullHealth)
                         })
                     }),
 
@@ -159,7 +159,7 @@ namespace low_age_data.Collections
                     {
                         new Validator(new List<Condition>
                         {
-                            Condition.BehaviourToApplyDoesNotAlreadyExist
+                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Slave.ManualLabourBuff)
                         })
                     }),
 
@@ -270,7 +270,7 @@ namespace low_age_data.Collections
                             EffectName.Camou.SilentAssassinSearchFriendly,
                             new List<Condition>
                             {
-                                Condition.NoActorsFoundFromEffect
+                                new Condition(Flag.Condition.NoActorsFoundFromEffect)
                             })
                     }),
 
@@ -292,14 +292,14 @@ namespace low_age_data.Collections
                             EffectName.Camou.SilentAssassinSearchFriendly,
                             new List<Condition>
                             {
-                                Condition.NoActorsFoundFromEffect
+                                new Condition(Flag.Condition.NoActorsFoundFromEffect)
                             }),
 
                         new ResultValidator(
                             EffectName.Camou.SilentAssassinSearchEnemy,
                             new List<Condition>
                             {
-                                Condition.NoActorsFoundFromEffect
+                                new Condition(Flag.Condition.NoActorsFoundFromEffect)
                             })
                     }),
 
@@ -342,8 +342,8 @@ namespace low_age_data.Collections
                     {
                         new Validator(new List<Condition>
                         {
-                            Condition.TargetIsHighGround,
-                            Condition.TargetIsUnoccupied
+                            new Condition(Flag.Condition.TargetIsHighGround),
+                            new Condition(Flag.Condition.TargetIsUnoccupied)
                         })
                     }),
 
@@ -539,7 +539,7 @@ namespace low_age_data.Collections
                     {
                         new Validator(new List<Condition>
                         {
-                            Condition.BehaviourToApplyDoesNotAlreadyExist
+                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Parasite.ParalysingGraspTether)
                         })
                     }),
 
@@ -559,7 +559,7 @@ namespace low_age_data.Collections
                     {
                         new Validator(new List<Condition>
                         {
-                            Condition.BehaviourToApplyDoesNotAlreadyExist
+                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Parasite.ParalysingGraspBuff)
                         })
                     }),
 
@@ -578,7 +578,7 @@ namespace low_age_data.Collections
                     {
                         new Validator(new List<Condition>
                         {
-                            Condition.BehaviourToApplyDoesNotAlreadyExist
+                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Parasite.ParalysingGraspSelfBuff)
                         })
                     }),
 
@@ -801,6 +801,99 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Hawk.HealthKitHealBuff
                     }),
+                
+                new ApplyBehaviour(
+                    EffectName.Engineer.OperateApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Engineer.OperateBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Unit,
+                        Flag.Unit.Cannon,
+                        Flag.Unit.Ballista,
+                        Flag.Unit.Radar,
+                        Flag.Unit.Vessel
+                    }),
+                
+                new Destroy(
+                    EffectName.Engineer.OperateDestroy,
+                    Location.Origin),
+                
+                new ApplyBehaviour(
+                    EffectName.Engineer.RepairStructureApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Engineer.RepairStructureOrMachineBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Structure
+                    },
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(Flag.Condition.TargetDoesNotHaveFullHealth)
+                        })
+                    }),
+                
+                new ApplyBehaviour(
+                    EffectName.Engineer.RepairMachineApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Engineer.RepairStructureOrMachineBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit,
+                        Flag.Unit.Cannon,
+                        Flag.Unit.Ballista,
+                        Flag.Unit.Radar,
+                        Flag.Unit.Vessel
+                    },
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(Flag.Condition.TargetDoesNotHaveFullHealth)
+                        })
+                    }),
+                
+                new ApplyBehaviour( 
+                    EffectName.Engineer.RepairHorriorApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Engineer.RepairHorriorBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit,
+                        Flag.Unit.Horrior
+                    },
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(Flag.Condition.BehaviourExists, BehaviourName.Horrior.MountWait)
+                        })
+                    }),
+                
+                new ApplyBehaviour(
+                    EffectName.Engineer.RepairApplyBehaviourSelf,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Engineer.RepairWait
+                    },
+                    Location.Origin),
             };
         }
     }

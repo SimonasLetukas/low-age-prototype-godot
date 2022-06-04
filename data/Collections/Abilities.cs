@@ -2,7 +2,9 @@
 using low_age_data.Common;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Effects;
+using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
+using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
@@ -40,7 +42,10 @@ namespace low_age_data.Collections
                     "Select an adjacent Obelisk and sap its energy to give all friendly units " +
                     "+2 Health. This Obelisk cannot be sapped again for 10 turns.",
                     1,
-                    EffectName.Leader.OneForAllApplyBehaviourObelisk),
+                    new List<EffectName>
+                    {
+                        EffectName.Leader.OneForAllApplyBehaviourObelisk
+                    }),
 
                 new Build(
                     AbilityName.Slave.Build,
@@ -49,7 +54,7 @@ namespace low_age_data.Collections
                     "can build the structure, each additional one after the first provides half of the " +
                     "Celestium production to the construction than the previous Slave.",
                     1,
-                    new List<StructureName>
+                    new List<EntityName>
                     {
                         StructureName.Hut,
                         StructureName.Obelisk,
@@ -63,16 +68,21 @@ namespace low_age_data.Collections
                         StructureName.Barricade
                     },
                     true,
-                    true),
+                    true,
+                    0.5f),
 
                 new Target(
                     AbilityName.Slave.Repair,
                     TurnPhase.Planning,
                     nameof(AbilityName.Slave.Repair).CamelCaseToWords(),
                     "Select an adjacent structure. At the start of the next planning phase the " +
-                    "selected structure receives +1 Health. Multiple Slaves can stack their repairs.",
+                    "selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be " +
+                    "interrupted.",
                     1,
-                    EffectName.Slave.RepairApplyBehaviourStructure),
+                    new List<EffectName>
+                    {
+                        EffectName.Slave.RepairApplyBehaviourStructure
+                    }),
 
                 new Target(
                     AbilityName.Slave.ManualLabour,
@@ -81,7 +91,10 @@ namespace low_age_data.Collections
                     "Select an adjacent Hut. At the start of the next planning phase receive +2 " +
                     "Scraps. Maximum of one Slave per Hut.",
                     1,
-                    EffectName.Slave.ManualLabourApplyBehaviourHut),
+                    new List<EffectName>
+                    {
+                        EffectName.Slave.ManualLabourApplyBehaviourHut
+                    }),
 
                 new Passive(
                     AbilityName.Quickdraw.Doubleshot,
@@ -173,7 +186,10 @@ namespace low_age_data.Collections
                     "occupied until the end of the action phase at which point Camou moves to it. Passively, " +
                     "Camou can move down from high ground at the additional cost of 1 Movement.",
                     1,
-                    EffectName.Camou.ClimbTeleport,
+                    new List<EffectName>
+                    {
+                        EffectName.Camou.ClimbTeleport
+                    },
                     new List<Research>
                     {
                         Research.Revelators.SpikedRope
@@ -202,7 +218,10 @@ namespace low_age_data.Collections
                     "receives 1 Pure Damage at the start of its turn. At the end of this action phase, the " +
                     "contamination area expands to adjacent tiles and stays until the end of the next action phase.",
                     4,
-                    EffectName.Shaman.WondrousGooCreateEntity,
+                    new List<EffectName>
+                    {
+                        EffectName.Shaman.WondrousGooCreateEntity
+                    },
                     null,
                     EndsAt.EndOf.Second.ActionPhase),
 
@@ -241,7 +260,10 @@ namespace low_age_data.Collections
                     "units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. " +
                     "If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage.",
                     1,
-                    EffectName.BigBadBull.UnleashTheRageSearch,
+                    new List<EffectName>
+                    {
+                        EffectName.BigBadBull.UnleashTheRageSearch
+                    },
                     null,
                     EndsAt.EndOf.Next.ActionPhase),
 
@@ -251,7 +273,10 @@ namespace low_age_data.Collections
                     nameof(AbilityName.Mummy.SpawnRoach).CamelCaseToWords(),
                     "Select an adjacent tile in which Roach is created.",
                     1,
-                    EffectName.Mummy.SpawnRoachCreateEntity,
+                    new List<EffectName>
+                    {
+                        EffectName.Mummy.SpawnRoachCreateEntity
+                    },
                     null,
                     EndsAt.EndOf.Next.ActionPhase),
 
@@ -275,7 +300,10 @@ namespace low_age_data.Collections
                     nameof(AbilityName.Mummy.SpawnRoach).CamelCaseToWords(),
                     "Select a tile in 4 Distance in which Roach is created.",
                     4,
-                    EffectName.Mummy.SpawnRoachCreateEntity,
+                    new List<EffectName>
+                    {
+                        EffectName.Mummy.SpawnRoachCreateEntity
+                    },
                     null,
                     EndsAt.EndOf.Next.ActionPhase),
 
@@ -296,7 +324,10 @@ namespace low_age_data.Collections
                     nameof(AbilityName.Roach.CorrosiveSpit).CamelCaseToWords(),
                     "Perform a ranged attack in 4 Distance dealing 6 (+8 to mechanical) Range Damage.",
                     4,
-                    EffectName.Roach.CorrosiveSpitDamage,
+                    new List<EffectName>
+                    {
+                        EffectName.Roach.CorrosiveSpitDamage
+                    },
                     new List<Research>
                     {
                         Research.Revelators.AdaptiveDigestion
@@ -430,7 +461,10 @@ namespace low_age_data.Collections
                     "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is " +
                     "lost at the end of the target's next action, or if the targeted unit is no longer adjacent.",
                     1,
-                    EffectName.Hawk.LeadershipApplyBehaviour),
+                    new List<EffectName>
+                    {
+                        EffectName.Hawk.LeadershipApplyBehaviour
+                    }),
                 
                 new Passive(
                     AbilityName.Hawk.HealthKit,
@@ -444,7 +478,52 @@ namespace low_age_data.Collections
                     },
                     null,
                     null,
-                    EffectName.Hawk.HealthKitApplyBehaviour)
+                    EffectName.Hawk.HealthKitApplyBehaviour),
+                
+                new Build(
+                    AbilityName.Engineer.AssembleMachine,
+                    nameof(AbilityName.Engineer.AssembleMachine).CamelCaseToWords(),
+                    "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, " +
+                    "up to a number needed to operate the Machine. Each Engineer provides current Celestium " +
+                    "production to the construction.",
+                    1,
+                    new List<EntityName>
+                    {
+                        UnitName.Cannon,
+                        UnitName.Ballista,
+                        UnitName.Radar
+                    },
+                    true,
+                    true,
+                    1f),
+                
+                new Target(
+                    AbilityName.Engineer.Operate,
+                    TurnPhase.Action, 
+                    nameof(AbilityName.Engineer.Operate).CamelCaseToWords(),
+                    "Select an adjacent Machine and start operating it if the Machine is built and does not " +
+                    "have the maximum number of operating Engineers already.",
+                    1,
+                    new List<EffectName>
+                    {
+                        EffectName.Engineer.OperateApplyBehaviour
+                    }),
+                
+                new Target(
+                    AbilityName.Engineer.Repair,
+                    TurnPhase.Planning, 
+                    nameof(AbilityName.Engineer.Repair).CamelCaseToWords(),
+                    "Select an adjacent structure, Machine or Horrior. At the start of the next planning " +
+                    "phase the selected structure or Machine receives +2 Health and selected Horrior's mounting " +
+                    "time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be " +
+                    "interrupted.",
+                    1,
+                    new List<EffectName>
+                    {
+                        EffectName.Engineer.RepairStructureApplyBehaviour,
+                        EffectName.Engineer.RepairMachineApplyBehaviour,
+                        EffectName.Engineer.RepairHorriorApplyBehaviour
+                    })
             };
         }
     }

@@ -23,6 +23,10 @@ namespace low_age_data.Domain.Logic
 
         public string Type { get; }
         public IList<Condition> Conditions { get; }
-        public IList<Flag> FilterFlags { get; } // Filters for the conditions to apply (empty list allows any).
+        
+        /// <summary>
+        /// Filters for the conditions to apply (empty list allows any).
+        /// </summary>
+        public IList<Flag> FilterFlags { get; } 
     }
 }

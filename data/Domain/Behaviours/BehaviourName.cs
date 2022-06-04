@@ -102,5 +102,13 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName HealthKitBuff => new BehaviourName($"{nameof(Hawk)}{nameof(HealthKitBuff)}".ToKebabCase());
             public static BehaviourName HealthKitHealBuff => new BehaviourName($"{nameof(Hawk)}{nameof(HealthKitHealBuff)}".ToKebabCase());
         }
+
+        public static class Engineer
+        {
+            public static BehaviourName OperateBuff => new BehaviourName($"{nameof(Engineer)}{nameof(OperateBuff)}".ToKebabCase());
+            public static BehaviourName RepairStructureOrMachineBuff => new BehaviourName($"{nameof(Engineer)}{nameof(RepairStructureOrMachineBuff)}".ToKebabCase());
+            public static BehaviourName RepairHorriorBuff => new BehaviourName($"{nameof(Engineer)}{nameof(RepairHorriorBuff)}".ToKebabCase());
+            public static BehaviourName RepairWait => new BehaviourName($"{nameof(Engineer)}{nameof(RepairWait)}".ToKebabCase());
+        }
     }
 }

@@ -1,42 +1,25 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Common;
+using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Shared.Flags;
 
 namespace low_age_data.Domain.Logic
 {
-    public class Condition : ValueObject<Condition>
+    public class Condition
     {
-        public override string ToString()
+        public Condition(Flag conditionFlag, BehaviourName? conditionedBehaviour = null)
         {
-            return $"{nameof(Condition)}.{Value}";
+            Type = $"{nameof(Condition)}";
+            ConditionFlag = conditionFlag;
+            ConditionedBehaviour = conditionedBehaviour;
         }
-
-        public static Condition BehaviourToApplyDoesNotAlreadyExist => new Condition(Conditions.BehaviourToApplyDoesNotAlreadyExist);
-        public static Condition TargetDoesNotHaveFullHealth => new Condition(Conditions.TargetDoesNotHaveFullHealth);
-        public static Condition NoActorsFoundFromEffect => new Condition(Conditions.NoActorsFoundFromEffect);
-        public static Condition TargetIsHighGround => new Condition(Conditions.TargetIsHighGround);
-        public static Condition TargetIsUnoccupied => new Condition(Conditions.TargetIsUnoccupied);
-        public static Condition TargetIsDifferentTypeThanOrigin => new Condition(Conditions.TargetIsDifferentTypeThanOrigin);
-
-        private Condition(Conditions @enum)
-        {
-            Value = @enum;
-        }
-
-        private Conditions Value { get; }
-
-        private enum Conditions
-        {
-            BehaviourToApplyDoesNotAlreadyExist,
-            TargetDoesNotHaveFullHealth,
-            NoActorsFoundFromEffect,
-            TargetIsHighGround,
-            TargetIsUnoccupied,
-            TargetIsDifferentTypeThanOrigin,
-        }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
-        }
+        
+        public string Type { get; }
+        public Flag ConditionFlag { get; }
+        
+        /// <summary>
+        /// Used if the condition flag requires to check for a specific behaviour
+        /// </summary>
+        public BehaviourName? ConditionedBehaviour { get; }
     }
 }

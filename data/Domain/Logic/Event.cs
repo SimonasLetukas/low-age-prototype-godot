@@ -10,6 +10,10 @@ namespace low_age_data.Domain.Logic
             return $"{nameof(Event)}.{Value}";
         }
 
+        /// <summary>
+        /// Interruption is considered anything that disables the use of abilities (NOT attacks): stuns, silences, etc.
+        /// </summary>
+        public static Event OriginIsInterrupted => new Event(Events.OriginIsInterrupted);
         public static Event OriginIsDestroyed => new Event(Events.OriginIsDestroyed);
         public static Event SourceIsDestroyed => new Event(Events.SourceIsDestroyed);
         public static Event SourceIsNotAdjacent => new Event(Events.SourceIsNotAdjacent);
@@ -25,6 +29,7 @@ namespace low_age_data.Domain.Logic
 
         private enum Events
         {
+            OriginIsInterrupted,
             OriginIsDestroyed,
             SourceIsDestroyed,
             SourceIsNotAdjacent,

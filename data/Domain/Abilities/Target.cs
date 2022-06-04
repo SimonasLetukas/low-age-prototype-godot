@@ -13,15 +13,15 @@ namespace low_age_data.Domain.Abilities
             string displayName, 
             string description,
             int distance,
-            EffectName effect,
+            IList<EffectName> effects,
             IList<Research>? researchNeeded = null,
             EndsAt? cooldown = null) : base(name, $"{nameof(Ability)}.{nameof(Target)}", turnPhase, researchNeeded ?? new List<Research>(), true, displayName, description, cooldown)
         {
             Distance = distance;
-            Effect = effect;
+            Effects = effects;
         }
 
         public int Distance { get; }
-        public EffectName Effect { get; }
+        public IList<EffectName> Effects { get; }
     }
 }

@@ -17,7 +17,10 @@ namespace low_age_data.Domain.Effects
         }
 
         public Location Target { get; }
-        public bool BlocksBehaviours { get; } // If true, no behaviours that have "final"
-                                              // effects or modifications are executed on actor 
+        
+        /// <summary>
+        /// If true, no behaviours that have "final" effects or modifications are executed on actor.
+        /// </summary>
+        public bool BlocksBehaviours { get; }
     }
 }
