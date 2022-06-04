@@ -548,7 +548,9 @@ namespace low_age_data.Collections
                     },
                     new List<AbilityName>
                     {
-
+                        AbilityName.Hawk.TacticalGoggles,
+                        AbilityName.Hawk.Leadership,
+                        AbilityName.Hawk.HealthKit
                     }),
 
                 new Unit(

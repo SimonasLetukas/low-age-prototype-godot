@@ -129,5 +129,14 @@ namespace low_age_data.Domain.Effects
             public static EffectName ReloadReload => new EffectName($"{nameof(Mortar)}{nameof(ReloadReload)}".ToKebabCase());
             public static EffectName PiercingBlastApplyBehaviour => new EffectName($"{nameof(Mortar)}{nameof(PiercingBlastApplyBehaviour)}".ToKebabCase());
         }
+
+        public static class Hawk
+        {
+            public static EffectName TacticalGogglesApplyBehaviour => new EffectName($"{nameof(Hawk)}{nameof(TacticalGogglesApplyBehaviour)}".ToKebabCase());
+            public static EffectName LeadershipApplyBehaviour => new EffectName($"{nameof(Hawk)}{nameof(LeadershipApplyBehaviour)}".ToKebabCase());
+            public static EffectName HealthKitApplyBehaviour => new EffectName($"{nameof(Hawk)}{nameof(HealthKitApplyBehaviour)}".ToKebabCase());
+            public static EffectName HealthKitSearch => new EffectName($"{nameof(Hawk)}{nameof(HealthKitSearch)}".ToKebabCase());
+            public static EffectName HealthKitHealApplyBehaviour => new EffectName($"{nameof(Hawk)}{nameof(HealthKitHealApplyBehaviour)}".ToKebabCase());
+        }
     }
 }

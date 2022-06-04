@@ -53,6 +53,11 @@ namespace low_age_data.Domain.Shared.Flags
             public static Flag Enemy => new Flag(Flags.FilterEnemy);
             public static Flag Unit => new Flag(Flags.FilterUnit);
             public static Flag Structure => new Flag(Flags.FilterStructure);
+
+            public static class Attribute
+            {
+                public static Flag Ranged => new Flag(Flags.FilterAttributeRanged);
+            }
         }
 
         public static class Structure
@@ -94,6 +99,7 @@ namespace low_age_data.Domain.Shared.Flags
             FilterEnemy,
             FilterUnit,
             FilterStructure,
+            FilterAttributeRanged,
             StructureObelisk,
             StructureHut,
             UnitHorrior

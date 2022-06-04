@@ -73,6 +73,11 @@
             "hasCurrent": false
           },
           {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          },
+          {
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -125,6 +130,11 @@
             "hasCurrent": false
           },
           {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          },
+          {
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 2,
@@ -174,6 +184,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 18,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
             "hasCurrent": false
           },
           {
@@ -238,6 +253,11 @@
             "hasCurrent": false
           },
           {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          },
+          {
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -289,6 +309,11 @@
             "hasCurrent": false
           },
           {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          },
+          {
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -337,6 +362,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 19,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
             "hasCurrent": false
           },
           {
@@ -397,6 +427,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 12,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
             "hasCurrent": false
           },
           {
@@ -461,6 +496,11 @@
             "hasCurrent": false
           },
           {
+            "combatType": "Stats.Vision",
+            "maxAmount": 6,
+            "hasCurrent": false
+          },
+          {
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -508,6 +548,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 16,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
             "hasCurrent": false
           },
           {
@@ -562,6 +607,11 @@
             "hasCurrent": false
           },
           {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          },
+          {
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -610,6 +660,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 14,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
             "hasCurrent": false
           },
           {
@@ -668,6 +723,11 @@
             "hasCurrent": false
           },
           {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          },
+          {
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -721,6 +781,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 17,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
             "hasCurrent": false
           },
           {
@@ -789,6 +854,11 @@
             "hasCurrent": false
           },
           {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          },
+          {
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -841,6 +911,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 21,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
             "hasCurrent": false
           },
           {
@@ -911,6 +986,11 @@
             "hasCurrent": false
           },
           {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          },
+          {
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -925,7 +1005,11 @@
           "CombatAttributes.Light",
           "CombatAttributes.Biological"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-hawk-tactical-goggles",
+          "ability-hawk-leadership",
+          "ability-hawk-health-kit"
+        ],
         "displayName": "Hawk",
         "description": ""
       },
@@ -961,6 +1045,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 11,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
             "hasCurrent": false
           },
           {
@@ -1014,6 +1103,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 8,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
             "hasCurrent": false
           },
           {
@@ -1071,6 +1165,11 @@
             "hasCurrent": false
           },
           {
+            "combatType": "Stats.Vision",
+            "maxAmount": 6,
+            "hasCurrent": false
+          },
+          {
             "attackType": "Attacks.Ranged",
             "minimumDistance": 1,
             "maximumDistance": 9,
@@ -1123,6 +1222,11 @@
             "combatType": "Stats.Initiative",
             "maxAmount": 8,
             "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
           }
         ],
         "originalFaction": "Factions.UEE",
@@ -1166,6 +1270,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 29,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 6,
             "hasCurrent": false
           },
           {
@@ -1219,6 +1328,11 @@
           {
             "combatType": "Stats.Initiative",
             "maxAmount": 13,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
             "hasCurrent": false
           },
           {
@@ -1731,6 +1845,48 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Piercing Blast",
       "description": "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition."
+    },
+    {
+      "name": "ability-hawk-tactical-goggles",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-hawk-tactical-goggles-apply-behaviour",
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Tactical Goggles",
+      "description": "Gains +3 Vision range."
+    },
+    {
+      "name": "ability-hawk-leadership",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 1,
+      "effect": "effect-hawk-leadership-apply-behaviour",
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Leadership",
+      "description": "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is lost at the end of the target's next action, or if the targeted unit is no longer adjacent."
+    },
+    {
+      "name": "ability-hawk-health-kit",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [
+        "Research.MDPractice"
+      ],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-hawk-health-kit-apply-behaviour",
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Health Kit",
+      "description": "Restores 1 Health to all adjacent friendly units at the start of each planning phase."
     }
   ],
   "effects": [
@@ -2672,6 +2828,74 @@
         "Flag.FilterUnit"
       ],
       "validators": []
+    },
+    {
+      "name": "effect-hawk-tactical-goggles-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-hawk-tactical-goggles-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-hawk-leadership-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-hawk-leadership-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit",
+        "Flag.FilterAttributeRanged"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-hawk-health-kit-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-hawk-health-kit-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-hawk-health-kit-search",
+      "type": "Effect.Search",
+      "radius": 1,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-hawk-health-kit-heal-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Circle",
+      "ignoreCenter": true,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-hawk-health-kit-heal-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-hawk-health-kit-heal-buff"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "validators": []
     }
   ],
   "behaviours": [
@@ -3453,6 +3677,115 @@
       "displayName": "Piercing Blast Buff",
       "description": "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
       "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-hawk-tactical-goggles-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Vision",
+          "change": "Change.AddMax",
+          "amount": 3.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Tactical Goggles Buff",
+      "description": "Gains +3 Vision range.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-hawk-leadership-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.AttackModification",
+          "attackType": "Attacks.Ranged",
+          "attribute": "AttackAttribute.MaxDistance",
+          "modificationFlags": [],
+          "change": "Change.AddMax",
+          "amount": 1.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [
+        {
+          "events": [
+            "Event.SourceIsNotAdjacent"
+          ],
+          "validators": []
+        }
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Leadership Buff",
+      "description": "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of the next action or if Hawk is not adjacent anymore.",
+      "endsAt": "EndsAt.EndOfThisAction"
+    },
+    {
+      "name": "behaviour-hawk-health-kit-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-hawk-health-kit-search",
+        "effect-hawk-health-kit-apply-behaviour"
+      ],
+      "canStack": true,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Health Kit Buff",
+      "description": "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
+      "endsAt": "EndsAt.StartOfNextPlanning"
+    },
+    {
+      "name": "behaviour-hawk-health-kit-heal-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Health",
+          "change": "Change.AddCurrent",
+          "amount": 1.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Health Kit Heal Buff",
+      "description": "Heals for 1 Health.",
+      "endsAt": "EndsAt.Instant"
     }
   ]
 }

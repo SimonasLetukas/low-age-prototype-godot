@@ -410,7 +410,41 @@ namespace low_age_data.Collections
                     },
                     null,
                     null,
-                    EffectName.Mortar.PiercingBlastApplyBehaviour)
+                    EffectName.Mortar.PiercingBlastApplyBehaviour),
+                
+                new Passive(
+                    AbilityName.Hawk.TacticalGoggles,
+                    nameof(AbilityName.Hawk.TacticalGoggles).CamelCaseToWords(),
+                    "Gains +3 Vision range.",
+                    true,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EffectName.Hawk.TacticalGogglesApplyBehaviour),
+                
+                new Target(
+                    AbilityName.Hawk.Leadership,
+                    TurnPhase.Action, 
+                    nameof(AbilityName.Hawk.Leadership).CamelCaseToWords(),
+                    "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is " +
+                    "lost at the end of the target's next action, or if the targeted unit is no longer adjacent.",
+                    1,
+                    EffectName.Hawk.LeadershipApplyBehaviour),
+                
+                new Passive(
+                    AbilityName.Hawk.HealthKit,
+                    nameof(AbilityName.Hawk.HealthKit).CamelCaseToWords(),
+                    "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
+                    true,
+                    null,
+                    new List<Research>
+                    {
+                        Research.Uee.MDPractice
+                    },
+                    null,
+                    null,
+                    EffectName.Hawk.HealthKitApplyBehaviour)
             };
         }
     }

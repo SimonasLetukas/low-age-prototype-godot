@@ -32,7 +32,15 @@ namespace low_age_data.Domain.Effects
         public int Radius { get; }
         public IList<Flag> SearchFlags { get; }
         public IList<Flag> FilterFlags { get; }
-        public IList<EffectName> Effects { get; } // Effects executed on each entity found
+        
+        /// <summary>
+        /// Effects executed on each entity found
+        /// </summary>
+        public IList<EffectName> Effects { get; } 
+        
+        /// <summary>
+        /// Indicates where the search originates from
+        /// </summary>
         public Location Location { get; }
         public Shape Shape { get; }
         public bool IgnoreCenter { get; }

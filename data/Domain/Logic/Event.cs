@@ -12,6 +12,7 @@ namespace low_age_data.Domain.Logic
 
         public static Event OriginIsDestroyed => new Event(Events.OriginIsDestroyed);
         public static Event SourceIsDestroyed => new Event(Events.SourceIsDestroyed);
+        public static Event SourceIsNotAdjacent => new Event(Events.SourceIsNotAdjacent);
         public static Event EntityIsAboutToMove => new Event(Events.EntityIsAboutToMove);
         public static Event EntityIsAttacked => new Event(Events.EntityIsAttacked);
 
@@ -26,6 +27,7 @@ namespace low_age_data.Domain.Logic
         {
             OriginIsDestroyed,
             SourceIsDestroyed,
+            SourceIsNotAdjacent,
             EntityIsAboutToMove,
             EntityIsAttacked,
         }

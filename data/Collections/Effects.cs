@@ -736,7 +736,71 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
-                    })
+                    }),
+                
+                new ApplyBehaviour(
+                    EffectName.Hawk.TacticalGogglesApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Hawk.TacticalGogglesBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
+                
+                new ApplyBehaviour(
+                    EffectName.Hawk.LeadershipApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Hawk.LeadershipBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit,
+                        Flag.Filter.Attribute.Ranged
+                    }),
+                
+                new ApplyBehaviour(
+                    EffectName.Hawk.HealthKitApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Hawk.HealthKitBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
+                
+                new Search(
+                    EffectName.Hawk.HealthKitSearch,
+                    1,
+                    new List<Flag>(),
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit
+                    },
+                    new List<EffectName>
+                    {
+                        EffectName.Hawk.HealthKitHealApplyBehaviour
+                    },
+                    Location.Self,
+                    Shape.Circle,
+                    true),
+                
+                new ApplyBehaviour(
+                    EffectName.Hawk.HealthKitHealApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Hawk.HealthKitHealBuff
+                    }),
             };
         }
     }

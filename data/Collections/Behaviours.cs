@@ -681,7 +681,94 @@ namespace low_age_data.Collections
                     EndsAt.Death,
                     null,
                     null,
-                    Alignment.Positive)
+                    Alignment.Positive),
+                
+                new Buff(
+                    BehaviourName.Hawk.TacticalGogglesBuff,
+                    nameof(BehaviourName.Hawk.TacticalGogglesBuff).CamelCaseToWords(),
+                    "Gains +3 Vision range.",
+                    null,
+                    new List<Modification>
+                    {
+                        new StatModification(Change.AddMax, 3, Stats.Vision)
+                    },
+                    null,
+                    null,
+                    null,
+                    EndsAt.Death,
+                    false,
+                    null,
+                    Alignment.Positive),
+                
+                new Buff(
+                    BehaviourName.Hawk.LeadershipBuff,
+                    nameof(BehaviourName.Hawk.LeadershipBuff).CamelCaseToWords(),
+                    "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of " +
+                    "the next action or if Hawk is not adjacent anymore.",
+                    null,
+                    new List<Modification>
+                    {
+                        new AttackModification(
+                            Change.AddMax, 
+                            1, 
+                            Attacks.Ranged, 
+                            AttackAttribute.MaxDistance)
+                    },
+                    null,
+                    null,
+                    null,
+                    EndsAt.EndOf.This.Action,
+                    false,
+                    null,
+                    Alignment.Positive,
+                    new List<Trigger>
+                    {
+                        new Trigger(new List<Event>
+                        {
+                            Event.SourceIsNotAdjacent
+                        })
+                    },
+                    true,
+                    null,
+                    true),
+                
+                new Buff(
+                    BehaviourName.Hawk.HealthKitBuff,
+                    nameof(BehaviourName.Hawk.HealthKitBuff).CamelCaseToWords(),
+                    "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
+                    null,
+                    null,
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Hawk.HealthKitSearch,
+                        EffectName.Hawk.HealthKitApplyBehaviour // Reapply the same buff to achieve periodic effect
+                    },
+                    EndsAt.StartOf.Next.Planning,
+                    true, // Only needed because final effects happen right before this behaviour is destroyed
+                    null,
+                    Alignment.Positive),
+                
+                new Buff(
+                    BehaviourName.Hawk.HealthKitHealBuff,
+                    nameof(BehaviourName.Hawk.HealthKitHealBuff).CamelCaseToWords(),
+                    "Heals for 1 Health.",
+                    null,
+                    new List<Modification>
+                    {
+                        new StatModification(
+                            Change.AddCurrent,
+                            1,
+                            Stats.Health)
+                    },
+                    null,
+                    null,
+                    null,
+                    EndsAt.Instant,
+                    false,
+                    false,
+                    Alignment.Positive),
             };
         }
     }
