@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Shared;
 
@@ -15,17 +16,39 @@ namespace low_age_data.Domain.Abilities
             IList<Research>? researchNeeded = null,
             IList<EffectName>? onHitEffects = null,
             IList<Attacks>? onHitAttackTypes = null,
-            EffectName? onBirthEffect = null) : base(name, $"{nameof(Ability)}.{nameof(Passive)}", TurnPhase.Passive, researchNeeded ?? new List<Research>(), hasButton, displayName, description)
+            EffectName? onBirthEffect = null,
+            BehaviourName? onBuildBehaviour = null) : base(name, $"{nameof(Ability)}.{nameof(Passive)}", TurnPhase.Passive, researchNeeded ?? new List<Research>(), hasButton, displayName, description)
         {
             PeriodicEffect = periodicEffect;
             OnHitEffects = onHitEffects ?? new List<EffectName>();
             OnHitAttackTypes = onHitAttackTypes ?? new List<Attacks>();
             OnBirthEffect = onBirthEffect;
+            OnBuildBehaviour = onBuildBehaviour;
         }
 
-        public EffectName? PeriodicEffect { get; } // Executes effect as often as possible
-        public IList<EffectName> OnHitEffects { get; } // Executes effects on each attack
-        public IList<Attacks> OnHitAttackTypes { get; } // Determines which attack types trigger the on-hit effect
-        public EffectName? OnBirthEffect { get; } // Executes effect upon birth or upon research completion on an entity with this ability
+        /// <summary>
+        /// Executes effect as often as possible
+        /// </summary>
+        public EffectName? PeriodicEffect { get; }
+        
+        /// <summary>
+        /// Executes effects on each attack
+        /// </summary>
+        public IList<EffectName> OnHitEffects { get; }
+        
+        /// <summary>
+        /// Determines which attack types trigger the on-hit effect
+        /// </summary>
+        public IList<Attacks> OnHitAttackTypes { get; }
+        
+        /// <summary>
+        /// Executes effect upon birth or upon research completion on an entity with this ability.
+        /// </summary>
+        public EffectName? OnBirthEffect { get; }
+        
+        /// <summary>
+        /// <see cref="Buildable"/> behaviour checked before and applied after <see cref="Build"/> start.
+        /// </summary>
+        public BehaviourName? OnBuildBehaviour { get; } 
     }
 }

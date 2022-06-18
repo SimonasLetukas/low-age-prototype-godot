@@ -770,16 +770,59 @@ namespace low_age_data.Collections
                     false,
                     Alignment.Positive),
                 
+                new Buildable(
+                    BehaviourName.Cannon.AssemblingBuildable,
+                    nameof(BehaviourName.Cannon.AssemblingBuildable).CamelCaseToWords(),
+                    "This machine can only be placed on the low ground and can be assembled by a maximum of " +
+                    "3 Engineers at once.",
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(Flag.Condition.TargetIsLowGround)
+                        })
+                    },
+                    3),
+                
+                new Buildable(
+                    BehaviourName.Ballista.AssemblingBuildable,
+                    nameof(BehaviourName.Ballista.AssemblingBuildable).CamelCaseToWords(),
+                    "This machine can only be placed on a Watchtower and can be assembled by a maximum of " +
+                    "1 Engineer at once.",
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(Flag.Condition.BehaviourExists) // TODO add when the Watchtower structure has
+                                                                          // the appropriate behaviour created
+                        })
+                    },
+                    1),
+                
+                new Buildable(
+                    BehaviourName.Radar.AssemblingBuildable,
+                    nameof(BehaviourName.Radar.AssemblingBuildable).CamelCaseToWords(),
+                    "This machine can only be placed on the low ground and can be assembled by a maximum of " +
+                    "1 Engineer at once.",
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(Flag.Condition.TargetIsLowGround)
+                        })
+                    },
+                    1),
+                
                 new Buff(
                     BehaviourName.Engineer.OperateBuff,
                     nameof(BehaviourName.Engineer.OperateBuff).CamelCaseToWords(),
                     "",
-                    new List<Flag>
+                    null,
+                    null,
+                    new List<EffectName>
                     {
-                        Flag.Modification.IncreaseMachineOperators
+                        EffectName.Engineer.OperateModifyCounter
                     },
-                    null,
-                    null,
                     null,
                     new List<EffectName>
                     {
@@ -855,6 +898,40 @@ namespace low_age_data.Collections
                     nameof(BehaviourName.Engineer.RepairWait).CamelCaseToWords(),
                     "Currently repairing.",
                     EndsAt.StartOf.Next.Planning),
+                
+                new Counter(
+                    BehaviourName.Cannon.MachineCounter,
+                    nameof(BehaviourName.Cannon.MachineCounter).CamelCaseToWords(),
+                    "Needs 3 Engineers to operate this machine.",
+                    3,
+                    3,
+                    new List<EffectName>
+                    {
+                        EffectName.Cannon.MachineRemoveBehaviour
+                    }),
+                
+                new Buff(
+                    BehaviourName.Cannon.MachineBuff,
+                    nameof(BehaviourName.Cannon.MachineBuff).CamelCaseToWords(),
+                    "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.FullyDisabled
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    EndsAt.Death,
+                    false,
+                    null,
+                    Alignment.Negative,
+                    null,
+                    false,
+                    null,
+                    true),
+                
+                
             };
         }
     }

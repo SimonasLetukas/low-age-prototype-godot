@@ -3,14 +3,19 @@ using low_age_data.Domain.Effects;
 
 namespace low_age_data.Domain.Logic
 {
+    /// <summary>
+    /// Used to check a searched area for a condition on found targets.
+    /// </summary>
     public class ResultValidator : Validator
     {
-        // Usually checks searched area for a condition on resulted targets, could have more applications in the future
-        public ResultValidator(EffectName effect, IList<Condition> conditions) : base(conditions, $"{nameof(Validator)}.{nameof(ResultValidator)}")
+        public ResultValidator(EffectName searchEffect, IList<Condition> conditions) : base(conditions, $"{nameof(Validator)}.{nameof(ResultValidator)}")
         {
-            Effect = effect;
+            SearchEffect = searchEffect;
         }
-
-        public EffectName Effect { get; }
+        
+        /// <summary>
+        /// <see cref="Search"/> to collect the found targets from.
+        /// </summary>
+        public EffectName SearchEffect { get; }
     }
 }

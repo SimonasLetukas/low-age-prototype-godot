@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Common;
 using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
@@ -497,6 +498,42 @@ namespace low_age_data.Collections
                     true,
                     1f),
                 
+                new Passive(
+                    AbilityName.Cannon.Assembling,
+                    nameof(AbilityName.Cannon.Assembling).CamelCaseToWords(),
+                    "",
+                    false,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    BehaviourName.Cannon.AssemblingBuildable),
+                
+                new Passive(
+                    AbilityName.Ballista.Assembling,
+                    nameof(AbilityName.Ballista.Assembling).CamelCaseToWords(),
+                    "",
+                    false,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    BehaviourName.Ballista.AssemblingBuildable),
+                
+                new Passive(
+                    AbilityName.Radar.Assembling,
+                    nameof(AbilityName.Radar.Assembling).CamelCaseToWords(),
+                    "",
+                    false,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    BehaviourName.Radar.AssemblingBuildable),
+                
                 new Target(
                     AbilityName.Engineer.Operate,
                     TurnPhase.Action, 
@@ -523,7 +560,19 @@ namespace low_age_data.Collections
                         EffectName.Engineer.RepairStructureApplyBehaviour,
                         EffectName.Engineer.RepairMachineApplyBehaviour,
                         EffectName.Engineer.RepairHorriorApplyBehaviour
-                    })
+                    }),
+                
+                new Passive(
+                    AbilityName.Cannon.Machine,
+                    nameof(AbilityName.Cannon.Machine).CamelCaseToWords(),
+                    "Can be built and operated by Engineers only. The Machine is functional and can act " +
+                    "only if maximum number of 3 Engineers are operating it.",
+                    true,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EffectName.Cannon.MachineApplyBehaviour)
             };
         }
     }

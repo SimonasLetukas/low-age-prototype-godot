@@ -582,7 +582,9 @@ namespace low_age_data.Collections
                     },
                     new List<AbilityName>
                     {
-
+                        AbilityName.Engineer.AssembleMachine,
+                        AbilityName.Engineer.Operate,
+                        AbilityName.Engineer.Repair
                     }),                
                 
                 new Unit(
@@ -615,7 +617,8 @@ namespace low_age_data.Collections
                     },
                     new List<AbilityName>
                     {
-
+                        AbilityName.Cannon.Assembling,
+                        AbilityName.Cannon.Machine
                     }),                
                 
                 new Unit(
@@ -648,7 +651,7 @@ namespace low_age_data.Collections
                     },
                     new List<AbilityName>
                     {
-
+                        AbilityName.Ballista.Assembling,
                     }),                
                 
                 new Unit(
@@ -673,7 +676,7 @@ namespace low_age_data.Collections
                     },
                     new List<AbilityName>
                     {
-
+                        AbilityName.Radar.Assembling,
                     }),                
                 
                 new Unit(

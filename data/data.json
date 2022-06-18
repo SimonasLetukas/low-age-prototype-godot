@@ -1067,7 +1067,11 @@
           "CombatAttributes.Light",
           "CombatAttributes.Biological"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-engineer-assemble-machine",
+          "ability-engineer-operate",
+          "ability-engineer-repair"
+        ],
         "displayName": "Engineer",
         "description": ""
       },
@@ -1126,7 +1130,10 @@
           "CombatAttributes.Mechanical",
           "CombatAttributes.Ranged"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-cannon-assembling",
+          "ability-cannon-machine"
+        ],
         "displayName": "Cannon",
         "description": ""
       },
@@ -1185,7 +1192,9 @@
           "CombatAttributes.Mechanical",
           "CombatAttributes.Ranged"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-ballista-assembling"
+        ],
         "displayName": "Ballista",
         "description": ""
       },
@@ -1234,7 +1243,9 @@
           "CombatAttributes.Light",
           "CombatAttributes.Mechanical"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-radar-assembling"
+        ],
         "displayName": "Radar",
         "description": ""
       },
@@ -1406,6 +1417,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-leader-all-for-one-apply-behaviour",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "All For One",
@@ -1420,6 +1432,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": null,
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Menacing Presence",
@@ -1502,6 +1515,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-quickdraw-doubleshot-apply-behaviour",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Doubleshot",
@@ -1522,6 +1536,7 @@
         "Attacks.Ranged"
       ],
       "onBirthEffect": null,
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Cripple",
@@ -1540,6 +1555,7 @@
         "Attacks.Melee"
       ],
       "onBirthEffect": "effect-gorger-fanatic-suicide-apply-behaviour-buff",
+      "onBuildBehaviour": null,
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
       "displayName": "Fanatic Suicide Passive",
@@ -1573,6 +1589,7 @@
         "Attacks.Melee"
       ],
       "onBirthEffect": null,
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Silent Assassin",
@@ -1605,6 +1622,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-camou-climb-apply-behaviour",
+      "onBuildBehaviour": null,
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
       "displayName": "Climb Passive",
@@ -1633,6 +1651,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-pyre-cargo-create-entity",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Wall Of Flames",
@@ -1649,6 +1668,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-pyre-phantom-menace-apply-behaviour",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Phantom Menace",
@@ -1693,6 +1713,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-mummy-leap-of-hunger-modify-ability",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Leap Of Hunger",
@@ -1721,6 +1742,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-roach-degrading-carapace-apply-behaviour",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Degrading Carapace",
@@ -1756,6 +1778,7 @@
         "Attacks.Melee"
       ],
       "onBirthEffect": null,
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Paralysing Grasp",
@@ -1770,6 +1793,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": null,
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Expert Formation",
@@ -1803,6 +1827,7 @@
         "Attacks.Ranged"
       ],
       "onBirthEffect": null,
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Critical Mark",
@@ -1817,6 +1842,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-surfer-dismount-apply-behaviour",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Dismount",
@@ -1831,6 +1857,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-mortar-deadly-ammunition-apply-behaviour",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Deadly Ammunition",
@@ -1860,6 +1887,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-mortar-piercing-blast-apply-behaviour",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Piercing Blast",
@@ -1874,6 +1902,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-hawk-tactical-goggles-apply-behaviour",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Tactical Goggles",
@@ -1904,6 +1933,7 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffect": "effect-hawk-health-kit-apply-behaviour",
+      "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Health Kit",
@@ -1927,6 +1957,51 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Assemble Machine",
       "description": "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, up to a number needed to operate the Machine. Each Engineer provides current Celestium production to the construction."
+    },
+    {
+      "name": "ability-cannon-assembling",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-cannon-assembling-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Assembling",
+      "description": ""
+    },
+    {
+      "name": "ability-ballista-assembling",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-ballista-assembling-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Assembling",
+      "description": ""
+    },
+    {
+      "name": "ability-radar-assembling",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-radar-assembling-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Assembling",
+      "description": ""
     },
     {
       "name": "ability-engineer-operate",
@@ -1957,6 +2032,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Repair",
       "description": "Select an adjacent structure, Machine or Horrior. At the start of the next planning phase the selected structure or Machine receives +2 Health and selected Horrior's mounting time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be interrupted."
+    },
+    {
+      "name": "ability-cannon-machine",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-cannon-machine-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Machine",
+      "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 3 Engineers are operating it."
     }
   ],
   "effects": [
@@ -2268,7 +2358,7 @@
       "filterFlags": [],
       "validators": [
         {
-          "effect": "effect-camou-silent-assassin-search-friendly",
+          "searchEffect": "effect-camou-silent-assassin-search-friendly",
           "type": "Validator.ResultValidator",
           "conditions": [
             {
@@ -2294,7 +2384,7 @@
       ],
       "validators": [
         {
-          "effect": "effect-camou-silent-assassin-search-friendly",
+          "searchEffect": "effect-camou-silent-assassin-search-friendly",
           "type": "Validator.ResultValidator",
           "conditions": [
             {
@@ -2306,7 +2396,7 @@
           "filterFlags": []
         },
         {
-          "effect": "effect-camou-silent-assassin-search-enemy",
+          "searchEffect": "effect-camou-silent-assassin-search-enemy",
           "type": "Validator.ResultValidator",
           "conditions": [
             {
@@ -2363,7 +2453,13 @@
               "type": "Condition",
               "conditionFlag": "Flag.ConditionTargetIsHighGround",
               "conditionedBehaviour": null
-            },
+            }
+          ],
+          "filterFlags": []
+        },
+        {
+          "type": "Validator",
+          "conditions": [
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionTargetIsUnoccupied",
@@ -3025,6 +3121,54 @@
         "Flag.UnitRadar",
         "Flag.UnitVessel"
       ],
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "conditionedBehaviour": "behaviour-cannon-assembling-buildable"
+            }
+          ],
+          "filterFlags": []
+        },
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "conditionedBehaviour": "behaviour-ballista-assembling-buildable"
+            }
+          ],
+          "filterFlags": []
+        },
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "conditionedBehaviour": "behaviour-radar-assembling-buildable"
+            }
+          ],
+          "filterFlags": []
+        }
+      ]
+    },
+    {
+      "name": "effect-engineer-operate-modify-counter",
+      "type": "Effect.ModifyCounter",
+      "countersToModify": [
+        "behaviour-cannon-machine-counter"
+      ],
+      "change": "Change.AddCurrent",
+      "amount": 1,
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf"
+      ],
       "validators": []
     },
     {
@@ -3122,6 +3266,33 @@
       ],
       "location": "Location.Origin",
       "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-cannon-machine-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-cannon-machine-counter",
+        "behaviour-cannon-machine-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-cannon-machine-remove-behaviour",
+      "type": "Effect.RemoveBehaviour",
+      "behavioursToRemove": [
+        "behaviour-cannon-machine-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
       "validators": []
     }
   ],
@@ -4019,13 +4190,76 @@
       "endsAt": "EndsAt.Instant"
     },
     {
+      "name": "behaviour-cannon-assembling-buildable",
+      "type": "Behaviour.Counter",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround",
+              "conditionedBehaviour": null
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": 3,
+      "displayName": "Assembling Buildable",
+      "description": "This machine can only be placed on the low ground and can be assembled by a maximum of 3 Engineers at once.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-ballista-assembling-buildable",
+      "type": "Behaviour.Counter",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourExists",
+              "conditionedBehaviour": null
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": 1,
+      "displayName": "Assembling Buildable",
+      "description": "This machine can only be placed on a Watchtower and can be assembled by a maximum of 1 Engineer at once.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-radar-assembling-buildable",
+      "type": "Behaviour.Counter",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround",
+              "conditionedBehaviour": null
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": 1,
+      "displayName": "Assembling Buildable",
+      "description": "This machine can only be placed on the low ground and can be assembled by a maximum of 1 Engineer at once.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
       "name": "behaviour-engineer-operate-buff",
       "type": "Behaviour.Buff",
-      "modificationFlags": [
-        "Flag.ModificationIncreaseMachineOperators"
-      ],
+      "modificationFlags": [],
       "initialModifications": [],
-      "initialEffects": [],
+      "initialEffects": [
+        "effect-engineer-operate-modify-counter"
+      ],
       "finalModifications": [],
       "finalEffects": [
         "effect-engineer-operate-destroy"
@@ -4118,6 +4352,43 @@
       "displayName": "Repair Wait",
       "description": "Currently repairing.",
       "endsAt": "EndsAt.StartOfNextPlanning"
+    },
+    {
+      "name": "behaviour-cannon-machine-counter",
+      "type": "Behaviour.Counter",
+      "maxAmount": 3,
+      "triggerAmount": 3,
+      "triggerAtMultiples": false,
+      "selfRemoveAfterAmountReached": false,
+      "triggeredEffects": [
+        "effect-cannon-machine-remove-behaviour"
+      ],
+      "separateDurations": false,
+      "canResetDuration": false,
+      "displayName": "Machine Counter",
+      "description": "Needs 3 Engineers to operate this machine.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-cannon-machine-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationFullyDisabled"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Machine Buff",
+      "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
+      "endsAt": "EndsAt.Death"
     }
   ]
 }

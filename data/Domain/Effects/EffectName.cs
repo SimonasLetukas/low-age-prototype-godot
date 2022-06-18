@@ -142,11 +142,26 @@ namespace low_age_data.Domain.Effects
         public static class Engineer
         {
             public static EffectName OperateApplyBehaviour => new EffectName($"{nameof(Engineer)}{nameof(OperateApplyBehaviour)}".ToKebabCase());
+            public static EffectName OperateModifyCounter => new EffectName($"{nameof(Engineer)}{nameof(OperateModifyCounter)}".ToKebabCase());
             public static EffectName OperateDestroy => new EffectName($"{nameof(Engineer)}{nameof(OperateDestroy)}".ToKebabCase());
             public static EffectName RepairStructureApplyBehaviour => new EffectName($"{nameof(Engineer)}{nameof(RepairStructureApplyBehaviour)}".ToKebabCase());
             public static EffectName RepairMachineApplyBehaviour => new EffectName($"{nameof(Engineer)}{nameof(RepairMachineApplyBehaviour)}".ToKebabCase());
             public static EffectName RepairHorriorApplyBehaviour => new EffectName($"{nameof(Engineer)}{nameof(RepairHorriorApplyBehaviour)}".ToKebabCase());
             public static EffectName RepairApplyBehaviourSelf => new EffectName($"{nameof(Engineer)}{nameof(RepairApplyBehaviourSelf)}".ToKebabCase());
+        }
+        
+        public static class Cannon
+        {
+            public static EffectName MachineApplyBehaviour => new EffectName($"{nameof(Cannon)}{nameof(MachineApplyBehaviour)}".ToKebabCase());
+            public static EffectName MachineRemoveBehaviour => new EffectName($"{nameof(Cannon)}{nameof(MachineRemoveBehaviour)}".ToKebabCase());
+        }
+
+        public static class Ballista
+        {
+        }
+        
+        public static class Radar
+        {
         }
     }
 }

@@ -342,7 +342,10 @@ namespace low_age_data.Collections
                     {
                         new Validator(new List<Condition>
                         {
-                            new Condition(Flag.Condition.TargetIsHighGround),
+                            new Condition(Flag.Condition.TargetIsHighGround)
+                        }),
+                        new Validator(new List<Condition>
+                        {
                             new Condition(Flag.Condition.TargetIsUnoccupied)
                         })
                     }),
@@ -801,7 +804,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Hawk.HealthKitHealBuff
                     }),
-                
+
                 new ApplyBehaviour(
                     EffectName.Engineer.OperateApplyBehaviour,
                     new List<BehaviourName>
@@ -816,6 +819,36 @@ namespace low_age_data.Collections
                         Flag.Unit.Ballista,
                         Flag.Unit.Radar,
                         Flag.Unit.Vessel
+                    },
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Cannon.AssemblingBuildable)
+                        }),
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Ballista.AssemblingBuildable)
+                        }),
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Radar.AssemblingBuildable)
+                        })
+                    }),
+                
+                new ModifyCounter(
+                    EffectName.Engineer.OperateModifyCounter,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Cannon.MachineCounter
+                        // TODO add with each machine
+                    },
+                    Change.AddCurrent, 
+                    1,
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self
                     }),
                 
                 new Destroy(
@@ -894,6 +927,33 @@ namespace low_age_data.Collections
                         BehaviourName.Engineer.RepairWait
                     },
                     Location.Origin),
+                
+                new ApplyBehaviour(
+                    EffectName.Cannon.MachineApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Cannon.MachineCounter,
+                        BehaviourName.Cannon.MachineBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
+                
+                new RemoveBehaviour(
+                    EffectName.Cannon.MachineRemoveBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Cannon.MachineBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    })
             };
         }
     }

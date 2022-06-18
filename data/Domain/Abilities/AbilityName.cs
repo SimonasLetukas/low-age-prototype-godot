@@ -111,5 +111,21 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName Operate => new AbilityName($"{nameof(Engineer)}{nameof(Operate)}".ToKebabCase());
             public static AbilityName Repair => new AbilityName($"{nameof(Engineer)}{nameof(Repair)}".ToKebabCase());
         }
+
+        public static class Cannon
+        {
+            public static AbilityName Assembling => new AbilityName($"{nameof(Cannon)}{nameof(Assembling)}".ToKebabCase());
+            public static AbilityName Machine => new AbilityName($"{nameof(Cannon)}{nameof(Machine)}".ToKebabCase());
+        }
+
+        public static class Ballista
+        {
+            public static AbilityName Assembling => new AbilityName($"{nameof(Ballista)}{nameof(Assembling)}".ToKebabCase());
+        }
+
+        public static class Radar
+        {
+            public static AbilityName Assembling => new AbilityName($"{nameof(Radar)}{nameof(Assembling)}".ToKebabCase());
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace low_age_data.Domain.Shared.Flags
             public static Flag BehaviourExists => new Flag(Flags.ConditionBehaviourExists);
             public static Flag TargetDoesNotHaveFullHealth => new Flag(Flags.ConditionTargetDoesNotHaveFullHealth);
             public static Flag NoActorsFoundFromEffect => new Flag(Flags.ConditionNoActorsFoundFromEffect);
+            public static Flag TargetIsLowGround => new Flag(Flags.ConditionTargetIsLowGround);
             public static Flag TargetIsHighGround => new Flag(Flags.ConditionTargetIsHighGround);
             public static Flag TargetIsUnoccupied => new Flag(Flags.ConditionTargetIsUnoccupied);
             public static Flag TargetIsDifferentTypeThanOrigin => new Flag(Flags.ConditionTargetIsDifferentTypeThanOrigin);
@@ -37,7 +38,12 @@ namespace low_age_data.Domain.Shared.Flags
             public static Flag MovementDisabled => new Flag(Flags.ModificationMovementDisabled);
             public static Flag CanAttackAnyTeam => new Flag(Flags.ModificationCanAttackAnyTeam);
             public static Flag IgnoreArmour => new Flag(Flags.ModificationIgnoreArmour);
-            public static Flag IncreaseMachineOperators => new Flag(Flags.ModificationIncreaseMachineOperators);
+            
+            /// <summary>
+            /// Includes <see cref="MovementDisabled"/>, <see cref="CannotAttack"/>, <see cref="AbilitiesDisabled"/>.
+            /// Action turn is always skipped.
+            /// </summary>
+            public static Flag FullyDisabled => new Flag(Flags.ModificationFullyDisabled);
         }
 
         public static class Effect
@@ -100,6 +106,7 @@ namespace low_age_data.Domain.Shared.Flags
             ConditionBehaviourExists,
             ConditionTargetDoesNotHaveFullHealth,
             ConditionNoActorsFoundFromEffect,
+            ConditionTargetIsLowGround,
             ConditionTargetIsHighGround,
             ConditionTargetIsUnoccupied,
             ConditionTargetIsDifferentTypeThanOrigin,
@@ -113,7 +120,7 @@ namespace low_age_data.Domain.Shared.Flags
             ModificationMovementDisabled,
             ModificationCanAttackAnyTeam,
             ModificationIgnoreArmour,
-            ModificationIncreaseMachineOperators,
+            ModificationFullyDisabled,
             EffectModifyPlayerGameLost,
             EffectSearchAppliedOnEnter,
             EffectSearchAppliedOnAction,
