@@ -154,6 +154,12 @@ namespace low_age_data.Domain.Effects
         {
             public static EffectName MachineApplyBehaviour => new EffectName($"{nameof(Cannon)}{nameof(MachineApplyBehaviour)}".ToKebabCase());
             public static EffectName MachineRemoveBehaviour => new EffectName($"{nameof(Cannon)}{nameof(MachineRemoveBehaviour)}".ToKebabCase());
+            public static EffectName HeatUpCreateEntity => new EffectName($"{nameof(Cannon)}{nameof(HeatUpCreateEntity)}".ToKebabCase());
+            public static EffectName HeatUpApplyWaitBehaviour => new EffectName($"{nameof(Cannon)}{nameof(HeatUpApplyWaitBehaviour)}".ToKebabCase());
+            public static EffectName HeatUpSearch => new EffectName($"{nameof(Cannon)}{nameof(HeatUpSearch)}".ToKebabCase());
+            public static EffectName HeatUpDamage => new EffectName($"{nameof(Cannon)}{nameof(HeatUpDamage)}".ToKebabCase());
+            public static EffectName HeatUpDestroy => new EffectName($"{nameof(Cannon)}{nameof(HeatUpDestroy)}".ToKebabCase());
+            public static EffectName HeatUpRemoveBehaviour => new EffectName($"{nameof(Cannon)}{nameof(HeatUpRemoveBehaviour)}".ToKebabCase());
         }
 
         public static class Ballista

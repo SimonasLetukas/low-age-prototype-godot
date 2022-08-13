@@ -931,7 +931,54 @@ namespace low_age_data.Collections
                     null,
                     true),
                 
+                new Buff(
+                    BehaviourName.Cannon.HeatUpDangerZoneBuff,
+                    nameof(BehaviourName.Cannon.HeatUpDangerZoneBuff).CamelCaseToWords(),
+                    "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's " +
+                    "owner has vision of this tile.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.ProvidesVision
+                    },
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Cannon.HeatUpApplyWaitBehaviour
+                    },
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Cannon.HeatUpSearch,
+                        EffectName.Cannon.HeatUpDestroy
+                    },
+                    EndsAt.EndOf.Next.Action,
+                    false,
+                    false,
+                    Alignment.Positive,
+                    new List<Trigger>
+                    {
+                        new Trigger(new List<Event>
+                        {
+                            Event.OriginIsInterrupted
+                        }),
+                        new Trigger(new List<Event>
+                        {
+                            Event.OriginIsDestroyed
+                        })
+                    },
+                    true,
+                    new List<EffectName>
+                    {
+                        EffectName.Cannon.MachineRemoveBehaviour,
+                        EffectName.Cannon.HeatUpDestroy
+                    },
+                    true),
                 
+                new Wait(
+                    BehaviourName.Cannon.HeatUpWait,
+                    nameof(BehaviourName.Cannon.HeatUpWait).CamelCaseToWords(),
+                    "This Cannon is heating up for a blast at the danger zone.",
+                    EndsAt.EndOf.Next.Action)
             };
         }
     }

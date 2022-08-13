@@ -38,6 +38,7 @@ namespace low_age_data.Domain.Shared.Flags
             public static Flag MovementDisabled => new Flag(Flags.ModificationMovementDisabled);
             public static Flag CanAttackAnyTeam => new Flag(Flags.ModificationCanAttackAnyTeam);
             public static Flag IgnoreArmour => new Flag(Flags.ModificationIgnoreArmour);
+            public static Flag ProvidesVision => new Flag(Flags.ModificationProvidesVision);
             
             /// <summary>
             /// Includes <see cref="MovementDisabled"/>, <see cref="CannotAttack"/>, <see cref="AbilitiesDisabled"/>.
@@ -120,6 +121,7 @@ namespace low_age_data.Domain.Shared.Flags
             ModificationMovementDisabled,
             ModificationCanAttackAnyTeam,
             ModificationIgnoreArmour,
+            ModificationProvidesVision,
             ModificationFullyDisabled,
             EffectModifyPlayerGameLost,
             EffectSearchAppliedOnEnter,

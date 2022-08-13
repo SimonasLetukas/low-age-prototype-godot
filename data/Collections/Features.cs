@@ -37,7 +37,17 @@ namespace low_age_data.Collections
                     new List<Flag>
                     {
                         Flag.Filter.Unit
-                    })
+                    }),
+                
+                new Feature(
+                    FeatureName.CannonHeatUpDangerZone,
+                    nameof(FeatureName.CannonHeatUpDangerZone).CamelCaseToWords(),
+                    "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's " +
+                    "owner has vision of this tile.",
+                    null,
+                    null,
+                    1,
+                    true)
             };
         }
     }

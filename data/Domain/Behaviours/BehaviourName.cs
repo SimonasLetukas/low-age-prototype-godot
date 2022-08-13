@@ -116,6 +116,8 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName AssemblingBuildable => new BehaviourName($"{nameof(Cannon)}{nameof(AssemblingBuildable)}".ToKebabCase());
             public static BehaviourName MachineCounter => new BehaviourName($"{nameof(Cannon)}{nameof(MachineCounter)}".ToKebabCase());
             public static BehaviourName MachineBuff => new BehaviourName($"{nameof(Cannon)}{nameof(MachineBuff)}".ToKebabCase());
+            public static BehaviourName HeatUpDangerZoneBuff => new BehaviourName($"{nameof(Cannon)}{nameof(HeatUpDangerZoneBuff)}".ToKebabCase());
+            public static BehaviourName HeatUpWait => new BehaviourName($"{nameof(Cannon)}{nameof(HeatUpWait)}".ToKebabCase());
         }
 
         public static class Ballista

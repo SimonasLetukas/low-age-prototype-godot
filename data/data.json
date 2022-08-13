@@ -1384,6 +1384,7 @@
           "Flag.FilterUnit"
         ],
         "size": 1,
+        "statsCopiedFromSource": false,
         "displayName": "Wondrous Goo",
         "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn."
       },
@@ -1392,6 +1393,7 @@
         "onCollisionEffect": null,
         "collisionFilters": [],
         "size": 1,
+        "statsCopiedFromSource": false,
         "displayName": "Pyre Cargo",
         "description": "The cargo which is attached to Pyre leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death."
       },
@@ -1402,8 +1404,18 @@
           "Flag.FilterUnit"
         ],
         "size": 1,
+        "statsCopiedFromSource": false,
         "displayName": "Pyre Flames",
         "description": "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
+      },
+      {
+        "name": "feature-cannon-heat-up-danger-zone",
+        "onCollisionEffect": null,
+        "collisionFilters": [],
+        "size": 1,
+        "statsCopiedFromSource": true,
+        "displayName": "Cannon Heat Up Danger Zone",
+        "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile."
       }
     ]
   },
@@ -1447,6 +1459,8 @@
       "effects": [
         "effect-leader-one-for-all-apply-behaviour-obelisk"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "One For All",
@@ -1487,6 +1501,8 @@
       "effects": [
         "effect-slave-repair-apply-behaviour-structure"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Repair",
@@ -1501,6 +1517,8 @@
       "effects": [
         "effect-slave-manual-labour-apply-behaviour-hut"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Manual Labour",
@@ -1606,6 +1624,8 @@
       "effects": [
         "effect-camou-climb-teleport"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Climb",
@@ -1637,6 +1657,8 @@
       "effects": [
         "effect-shaman-wondrous-goo-create-entity"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "displayName": "Wondrous Goo",
@@ -1683,6 +1705,8 @@
       "effects": [
         "effect-big-bad-bull-unleash-the-rage-search"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "displayName": "Unleash The Rage",
@@ -1697,6 +1721,8 @@
       "effects": [
         "effect-mummy-spawn-roach-create-entity"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "displayName": "Spawn Roach",
@@ -1728,6 +1754,8 @@
       "effects": [
         "effect-mummy-spawn-roach-create-entity"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "displayName": "Spawn Roach",
@@ -1759,6 +1787,8 @@
       "effects": [
         "effect-roach-corrosive-spit-damage"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "displayName": "Corrosive Spit",
@@ -1917,6 +1947,8 @@
       "effects": [
         "effect-hawk-leadership-apply-behaviour"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Leadership",
@@ -2012,6 +2044,8 @@
       "effects": [
         "effect-engineer-operate-apply-behaviour"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Operate",
@@ -2028,6 +2062,8 @@
         "effect-engineer-repair-machine-apply-behaviour",
         "effect-engineer-repair-horrior-apply-behaviour"
       ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Repair",
@@ -2047,6 +2083,24 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Machine",
       "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 3 Engineers are operating it."
+    },
+    {
+      "name": "ability-cannon-heat-up",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 10,
+      "effects": [
+        "effect-cannon-heat-up-create-entity"
+      ],
+      "overridesAttacks": [
+        "Attacks.Ranged"
+      ],
+      "fallbackToAttack": false,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Heat Up",
+      "description": "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's action, the attack is triggered which deals massive Range Damage."
     }
   ],
   "effects": [
@@ -3294,6 +3348,88 @@
         "Flag.FilterUnit"
       ],
       "validators": []
+    },
+    {
+      "name": "effect-cannon-heat-up-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "feature-cannon-heat-up-danger-zone",
+      "initialEntityBehaviours": [
+        "behaviour-cannon-heat-up-danger-zone-buff"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-cannon-heat-up-apply-wait-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-cannon-heat-up-wait"
+      ],
+      "location": "Location.Origin",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-cannon-heat-up-search",
+      "type": "Effect.Search",
+      "radius": 0,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-cannon-heat-up-damage"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Circle",
+      "ignoreCenter": false,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-cannon-heat-up-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.OverrideRanged",
+      "amount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-cannon-heat-up-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Self",
+      "blocksBehaviours": false,
+      "validators": []
+    },
+    {
+      "name": "effect-cannon-heat-up-remove-behaviour",
+      "type": "Effect.RemoveBehaviour",
+      "behavioursToRemove": [
+        "behaviour-cannon-heat-up-wait"
+      ],
+      "location": "Location.Origin",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
     }
   ],
   "behaviours": [
@@ -4389,6 +4525,56 @@
       "displayName": "Machine Buff",
       "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
       "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-cannon-heat-up-danger-zone-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationProvidesVision"
+      ],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-cannon-heat-up-apply-wait-behaviour"
+      ],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-cannon-heat-up-search",
+        "effect-cannon-heat-up-destroy"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [
+        {
+          "events": [
+            "Event.OriginIsInterrupted"
+          ],
+          "validators": []
+        },
+        {
+          "events": [
+            "Event.OriginIsDestroyed"
+          ],
+          "validators": []
+        }
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [
+        "effect-cannon-machine-remove-behaviour",
+        "effect-cannon-heat-up-destroy"
+      ],
+      "restoreChangesOnEnd": true,
+      "displayName": "Heat Up Danger Zone Buff",
+      "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile.",
+      "endsAt": "EndsAt.EndOfNextAction"
+    },
+    {
+      "name": "behaviour-cannon-heat-up-wait",
+      "type": "Behaviour.Wait",
+      "nextBehaviour": null,
+      "displayName": "Heat Up Wait",
+      "description": "This Cannon is heating up for a blast at the danger zone.",
+      "endsAt": "EndsAt.EndOfNextAction"
     }
   ]
 }

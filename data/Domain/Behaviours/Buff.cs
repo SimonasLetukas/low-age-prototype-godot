@@ -43,18 +43,60 @@ namespace low_age_data.Domain.Behaviours
         }
 
         public IList<Flag> ModificationFlags { get; }
-        public IList<Modification> InitialModifications { get; } // Added at the start of behaviour
-        public IList<EffectName> InitialEffects { get; } // Executed when behaviour is added
-        public IList<Modification> FinalModifications { get; } // Added right before the end of behaviour
-        public IList<EffectName> FinalEffects { get; } // Executed right before behaviour ends
+        
+        /// <summary>
+        /// Added at the start of behaviour.
+        /// </summary>
+        public IList<Modification> InitialModifications { get; }
+        
+        /// <summary>
+        /// Executed when behaviour is added.
+        /// </summary>
+        public IList<EffectName> InitialEffects { get; }
+        
+        /// <summary>
+        /// Added right before the end of behaviour.
+        /// </summary>
+        public IList<Modification> FinalModifications { get; }
+        
+        /// <summary>
+        /// Executed right before behaviour ends.
+        /// </summary>
+        public IList<EffectName> FinalEffects { get; }
+        
+        /// <summary>
+        /// If true, multiple <see cref="Buff"/>s can be added.
+        /// </summary>
         public bool CanStack { get; }
-        public bool CanResetDuration { get; } // If true, applying the same buff will reset the duration (to all stacks,
-                                              // if CanStack is true).
+        
+        /// <summary>
+        /// If true, applying the same <see cref="Buff"/> will reset the duration (to all stacks, if
+        /// <see cref="CanStack"/> is true).
+        /// </summary>
+        public bool CanResetDuration { get; }
         public Alignment Alignment { get; }
-        public IList<Trigger> Triggers { get; } // Logic OR between the triggers, but AND between events inside.
-        public bool DestroyOnConditionsMet { get; } // If true, behaviour is removed (without triggering final modifications
-                                                    // or effects) when all events & their conditions are met in any of the trigger
-        public IList<EffectName> ConditionalEffects { get; } // Executed when all trigger conditions are met (before destroy)
-        public bool RestoreChangesOnEnd { get; } // If true, counter-acts the initial modifications before end or destroy
+        
+        /// <summary>
+        /// Logical <b>OR</b> between the <see cref="Triggers"/>, but <b>AND</b> between the <see cref="Event"/>s inside.
+        /// </summary>
+        public IList<Trigger> Triggers { get; }
+        
+        /// <summary>
+        /// If true, behaviour is removed (without triggering <see cref="FinalModifications"/> or <see cref="FinalEffects"/>)
+        /// when all <see cref="Event"/>s and their conditions are met in any of the <see cref="Triggers"/>.
+        /// </summary>
+        public bool DestroyOnConditionsMet { get; }
+        
+        /// <summary>
+        /// Executed when any of the <see cref="Triggers"/> condition is met (before destroy of this behaviour, if
+        /// <see cref="DestroyOnConditionsMet"/> is true).
+        /// </summary>
+        public IList<EffectName> ConditionalEffects { get; }
+        
+        /// <summary>
+        /// If true, counter-acts the <see cref="InitialModifications"/> and <see cref="ModificationFlags"/> before
+        /// end or destroy.
+        /// </summary>
+        public bool RestoreChangesOnEnd { get; }
     }
 }

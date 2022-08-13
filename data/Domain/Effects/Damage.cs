@@ -25,7 +25,7 @@ namespace low_age_data.Domain.Effects
             FilterFlags = filterFlags ?? new List<Flag>();
 
         }
-
+        
         public DamageType DamageType { get; }
         public Amount Amount { get; }
         public CombatAttributes? BonusTo { get; }

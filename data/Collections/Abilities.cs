@@ -572,7 +572,27 @@ namespace low_age_data.Collections
                     null,
                     null,
                     null,
-                    EffectName.Cannon.MachineApplyBehaviour)
+                    EffectName.Cannon.MachineApplyBehaviour),
+                
+                new Target(
+                    AbilityName.Cannon.HeatUp,
+                    TurnPhase.Action,
+                    nameof(AbilityName.Cannon.HeatUp).CamelCaseToWords(),
+                    "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is " +
+                    "revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's " +
+                    "action, the attack is triggered which deals massive Range Damage.",
+                    10,
+                    new List<EffectName>
+                    {
+                        EffectName.Cannon.HeatUpCreateEntity
+                    },
+                    null,
+                    null,
+                    new List<Attacks>
+                    {
+                        Attacks.Ranged
+                    },
+                    false),
             };
         }
     }

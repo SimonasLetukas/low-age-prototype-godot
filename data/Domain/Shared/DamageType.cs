@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Common;
+using low_age_data.Domain.Entities.Actors;
 
 namespace low_age_data.Domain.Shared
 {
@@ -10,13 +11,52 @@ namespace low_age_data.Domain.Shared
             return $"{nameof(DamageType)}.{Value}";
         }
 
+        /// <summary>
+        /// Deals damage subtracted by melee armour of the target.
+        /// </summary>
         public static DamageType Melee => new DamageType(DamageTypes.Melee);
+        
+        /// <summary>
+        /// Deals damage subtracted by ranged armour of the target.
+        /// </summary>
         public static DamageType Ranged => new DamageType(DamageTypes.Ranged);
+        
+        /// <summary>
+        /// Deals damage directly to health.
+        /// </summary>
         public static DamageType Pure => new DamageType(DamageTypes.Pure);
+        
+        /// <summary>
+        /// Any damage amount is added to the source's current melee attack damage (includes bonus). Source is the
+        /// first valid <see cref="Actor"/> in the chain.
+        /// </summary>
         public static DamageType CurrentMelee => new DamageType(DamageTypes.CurrentMelee);
+        
+        /// <summary>
+        /// Any damage amount is added to the source's current ranged attack damage (includes bonus). Source is the
+        /// first valid <see cref="Actor"/> in the chain.
+        /// </summary>
         public static DamageType CurrentRanged => new DamageType(DamageTypes.CurrentRanged);
+        
+        /// <summary>
+        /// Any damage amount is overwritten by the source's current melee attack damage (includes bonus).
+        /// </summary>
         public static DamageType OverrideMelee => new DamageType(DamageTypes.OverrideMelee);
+        
+        /// <summary>
+        /// Any damage amount is overwritten by the source's current ranged attack damage (includes bonus).
+        /// </summary>
         public static DamageType OverrideRanged => new DamageType(DamageTypes.OverrideRanged);
+
+        /// <summary>
+        /// Any damage amount is overwritten by the target's current melee attack damage (includes bonus).
+        /// </summary>
+        public static DamageType TargetMelee => new DamageType(DamageTypes.TargetMelee);
+
+        /// <summary>
+        /// Any damage amount is overwritten by the target's current ranged attack damage (includes bonus).
+        /// </summary>
+        public static DamageType TargetRanged => new DamageType(DamageTypes.TargetRanged);
 
         private DamageType(DamageTypes @enum)
         {
@@ -27,15 +67,15 @@ namespace low_age_data.Domain.Shared
 
         private enum DamageTypes
         {
-            Melee, // Deals damage subtracted by melee armour of the target
-            Ranged, // Deals damage subtracted by ranged armour of the target
-            Pure, // Deals damage directly to health
-            CurrentMelee, // Any damage amount is added by the source's current melee attack damage (includes bonus)
-            CurrentRanged, // Any damage amount is added by the source's current ranged attack damage (includes bonus)
-            OverrideMelee, // Any damage amount is overwritten by the source's current melee attack damage (includes bonus)
-            OverrideRanged, // Any damage amount is overwritten by the source's current ranged attack damage (includes bonus)
-            TargetMelee, // Any damage amount is overwritten by the target's current melee attack damage (includes bonus)
-            TargetRanged // Any damage amount is overwritten by the target's current ranged attack damage (includes bonus)
+            Melee,
+            Ranged,
+            Pure,
+            CurrentMelee, 
+            CurrentRanged, 
+            OverrideMelee, 
+            OverrideRanged, 
+            TargetMelee, 
+            TargetRanged 
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

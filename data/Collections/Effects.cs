@@ -953,6 +953,64 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
+                    }),
+                
+                new CreateEntity(
+                    EffectName.Cannon.HeatUpCreateEntity,
+                    FeatureName.CannonHeatUpDangerZone,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Cannon.HeatUpDangerZoneBuff
+                    }),
+                
+                new ApplyBehaviour(
+                    EffectName.Cannon.HeatUpApplyWaitBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Cannon.HeatUpWait
+                    },
+                    Location.Origin,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit
+                    }),
+                
+                new Search(
+                    EffectName.Cannon.HeatUpSearch,
+                    0,
+                    new List<Flag>(),
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    new List<EffectName>
+                    {
+                        EffectName.Cannon.HeatUpDamage
+                    },
+                    Location.Self),
+                
+                new Damage(
+                    EffectName.Cannon.HeatUpDamage,
+                    DamageType.OverrideRanged),
+                
+                new Destroy(
+                    EffectName.Cannon.HeatUpDestroy,
+                    Location.Self),
+                
+                new RemoveBehaviour(
+                    EffectName.Cannon.HeatUpRemoveBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Cannon.HeatUpWait
+                    },
+                    Location.Origin,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit
                     })
             };
         }
