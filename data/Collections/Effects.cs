@@ -1011,7 +1011,63 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
-                    })
+                    }),
+                
+                new ApplyBehaviour(
+                    EffectName.Ballista.MachineApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Ballista.MachineCounter,
+                        BehaviourName.Ballista.MachineBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
+                
+                new RemoveBehaviour(
+                    EffectName.Ballista.MachineRemoveBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Ballista.MachineBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
+                
+                // Ballista effects
+                
+                new ApplyBehaviour(
+                    EffectName.Radar.MachineApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Radar.MachineCounter,
+                        BehaviourName.Radar.MachineBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
+                
+                new RemoveBehaviour(
+                    EffectName.Radar.MachineRemoveBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Radar.MachineBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
             };
         }
     }

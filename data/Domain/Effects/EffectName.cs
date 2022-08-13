@@ -164,10 +164,14 @@ namespace low_age_data.Domain.Effects
 
         public static class Ballista
         {
+            public static EffectName MachineApplyBehaviour => new EffectName($"{nameof(Ballista)}{nameof(MachineApplyBehaviour)}".ToKebabCase());
+            public static EffectName MachineRemoveBehaviour => new EffectName($"{nameof(Ballista)}{nameof(MachineRemoveBehaviour)}".ToKebabCase());
         }
         
         public static class Radar
         {
+            public static EffectName MachineApplyBehaviour => new EffectName($"{nameof(Radar)}{nameof(MachineApplyBehaviour)}".ToKebabCase());
+            public static EffectName MachineRemoveBehaviour => new EffectName($"{nameof(Radar)}{nameof(MachineRemoveBehaviour)}".ToKebabCase());
         }
     }
 }

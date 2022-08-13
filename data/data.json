@@ -2101,6 +2101,36 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Heat Up",
       "description": "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's action, the attack is triggered which deals massive Range Damage."
+    },
+    {
+      "name": "ability-ballista-machine",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-ballista-machine-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Machine",
+      "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it."
+    },
+    {
+      "name": "ability-radar-machine",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-radar-machine-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Machine",
+      "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it."
     }
   ],
   "effects": [
@@ -3430,6 +3460,60 @@
         "Flag.FilterUnit"
       ],
       "validators": []
+    },
+    {
+      "name": "effect-ballista-machine-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-ballista-machine-counter",
+        "behaviour-ballista-machine-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-ballista-machine-remove-behaviour",
+      "type": "Effect.RemoveBehaviour",
+      "behavioursToRemove": [
+        "behaviour-ballista-machine-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-radar-machine-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-radar-machine-counter",
+        "behaviour-radar-machine-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-radar-machine-remove-behaviour",
+      "type": "Effect.RemoveBehaviour",
+      "behavioursToRemove": [
+        "behaviour-radar-machine-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
     }
   ],
   "behaviours": [
@@ -4575,6 +4659,80 @@
       "displayName": "Heat Up Wait",
       "description": "This Cannon is heating up for a blast at the danger zone.",
       "endsAt": "EndsAt.EndOfNextAction"
+    },
+    {
+      "name": "behaviour-ballista-machine-counter",
+      "type": "Behaviour.Counter",
+      "maxAmount": 3,
+      "triggerAmount": 3,
+      "triggerAtMultiples": false,
+      "selfRemoveAfterAmountReached": false,
+      "triggeredEffects": [
+        "effect-ballista-machine-remove-behaviour"
+      ],
+      "separateDurations": false,
+      "canResetDuration": false,
+      "displayName": "Machine Counter",
+      "description": "Needs 1 Engineer to operate this machine.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-ballista-machine-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationFullyDisabled"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Machine Buff",
+      "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-radar-machine-counter",
+      "type": "Behaviour.Counter",
+      "maxAmount": 3,
+      "triggerAmount": 3,
+      "triggerAtMultiples": false,
+      "selfRemoveAfterAmountReached": false,
+      "triggeredEffects": [
+        "effect-radar-machine-remove-behaviour"
+      ],
+      "separateDurations": false,
+      "canResetDuration": false,
+      "displayName": "Machine Counter",
+      "description": "Needs 1 Engineer to operate this machine.",
+      "endsAt": "EndsAt.Death"
+    },
+    {
+      "name": "behaviour-radar-machine-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationFullyDisabled"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Machine Buff",
+      "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
+      "endsAt": "EndsAt.Death"
     }
   ]
 }

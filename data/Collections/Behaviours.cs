@@ -978,7 +978,73 @@ namespace low_age_data.Collections
                     BehaviourName.Cannon.HeatUpWait,
                     nameof(BehaviourName.Cannon.HeatUpWait).CamelCaseToWords(),
                     "This Cannon is heating up for a blast at the danger zone.",
-                    EndsAt.EndOf.Next.Action)
+                    EndsAt.EndOf.Next.Action),
+                
+                new Counter(
+                    BehaviourName.Ballista.MachineCounter,
+                    nameof(BehaviourName.Ballista.MachineCounter).CamelCaseToWords(),
+                    "Needs 1 Engineer to operate this machine.",
+                    3,
+                    3,
+                    new List<EffectName>
+                    {
+                        EffectName.Ballista.MachineRemoveBehaviour
+                    }),
+                
+                new Buff(
+                    BehaviourName.Ballista.MachineBuff,
+                    nameof(BehaviourName.Ballista.MachineBuff).CamelCaseToWords(),
+                    "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.FullyDisabled
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    EndsAt.Death,
+                    false,
+                    null,
+                    Alignment.Negative,
+                    null,
+                    false,
+                    null,
+                    true),
+                
+                // Ballista behaviours
+                
+                new Counter(
+                    BehaviourName.Radar.MachineCounter,
+                    nameof(BehaviourName.Radar.MachineCounter).CamelCaseToWords(),
+                    "Needs 1 Engineer to operate this machine.",
+                    3,
+                    3,
+                    new List<EffectName>
+                    {
+                        EffectName.Radar.MachineRemoveBehaviour
+                    }),
+                
+                new Buff(
+                    BehaviourName.Radar.MachineBuff,
+                    nameof(BehaviourName.Radar.MachineBuff).CamelCaseToWords(),
+                    "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.FullyDisabled
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    EndsAt.Death,
+                    false,
+                    null,
+                    Alignment.Negative,
+                    null,
+                    false,
+                    null,
+                    true),
             };
         }
     }

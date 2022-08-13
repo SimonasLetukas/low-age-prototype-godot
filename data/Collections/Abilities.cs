@@ -593,6 +593,32 @@ namespace low_age_data.Collections
                         Attacks.Ranged
                     },
                     false),
+                
+                new Passive(
+                    AbilityName.Ballista.Machine,
+                    nameof(AbilityName.Ballista.Machine).CamelCaseToWords(),
+                    "Can be built and operated by Engineers only. The Machine is functional and can act " +
+                    "only if maximum number of 1 Engineer is operating it.",
+                    true,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EffectName.Ballista.MachineApplyBehaviour),
+                
+                // Ballista abilities
+                
+                new Passive(
+                    AbilityName.Radar.Machine,
+                    nameof(AbilityName.Radar.Machine).CamelCaseToWords(),
+                    "Can be built and operated by Engineers only. The Machine is functional and can act " +
+                    "only if maximum number of 1 Engineer is operating it.",
+                    true,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EffectName.Radar.MachineApplyBehaviour),
             };
         }
     }
