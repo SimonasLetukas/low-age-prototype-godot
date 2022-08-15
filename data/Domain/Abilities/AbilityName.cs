@@ -123,7 +123,8 @@ namespace low_age_data.Domain.Abilities
         {
             public static AbilityName Assembling => new AbilityName($"{nameof(Ballista)}{nameof(Assembling)}".ToKebabCase());
             public static AbilityName Machine => new AbilityName($"{nameof(Ballista)}{nameof(Machine)}".ToKebabCase());
-
+            public static AbilityName AddOn => new AbilityName($"{nameof(Ballista)}{nameof(AddOn)}".ToKebabCase());
+            public static AbilityName Aim => new AbilityName($"{nameof(Ballista)}{nameof(Aim)}".ToKebabCase());
         }
 
         public static class Radar

@@ -1012,7 +1012,44 @@ namespace low_age_data.Collections
                     null,
                     true),
                 
-                // Ballista behaviours
+                new Buff(
+                    BehaviourName.Ballista.AimBuff,
+                    nameof(BehaviourName.Ballista.AimBuff).CamelCaseToWords(),
+                    "This unit is aimed by a Ballista, which allows it to shoot every turn as long as this " +
+                    "unit remains in range.",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EndsAt.EndOf.Next.ActionPhase,
+                    false,
+                    true,
+                    Alignment.Negative,
+                    new List<Trigger>
+                    {
+                        new Trigger(new List<Event>
+                        {
+                            Event.EntityFinishedMoving
+                        },new List<Validator> 
+                        {
+                            new ResultValidator(
+                                EffectName.Ballista.AimSearch, 
+                                new List<Condition>
+                                {
+                                    new Condition(Flag.Condition.NoActorsFoundFromEffect)
+                                })
+                        }),
+                        new Trigger(new List<Event>
+                        {
+                            Event.OriginIsDestroyed
+                        })
+                    },
+                    true,
+                    null,
+                    null,
+                    true,
+                    false),
                 
                 new Counter(
                     BehaviourName.Radar.MachineCounter,

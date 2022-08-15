@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Effects;
+using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
@@ -24,9 +25,19 @@ namespace low_age_data.Domain.Behaviours
             bool? canResetDuration = null,
             Alignment? alignment = null,
             IList<Trigger>? triggers = null,
-            bool destroyOnConditionsMet = false,
+            bool? destroyOnConditionsMet = null,
             IList<EffectName>? conditionalEffects = null,
-            bool restoreChangesOnEnd = false) : base(name, $"{nameof(Behaviour)}.{nameof(Buff)}", displayName, description, endsAt ?? EndsAt.Death)
+            bool? restoreChangesOnEnd = null,
+            bool? ownerAllowed = null,
+            bool? hasSameInstanceForAllOwners = null) 
+            : base(
+                name, 
+                $"{nameof(Behaviour)}.{nameof(Buff)}", 
+                displayName, 
+                description, 
+                endsAt ?? EndsAt.Death, 
+                ownerAllowed, 
+                hasSameInstanceForAllOwners)
         {
             ModificationFlags = modificationFlags ?? new List<Flag>();
             InitialModifications = initialModifications ?? new List<Modification>();
@@ -37,9 +48,9 @@ namespace low_age_data.Domain.Behaviours
             CanResetDuration = canResetDuration ?? false;
             Alignment = alignment ?? Alignment.Neutral;
             Triggers = triggers ?? new List<Trigger>();
-            DestroyOnConditionsMet = destroyOnConditionsMet;
+            DestroyOnConditionsMet = destroyOnConditionsMet ?? false;
             ConditionalEffects = conditionalEffects ?? new List<EffectName>();
-            RestoreChangesOnEnd = restoreChangesOnEnd;
+            RestoreChangesOnEnd = restoreChangesOnEnd ?? false;
         }
 
         public IList<Flag> ModificationFlags { get; }

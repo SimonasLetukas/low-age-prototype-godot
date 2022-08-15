@@ -23,7 +23,6 @@ namespace low_age_data.Domain.Effects
             BonusAmount = bonusAmount ?? new Amount(0);
             Location = location ?? Location.Inherited;
             FilterFlags = filterFlags ?? new List<Flag>();
-
         }
         
         public DamageType DamageType { get; }

@@ -6,7 +6,7 @@ using low_age_data.Domain.Shared.Flags;
 namespace low_age_data.Domain.Entities.Features
 {
     public class Feature : Entity
-    {
+    { 
         public Feature(
             FeatureName name, 
             string displayName, 

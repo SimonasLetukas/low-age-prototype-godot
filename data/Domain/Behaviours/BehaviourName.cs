@@ -125,6 +125,7 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName AssemblingBuildable => new BehaviourName($"{nameof(Ballista)}{nameof(AssemblingBuildable)}".ToKebabCase());
             public static BehaviourName MachineCounter => new BehaviourName($"{nameof(Ballista)}{nameof(MachineCounter)}".ToKebabCase());
             public static BehaviourName MachineBuff => new BehaviourName($"{nameof(Ballista)}{nameof(MachineBuff)}".ToKebabCase());
+            public static BehaviourName AimBuff => new BehaviourName($"{nameof(Ballista)}{nameof(AimBuff)}".ToKebabCase());
         }
 
         public static class Radar

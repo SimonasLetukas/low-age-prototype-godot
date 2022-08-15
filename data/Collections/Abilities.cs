@@ -606,7 +606,32 @@ namespace low_age_data.Collections
                     null,
                     EffectName.Ballista.MachineApplyBehaviour),
                 
-                // Ballista abilities
+                new Passive(
+                    AbilityName.Ballista.AddOn,
+                    nameof(AbilityName.Ballista.AddOn).CamelCaseToWords(),
+                    "Can only be built on a Watchtower.",
+                    true),
+                
+                new Target(
+                    AbilityName.Ballista.Aim,
+                    TurnPhase.Action, 
+                    nameof(AbilityName.Ballista.Aim).CamelCaseToWords(),
+                    "Spends 1 action aiming, when attacking a new target. A dotted line to the target " +
+                    "indicates aiming. The target can stop this process if it moves out of Ballista's Attack " +
+                    "Distance. Once aimed, same target can be attacked each action.",
+                    9,
+                    new List<EffectName>
+                    {
+                        EffectName.Ballista.AimDamage,
+                        EffectName.Ballista.AimApplyBehaviour
+                    },
+                    null,
+                    null,
+                    new List<Attacks>
+                    {
+                        Attacks.Ranged
+                    },
+                    false), 
                 
                 new Passive(
                     AbilityName.Radar.Machine,

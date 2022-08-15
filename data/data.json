@@ -2118,6 +2118,40 @@
       "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it."
     },
     {
+      "name": "ability-ballista-add-on",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Add On",
+      "description": "Can only be built on a Watchtower."
+    },
+    {
+      "name": "ability-ballista-aim",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 9,
+      "effects": [
+        "effect-ballista-aim-damage",
+        "effect-ballista-aim-apply-behaviour"
+      ],
+      "overridesAttacks": [
+        "Attacks.Ranged"
+      ],
+      "fallbackToAttack": false,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Aim",
+      "description": "Spends 1 action aiming, when attacking a new target. A dotted line to the target indicates aiming. The target can stop this process if it moves out of Ballista's Attack Distance. Once aimed, same target can be attacked each action."
+    },
+    {
       "name": "ability-radar-machine",
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
@@ -2144,6 +2178,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2189,6 +2224,7 @@
       ],
       "location": "Location.Inherited",
       "filterFlags": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2201,8 +2237,9 @@
       "filterFlags": [
         "Flag.FilterAlly",
         "Flag.FilterStructure",
-        "Flag.StructureObelisk"
+        "Flag.FilterSpecificStructureObelisk"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "type": "Validator",
@@ -2210,7 +2247,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
-              "conditionedBehaviour": "behaviour-leader-one-for-all-obelisk-buff"
+              "conditionedBehaviour": "behaviour-leader-one-for-all-obelisk-buff",
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2243,6 +2281,7 @@
       ],
       "location": "Location.Self",
       "filterFlags": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2256,6 +2295,7 @@
         "Flag.FilterAlly",
         "Flag.FilterStructure"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "type": "Validator",
@@ -2263,7 +2303,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2278,6 +2319,7 @@
       ],
       "location": "Location.Origin",
       "filterFlags": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2290,8 +2332,9 @@
       "filterFlags": [
         "Flag.FilterAlly",
         "Flag.FilterStructure",
-        "Flag.StructureHut"
+        "Flag.FilterSpecificStructureHut"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "type": "Validator",
@@ -2299,7 +2342,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
-              "conditionedBehaviour": "behaviour-slave-manual-labour-buff"
+              "conditionedBehaviour": "behaviour-slave-manual-labour-buff",
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2314,6 +2358,7 @@
       ],
       "location": "Location.Origin",
       "filterFlags": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2343,6 +2388,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2356,6 +2402,7 @@
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2368,6 +2415,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2448,7 +2496,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2466,6 +2515,7 @@
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "searchEffect": "effect-camou-silent-assassin-search-friendly",
@@ -2474,7 +2524,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2486,7 +2537,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2536,7 +2588,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionTargetIsHighGround",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2547,7 +2600,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionTargetIsUnoccupied",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2564,6 +2618,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2605,6 +2660,7 @@
       ],
       "location": "Location.Inherited",
       "filterFlags": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2690,6 +2746,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2788,6 +2845,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2800,6 +2858,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2859,6 +2918,7 @@
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "type": "Validator",
@@ -2866,7 +2926,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
-              "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-tether"
+              "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-tether",
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2884,6 +2945,7 @@
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "type": "Validator",
@@ -2891,7 +2953,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
-              "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-buff"
+              "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-buff",
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2908,6 +2971,7 @@
       "filterFlags": [
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "type": "Validator",
@@ -2915,7 +2979,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
-              "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-self-buff"
+              "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-self-buff",
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -2934,7 +2999,7 @@
       "filterFlags": [
         "Flag.FilterAlly",
         "Flag.FilterUnit",
-        "Flag.UnitHorrior"
+        "Flag.FilterSpecificUnitHorrior"
       ],
       "effects": [
         "effect-horrior-expert-formation-apply-behaviour"
@@ -2953,6 +3018,7 @@
       ],
       "location": "Location.Inherited",
       "filterFlags": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2965,6 +3031,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2992,6 +3059,7 @@
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3028,6 +3096,7 @@
       "filterFlags": [
         "Flag.FilterSelf"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3048,6 +3117,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3101,6 +3171,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3121,6 +3192,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3134,6 +3206,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3148,6 +3221,7 @@
         "Flag.FilterUnit",
         "Flag.FilterAttributeRanged"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3161,6 +3235,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3189,6 +3264,7 @@
       ],
       "location": "Location.Inherited",
       "filterFlags": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3200,11 +3276,12 @@
       "location": "Location.Actor",
       "filterFlags": [
         "Flag.FilterUnit",
-        "Flag.UnitCannon",
-        "Flag.UnitBallista",
-        "Flag.UnitRadar",
-        "Flag.UnitVessel"
+        "Flag.FilterSpecificUnitCannon",
+        "Flag.FilterSpecificUnitBallista",
+        "Flag.FilterSpecificUnitRadar",
+        "Flag.FilterSpecificUnitVessel"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "type": "Validator",
@@ -3212,7 +3289,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
-              "conditionedBehaviour": "behaviour-cannon-assembling-buildable"
+              "conditionedBehaviour": "behaviour-cannon-assembling-buildable",
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -3223,7 +3301,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
-              "conditionedBehaviour": "behaviour-ballista-assembling-buildable"
+              "conditionedBehaviour": "behaviour-ballista-assembling-buildable",
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -3234,7 +3313,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
-              "conditionedBehaviour": "behaviour-radar-assembling-buildable"
+              "conditionedBehaviour": "behaviour-radar-assembling-buildable",
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -3273,6 +3353,7 @@
         "Flag.FilterAlly",
         "Flag.FilterStructure"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "type": "Validator",
@@ -3280,7 +3361,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -3297,11 +3379,12 @@
       "filterFlags": [
         "Flag.FilterAlly",
         "Flag.FilterUnit",
-        "Flag.UnitCannon",
-        "Flag.UnitBallista",
-        "Flag.UnitRadar",
-        "Flag.UnitVessel"
+        "Flag.FilterSpecificUnitCannon",
+        "Flag.FilterSpecificUnitBallista",
+        "Flag.FilterSpecificUnitRadar",
+        "Flag.FilterSpecificUnitVessel"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "type": "Validator",
@@ -3309,7 +3392,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -3326,8 +3410,9 @@
       "filterFlags": [
         "Flag.FilterAlly",
         "Flag.FilterUnit",
-        "Flag.UnitHorrior"
+        "Flag.FilterSpecificUnitHorrior"
       ],
+      "behaviourOwner": null,
       "validators": [
         {
           "type": "Validator",
@@ -3335,7 +3420,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionBehaviourExists",
-              "conditionedBehaviour": "behaviour-horrior-mount-wait"
+              "conditionedBehaviour": "behaviour-horrior-mount-wait",
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -3350,6 +3436,7 @@
       ],
       "location": "Location.Origin",
       "filterFlags": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3364,6 +3451,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3377,6 +3465,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3399,6 +3488,7 @@
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3459,6 +3549,7 @@
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3473,6 +3564,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3486,6 +3578,76 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-ballista-aim-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.OverrideRanged",
+      "amount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterStructure",
+        "Flag.FilterUnit"
+      ],
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourExists",
+              "conditionedBehaviour": "behaviour-ballista-aim-buff",
+              "behaviourOwner": "Location.Origin"
+            }
+          ],
+          "filterFlags": []
+        }
+      ]
+    },
+    {
+      "name": "effect-ballista-aim-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-ballista-aim-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterStructure",
+        "Flag.FilterUnit"
+      ],
+      "behaviourOwner": "Location.Origin",
+      "validators": []
+    },
+    {
+      "name": "effect-ballista-aim-search",
+      "type": "Effect.Search",
+      "radius": 9,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterOrigin",
+        "Flag.FilterSpecificUnitBallista"
+      ],
+      "effects": [],
+      "location": "Location.Self",
+      "shape": "Shape.Circle",
+      "ignoreCenter": false,
+      "usedForValidator": true,
       "validators": []
     },
     {
@@ -3500,6 +3662,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3513,6 +3676,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "behaviourOwner": null,
       "validators": []
     }
   ],
@@ -3536,7 +3700,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "All For One Buff",
       "description": "Revelators faction loses when this unit dies.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-leader-menacing-presence-buff",
@@ -3572,7 +3738,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Menacing Presence Buff",
       "description": "Melee and Range Damage for this unit is reduced by 2.",
-      "endsAt": "EndsAt.EndOfThisAction"
+      "endsAt": "EndsAt.EndOfThisAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-leader-one-for-all-obelisk-buff",
@@ -3593,7 +3761,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "One For All Obelisk Buff",
       "description": "This unit has recently been sapped for health.",
-      "endsAt": "EndsAt.StartOfTenthPlanning"
+      "endsAt": "EndsAt.StartOfTenthPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-leader-one-for-all-heal-buff",
@@ -3619,7 +3789,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "One For All Heal Buff",
       "description": "Heals for 2 Health.",
-      "endsAt": "EndsAt.Instant"
+      "endsAt": "EndsAt.Instant",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-slave-repair-structure-buff",
@@ -3654,7 +3826,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Repair Structure Buff",
       "description": "This structure will be repaired by +1 Health at the start of the planning phase.",
-      "endsAt": "EndsAt.StartOfNextPlanning"
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-slave-repair-wait",
@@ -3662,7 +3836,9 @@
       "nextBehaviour": null,
       "displayName": "Repair Wait",
       "description": "Currently repairing a structure.",
-      "endsAt": "EndsAt.StartOfNextPlanning"
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-slave-manual-labour-buff",
@@ -3692,7 +3868,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Manual Labour Buff",
       "description": "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
-      "endsAt": "EndsAt.StartOfNextPlanning"
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-slave-manual-labour-wait",
@@ -3700,7 +3878,9 @@
       "nextBehaviour": null,
       "displayName": "Manual Labour Wait",
       "description": "Currently working on a nearby Hut.",
-      "endsAt": "EndsAt.StartOfNextPlanning"
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-quickdraw-doubleshot-extra-attack",
@@ -3711,7 +3891,9 @@
       "canStack": false,
       "displayName": "Doubleshot Extra Attack",
       "description": "Ranged attacks twice.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-quickdraw-cripple-buff",
@@ -3739,7 +3921,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Cripple Buff",
       "description": "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing from any sources until the end of its action.",
-      "endsAt": "EndsAt.EndOfThisAction"
+      "endsAt": "EndsAt.EndOfThisAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-gorger-fanatic-suicide-buff",
@@ -3760,7 +3944,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Fanatic Suicide Buff",
       "description": "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage to all friendly and enemy units in 1 Distance.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-camou-silent-assassin-buff",
@@ -3781,7 +3967,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Silent Assassin Buff",
       "description": "This unit is silenced (use of any abilities is disabled).",
-      "endsAt": "EndsAt.EndOfSecondAction"
+      "endsAt": "EndsAt.EndOfSecondAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-camou-climb-wait",
@@ -3789,7 +3977,9 @@
       "nextBehaviour": null,
       "displayName": "Climb Wait",
       "description": "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
-      "endsAt": "EndsAt.EndOfThisActionPhase"
+      "endsAt": "EndsAt.EndOfThisActionPhase",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-camou-climb-buff",
@@ -3810,7 +4000,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Climb Buff",
       "description": "Camou can move down from high ground at the additional cost of 1 Movement.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-shaman-wondrous-goo-feature-wait",
@@ -3818,7 +4010,9 @@
       "nextBehaviour": "behaviour-shaman-wondrous-goo-feature-buff",
       "displayName": "Wondrous Goo Feature Wait",
       "description": "Effect area will expand at the end of this action phase.",
-      "endsAt": "EndsAt.EndOfThisActionPhase"
+      "endsAt": "EndsAt.EndOfThisActionPhase",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-shaman-wondrous-goo-feature-buff",
@@ -3846,7 +4040,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Wondrous Goo Feature Buff",
       "description": "Effect area will disappear at the end of this action phase.",
-      "endsAt": "EndsAt.EndOfThisActionPhase"
+      "endsAt": "EndsAt.EndOfThisActionPhase",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-shaman-wondrous-goo-buff",
@@ -3884,7 +4080,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Wondrous Goo Buff",
       "description": "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
-      "endsAt": "EndsAt.StartOfNextAction"
+      "endsAt": "EndsAt.StartOfNextAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-pyre-cargo-tether",
@@ -3896,7 +4094,9 @@
       "calculatedForSourcePathfinding": true,
       "displayName": "Cargo Tether",
       "description": "The cargo follows Pyre.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-pyre-cargo-wall-of-flames-buff",
@@ -3924,7 +4124,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Cargo Wall Of Flames Buff",
       "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-pyre-wall-of-flames-buff",
@@ -3954,7 +4156,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Wall Of Flames Buff",
       "description": "",
-      "endsAt": "EndsAt.StartOfNextAction"
+      "endsAt": "EndsAt.StartOfNextAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-pyre-phantom-menace-buff",
@@ -3975,7 +4179,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Phantom Menace Buff",
       "description": "Pyre can move through enemy units (but not buildings).",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-roach-degrading-carapace-buff",
@@ -3997,7 +4203,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Degrading Carapace Buff",
       "description": "Increases periodic damage by 1 at the start of each action.",
-      "endsAt": "EndsAt.StartOfNextAction"
+      "endsAt": "EndsAt.StartOfNextAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-roach-degrading-carapace-periodic-damage-buff",
@@ -4020,7 +4228,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Degrading Carapace Periodic Damage Buff",
       "description": "This unit will continue to receive 1 damage at every start of its action.",
-      "endsAt": "EndsAt.StartOfNextAction"
+      "endsAt": "EndsAt.StartOfNextAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-parasite-paralysing-grasp-tether",
@@ -4032,7 +4242,9 @@
       "calculatedForSourcePathfinding": true,
       "displayName": "Paralysing Grasp Tether",
       "description": "This unit is possessed by Parasite. On Parasite turn, it moves both units using the movement speed that the possessed unit has. Any damage received is shared between both.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-parasite-paralysing-grasp-buff",
@@ -4064,7 +4276,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Paralysing Grasp Buff",
       "description": "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it must do unless there are no legal targets.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-parasite-paralysing-grasp-self-buff",
@@ -4101,7 +4315,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Paralysing Grasp Self Buff",
       "description": "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both units on Parasite's turn.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-horrior-expert-formation-buff",
@@ -4127,7 +4343,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Expert Formation Buff",
       "description": "Range Armour for this unit is increased by 2 because it is in formation with an adjacent Horrior.",
-      "endsAt": "EndsAt.EndOfThisAction"
+      "endsAt": "EndsAt.EndOfThisAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-horrior-mount-wait",
@@ -4135,7 +4353,9 @@
       "nextBehaviour": "behaviour-horrior-mount-buff",
       "displayName": "Mount Wait",
       "description": "This unit is mounting up to transform into Surfer.",
-      "endsAt": "EndsAt.StartOfFourthPlanning"
+      "endsAt": "EndsAt.StartOfFourthPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-horrior-mount-buff",
@@ -4158,7 +4378,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Mount Buff",
       "description": "",
-      "endsAt": "EndsAt.Instant"
+      "endsAt": "EndsAt.Instant",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-marksman-critical-mark-buff",
@@ -4183,7 +4405,8 @@
                 {
                   "type": "Condition",
                   "conditionFlag": "Flag.ConditionTargetIsDifferentTypeThanOrigin",
-                  "conditionedBehaviour": null
+                  "conditionedBehaviour": null,
+                  "behaviourOwner": null
                 }
               ],
               "filterFlags": [
@@ -4201,7 +4424,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Critical Mark Buff",
       "description": "Marksman has marked this target until the end of the next action phase. The mark is consumed dealing 5 Melee Damage, when an ally of Marksman attacks this unit.",
-      "endsAt": "EndsAt.EndOfNextActionPhase"
+      "endsAt": "EndsAt.EndOfNextActionPhase",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-surfer-dismount-buff",
@@ -4222,7 +4447,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Dismount Buff",
       "description": "Upon death, reemerges as Horrior.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-mortar-deadly-ammunition-ammunition",
@@ -4239,7 +4466,9 @@
       ],
       "displayName": "Deadly Ammunition Ammunition",
       "description": "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-mortar-reload-wait",
@@ -4247,7 +4476,9 @@
       "nextBehaviour": "behaviour-mortar-reload-buff",
       "displayName": "Reload Wait",
       "description": "Mortar will reload its ammunition at the end of this action.",
-      "endsAt": "EndsAt.EndOfThisAction"
+      "endsAt": "EndsAt.EndOfThisAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-mortar-reload-buff",
@@ -4268,7 +4499,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Reload Buff",
       "description": "",
-      "endsAt": "EndsAt.Instant"
+      "endsAt": "EndsAt.Instant",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-mortar-piercing-blast-buff",
@@ -4298,7 +4531,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Piercing Blast Buff",
       "description": "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-hawk-tactical-goggles-buff",
@@ -4324,7 +4559,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Tactical Goggles Buff",
       "description": "Gains +3 Vision range.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-hawk-leadership-buff",
@@ -4359,7 +4596,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Leadership Buff",
       "description": "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of the next action or if Hawk is not adjacent anymore.",
-      "endsAt": "EndsAt.EndOfThisAction"
+      "endsAt": "EndsAt.EndOfThisAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-hawk-health-kit-buff",
@@ -4381,7 +4620,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Health Kit Buff",
       "description": "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
-      "endsAt": "EndsAt.StartOfNextPlanning"
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-hawk-health-kit-heal-buff",
@@ -4407,7 +4648,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Health Kit Heal Buff",
       "description": "Heals for 1 Health.",
-      "endsAt": "EndsAt.Instant"
+      "endsAt": "EndsAt.Instant",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-cannon-assembling-buildable",
@@ -4419,7 +4662,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionTargetIsLowGround",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -4428,7 +4672,9 @@
       "maximumHelpers": 3,
       "displayName": "Assembling Buildable",
       "description": "This machine can only be placed on the low ground and can be assembled by a maximum of 3 Engineers at once.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-ballista-assembling-buildable",
@@ -4440,7 +4686,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionBehaviourExists",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -4449,7 +4696,9 @@
       "maximumHelpers": 1,
       "displayName": "Assembling Buildable",
       "description": "This machine can only be placed on a Watchtower and can be assembled by a maximum of 1 Engineer at once.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-radar-assembling-buildable",
@@ -4461,7 +4710,8 @@
             {
               "type": "Condition",
               "conditionFlag": "Flag.ConditionTargetIsLowGround",
-              "conditionedBehaviour": null
+              "conditionedBehaviour": null,
+              "behaviourOwner": null
             }
           ],
           "filterFlags": []
@@ -4470,7 +4720,9 @@
       "maximumHelpers": 1,
       "displayName": "Assembling Buildable",
       "description": "This machine can only be placed on the low ground and can be assembled by a maximum of 1 Engineer at once.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-engineer-operate-buff",
@@ -4493,7 +4745,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Operate Buff",
       "description": "",
-      "endsAt": "EndsAt.Instant"
+      "endsAt": "EndsAt.Instant",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-engineer-repair-structure-or-machine-buff",
@@ -4528,7 +4782,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Repair Structure Or Machine Buff",
       "description": "This structure or machine will be repaired by +2 Health at the start of the planning phase.",
-      "endsAt": "EndsAt.StartOfNextPlanning"
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-engineer-repair-horrior-buff",
@@ -4563,7 +4819,9 @@
       "restoreChangesOnEnd": false,
       "displayName": "Repair Horrior Buff",
       "description": "This Horrior will have their Mount duration reduced by one turn at the start of the planning phase.",
-      "endsAt": "EndsAt.StartOfNextPlanning"
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-engineer-repair-wait",
@@ -4571,7 +4829,9 @@
       "nextBehaviour": null,
       "displayName": "Repair Wait",
       "description": "Currently repairing.",
-      "endsAt": "EndsAt.StartOfNextPlanning"
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-cannon-machine-counter",
@@ -4587,7 +4847,9 @@
       "canResetDuration": false,
       "displayName": "Machine Counter",
       "description": "Needs 3 Engineers to operate this machine.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-cannon-machine-buff",
@@ -4608,7 +4870,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Machine Buff",
       "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-cannon-heat-up-danger-zone-buff",
@@ -4650,7 +4914,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Heat Up Danger Zone Buff",
       "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile.",
-      "endsAt": "EndsAt.EndOfNextAction"
+      "endsAt": "EndsAt.EndOfNextAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-cannon-heat-up-wait",
@@ -4658,7 +4924,9 @@
       "nextBehaviour": null,
       "displayName": "Heat Up Wait",
       "description": "This Cannon is heating up for a blast at the danger zone.",
-      "endsAt": "EndsAt.EndOfNextAction"
+      "endsAt": "EndsAt.EndOfNextAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-ballista-machine-counter",
@@ -4674,7 +4942,9 @@
       "canResetDuration": false,
       "displayName": "Machine Counter",
       "description": "Needs 1 Engineer to operate this machine.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-ballista-machine-buff",
@@ -4695,7 +4965,57 @@
       "restoreChangesOnEnd": true,
       "displayName": "Machine Buff",
       "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-ballista-aim-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": true,
+      "alignment": "Alignment.Negative",
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityFinishedMoving"
+          ],
+          "validators": [
+            {
+              "searchEffect": "effect-ballista-aim-search",
+              "type": "Validator.ResultValidator",
+              "conditions": [
+                {
+                  "type": "Condition",
+                  "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
+                  "conditionedBehaviour": null,
+                  "behaviourOwner": null
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
+        },
+        {
+          "events": [
+            "Event.OriginIsDestroyed"
+          ],
+          "validators": []
+        }
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Aim Buff",
+      "description": "This unit is aimed by a Ballista, which allows it to shoot every turn as long as this unit remains in range.",
+      "endsAt": "EndsAt.EndOfNextActionPhase",
+      "ownerAllowed": true,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-radar-machine-counter",
@@ -4711,7 +5031,9 @@
       "canResetDuration": false,
       "displayName": "Machine Counter",
       "description": "Needs 1 Engineer to operate this machine.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-radar-machine-buff",
@@ -4732,7 +5054,9 @@
       "restoreChangesOnEnd": true,
       "displayName": "Machine Buff",
       "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
-      "endsAt": "EndsAt.Death"
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     }
   ]
 }

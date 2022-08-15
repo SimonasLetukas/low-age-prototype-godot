@@ -80,8 +80,9 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Structure,
-                        Flag.Structure.Obelisk
+                        Flag.Filter.SpecificStructure.Obelisk
                     },
+                    null,
                     new List<Validator>
                     {
                         new Validator(new List<Condition>
@@ -126,6 +127,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Ally,
                         Flag.Filter.Structure
                     },
+                    null,
                     new List<Validator>
                     {
                         new Validator(new List<Condition>
@@ -153,8 +155,9 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Structure,
-                        Flag.Structure.Hut
+                        Flag.Filter.SpecificStructure.Hut
                     },
+                    null,
                     new List<Validator>
                     {
                         new Validator(new List<Condition>
@@ -286,6 +289,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
+                    null,
                     new List<Validator>
                     {
                         new ResultValidator(
@@ -538,6 +542,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
+                    null,
                     new List<Validator>
                     {
                         new Validator(new List<Condition>
@@ -558,6 +563,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
+                    null,
                     new List<Validator>
                     {
                         new Validator(new List<Condition>
@@ -577,6 +583,7 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Unit
                     },
+                    null,
                     new List<Validator>
                     {
                         new Validator(new List<Condition>
@@ -598,7 +605,7 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
-                        Flag.Unit.Horrior
+                        Flag.Filter.SpecificUnit.Horrior
                     },
                     new List<EffectName>
                     {
@@ -815,11 +822,12 @@ namespace low_age_data.Collections
                     new List<Flag>
                     {
                         Flag.Filter.Unit,
-                        Flag.Unit.Cannon,
-                        Flag.Unit.Ballista,
-                        Flag.Unit.Radar,
-                        Flag.Unit.Vessel
+                        Flag.Filter.SpecificUnit.Cannon,
+                        Flag.Filter.SpecificUnit.Ballista,
+                        Flag.Filter.SpecificUnit.Radar,
+                        Flag.Filter.SpecificUnit.Vessel
                     },
+                    null,
                     new List<Validator>
                     {
                         new Validator(new List<Condition>
@@ -867,6 +875,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Ally,
                         Flag.Filter.Structure
                     },
+                    null,
                     new List<Validator>
                     {
                         new Validator(new List<Condition>
@@ -886,11 +895,12 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
-                        Flag.Unit.Cannon,
-                        Flag.Unit.Ballista,
-                        Flag.Unit.Radar,
-                        Flag.Unit.Vessel
+                        Flag.Filter.SpecificUnit.Cannon,
+                        Flag.Filter.SpecificUnit.Ballista,
+                        Flag.Filter.SpecificUnit.Radar,
+                        Flag.Filter.SpecificUnit.Vessel
                     },
+                    null,
                     new List<Validator>
                     {
                         new Validator(new List<Condition>
@@ -910,8 +920,9 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
-                        Flag.Unit.Horrior
+                        Flag.Filter.SpecificUnit.Horrior
                     },
+                    null,
                     new List<Validator>
                     {
                         new Validator(new List<Condition>
@@ -1040,7 +1051,60 @@ namespace low_age_data.Collections
                         Flag.Filter.Unit
                     }),
                 
-                // Ballista effects
+                new Damage(
+                    EffectName.Ballista.AimDamage,
+                    DamageType.OverrideRanged,
+                    null,
+                    null,
+                    null,
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Structure,
+                        Flag.Filter.Unit
+                    },
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(
+                                Flag.Condition.BehaviourExists, 
+                                BehaviourName.Ballista.AimBuff, 
+                                Location.Origin)
+                        })
+                    }),
+                
+                new ApplyBehaviour(
+                    EffectName.Ballista.AimApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Ballista.AimBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Structure,
+                        Flag.Filter.Unit
+                    },
+                    Location.Origin),
+                
+                new Search(
+                    EffectName.Ballista.AimSearch,
+                    9,
+                    new List<Flag>(),
+                    new List<Flag>
+                    {
+                        Flag.Filter.Origin,
+                        Flag.Filter.SpecificUnit.Ballista
+                    },
+                    null,
+                    Location.Self,
+                    null,
+                    null,
+                    null,
+                    true),
                 
                 new ApplyBehaviour(
                     EffectName.Radar.MachineApplyBehaviour,

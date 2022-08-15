@@ -67,6 +67,8 @@ namespace low_age_data.Domain.Shared.Flags
 
         public static class Filter
         {
+            public static Flag Origin => new Flag(Flags.FilterOrigin);
+            public static Flag Source => new Flag(Flags.FilterSource);
             public static Flag Self => new Flag(Flags.FilterSelf);
             public static Flag Ally => new Flag(Flags.FilterAlly);
             public static Flag Enemy => new Flag(Flags.FilterEnemy);
@@ -77,21 +79,21 @@ namespace low_age_data.Domain.Shared.Flags
             {
                 public static Flag Ranged => new Flag(Flags.FilterAttributeRanged);
             }
-        }
+            
+            public static class SpecificStructure
+            {
+                public static Flag Obelisk => new Flag(Flags.FilterSpecificStructureObelisk);
+                public static Flag Hut => new Flag(Flags.FilterSpecificStructureHut);
+            }
 
-        public static class Structure
-        {
-            public static Flag Obelisk => new Flag(Flags.StructureObelisk);
-            public static Flag Hut => new Flag(Flags.StructureHut);
-        }
-
-        public static class Unit
-        {
-            public static Flag Horrior => new Flag(Flags.UnitHorrior);
-            public static Flag Cannon => new Flag(Flags.UnitCannon);
-            public static Flag Ballista => new Flag(Flags.UnitBallista);
-            public static Flag Radar => new Flag(Flags.UnitRadar);
-            public static Flag Vessel => new Flag(Flags.UnitVessel);
+            public static class SpecificUnit
+            {
+                public static Flag Horrior => new Flag(Flags.FilterSpecificUnitHorrior);
+                public static Flag Cannon => new Flag(Flags.FilterSpecificUnitCannon);
+                public static Flag Ballista => new Flag(Flags.FilterSpecificUnitBallista);
+                public static Flag Radar => new Flag(Flags.FilterSpecificUnitRadar);
+                public static Flag Vessel => new Flag(Flags.FilterSpecificUnitVessel);
+            }
         }
 
         private Flag(Flags @enum)
@@ -127,19 +129,21 @@ namespace low_age_data.Domain.Shared.Flags
             EffectSearchAppliedOnEnter,
             EffectSearchAppliedOnAction,
             EffectSearchRemovedOnExit,
+            FilterOrigin,
+            FilterSource,
             FilterSelf,
             FilterAlly,
             FilterEnemy,
             FilterUnit,
             FilterStructure,
             FilterAttributeRanged,
-            StructureObelisk,
-            StructureHut,
-            UnitHorrior,
-            UnitCannon,
-            UnitBallista,
-            UnitRadar,
-            UnitVessel
+            FilterSpecificStructureObelisk,
+            FilterSpecificStructureHut,
+            FilterSpecificUnitHorrior,
+            FilterSpecificUnitCannon,
+            FilterSpecificUnitBallista,
+            FilterSpecificUnitRadar,
+            FilterSpecificUnitVessel
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
