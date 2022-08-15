@@ -618,7 +618,8 @@ namespace low_age_data.Collections
                     new List<AbilityName>
                     {
                         AbilityName.Cannon.Assembling,
-                        AbilityName.Cannon.Machine
+                        AbilityName.Cannon.Machine,
+                        AbilityName.Cannon.HeatUp
                     }),                
                 
                 new Unit(
@@ -652,6 +653,9 @@ namespace low_age_data.Collections
                     new List<AbilityName>
                     {
                         AbilityName.Ballista.Assembling,
+                        AbilityName.Ballista.Machine,
+                        AbilityName.Ballista.AddOn,
+                        AbilityName.Ballista.Aim
                     }),                
                 
                 new Unit(
@@ -677,6 +681,10 @@ namespace low_age_data.Collections
                     new List<AbilityName>
                     {
                         AbilityName.Radar.Assembling,
+                        AbilityName.Radar.Machine,
+                        AbilityName.Radar.PowerDependency,
+                        AbilityName.Radar.ResonatingSweep,
+                        AbilityName.Radar.RadioLocation
                     }),                
                 
                 new Unit(

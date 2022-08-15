@@ -20,6 +20,13 @@ namespace low_age_data.Domain.Logic
         public static Event EntityIsAboutToMove => new Event(Events.EntityIsAboutToMove);
         public static Event EntityFinishedMoving => new Event(Events.EntityFinishedMoving);
         public static Event EntityIsAttacked => new Event(Events.EntityIsAttacked);
+        
+        /// <summary>
+        /// Triggers either at the start of action if entity can have an action, or on action phase if entity has no
+        /// initiative and action (i.e. building, feature).
+        /// </summary>
+        public static Event EntityStartsActionNotOnPower => new Event(Events.EntityStartsActionNotOnPower);
+        public static Event EntityReceivedPower => new Event(Events.EntityReceivedPower);
 
         private Event(Events @enum)
         {
@@ -37,6 +44,8 @@ namespace low_age_data.Domain.Logic
             EntityIsAboutToMove,
             EntityFinishedMoving,
             EntityIsAttacked,
+            EntityStartsActionNotOnPower,
+            EntityReceivedPower,
         }
         
         protected override IEnumerable<object> GetEqualityComponents()

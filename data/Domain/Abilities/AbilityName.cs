@@ -131,6 +131,19 @@ namespace low_age_data.Domain.Abilities
         {
             public static AbilityName Assembling => new AbilityName($"{nameof(Radar)}{nameof(Assembling)}".ToKebabCase());
             public static AbilityName Machine => new AbilityName($"{nameof(Radar)}{nameof(Machine)}".ToKebabCase());
+            public static AbilityName PowerDependency => new AbilityName($"{nameof(Radar)}{nameof(PowerDependency)}".ToKebabCase());
+            public static AbilityName ResonatingSweep => new AbilityName($"{nameof(Radar)}{nameof(ResonatingSweep)}".ToKebabCase());
+            public static AbilityName RadioLocation => new AbilityName($"{nameof(Radar)}{nameof(RadioLocation)}".ToKebabCase());
+        }
+
+        public static class Vessel
+        {
+            
+        }
+        
+        public static class Omen
+        {
+            
         }
     }
 }

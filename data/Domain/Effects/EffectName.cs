@@ -175,6 +175,9 @@ namespace low_age_data.Domain.Effects
         {
             public static EffectName MachineApplyBehaviour => new EffectName($"{nameof(Radar)}{nameof(MachineApplyBehaviour)}".ToKebabCase());
             public static EffectName MachineRemoveBehaviour => new EffectName($"{nameof(Radar)}{nameof(MachineRemoveBehaviour)}".ToKebabCase());
+            public static EffectName PowerDependencyApplyBehaviour => new EffectName($"{nameof(Radar)}{nameof(PowerDependencyApplyBehaviour)}".ToKebabCase());
+            public static EffectName PowerDependencyDamage => new EffectName($"{nameof(Radar)}{nameof(PowerDependencyDamage)}".ToKebabCase());
+            public static EffectName PowerDependencyApplyBehaviourDisable => new EffectName($"{nameof(Radar)}{nameof(PowerDependencyApplyBehaviourDisable)}".ToKebabCase());
         }
     }
 }

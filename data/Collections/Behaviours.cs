@@ -1082,6 +1082,61 @@ namespace low_age_data.Collections
                     false,
                     null,
                     true),
+                
+                new Buff(
+                    BehaviourName.Radar.PowerDependencyBuff,
+                    nameof(BehaviourName.Radar.PowerDependencyBuff).CamelCaseToWords(),
+                    "If this unit is not connected to Power, all abilities get disabled and it loses 1 Health " +
+                    "at the start of its action.",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EndsAt.Death,
+                    false,
+                    false,
+                    Alignment.Neutral,
+                    new List<Trigger>
+                    {
+                        new Trigger(new List<Event>
+                        {
+                            Event.EntityStartsActionNotOnPower
+                        })
+                    },
+                    false,
+                    new List<EffectName>
+                    {
+                        EffectName.Radar.PowerDependencyDamage,
+                        EffectName.Radar.PowerDependencyApplyBehaviourDisable,
+                    }),
+                
+                new Buff(
+                    BehaviourName.Radar.PowerDependencyBuffDisable,
+                    nameof(BehaviourName.Radar.PowerDependencyBuffDisable).CamelCaseToWords(),
+                    "All abilities are disabled because Power is not supplied.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.AbilitiesDisabled
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    EndsAt.StartOf.Next.ActionPhase,
+                    false,
+                    true,
+                    Alignment.Negative,
+                    new List<Trigger>
+                    {
+                        new Trigger(new List<Event>
+                        {
+                            Event.EntityReceivedPower
+                        })
+                    },
+                    true,
+                    null,
+                    true)
             };
         }
     }

@@ -644,6 +644,18 @@ namespace low_age_data.Collections
                     null,
                     null,
                     EffectName.Radar.MachineApplyBehaviour),
+                
+                new Passive(
+                    AbilityName.Radar.PowerDependency,
+                    nameof(AbilityName.Radar.PowerDependency).CamelCaseToWords(),
+                    "All abilities get disabled and loses 1 Health at the start of its action if not " +
+                    "connected to Power.",
+                    true,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EffectName.Radar.PowerDependencyApplyBehaviour)
             };
         }
     }

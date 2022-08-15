@@ -6,7 +6,6 @@ using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Features;
 
@@ -1132,6 +1131,37 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
+                
+                new ApplyBehaviour(
+                    EffectName.Radar.PowerDependencyApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Radar.PowerDependencyBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Self
+                    }),
+                
+                new Damage(
+                    EffectName.Radar.PowerDependencyDamage,
+                    DamageType.Pure,
+                    new Amount(1)),
+                
+                new ApplyBehaviour(
+                    EffectName.Radar.PowerDependencyApplyBehaviourDisable,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Radar.PowerDependencyBuffDisable
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Self
+                    })
             };
         }
     }

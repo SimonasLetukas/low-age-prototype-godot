@@ -1132,7 +1132,8 @@
         ],
         "abilities": [
           "ability-cannon-assembling",
-          "ability-cannon-machine"
+          "ability-cannon-machine",
+          "ability-cannon-heat-up"
         ],
         "displayName": "Cannon",
         "description": ""
@@ -1193,7 +1194,10 @@
           "CombatAttributes.Ranged"
         ],
         "abilities": [
-          "ability-ballista-assembling"
+          "ability-ballista-assembling",
+          "ability-ballista-machine",
+          "ability-ballista-add-on",
+          "ability-ballista-aim"
         ],
         "displayName": "Ballista",
         "description": ""
@@ -1244,7 +1248,11 @@
           "CombatAttributes.Mechanical"
         ],
         "abilities": [
-          "ability-radar-assembling"
+          "ability-radar-assembling",
+          "ability-radar-machine",
+          "ability-radar-power-dependency",
+          "ability-radar-resonating-sweep",
+          "ability-radar-radio-location"
         ],
         "displayName": "Radar",
         "description": ""
@@ -2165,6 +2173,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Machine",
       "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it."
+    },
+    {
+      "name": "ability-radar-power-dependency",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-radar-power-dependency-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Power Dependency",
+      "description": "All abilities get disabled and loses 1 Health at the start of its action if not connected to Power."
     }
   ],
   "effects": [
@@ -3678,6 +3701,55 @@
       ],
       "behaviourOwner": null,
       "validators": []
+    },
+    {
+      "name": "effect-radar-power-dependency-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-radar-power-dependency-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterSelf"
+      ],
+      "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-radar-power-dependency-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Pure",
+      "amount": {
+        "flat": 1,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-radar-power-dependency-apply-behaviour-disable",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-radar-power-dependency-buff-disable"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterSelf"
+      ],
+      "behaviourOwner": null,
+      "validators": []
     }
   ],
   "behaviours": [
@@ -5055,6 +5127,67 @@
       "displayName": "Machine Buff",
       "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
       "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-radar-power-dependency-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityStartsActionNotOnPower"
+          ],
+          "validators": []
+        }
+      ],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [
+        "effect-radar-power-dependency-damage",
+        "effect-radar-power-dependency-apply-behaviour-disable"
+      ],
+      "restoreChangesOnEnd": false,
+      "displayName": "Power Dependency Buff",
+      "description": "If this unit is not connected to Power, all abilities get disabled and it loses 1 Health at the start of its action.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-radar-power-dependency-buff-disable",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationAbilitiesDisabled"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": true,
+      "alignment": "Alignment.Negative",
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityReceivedPower"
+          ],
+          "validators": []
+        }
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Power Dependency Buff Disable",
+      "description": "All abilities are disabled because Power is not supplied.",
+      "endsAt": "EndsAt.StartOfNextActionPhase",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     }
