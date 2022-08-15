@@ -940,7 +940,10 @@ namespace low_age_data.Collections
                     {
                         Flag.Modification.ProvidesVision
                     },
-                    null,
+                    new List<Modification>
+                    {
+                        new StatModification(Change.SetCurrent, 1, Stats.Vision)
+                    },
                     new List<EffectName>
                     {
                         EffectName.Cannon.HeatUpApplyWaitBehaviour
@@ -1136,7 +1139,30 @@ namespace low_age_data.Collections
                     },
                     true,
                     null,
-                    true)
+                    true),
+                
+                new Buff(
+                    BehaviourName.Radar.ResonatingSweepBuff,
+                    nameof(BehaviourName.Radar.ResonatingSweepBuff).CamelCaseToWords(),
+                    "Provides vision to the Radar's owner.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.ProvidesVision
+                    },
+                    new List<Modification>
+                    {
+                        new StatModification(Change.SetCurrent, 1, Stats.Vision)
+                    },
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Radar.ResonatingSweepDestroy
+                    },
+                    EndsAt.StartOf.Next.Planning,
+                    false,
+                    false,
+                    Alignment.Positive)
             };
         }
     }

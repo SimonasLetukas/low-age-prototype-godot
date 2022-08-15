@@ -1386,14 +1386,16 @@
     "structures": [],
     "features": [
       {
-        "name": "feature-wondrous-goo",
+        "name": "feature-shaman-wondrous-goo",
         "onCollisionEffect": "effect-shaman-wondrous-goo-search",
         "collisionFilters": [
           "Flag.FilterUnit"
         ],
         "size": 1,
         "statsCopiedFromSource": false,
-        "displayName": "Wondrous Goo",
+        "sameTeamCanStack": false,
+        "onlyOneCanExist": true,
+        "displayName": "Shaman Wondrous Goo",
         "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn."
       },
       {
@@ -1402,6 +1404,8 @@
         "collisionFilters": [],
         "size": 1,
         "statsCopiedFromSource": false,
+        "sameTeamCanStack": false,
+        "onlyOneCanExist": true,
         "displayName": "Pyre Cargo",
         "description": "The cargo which is attached to Pyre leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death."
       },
@@ -1413,6 +1417,8 @@
         ],
         "size": 1,
         "statsCopiedFromSource": false,
+        "sameTeamCanStack": false,
+        "onlyOneCanExist": true,
         "displayName": "Pyre Flames",
         "description": "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
       },
@@ -1422,8 +1428,21 @@
         "collisionFilters": [],
         "size": 1,
         "statsCopiedFromSource": true,
+        "sameTeamCanStack": true,
+        "onlyOneCanExist": false,
         "displayName": "Cannon Heat Up Danger Zone",
         "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile."
+      },
+      {
+        "name": "feature-radar-resonating-sweep",
+        "onCollisionEffect": null,
+        "collisionFilters": [],
+        "size": 3,
+        "statsCopiedFromSource": false,
+        "sameTeamCanStack": true,
+        "onlyOneCanExist": false,
+        "displayName": "Radar Resonating Sweep",
+        "description": "These tiles are revealed for Radar's owner until the start of the next planning phase."
       }
     ]
   },
@@ -2188,6 +2207,22 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Power Dependency",
       "description": "All abilities get disabled and loses 1 Health at the start of its action if not connected to Power."
+    },
+    {
+      "name": "ability-radar-resonating-sweep",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 15,
+      "effects": [
+        "effect-radar-resonating-sweep-create-entity"
+      ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Resonating Sweep",
+      "description": "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start of the next planning phase."
     }
   ],
   "effects": [
@@ -2647,7 +2682,7 @@
     {
       "name": "effect-shaman-wondrous-goo-create-entity",
       "type": "Effect.CreateEntity",
-      "entityToCreate": "feature-wondrous-goo",
+      "entityToCreate": "feature-shaman-wondrous-goo",
       "initialEntityBehaviours": [
         "behaviour-shaman-wondrous-goo-feature-wait"
       ],
@@ -3749,6 +3784,22 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-radar-resonating-sweep-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "feature-radar-resonating-sweep",
+      "initialEntityBehaviours": [
+        "behaviour-radar-resonating-sweep-buff"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-radar-resonating-sweep-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Self",
+      "blocksBehaviours": false,
       "validators": []
     }
   ],
@@ -4952,7 +5003,14 @@
       "modificationFlags": [
         "Flag.ModificationProvidesVision"
       ],
-      "initialModifications": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Vision",
+          "change": "Change.SetCurrent",
+          "amount": 1.0
+        }
+      ],
       "initialEffects": [
         "effect-cannon-heat-up-apply-wait-behaviour"
       ],
@@ -5188,6 +5246,38 @@
       "displayName": "Power Dependency Buff Disable",
       "description": "All abilities are disabled because Power is not supplied.",
       "endsAt": "EndsAt.StartOfNextActionPhase",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-radar-resonating-sweep-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationProvidesVision"
+      ],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Vision",
+          "change": "Change.SetCurrent",
+          "amount": 1.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-radar-resonating-sweep-destroy"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Resonating Sweep Buff",
+      "description": "Provides vision to the Radar's owner.",
+      "endsAt": "EndsAt.StartOfNextPlanning",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     }

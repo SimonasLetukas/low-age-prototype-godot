@@ -655,7 +655,19 @@ namespace low_age_data.Collections
                     null,
                     null,
                     null,
-                    EffectName.Radar.PowerDependencyApplyBehaviour)
+                    EffectName.Radar.PowerDependencyApplyBehaviour),
+                
+                new Target(
+                    AbilityName.Radar.ResonatingSweep,
+                    TurnPhase.Action, 
+                    nameof(AbilityName.Radar.ResonatingSweep).CamelCaseToWords(),
+                    "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start " +
+                    "of the next planning phase.",
+                    15,
+                    new List<EffectName>
+                    {
+                        EffectName.Radar.ResonatingSweepCreateEntity
+                    })
             };
         }
     }

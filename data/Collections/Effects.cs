@@ -367,7 +367,7 @@ namespace low_age_data.Collections
 
                 new CreateEntity(
                     EffectName.Shaman.WondrousGooCreateEntity,
-                    FeatureName.WondrousGoo,
+                    FeatureName.ShamanWondrousGoo,
                     new List<BehaviourName>
                     {
                         BehaviourName.Shaman.WondrousGooFeatureWait
@@ -1161,7 +1161,19 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Self
-                    })
+                    }),
+                
+                new CreateEntity(
+                    EffectName.Radar.ResonatingSweepCreateEntity,
+                    FeatureName.RadarResonatingSweep,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Radar.ResonatingSweepBuff
+                    }),
+                
+                new Destroy(
+                    EffectName.Radar.ResonatingSweepDestroy,
+                    Location.Self)
             };
         }
     }
