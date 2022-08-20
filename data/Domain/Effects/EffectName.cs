@@ -180,6 +180,11 @@ namespace low_age_data.Domain.Effects
             public static EffectName PowerDependencyApplyBehaviourDisable => new EffectName($"{nameof(Radar)}{nameof(PowerDependencyApplyBehaviourDisable)}".ToKebabCase());
             public static EffectName ResonatingSweepCreateEntity => new EffectName($"{nameof(Radar)}{nameof(ResonatingSweepCreateEntity)}".ToKebabCase());
             public static EffectName ResonatingSweepDestroy => new EffectName($"{nameof(Radar)}{nameof(ResonatingSweepDestroy)}".ToKebabCase());
+            public static EffectName RadioLocationApplyBehaviour => new EffectName($"{nameof(Radar)}{nameof(RadioLocationApplyBehaviour)}".ToKebabCase());
+            public static EffectName RadioLocationSearchDestroy => new EffectName($"{nameof(Radar)}{nameof(RadioLocationSearchDestroy)}".ToKebabCase());
+            public static EffectName RadioLocationDestroy => new EffectName($"{nameof(Radar)}{nameof(RadioLocationDestroy)}".ToKebabCase());
+            public static EffectName RadioLocationSearchCreate => new EffectName($"{nameof(Radar)}{nameof(RadioLocationSearchCreate)}".ToKebabCase());
+            public static EffectName RadioLocationCreateEntity => new EffectName($"{nameof(Radar)}{nameof(RadioLocationCreateEntity)}".ToKebabCase());
         }
     }
 }

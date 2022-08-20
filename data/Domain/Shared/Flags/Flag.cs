@@ -39,6 +39,8 @@ namespace low_age_data.Domain.Shared.Flags
             public static Flag CanAttackAnyTeam => new Flag(Flags.ModificationCanAttackAnyTeam);
             public static Flag IgnoreArmour => new Flag(Flags.ModificationIgnoreArmour);
             public static Flag ProvidesVision => new Flag(Flags.ModificationProvidesVision);
+            public static Flag OnlyVisibleToAllies => new Flag(Flags.ModificationOnlyVisibleToAllies);
+            public static Flag OnlyVisibleInFogOfWar => new Flag(Flags.ModificationOnlyVisibleInFogOfWar);
             
             /// <summary>
             /// Includes <see cref="MovementDisabled"/>, <see cref="CannotAttack"/>, <see cref="AbilitiesDisabled"/>.
@@ -94,6 +96,11 @@ namespace low_age_data.Domain.Shared.Flags
                 public static Flag Radar => new Flag(Flags.FilterSpecificUnitRadar);
                 public static Flag Vessel => new Flag(Flags.FilterSpecificUnitVessel);
             }
+
+            public static class SpecificFeature
+            {
+                public static Flag RadarRedDot => new Flag(Flags.FilterSpecificFeatureRadarRedDot);
+            }
         }
 
         private Flag(Flags @enum)
@@ -125,6 +132,8 @@ namespace low_age_data.Domain.Shared.Flags
             ModificationIgnoreArmour,
             ModificationProvidesVision,
             ModificationFullyDisabled,
+            ModificationOnlyVisibleToAllies,
+            ModificationOnlyVisibleInFogOfWar,
             EffectModifyPlayerGameLost,
             EffectSearchAppliedOnEnter,
             EffectSearchAppliedOnAction,
@@ -143,7 +152,8 @@ namespace low_age_data.Domain.Shared.Flags
             FilterSpecificUnitCannon,
             FilterSpecificUnitBallista,
             FilterSpecificUnitRadar,
-            FilterSpecificUnitVessel
+            FilterSpecificUnitVessel,
+            FilterSpecificFeatureRadarRedDot
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

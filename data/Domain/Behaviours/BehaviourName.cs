@@ -136,6 +136,8 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName PowerDependencyBuff => new BehaviourName($"{nameof(Radar)}{nameof(PowerDependencyBuff)}".ToKebabCase());
             public static BehaviourName PowerDependencyBuffDisable => new BehaviourName($"{nameof(Radar)}{nameof(PowerDependencyBuffDisable)}".ToKebabCase());
             public static BehaviourName ResonatingSweepBuff => new BehaviourName($"{nameof(Radar)}{nameof(ResonatingSweepBuff)}".ToKebabCase());
+            public static BehaviourName RadioLocationBuff => new BehaviourName($"{nameof(Radar)}{nameof(RadioLocationBuff)}".ToKebabCase());
+            public static BehaviourName RadioLocationFeatureBuff => new BehaviourName($"{nameof(Radar)}{nameof(RadioLocationFeatureBuff)}".ToKebabCase());
         }
     }
 }

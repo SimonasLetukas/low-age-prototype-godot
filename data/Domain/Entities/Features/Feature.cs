@@ -17,14 +17,14 @@ namespace low_age_data.Domain.Entities.Features
             IList<Flag>? collisionFilters = null,
             int? size = null,
             bool? statsCopiedFromSource = null,
-            bool? sameTeamCanStack = null,
+            bool? alliesCanStack = null,
             bool? onlyOneCanExist = null) : base(name, displayName, description)
         {
             OnCollisionEffect = onCollisionEffect;
             CollisionFilters = collisionFilters ?? new List<Flag>();
             Size = size ?? 1;
             StatsCopiedFromSource = statsCopiedFromSource ?? false;
-            SameTeamCanStack = sameTeamCanStack ?? false;
+            AlliesCanStack = alliesCanStack ?? false;
             OnlyOneCanExist = onlyOneCanExist ?? false;
         }
 
@@ -42,14 +42,14 @@ namespace low_age_data.Domain.Entities.Features
         
         /// <summary>
         /// If true, multiple <see cref="Feature"/>s from the same team can co-exist on the same <see cref="Tile"/>.
-        /// By default, same team cannot stack <see cref="Feature"/>s, but <see cref="Feature"/>s from different teams
+        /// By default, allies cannot stack <see cref="Feature"/>s, but <see cref="Feature"/>s from different teams
         /// can co-exist.
         /// </summary>
-        public bool SameTeamCanStack { get; }
+        public bool AlliesCanStack { get; }
         
         /// <summary>
         /// If true, only one <see cref="Feature"/> can exist on the same <see cref="Tile"/> across any number of
-        /// teams and <see cref="SameTeamCanStack"/> input is overriden. 
+        /// teams and <see cref="AlliesCanStack"/> input is overriden. 
         /// </summary>
         public bool OnlyOneCanExist { get; }
     }

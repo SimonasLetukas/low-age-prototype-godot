@@ -49,14 +49,20 @@ namespace low_age_data.Collections
                     "owner has vision of this tile.",
                     size: 1,
                     statsCopiedFromSource: true,
-                    sameTeamCanStack: true),
+                    alliesCanStack: true),
                 
                 new Feature(
                     FeatureName.RadarResonatingSweep,
                     nameof(FeatureName.RadarResonatingSweep).CamelCaseToWords(),
                     "These tiles are revealed for Radar's owner until the start of the next planning phase.",
                     size: 3,
-                    sameTeamCanStack: true)
+                    alliesCanStack: true),
+                
+                new Feature(
+                    FeatureName.RadarRedDot, 
+                    nameof(FeatureName.RadarRedDot).CamelCaseToWords(),
+                    "This red dot shows where enemy unit is currently located inside the fog of war.",
+                    size: 1)
             };
         }
     }

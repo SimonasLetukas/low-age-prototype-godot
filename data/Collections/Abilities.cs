@@ -667,6 +667,17 @@ namespace low_age_data.Collections
                     new List<EffectName>
                     {
                         EffectName.Radar.ResonatingSweepCreateEntity
+                    }),
+                
+                new Passive(
+                    AbilityName.Radar.RadioLocation,
+                    nameof(AbilityName.Radar.RadioLocation).CamelCaseToWords(),
+                    "Enemy units in 15 Attack Distance are shown as red dots in the fog of war.",
+                    true,
+                    EffectName.Radar.RadioLocationApplyBehaviour,
+                    new List<Research>
+                    {
+                        Research.Uee.CelestiumCoatedMaterials
                     })
             };
         }

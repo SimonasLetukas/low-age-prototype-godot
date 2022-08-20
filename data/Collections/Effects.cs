@@ -6,6 +6,7 @@ using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Features;
 
@@ -1173,7 +1174,71 @@ namespace low_age_data.Collections
                 
                 new Destroy(
                     EffectName.Radar.ResonatingSweepDestroy,
-                    Location.Self)
+                    Location.Self),
+                
+                new ApplyBehaviour(
+                    EffectName.Radar.RadioLocationApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Radar.RadioLocationBuff
+                    },
+                    Location.Self),
+                
+                new Search(
+                    EffectName.Radar.RadioLocationSearchDestroy,
+                    1,
+                    new List<Flag>(),
+                    new List<Flag>
+                    {
+                        Flag.Filter.SpecificFeature.RadarRedDot
+                    },
+                    new List<EffectName>
+                    {
+                        EffectName.Radar.RadioLocationDestroy
+                    },
+                    Location.Self,
+                    Shape.Map),
+                
+                new Destroy(
+                    EffectName.Radar.RadioLocationDestroy,
+                    Location.Inherited,
+                    new List<Validator>
+                    {
+                        new Validator(new List<Condition>
+                        {
+                            new Condition(
+                                Flag.Condition.BehaviourExists, 
+                                BehaviourName.Radar.RadioLocationFeatureBuff,
+                                Location.Origin)
+                        })
+                    }),
+                
+                new Search(
+                    EffectName.Radar.RadioLocationSearchCreate,
+                    15,
+                    new List<Flag>(),
+                    new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    new List<EffectName>
+                    {
+                        EffectName.Radar.RadioLocationCreateEntity
+                    },
+                    Location.Self,
+                    Shape.Circle,
+                    true
+                ),
+                
+                new CreateEntity(
+                    EffectName.Radar.RadioLocationCreateEntity,
+                    FeatureName.RadarRedDot,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Radar.RadioLocationFeatureBuff
+                    },
+                    Location.Origin)
             };
         }
     }

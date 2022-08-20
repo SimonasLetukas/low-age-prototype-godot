@@ -1393,7 +1393,7 @@
         ],
         "size": 1,
         "statsCopiedFromSource": false,
-        "sameTeamCanStack": false,
+        "alliesCanStack": false,
         "onlyOneCanExist": true,
         "displayName": "Shaman Wondrous Goo",
         "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn."
@@ -1404,7 +1404,7 @@
         "collisionFilters": [],
         "size": 1,
         "statsCopiedFromSource": false,
-        "sameTeamCanStack": false,
+        "alliesCanStack": false,
         "onlyOneCanExist": true,
         "displayName": "Pyre Cargo",
         "description": "The cargo which is attached to Pyre leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death."
@@ -1417,7 +1417,7 @@
         ],
         "size": 1,
         "statsCopiedFromSource": false,
-        "sameTeamCanStack": false,
+        "alliesCanStack": false,
         "onlyOneCanExist": true,
         "displayName": "Pyre Flames",
         "description": "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
@@ -1428,7 +1428,7 @@
         "collisionFilters": [],
         "size": 1,
         "statsCopiedFromSource": true,
-        "sameTeamCanStack": true,
+        "alliesCanStack": true,
         "onlyOneCanExist": false,
         "displayName": "Cannon Heat Up Danger Zone",
         "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile."
@@ -1439,10 +1439,21 @@
         "collisionFilters": [],
         "size": 3,
         "statsCopiedFromSource": false,
-        "sameTeamCanStack": true,
+        "alliesCanStack": true,
         "onlyOneCanExist": false,
         "displayName": "Radar Resonating Sweep",
         "description": "These tiles are revealed for Radar's owner until the start of the next planning phase."
+      },
+      {
+        "name": "feature-radar-red-dot",
+        "onCollisionEffect": null,
+        "collisionFilters": [],
+        "size": 1,
+        "statsCopiedFromSource": false,
+        "alliesCanStack": false,
+        "onlyOneCanExist": false,
+        "displayName": "Radar Red Dot",
+        "description": "This red dot shows where enemy unit is currently located inside the fog of war."
       }
     ]
   },
@@ -2223,6 +2234,23 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Resonating Sweep",
       "description": "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start of the next planning phase."
+    },
+    {
+      "name": "ability-radar-radio-location",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [
+        "Research.CelestiumCoatedMaterials"
+      ],
+      "periodicEffect": "effect-radar-radio-location-apply-behaviour",
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Radio Location",
+      "description": "Enemy units in 15 Attack Distance are shown as red dots in the fog of war."
     }
   ],
   "effects": [
@@ -2686,6 +2714,7 @@
       "initialEntityBehaviours": [
         "behaviour-shaman-wondrous-goo-feature-wait"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2757,6 +2786,7 @@
         "behaviour-pyre-cargo-tether",
         "behaviour-pyre-cargo-wall-of-flames-buff"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2764,6 +2794,7 @@
       "type": "Effect.CreateEntity",
       "entityToCreate": "feature-pyre-flames",
       "initialEntityBehaviours": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -2884,6 +2915,7 @@
       "type": "Effect.CreateEntity",
       "entityToCreate": "unit-roach",
       "initialEntityBehaviours": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3097,6 +3129,7 @@
       "type": "Effect.CreateEntity",
       "entityToCreate": "unit-surfer",
       "initialEntityBehaviours": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3162,6 +3195,7 @@
       "type": "Effect.CreateEntity",
       "entityToCreate": "unit-horrior",
       "initialEntityBehaviours": [],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3533,6 +3567,7 @@
       "initialEntityBehaviours": [
         "behaviour-cannon-heat-up-danger-zone-buff"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3793,6 +3828,7 @@
       "initialEntityBehaviours": [
         "behaviour-radar-resonating-sweep-buff"
       ],
+      "behaviourOwner": null,
       "validators": []
     },
     {
@@ -3800,6 +3836,82 @@
       "type": "Effect.Destroy",
       "target": "Location.Self",
       "blocksBehaviours": false,
+      "validators": []
+    },
+    {
+      "name": "effect-radar-radio-location-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-radar-radio-location-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-radar-radio-location-search-destroy",
+      "type": "Effect.Search",
+      "radius": 1,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterSpecificFeatureRadarRedDot"
+      ],
+      "effects": [
+        "effect-radar-radio-location-destroy"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Map",
+      "ignoreCenter": false,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-radar-radio-location-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Inherited",
+      "blocksBehaviours": false,
+      "validators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionBehaviourExists",
+              "conditionedBehaviour": "behaviour-radar-radio-location-feature-buff",
+              "behaviourOwner": "Location.Origin"
+            }
+          ],
+          "filterFlags": []
+        }
+      ]
+    },
+    {
+      "name": "effect-radar-radio-location-search-create",
+      "type": "Effect.Search",
+      "radius": 15,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-radar-radio-location-create-entity"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Circle",
+      "ignoreCenter": true,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-radar-radio-location-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "feature-radar-red-dot",
+      "initialEntityBehaviours": [
+        "behaviour-radar-radio-location-feature-buff"
+      ],
+      "behaviourOwner": "Location.Origin",
       "validators": []
     }
   ],
@@ -5278,6 +5390,57 @@
       "displayName": "Resonating Sweep Buff",
       "description": "Provides vision to the Radar's owner.",
       "endsAt": "EndsAt.StartOfNextPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-radar-radio-location-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-radar-radio-location-search-destroy"
+      ],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-radar-radio-location-search-create"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Radio Location Buff",
+      "description": "",
+      "endsAt": "EndsAt.Instant",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-radar-radio-location-feature-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationOnlyVisibleToAllies",
+        "Flag.ModificationOnlyVisibleInFogOfWar"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-radar-radio-location-destroy"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Radio Location Feature Buff",
+      "description": "This red dot is able to detect enemy units in the fog of war.",
+      "endsAt": "EndsAt.EndOfThisPlanning",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     }

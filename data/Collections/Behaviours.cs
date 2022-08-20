@@ -8,6 +8,7 @@ using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
 
 namespace low_age_data.Collections
 {
@@ -1162,7 +1163,44 @@ namespace low_age_data.Collections
                     EndsAt.StartOf.Next.Planning,
                     false,
                     false,
-                    Alignment.Positive)
+                    Alignment.Positive),
+                
+                new Buff(
+                    BehaviourName.Radar.RadioLocationBuff,
+                    nameof(BehaviourName.Radar.RadioLocationBuff).CamelCaseToWords(),
+                    "",
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Radar.RadioLocationSearchDestroy
+                    },
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Radar.RadioLocationSearchCreate
+                    },
+                    EndsAt.Instant,
+                    false,
+                    false),
+                
+                new Buff(
+                    BehaviourName.Radar.RadioLocationFeatureBuff,
+                    nameof(BehaviourName.Radar.RadioLocationFeatureBuff).CamelCaseToWords(),
+                    "This red dot is able to detect enemy units in the fog of war.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.OnlyVisibleToAllies,
+                        Flag.Modification.OnlyVisibleInFogOfWar
+                    },
+                    null,
+                    null,
+                    null,
+                    new List<EffectName>
+                    {
+                        EffectName.Radar.RadioLocationDestroy
+                    },
+                    EndsAt.EndOf.This.Planning)
             };
         }
     }
