@@ -138,7 +138,9 @@ namespace low_age_data.Domain.Abilities
 
         public static class Vessel
         {
-            
+            public static AbilityName Machine => new AbilityName($"{nameof(Vessel)}{nameof(Machine)}".ToKebabCase());
+            public static AbilityName AbsorbentField => new AbilityName($"{nameof(Vessel)}{nameof(AbsorbentField)}".ToKebabCase());
+            public static AbilityName Fortify => new AbilityName($"{nameof(Vessel)}{nameof(Fortify)}".ToKebabCase());
         }
         
         public static class Omen

@@ -1238,7 +1238,34 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Radar.RadioLocationFeatureBuff
                     },
-                    Location.Origin)
+                    Location.Origin),
+                
+                new ApplyBehaviour(
+                    EffectName.Vessel.MachineApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Vessel.MachineCounter,
+                        BehaviourName.Vessel.MachineBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
+                
+                new RemoveBehaviour(
+                    EffectName.Vessel.MachineRemoveBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Vessel.MachineBuff
+                    },
+                    Location.Self,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Self,
+                        Flag.Filter.Unit
+                    }),
             };
         }
     }

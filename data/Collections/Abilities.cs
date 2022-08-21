@@ -678,7 +678,19 @@ namespace low_age_data.Collections
                     new List<Research>
                     {
                         Research.Uee.CelestiumCoatedMaterials
-                    })
+                    }),
+                
+                new Passive(
+                    AbilityName.Vessel.Machine,
+                    nameof(AbilityName.Vessel.Machine).CamelCaseToWords(),
+                    "Can be operated by Engineers only (after it is built from Factory). The Machine is " +
+                    "functional and can act only if maximum number of 3 Engineers are operating it.",
+                    true,
+                    null,
+                    null,
+                    null,
+                    null,
+                    EffectName.Vessel.MachineApplyBehaviour),
             };
         }
     }

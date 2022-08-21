@@ -1200,7 +1200,39 @@ namespace low_age_data.Collections
                     {
                         EffectName.Radar.RadioLocationDestroy
                     },
-                    EndsAt.EndOf.This.Planning)
+                    EndsAt.EndOf.This.Planning),
+                
+                new Counter(
+                    BehaviourName.Vessel.MachineCounter,
+                    nameof(BehaviourName.Vessel.MachineCounter).CamelCaseToWords(),
+                    "Needs 3 Engineers to operate this machine.",
+                    3,
+                    3,
+                    new List<EffectName>
+                    {
+                        EffectName.Vessel.MachineRemoveBehaviour
+                    }),
+                
+                new Buff(
+                    BehaviourName.Vessel.MachineBuff,
+                    nameof(BehaviourName.Vessel.MachineBuff).CamelCaseToWords(),
+                    "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    new List<Flag>
+                    {
+                        Flag.Modification.FullyDisabled
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    EndsAt.Death,
+                    false,
+                    null,
+                    Alignment.Negative,
+                    null,
+                    false,
+                    null,
+                    true),
             };
         }
     }

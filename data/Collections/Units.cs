@@ -716,7 +716,9 @@ namespace low_age_data.Collections
                     },
                     new List<AbilityName>
                     {
-
+                        AbilityName.Vessel.Machine,
+                        AbilityName.Vessel.AbsorbentField,
+                        AbilityName.Vessel.Fortify
                     }),                
                 
                 new Unit(

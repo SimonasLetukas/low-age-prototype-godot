@@ -186,5 +186,11 @@ namespace low_age_data.Domain.Effects
             public static EffectName RadioLocationSearchCreate => new EffectName($"{nameof(Radar)}{nameof(RadioLocationSearchCreate)}".ToKebabCase());
             public static EffectName RadioLocationCreateEntity => new EffectName($"{nameof(Radar)}{nameof(RadioLocationCreateEntity)}".ToKebabCase());
         }
+
+        public static class Vessel
+        {
+            public static EffectName MachineApplyBehaviour => new EffectName($"{nameof(Vessel)}{nameof(MachineApplyBehaviour)}".ToKebabCase());
+            public static EffectName MachineRemoveBehaviour => new EffectName($"{nameof(Vessel)}{nameof(MachineRemoveBehaviour)}".ToKebabCase());
+        }
     }
 }

@@ -139,5 +139,11 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName RadioLocationBuff => new BehaviourName($"{nameof(Radar)}{nameof(RadioLocationBuff)}".ToKebabCase());
             public static BehaviourName RadioLocationFeatureBuff => new BehaviourName($"{nameof(Radar)}{nameof(RadioLocationFeatureBuff)}".ToKebabCase());
         }
+
+        public static class Vessel
+        {
+            public static BehaviourName MachineCounter => new BehaviourName($"{nameof(Vessel)}{nameof(MachineCounter)}".ToKebabCase());
+            public static BehaviourName MachineBuff => new BehaviourName($"{nameof(Vessel)}{nameof(MachineBuff)}".ToKebabCase());
+        }
     }
 }

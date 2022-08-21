@@ -1311,7 +1311,11 @@
           "CombatAttributes.Giant",
           "CombatAttributes.Mechanical"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-vessel-machine",
+          "ability-vessel-absorbent-field",
+          "ability-vessel-fortify"
+        ],
         "displayName": "Vessel",
         "description": ""
       },
@@ -2251,6 +2255,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Radio Location",
       "description": "Enemy units in 15 Attack Distance are shown as red dots in the fog of war."
+    },
+    {
+      "name": "ability-vessel-machine",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-vessel-machine-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Machine",
+      "description": "Can be operated by Engineers only (after it is built from Factory). The Machine is functional and can act only if maximum number of 3 Engineers are operating it."
     }
   ],
   "effects": [
@@ -3913,6 +3932,35 @@
       ],
       "behaviourOwner": "Location.Origin",
       "validators": []
+    },
+    {
+      "name": "effect-vessel-machine-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-vessel-machine-counter",
+        "behaviour-vessel-machine-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-vessel-machine-remove-behaviour",
+      "type": "Effect.RemoveBehaviour",
+      "behavioursToRemove": [
+        "behaviour-vessel-machine-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [
+        "Flag.FilterSelf",
+        "Flag.FilterUnit"
+      ],
+      "behaviourOwner": null,
+      "validators": []
     }
   ],
   "behaviours": [
@@ -5441,6 +5489,47 @@
       "displayName": "Radio Location Feature Buff",
       "description": "This red dot is able to detect enemy units in the fog of war.",
       "endsAt": "EndsAt.EndOfThisPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-vessel-machine-counter",
+      "type": "Behaviour.Counter",
+      "maxAmount": 3,
+      "triggerAmount": 3,
+      "triggerAtMultiples": false,
+      "selfRemoveAfterAmountReached": false,
+      "triggeredEffects": [
+        "effect-vessel-machine-remove-behaviour"
+      ],
+      "separateDurations": false,
+      "canResetDuration": false,
+      "displayName": "Machine Counter",
+      "description": "Needs 3 Engineers to operate this machine.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-vessel-machine-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationFullyDisabled"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Machine Buff",
+      "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
+      "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     }
