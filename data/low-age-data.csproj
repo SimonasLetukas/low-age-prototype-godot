@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>low_age_data</RootNamespace>
 	<Nullable>enable</Nullable>
+	<LangVersion>latestmajor</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

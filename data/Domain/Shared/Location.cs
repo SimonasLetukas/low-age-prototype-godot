@@ -13,32 +13,32 @@ namespace low_age_data.Domain.Shared
         /// <summary>
         /// Applies the same location that was set before in the chain
         /// </summary>
-        public static Location Inherited => new Location(Locations.Inherited);
+        public static Location Inherited => new(Locations.Inherited);
 
         /// <summary>
         /// Targets the current actor in the chain
         /// </summary>
-        public static Location Self => new Location(Locations.Self);
+        public static Location Self => new(Locations.Self);
 
         /// <summary>
         /// Targets single actor
         /// </summary>
-        public static Location Actor => new Location(Locations.Actor);
+        public static Location Actor => new(Locations.Actor);
 
         /// <summary>
         /// Targets point on the ground (tile)
         /// </summary>
-        public static Location Point => new Location(Locations.Point);
+        public static Location Point => new(Locations.Point);
 
         /// <summary>
         /// Targets the previous actor in the chain
         /// </summary>
-        public static Location Source => new Location(Locations.Source);
+        public static Location Source => new(Locations.Source);
 
         /// <summary>
         /// Targets origin - the first actor from which the chain started
         /// </summary>
-        public static Location Origin => new Location(Locations.Origin);
+        public static Location Origin => new(Locations.Origin);
 
         private Location(Locations @enum)
         {

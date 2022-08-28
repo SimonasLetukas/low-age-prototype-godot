@@ -2270,6 +2270,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Machine",
       "description": "Can be operated by Engineers only (after it is built from Factory). The Machine is functional and can act only if maximum number of 3 Engineers are operating it."
+    },
+    {
+      "name": "ability-vessel-absorbent-field",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": "effect-vessel-absorbent-field-search",
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Absorbent Field",
+      "description": "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, which is instead dealt to Vessel."
     }
   ],
   "effects": [
@@ -2304,7 +2319,7 @@
       "radius": 6,
       "searchFlags": [
         "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchAppliedOnAction",
+        "Flag.EffectSearchAppliedOnActorAction",
         "Flag.EffectSearchRemovedOnExit"
       ],
       "filterFlags": [
@@ -2568,6 +2583,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
       "filterFlags": [],
       "validators": []
     },
@@ -2592,6 +2608,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
       "filterFlags": [],
       "validators": [
         {
@@ -2741,7 +2758,7 @@
       "type": "Effect.Search",
       "radius": 0,
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnAction",
+        "Flag.EffectSearchAppliedOnEveryAction",
         "Flag.EffectSearchAppliedOnEnter"
       ],
       "filterFlags": [
@@ -2794,6 +2811,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
       "filterFlags": [],
       "validators": []
     },
@@ -2841,6 +2859,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
       "filterFlags": [],
       "validators": []
     },
@@ -2895,6 +2914,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
       "filterFlags": [],
       "validators": []
     },
@@ -2926,6 +2946,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
       "filterFlags": [],
       "validators": []
     },
@@ -2988,6 +3009,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
       "filterFlags": [],
       "validators": []
     },
@@ -3009,6 +3031,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Actor",
+      "ignoresArmor": false,
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterStructure",
@@ -3102,7 +3125,7 @@
       "radius": 1,
       "searchFlags": [
         "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchAppliedOnAction",
+        "Flag.EffectSearchAppliedOnEveryAction",
         "Flag.EffectSearchRemovedOnExit"
       ],
       "filterFlags": [
@@ -3190,6 +3213,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Self",
+      "ignoresArmor": false,
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -3268,6 +3292,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
       "filterFlags": [],
       "validators": []
     },
@@ -3640,6 +3665,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
       "filterFlags": [],
       "validators": []
     },
@@ -3711,6 +3737,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Actor",
+      "ignoresArmor": false,
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterStructure",
@@ -3823,6 +3850,7 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
       "filterFlags": [],
       "validators": []
     },
@@ -3960,6 +3988,83 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-vessel-absorbent-field-search",
+      "type": "Effect.Search",
+      "radius": 3,
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnEnter",
+        "Flag.EffectSearchRemovedOnExit"
+      ],
+      "filterFlags": [
+        "Flag.FilterEnemy"
+      ],
+      "effects": [
+        "effect-vessel-absorbent-field-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Circle",
+      "ignoreCenter": false,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-vessel-absorbent-field-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-vessel-absorbent-field-buff-melee"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterEnemy"
+      ],
+      "behaviourOwner": "Location.Origin",
+      "validators": []
+    },
+    {
+      "name": "effect-vessel-absorbent-field-damage-melee",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.CurrentMelee",
+      "amount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Origin",
+      "ignoresArmor": true,
+      "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-vessel-absorbent-field-damage-ranged",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.CurrentRanged",
+      "amount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Origin",
+      "ignoresArmor": true,
+      "filterFlags": [],
       "validators": []
     }
   ],
@@ -4619,14 +4724,14 @@
       "finalEffects": [],
       "canStack": false,
       "canResetDuration": true,
-      "alignment": "Alignment.Negative",
+      "alignment": "Alignment.Positive",
       "triggers": [],
       "destroyOnConditionsMet": false,
       "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Expert Formation Buff",
       "description": "Range Armour for this unit is increased by 2 because it is in formation with an adjacent Horrior.",
-      "endsAt": "EndsAt.EndOfThisAction",
+      "endsAt": "EndsAt.EndOfThisActionPhase",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -5532,6 +5637,84 @@
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-vessel-absorbent-field-buff-melee",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.AttackModification",
+          "attackType": "Attacks.Melee",
+          "attribute": "AttackAttribute.MaxAmount",
+          "modificationFlags": [],
+          "change": "Change.MultiplyMax",
+          "amount": 0.5
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityMeleeAttacks"
+          ],
+          "validators": []
+        }
+      ],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [
+        "effect-vessel-absorbent-field-damage-melee"
+      ],
+      "restoreChangesOnEnd": true,
+      "displayName": "Absorbent Field Buff Melee",
+      "description": "The melee damage this unit deals is reduced by 50%, but this amount is also dealt to a nearby Vessel.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": true,
+      "hasSameInstanceForAllOwners": true
+    },
+    {
+      "name": "behaviour-vessel-absorbent-field-buff-ranged",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.AttackModification",
+          "attackType": "Attacks.Ranged",
+          "attribute": "AttackAttribute.MaxAmount",
+          "modificationFlags": [],
+          "change": "Change.MultiplyMax",
+          "amount": 0.5
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityRangedAttacks"
+          ],
+          "validators": []
+        }
+      ],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [
+        "effect-vessel-absorbent-field-damage-ranged"
+      ],
+      "restoreChangesOnEnd": true,
+      "displayName": "Absorbent Field Buff Ranged",
+      "description": "The ranged damage this unit deals is reduced by 50%, but this amount is also dealt to a nearby Vessel.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": true,
+      "hasSameInstanceForAllOwners": true
     }
   ]
 }

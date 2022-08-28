@@ -7,8 +7,6 @@ using low_age_data.Domain.Shared.Durations;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Reflection.Metadata;
 
 namespace low_age_data.Collections
 {
@@ -19,1220 +17,1284 @@ namespace low_age_data.Collections
             return new List<Behaviour>
             {
                 new Buff(
-                    BehaviourName.Leader.AllForOneBuff,
-                    nameof(BehaviourName.Leader.AllForOneBuff).CamelCaseToWords(),
-                    "Revelators faction loses when this unit dies.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Leader.AllForOneBuff,
+                    displayName: nameof(BehaviourName.Leader.AllForOneBuff).CamelCaseToWords(),
+                    description: "Revelators faction loses when this unit dies.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Leader.AllForOnePlayerLoses
                     }),
 
                 new Buff(
-                    BehaviourName.Leader.MenacingPresenceBuff,
-                    nameof(BehaviourName.Leader.MenacingPresenceBuff).CamelCaseToWords(),
-                    "Melee and Range Damage for this unit is reduced by 2.",
-                    null,
-                    new List<Modification>
+                    name: BehaviourName.Leader.MenacingPresenceBuff,
+                    displayName: nameof(BehaviourName.Leader.MenacingPresenceBuff).CamelCaseToWords(),
+                    description: "Melee and Range Damage for this unit is reduced by 2.",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
                     {
                         new AttackModification(
-                            Change.SubtractMax,
-                            2,
-                            Attacks.Melee,
-                            AttackAttribute.MaxAmount),
+                            change: Change.SubtractMax,
+                            amount: 2,
+                            attackType: Attacks.Melee,
+                            attribute: AttackAttribute.MaxAmount),
                         new AttackModification(
-                            Change.SubtractMax,
-                            2,
-                            Attacks.Ranged,
-                            AttackAttribute.MaxAmount)
+                            change: Change.SubtractMax,
+                            amount: 2,
+                            attackType: Attacks.Ranged,
+                            attribute: AttackAttribute.MaxAmount)
                     },
-                    null,
-                    null,
-                    null,
-                    EndsAt.EndOf.This.Action,
-                    false,
-                    true,
-                    Alignment.Negative,
-                    null,
-                    false,
-                    null,
-                    true),
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.EndOf.This.Action,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Negative,
+                    triggers: null,
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
 
                 new Buff(
-                    BehaviourName.Leader.OneForAllObeliskBuff,
-                    nameof(BehaviourName.Leader.OneForAllObeliskBuff).CamelCaseToWords(),
-                    "This unit has recently been sapped for health.",
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Leader.OneForAllObeliskBuff,
+                    displayName: nameof(BehaviourName.Leader.OneForAllObeliskBuff).CamelCaseToWords(),
+                    description: "This unit has recently been sapped for health.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Leader.OneForAllSearch
                     },
-                    null,
-                    null,
-                    EndsAt.StartOf.Tenth.Planning,
-                    false,
-                    false,
-                    Alignment.Negative),
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.StartOf.Tenth.Planning,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Negative),
 
                 new Buff(
-                    BehaviourName.Leader.OneForAllHealBuff,
-                    nameof(BehaviourName.Leader.OneForAllHealBuff).CamelCaseToWords(),
-                    "Heals for 2 Health.",
-                    null,
-                    new List<Modification>
+                    name: BehaviourName.Leader.OneForAllHealBuff,
+                    displayName: nameof(BehaviourName.Leader.OneForAllHealBuff).CamelCaseToWords(),
+                    description: "Heals for 2 Health.",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
                     {
                         new StatModification(
-                            Change.AddCurrent,
-                            2,
-                            Stats.Health)
+                            change: Change.AddCurrent,
+                            amount: 2,
+                            stat: Stats.Health)
                     },
-                    null,
-                    null,
-                    null,
-                    EndsAt.Instant,
-                    false,
-                    false,
-                    Alignment.Positive),
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Instant,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive),
 
                 new Buff(
-                    BehaviourName.Slave.RepairStructureBuff,
-                    nameof(BehaviourName.Slave.RepairStructureBuff).CamelCaseToWords(),
-                    "This structure will be repaired by +1 Health at the start of the planning phase.",
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Slave.RepairStructureBuff,
+                    displayName: nameof(BehaviourName.Slave.RepairStructureBuff).CamelCaseToWords(),
+                    description: "This structure will be repaired by +1 Health at the start of the planning phase.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Slave.RepairApplyBehaviourSelf
                     },
-                    new List<Modification>
+                    finalModifications: new List<Modification>
                     {
                         new StatModification(
-                            Change.AddCurrent,
-                            1,
-                            Stats.Health)
+                            change: Change.AddCurrent,
+                            amount: 1,
+                            stat: Stats.Health)
                     },
-                    null,
-                    EndsAt.StartOf.Next.Planning,
-                    true,
-                    false,
-                    Alignment.Positive,
-                    new List<Trigger>
+                    finalEffects: null,
+                    endsAt: EndsAt.StartOf.Next.Planning,
+                    canStack: true,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.OriginIsInterrupted
                         })
                     },
-                    true),
+                    destroyOnConditionsMet: true),
 
                 new Wait(
-                    BehaviourName.Slave.RepairWait,
-                    nameof(BehaviourName.Slave.RepairWait).CamelCaseToWords(),
-                    "Currently repairing a structure.",
-                    EndsAt.StartOf.Next.Planning),
+                    name: BehaviourName.Slave.RepairWait,
+                    displayName: nameof(BehaviourName.Slave.RepairWait).CamelCaseToWords(),
+                    description: "Currently repairing a structure.",
+                    endsAt: EndsAt.StartOf.Next.Planning),
 
                 new Buff(
-                    BehaviourName.Slave.ManualLabourBuff,
-                    nameof(BehaviourName.Slave.ManualLabourBuff).CamelCaseToWords(),
-                    "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Slave.ManualLabourBuff,
+                    displayName: nameof(BehaviourName.Slave.ManualLabourBuff).CamelCaseToWords(),
+                    description: "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Slave.ManualLabourApplyBehaviourSelf
                     },
-                    null,
-                    new List<EffectName>
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Slave.ManualLabourModifyPlayer
                     },
-                    EndsAt.StartOf.Next.Planning,
-                    false,
-                    false,
-                    Alignment.Positive,
-                    new List<Trigger>
+                    endsAt: EndsAt.StartOf.Next.Planning,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.OriginIsDestroyed
                         })
                     },
-                    true),
+                    destroyOnConditionsMet: true),
 
                 new Wait(
-                    BehaviourName.Slave.ManualLabourWait,
-                    nameof(BehaviourName.Slave.ManualLabourWait).CamelCaseToWords(),
-                    "Currently working on a nearby Hut.",
-                    EndsAt.StartOf.Next.Planning),
+                    name: BehaviourName.Slave.ManualLabourWait,
+                    displayName: nameof(BehaviourName.Slave.ManualLabourWait).CamelCaseToWords(),
+                    description: "Currently working on a nearby Hut.",
+                    endsAt: EndsAt.StartOf.Next.Planning),
 
                 new ExtraAttack(
-                    BehaviourName.Quickdraw.DoubleshotExtraAttack,
-                    nameof(BehaviourName.Quickdraw.DoubleshotExtraAttack).CamelCaseToWords(),
-                    "Ranged attacks twice.",
-                    new List<Attacks>
+                    name: BehaviourName.Quickdraw.DoubleshotExtraAttack,
+                    displayName: nameof(BehaviourName.Quickdraw.DoubleshotExtraAttack).CamelCaseToWords(),
+                    description: "Ranged attacks twice.",
+                    attackTypes: new List<Attacks>
                     {
                         Attacks.Ranged
                     }),
 
                 new Buff(
-                    BehaviourName.Quickdraw.CrippleBuff,
-                    nameof(BehaviourName.Quickdraw.CrippleBuff).CamelCaseToWords(),
-                    "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing " +
-                    "from any sources until the end of its action.",
-                    new List<Flag>
+                    name: BehaviourName.Quickdraw.CrippleBuff,
+                    displayName: nameof(BehaviourName.Quickdraw.CrippleBuff).CamelCaseToWords(),
+                    description: "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing " +
+                                 "from any sources until the end of its action.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.CannotBeHealed
                     },
-                    new List<Modification>
+                    initialModifications: new List<Modification>
                     {
                         new StatModification(
-                            Change.MultiplyMax,
-                            0.6f,
-                            Stats.Movement)
+                            change: Change.MultiplyMax,
+                            amount: 0.6f,
+                            stat: Stats.Movement)
                     },
-                    null,
-                    null,
-                    null,
-                    EndsAt.EndOf.This.Action,
-                    false,
-                    true,
-                    Alignment.Negative,
-                    null,
-                    false,
-                    null,
-                    true),
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.EndOf.This.Action,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Negative,
+                    triggers: null,
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
 
                 new Buff(
-                    BehaviourName.Gorger.FanaticSuicideBuff,
-                    nameof(BehaviourName.Gorger.FanaticSuicideBuff).CamelCaseToWords(),
-                    "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage " +
-                    "to all friendly and enemy units in 1 Distance.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Gorger.FanaticSuicideBuff,
+                    displayName: nameof(BehaviourName.Gorger.FanaticSuicideBuff).CamelCaseToWords(),
+                    description: "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage " +
+                                 "to all friendly and enemy units in 1 Distance.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Gorger.FanaticSuicideSearch
                     }),
 
                 new Buff(
-                    BehaviourName.Camou.SilentAssassinBuff,
-                    nameof(BehaviourName.Camou.SilentAssassinBuff).CamelCaseToWords(),
-                    "This unit is silenced (use of any abilities is disabled).",
-                    new List<Flag>
+                    name: BehaviourName.Camou.SilentAssassinBuff,
+                    displayName: nameof(BehaviourName.Camou.SilentAssassinBuff).CamelCaseToWords(),
+                    description: "This unit is silenced (use of any abilities is disabled).",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.AbilitiesDisabled
                     },
-                    null,
-                    null,
-                    null,
-                    null,
-                    EndsAt.EndOf.Second.Action,
-                    false,
-                    true,
-                    Alignment.Negative,
-                    null,
-                    false,
-                    null,
-                    true),
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.EndOf.Second.Action,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Negative,
+                    triggers: null,
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
 
                 new Wait(
-                    BehaviourName.Camou.ClimbWait,
-                    nameof(BehaviourName.Camou.ClimbWait).CamelCaseToWords(),
-                    "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
-                    EndsAt.EndOf.This.ActionPhase),
+                    name: BehaviourName.Camou.ClimbWait,
+                    displayName: nameof(BehaviourName.Camou.ClimbWait).CamelCaseToWords(),
+                    description: "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
+                    endsAt: EndsAt.EndOf.This.ActionPhase),
 
                 new Buff(
-                    BehaviourName.Camou.ClimbBuff,
-                    nameof(BehaviourName.Camou.ClimbBuff).CamelCaseToWords(),
-                    "Camou can move down from high ground at the additional cost of 1 Movement.",
-                    new List<Flag>
+                    name: BehaviourName.Camou.ClimbBuff,
+                    displayName: nameof(BehaviourName.Camou.ClimbBuff).CamelCaseToWords(),
+                    description: "Camou can move down from high ground at the additional cost of 1 Movement.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.ClimbsDown
                     },
-                    null,
-                    null,
-                    null,
-                    null,
-                    EndsAt.Death,
-                    false,
-                    false,
-                    Alignment.Positive),
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive),
 
                 new Wait(
-                    BehaviourName.Shaman.WondrousGooFeatureWait,
-                    nameof(BehaviourName.Shaman.WondrousGooFeatureWait).CamelCaseToWords(),
-                    "Effect area will expand at the end of this action phase.",
-                    EndsAt.EndOf.This.ActionPhase,
-                    BehaviourName.Shaman.WondrousGooFeatureBuff),
+                    name: BehaviourName.Shaman.WondrousGooFeatureWait,
+                    displayName: nameof(BehaviourName.Shaman.WondrousGooFeatureWait).CamelCaseToWords(),
+                    description: "Effect area will expand at the end of this action phase.",
+                    endsAt: EndsAt.EndOf.This.ActionPhase,
+                    nextBehaviour: BehaviourName.Shaman.WondrousGooFeatureBuff),
 
                 new Buff(
-                    BehaviourName.Shaman.WondrousGooFeatureBuff,
-                    nameof(BehaviourName.Shaman.WondrousGooFeatureBuff).CamelCaseToWords(),
-                    "Effect area will disappear at the end of this action phase.",
-                    null,
-                    new List<Modification>
+                    name: BehaviourName.Shaman.WondrousGooFeatureBuff,
+                    displayName: nameof(BehaviourName.Shaman.WondrousGooFeatureBuff).CamelCaseToWords(),
+                    description: "Effect area will disappear at the end of this action phase.",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
                     {
                         new SizeModification(
-                            Change.SetMax,
-                            3)
+                            change: Change.SetMax,
+                            amount: 3)
                     },
-                    null,
-                    null,
-                    new List<EffectName>
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Shaman.WondrousGooDestroy
                     },
-                    EndsAt.EndOf.This.ActionPhase),
+                    endsAt: EndsAt.EndOf.This.ActionPhase),
 
                 new Buff(
-                    BehaviourName.Shaman.WondrousGooBuff,
-                    nameof(BehaviourName.Shaman.WondrousGooBuff).CamelCaseToWords(),
-                    "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) " +
-                    "and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
-                    null,
-                    new List<Modification>
+                    name: BehaviourName.Shaman.WondrousGooBuff,
+                    displayName: nameof(BehaviourName.Shaman.WondrousGooBuff).CamelCaseToWords(),
+                    description: "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) " +
+                                 "and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
                     {
                         new AttackModification(
-                            Change.SubtractMax,
-                            3,
-                            Attacks.Melee,
-                            AttackAttribute.MaxDistance),
+                            change: Change.SubtractMax,
+                            amount: 3,
+                            attackType: Attacks.Melee,
+                            attribute: AttackAttribute.MaxDistance),
                         new AttackModification(
-                            Change.SubtractMax,
-                            3,
-                            Attacks.Ranged,
-                            AttackAttribute.MaxDistance)
+                            change: Change.SubtractMax,
+                            amount: 3,
+                            attackType: Attacks.Ranged,
+                            attribute: AttackAttribute.MaxDistance)
                     },
-                    null,
-                    null,
-                    new List<EffectName>
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Shaman.WondrousGooDamage
                     },
-                    EndsAt.StartOf.Next.Action,
-                    false,
-                    false,
-                    Alignment.Negative,
-                    null,
-                    false,
-                    null,
-                    true),
+                    endsAt: EndsAt.StartOf.Next.Action,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Negative,
+                    triggers: null,
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
 
                 new Tether(
-                    BehaviourName.Pyre.CargoTether,
-                    nameof(BehaviourName.Pyre.CargoTether).CamelCaseToWords(),
-                    "The cargo follows Pyre.",
-                    Location.Origin,
-                    true,
-                    true,
-                    1,
-                    true),
+                    name: BehaviourName.Pyre.CargoTether,
+                    displayName: nameof(BehaviourName.Pyre.CargoTether).CamelCaseToWords(),
+                    description: "The cargo follows Pyre.",
+                    source: Location.Origin,
+                    extendsSelection: true,
+                    sharedDamage: true,
+                    maximumLeashRange: 1,
+                    calculatedForSourcePathfinding: true),
 
                 new Buff(
-                    BehaviourName.Pyre.CargoWallOfFlamesBuff,
-                    nameof(BehaviourName.Pyre.CargoWallOfFlamesBuff).CamelCaseToWords(),
-                    "The cargo leaves a path of flames when moved, which stay until the start of the next " +
-                    "Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives " +
-                    "5 Melee Damage.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    false,
-                    false,
-                    null,
-                    new List<Trigger>
+                    name: BehaviourName.Pyre.CargoWallOfFlamesBuff,
+                    displayName: nameof(BehaviourName.Pyre.CargoWallOfFlamesBuff).CamelCaseToWords(),
+                    description: "The cargo leaves a path of flames when moved, which stay until the start of the next " +
+                                 "Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives " +
+                                 "5 Melee Damage.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: null,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: null,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.EntityIsAboutToMove
                         })
                     },
-                    false,
-                    new List<EffectName>
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: new List<EffectName>
                     {
                         EffectName.Pyre.WallOfFlamesCreateEntity
                     }),
 
                 new Buff(
-                    BehaviourName.Pyre.WallOfFlamesBuff,
-                    nameof(BehaviourName.Pyre.WallOfFlamesBuff).CamelCaseToWords(),
-                    "",
-                    null,
-                    null,
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Pyre.WallOfFlamesBuff,
+                    displayName: nameof(BehaviourName.Pyre.WallOfFlamesBuff).CamelCaseToWords(),
+                    description: "",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Pyre.WallOfFlamesDestroy
                     },
-                    EndsAt.StartOf.Next.Action,
-                    false,
-                    false,
-                    Alignment.Negative,
-                    new List<Trigger>
+                    endsAt: EndsAt.StartOf.Next.Action,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.OriginIsDestroyed
                         })
                     },
-                    true,
-                    new List<EffectName>
+                    destroyOnConditionsMet: true,
+                    conditionalEffects: new List<EffectName>
                     {
                         EffectName.Pyre.WallOfFlamesDestroy
                     }),
 
                 new Buff(
-                    BehaviourName.Pyre.PhantomMenaceBuff,
-                    nameof(BehaviourName.Pyre.PhantomMenaceBuff).CamelCaseToWords(),
-                    "Pyre can move through enemy units (but not buildings).",
-                    new List<Flag>
+                    name: BehaviourName.Pyre.PhantomMenaceBuff,
+                    displayName: nameof(BehaviourName.Pyre.PhantomMenaceBuff).CamelCaseToWords(),
+                    description: "Pyre can move through enemy units (but not buildings).",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.MovesThroughEnemyUnits
                     }),
 
                 new Buff(
-                    BehaviourName.Roach.DegradingCarapaceBuff,
-                    nameof(BehaviourName.Roach.DegradingCarapaceBuff).CamelCaseToWords(),
-                    "Increases periodic damage by 1 at the start of each action.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Roach.DegradingCarapaceBuff,
+                    displayName: nameof(BehaviourName.Roach.DegradingCarapaceBuff).CamelCaseToWords(),
+                    description: "Increases periodic damage by 1 at the start of each action.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Roach.DegradingCarapacePeriodicApplyBehaviour,
                         EffectName.Roach.DegradingCarapaceApplyBehaviour
                     },
-                    EndsAt.StartOf.Next.Action,
-                    true,
-                    false,
-                    Alignment.Negative),
+                    endsAt: EndsAt.StartOf.Next.Action,
+                    canStack: true,
+                    canResetDuration: false,
+                    alignment: Alignment.Negative),
 
                 new Buff(
-                    BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff,
-                    nameof(BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff).CamelCaseToWords(),
-                    "This unit will continue to receive 1 damage at every start of its action.",
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff,
+                    displayName: nameof(BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff).CamelCaseToWords(),
+                    description: "This unit will continue to receive 1 damage at every start of its action.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Roach.DegradingCarapaceSelfDamage
                     },
-                    null,
-                    new List<EffectName>
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Roach.DegradingCarapacePeriodicApplyBehaviour
                     },
-                    EndsAt.StartOf.Next.Action,
-                    true,
-                    false,
-                    Alignment.Negative),
+                    endsAt: EndsAt.StartOf.Next.Action,
+                    canStack: true,
+                    canResetDuration: false,
+                    alignment: Alignment.Negative),
 
                 new Tether(
-                    BehaviourName.Parasite.ParalysingGraspTether,
-                    nameof(BehaviourName.Parasite.ParalysingGraspTether).CamelCaseToWords(),
-                    "This unit is possessed by Parasite. On Parasite turn, it moves both units using the movement " +
-                    "speed that the possessed unit has. Any damage received is shared between both.",
-                    Location.Inherited,
-                    false,
-                    true,
-                    0,
-                    true),
+                    name: BehaviourName.Parasite.ParalysingGraspTether,
+                    displayName: nameof(BehaviourName.Parasite.ParalysingGraspTether).CamelCaseToWords(),
+                    description: "This unit is possessed by Parasite. On Parasite turn, it moves both units using the movement " +
+                                 "speed that the possessed unit has. Any damage received is shared between both.",
+                    source: Location.Inherited,
+                    extendsSelection: false,
+                    sharedDamage: true,
+                    maximumLeashRange: 0,
+                    calculatedForSourcePathfinding: true),
 
                 new Buff(
-                    BehaviourName.Parasite.ParalysingGraspBuff,
-                    nameof(BehaviourName.Parasite.ParalysingGraspBuff).CamelCaseToWords(),
-                    "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it " +
-                    "must do unless there are no legal targets.",
-                    new List<Flag>
+                    name: BehaviourName.Parasite.ParalysingGraspBuff,
+                    displayName: nameof(BehaviourName.Parasite.ParalysingGraspBuff).CamelCaseToWords(),
+                    description: "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it " +
+                                 "must do unless there are no legal targets.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.CanAttackAnyTeam,
                         Flag.Modification.MovementDisabled,
                         Flag.Modification.MustExecuteAttack
                     },
-                    null,
-                    new List<EffectName>
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Parasite.ParalysingGraspApplySelfBehaviour
                     },
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    Alignment.Negative,
-                    new List<Trigger>
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: null,
+                    canStack: null,
+                    canResetDuration: null,
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.OriginIsDestroyed
                         })
                     },
-                    true,
-                    null,
-                    true),
+                    destroyOnConditionsMet: true,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
 
                 new Buff(
-                    BehaviourName.Parasite.ParalysingGraspSelfBuff,
-                    nameof(BehaviourName.Parasite.ParalysingGraspSelfBuff).CamelCaseToWords(),
-                    "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both " +
-                    "units on Parasite's turn.",
-                    new List<Flag>
+                    name: BehaviourName.Parasite.ParalysingGraspSelfBuff,
+                    displayName: nameof(BehaviourName.Parasite.ParalysingGraspSelfBuff).CamelCaseToWords(),
+                    description: "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both " +
+                                 "units on Parasite's turn.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.AbilitiesDisabled,
                         Flag.Modification.CannotAttack
                     },
-                    new List<Modification>
+                    initialModifications: new List<Modification>
                     {
                         new StatCopyModification(
-                            Change.SetMax,
-                            Location.Source,
-                            0,
-                            Stats.Movement)
+                            change: Change.SetMax,
+                            copyFrom: Location.Source,
+                            additionalAmount: 0,
+                            stat: Stats.Movement)
                     },
-                    null,
-                    null,
-                    null,
-                    null,
-                    false,
-                    false,
-                    Alignment.Positive,
-                    new List<Trigger>
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: null,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.SourceIsDestroyed
                         })
                     },
-                    true,
-                    null,
-                    true),
+                    destroyOnConditionsMet: true,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
 
                 new Buff(
-                    BehaviourName.Horrior.ExpertFormationBuff,
-                    nameof(BehaviourName.Horrior.ExpertFormationBuff).CamelCaseToWords(),
-                    "Range Armour for this unit is increased by 2 because it is in formation with an adjacent Horrior.",
-                    null,
-                    new List<Modification>
+                    name: BehaviourName.Horrior.ExpertFormationBuff,
+                    displayName: nameof(BehaviourName.Horrior.ExpertFormationBuff).CamelCaseToWords(),
+                    description: "Range Armour for this unit is increased by 2 because it is in formation with an adjacent Horrior.",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
                     {
                         new StatModification(
-                            Change.AddMax,
-                            2,
-                            Stats.RangedArmour)
+                            change: Change.AddMax,
+                            amount: 2,
+                            stat: Stats.RangedArmour)
                     },
-                    null,
-                    null,
-                    null,
-                    EndsAt.EndOf.This.Action,
-                    false,
-                    true,
-                    Alignment.Negative,
-                    null,
-                    false,
-                    null,
-                    true),
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.EndOf.This.ActionPhase,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Positive,
+                    triggers: null,
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
 
                 new Wait(
-                    BehaviourName.Horrior.MountWait,
-                    nameof(BehaviourName.Horrior.MountWait).CamelCaseToWords(),
-                    "This unit is mounting up to transform into Surfer.",
-                    EndsAt.StartOf.Fourth.Planning,
-                    BehaviourName.Horrior.MountBuff),
+                    name: BehaviourName.Horrior.MountWait,
+                    displayName: nameof(BehaviourName.Horrior.MountWait).CamelCaseToWords(),
+                    description: "This unit is mounting up to transform into Surfer.",
+                    endsAt: EndsAt.StartOf.Fourth.Planning,
+                    nextBehaviour: BehaviourName.Horrior.MountBuff),
 
                 new Buff(
-                    BehaviourName.Horrior.MountBuff,
-                    nameof(BehaviourName.Horrior.MountBuff).CamelCaseToWords(),
-                    "",
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Horrior.MountBuff,
+                    displayName: nameof(BehaviourName.Horrior.MountBuff).CamelCaseToWords(),
+                    description: "",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Horrior.MountCreateEntity
                     },
-                    null,
-                    new List<EffectName>
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Horrior.MountDestroy
                     },
-                    EndsAt.Instant),
+                    endsAt: EndsAt.Instant),
 
                 new Buff(
-                    BehaviourName.Marksman.CriticalMarkBuff,
-                    nameof(BehaviourName.Marksman.CriticalMarkBuff).CamelCaseToWords(),
-                    "Marksman has marked this target until the end of the next action phase. The mark " +
-                    "is consumed dealing 5 Melee Damage, when an ally of Marksman attacks this unit.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    EndsAt.EndOf.Next.ActionPhase,
-                    false,
-                    true,
-                    Alignment.Negative,
-                    new List<Trigger>
+                    name: BehaviourName.Marksman.CriticalMarkBuff,
+                    displayName: nameof(BehaviourName.Marksman.CriticalMarkBuff).CamelCaseToWords(),
+                    description: "Marksman has marked this target until the end of the next action phase. The mark " +
+                                 "is consumed dealing 5 Melee Damage, when an ally of Marksman attacks this unit.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.EndOf.Next.ActionPhase,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.EntityIsAttacked
-                        }, new List<Validator>
+                        }, validators: new List<Validator>
                         {
-                            new Validator(
-                                new List<Condition>
+                            new(
+                                conditions: new List<Condition>
                                 {
-                                    new Condition(Flag.Condition.TargetIsDifferentTypeThanOrigin)
+                                    new(conditionFlag: Flag.Condition.TargetIsDifferentTypeThanOrigin)
                                 },
-                                new List<Flag>
+                                filterFlags: new List<Flag>
                                 {
                                     Flag.Filter.Enemy,
                                     Flag.Filter.Unit
                                 })
                         })
                     },
-                    true,
-                    new List<EffectName>
+                    destroyOnConditionsMet: true,
+                    conditionalEffects: new List<EffectName>
                     {
                         EffectName.Marksman.CriticalMarkDamage
                     },
-                    false),
+                    restoreChangesOnEnd: false),
                 
                 new Buff(
-                    BehaviourName.Surfer.DismountBuff,
-                    nameof(BehaviourName.Surfer.DismountBuff).CamelCaseToWords(),
-                    "Upon death, reemerges as Horrior.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Surfer.DismountBuff,
+                    displayName: nameof(BehaviourName.Surfer.DismountBuff).CamelCaseToWords(),
+                    description: "Upon death, reemerges as Horrior.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Surfer.DismountCreateEntity
                     },
-                    EndsAt.Death,
-                    false,
-                    false,
-                    Alignment.Positive),
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive),
                 
                 new Ammunition(
-                    BehaviourName.Mortar.DeadlyAmmunitionAmmunition,
-                    nameof(BehaviourName.Mortar.DeadlyAmmunitionAmmunition).CamelCaseToWords(),
-                    "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out " +
-                    "of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
-                    2, 
-                    new List<Attacks>
+                    name: BehaviourName.Mortar.DeadlyAmmunitionAmmunition,
+                    displayName: nameof(BehaviourName.Mortar.DeadlyAmmunitionAmmunition).CamelCaseToWords(),
+                    description: "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out " +
+                                 "of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
+                    maxAmmunitionAmount: 2, 
+                    ammunitionAttackTypes: new List<Attacks>
                     {
                         Attacks.Ranged
                     },
-                    1,
-                    new List<EffectName>
+                    ammunitionAmountLostOnHit: 1,
+                    onHitEffects: new List<EffectName>
                     {
                         EffectName.Mortar.DeadlyAmmunitionSearch
                     },
-                    2,
-                    false),
+                    ammunitionRecoveredOnReload: 2,
+                    applyOriginalAttackToTarget: false),
                 
                 new Wait(
-                    BehaviourName.Mortar.ReloadWait,
-                    nameof(BehaviourName.Mortar.ReloadWait).CamelCaseToWords(),
-                    "Mortar will reload its ammunition at the end of this action.",
-                    EndsAt.EndOf.This.Action,
-                    BehaviourName.Mortar.ReloadBuff),
+                    name: BehaviourName.Mortar.ReloadWait,
+                    displayName: nameof(BehaviourName.Mortar.ReloadWait).CamelCaseToWords(),
+                    description: "Mortar will reload its ammunition at the end of this action.",
+                    endsAt: EndsAt.EndOf.This.Action,
+                    nextBehaviour: BehaviourName.Mortar.ReloadBuff),
                 
                 new Buff(
-                    BehaviourName.Mortar.ReloadBuff,
-                    nameof(BehaviourName.Mortar.ReloadBuff).CamelCaseToWords(),
-                    "",
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Mortar.ReloadBuff,
+                    displayName: nameof(BehaviourName.Mortar.ReloadBuff).CamelCaseToWords(),
+                    description: "",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Mortar.ReloadReload
                     },
-                    null,
-                    null,
-                    EndsAt.Instant),
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Instant),
                 
                 new Buff(
-                    BehaviourName.Mortar.PiercingBlastBuff,
-                    nameof(BehaviourName.Mortar.PiercingBlastBuff).CamelCaseToWords(),
-                    "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
-                    null,
-                    new List<Modification>
+                    name: BehaviourName.Mortar.PiercingBlastBuff,
+                    displayName: nameof(BehaviourName.Mortar.PiercingBlastBuff).CamelCaseToWords(),
+                    description: "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
                     {
                         new AttackModification(
-                            Attacks.Ranged, 
-                            new List<Flag>
+                            attackType: Attacks.Ranged, 
+                            modificationFlags: new List<Flag>
                             {
                                 Flag.Modification.IgnoreArmour
                             })
                     },
-                    null,
-                    null,
-                    null,
-                    EndsAt.Death,
-                    null,
-                    null,
-                    Alignment.Positive),
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Death,
+                    canStack: null,
+                    canResetDuration: null,
+                    alignment: Alignment.Positive),
                 
                 new Buff(
-                    BehaviourName.Hawk.TacticalGogglesBuff,
-                    nameof(BehaviourName.Hawk.TacticalGogglesBuff).CamelCaseToWords(),
-                    "Gains +3 Vision range.",
-                    null,
-                    new List<Modification>
+                    name: BehaviourName.Hawk.TacticalGogglesBuff,
+                    displayName: nameof(BehaviourName.Hawk.TacticalGogglesBuff).CamelCaseToWords(),
+                    description: "Gains +3 Vision range.",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
                     {
-                        new StatModification(Change.AddMax, 3, Stats.Vision)
+                        new StatModification(change: Change.AddMax, amount: 3, stat: Stats.Vision)
                     },
-                    null,
-                    null,
-                    null,
-                    EndsAt.Death,
-                    false,
-                    null,
-                    Alignment.Positive),
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: null,
+                    alignment: Alignment.Positive),
                 
                 new Buff(
-                    BehaviourName.Hawk.LeadershipBuff,
-                    nameof(BehaviourName.Hawk.LeadershipBuff).CamelCaseToWords(),
-                    "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of " +
-                    "the next action or if Hawk is not adjacent anymore.",
-                    null,
-                    new List<Modification>
+                    name: BehaviourName.Hawk.LeadershipBuff,
+                    displayName: nameof(BehaviourName.Hawk.LeadershipBuff).CamelCaseToWords(),
+                    description: "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of " +
+                                 "the next action or if Hawk is not adjacent anymore.",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
                     {
                         new AttackModification(
-                            Change.AddMax, 
-                            1, 
-                            Attacks.Ranged, 
-                            AttackAttribute.MaxDistance)
+                            change: Change.AddMax, 
+                            amount: 1, 
+                            attackType: Attacks.Ranged, 
+                            attribute: AttackAttribute.MaxDistance)
                     },
-                    null,
-                    null,
-                    null,
-                    EndsAt.EndOf.This.Action,
-                    false,
-                    null,
-                    Alignment.Positive,
-                    new List<Trigger>
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.EndOf.This.Action,
+                    canStack: false,
+                    canResetDuration: null,
+                    alignment: Alignment.Positive,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.SourceIsNotAdjacent
                         })
                     },
-                    true,
-                    null,
-                    true),
+                    destroyOnConditionsMet: true,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
                 
                 new Buff(
-                    BehaviourName.Hawk.HealthKitBuff,
-                    nameof(BehaviourName.Hawk.HealthKitBuff).CamelCaseToWords(),
-                    "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Hawk.HealthKitBuff,
+                    displayName: nameof(BehaviourName.Hawk.HealthKitBuff).CamelCaseToWords(),
+                    description: "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Hawk.HealthKitSearch,
                         EffectName.Hawk.HealthKitApplyBehaviour // Reapply the same buff to achieve periodic effect
                     },
-                    EndsAt.StartOf.Next.Planning,
-                    true, // Only needed because final effects happen right before this behaviour is destroyed
-                    null,
-                    Alignment.Positive),
+                    endsAt: EndsAt.StartOf.Next.Planning,
+                    canStack: true, // Only needed because final effects happen right before this behaviour is destroyed
+                    canResetDuration: null,
+                    alignment: Alignment.Positive),
                 
                 new Buff(
-                    BehaviourName.Hawk.HealthKitHealBuff,
-                    nameof(BehaviourName.Hawk.HealthKitHealBuff).CamelCaseToWords(),
-                    "Heals for 1 Health.",
-                    null,
-                    new List<Modification>
+                    name: BehaviourName.Hawk.HealthKitHealBuff,
+                    displayName: nameof(BehaviourName.Hawk.HealthKitHealBuff).CamelCaseToWords(),
+                    description: "Heals for 1 Health.",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
                     {
                         new StatModification(
-                            Change.AddCurrent,
-                            1,
-                            Stats.Health)
+                            change: Change.AddCurrent,
+                            amount: 1,
+                            stat: Stats.Health)
                     },
-                    null,
-                    null,
-                    null,
-                    EndsAt.Instant,
-                    false,
-                    false,
-                    Alignment.Positive),
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Instant,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive),
                 
                 new Buildable(
-                    BehaviourName.Cannon.AssemblingBuildable,
-                    nameof(BehaviourName.Cannon.AssemblingBuildable).CamelCaseToWords(),
-                    "This machine can only be placed on the low ground and can be assembled by a maximum of " +
-                    "3 Engineers at once.",
-                    new List<Validator>
+                    name: BehaviourName.Cannon.AssemblingBuildable,
+                    displayName: nameof(BehaviourName.Cannon.AssemblingBuildable).CamelCaseToWords(),
+                    description: "This machine can only be placed on the low ground and can be assembled by a maximum of " +
+                                 "3 Engineers at once.",
+                    placementValidators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
                         })
                     },
-                    3),
+                    maximumHelpers: 3),
                 
                 new Buildable(
-                    BehaviourName.Ballista.AssemblingBuildable,
-                    nameof(BehaviourName.Ballista.AssemblingBuildable).CamelCaseToWords(),
-                    "This machine can only be placed on a Watchtower and can be assembled by a maximum of " +
-                    "1 Engineer at once.",
-                    new List<Validator>
+                    name: BehaviourName.Ballista.AssemblingBuildable,
+                    displayName: nameof(BehaviourName.Ballista.AssemblingBuildable).CamelCaseToWords(),
+                    description: "This machine can only be placed on a Watchtower and can be assembled by a maximum of " +
+                                 "1 Engineer at once.",
+                    placementValidators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.BehaviourExists) // TODO add when the Watchtower structure has
+                            new(conditionFlag: Flag.Condition.BehaviourExists) // TODO add when the Watchtower structure has
                                                                           // the appropriate behaviour created
                         })
                     },
-                    1),
+                    maximumHelpers: 1),
                 
                 new Buildable(
-                    BehaviourName.Radar.AssemblingBuildable,
-                    nameof(BehaviourName.Radar.AssemblingBuildable).CamelCaseToWords(),
-                    "This machine can only be placed on the low ground and can be assembled by a maximum of " +
-                    "1 Engineer at once.",
-                    new List<Validator>
+                    name: BehaviourName.Radar.AssemblingBuildable,
+                    displayName: nameof(BehaviourName.Radar.AssemblingBuildable).CamelCaseToWords(),
+                    description: "This machine can only be placed on the low ground and can be assembled by a maximum of " +
+                                 "1 Engineer at once.",
+                    placementValidators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
                         })
                     },
-                    1),
+                    maximumHelpers: 1),
                 
                 new Buff(
-                    BehaviourName.Engineer.OperateBuff,
-                    nameof(BehaviourName.Engineer.OperateBuff).CamelCaseToWords(),
-                    "",
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Engineer.OperateBuff,
+                    displayName: nameof(BehaviourName.Engineer.OperateBuff).CamelCaseToWords(),
+                    description: "",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Engineer.OperateModifyCounter
                     },
-                    null,
-                    new List<EffectName>
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Engineer.OperateDestroy
                     },
-                    EndsAt.Instant),
+                    endsAt: EndsAt.Instant),
                 
                 new Buff(
-                    BehaviourName.Engineer.RepairStructureOrMachineBuff,
-                    nameof(BehaviourName.Engineer.RepairStructureOrMachineBuff).CamelCaseToWords(),
-                    "This structure or machine will be repaired by +2 Health at the start of the planning phase.",
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Engineer.RepairStructureOrMachineBuff,
+                    displayName: nameof(BehaviourName.Engineer.RepairStructureOrMachineBuff).CamelCaseToWords(),
+                    description: "This structure or machine will be repaired by +2 Health at the start of the planning phase.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Engineer.RepairApplyBehaviourSelf
                     },
-                    new List<Modification>
+                    finalModifications: new List<Modification>
                     {
                         new StatModification(
-                            Change.AddCurrent,
-                            1,
-                            Stats.Health)
+                            change: Change.AddCurrent,
+                            amount: 1,
+                            stat: Stats.Health)
                     },
-                    null,
-                    EndsAt.StartOf.Next.Planning,
-                    true,
-                    false,
-                    Alignment.Positive,
-                    new List<Trigger>
+                    finalEffects: null,
+                    endsAt: EndsAt.StartOf.Next.Planning,
+                    canStack: true,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.OriginIsInterrupted
                         })
                     },
-                    true),
+                    destroyOnConditionsMet: true),
                 
                 new Buff(
-                    BehaviourName.Engineer.RepairHorriorBuff,
-                    nameof(BehaviourName.Engineer.RepairHorriorBuff).CamelCaseToWords(),
-                    "This Horrior will have their Mount duration reduced by one turn at the start of the " +
-                    "planning phase.",
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Engineer.RepairHorriorBuff,
+                    displayName: nameof(BehaviourName.Engineer.RepairHorriorBuff).CamelCaseToWords(),
+                    description: "This Horrior will have their Mount duration reduced by one turn at the start of the " +
+                                 "planning phase.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Engineer.RepairApplyBehaviourSelf
                     },
-                    new List<Modification>
+                    finalModifications: new List<Modification>
                     {
                         new DurationModification(
-                            Change.SubtractCurrent, 
-                            1f,
-                            BehaviourName.Horrior.MountWait)
+                            change: Change.SubtractCurrent, 
+                            amount: 1f,
+                            behaviourToModify: BehaviourName.Horrior.MountWait)
                     },
-                    null,
-                    EndsAt.StartOf.Next.Planning,
-                    true,
-                    false,
-                    Alignment.Positive,
-                    new List<Trigger>
+                    finalEffects: null,
+                    endsAt: EndsAt.StartOf.Next.Planning,
+                    canStack: true,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.OriginIsInterrupted
                         })
                     },
-                    true),
+                    destroyOnConditionsMet: true),
 
                 new Wait(
-                    BehaviourName.Engineer.RepairWait,
-                    nameof(BehaviourName.Engineer.RepairWait).CamelCaseToWords(),
-                    "Currently repairing.",
-                    EndsAt.StartOf.Next.Planning),
+                    name: BehaviourName.Engineer.RepairWait,
+                    displayName: nameof(BehaviourName.Engineer.RepairWait).CamelCaseToWords(),
+                    description: "Currently repairing.",
+                    endsAt: EndsAt.StartOf.Next.Planning),
                 
                 new Counter(
-                    BehaviourName.Cannon.MachineCounter,
-                    nameof(BehaviourName.Cannon.MachineCounter).CamelCaseToWords(),
-                    "Needs 3 Engineers to operate this machine.",
-                    3,
-                    3,
-                    new List<EffectName>
+                    name: BehaviourName.Cannon.MachineCounter,
+                    displayName: nameof(BehaviourName.Cannon.MachineCounter).CamelCaseToWords(),
+                    description: "Needs 3 Engineers to operate this machine.",
+                    maxAmount: 3,
+                    triggerAmount: 3,
+                    triggeredEffects: new List<EffectName>
                     {
                         EffectName.Cannon.MachineRemoveBehaviour
                     }),
                 
                 new Buff(
-                    BehaviourName.Cannon.MachineBuff,
-                    nameof(BehaviourName.Cannon.MachineBuff).CamelCaseToWords(),
-                    "This machine is disabled until it is fully operated by the required number of Engineers.",
-                    new List<Flag>
+                    name: BehaviourName.Cannon.MachineBuff,
+                    displayName: nameof(BehaviourName.Cannon.MachineBuff).CamelCaseToWords(),
+                    description: "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.FullyDisabled
                     },
-                    null,
-                    null,
-                    null,
-                    null,
-                    EndsAt.Death,
-                    false,
-                    null,
-                    Alignment.Negative,
-                    null,
-                    false,
-                    null,
-                    true),
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: null,
+                    alignment: Alignment.Negative,
+                    triggers: null,
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
                 
                 new Buff(
-                    BehaviourName.Cannon.HeatUpDangerZoneBuff,
-                    nameof(BehaviourName.Cannon.HeatUpDangerZoneBuff).CamelCaseToWords(),
-                    "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's " +
-                    "owner has vision of this tile.",
-                    new List<Flag>
+                    name: BehaviourName.Cannon.HeatUpDangerZoneBuff,
+                    displayName: nameof(BehaviourName.Cannon.HeatUpDangerZoneBuff).CamelCaseToWords(),
+                    description: "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's " +
+                                 "owner has vision of this tile.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.ProvidesVision
                     },
-                    new List<Modification>
+                    initialModifications: new List<Modification>
                     {
-                        new StatModification(Change.SetCurrent, 1, Stats.Vision)
+                        new StatModification(change: Change.SetCurrent, amount: 1, stat: Stats.Vision)
                     },
-                    new List<EffectName>
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Cannon.HeatUpApplyWaitBehaviour
                     },
-                    null,
-                    new List<EffectName>
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Cannon.HeatUpSearch,
                         EffectName.Cannon.HeatUpDestroy
                     },
-                    EndsAt.EndOf.Next.Action,
-                    false,
-                    false,
-                    Alignment.Positive,
-                    new List<Trigger>
+                    endsAt: EndsAt.EndOf.Next.Action,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.OriginIsInterrupted
                         }),
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.OriginIsDestroyed
                         })
                     },
-                    true,
-                    new List<EffectName>
+                    destroyOnConditionsMet: true,
+                    conditionalEffects: new List<EffectName>
                     {
                         EffectName.Cannon.MachineRemoveBehaviour,
                         EffectName.Cannon.HeatUpDestroy
                     },
-                    true),
+                    restoreChangesOnEnd: true),
                 
                 new Wait(
-                    BehaviourName.Cannon.HeatUpWait,
-                    nameof(BehaviourName.Cannon.HeatUpWait).CamelCaseToWords(),
-                    "This Cannon is heating up for a blast at the danger zone.",
-                    EndsAt.EndOf.Next.Action),
+                    name: BehaviourName.Cannon.HeatUpWait,
+                    displayName: nameof(BehaviourName.Cannon.HeatUpWait).CamelCaseToWords(),
+                    description: "This Cannon is heating up for a blast at the danger zone.",
+                    endsAt: EndsAt.EndOf.Next.Action),
                 
                 new Counter(
-                    BehaviourName.Ballista.MachineCounter,
-                    nameof(BehaviourName.Ballista.MachineCounter).CamelCaseToWords(),
-                    "Needs 1 Engineer to operate this machine.",
-                    3,
-                    3,
-                    new List<EffectName>
+                    name: BehaviourName.Ballista.MachineCounter,
+                    displayName: nameof(BehaviourName.Ballista.MachineCounter).CamelCaseToWords(),
+                    description: "Needs 1 Engineer to operate this machine.",
+                    maxAmount: 3,
+                    triggerAmount: 3,
+                    triggeredEffects: new List<EffectName>
                     {
                         EffectName.Ballista.MachineRemoveBehaviour
                     }),
                 
                 new Buff(
-                    BehaviourName.Ballista.MachineBuff,
-                    nameof(BehaviourName.Ballista.MachineBuff).CamelCaseToWords(),
-                    "This machine is disabled until it is fully operated by the required number of Engineers.",
-                    new List<Flag>
+                    name: BehaviourName.Ballista.MachineBuff,
+                    displayName: nameof(BehaviourName.Ballista.MachineBuff).CamelCaseToWords(),
+                    description: "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.FullyDisabled
                     },
-                    null,
-                    null,
-                    null,
-                    null,
-                    EndsAt.Death,
-                    false,
-                    null,
-                    Alignment.Negative,
-                    null,
-                    false,
-                    null,
-                    true),
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: null,
+                    alignment: Alignment.Negative,
+                    triggers: null,
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
                 
                 new Buff(
-                    BehaviourName.Ballista.AimBuff,
-                    nameof(BehaviourName.Ballista.AimBuff).CamelCaseToWords(),
-                    "This unit is aimed by a Ballista, which allows it to shoot every turn as long as this " +
-                    "unit remains in range.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    EndsAt.EndOf.Next.ActionPhase,
-                    false,
-                    true,
-                    Alignment.Negative,
-                    new List<Trigger>
+                    name: BehaviourName.Ballista.AimBuff,
+                    displayName: nameof(BehaviourName.Ballista.AimBuff).CamelCaseToWords(),
+                    description: "This unit is aimed by a Ballista, which allows it to shoot every turn as long as this " +
+                                 "unit remains in range.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.EndOf.Next.ActionPhase,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.EntityFinishedMoving
-                        },new List<Validator> 
+                        },validators: new List<Validator> 
                         {
                             new ResultValidator(
-                                EffectName.Ballista.AimSearch, 
-                                new List<Condition>
+                                searchEffect: EffectName.Ballista.AimSearch, 
+                                conditions: new List<Condition>
                                 {
-                                    new Condition(Flag.Condition.NoActorsFoundFromEffect)
+                                    new(conditionFlag: Flag.Condition.NoActorsFoundFromEffect)
                                 })
                         }),
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.OriginIsDestroyed
                         })
                     },
-                    true,
-                    null,
-                    null,
-                    true,
-                    false),
+                    destroyOnConditionsMet: true,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: null,
+                    ownerAllowed: true,
+                    hasSameInstanceForAllOwners: false),
                 
                 new Counter(
-                    BehaviourName.Radar.MachineCounter,
-                    nameof(BehaviourName.Radar.MachineCounter).CamelCaseToWords(),
-                    "Needs 1 Engineer to operate this machine.",
-                    3,
-                    3,
-                    new List<EffectName>
+                    name: BehaviourName.Radar.MachineCounter,
+                    displayName: nameof(BehaviourName.Radar.MachineCounter).CamelCaseToWords(),
+                    description: "Needs 1 Engineer to operate this machine.",
+                    maxAmount: 3,
+                    triggerAmount: 3,
+                    triggeredEffects: new List<EffectName>
                     {
                         EffectName.Radar.MachineRemoveBehaviour
                     }),
                 
                 new Buff(
-                    BehaviourName.Radar.MachineBuff,
-                    nameof(BehaviourName.Radar.MachineBuff).CamelCaseToWords(),
-                    "This machine is disabled until it is fully operated by the required number of Engineers.",
-                    new List<Flag>
+                    name: BehaviourName.Radar.MachineBuff,
+                    displayName: nameof(BehaviourName.Radar.MachineBuff).CamelCaseToWords(),
+                    description: "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.FullyDisabled
                     },
-                    null,
-                    null,
-                    null,
-                    null,
-                    EndsAt.Death,
-                    false,
-                    null,
-                    Alignment.Negative,
-                    null,
-                    false,
-                    null,
-                    true),
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: null,
+                    alignment: Alignment.Negative,
+                    triggers: null,
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
                 
                 new Buff(
-                    BehaviourName.Radar.PowerDependencyBuff,
-                    nameof(BehaviourName.Radar.PowerDependencyBuff).CamelCaseToWords(),
-                    "If this unit is not connected to Power, all abilities get disabled and it loses 1 Health " +
-                    "at the start of its action.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    EndsAt.Death,
-                    false,
-                    false,
-                    Alignment.Neutral,
-                    new List<Trigger>
+                    name: BehaviourName.Radar.PowerDependencyBuff,
+                    displayName: nameof(BehaviourName.Radar.PowerDependencyBuff).CamelCaseToWords(),
+                    description: "If this unit is not connected to Power, all abilities get disabled and it loses 1 Health " +
+                                 "at the start of its action.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Neutral,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.EntityStartsActionNotOnPower
                         })
                     },
-                    false,
-                    new List<EffectName>
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: new List<EffectName>
                     {
                         EffectName.Radar.PowerDependencyDamage,
                         EffectName.Radar.PowerDependencyApplyBehaviourDisable,
                     }),
                 
                 new Buff(
-                    BehaviourName.Radar.PowerDependencyBuffDisable,
-                    nameof(BehaviourName.Radar.PowerDependencyBuffDisable).CamelCaseToWords(),
-                    "All abilities are disabled because Power is not supplied.",
-                    new List<Flag>
+                    name: BehaviourName.Radar.PowerDependencyBuffDisable,
+                    displayName: nameof(BehaviourName.Radar.PowerDependencyBuffDisable).CamelCaseToWords(),
+                    description: "All abilities are disabled because Power is not supplied.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.AbilitiesDisabled
                     },
-                    null,
-                    null,
-                    null,
-                    null,
-                    EndsAt.StartOf.Next.ActionPhase,
-                    false,
-                    true,
-                    Alignment.Negative,
-                    new List<Trigger>
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.StartOf.Next.ActionPhase,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
                     {
-                        new Trigger(new List<Event>
+                        new(events: new List<Event>
                         {
                             Event.EntityReceivedPower
                         })
                     },
-                    true,
-                    null,
-                    true),
+                    destroyOnConditionsMet: true,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
                 
                 new Buff(
-                    BehaviourName.Radar.ResonatingSweepBuff,
-                    nameof(BehaviourName.Radar.ResonatingSweepBuff).CamelCaseToWords(),
-                    "Provides vision to the Radar's owner.",
-                    new List<Flag>
+                    name: BehaviourName.Radar.ResonatingSweepBuff,
+                    displayName: nameof(BehaviourName.Radar.ResonatingSweepBuff).CamelCaseToWords(),
+                    description: "Provides vision to the Radar's owner.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.ProvidesVision
                     },
-                    new List<Modification>
+                    initialModifications: new List<Modification>
                     {
-                        new StatModification(Change.SetCurrent, 1, Stats.Vision)
+                        new StatModification(change: Change.SetCurrent, amount: 1, stat: Stats.Vision)
                     },
-                    null,
-                    null,
-                    new List<EffectName>
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Radar.ResonatingSweepDestroy
                     },
-                    EndsAt.StartOf.Next.Planning,
-                    false,
-                    false,
-                    Alignment.Positive),
+                    endsAt: EndsAt.StartOf.Next.Planning,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive),
                 
                 new Buff(
-                    BehaviourName.Radar.RadioLocationBuff,
-                    nameof(BehaviourName.Radar.RadioLocationBuff).CamelCaseToWords(),
-                    "",
-                    null,
-                    null,
-                    new List<EffectName>
+                    name: BehaviourName.Radar.RadioLocationBuff,
+                    displayName: nameof(BehaviourName.Radar.RadioLocationBuff).CamelCaseToWords(),
+                    description: "",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
                     {
                         EffectName.Radar.RadioLocationSearchDestroy
                     },
-                    null,
-                    new List<EffectName>
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Radar.RadioLocationSearchCreate
                     },
-                    EndsAt.Instant,
-                    false,
-                    false),
+                    endsAt: EndsAt.Instant,
+                    canStack: false,
+                    canResetDuration: false),
                 
                 new Buff(
-                    BehaviourName.Radar.RadioLocationFeatureBuff,
-                    nameof(BehaviourName.Radar.RadioLocationFeatureBuff).CamelCaseToWords(),
-                    "This red dot is able to detect enemy units in the fog of war.",
-                    new List<Flag>
+                    name: BehaviourName.Radar.RadioLocationFeatureBuff,
+                    displayName: nameof(BehaviourName.Radar.RadioLocationFeatureBuff).CamelCaseToWords(),
+                    description: "This red dot is able to detect enemy units in the fog of war.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.OnlyVisibleToAllies,
                         Flag.Modification.OnlyVisibleInFogOfWar
                     },
-                    null,
-                    null,
-                    null,
-                    new List<EffectName>
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
                     {
                         EffectName.Radar.RadioLocationDestroy
                     },
-                    EndsAt.EndOf.This.Planning),
+                    endsAt: EndsAt.EndOf.This.Planning),
                 
                 new Counter(
-                    BehaviourName.Vessel.MachineCounter,
-                    nameof(BehaviourName.Vessel.MachineCounter).CamelCaseToWords(),
-                    "Needs 3 Engineers to operate this machine.",
-                    3,
-                    3,
-                    new List<EffectName>
+                    name: BehaviourName.Vessel.MachineCounter,
+                    displayName: nameof(BehaviourName.Vessel.MachineCounter).CamelCaseToWords(),
+                    description: "Needs 3 Engineers to operate this machine.",
+                    maxAmount: 3,
+                    triggerAmount: 3,
+                    triggeredEffects: new List<EffectName>
                     {
                         EffectName.Vessel.MachineRemoveBehaviour
                     }),
                 
                 new Buff(
-                    BehaviourName.Vessel.MachineBuff,
-                    nameof(BehaviourName.Vessel.MachineBuff).CamelCaseToWords(),
-                    "This machine is disabled until it is fully operated by the required number of Engineers.",
-                    new List<Flag>
+                    name: BehaviourName.Vessel.MachineBuff,
+                    displayName: nameof(BehaviourName.Vessel.MachineBuff).CamelCaseToWords(),
+                    description: "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    modificationFlags: new List<Flag>
                     {
                         Flag.Modification.FullyDisabled
                     },
-                    null,
-                    null,
-                    null,
-                    null,
-                    EndsAt.Death,
-                    false,
-                    null,
-                    Alignment.Negative,
-                    null,
-                    false,
-                    null,
-                    true),
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: null,
+                    alignment: Alignment.Negative,
+                    triggers: null,
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: null,
+                    restoreChangesOnEnd: true),
+                    
+                new Buff(
+                    name: BehaviourName.Vessel.AbsorbentFieldBuffMelee,
+                    displayName: nameof(BehaviourName.Vessel.AbsorbentFieldBuffMelee).CamelCaseToWords(),
+                    description: "The melee damage this unit deals is reduced by 50%, but this amount is also dealt " +
+                                 "to a nearby Vessel.",
+                    initialModifications: new List<Modification>
+                    {
+                        new AttackModification(
+                            change: Change.MultiplyMax, 
+                            amount: 0.5f, 
+                            attackType: Attacks.Melee, 
+                            attribute: AttackAttribute.MaxAmount)
+                    },
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
+                    {
+                        new(events: new List<Event>
+                            {
+                                Event.EntityMeleeAttacks
+                            })
+                    },
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: new List<EffectName>
+                    {
+                        EffectName.Vessel.AbsorbentFieldDamageMelee
+                    },
+                    restoreChangesOnEnd: true,
+                    ownerAllowed: true,
+                    hasSameInstanceForAllOwners: true),
+                
+                new Buff(
+                    name: BehaviourName.Vessel.AbsorbentFieldBuffRanged,
+                    displayName: nameof(BehaviourName.Vessel.AbsorbentFieldBuffRanged).CamelCaseToWords(),
+                    description: "The ranged damage this unit deals is reduced by 50%, but this amount is also dealt " +
+                                 "to a nearby Vessel.",
+                    initialModifications: new List<Modification>
+                    {
+                        new AttackModification(
+                            change: Change.MultiplyMax, 
+                            amount: 0.5f, 
+                            attackType: Attacks.Ranged, 
+                            attribute: AttackAttribute.MaxAmount)
+                    },
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
+                    {
+                        new(events: new List<Event>
+                        {
+                            Event.EntityRangedAttacks
+                        })
+                    },
+                    destroyOnConditionsMet: false,
+                    conditionalEffects: new List<EffectName>
+                    {
+                        EffectName.Vessel.AbsorbentFieldDamageRanged
+                    },
+                    restoreChangesOnEnd: true,
+                    ownerAllowed: true,
+                    hasSameInstanceForAllOwners: true)
             };
         }
     }

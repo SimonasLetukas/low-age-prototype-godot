@@ -10,8 +10,8 @@ namespace low_age_data.Domain.Shared
             return $"{nameof(Resources)}.{Value}";
         }
 
-        public static Resources Scraps => new Resources(ResourcesEnum.Scraps);
-        public static Resources Celestium => new Resources(ResourcesEnum.Celestium);
+        public static Resources Scraps => new(ResourcesEnum.Scraps);
+        public static Resources Celestium => new(ResourcesEnum.Celestium);
 
         private Resources(ResourcesEnum @enum)
         {

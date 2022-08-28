@@ -10,13 +10,13 @@ namespace low_age_data.Domain.Shared
             return $"{nameof(Stats)}.{Value}";
         }
 
-        public static Stats Health => new Stats(StatsEnum.Health);
-        public static Stats Shields => new Stats(StatsEnum.Shields);
-        public static Stats MeleeArmour => new Stats(StatsEnum.MeleeArmour);
-        public static Stats RangedArmour => new Stats(StatsEnum.RangedArmour);
-        public static Stats Movement => new Stats(StatsEnum.Movement);
-        public static Stats Initiative => new Stats(StatsEnum.Initiative);
-        public static Stats Vision => new Stats(StatsEnum.Vision);
+        public static Stats Health => new(StatsEnum.Health);
+        public static Stats Shields => new(StatsEnum.Shields);
+        public static Stats MeleeArmour => new(StatsEnum.MeleeArmour);
+        public static Stats RangedArmour => new(StatsEnum.RangedArmour);
+        public static Stats Movement => new(StatsEnum.Movement);
+        public static Stats Initiative => new(StatsEnum.Initiative);
+        public static Stats Vision => new(StatsEnum.Vision);
 
         private Stats(StatsEnum @enum)
         {

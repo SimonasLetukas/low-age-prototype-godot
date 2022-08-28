@@ -6,7 +6,6 @@ using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Features;
 
@@ -19,511 +18,513 @@ namespace low_age_data.Collections
             return new List<Effect>
             {
                 new ApplyBehaviour(
-                    EffectName.Leader.AllForOneApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Leader.AllForOneApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Leader.AllForOneBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
 
                 new ModifyPlayer(
-                    EffectName.Leader.AllForOnePlayerLoses,
-                    new List<Flag>
+                    name: EffectName.Leader.AllForOnePlayerLoses,
+                    playerFilterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     },
-                    new List<Flag>
+                    modifyFlags: new List<Flag>
                     {
                         Flag.Effect.ModifyPlayer.GameLost
                     }),
 
                 new Search(
-                    EffectName.Leader.MenacingPresenceSearch,
-                    6,
-                    new List<Flag>
+                    name: EffectName.Leader.MenacingPresenceSearch,
+                    radius: 6,
+                    searchFlags: new List<Flag>
                     {
                         Flag.Effect.Search.AppliedOnEnter,
-                        Flag.Effect.Search.AppliedOnAction,
+                        Flag.Effect.Search.AppliedOnActorAction,
                         Flag.Effect.Search.RemovedOnExit
                     },
-                    new List<Flag>
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.Leader.MenacingPresenceApplyBehaviour
                     },
-                    Location.Self),
+                    location: Location.Self),
 
                 new ApplyBehaviour(
-                    EffectName.Leader.MenacingPresenceApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Leader.MenacingPresenceApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Leader.MenacingPresenceBuff
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Leader.OneForAllApplyBehaviourObelisk,
-                    new List<BehaviourName>
+                    name: EffectName.Leader.OneForAllApplyBehaviourObelisk,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Leader.OneForAllObeliskBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Structure,
                         Flag.Filter.SpecificStructure.Obelisk
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Leader.OneForAllObeliskBuff)
+                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                                conditionedBehaviour: BehaviourName.Leader.OneForAllObeliskBuff)
                         })
                     }),
 
                 new Search(
-                    EffectName.Leader.OneForAllSearch,
-                    1,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.Leader.OneForAllSearch,
+                    radius: 1,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.Leader.OneForAllApplyBehaviourHeal
                     },
-                    Location.Self,
-                    Shape.Map),
+                    location: Location.Self,
+                    shape: Shape.Map),
 
                 new ApplyBehaviour(
-                    EffectName.Leader.OneForAllApplyBehaviourHeal,
-                    new List<BehaviourName>
+                    name: EffectName.Leader.OneForAllApplyBehaviourHeal,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Leader.OneForAllHealBuff
                     },
-                    Location.Self),
+                    location: Location.Self),
 
                 new ApplyBehaviour(
-                    EffectName.Slave.RepairApplyBehaviourStructure,
-                    new List<BehaviourName>
+                    name: EffectName.Slave.RepairApplyBehaviourStructure,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Slave.RepairStructureBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Structure
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.TargetDoesNotHaveFullHealth)
+                            new(conditionFlag: Flag.Condition.TargetDoesNotHaveFullHealth)
                         })
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Slave.RepairApplyBehaviourSelf,
-                    new List<BehaviourName>
+                    name: EffectName.Slave.RepairApplyBehaviourSelf,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Slave.RepairWait
                     },
-                    Location.Origin),
+                    location: Location.Origin),
 
                 new ApplyBehaviour(
-                    EffectName.Slave.ManualLabourApplyBehaviourHut,
-                    new List<BehaviourName>
+                    name: EffectName.Slave.ManualLabourApplyBehaviourHut,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Slave.ManualLabourBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Structure,
                         Flag.Filter.SpecificStructure.Hut
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Slave.ManualLabourBuff)
+                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                                conditionedBehaviour: BehaviourName.Slave.ManualLabourBuff)
                         })
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Slave.ManualLabourApplyBehaviourSelf,
-                    new List<BehaviourName>
+                    name: EffectName.Slave.ManualLabourApplyBehaviourSelf,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Slave.ManualLabourWait
                     },
-                    Location.Origin),
+                    location: Location.Origin),
 
                 new ModifyPlayer(
-                    EffectName.Slave.ManualLabourModifyPlayer,
-                    new List<Flag>
+                    name: EffectName.Slave.ManualLabourModifyPlayer,
+                    playerFilterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     },
-                    null,
-                    new List<ResourceModification>
+                    modifyFlags: null,
+                    resourceModifications: new List<ResourceModification>
                     {
-                        new ResourceModification(
-                            Change.AddCurrent,
-                            2.0f,
-                            Resources.Scraps)
+                        new(
+                            change: Change.AddCurrent,
+                            amount: 2.0f,
+                            resource: Resources.Scraps)
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Quickdraw.DoubleshotApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Quickdraw.DoubleshotApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Quickdraw.DoubleshotExtraAttack
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Quickdraw.CrippleApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Quickdraw.CrippleApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Quickdraw.CrippleBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Gorger.FanaticSuicideApplyBehaviourBuff,
-                    new List<BehaviourName>
+                    name: EffectName.Gorger.FanaticSuicideApplyBehaviourBuff,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Gorger.FanaticSuicideBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
 
                 new Destroy(
-                    EffectName.Gorger.FanaticSuicideDestroy,
-                    Location.Origin),
+                    name: EffectName.Gorger.FanaticSuicideDestroy,
+                    target: Location.Origin),
 
                 new Search(
-                    EffectName.Gorger.FanaticSuicideSearch,
-                    1,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.Gorger.FanaticSuicideSearch,
+                    radius: 1,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Structure,
                         Flag.Filter.Unit
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.Gorger.FanaticSuicideDamage
                     },
-                    Location.Self),
+                    location: Location.Self),
 
                 new Damage(
-                    EffectName.Gorger.FanaticSuicideDamage,
-                    DamageType.OverrideMelee),
+                    name: EffectName.Gorger.FanaticSuicideDamage,
+                    damageType: DamageType.OverrideMelee),
 
                 new Damage(
-                    EffectName.Camou.SilentAssassinOnHitDamage,
-                    DamageType.CurrentMelee,
-                    new Amount(
-                        0,
-                        0.5f,
-                        Flag.Amount.FromMissingHealth,
-                        new List<Flag>
+                    name: EffectName.Camou.SilentAssassinOnHitDamage,
+                    damageType: DamageType.CurrentMelee,
+                    amount: new Amount(
+                        flat: 0,
+                        multiplier: 0.5f,
+                        multiplierOf: Flag.Amount.FromMissingHealth,
+                        multiplierFlags: new List<Flag>
                         {
                             Flag.Filter.Enemy,
                             Flag.Filter.Unit
                         }),
-                    null,
-                    null,
-                    null,
-                    null,
-                    new List<Validator>
+                    bonusTo: null,
+                    bonusAmount: null,
+                    location: null,
+                    filterFlags: null,
+                    validators: new List<Validator>
                     {
                         new ResultValidator(
-                            EffectName.Camou.SilentAssassinSearchFriendly,
-                            new List<Condition>
+                            searchEffect: EffectName.Camou.SilentAssassinSearchFriendly,
+                            conditions: new List<Condition>
                             {
-                                new Condition(Flag.Condition.NoActorsFoundFromEffect)
+                                new(conditionFlag: Flag.Condition.NoActorsFoundFromEffect)
                             })
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Camou.SilentAssassinOnHitSilence,
-                    new List<BehaviourName>
+                    name: EffectName.Camou.SilentAssassinOnHitSilence,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Camou.SilentAssassinBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
                         new ResultValidator(
-                            EffectName.Camou.SilentAssassinSearchFriendly,
-                            new List<Condition>
+                            searchEffect: EffectName.Camou.SilentAssassinSearchFriendly,
+                            conditions: new List<Condition>
                             {
-                                new Condition(Flag.Condition.NoActorsFoundFromEffect)
+                                new(conditionFlag: Flag.Condition.NoActorsFoundFromEffect)
                             }),
 
                         new ResultValidator(
-                            EffectName.Camou.SilentAssassinSearchEnemy,
-                            new List<Condition>
+                            searchEffect: EffectName.Camou.SilentAssassinSearchEnemy,
+                            conditions: new List<Condition>
                             {
-                                new Condition(Flag.Condition.NoActorsFoundFromEffect)
+                                new(conditionFlag: Flag.Condition.NoActorsFoundFromEffect)
                             })
                     }),
 
                 new Search(
-                    EffectName.Camou.SilentAssassinSearchFriendly,
-                    4,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.Camou.SilentAssassinSearchFriendly,
+                    radius: 4,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Unit,
                         Flag.Filter.Ally
                     },
-                    null,
-                    Location.Origin,
-                    Shape.Circle,
-                    null,
-                    null,
-                    true),
+                    effects: null,
+                    location: Location.Origin,
+                    shape: Shape.Circle,
+                    ignoreCenter: null,
+                    validators: null,
+                    usedForValidator: true),
 
                 new Search(
-                    EffectName.Camou.SilentAssassinSearchEnemy,
-                    4,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.Camou.SilentAssassinSearchEnemy,
+                    radius: 4,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Unit,
                         Flag.Filter.Enemy
                     },
-                    null,
-                    Location.Actor,
-                    Shape.Circle,
-                    null,
-                    null,
-                    true),
+                    effects: null,
+                    location: Location.Actor,
+                    shape: Shape.Circle,
+                    ignoreCenter: null,
+                    validators: null,
+                    usedForValidator: true),
 
                 new Teleport(
-                    EffectName.Camou.ClimbTeleport,
-                    BehaviourName.Camou.ClimbWait,
-                    new List<Validator>
+                    name: EffectName.Camou.ClimbTeleport,
+                    waitBefore: BehaviourName.Camou.ClimbWait,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.TargetIsHighGround)
+                            new(conditionFlag: Flag.Condition.TargetIsHighGround)
                         }),
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.TargetIsUnoccupied)
+                            new(conditionFlag: Flag.Condition.TargetIsUnoccupied)
                         })
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Camou.ClimbApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Camou.ClimbApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Camou.ClimbBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
 
                 new CreateEntity(
-                    EffectName.Shaman.WondrousGooCreateEntity,
-                    FeatureName.ShamanWondrousGoo,
-                    new List<BehaviourName>
+                    name: EffectName.Shaman.WondrousGooCreateEntity,
+                    entityToCreate: FeatureName.ShamanWondrousGoo,
+                    initialEntityBehaviours: new List<BehaviourName>
                     {
                         BehaviourName.Shaman.WondrousGooFeatureWait
                     }),
 
                 new Search(
-                    EffectName.Shaman.WondrousGooSearch,
-                    0,
-                    new List<Flag>
+                    name: EffectName.Shaman.WondrousGooSearch,
+                    radius: 0,
+                    searchFlags: new List<Flag>
                     {
-                        Flag.Effect.Search.AppliedOnAction,
+                        Flag.Effect.Search.AppliedOnEveryAction,
                         Flag.Effect.Search.AppliedOnEnter
                     },
-                    new List<Flag>
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.Shaman.WondrousGooApplyBehaviour
                     },
-                    Location.Self),
+                    location: Location.Self),
 
                 new ApplyBehaviour(
-                    EffectName.Shaman.WondrousGooApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Shaman.WondrousGooApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Shaman.WondrousGooBuff
                     }),
 
                 new Destroy(
-                    EffectName.Shaman.WondrousGooDestroy),
+                    name: EffectName.Shaman.WondrousGooDestroy),
 
                 new Damage(
-                    EffectName.Shaman.WondrousGooDamage,
-                    DamageType.Pure,
-                    new Amount(1)),
+                    name: EffectName.Shaman.WondrousGooDamage,
+                    damageType: DamageType.Pure,
+                    amount: new Amount(flat: 1)),
 
                 new CreateEntity(
-                    EffectName.Pyre.CargoCreateEntity,
-                    FeatureName.PyreCargo,
-                    new List<BehaviourName>
+                    name: EffectName.Pyre.CargoCreateEntity,
+                    entityToCreate: FeatureName.PyreCargo,
+                    initialEntityBehaviours: new List<BehaviourName>
                     {
                         BehaviourName.Pyre.CargoTether,
                         BehaviourName.Pyre.CargoWallOfFlamesBuff
                     }),
 
                 new CreateEntity(
-                    EffectName.Pyre.WallOfFlamesCreateEntity,
-                    FeatureName.PyreFlames),
+                    name: EffectName.Pyre.WallOfFlamesCreateEntity,
+                    entityToCreate: FeatureName.PyreFlames),
 
                 new Destroy(
-                    EffectName.Pyre.WallOfFlamesDestroy),
+                    name: EffectName.Pyre.WallOfFlamesDestroy),
 
                 new Damage(
-                    EffectName.Pyre.WallOfFlamesDamage,
-                    DamageType.Melee,
-                    new Amount(5)),
+                    name: EffectName.Pyre.WallOfFlamesDamage,
+                    damageType: DamageType.Melee,
+                    amount: new Amount(flat: 5)),
 
                 new ApplyBehaviour(
-                    EffectName.Pyre.PhantomMenaceApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Pyre.PhantomMenaceApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Pyre.PhantomMenaceBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
 
                 new Search(
-                    EffectName.BigBadBull.UnleashTheRageSearch,
-                    1,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.BigBadBull.UnleashTheRageSearch,
+                    radius: 1,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.BigBadBull.UnleashTheRageDamage,
                         EffectName.BigBadBull.UnleashTheRageForce
                     },
-                    Location.Point,
-                    Shape.Line),
+                    location: Location.Point,
+                    shape: Shape.Line),
 
                 new Damage(
-                    EffectName.BigBadBull.UnleashTheRageDamage,
-                    DamageType.OverrideMelee),
+                    name: EffectName.BigBadBull.UnleashTheRageDamage,
+                    damageType: DamageType.OverrideMelee),
 
                 new Force(
-                    EffectName.BigBadBull.UnleashTheRageForce,
-                    Location.Origin, 
-                    1,
-                    new List<EffectName>
+                    name: EffectName.BigBadBull.UnleashTheRageForce,
+                    @from: Location.Origin, 
+                    amount: 1,
+                    onCollisionEffects: new List<EffectName>
                     {
                         EffectName.BigBadBull.UnleashTheRageForceDamage
                     }),
 
                 new Damage(
-                    EffectName.BigBadBull.UnleashTheRageForceDamage,
-                    DamageType.Melee,
-                    new Amount(5)),
+                    name: EffectName.BigBadBull.UnleashTheRageForceDamage,
+                    damageType: DamageType.Melee,
+                    amount: new Amount(flat: 5)),
 
                 new CreateEntity(
-                    EffectName.Mummy.SpawnRoachCreateEntity,
-                    UnitName.Roach),
+                    name: EffectName.Mummy.SpawnRoachCreateEntity,
+                    entityToCreate: UnitName.Roach),
 
                 new ModifyAbility(
-                    EffectName.Mummy.LeapOfHungerModifyAbility,
-                    AbilityName.Mummy.SpawnRoach,
-                    AbilityName.Mummy.SpawnRoachModified),
+                    name: EffectName.Mummy.LeapOfHungerModifyAbility,
+                    abilityToModify: AbilityName.Mummy.SpawnRoach,
+                    modifiedAbility: AbilityName.Mummy.SpawnRoachModified),
 
                 new ApplyBehaviour(
-                    EffectName.Roach.DegradingCarapaceApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Roach.DegradingCarapaceApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Roach.DegradingCarapaceBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Roach.DegradingCarapacePeriodicApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Roach.DegradingCarapacePeriodicApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
 
                 new Damage(
-                    EffectName.Roach.DegradingCarapaceSelfDamage,
-                    DamageType.Pure,
-                    new Amount(1)),
+                    name: EffectName.Roach.DegradingCarapaceSelfDamage,
+                    damageType: DamageType.Pure,
+                    amount: new Amount(flat: 1)),
 
                 new Damage(
-                    EffectName.Roach.CorrosiveSpitDamage,
-                    DamageType.Ranged,
-                    new Amount(6),
-                    CombatAttributes.Mechanical,
-                    new Amount(8),
-                    Location.Actor,
-                    new List<Flag>
+                    name: EffectName.Roach.CorrosiveSpitDamage,
+                    damageType: DamageType.Ranged,
+                    amount: new Amount(flat: 6),
+                    bonusTo: CombatAttributes.Mechanical,
+                    bonusAmount: new Amount(flat: 8),
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Structure,
@@ -531,244 +532,247 @@ namespace low_age_data.Collections
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Parasite.ParalysingGraspApplyTetherBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Parasite.ParalysingGraspApplyTetherBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Parasite.ParalysingGraspTether
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Parasite.ParalysingGraspTether)
+                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                                conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspTether)
                         })
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Parasite.ParalysingGraspApplyAttackBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Parasite.ParalysingGraspApplyAttackBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Parasite.ParalysingGraspBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Parasite.ParalysingGraspBuff)
+                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                                conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspBuff)
                         })
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Parasite.ParalysingGraspApplySelfBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Parasite.ParalysingGraspApplySelfBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Parasite.ParalysingGraspSelfBuff
                     },
-                    Location.Source,
-                    new List<Flag>
+                    location: Location.Source,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Unit
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Parasite.ParalysingGraspSelfBuff)
+                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                                conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspSelfBuff)
                         })
                     }),
 
                 new Search(
-                    EffectName.Horrior.ExpertFormationSearch,
-                    1,
-                    new List<Flag>
+                    name: EffectName.Horrior.ExpertFormationSearch,
+                    radius: 1,
+                    searchFlags: new List<Flag>
                     {
                         Flag.Effect.Search.AppliedOnEnter,
-                        Flag.Effect.Search.AppliedOnAction,
-                        Flag.Effect.Search.RemovedOnExit
+                        Flag.Effect.Search.AppliedOnEveryAction,
+                        Flag.Effect.Search.RemovedOnExit,
                     },
-                    new List<Flag>
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
                         Flag.Filter.SpecificUnit.Horrior
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.Horrior.ExpertFormationApplyBehaviour
                     },
-                    Location.Self),
+                    location: Location.Self),
 
                 new ApplyBehaviour(
-                    EffectName.Horrior.ExpertFormationApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Horrior.ExpertFormationApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Horrior.ExpertFormationBuff
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Horrior.MountApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Horrior.MountApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Horrior.MountWait
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
 
                 new CreateEntity(
-                    EffectName.Horrior.MountCreateEntity,
-                    UnitName.Surfer),
+                    name: EffectName.Horrior.MountCreateEntity,
+                    entityToCreate: UnitName.Surfer),
 
                 new Destroy(
-                    EffectName.Horrior.MountDestroy,
-                    Location.Self),
+                    name: EffectName.Horrior.MountDestroy,
+                    target: Location.Self),
 
                 new ApplyBehaviour(
-                    EffectName.Marksman.CriticalMarkApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Marksman.CriticalMarkApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Marksman.CriticalMarkBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     }),
                 
                 new Damage(
-                    EffectName.Marksman.CriticalMarkDamage,
-                    DamageType.Melee,
-                    new Amount(5),
-                    null,
-                    null,
-                    Location.Self,
-                    new List<Flag>
+                    name: EffectName.Marksman.CriticalMarkDamage,
+                    damageType: DamageType.Melee,
+                    amount: new Amount(flat: 5),
+                    bonusTo: null,
+                    bonusAmount: null,
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     }),
                 
                 new ApplyBehaviour(
-                    EffectName.Surfer.DismountApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Surfer.DismountApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Surfer.DismountBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
                 
                 new CreateEntity(
-                    EffectName.Surfer.DismountCreateEntity,
-                    UnitName.Horrior),
+                    name: EffectName.Surfer.DismountCreateEntity,
+                    entityToCreate: UnitName.Horrior),
                 
                 new ApplyBehaviour(
-                    EffectName.Mortar.DeadlyAmmunitionApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Mortar.DeadlyAmmunitionApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Mortar.DeadlyAmmunitionAmmunition
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new Search(
-                    EffectName.Mortar.DeadlyAmmunitionSearch,
-                    1,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.Mortar.DeadlyAmmunitionSearch,
+                    radius: 1,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.Mortar.DeadlyAmmunitionDamage
                     },
-                    Location.Inherited,
-                    Shape.Circle,
-                    true),
+                    location: Location.Inherited,
+                    shape: Shape.Circle,
+                    ignoreCenter: true),
                 
                 new Damage(
-                    EffectName.Mortar.DeadlyAmmunitionDamage,
-                    DamageType.OverrideRanged),
+                    name: EffectName.Mortar.DeadlyAmmunitionDamage,
+                    damageType: DamageType.OverrideRanged),
                 
                 new ApplyBehaviour(
-                    EffectName.Mortar.ReloadApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Mortar.ReloadApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Mortar.ReloadWait
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new Reload(
-                    EffectName.Mortar.ReloadReload,
-                    BehaviourName.Mortar.DeadlyAmmunitionAmmunition,
-                    Location.Self),
+                    name: EffectName.Mortar.ReloadReload,
+                    ammunitionToTarget: BehaviourName.Mortar.DeadlyAmmunitionAmmunition,
+                    location: Location.Self),
                 
                 new ApplyBehaviour(
-                    EffectName.Mortar.PiercingBlastApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Mortar.PiercingBlastApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Mortar.PiercingBlastBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new ApplyBehaviour(
-                    EffectName.Hawk.TacticalGogglesApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Hawk.TacticalGogglesApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Hawk.TacticalGogglesBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new ApplyBehaviour(
-                    EffectName.Hawk.LeadershipApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Hawk.LeadershipApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Hawk.LeadershipBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
@@ -776,50 +780,50 @@ namespace low_age_data.Collections
                     }),
                 
                 new ApplyBehaviour(
-                    EffectName.Hawk.HealthKitApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Hawk.HealthKitApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Hawk.HealthKitBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new Search(
-                    EffectName.Hawk.HealthKitSearch,
-                    1,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.Hawk.HealthKitSearch,
+                    radius: 1,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.Hawk.HealthKitHealApplyBehaviour
                     },
-                    Location.Self,
-                    Shape.Circle,
-                    true),
+                    location: Location.Self,
+                    shape: Shape.Circle,
+                    ignoreCenter: true),
                 
                 new ApplyBehaviour(
-                    EffectName.Hawk.HealthKitHealApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Hawk.HealthKitHealApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Hawk.HealthKitHealBuff
                     }),
 
                 new ApplyBehaviour(
-                    EffectName.Engineer.OperateApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Engineer.OperateApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Engineer.OperateBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Unit,
                         Flag.Filter.SpecificUnit.Cannon,
@@ -827,71 +831,74 @@ namespace low_age_data.Collections
                         Flag.Filter.SpecificUnit.Radar,
                         Flag.Filter.SpecificUnit.Vessel
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Cannon.AssemblingBuildable)
+                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                                conditionedBehaviour: BehaviourName.Cannon.AssemblingBuildable)
                         }),
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Ballista.AssemblingBuildable)
+                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                                conditionedBehaviour: BehaviourName.Ballista.AssemblingBuildable)
                         }),
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.BehaviourDoesNotExist, BehaviourName.Radar.AssemblingBuildable)
+                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                                conditionedBehaviour: BehaviourName.Radar.AssemblingBuildable)
                         })
                     }),
                 
                 new ModifyCounter(
-                    EffectName.Engineer.OperateModifyCounter,
-                    new List<BehaviourName>
+                    name: EffectName.Engineer.OperateModifyCounter,
+                    countersToModify: new List<BehaviourName>
                     {
                         BehaviourName.Cannon.MachineCounter
                         // TODO add with each machine
                     },
-                    Change.AddCurrent, 
-                    1,
-                    Location.Self,
-                    new List<Flag>
+                    change: Change.AddCurrent, 
+                    amount: 1,
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
                 
                 new Destroy(
-                    EffectName.Engineer.OperateDestroy,
-                    Location.Origin),
+                    name: EffectName.Engineer.OperateDestroy,
+                    target: Location.Origin),
                 
                 new ApplyBehaviour(
-                    EffectName.Engineer.RepairStructureApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Engineer.RepairStructureApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Engineer.RepairStructureOrMachineBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Structure
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.TargetDoesNotHaveFullHealth)
+                            new(conditionFlag: Flag.Condition.TargetDoesNotHaveFullHealth)
                         })
                     }),
                 
                 new ApplyBehaviour(
-                    EffectName.Engineer.RepairMachineApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Engineer.RepairMachineApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Engineer.RepairStructureOrMachineBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
@@ -900,372 +907,414 @@ namespace low_age_data.Collections
                         Flag.Filter.SpecificUnit.Radar,
                         Flag.Filter.SpecificUnit.Vessel
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.TargetDoesNotHaveFullHealth)
+                            new(conditionFlag: Flag.Condition.TargetDoesNotHaveFullHealth)
                         })
                     }),
                 
                 new ApplyBehaviour( 
-                    EffectName.Engineer.RepairHorriorApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Engineer.RepairHorriorApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Engineer.RepairHorriorBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
                         Flag.Filter.SpecificUnit.Horrior
                     },
-                    null,
-                    new List<Validator>
+                    behaviourOwner: null,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(Flag.Condition.BehaviourExists, BehaviourName.Horrior.MountWait)
+                            new(conditionFlag: Flag.Condition.BehaviourExists, 
+                                conditionedBehaviour: BehaviourName.Horrior.MountWait)
                         })
                     }),
                 
                 new ApplyBehaviour(
-                    EffectName.Engineer.RepairApplyBehaviourSelf,
-                    new List<BehaviourName>
+                    name: EffectName.Engineer.RepairApplyBehaviourSelf,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Engineer.RepairWait
                     },
-                    Location.Origin),
+                    location: Location.Origin),
                 
                 new ApplyBehaviour(
-                    EffectName.Cannon.MachineApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Cannon.MachineApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Cannon.MachineCounter,
                         BehaviourName.Cannon.MachineBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new RemoveBehaviour(
-                    EffectName.Cannon.MachineRemoveBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Cannon.MachineRemoveBehaviour,
+                    behavioursToRemove: new List<BehaviourName>
                     {
                         BehaviourName.Cannon.MachineBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new CreateEntity(
-                    EffectName.Cannon.HeatUpCreateEntity,
-                    FeatureName.CannonHeatUpDangerZone,
-                    new List<BehaviourName>
+                    name: EffectName.Cannon.HeatUpCreateEntity,
+                    entityToCreate: FeatureName.CannonHeatUpDangerZone,
+                    initialEntityBehaviours: new List<BehaviourName>
                     {
                         BehaviourName.Cannon.HeatUpDangerZoneBuff
                     }),
                 
                 new ApplyBehaviour(
-                    EffectName.Cannon.HeatUpApplyWaitBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Cannon.HeatUpApplyWaitBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Cannon.HeatUpWait
                     },
-                    Location.Origin,
-                    new List<Flag>
+                    location: Location.Origin,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     }),
                 
                 new Search(
-                    EffectName.Cannon.HeatUpSearch,
-                    0,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.Cannon.HeatUpSearch,
+                    radius: 0,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.Cannon.HeatUpDamage
                     },
-                    Location.Self),
+                    location: Location.Self),
                 
                 new Damage(
-                    EffectName.Cannon.HeatUpDamage,
-                    DamageType.OverrideRanged),
+                    name: EffectName.Cannon.HeatUpDamage,
+                    damageType: DamageType.OverrideRanged),
                 
                 new Destroy(
-                    EffectName.Cannon.HeatUpDestroy,
-                    Location.Self),
+                    name: EffectName.Cannon.HeatUpDestroy,
+                    target: Location.Self),
                 
                 new RemoveBehaviour(
-                    EffectName.Cannon.HeatUpRemoveBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Cannon.HeatUpRemoveBehaviour,
+                    behavioursToRemove: new List<BehaviourName>
                     {
                         BehaviourName.Cannon.HeatUpWait
                     },
-                    Location.Origin,
-                    new List<Flag>
+                    location: Location.Origin,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     }),
                 
                 new ApplyBehaviour(
-                    EffectName.Ballista.MachineApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Ballista.MachineApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Ballista.MachineCounter,
                         BehaviourName.Ballista.MachineBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new RemoveBehaviour(
-                    EffectName.Ballista.MachineRemoveBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Ballista.MachineRemoveBehaviour,
+                    behavioursToRemove: new List<BehaviourName>
                     {
                         BehaviourName.Ballista.MachineBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new Damage(
-                    EffectName.Ballista.AimDamage,
-                    DamageType.OverrideRanged,
-                    null,
-                    null,
-                    null,
-                    Location.Actor,
-                    new List<Flag>
+                    name: EffectName.Ballista.AimDamage,
+                    damageType: DamageType.OverrideRanged,
+                    amount: null,
+                    bonusTo: null,
+                    bonusAmount: null,
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Structure,
                         Flag.Filter.Unit
                     },
-                    new List<Validator>
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(
-                                Flag.Condition.BehaviourExists, 
-                                BehaviourName.Ballista.AimBuff, 
-                                Location.Origin)
+                            new(conditionFlag: Flag.Condition.BehaviourExists, 
+                                conditionedBehaviour: BehaviourName.Ballista.AimBuff, 
+                                behaviourOwner: Location.Origin)
                         })
                     }),
                 
                 new ApplyBehaviour(
-                    EffectName.Ballista.AimApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Ballista.AimApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Ballista.AimBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Structure,
                         Flag.Filter.Unit
                     },
-                    Location.Origin),
+                    behaviourOwner: Location.Origin),
                 
                 new Search(
-                    EffectName.Ballista.AimSearch,
-                    9,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.Ballista.AimSearch,
+                    radius: 9,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Origin,
                         Flag.Filter.SpecificUnit.Ballista
                     },
-                    null,
-                    Location.Self,
-                    null,
-                    null,
-                    null,
-                    true),
+                    effects: null,
+                    location: Location.Self,
+                    shape: null,
+                    ignoreCenter: null,
+                    validators: null,
+                    usedForValidator: true),
                 
                 new ApplyBehaviour(
-                    EffectName.Radar.MachineApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Radar.MachineApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Radar.MachineCounter,
                         BehaviourName.Radar.MachineBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new RemoveBehaviour(
-                    EffectName.Radar.MachineRemoveBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Radar.MachineRemoveBehaviour,
+                    behavioursToRemove: new List<BehaviourName>
                     {
                         BehaviourName.Radar.MachineBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new ApplyBehaviour(
-                    EffectName.Radar.PowerDependencyApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Radar.PowerDependencyApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Radar.PowerDependencyBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Self
                     }),
                 
                 new Damage(
-                    EffectName.Radar.PowerDependencyDamage,
-                    DamageType.Pure,
-                    new Amount(1)),
+                    name: EffectName.Radar.PowerDependencyDamage,
+                    damageType: DamageType.Pure,
+                    amount: new Amount(flat: 1)),
                 
                 new ApplyBehaviour(
-                    EffectName.Radar.PowerDependencyApplyBehaviourDisable,
-                    new List<BehaviourName>
+                    name: EffectName.Radar.PowerDependencyApplyBehaviourDisable,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Radar.PowerDependencyBuffDisable
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Self
                     }),
                 
                 new CreateEntity(
-                    EffectName.Radar.ResonatingSweepCreateEntity,
-                    FeatureName.RadarResonatingSweep,
-                    new List<BehaviourName>
+                    name: EffectName.Radar.ResonatingSweepCreateEntity,
+                    entityToCreate: FeatureName.RadarResonatingSweep,
+                    initialEntityBehaviours: new List<BehaviourName>
                     {
                         BehaviourName.Radar.ResonatingSweepBuff
                     }),
                 
                 new Destroy(
-                    EffectName.Radar.ResonatingSweepDestroy,
-                    Location.Self),
+                    name: EffectName.Radar.ResonatingSweepDestroy,
+                    target: Location.Self),
                 
                 new ApplyBehaviour(
-                    EffectName.Radar.RadioLocationApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Radar.RadioLocationApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Radar.RadioLocationBuff
                     },
-                    Location.Self),
+                    location: Location.Self),
                 
                 new Search(
-                    EffectName.Radar.RadioLocationSearchDestroy,
-                    1,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.Radar.RadioLocationSearchDestroy,
+                    radius: 1,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.SpecificFeature.RadarRedDot
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.Radar.RadioLocationDestroy
                     },
-                    Location.Self,
-                    Shape.Map),
+                    location: Location.Self,
+                    shape: Shape.Map),
                 
                 new Destroy(
-                    EffectName.Radar.RadioLocationDestroy,
-                    Location.Inherited,
-                    new List<Validator>
+                    name: EffectName.Radar.RadioLocationDestroy,
+                    target: Location.Inherited,
+                    validators: new List<Validator>
                     {
-                        new Validator(new List<Condition>
+                        new(conditions: new List<Condition>
                         {
-                            new Condition(
-                                Flag.Condition.BehaviourExists, 
-                                BehaviourName.Radar.RadioLocationFeatureBuff,
-                                Location.Origin)
+                            new(conditionFlag: Flag.Condition.BehaviourExists, 
+                                conditionedBehaviour: BehaviourName.Radar.RadioLocationFeatureBuff,
+                                behaviourOwner: Location.Origin)
                         })
                     }),
                 
                 new Search(
-                    EffectName.Radar.RadioLocationSearchCreate,
-                    15,
-                    new List<Flag>(),
-                    new List<Flag>
+                    name: EffectName.Radar.RadioLocationSearchCreate,
+                    radius: 15,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     },
-                    new List<EffectName>
+                    effects: new List<EffectName>
                     {
                         EffectName.Radar.RadioLocationCreateEntity
                     },
-                    Location.Self,
-                    Shape.Circle,
-                    true
+                    location: Location.Self,
+                    shape: Shape.Circle,
+                    ignoreCenter: true
                 ),
                 
                 new CreateEntity(
-                    EffectName.Radar.RadioLocationCreateEntity,
-                    FeatureName.RadarRedDot,
-                    new List<BehaviourName>
+                    name: EffectName.Radar.RadioLocationCreateEntity,
+                    entityToCreate: FeatureName.RadarRedDot,
+                    initialEntityBehaviours: new List<BehaviourName>
                     {
                         BehaviourName.Radar.RadioLocationFeatureBuff
                     },
-                    Location.Origin),
+                    behaviourOwner: Location.Origin),
                 
                 new ApplyBehaviour(
-                    EffectName.Vessel.MachineApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Vessel.MachineApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Vessel.MachineCounter,
                         BehaviourName.Vessel.MachineBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
                 
                 new RemoveBehaviour(
-                    EffectName.Vessel.MachineRemoveBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Vessel.MachineRemoveBehaviour,
+                    behavioursToRemove: new List<BehaviourName>
                     {
                         BehaviourName.Vessel.MachineBuff
                     },
-                    Location.Self,
-                    new List<Flag>
+                    location: Location.Self,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
+                
+                new Search(
+                    name: EffectName.Vessel.AbsorbentFieldSearch,
+                    radius: 3,
+                    searchFlags: new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnEnter,
+                        Flag.Effect.Search.RemovedOnExit
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Enemy
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Vessel.AbsorbentFieldApplyBehaviour
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Vessel.AbsorbentFieldApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Vessel.AbsorbentFieldBuffMelee
+                    },
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Enemy
+                    },
+                    behaviourOwner: Location.Origin),
+                
+                new Damage(
+                    name: EffectName.Vessel.AbsorbentFieldDamageMelee,
+                    damageType: DamageType.CurrentMelee,
+                    location: Location.Origin,
+                    ignoresArmor: true),
+                
+                new Damage(
+                    name: EffectName.Vessel.AbsorbentFieldDamageRanged,
+                    damageType: DamageType.CurrentRanged,
+                    location: Location.Origin,
+                    ignoresArmor: true)
             };
         }
     }

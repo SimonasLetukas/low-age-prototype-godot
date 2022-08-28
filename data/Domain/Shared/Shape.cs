@@ -10,9 +10,9 @@ namespace low_age_data.Domain.Shared
             return $"{nameof(Shape)}.{Value}";
         }
 
-        public static Shape Circle => new Shape(Shapes.Circle);
-        public static Shape Line => new Shape(Shapes.Line);
-        public static Shape Map => new Shape(Shapes.Map);
+        public static Shape Circle => new(Shapes.Circle);
+        public static Shape Line => new(Shapes.Line);
+        public static Shape Map => new(Shapes.Map);
 
         private Shape(Shapes @enum)
         {

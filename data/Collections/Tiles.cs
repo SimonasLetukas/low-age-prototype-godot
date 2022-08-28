@@ -10,41 +10,41 @@ namespace low_age_data.Collections
         {
             return new List<Tile>
             {
-                new Tile(
-                    TileName.Grass,
-                    nameof(TileName.Grass),
-                    "",
-                    Terrains.Grass,
-                    1.0f,
-                    true),
-                new Tile(
-                    TileName.Mountains,
-                    nameof(TileName.Mountains),
-                    "",
-                    Terrains.Mountains,
-                    0.0f,
-                    false),
-                new Tile(
-                    TileName.Marsh,
-                    nameof(TileName.Marsh),
-                    "",
-                    Terrains.Marsh,
-                    2.0f,
-                    false),
-                new Tile(
-                    TileName.Scraps,
-                    nameof(TileName.Scraps),
-                    "",
-                    Terrains.Scraps,
-                    1.0f,
-                    true),
-                new Tile(
-                    TileName.Celestium,
-                    nameof(TileName.Celestium),
-                    "",
-                    Terrains.Celestium,
-                    1.0f,
-                    true)
+                new(
+                    name: TileName.Grass,
+                    displayName: nameof(TileName.Grass),
+                    description: "",
+                    terrain: Terrains.Grass,
+                    movementCost: 1.0f,
+                    allowsBuilding: true),
+                new(
+                    name: TileName.Mountains,
+                    displayName: nameof(TileName.Mountains),
+                    description: "",
+                    terrain: Terrains.Mountains,
+                    movementCost: 0.0f,
+                    allowsBuilding: false),
+                new(
+                    name: TileName.Marsh,
+                    displayName: nameof(TileName.Marsh),
+                    description: "",
+                    terrain: Terrains.Marsh,
+                    movementCost: 2.0f,
+                    allowsBuilding: false),
+                new(
+                    name: TileName.Scraps,
+                    displayName: nameof(TileName.Scraps),
+                    description: "",
+                    terrain: Terrains.Scraps,
+                    movementCost: 1.0f,
+                    allowsBuilding: true),
+                new(
+                    name: TileName.Celestium,
+                    displayName: nameof(TileName.Celestium),
+                    description: "",
+                    terrain: Terrains.Celestium,
+                    movementCost: 1.0f,
+                    allowsBuilding: true)
             };
         }
     }

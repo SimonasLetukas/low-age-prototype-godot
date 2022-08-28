@@ -10,9 +10,9 @@ namespace low_age_data.Domain.Shared
             return $"{nameof(Alignment)}.{Value}";
         }
 
-        public static Alignment Positive => new Alignment(Alignments.Positive);
-        public static Alignment Neutral => new Alignment(Alignments.Neutral);
-        public static Alignment Negative => new Alignment(Alignments.Negative);
+        public static Alignment Positive => new(Alignments.Positive);
+        public static Alignment Neutral => new(Alignments.Neutral);
+        public static Alignment Negative => new(Alignments.Negative);
 
         private Alignment(Alignments @enum)
         {

@@ -10,8 +10,8 @@ namespace low_age_data.Domain.Shared
             return $"{nameof(Factions)}.{Value}";
         }
 
-        public static Factions Revelators => new Factions(FactionsEnum.Revelators);
-        public static Factions UEE => new Factions(FactionsEnum.UEE);
+        public static Factions Revelators => new(FactionsEnum.Revelators);
+        public static Factions UEE => new(FactionsEnum.UEE);
 
         private Factions(FactionsEnum @enum)
         {

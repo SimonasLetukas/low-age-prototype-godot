@@ -8,11 +8,11 @@ namespace low_age_data.Domain.Entities.Features
         {
         }
 
-        public static FeatureName ShamanWondrousGoo => new FeatureName(nameof(ShamanWondrousGoo).ToKebabCase());
-        public static FeatureName PyreCargo => new FeatureName(nameof(PyreCargo).ToKebabCase());
-        public static FeatureName PyreFlames => new FeatureName(nameof(PyreFlames).ToKebabCase());
-        public static FeatureName CannonHeatUpDangerZone => new FeatureName(nameof(CannonHeatUpDangerZone).ToKebabCase());
-        public static FeatureName RadarResonatingSweep => new FeatureName(nameof(RadarResonatingSweep).ToKebabCase());
-        public static FeatureName RadarRedDot => new FeatureName(nameof(RadarRedDot).ToKebabCase());
+        public static FeatureName ShamanWondrousGoo => new(nameof(ShamanWondrousGoo).ToKebabCase());
+        public static FeatureName PyreCargo => new(nameof(PyreCargo).ToKebabCase());
+        public static FeatureName PyreFlames => new(nameof(PyreFlames).ToKebabCase());
+        public static FeatureName CannonHeatUpDangerZone => new(nameof(CannonHeatUpDangerZone).ToKebabCase());
+        public static FeatureName RadarResonatingSweep => new(nameof(RadarResonatingSweep).ToKebabCase());
+        public static FeatureName RadarRedDot => new(nameof(RadarRedDot).ToKebabCase());
     }
 }

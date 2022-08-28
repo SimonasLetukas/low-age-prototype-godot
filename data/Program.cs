@@ -58,7 +58,7 @@ namespace low_age_data
 
             var path = Path.Combine(
                 Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory 
-                                    ?? Directory.GetCurrentDirectory())
+                                                 ?? Directory.GetCurrentDirectory())
                     .Parent.Parent.Parent.FullName, 
                 FileName);
 
@@ -68,7 +68,7 @@ namespace low_age_data
 
     class OutputObject
     {
-        public OutputEntities Entities { get; set; } = new OutputEntities();
+        public OutputEntities Entities { get; set; } = new();
         public IList<Ability> Abilities { get; set; } = new List<Ability>();
         public IList<Effect> Effects { get; set; } = new List<Effect>();
         public IList<Behaviour> Behaviours { get; set; } = new List<Behaviour>();

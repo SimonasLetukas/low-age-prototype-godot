@@ -10,9 +10,9 @@ namespace low_age_data.Domain.Shared
             return $"{nameof(TurnPhase)}.{Value}";
         }
 
-        public static TurnPhase Passive => new TurnPhase(TurnPhases.Passive);
-        public static TurnPhase Planning => new TurnPhase(TurnPhases.Planning);
-        public static TurnPhase Action => new TurnPhase(TurnPhases.Action);
+        public static TurnPhase Passive => new(TurnPhases.Passive);
+        public static TurnPhase Planning => new(TurnPhases.Planning);
+        public static TurnPhase Action => new(TurnPhases.Action);
 
         private TurnPhase(TurnPhases @enum)
         {

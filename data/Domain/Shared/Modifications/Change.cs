@@ -10,14 +10,18 @@ namespace low_age_data.Domain.Shared.Modifications
             return $"{nameof(Change)}.{Value}";
         }
 
-        public static Change AddMax => new Change(Changes.AddMax);
-        public static Change AddCurrent => new Change(Changes.AddCurrent);
-        public static Change SubtractMax => new Change(Changes.SubtractMax);
-        public static Change SubtractCurrent => new Change(Changes.SubtractCurrent);
-        public static Change SetMax => new Change(Changes.SetMax);
-        public static Change SetCurrent => new Change(Changes.SetCurrent);
-        public static Change MultiplyMax => new Change(Changes.MultiplyMax);
-        public static Change MultiplyCurrent => new Change(Changes.MultiplyCurrent);
+        public static Change AddMax => new(Changes.AddMax);
+        public static Change AddCurrent => new(Changes.AddCurrent);
+        public static Change SubtractMax => new(Changes.SubtractMax);
+        public static Change SubtractCurrent => new(Changes.SubtractCurrent);
+        public static Change SetMax => new(Changes.SetMax);
+        public static Change SetCurrent => new(Changes.SetCurrent);
+        
+        /// <summary>
+        /// The result should always be rounded up by using a ceiling function.
+        /// </summary>
+        public static Change MultiplyMax => new(Changes.MultiplyMax);
+        public static Change MultiplyCurrent => new(Changes.MultiplyCurrent);
 
         private Change(Changes @enum)
         {

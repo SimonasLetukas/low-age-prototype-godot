@@ -12,645 +12,645 @@ namespace low_age_data.Collections
         {
             return new List<Unit>
             {
-                new Unit(
-                    UnitName.Slave,
-                    nameof(UnitName.Slave),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Slave,
+                    displayName: nameof(UnitName.Slave),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(6, true, Stats.Health),
-                        new CombatStat(0, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(5, true, Stats.Movement),
-                        new CombatStat(20, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 6, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            1, 
-                            Attacks.Melee, 
-                            1, 
-                            1)
+                            maxAmount: 1, 
+                            attackType: Attacks.Melee, 
+                            minimumDistance: 1, 
+                            maximumDistance: 1)
                     },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Biological
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Slave.Build,
                         AbilityName.Slave.Repair,
                         AbilityName.Slave.ManualLabour
                     }),
 
-                new Unit(
-                    UnitName.Leader,
-                    nameof(UnitName.Leader),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Leader,
+                    displayName: nameof(UnitName.Leader),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(50, true, Stats.Health),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(5, false, Stats.RangedArmour),
-                        new CombatStat(3, true, Stats.Movement),
-                        new CombatStat(28, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 50, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 3, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 28, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            5, 
-                            Attacks.Melee, 
-                            1, 
-                            2, 
-                            CombatAttributes.Biological, 
-                            7)
+                            maxAmount: 5, 
+                            attackType: Attacks.Melee, 
+                            minimumDistance: 1, 
+                            maximumDistance: 2, 
+                            bonusTo: CombatAttributes.Biological, 
+                            bonusAmount: 7)
                     },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
                         CombatAttributes.Celestial
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Leader.AllForOne,
                         AbilityName.Leader.MenacingPresence,
                         AbilityName.Leader.OneForAll
                     }),
 
-                new Unit(
-                    UnitName.Quickdraw,
-                    nameof(UnitName.Quickdraw),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Quickdraw,
+                    displayName: nameof(UnitName.Quickdraw),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(13, true, Stats.Health),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(4, true, Stats.Movement),
-                        new CombatStat(18, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 13, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 18, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            1,
-                            Attacks.Melee,
-                            1,
-                            1),
+                            maxAmount: 1,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1),
                         new AttackStat(
-                            3,
-                            Attacks.Ranged, 
-                            2,
-                            6,
-                            CombatAttributes.Light,
-                            2)
+                            maxAmount: 3,
+                            attackType: Attacks.Ranged, 
+                            minimumDistance: 2,
+                            maximumDistance: 6,
+                            bonusTo: CombatAttributes.Light,
+                            bonusAmount: 2)
                     },
-                    Factions.Revelators, 
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators, 
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Biological,
                         CombatAttributes.Ranged
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Quickdraw.Doubleshot,
                         AbilityName.Quickdraw.Cripple
                     }),
 
-                new Unit(
-                    UnitName.Gorger,
-                    nameof(UnitName.Gorger),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Gorger,
+                    displayName: nameof(UnitName.Gorger),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(7, true, Stats.Health),
-                        new CombatStat(2, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(4, true, Stats.Movement),
-                        new CombatStat(26, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 7, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 26, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            3,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Biological,
-                            3)
+                            maxAmount: 3,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1,
+                            bonusTo: CombatAttributes.Biological,
+                            bonusAmount: 3)
                     },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
                         CombatAttributes.Biological
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Gorger.FanaticSuicide,
                         AbilityName.Gorger.FanaticSuicidePassive
                     }),
 
-                new Unit(
-                    UnitName.Camou,
-                    nameof(UnitName.Camou),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Camou,
+                    displayName: nameof(UnitName.Camou),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(19, true, Stats.Health),
-                        new CombatStat(0, false, Stats.MeleeArmour),
-                        new CombatStat(1, false, Stats.RangedArmour),
-                        new CombatStat(4, true, Stats.Movement),
-                        new CombatStat(23, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 19, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 23, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            6,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Armoured,
-                            4)
+                            maxAmount: 6,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1,
+                            bonusTo: CombatAttributes.Armoured,
+                            bonusAmount: 4)
                     },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Biological
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Camou.SilentAssassin,
                         AbilityName.Camou.Climb
                     }),
 
-                new Unit(
-                    UnitName.Shaman, 
-                    nameof(UnitName.Shaman),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Shaman, 
+                    displayName: nameof(UnitName.Shaman),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(18, true, Stats.Health),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(1, false, Stats.RangedArmour),
-                        new CombatStat(4, true, Stats.Movement),
-                        new CombatStat(19, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 18, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 19, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            1,
-                            Attacks.Melee,
-                            1,
-                            1),
+                            maxAmount: 1,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1),
                         new AttackStat(
-                            2,
-                            Attacks.Ranged,
-                            2,
-                            4,
-                            CombatAttributes.Ranged,
-                            9)
+                            maxAmount: 2,
+                            attackType: Attacks.Ranged,
+                            minimumDistance: 2,
+                            maximumDistance: 4,
+                            bonusTo: CombatAttributes.Ranged,
+                            bonusAmount: 9)
                     },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
                         CombatAttributes.Biological,
                         CombatAttributes.Ranged
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Shaman.WondrousGoo
                     }),
 
-                new Unit(
-                    UnitName.Pyre,
-                    nameof(UnitName.Pyre),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Pyre,
+                    displayName: nameof(UnitName.Pyre),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(22, true, Stats.Health),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(5, true, Stats.Movement),
-                        new CombatStat(12, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 22, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 12, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            1,
-                            Attacks.Melee,
-                            1,
-                            1),
+                            maxAmount: 1,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1),
                         new AttackStat(
-                            6,
-                            Attacks.Ranged,
-                            2,
-                            5,
-                            CombatAttributes.Armoured,
-                            8)
+                            maxAmount: 6,
+                            attackType: Attacks.Ranged,
+                            minimumDistance: 2,
+                            maximumDistance: 5,
+                            bonusTo: CombatAttributes.Armoured,
+                            bonusAmount: 8)
                     },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Mechanical,
                         CombatAttributes.Ranged
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Pyre.WallOfFlames,
                         AbilityName.Pyre.PhantomMenace
                     }),
 
-                new Unit(
-                    UnitName.BigBadBull,
-                    nameof(UnitName.BigBadBull).CamelCaseToWords(),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.BigBadBull,
+                    displayName: nameof(UnitName.BigBadBull).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(40, true, Stats.Health),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(4, true, Stats.Movement),
-                        new CombatStat(25, false, Stats.Initiative),
-                        new CombatStat(6, false, Stats.Vision),
+                        new CombatStat(maxAmount: 40, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 25, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 6, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            8,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Giant,
-                            6)
+                            maxAmount: 8,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1,
+                            bonusTo: CombatAttributes.Giant,
+                            bonusAmount: 6)
                     },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Giant,
                         CombatAttributes.Biological
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.BigBadBull.UnleashTheRage
                     },
-                    2),
+                    size: 2),
 
-                new Unit(
-                    UnitName.Mummy,
-                    nameof(UnitName.Mummy),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Mummy,
+                    displayName: nameof(UnitName.Mummy),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(39, true, Stats.Health),
-                        new CombatStat(0, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(2, true, Stats.Movement),
-                        new CombatStat(16, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 39, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 2, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 16, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            3,
-                            Attacks.Melee,
-                            1,
-                            1)
+                            maxAmount: 3,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1)
                     },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Biological
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Mummy.SpawnRoach,
                         AbilityName.Mummy.LeapOfHunger
                     }),
 
-                new Unit(
-                    UnitName.Roach,
-                    nameof(UnitName.Roach),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Roach,
+                    displayName: nameof(UnitName.Roach),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(5, true, Stats.Health),
-                        new CombatStat(0, false, Stats.MeleeArmour),
-                        new CombatStat(2, false, Stats.RangedArmour),
-                        new CombatStat(5, true, Stats.Movement),
-                        new CombatStat(15, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            6,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Mechanical,
-                            4)
+                            maxAmount: 6,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1,
+                            bonusTo: CombatAttributes.Mechanical,
+                            bonusAmount: 4)
                     },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
                         CombatAttributes.Biological
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Roach.DegradingCarapace,
                         AbilityName.Roach.CorrosiveSpit
                     }),
 
-                new Unit(
-                    UnitName.Parasite,
-                    nameof(UnitName.Parasite),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Parasite,
+                    displayName: nameof(UnitName.Parasite),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(36, true, Stats.Health),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(1, false, Stats.RangedArmour),
-                        new CombatStat(6, true, Stats.Movement),
-                        new CombatStat(14, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 36, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 6, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 14, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            0,
-                            Attacks.Melee,
-                            1,
-                            1)
+                            maxAmount: 0,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1)
                     },
-                    Factions.Revelators,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.Revelators,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Celestial
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Parasite.ParalysingGrasp
                     }),
 
-                new Unit(
-                    UnitName.Horrior, 
-                    nameof(UnitName.Horrior),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Horrior, 
+                    displayName: nameof(UnitName.Horrior),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(25, true, Stats.Health),
-                        new CombatStat(12, true, Stats.Shields),
-                        new CombatStat(3, false, Stats.MeleeArmour),
-                        new CombatStat(1, false, Stats.RangedArmour),
-                        new CombatStat(2, true, Stats.Movement),
-                        new CombatStat(32, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 25, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 12, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 3, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 2, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 32, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            9,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Armoured,
-                            4)
+                            maxAmount: 9,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1,
+                            bonusTo: CombatAttributes.Armoured,
+                            bonusAmount: 4)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
                         CombatAttributes.Biological
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Horrior.ExpertFormation,
                         AbilityName.Horrior.Mount
                     }),
 
-                new Unit(
-                    UnitName.Marksman,
-                    nameof(UnitName.Marksman),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Marksman,
+                    displayName: nameof(UnitName.Marksman),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(7, true, Stats.Health),
-                        new CombatStat(4, true, Stats.Shields),
-                        new CombatStat(0, false, Stats.MeleeArmour),
-                        new CombatStat(1, false, Stats.RangedArmour),
-                        new CombatStat(5, true, Stats.Movement),
-                        new CombatStat(17, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 7, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 17, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            1,
-                            Attacks.Melee,
-                            1,
-                            1),
+                            maxAmount: 1,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1),
                         new AttackStat(
-                            4,
-                            Attacks.Ranged, 
-                            2,
-                            7,
-                            CombatAttributes.Ranged,
-                            3)
+                            maxAmount: 4,
+                            attackType: Attacks.Ranged, 
+                            minimumDistance: 2,
+                            maximumDistance: 7,
+                            bonusTo: CombatAttributes.Ranged,
+                            bonusAmount: 3)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Biological,
                         CombatAttributes.Ranged
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Marksman.CriticalMark
                     }),
 
-                new Unit(
-                    UnitName.Surfer,
-                    nameof(UnitName.Surfer),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Surfer,
+                    displayName: nameof(UnitName.Surfer),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(2, true, Stats.Health),
-                        new CombatStat(2, true, Stats.Shields),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(5, true, Stats.Movement),
-                        new CombatStat(30, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 2, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 2, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 30, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            5,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Light,
-                            4)
+                            maxAmount: 5,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1,
+                            bonusTo: CombatAttributes.Light,
+                            bonusAmount: 4)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Biological
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Surfer.Dismount
                     }),
 
-                new Unit(
-                    UnitName.Mortar, 
-                    nameof(UnitName.Mortar),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Mortar, 
+                    displayName: nameof(UnitName.Mortar),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(10, true, Stats.Health),
-                        new CombatStat(10, true, Stats.Shields),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(4, true, Stats.Movement),
-                        new CombatStat(21, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 21, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            2,
-                            Attacks.Melee,
-                            1,
-                            1),
+                            maxAmount: 2,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1),
                         new AttackStat(
-                            8,
-                            Attacks.Ranged,
-                            2,
-                            5,
-                            CombatAttributes.Armoured,
-                            9)
+                            maxAmount: 8,
+                            attackType: Attacks.Ranged,
+                            minimumDistance: 2,
+                            maximumDistance: 5,
+                            bonusTo: CombatAttributes.Armoured,
+                            bonusAmount: 9)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
                         CombatAttributes.Biological,
                         CombatAttributes.Ranged
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Mortar.DeadlyAmmunition,
                         AbilityName.Mortar.Reload,
                         AbilityName.Mortar.PiercingBlast
                     }),
 
-                new Unit(
-                    UnitName.Hawk,
-                    nameof(UnitName.Hawk),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Hawk,
+                    displayName: nameof(UnitName.Hawk),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(9, true, Stats.Health),
-                        new CombatStat(5, true, Stats.Shields),
-                        new CombatStat(0, false, Stats.MeleeArmour),
-                        new CombatStat(0, false, Stats.RangedArmour),
-                        new CombatStat(4, true, Stats.Movement),
-                        new CombatStat(45, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 9, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 45, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            3,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Celestial,
-                            3)
+                            maxAmount: 3,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1,
+                            bonusTo: CombatAttributes.Celestial,
+                            bonusAmount: 3)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Biological
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Hawk.TacticalGoggles,
                         AbilityName.Hawk.Leadership,
                         AbilityName.Hawk.HealthKit
                     }),
 
-                new Unit(
-                    UnitName.Engineer,
-                    nameof(UnitName.Engineer),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Engineer,
+                    displayName: nameof(UnitName.Engineer),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(8, true, Stats.Health),
-                        new CombatStat(4, true, Stats.Shields),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(1, false, Stats.RangedArmour),
-                        new CombatStat(4, true, Stats.Movement),
-                        new CombatStat(11, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 8, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 11, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            1,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Mechanical,
-                            5)
+                            maxAmount: 1,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1,
+                            bonusTo: CombatAttributes.Mechanical,
+                            bonusAmount: 5)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Biological
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Engineer.AssembleMachine,
                         AbilityName.Engineer.Operate,
                         AbilityName.Engineer.Repair
                     }),                
                 
-                new Unit(
-                    UnitName.Cannon,
-                    nameof(UnitName.Cannon),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Cannon,
+                    displayName: nameof(UnitName.Cannon),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(30, true, Stats.Health),
-                        new CombatStat(8, true, Stats.Shields),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(3, false, Stats.RangedArmour),
-                        new CombatStat(1, true, Stats.Movement),
-                        new CombatStat(8, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 30, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 8, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 3, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 1, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 8, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            20,
-                            Attacks.Ranged,
-                            1,
-                            10,
-                            CombatAttributes.Structure,
-                            20)
+                            maxAmount: 20,
+                            attackType: Attacks.Ranged,
+                            minimumDistance: 1,
+                            maximumDistance: 10,
+                            bonusTo: CombatAttributes.Structure,
+                            bonusAmount: 20)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
                         CombatAttributes.Mechanical,
                         CombatAttributes.Ranged
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Cannon.Assembling,
                         AbilityName.Cannon.Machine,
                         AbilityName.Cannon.HeatUp
                     }),                
                 
-                new Unit(
-                    UnitName.Ballista,
-                    nameof(UnitName.Ballista),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Ballista,
+                    displayName: nameof(UnitName.Ballista),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(14, true, Stats.Health),
-                        new CombatStat(10, true, Stats.Shields),
-                        new CombatStat(0, false, Stats.MeleeArmour),
-                        new CombatStat(1, false, Stats.RangedArmour),
-                        new CombatStat(0, true, Stats.Movement),
-                        new CombatStat(27, false, Stats.Initiative),
-                        new CombatStat(6, false, Stats.Vision),
+                        new CombatStat(maxAmount: 14, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 27, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 6, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            9,
-                            Attacks.Ranged,
-                            1,
-                            9,
-                            CombatAttributes.Giant,
-                            6)
+                            maxAmount: 9,
+                            attackType: Attacks.Ranged,
+                            minimumDistance: 1,
+                            maximumDistance: 9,
+                            bonusTo: CombatAttributes.Giant,
+                            bonusAmount: 6)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Mechanical,
                         CombatAttributes.Ranged
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Ballista.Assembling,
                         AbilityName.Ballista.Machine,
@@ -658,27 +658,27 @@ namespace low_age_data.Collections
                         AbilityName.Ballista.Aim
                     }),                
                 
-                new Unit(
-                    UnitName.Radar,
-                    nameof(UnitName.Radar),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Radar,
+                    displayName: nameof(UnitName.Radar),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(10, true, Stats.Health),
-                        new CombatStat(12, true, Stats.Shields),
-                        new CombatStat(2, false, Stats.MeleeArmour),
-                        new CombatStat(5, false, Stats.RangedArmour),
-                        new CombatStat(0, true, Stats.Movement),
-                        new CombatStat(8, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision)
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 12, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 0, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 8, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
                         CombatAttributes.Mechanical
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Radar.Assembling,
                         AbilityName.Radar.Machine,
@@ -687,75 +687,75 @@ namespace low_age_data.Collections
                         AbilityName.Radar.RadioLocation
                     }),                
                 
-                new Unit(
-                    UnitName.Vessel,
-                    nameof(UnitName.Vessel),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Vessel,
+                    displayName: nameof(UnitName.Vessel),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(50, true, Stats.Health),
-                        new CombatStat(10, true, Stats.Shields),
-                        new CombatStat(2, false, Stats.MeleeArmour),
-                        new CombatStat(2, false, Stats.RangedArmour),
-                        new CombatStat(3, true, Stats.Movement),
-                        new CombatStat(29, false, Stats.Initiative),
-                        new CombatStat(6, false, Stats.Vision),
+                        new CombatStat(maxAmount: 50, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 3, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 29, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 6, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            2,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Mechanical,
-                            8)
+                            maxAmount: 2,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1,
+                            bonusTo: CombatAttributes.Mechanical,
+                            bonusAmount: 8)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Giant,
                         CombatAttributes.Mechanical
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
                         AbilityName.Vessel.Machine,
                         AbilityName.Vessel.AbsorbentField,
                         AbilityName.Vessel.Fortify
                     }),                
                 
-                new Unit(
-                    UnitName.Omen,
-                    nameof(UnitName.Omen),
-                    "",
-                    new List<Stat>
+                new(
+                    name: UnitName.Omen,
+                    displayName: nameof(UnitName.Omen),
+                    description: "",
+                    statistics: new List<Stat>
                     {
-                        new CombatStat(5, true, Stats.Health),
-                        new CombatStat(20, true, Stats.Shields),
-                        new CombatStat(1, false, Stats.MeleeArmour),
-                        new CombatStat(1, false, Stats.RangedArmour),
-                        new CombatStat(5, true, Stats.Movement),
-                        new CombatStat(13, false, Stats.Initiative),
-                        new CombatStat(5, false, Stats.Vision),
+                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 20, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: Stats.Movement),
+                        new CombatStat(maxAmount: 13, hasCurrent: false, combatType: Stats.Initiative),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision),
                         new AttackStat(
-                            10,
-                            Attacks.Melee,
-                            1,
-                            1,
-                            CombatAttributes.Biological,
-                            10),
+                            maxAmount: 10,
+                            attackType: Attacks.Melee,
+                            minimumDistance: 1,
+                            maximumDistance: 1,
+                            bonusTo: CombatAttributes.Biological,
+                            bonusAmount: 10),
                         new AttackStat(
-                            5,
-                            Attacks.Ranged,
-                            2,
-                            4,
-                            CombatAttributes.Biological,
-                            5)
+                            maxAmount: 5,
+                            attackType: Attacks.Ranged,
+                            minimumDistance: 2,
+                            maximumDistance: 4,
+                            bonusTo: CombatAttributes.Biological,
+                            bonusAmount: 5)
                     },
-                    Factions.UEE,
-                    new List<CombatAttributes>
+                    originalFaction: Factions.UEE,
+                    combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Celestial,
                         CombatAttributes.Ranged
                     },
-                    new List<AbilityName>
+                    abilities: new List<AbilityName>
                     {
 
                     })

@@ -18,42 +18,42 @@ namespace low_age_data.Domain.Shared.Durations
             return $"{nameof(EndsAt)}.{Value}";
         }
 
-        public static EndsAt Death => new EndsAt(Durations.Death);
-        public static EndsAt Instant => new EndsAt(Durations.Instant);
+        public static EndsAt Death => new(Durations.Death);
+        public static EndsAt Instant => new(Durations.Instant);
 
         public static class StartOf
         {
             public static class Next
             {
-                public static EndsAt Planning => new EndsAt(Durations.StartOfNextPlanning);
-                public static EndsAt ActionPhase => new EndsAt(Durations.StartOfNextActionPhase);
-                public static EndsAt Action => new EndsAt(Durations.StartOfNextAction);
+                public static EndsAt Planning => new(Durations.StartOfNextPlanning);
+                public static EndsAt ActionPhase => new(Durations.StartOfNextActionPhase);
+                public static EndsAt Action => new(Durations.StartOfNextAction);
             }
 
             public static class Second
             {
-                public static EndsAt Planning => new EndsAt(Durations.StartOfSecondPlanning);
-                public static EndsAt ActionPhase => new EndsAt(Durations.StartOfSecondActionPhase);
-                public static EndsAt Action => new EndsAt(Durations.StartOfSecondAction);
+                public static EndsAt Planning => new(Durations.StartOfSecondPlanning);
+                public static EndsAt ActionPhase => new(Durations.StartOfSecondActionPhase);
+                public static EndsAt Action => new(Durations.StartOfSecondAction);
             }
 
             public static class Third
             {
-                public static EndsAt Planning => new EndsAt(Durations.StartOfThirdPlanning);
-                public static EndsAt ActionPhase => new EndsAt(Durations.StartOfThirdActionPhase);
-                public static EndsAt Action => new EndsAt(Durations.StartOfThirdAction);
+                public static EndsAt Planning => new(Durations.StartOfThirdPlanning);
+                public static EndsAt ActionPhase => new(Durations.StartOfThirdActionPhase);
+                public static EndsAt Action => new(Durations.StartOfThirdAction);
             }
 
             public static class Fourth
             {
-                public static EndsAt Planning => new EndsAt(Durations.StartOfFourthPlanning);
-                public static EndsAt ActionPhase => new EndsAt(Durations.StartOfFourthActionPhase);
-                public static EndsAt Action => new EndsAt(Durations.StartOfFourthAction);
+                public static EndsAt Planning => new(Durations.StartOfFourthPlanning);
+                public static EndsAt ActionPhase => new(Durations.StartOfFourthActionPhase);
+                public static EndsAt Action => new(Durations.StartOfFourthAction);
             }
 
             public static class Tenth
             {
-                public static EndsAt Planning => new EndsAt(Durations.StartOfTenthPlanning);
+                public static EndsAt Planning => new(Durations.StartOfTenthPlanning);
             }
         }
 
@@ -61,37 +61,37 @@ namespace low_age_data.Domain.Shared.Durations
         {
             public static class This
             {
-                public static EndsAt Planning => new EndsAt(Durations.EndOfThisPlanning);
-                public static EndsAt ActionPhase => new EndsAt(Durations.EndOfThisActionPhase);
-                public static EndsAt Action => new EndsAt(Durations.EndOfThisAction);
+                public static EndsAt Planning => new(Durations.EndOfThisPlanning);
+                public static EndsAt ActionPhase => new(Durations.EndOfThisActionPhase);
+                public static EndsAt Action => new(Durations.EndOfThisAction);
             }
 
             public static class Next
             {
-                public static EndsAt Planning => new EndsAt(Durations.EndOfNextPlanning);
-                public static EndsAt ActionPhase => new EndsAt(Durations.EndOfNextActionPhase);
-                public static EndsAt Action => new EndsAt(Durations.EndOfNextAction);
+                public static EndsAt Planning => new(Durations.EndOfNextPlanning);
+                public static EndsAt ActionPhase => new(Durations.EndOfNextActionPhase);
+                public static EndsAt Action => new(Durations.EndOfNextAction);
             }
 
             public static class Second
             {
-                public static EndsAt Planning => new EndsAt(Durations.EndOfSecondPlanning);
-                public static EndsAt ActionPhase => new EndsAt(Durations.EndOfSecondActionPhase);
-                public static EndsAt Action => new EndsAt(Durations.EndOfSecondAction);
+                public static EndsAt Planning => new(Durations.EndOfSecondPlanning);
+                public static EndsAt ActionPhase => new(Durations.EndOfSecondActionPhase);
+                public static EndsAt Action => new(Durations.EndOfSecondAction);
             }
 
             public static class Third
             {
-                public static EndsAt Planning => new EndsAt(Durations.EndOfThirdPlanning);
-                public static EndsAt ActionPhase => new EndsAt(Durations.EndOfThirdActionPhase);
-                public static EndsAt Action => new EndsAt(Durations.EndOfThirdAction);
+                public static EndsAt Planning => new(Durations.EndOfThirdPlanning);
+                public static EndsAt ActionPhase => new(Durations.EndOfThirdActionPhase);
+                public static EndsAt Action => new(Durations.EndOfThirdAction);
             }
 
             public static class Fourth
             {
-                public static EndsAt Planning => new EndsAt(Durations.EndOfFourthPlanning);
-                public static EndsAt ActionPhase => new EndsAt(Durations.EndOfFourthActionPhase);
-                public static EndsAt Action => new EndsAt(Durations.EndOfFourthAction);
+                public static EndsAt Planning => new(Durations.EndOfFourthPlanning);
+                public static EndsAt ActionPhase => new(Durations.EndOfFourthActionPhase);
+                public static EndsAt Action => new(Durations.EndOfFourthAction);
             }
         }
 

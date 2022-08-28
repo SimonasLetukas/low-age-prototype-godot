@@ -10,14 +10,14 @@ namespace low_age_data.Domain.Shared
             return $"{nameof(CombatAttributes)}.{Value}";
         }
 
-        public static CombatAttributes Light => new CombatAttributes(CombatAttributesEnum.Light);
-        public static CombatAttributes Armoured => new CombatAttributes(CombatAttributesEnum.Armoured);
-        public static CombatAttributes Giant => new CombatAttributes(CombatAttributesEnum.Giant);
-        public static CombatAttributes Biological => new CombatAttributes(CombatAttributesEnum.Biological);
-        public static CombatAttributes Mechanical => new CombatAttributes(CombatAttributesEnum.Mechanical);
-        public static CombatAttributes Celestial => new CombatAttributes(CombatAttributesEnum.Celestial);
-        public static CombatAttributes Structure => new CombatAttributes(CombatAttributesEnum.Structure);
-        public static CombatAttributes Ranged => new CombatAttributes(CombatAttributesEnum.Ranged);
+        public static CombatAttributes Light => new(CombatAttributesEnum.Light);
+        public static CombatAttributes Armoured => new(CombatAttributesEnum.Armoured);
+        public static CombatAttributes Giant => new(CombatAttributesEnum.Giant);
+        public static CombatAttributes Biological => new(CombatAttributesEnum.Biological);
+        public static CombatAttributes Mechanical => new(CombatAttributesEnum.Mechanical);
+        public static CombatAttributes Celestial => new(CombatAttributesEnum.Celestial);
+        public static CombatAttributes Structure => new(CombatAttributesEnum.Structure);
+        public static CombatAttributes Ranged => new(CombatAttributesEnum.Ranged);
 
         private CombatAttributes(CombatAttributesEnum @enum)
         {
