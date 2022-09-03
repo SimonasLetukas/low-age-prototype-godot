@@ -14,5 +14,6 @@ namespace low_age_data.Domain.Entities.Features
         public static FeatureName CannonHeatUpDangerZone => new(nameof(CannonHeatUpDangerZone).ToKebabCase());
         public static FeatureName RadarResonatingSweep => new(nameof(RadarResonatingSweep).ToKebabCase());
         public static FeatureName RadarRedDot => new(nameof(RadarRedDot).ToKebabCase());
+        public static FeatureName VesselFortification => new(nameof(VesselFortification).ToKebabCase());
     }
 }

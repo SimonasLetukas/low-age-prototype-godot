@@ -1395,6 +1395,7 @@
         "collisionFilters": [
           "Flag.FilterUnit"
         ],
+        "periodicEffect": null,
         "size": 1,
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
@@ -1406,6 +1407,7 @@
         "name": "feature-pyre-cargo",
         "onCollisionEffect": null,
         "collisionFilters": [],
+        "periodicEffect": null,
         "size": 1,
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
@@ -1419,6 +1421,7 @@
         "collisionFilters": [
           "Flag.FilterUnit"
         ],
+        "periodicEffect": null,
         "size": 1,
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
@@ -1430,6 +1433,7 @@
         "name": "feature-cannon-heat-up-danger-zone",
         "onCollisionEffect": null,
         "collisionFilters": [],
+        "periodicEffect": null,
         "size": 1,
         "statsCopiedFromSource": true,
         "alliesCanStack": true,
@@ -1441,6 +1445,7 @@
         "name": "feature-radar-resonating-sweep",
         "onCollisionEffect": null,
         "collisionFilters": [],
+        "periodicEffect": null,
         "size": 3,
         "statsCopiedFromSource": false,
         "alliesCanStack": true,
@@ -1452,12 +1457,25 @@
         "name": "feature-radar-red-dot",
         "onCollisionEffect": null,
         "collisionFilters": [],
+        "periodicEffect": null,
         "size": 1,
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": false,
         "displayName": "Radar Red Dot",
         "description": "This red dot shows where enemy unit is currently located inside the fog of war."
+      },
+      {
+        "name": "feature-vessel-fortification",
+        "onCollisionEffect": null,
+        "collisionFilters": [],
+        "periodicEffect": null,
+        "size": 7,
+        "statsCopiedFromSource": false,
+        "alliesCanStack": true,
+        "onlyOneCanExist": false,
+        "displayName": "Vessel Fortification",
+        "description": "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of Vessel's action."
       }
     ]
   },
@@ -2285,6 +2303,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Absorbent Field",
       "description": "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, which is instead dealt to Vessel."
+    },
+    {
+      "name": "ability-vessel-fortify",
+      "type": "Ability.Instant",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [
+        "Research.HardenedMatrix"
+      ],
+      "effects": [
+        "effect-vessel-fortify-create-entity"
+      ],
+      "hasButton": true,
+      "cooldown": "EndsAt.EndOfSecondActionPhase",
+      "displayName": "Fortify",
+      "description": "Provide +3 Melee Armour and +3 Range Armour to all friendly units in 3 Attack Distance until the start of the next Vessel's action."
     }
   ],
   "effects": [
@@ -4066,6 +4099,58 @@
       "ignoresArmor": true,
       "filterFlags": [],
       "validators": []
+    },
+    {
+      "name": "effect-vessel-fortify-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "feature-vessel-fortification",
+      "initialEntityBehaviours": [
+        "behaviour-vessel-fortify-destroy-buff"
+      ],
+      "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-vessel-fortify-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Self",
+      "blocksBehaviours": false,
+      "validators": []
+    },
+    {
+      "name": "effect-vessel-fortify-search",
+      "type": "Effect.Search",
+      "radius": 0,
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnEnter",
+        "Flag.EffectSearchRemovedOnExit"
+      ],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-vessel-fortify-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "shape": "Shape.Circle",
+      "ignoreCenter": false,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-vessel-fortify-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-vessel-fortify-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit"
+      ],
+      "behaviourOwner": null,
+      "validators": []
     }
   ],
   "behaviours": [
@@ -5715,6 +5800,63 @@
       "endsAt": "EndsAt.Death",
       "ownerAllowed": true,
       "hasSameInstanceForAllOwners": true
+    },
+    {
+      "name": "behaviour-vessel-fortify-destroy-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-vessel-fortify-destroy"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Fortify Destroy Buff",
+      "description": "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of Vessel's action.",
+      "endsAt": "EndsAt.StartOfNextAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-vessel-fortify-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.MeleeArmour",
+          "change": "Change.AddCurrent",
+          "amount": 3.0
+        },
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.RangedArmour",
+          "change": "Change.AddCurrent",
+          "amount": 3.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Fortify Buff",
+      "description": "Has +3 Melee Armour and +3 Range Armour due to a nearby fortified Vessel",
+      "endsAt": "EndsAt.StartOfNextAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
     }
   ]
 }

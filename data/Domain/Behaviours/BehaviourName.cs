@@ -146,6 +146,8 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName MachineBuff => new($"{nameof(Vessel)}{nameof(MachineBuff)}".ToKebabCase());
             public static BehaviourName AbsorbentFieldBuffMelee => new($"{nameof(Vessel)}{nameof(AbsorbentFieldBuffMelee)}".ToKebabCase());
             public static BehaviourName AbsorbentFieldBuffRanged => new($"{nameof(Vessel)}{nameof(AbsorbentFieldBuffRanged)}".ToKebabCase());
+            public static BehaviourName FortifyDestroyBuff => new($"{nameof(Vessel)}{nameof(FortifyDestroyBuff)}".ToKebabCase());
+            public static BehaviourName FortifyBuff => new($"{nameof(Vessel)}{nameof(FortifyBuff)}".ToKebabCase());
         }
     }
 }

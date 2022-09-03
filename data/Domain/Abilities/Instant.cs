@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Shared;
+using low_age_data.Domain.Shared.Durations;
 
 namespace low_age_data.Domain.Abilities
 {
@@ -12,7 +13,17 @@ namespace low_age_data.Domain.Abilities
             string displayName, 
             string description,
             IList<EffectName> effects,
-            IList<Research>? researchNeeded = null) : base(name, $"{nameof(Ability)}.{nameof(Instant)}", turnPhase, researchNeeded ?? new List<Research>(), true, displayName, description)
+            EndsAt? cooldown = null,
+            IList<Research>? researchNeeded = null) 
+            : base(
+                name, 
+                $"{nameof(Ability)}.{nameof(Instant)}", 
+                turnPhase, 
+                researchNeeded ?? new List<Research>(), 
+                true, 
+                displayName, 
+                description, 
+                cooldown)
         {
             Effects = effects;
         }

@@ -1314,7 +1314,53 @@ namespace low_age_data.Collections
                     name: EffectName.Vessel.AbsorbentFieldDamageRanged,
                     damageType: DamageType.CurrentRanged,
                     location: Location.Origin,
-                    ignoresArmor: true)
+                    ignoresArmor: true),
+                
+                new CreateEntity(
+                    name: EffectName.Vessel.FortifyCreateEntity,
+                    entityToCreate: FeatureName.VesselFortification,
+                    initialEntityBehaviours: new List<BehaviourName>
+                    {
+                        BehaviourName.Vessel.FortifyDestroyBuff
+                    }),
+                
+                new Destroy(
+                    EffectName.Vessel.FortifyDestroy,
+                    Location.Self),
+
+                new Search(
+                    name: EffectName.Vessel.FortifySearch,
+                    radius: 0,
+                    searchFlags: new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnEnter,
+                        Flag.Effect.Search.RemovedOnExit
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Vessel.FortifyApplyBehaviour
+                    },
+                    location: Location.Self,
+                    shape: Shape.Circle,
+                    ignoreCenter: false),
+                
+                new ApplyBehaviour(
+                    EffectName.Vessel.FortifyApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Vessel.FortifyBuff
+                    },
+                    Location.Actor,
+                    new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit
+                    })
             };
         }
     }

@@ -13,8 +13,8 @@ namespace low_age_data.Domain.Entities.Features
             string displayName, 
             string description,
             EffectName? onCollisionEffect = null,
-            // TODO flag for continuous collision every turn?
             IList<Flag>? collisionFilters = null,
+            EffectName? periodicEffect = null,
             int? size = null,
             bool? statsCopiedFromSource = null,
             bool? alliesCanStack = null,
@@ -30,6 +30,12 @@ namespace low_age_data.Domain.Entities.Features
 
         public EffectName? OnCollisionEffect { get; }
         public IList<Flag> CollisionFilters { get; }
+        
+        /// <summary>
+        /// Executes effect as often as possible
+        /// </summary>
+        public EffectName? PeriodicEffect { get; }
+        
         public int Size { get; }
         
         /// <summary>

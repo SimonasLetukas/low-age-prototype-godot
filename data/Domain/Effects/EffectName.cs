@@ -195,6 +195,10 @@ namespace low_age_data.Domain.Effects
             public static EffectName AbsorbentFieldApplyBehaviour => new($"{nameof(Vessel)}{nameof(AbsorbentFieldApplyBehaviour)}".ToKebabCase());
             public static EffectName AbsorbentFieldDamageMelee => new($"{nameof(Vessel)}{nameof(AbsorbentFieldDamageMelee)}".ToKebabCase());
             public static EffectName AbsorbentFieldDamageRanged => new($"{nameof(Vessel)}{nameof(AbsorbentFieldDamageRanged)}".ToKebabCase());
+            public static EffectName FortifyCreateEntity => new($"{nameof(Vessel)}{nameof(FortifyCreateEntity)}".ToKebabCase());
+            public static EffectName FortifyDestroy => new($"{nameof(Vessel)}{nameof(FortifyDestroy)}".ToKebabCase());
+            public static EffectName FortifySearch => new($"{nameof(Vessel)}{nameof(FortifySearch)}".ToKebabCase());
+            public static EffectName FortifyApplyBehaviour => new($"{nameof(Vessel)}{nameof(FortifyApplyBehaviour)}".ToKebabCase());
         }
     }
 }

@@ -62,7 +62,17 @@ namespace low_age_data.Collections
                     name: FeatureName.RadarRedDot, 
                     displayName: nameof(FeatureName.RadarRedDot).CamelCaseToWords(),
                     description: "This red dot shows where enemy unit is currently located inside the fog of war.",
-                    size: 1)
+                    size: 1),
+                
+                new(
+                    name: FeatureName.VesselFortification,
+                    displayName: nameof(FeatureName.VesselFortification).CamelCaseToWords(),
+                    description: "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of " +
+                                 "Vessel's action.",
+                    periodicEffect: EffectName.Vessel.FortifySearch,
+                    size: 7,
+                    alliesCanStack: true,
+                    onlyOneCanExist: false)
             };
         }
     }

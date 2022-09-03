@@ -698,7 +698,23 @@ namespace low_age_data.Collections
                     description: "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, " +
                                  "which is instead dealt to Vessel.",
                     hasButton: true,
-                    periodicEffect: EffectName.Vessel.AbsorbentFieldSearch)
+                    periodicEffect: EffectName.Vessel.AbsorbentFieldSearch),
+                
+                new Instant(
+                    name: AbilityName.Vessel.Fortify,
+                    turnPhase: TurnPhase.Action,
+                    displayName: nameof(AbilityName.Vessel.Fortify).CamelCaseToWords(),
+                    description: "Provide +3 Melee Armour and +3 Range Armour to all friendly units in 3 Attack " +
+                                 "Distance until the start of the next Vessel's action.",
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Vessel.FortifyCreateEntity,
+                    },
+                    researchNeeded: new List<Research>
+                    {
+                        Research.Uee.HardenedMatrix
+                    },
+                    cooldown: EndsAt.EndOf.Second.ActionPhase)
             };
         }
     }

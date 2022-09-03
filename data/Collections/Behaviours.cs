@@ -1294,7 +1294,50 @@ namespace low_age_data.Collections
                     },
                     restoreChangesOnEnd: true,
                     ownerAllowed: true,
-                    hasSameInstanceForAllOwners: true)
+                    hasSameInstanceForAllOwners: true),
+                
+                new Buff(
+                    name: BehaviourName.Vessel.FortifyDestroyBuff,
+                    displayName: nameof(BehaviourName.Vessel.FortifyDestroyBuff).CamelCaseToWords(),
+                    description: "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start " +
+                                 "of Vessel's action.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
+                    {
+                        EffectName.Vessel.FortifyDestroy
+                    },
+                    endsAt: EndsAt.StartOf.Next.Action,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive),
+                
+                new Buff(
+                    name: BehaviourName.Vessel.FortifyBuff,
+                    displayName: nameof(BehaviourName.Vessel.FortifyBuff).CamelCaseToWords(),
+                    description: "Has +3 Melee Armour and +3 Range Armour due to a nearby fortified Vessel",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.AddCurrent,
+                            amount: 3,
+                            stat: Stats.MeleeArmour),
+                        new StatModification(
+                            change: Change.AddCurrent,
+                            amount: 3,
+                            stat: Stats.RangedArmour)
+                    },
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.StartOf.Next.Action,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    restoreChangesOnEnd: true)
             };
         }
     }
