@@ -23,13 +23,17 @@ namespace low_age_data.Domain.Behaviours
             Location? shareWith = null,
             Amount? amountShared = null,
             DamageType? damageTypeShared = null,
-            bool? reduceByTheSharedAmount = null) 
+            bool? reduceByTheSharedAmount = null,
+            bool? ownerAllowed = null,
+            bool? hasSameInstanceForAllOwners = null) 
             : base(
                 name, 
                 $"{nameof(Behaviour)}.{nameof(InterceptDamage)}", 
                 displayName, 
                 description, 
-                endsAt)
+                endsAt,
+                ownerAllowed, 
+                hasSameInstanceForAllOwners)
         {
             NumberOfInterceptions = numberOfInterceptions;
             DamageTypes = damageTypes ?? new List<DamageType>();

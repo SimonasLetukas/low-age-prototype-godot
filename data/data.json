@@ -4139,7 +4139,8 @@
         "Flag.EffectSearchRemovedOnExit"
       ],
       "filterFlags": [
-        "Flag.FilterEnemy"
+        "Flag.FilterAlly",
+        "Flag.FilterUnit"
       ],
       "effects": [
         "effect-vessel-absorbent-field-apply-behaviour"
@@ -4154,58 +4155,15 @@
       "name": "effect-vessel-absorbent-field-apply-behaviour",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
-        "behaviour-vessel-absorbent-field-buff-melee"
+        "behaviour-vessel-absorbent-field-intercept-damage"
       ],
       "location": "Location.Actor",
       "filterFlags": [
-        "Flag.FilterEnemy"
+        "Flag.FilterAlly",
+        "Flag.FilterUnit"
       ],
       "behaviourOwner": "Location.Origin",
       "waitForInitialEffects": false,
-      "validators": []
-    },
-    {
-      "name": "effect-vessel-absorbent-field-damage-melee",
-      "type": "Effect.Damage",
-      "damageType": "DamageType.CurrentMelee",
-      "amount": {
-        "flat": 0,
-        "multiplier": null,
-        "multiplierOf": null,
-        "multiplierFlags": []
-      },
-      "bonusTo": null,
-      "bonusAmount": {
-        "flat": 0,
-        "multiplier": null,
-        "multiplierOf": null,
-        "multiplierFlags": []
-      },
-      "location": "Location.Origin",
-      "ignoresArmor": true,
-      "filterFlags": [],
-      "validators": []
-    },
-    {
-      "name": "effect-vessel-absorbent-field-damage-ranged",
-      "type": "Effect.Damage",
-      "damageType": "DamageType.CurrentRanged",
-      "amount": {
-        "flat": 0,
-        "multiplier": null,
-        "multiplierOf": null,
-        "multiplierFlags": []
-      },
-      "bonusTo": null,
-      "bonusAmount": {
-        "flat": 0,
-        "multiplier": null,
-        "multiplierOf": null,
-        "multiplierFlags": []
-      },
-      "location": "Location.Origin",
-      "ignoresArmor": true,
-      "filterFlags": [],
       "validators": []
     },
     {
@@ -5916,82 +5874,29 @@
       "hasSameInstanceForAllOwners": false
     },
     {
-      "name": "behaviour-vessel-absorbent-field-buff-melee",
-      "type": "Behaviour.Buff",
-      "modificationFlags": [],
-      "initialModifications": [
-        {
-          "type": "Modification.AttackModification",
-          "attackType": "Attacks.Melee",
-          "attribute": "AttackAttribute.MaxAmount",
-          "modificationFlags": [],
-          "change": "Change.MultiplyMax",
-          "amount": 0.5
-        }
+      "name": "behaviour-vessel-absorbent-field-intercept-damage",
+      "type": "Behaviour.InterceptDamage",
+      "numberOfInterceptions": 0,
+      "damageTypes": [
+        "DamageType.Melee",
+        "DamageType.Ranged"
       ],
-      "initialEffects": [],
-      "finalModifications": [],
-      "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [
-        {
-          "events": [
-            "Event.EntityMeleeAttacks"
-          ],
-          "validators": []
-        }
-      ],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [
-        "effect-vessel-absorbent-field-damage-melee"
-      ],
-      "restoreChangesOnEnd": true,
-      "displayName": "Absorbent Field Buff Melee",
-      "description": "The melee damage this unit deals is reduced by 50%, but this amount is also dealt to a nearby Vessel.",
+      "amountDealtInstead": null,
+      "damageTypeDealtInstead": null,
+      "shareWith": "Location.Origin",
+      "amountShared": {
+        "flat": 0,
+        "multiplier": 0.5,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "damageTypeShared": null,
+      "reduceByTheSharedAmount": true,
+      "displayName": "Absorbent Field Intercept Damage",
+      "description": "The melee and ranged damage this unit receives is reduced by 50%, but this amount is also dealt to a nearby Vessel.",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": true,
-      "hasSameInstanceForAllOwners": true
-    },
-    {
-      "name": "behaviour-vessel-absorbent-field-buff-ranged",
-      "type": "Behaviour.Buff",
-      "modificationFlags": [],
-      "initialModifications": [
-        {
-          "type": "Modification.AttackModification",
-          "attackType": "Attacks.Ranged",
-          "attribute": "AttackAttribute.MaxAmount",
-          "modificationFlags": [],
-          "change": "Change.MultiplyMax",
-          "amount": 0.5
-        }
-      ],
-      "initialEffects": [],
-      "finalModifications": [],
-      "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [
-        {
-          "events": [
-            "Event.EntityRangedAttacks"
-          ],
-          "validators": []
-        }
-      ],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [
-        "effect-vessel-absorbent-field-damage-ranged"
-      ],
-      "restoreChangesOnEnd": true,
-      "displayName": "Absorbent Field Buff Ranged",
-      "description": "The ranged damage this unit deals is reduced by 50%, but this amount is also dealt to a nearby Vessel.",
-      "endsAt": "EndsAt.Death",
-      "ownerAllowed": true,
-      "hasSameInstanceForAllOwners": true
+      "hasSameInstanceForAllOwners": false
     },
     {
       "name": "behaviour-vessel-fortify-destroy-buff",

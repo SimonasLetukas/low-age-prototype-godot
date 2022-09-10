@@ -1231,71 +1231,28 @@ namespace low_age_data.Collections
                     destroyOnConditionsMet: false,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
-                    
-                new Buff(
-                    name: BehaviourName.Vessel.AbsorbentFieldBuffMelee,
-                    displayName: nameof(BehaviourName.Vessel.AbsorbentFieldBuffMelee).CamelCaseToWords(),
-                    description: "The melee damage this unit deals is reduced by 50%, but this amount is also dealt " +
-                                 "to a nearby Vessel.",
-                    initialModifications: new List<Modification>
+
+                new InterceptDamage(
+                    BehaviourName.Vessel.AbsorbentFieldInterceptDamage,
+                    nameof(BehaviourName.Vessel.AbsorbentFieldInterceptDamage).CamelCaseToWords(),
+                    "The melee and ranged damage this unit receives is reduced by 50%, but this amount is " +
+                    "also dealt to a nearby Vessel.",
+                    EndsAt.Death,
+                    0,
+                    new List<DamageType>
                     {
-                        new AttackModification(
-                            change: Change.MultiplyMax, 
-                            amount: 0.5f, 
-                            attackType: Attacks.Melee, 
-                            attribute: AttackAttribute.MaxAmount)
+                        DamageType.Melee,
+                        DamageType.Ranged
                     },
-                    endsAt: EndsAt.Death,
-                    canStack: false,
-                    alignment: Alignment.Negative,
-                    triggers: new List<Trigger>
-                    {
-                        new(events: new List<Event>
-                            {
-                                Event.EntityMeleeAttacks
-                            })
-                    },
-                    destroyOnConditionsMet: false,
-                    conditionalEffects: new List<EffectName>
-                    {
-                        EffectName.Vessel.AbsorbentFieldDamageMelee
-                    },
-                    restoreChangesOnEnd: true,
-                    ownerAllowed: true,
-                    hasSameInstanceForAllOwners: true),
-                
-                new Buff(
-                    name: BehaviourName.Vessel.AbsorbentFieldBuffRanged,
-                    displayName: nameof(BehaviourName.Vessel.AbsorbentFieldBuffRanged).CamelCaseToWords(),
-                    description: "The ranged damage this unit deals is reduced by 50%, but this amount is also dealt " +
-                                 "to a nearby Vessel.",
-                    initialModifications: new List<Modification>
-                    {
-                        new AttackModification(
-                            change: Change.MultiplyMax, 
-                            amount: 0.5f, 
-                            attackType: Attacks.Ranged, 
-                            attribute: AttackAttribute.MaxAmount)
-                    },
-                    endsAt: EndsAt.Death,
-                    canStack: false,
-                    alignment: Alignment.Negative,
-                    triggers: new List<Trigger>
-                    {
-                        new(events: new List<Event>
-                        {
-                            Event.EntityRangedAttacks
-                        })
-                    },
-                    destroyOnConditionsMet: false,
-                    conditionalEffects: new List<EffectName>
-                    {
-                        EffectName.Vessel.AbsorbentFieldDamageRanged
-                    },
-                    restoreChangesOnEnd: true,
-                    ownerAllowed: true,
-                    hasSameInstanceForAllOwners: true),
-                
+                    null,
+                    null,
+                    Location.Origin,
+                    new Amount(0, 0.5f),
+                    null,
+                    true,
+                    true,
+                    false),
+
                 new Buff(
                     name: BehaviourName.Vessel.FortifyDestroyBuff,
                     displayName: nameof(BehaviourName.Vessel.FortifyDestroyBuff).CamelCaseToWords(),

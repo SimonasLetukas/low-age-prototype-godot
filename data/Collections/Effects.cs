@@ -1283,7 +1283,8 @@ namespace low_age_data.Collections
                     },
                     filterFlags: new List<Flag>
                     {
-                        Flag.Filter.Enemy
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit
                     },
                     effects: new List<EffectName>
                     {
@@ -1295,27 +1296,16 @@ namespace low_age_data.Collections
                     name: EffectName.Vessel.AbsorbentFieldApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
-                        BehaviourName.Vessel.AbsorbentFieldBuffMelee
+                        BehaviourName.Vessel.AbsorbentFieldInterceptDamage
                     },
                     location: Location.Actor,
                     filterFlags: new List<Flag>
                     {
-                        Flag.Filter.Enemy
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit
                     },
                     behaviourOwner: Location.Origin),
-                
-                new Damage(
-                    name: EffectName.Vessel.AbsorbentFieldDamageMelee,
-                    damageType: DamageType.CurrentMelee,
-                    location: Location.Origin,
-                    ignoresArmor: true),
-                
-                new Damage(
-                    name: EffectName.Vessel.AbsorbentFieldDamageRanged,
-                    damageType: DamageType.CurrentRanged,
-                    location: Location.Origin,
-                    ignoresArmor: true),
-                
+
                 new CreateEntity(
                     name: EffectName.Vessel.FortifyCreateEntity,
                     entityToCreate: FeatureName.VesselFortification,
