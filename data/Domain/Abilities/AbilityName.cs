@@ -145,7 +145,8 @@ namespace low_age_data.Domain.Abilities
         
         public static class Omen
         {
-            
+            public static AbilityName Rendition => new($"{nameof(Omen)}{nameof(Rendition)}".ToKebabCase());
+            public static AbilityName RenditionPlacement => new($"{nameof(Omen)}{nameof(RenditionPlacement)}".ToKebabCase());
         }
     }
 }

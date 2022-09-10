@@ -29,6 +29,8 @@ namespace low_age_data.Collections
                     displayName: nameof(FeatureName.PyreCargo).CamelCaseToWords(),
                     description: "The cargo which is attached to Pyre leaves a path of flames when moved, which " +
                                  "stay until the start of the next Pyre's action or until death.",
+                    canBeAttacked: true,
+                    occupiesSpace: true,
                     onlyOneCanExist: true),
 
                 new(
@@ -72,7 +74,16 @@ namespace low_age_data.Collections
                     periodicEffect: EffectName.Vessel.FortifySearch,
                     size: 7,
                     alliesCanStack: true,
-                    onlyOneCanExist: false)
+                    onlyOneCanExist: false),
+                
+                new(
+                    name: FeatureName.OmenRendition,
+                    displayName: nameof(FeatureName.OmenRendition).CamelCaseToWords(),
+                    description: "50% of all damage done to this rendition will be done as Pure Damage to the original " +
+                                 "target.",
+                    canBeAttacked: true,
+                    occupiesSpace: true,
+                    statsCopiedFromSource: true)
             };
         }
     }

@@ -149,5 +149,14 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName FortifyDestroyBuff => new($"{nameof(Vessel)}{nameof(FortifyDestroyBuff)}".ToKebabCase());
             public static BehaviourName FortifyBuff => new($"{nameof(Vessel)}{nameof(FortifyBuff)}".ToKebabCase());
         }
+
+        public static class Omen
+        {
+            public static BehaviourName RenditionPlacementBuff => new($"{nameof(Omen)}{nameof(RenditionPlacementBuff)}".ToKebabCase());
+            public static BehaviourName RenditionInterceptDamage => new($"{nameof(Omen)}{nameof(RenditionInterceptDamage)}".ToKebabCase());
+            public static BehaviourName RenditionBuffTimer => new($"{nameof(Omen)}{nameof(RenditionBuffTimer)}".ToKebabCase());
+            public static BehaviourName RenditionBuffDeath => new($"{nameof(Omen)}{nameof(RenditionBuffDeath)}".ToKebabCase());
+            public static BehaviourName RenditionBuffSlow => new($"{nameof(Omen)}{nameof(RenditionBuffSlow)}".ToKebabCase());
+        }
     }
 }

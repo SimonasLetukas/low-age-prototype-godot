@@ -714,7 +714,37 @@ namespace low_age_data.Collections
                     {
                         Research.Uee.HardenedMatrix
                     },
-                    cooldown: EndsAt.EndOf.Second.ActionPhase)
+                    cooldown: EndsAt.EndOf.Second.ActionPhase),
+                
+                new Target(
+                    name: AbilityName.Omen.Rendition,
+                    turnPhase: TurnPhase.Action, 
+                    displayName: nameof(AbilityName.Omen.Rendition).CamelCaseToWords(),
+                    description: "Place a ghostly rendition of a selected enemy unit in 7 Attack Distance to an " +
+                                 "unoccupied space in a 3 Attack Distance from the selected target. The rendition has the same " +
+                                 "amount of Health, Melee and Range Armour as the selected target, cannot act, can be attacked " +
+                                 "and stays for 2 action phases or until the selected target is dead. 50% of all damage done to " +
+                                 "the rendition is done as Pure Damage to the selected target. If the rendition is destroyed " +
+                                 "before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows " +
+                                 "all adjacent enemies by 50% until the end of their next action.",
+                    distance: 7,
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Omen.RenditionPlacementApplyBehaviour
+                    },
+                    cooldown: EndsAt.EndOf.Second.ActionPhase),
+                
+                new Target(
+                    name: AbilityName.Omen.RenditionPlacement,
+                    turnPhase: TurnPhase.Action, 
+                    displayName: nameof(AbilityName.Omen.RenditionPlacement).CamelCaseToWords(),
+                    description: "Select an unoccupied space in a 3 Attack Distance to place the rendition of the " +
+                                 "selected target.",
+                    distance: 3,
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Omen.RenditionPlacementCreateEntity
+                    })
             };
         }
     }

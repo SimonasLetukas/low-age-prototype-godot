@@ -1259,7 +1259,7 @@
       },
       {
         "name": "unit-vessel",
-        "size": 1,
+        "size": 2,
         "statistics": [
           {
             "combatType": "Stats.Health",
@@ -1382,7 +1382,9 @@
           "CombatAttributes.Celestial",
           "CombatAttributes.Ranged"
         ],
-        "abilities": [],
+        "abilities": [
+          "ability-omen-rendition"
+        ],
         "displayName": "Omen",
         "description": ""
       }
@@ -1397,6 +1399,8 @@
         ],
         "periodicEffect": null,
         "size": 1,
+        "canBeAttacked": false,
+        "occupiesSpace": false,
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": true,
@@ -1409,6 +1413,8 @@
         "collisionFilters": [],
         "periodicEffect": null,
         "size": 1,
+        "canBeAttacked": true,
+        "occupiesSpace": true,
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": true,
@@ -1423,6 +1429,8 @@
         ],
         "periodicEffect": null,
         "size": 1,
+        "canBeAttacked": false,
+        "occupiesSpace": false,
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": true,
@@ -1435,6 +1443,8 @@
         "collisionFilters": [],
         "periodicEffect": null,
         "size": 1,
+        "canBeAttacked": false,
+        "occupiesSpace": false,
         "statsCopiedFromSource": true,
         "alliesCanStack": true,
         "onlyOneCanExist": false,
@@ -1447,6 +1457,8 @@
         "collisionFilters": [],
         "periodicEffect": null,
         "size": 3,
+        "canBeAttacked": false,
+        "occupiesSpace": false,
         "statsCopiedFromSource": false,
         "alliesCanStack": true,
         "onlyOneCanExist": false,
@@ -1459,6 +1471,8 @@
         "collisionFilters": [],
         "periodicEffect": null,
         "size": 1,
+        "canBeAttacked": false,
+        "occupiesSpace": false,
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": false,
@@ -1471,11 +1485,27 @@
         "collisionFilters": [],
         "periodicEffect": null,
         "size": 7,
+        "canBeAttacked": false,
+        "occupiesSpace": false,
         "statsCopiedFromSource": false,
         "alliesCanStack": true,
         "onlyOneCanExist": false,
         "displayName": "Vessel Fortification",
         "description": "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of Vessel's action."
+      },
+      {
+        "name": "feature-omen-rendition",
+        "onCollisionEffect": null,
+        "collisionFilters": [],
+        "periodicEffect": null,
+        "size": 1,
+        "canBeAttacked": true,
+        "occupiesSpace": true,
+        "statsCopiedFromSource": true,
+        "alliesCanStack": false,
+        "onlyOneCanExist": false,
+        "displayName": "Omen Rendition",
+        "description": "50% of all damage done to this rendition will be done as Pure Damage to the original target."
       }
     ]
   },
@@ -2318,6 +2348,38 @@
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "displayName": "Fortify",
       "description": "Provide +3 Melee Armour and +3 Range Armour to all friendly units in 3 Attack Distance until the start of the next Vessel's action."
+    },
+    {
+      "name": "ability-omen-rendition",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 7,
+      "effects": [
+        "effect-omen-rendition-placement-apply-behaviour"
+      ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
+      "hasButton": true,
+      "cooldown": "EndsAt.EndOfSecondActionPhase",
+      "displayName": "Rendition",
+      "description": "Place a ghostly rendition of a selected enemy unit in 7 Attack Distance to an unoccupied space in a 3 Attack Distance from the selected target. The rendition has the same amount of Health, Melee and Range Armour as the selected target, cannot act, can be attacked and stays for 2 action phases or until the selected target is dead. 50% of all damage done to the rendition is done as Pure Damage to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows all adjacent enemies by 50% until the end of their next action."
+    },
+    {
+      "name": "ability-omen-rendition-placement",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Action",
+      "researchNeeded": [],
+      "distance": 3,
+      "effects": [
+        "effect-omen-rendition-placement-create-entity"
+      ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Rendition Placement",
+      "description": "Select an unoccupied space in a 3 Attack Distance to place the rendition of the selected target."
     }
   ],
   "effects": [
@@ -2332,6 +2394,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -2378,6 +2441,7 @@
       "location": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -2393,6 +2457,7 @@
         "Flag.FilterSpecificStructureObelisk"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "type": "Validator",
@@ -2435,6 +2500,7 @@
       "location": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -2449,6 +2515,7 @@
         "Flag.FilterStructure"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "type": "Validator",
@@ -2473,6 +2540,7 @@
       "location": "Location.Origin",
       "filterFlags": [],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -2488,6 +2556,7 @@
         "Flag.FilterSpecificStructureHut"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "type": "Validator",
@@ -2512,6 +2581,7 @@
       "location": "Location.Origin",
       "filterFlags": [],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -2542,6 +2612,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -2556,6 +2627,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -2569,6 +2641,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -2671,6 +2744,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "searchEffect": "effect-camou-silent-assassin-search-friendly",
@@ -2774,6 +2848,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -2817,6 +2892,7 @@
       "location": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -2907,6 +2983,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3009,6 +3086,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3022,6 +3100,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3084,6 +3163,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "type": "Validator",
@@ -3111,6 +3191,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "type": "Validator",
@@ -3137,6 +3218,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "type": "Validator",
@@ -3184,6 +3266,7 @@
       "location": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3197,6 +3280,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3226,6 +3310,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3264,6 +3349,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3286,6 +3372,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3341,6 +3428,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3362,6 +3450,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3376,6 +3465,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3391,6 +3481,7 @@
         "Flag.FilterAttributeRanged"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3405,6 +3496,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3434,6 +3526,7 @@
       "location": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3451,6 +3544,7 @@
         "Flag.FilterSpecificUnitVessel"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "type": "Validator",
@@ -3523,6 +3617,7 @@
         "Flag.FilterStructure"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "type": "Validator",
@@ -3554,6 +3649,7 @@
         "Flag.FilterSpecificUnitVessel"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "type": "Validator",
@@ -3582,6 +3678,7 @@
         "Flag.FilterSpecificUnitHorrior"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": [
         {
           "type": "Validator",
@@ -3606,6 +3703,7 @@
       "location": "Location.Origin",
       "filterFlags": [],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3621,6 +3719,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3659,6 +3758,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3736,6 +3836,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3804,6 +3905,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": "Location.Origin",
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3835,6 +3937,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3863,6 +3966,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3899,6 +4003,7 @@
         "Flag.FilterSelf"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -3927,6 +4032,7 @@
       "location": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -4007,6 +4113,7 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -4054,6 +4161,7 @@
         "Flag.FilterEnemy"
       ],
       "behaviourOwner": "Location.Origin",
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -4150,6 +4258,90 @@
         "Flag.FilterUnit"
       ],
       "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-omen-rendition-placement-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-omen-rendition-placement-buff"
+      ],
+      "location": "Location.Actor",
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "behaviourOwner": null,
+      "waitForInitialEffects": true,
+      "validators": []
+    },
+    {
+      "name": "effect-omen-rendition-placement-execute-ability",
+      "type": "Effect.ExecuteAbility",
+      "abilityToExecute": "ability-omen-rendition-placement",
+      "executingPlayer": "Location.Origin",
+      "cancelSynchronised": true,
+      "validators": []
+    },
+    {
+      "name": "effect-omen-rendition-placement-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "feature-omen-rendition",
+      "initialEntityBehaviours": [
+        "behaviour-omen-rendition-intercept-damage",
+        "behaviour-omen-rendition-buff-death",
+        "behaviour-omen-rendition-buff-timer"
+      ],
+      "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-omen-rendition-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Self",
+      "blocksBehaviours": true,
+      "validators": []
+    },
+    {
+      "name": "effect-omen-rendition-search",
+      "type": "Effect.Search",
+      "radius": 1,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-omen-rendition-damage",
+        "effect-omen-rendition-apply-behaviour-slow"
+      ],
+      "location": "Location.Source",
+      "shape": "Shape.Circle",
+      "ignoreCenter": false,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-omen-rendition-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Melee",
+      "amount": {
+        "flat": 10,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Inherited",
+      "ignoresArmor": false,
+      "filterFlags": [],
       "validators": []
     }
   ],
@@ -5855,6 +6047,134 @@
       "displayName": "Fortify Buff",
       "description": "Has +3 Melee Armour and +3 Range Armour due to a nearby fortified Vessel",
       "endsAt": "EndsAt.StartOfNextAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-omen-rendition-placement-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-omen-rendition-placement-execute-ability"
+      ],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": true,
+      "canResetDuration": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Rendition Placement Buff",
+      "description": "This unit is about to have its rendition placed in a 3 Attack Distance.",
+      "endsAt": "EndsAt.Instant",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-omen-rendition-intercept-damage",
+      "type": "Behaviour.InterceptDamage",
+      "numberOfInterceptions": 0,
+      "damageTypes": [],
+      "amountDealtInstead": null,
+      "damageTypeDealtInstead": null,
+      "shareWith": "Location.Source",
+      "amountShared": {
+        "flat": 0,
+        "multiplier": 0.5,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "damageTypeShared": "DamageType.Pure",
+      "reduceByTheSharedAmount": false,
+      "displayName": "Rendition Placement Buff",
+      "description": "50% of any damage dealt will be dealt as Pure Damage to the unit that was the target of this rendition.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-omen-rendition-buff-timer",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-omen-rendition-destroy"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Negative",
+      "triggers": [
+        {
+          "events": [
+            "Event.SourceIsDestroyed"
+          ],
+          "validators": []
+        }
+      ],
+      "destroyOnConditionsMet": true,
+      "conditionalEffects": [
+        "effect-omen-rendition-destroy"
+      ],
+      "restoreChangesOnEnd": false,
+      "displayName": "Rendition Buff Timer",
+      "description": "The rendition stays for 2 action phases and disappears afterwards.",
+      "endsAt": "EndsAt.EndOfNextActionPhase",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-omen-rendition-buff-death",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-omen-rendition-search"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Rendition Buff Death",
+      "description": "The unit that was the target of this rendition will emit a blast if this rendition is destroyed. This blast would deal 10 Melee Damage and slow all adjacent enemy units by 50% until the end of their next action.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-omen-rendition-buff-death",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Movement",
+          "change": "Change.MultiplyMax",
+          "amount": 0.5
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": true,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Rendition Buff Death",
+      "description": "This unit is slowed by 50% until the end of its next action.",
+      "endsAt": "EndsAt.EndOfNextAction",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     }

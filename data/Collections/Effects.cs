@@ -1325,8 +1325,8 @@ namespace low_age_data.Collections
                     }),
                 
                 new Destroy(
-                    EffectName.Vessel.FortifyDestroy,
-                    Location.Self),
+                    name: EffectName.Vessel.FortifyDestroy,
+                    target: Location.Self),
 
                 new Search(
                     name: EffectName.Vessel.FortifySearch,
@@ -1350,17 +1350,76 @@ namespace low_age_data.Collections
                     ignoreCenter: false),
                 
                 new ApplyBehaviour(
-                    EffectName.Vessel.FortifyApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Vessel.FortifyApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Vessel.FortifyBuff
                     },
-                    Location.Actor,
-                    new List<Flag>
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
                     {
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
-                    })
+                    }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Omen.RenditionPlacementApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Omen.RenditionPlacementBuff
+                    },
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    waitForInitialEffects: true),
+                
+                new ExecuteAbility(
+                    name: EffectName.Omen.RenditionPlacementExecuteAbility,
+                    abilityToExecute: AbilityName.Omen.RenditionPlacement,
+                    executingPlayer: Location.Origin,
+                    cancelSynchronised: true),
+                
+                new CreateEntity(
+                    name: EffectName.Omen.RenditionPlacementCreateEntity,
+                    entityToCreate: FeatureName.OmenRendition,
+                    initialEntityBehaviours: new List<BehaviourName>
+                    {
+                        BehaviourName.Omen.RenditionInterceptDamage, 
+                        BehaviourName.Omen.RenditionBuffDeath,
+                        // Order is important, death check should happen first through the FinalEffect, because 
+                        // the timer check disables any further Behaviours when it goes through the destroy
+                        BehaviourName.Omen.RenditionBuffTimer
+                    }),
+                
+                new Destroy(
+                    name: EffectName.Omen.RenditionDestroy,
+                    target: Location.Self,
+                    validators: null,
+                    blocksBehaviours: true),
+                
+                new Search(
+                    name: EffectName.Omen.RenditionSearch,
+                    radius: 1,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Omen.RenditionDamage,
+                        EffectName.Omen.RenditionApplyBehaviourSlow
+                    },
+                    location: Location.Source),
+                
+                new Damage(
+                    name: EffectName.Omen.RenditionDamage,
+                    damageType: DamageType.Melee,
+                    amount: new Amount(flat: 10))
             };
         }
     }

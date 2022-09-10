@@ -1337,6 +1337,111 @@ namespace low_age_data.Collections
                     canStack: false,
                     canResetDuration: false,
                     alignment: Alignment.Positive,
+                    restoreChangesOnEnd: true),
+                
+                new Buff(
+                    name: BehaviourName.Omen.RenditionPlacementBuff,
+                    displayName: nameof(BehaviourName.Omen.RenditionPlacementBuff).CamelCaseToWords(),
+                    description: "This unit is about to have its rendition placed in a 3 Attack Distance.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: new List<EffectName>
+                    {
+                        EffectName.Omen.RenditionPlacementExecuteAbility
+                    },
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.Instant,
+                    canStack: true,
+                    canResetDuration: false,
+                    alignment: Alignment.Negative),
+                
+                new InterceptDamage(
+                    name: BehaviourName.Omen.RenditionInterceptDamage,
+                    displayName: nameof(BehaviourName.Omen.RenditionPlacementBuff).CamelCaseToWords(),
+                    description: "50% of any damage dealt will be dealt as Pure Damage to the unit that was the target of " +
+                                 "this rendition.",
+                    endsAt: EndsAt.Death,
+                    numberOfInterceptions: 0,
+                    damageTypes: null,
+                    amountDealtInstead: null,
+                    damageTypeDealtInstead: null,
+                    shareWith: Location.Source,
+                    amountShared: new Amount(
+                        flat: 0, 
+                        multiplier: 0.5f),
+                    damageTypeShared: DamageType.Pure),
+                
+                new Buff(
+                    name: BehaviourName.Omen.RenditionBuffTimer,
+                    displayName: nameof(BehaviourName.Omen.RenditionBuffTimer).CamelCaseToWords(),
+                    description: "The rendition stays for 2 action phases and disappears afterwards.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
+                    {
+                        EffectName.Omen.RenditionDestroy
+                    },
+                    endsAt: EndsAt.EndOf.Next.ActionPhase,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
+                    {
+                        new(events: new List<Event>
+                        {
+                            Event.SourceIsDestroyed
+                        })
+                    },
+                    destroyOnConditionsMet: true,
+                    conditionalEffects: new List<EffectName>
+                    {
+                        EffectName.Omen.RenditionDestroy
+                    }),
+                
+                new Buff(
+                    name: BehaviourName.Omen.RenditionBuffDeath,
+                    displayName: nameof(BehaviourName.Omen.RenditionBuffDeath).CamelCaseToWords(),
+                    description: "The unit that was the target of this rendition will emit a blast if this rendition " +
+                                 "is destroyed. This blast would deal 10 Melee Damage and slow all adjacent enemy units by 50% " +
+                                 "until the end of their next action.",
+                    modificationFlags: null,
+                    initialModifications: null,
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: new List<EffectName>
+                    {
+                        EffectName.Omen.RenditionSearch
+                    },
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive),
+                
+                new Buff(
+                    name: BehaviourName.Omen.RenditionBuffDeath,
+                    displayName: nameof(BehaviourName.Omen.RenditionBuffDeath).CamelCaseToWords(),
+                    description: "This unit is slowed by 50% until the end of its next action.",
+                    modificationFlags: null,
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.MultiplyMax, 
+                            amount: 0.5f, 
+                            stat: Stats.Movement)
+                    },
+                    initialEffects: null,
+                    finalModifications: null,
+                    finalEffects: null,
+                    endsAt: EndsAt.EndOf.Next.Action,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Negative,
+                    triggers: null,
+                    destroyOnConditionsMet: null,
+                    conditionalEffects: null,
                     restoreChangesOnEnd: true)
             };
         }

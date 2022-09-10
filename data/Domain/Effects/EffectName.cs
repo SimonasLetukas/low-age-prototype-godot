@@ -200,5 +200,16 @@ namespace low_age_data.Domain.Effects
             public static EffectName FortifySearch => new($"{nameof(Vessel)}{nameof(FortifySearch)}".ToKebabCase());
             public static EffectName FortifyApplyBehaviour => new($"{nameof(Vessel)}{nameof(FortifyApplyBehaviour)}".ToKebabCase());
         }
+
+        public static class Omen
+        {
+            public static EffectName RenditionPlacementApplyBehaviour => new($"{nameof(Omen)}{nameof(RenditionPlacementApplyBehaviour)}".ToKebabCase());
+            public static EffectName RenditionPlacementExecuteAbility => new($"{nameof(Omen)}{nameof(RenditionPlacementExecuteAbility)}".ToKebabCase());
+            public static EffectName RenditionPlacementCreateEntity => new($"{nameof(Omen)}{nameof(RenditionPlacementCreateEntity)}".ToKebabCase());
+            public static EffectName RenditionDestroy => new($"{nameof(Omen)}{nameof(RenditionDestroy)}".ToKebabCase());
+            public static EffectName RenditionSearch => new($"{nameof(Omen)}{nameof(RenditionSearch)}".ToKebabCase());
+            public static EffectName RenditionDamage => new($"{nameof(Omen)}{nameof(RenditionDamage)}".ToKebabCase());
+            public static EffectName RenditionApplyBehaviourSlow => new($"{nameof(Omen)}{nameof(RenditionApplyBehaviourSlow)}".ToKebabCase());
+        }
     }
 }

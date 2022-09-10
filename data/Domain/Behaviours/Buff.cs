@@ -66,12 +66,12 @@ namespace low_age_data.Domain.Behaviours
         public IList<EffectName> InitialEffects { get; }
         
         /// <summary>
-        /// Added right before the end of behaviour.
+        /// Added right before the <see cref="EndsAt"/> of behaviour.
         /// </summary>
         public IList<Modification> FinalModifications { get; }
         
         /// <summary>
-        /// Executed right before behaviour ends.
+        /// Executed right before behaviour <see cref="EndsAt"/>.
         /// </summary>
         public IList<EffectName> FinalEffects { get; }
         
