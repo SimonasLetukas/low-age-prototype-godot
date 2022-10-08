@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Shared;
@@ -7,12 +8,15 @@ namespace low_age_data.Domain.Abilities
 {
     public class Build : Ability
     {
+        /// <summary>
+        /// Used for placing and working on a <see cref="Buildable"/> <see cref="Entity"/> on top of the game map. 
+        /// </summary>
         public Build(
             AbilityName name,
             string displayName, 
             string description,
             int distance,
-            IList<EntityName> selection,
+            IList<Selection> selection,
             bool casterConsumesAction = false,
             bool canHelp = false,
             float? helpEfficiency = null) : base(name, $"{nameof(Ability)}.{nameof(Build)}", TurnPhase.Planning, new List<Research>(), true, displayName, description)
@@ -25,7 +29,7 @@ namespace low_age_data.Domain.Abilities
         }
 
         public int Distance { get; }
-        public IList<EntityName> Selection { get; }
+        public IList<Selection> Selection { get; }
         public bool CasterConsumesAction { get; }
         public bool CanHelp { get; }
         

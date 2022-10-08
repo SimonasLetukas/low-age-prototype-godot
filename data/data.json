@@ -1564,6 +1564,190 @@
       "description": "Provides 3 Scraps and 7 Celestium at the start of each planning phase."
     },
     {
+      "name": "ability-citadel-promote-goon",
+      "type": "Ability.Produce",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "selection": [
+        {
+          "entityName": "unit-slave",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 4
+            },
+            {
+              "type": "Resources.MeleeWeapon",
+              "amount": 1
+            },
+            {
+              "type": "Resources.Population",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "entityName": "unit-quickdraw",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 9
+            },
+            {
+              "type": "Resources.RangedWeapon",
+              "amount": 2
+            },
+            {
+              "type": "Resources.Population",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "entityName": "unit-gorger",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 7
+            },
+            {
+              "type": "Resources.MeleeWeapon",
+              "amount": 2
+            },
+            {
+              "type": "Resources.Population",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "entityName": "unit-camou",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 11
+            },
+            {
+              "type": "Resources.MeleeWeapon",
+              "amount": 2
+            },
+            {
+              "type": "Resources.SpecialWeapon",
+              "amount": 1
+            },
+            {
+              "type": "Resources.Population",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "entityName": "unit-shaman",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 10
+            },
+            {
+              "type": "Resources.RangedWeapon",
+              "amount": 1
+            },
+            {
+              "type": "Resources.SpecialWeapon",
+              "amount": 2
+            },
+            {
+              "type": "Resources.Population",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "entityName": "unit-pyre",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 15
+            },
+            {
+              "type": "Resources.RangedWeapon",
+              "amount": 4
+            },
+            {
+              "type": "Resources.Population",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "entityName": "unit-big-bad-bull",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 14
+            },
+            {
+              "type": "Resources.MeleeWeapon",
+              "amount": 4
+            },
+            {
+              "type": "Resources.Population",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "entityName": "unit-mummy",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 29
+            },
+            {
+              "type": "Resources.SpecialWeapon",
+              "amount": 5
+            },
+            {
+              "type": "Resources.Population",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "entityName": "unit-parasite",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 21
+            },
+            {
+              "type": "Resources.MeleeWeapon",
+              "amount": 2
+            },
+            {
+              "type": "Resources.RangedWeapon",
+              "amount": 2
+            },
+            {
+              "type": "Resources.SpecialWeapon",
+              "amount": 2
+            },
+            {
+              "type": "Resources.Population",
+              "amount": 1
+            }
+          ]
+        }
+      ],
+      "canPlaceInWalkableAreaOnly": true,
+      "hasQueue": false,
+      "producedInstantly": true,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Passive Income",
+      "description": "Promote a new Revelators goon from the remaining population."
+    },
+    {
       "name": "ability-leader-all-for-one",
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
@@ -1616,16 +1800,136 @@
       "researchNeeded": [],
       "distance": 1,
       "selection": [
-        "structure-hut",
-        "structure-obelisk",
-        "structure-shack",
-        "structure-smith",
-        "structure-fletcher",
-        "structure-alchemy",
-        "structure-depot",
-        "structure-workshop",
-        "structure-outpost",
-        "structure-barricade"
+        {
+          "entityName": "structure-hut",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 5
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 40
+            }
+          ]
+        },
+        {
+          "entityName": "structure-obelisk",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 12
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 30
+            }
+          ]
+        },
+        {
+          "entityName": "structure-shack",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 15
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 40
+            }
+          ]
+        },
+        {
+          "entityName": "structure-smith",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 11
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 50
+            }
+          ]
+        },
+        {
+          "entityName": "structure-fletcher",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 17
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 75
+            }
+          ]
+        },
+        {
+          "entityName": "structure-alchemy",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 23
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 100
+            }
+          ]
+        },
+        {
+          "entityName": "structure-depot",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 20
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 65
+            }
+          ]
+        },
+        {
+          "entityName": "structure-workshop",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 20
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 50
+            }
+          ]
+        },
+        {
+          "entityName": "structure-outpost",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 18
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 45
+            }
+          ]
+        },
+        {
+          "entityName": "structure-barricade",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 16
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 35
+            }
+          ]
+        }
       ],
       "casterConsumesAction": true,
       "canHelp": true,
@@ -2121,9 +2425,45 @@
       "researchNeeded": [],
       "distance": 1,
       "selection": [
-        "unit-cannon",
-        "unit-ballista",
-        "unit-radar"
+        {
+          "entityName": "unit-cannon",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 18
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 120
+            }
+          ]
+        },
+        {
+          "entityName": "unit-ballista",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 7
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 106
+            }
+          ]
+        },
+        {
+          "entityName": "unit-radar",
+          "cost": [
+            {
+              "type": "Resources.Scraps",
+              "amount": 15
+            },
+            {
+              "type": "Resources.Celestium",
+              "amount": 84
+            }
+          ]
+        }
       ],
       "casterConsumesAction": true,
       "canHelp": true,

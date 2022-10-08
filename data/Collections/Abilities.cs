@@ -3,7 +3,6 @@ using low_age_data.Common;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Shared;
@@ -28,6 +27,75 @@ namespace low_age_data.Collections
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Citadel.PassiveIncomeApplyBehaviour),
                 
+                new Produce(
+                    name: AbilityName.Citadel.PromoteGoon,
+                    displayName: nameof(AbilityName.Citadel.PassiveIncome).CamelCaseToWords(),
+                    description: "Promote a new Revelators goon from the remaining population.",
+                    selection: new List<Selection>
+                    {
+                        new(entityName: UnitName.Slave, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 4),
+                            new(type: Resources.MeleeWeapon, amount: 1),
+                            new(type: Resources.Population, amount: 1)
+                        }),
+                        new(entityName: UnitName.Quickdraw, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 9),
+                            new(type: Resources.RangedWeapon, amount: 2),
+                            new(type: Resources.Population, amount: 1)
+                        }),
+                        new(entityName: UnitName.Gorger, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 7),
+                            new(type: Resources.MeleeWeapon, amount: 2),
+                            new(type: Resources.Population, amount: 1)
+                        }),
+                        new(entityName: UnitName.Camou, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 11),
+                            new(type: Resources.MeleeWeapon, amount: 2),
+                            new(type: Resources.SpecialWeapon, amount: 1),
+                            new(type: Resources.Population, amount: 1)
+                        }),
+                        new(entityName: UnitName.Shaman, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 10),
+                            new(type: Resources.RangedWeapon, amount: 1),
+                            new(type: Resources.SpecialWeapon, amount: 2),
+                            new(type: Resources.Population, amount: 1)
+                        }),
+                        new(entityName: UnitName.Pyre, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 15),
+                            new(type: Resources.RangedWeapon, amount: 4),
+                            new(type: Resources.Population, amount: 1)
+                        }),
+                        new(entityName: UnitName.BigBadBull, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 14),
+                            new(type: Resources.MeleeWeapon, amount: 4),
+                            new(type: Resources.Population, amount: 1)
+                        }),
+                        new(entityName: UnitName.Mummy, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 29),
+                            new(type: Resources.SpecialWeapon, amount: 5),
+                            new(type: Resources.Population, amount: 1)
+                        }),
+                        new(entityName: UnitName.Parasite, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 21),
+                            new(type: Resources.MeleeWeapon, amount: 2),
+                            new(type: Resources.RangedWeapon, amount: 2),
+                            new(type: Resources.SpecialWeapon, amount: 2),
+                            new(type: Resources.Population, amount: 1)
+                        }),
+                    },
+                    canPlaceInWalkableAreaOnly: true,
+                    hasQueue: false,
+                    producedInstantly: true),
+
                 new Passive(
                     name: AbilityName.Leader.AllForOne,
                     displayName: nameof(AbilityName.Leader.AllForOne).CamelCaseToWords(),
@@ -66,18 +134,58 @@ namespace low_age_data.Collections
                                  "can build the structure, each additional one after the first provides half of the " +
                                  "Celestium production to the construction than the previous Slave.",
                     distance: 1,
-                    selection: new List<EntityName>
+                    selection: new List<Selection>
                     {
-                        StructureName.Hut,
-                        StructureName.Obelisk,
-                        StructureName.Shack,
-                        StructureName.Smith,
-                        StructureName.Fletcher,
-                        StructureName.Alchemy,
-                        StructureName.Depot,
-                        StructureName.Workshop,
-                        StructureName.Outpost,
-                        StructureName.Barricade
+                        new(entityName: StructureName.Hut, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 5),
+                            new(type: Resources.Celestium, amount: 40)
+                        }),
+                        new(entityName: StructureName.Obelisk, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 12),
+                            new(type: Resources.Celestium, amount: 30)
+                        }),
+                        new(entityName: StructureName.Shack, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 15),
+                            new(type: Resources.Celestium, amount: 40)
+                        }),
+                        new(entityName: StructureName.Smith, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 11),
+                            new(type: Resources.Celestium, amount: 50)
+                        }),
+                        new(entityName: StructureName.Fletcher, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 17),
+                            new(type: Resources.Celestium, amount: 75)
+                        }),
+                        new(entityName: StructureName.Alchemy, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 23),
+                            new(type: Resources.Celestium, amount: 100)
+                        }),
+                        new(entityName: StructureName.Depot, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 20),
+                            new(type: Resources.Celestium, amount: 65)
+                        }),
+                        new(entityName: StructureName.Workshop, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 20),
+                            new(type: Resources.Celestium, amount: 50)
+                        }),
+                        new(entityName: StructureName.Outpost, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 18),
+                            new(type: Resources.Celestium, amount: 45)
+                        }),
+                        new(entityName: StructureName.Barricade, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 16),
+                            new(type: Resources.Celestium, amount: 35)
+                        }),
                     },
                     casterConsumesAction: true,
                     canHelp: true,
@@ -159,7 +267,7 @@ namespace low_age_data.Collections
 
                 new Instant(
                     name: AbilityName.Gorger.FanaticSuicide,
-                    turnPhase: TurnPhase.Action, 
+                    turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Gorger.FanaticSuicide).CamelCaseToWords(),
                     description: "Either as an action, or instead of attacking, or upon getting killed Gorger " +
                                  "detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, " +
@@ -192,7 +300,7 @@ namespace low_age_data.Collections
 
                 new Target(
                     name: AbilityName.Camou.Climb,
-                    turnPhase: TurnPhase.Action, 
+                    turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Camou.Climb).CamelCaseToWords(),
                     description: "Select an adjacent unoccupied space on a high ground. This space is considered " +
                                  "occupied until the end of the action phase at which point Camou moves to it. Passively, " +
@@ -332,7 +440,7 @@ namespace low_age_data.Collections
 
                 new Target(
                     name: AbilityName.Roach.CorrosiveSpit,
-                    turnPhase: TurnPhase.Action, 
+                    turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Roach.CorrosiveSpit).CamelCaseToWords(),
                     description: "Perform a ranged attack in 4 Distance dealing 6 (+8 to mechanical) Range Damage.",
                     distance: 4,
@@ -349,11 +457,12 @@ namespace low_age_data.Collections
                 new Passive(
                     name: AbilityName.Parasite.ParalysingGrasp,
                     displayName: nameof(AbilityName.Parasite.ParalysingGrasp).CamelCaseToWords(),
-                    description: "Instead of attacking, Parasite attaches to the target. Both units occupy the same space and " +
-                                 "are considered enemy to all players. Parasite can only detach when the target is killed. All units who " +
-                                 "attack this combined unit do damage to both. On its turn, Parasite can move the target, using target's " +
-                                 "Movement. On target's turn, it must execute attack action to any friendly or enemy unit in range, " +
-                                 "otherwise skip turn.",
+                    description:
+                    "Instead of attacking, Parasite attaches to the target. Both units occupy the same space and " +
+                    "are considered enemy to all players. Parasite can only detach when the target is killed. All units who " +
+                    "attack this combined unit do damage to both. On its turn, Parasite can move the target, using target's " +
+                    "Movement. On target's turn, it must execute attack action to any friendly or enemy unit in range, " +
+                    "otherwise skip turn.",
                     hasButton: true,
                     periodicEffect: null,
                     researchNeeded: null,
@@ -379,8 +488,9 @@ namespace low_age_data.Collections
                     name: AbilityName.Horrior.Mount,
                     turnPhase: TurnPhase.Planning,
                     displayName: nameof(AbilityName.Horrior.Mount).CamelCaseToWords(),
-                    description: "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase " +
-                                 "transform into Surfer.",
+                    description:
+                    "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase " +
+                    "transform into Surfer.",
                     effects: new List<EffectName>
                     {
                         EffectName.Horrior.MountApplyBehaviour
@@ -393,9 +503,10 @@ namespace low_age_data.Collections
                 new Passive(
                     name: AbilityName.Marksman.CriticalMark,
                     displayName: nameof(AbilityName.Marksman.CriticalMark).CamelCaseToWords(),
-                    description: "Each ranged attack marks the target unit. If a friendly non-Marksman unit attacks the marked " +
-                                 "target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end " +
-                                 "of the next action phase.",
+                    description:
+                    "Each ranged attack marks the target unit. If a friendly non-Marksman unit attacks the marked " +
+                    "target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end " +
+                    "of the next action phase.",
                     hasButton: true,
                     periodicEffect: null,
                     researchNeeded: null,
@@ -407,7 +518,7 @@ namespace low_age_data.Collections
                     {
                         Attacks.Ranged
                     }),
-                
+
                 new Passive(
                     name: AbilityName.Surfer.Dismount,
                     displayName: nameof(AbilityName.Surfer.Dismount).CamelCaseToWords(),
@@ -418,19 +529,20 @@ namespace low_age_data.Collections
                     onHitEffects: null,
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Surfer.DismountApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Mortar.DeadlyAmmunition,
                     displayName: nameof(AbilityName.Mortar.DeadlyAmmunition).CamelCaseToWords(),
-                    description: "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. " +
-                                 "Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
+                    description:
+                    "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. " +
+                    "Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
                     hasButton: true,
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Mortar.DeadlyAmmunitionApplyBehaviour),
-                
+
                 new Instant(
                     name: AbilityName.Mortar.Reload,
                     turnPhase: TurnPhase.Action,
@@ -440,7 +552,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Mortar.ReloadApplyBehaviour
                     }),
-                
+
                 new Passive(
                     name: AbilityName.Mortar.PiercingBlast,
                     displayName: nameof(AbilityName.Mortar.PiercingBlast).CamelCaseToWords(),
@@ -454,7 +566,7 @@ namespace low_age_data.Collections
                     onHitEffects: null,
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Mortar.PiercingBlastApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Hawk.TacticalGoggles,
                     displayName: nameof(AbilityName.Hawk.TacticalGoggles).CamelCaseToWords(),
@@ -465,10 +577,10 @@ namespace low_age_data.Collections
                     onHitEffects: null,
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Hawk.TacticalGogglesApplyBehaviour),
-                
+
                 new Target(
                     name: AbilityName.Hawk.Leadership,
-                    turnPhase: TurnPhase.Action, 
+                    turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Hawk.Leadership).CamelCaseToWords(),
                     description: "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is " +
                                  "lost at the end of the target's next action, or if the targeted unit is no longer adjacent.",
@@ -477,11 +589,12 @@ namespace low_age_data.Collections
                     {
                         EffectName.Hawk.LeadershipApplyBehaviour
                     }),
-                
+
                 new Passive(
                     name: AbilityName.Hawk.HealthKit,
                     displayName: nameof(AbilityName.Hawk.HealthKit).CamelCaseToWords(),
-                    description: "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
+                    description:
+                    "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
                     hasButton: true,
                     periodicEffect: null,
                     researchNeeded: new List<Research>
@@ -491,24 +604,37 @@ namespace low_age_data.Collections
                     onHitEffects: null,
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Hawk.HealthKitApplyBehaviour),
-                
+
                 new Build(
                     name: AbilityName.Engineer.AssembleMachine,
                     displayName: nameof(AbilityName.Engineer.AssembleMachine).CamelCaseToWords(),
-                    description: "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, " +
-                                 "up to a number needed to operate the Machine. Each Engineer provides current Celestium " +
-                                 "production to the construction.",
+                    description:
+                    "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, " +
+                    "up to a number needed to operate the Machine. Each Engineer provides current Celestium " +
+                    "production to the construction.",
                     distance: 1,
-                    selection: new List<EntityName>
+                    selection: new List<Selection>
                     {
-                        UnitName.Cannon,
-                        UnitName.Ballista,
-                        UnitName.Radar
+                        new(entityName: UnitName.Cannon, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 18),
+                            new(type: Resources.Celestium, amount: 120)
+                        }),
+                        new(entityName: UnitName.Ballista, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 7),
+                            new(type: Resources.Celestium, amount: 106)
+                        }),
+                        new(entityName: UnitName.Radar, cost: new List<Resource>
+                        {
+                            new(type: Resources.Scraps, amount: 15),
+                            new(type: Resources.Celestium, amount: 84)
+                        }),
                     },
                     casterConsumesAction: true,
                     canHelp: true,
                     helpEfficiency: 1f),
-                
+
                 new Passive(
                     name: AbilityName.Cannon.Assembling,
                     displayName: nameof(AbilityName.Cannon.Assembling).CamelCaseToWords(),
@@ -520,7 +646,7 @@ namespace low_age_data.Collections
                     onHitAttackTypes: null,
                     onBirthEffect: null,
                     onBuildBehaviour: BehaviourName.Cannon.AssemblingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Ballista.Assembling,
                     displayName: nameof(AbilityName.Ballista.Assembling).CamelCaseToWords(),
@@ -532,7 +658,7 @@ namespace low_age_data.Collections
                     onHitAttackTypes: null,
                     onBirthEffect: null,
                     onBuildBehaviour: BehaviourName.Ballista.AssemblingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Radar.Assembling,
                     displayName: nameof(AbilityName.Radar.Assembling).CamelCaseToWords(),
@@ -544,27 +670,29 @@ namespace low_age_data.Collections
                     onHitAttackTypes: null,
                     onBirthEffect: null,
                     onBuildBehaviour: BehaviourName.Radar.AssemblingBuildable),
-                
+
                 new Target(
                     name: AbilityName.Engineer.Operate,
-                    turnPhase: TurnPhase.Action, 
+                    turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Engineer.Operate).CamelCaseToWords(),
-                    description: "Select an adjacent Machine and start operating it if the Machine is built and does not " +
-                                 "have the maximum number of operating Engineers already.",
+                    description:
+                    "Select an adjacent Machine and start operating it if the Machine is built and does not " +
+                    "have the maximum number of operating Engineers already.",
                     distance: 1,
                     effects: new List<EffectName>
                     {
                         EffectName.Engineer.OperateApplyBehaviour
                     }),
-                
+
                 new Target(
                     name: AbilityName.Engineer.Repair,
-                    turnPhase: TurnPhase.Planning, 
+                    turnPhase: TurnPhase.Planning,
                     displayName: nameof(AbilityName.Engineer.Repair).CamelCaseToWords(),
-                    description: "Select an adjacent structure, Machine or Horrior. At the start of the next planning " +
-                                 "phase the selected structure or Machine receives +2 Health and selected Horrior's mounting " +
-                                 "time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be " +
-                                 "interrupted.",
+                    description:
+                    "Select an adjacent structure, Machine or Horrior. At the start of the next planning " +
+                    "phase the selected structure or Machine receives +2 Health and selected Horrior's mounting " +
+                    "time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be " +
+                    "interrupted.",
                     distance: 1,
                     effects: new List<EffectName>
                     {
@@ -572,7 +700,7 @@ namespace low_age_data.Collections
                         EffectName.Engineer.RepairMachineApplyBehaviour,
                         EffectName.Engineer.RepairHorriorApplyBehaviour
                     }),
-                
+
                 new Passive(
                     name: AbilityName.Cannon.Machine,
                     displayName: nameof(AbilityName.Cannon.Machine).CamelCaseToWords(),
@@ -584,14 +712,15 @@ namespace low_age_data.Collections
                     onHitEffects: null,
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Cannon.MachineApplyBehaviour),
-                
+
                 new Target(
                     name: AbilityName.Cannon.HeatUp,
                     turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Cannon.HeatUp).CamelCaseToWords(),
-                    description: "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is " +
-                                 "revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's " +
-                                 "action, the attack is triggered which deals massive Range Damage.",
+                    description:
+                    "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is " +
+                    "revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's " +
+                    "action, the attack is triggered which deals massive Range Damage.",
                     distance: 10,
                     effects: new List<EffectName>
                     {
@@ -604,7 +733,7 @@ namespace low_age_data.Collections
                         Attacks.Ranged
                     },
                     fallbackToAttack: false),
-                
+
                 new Passive(
                     name: AbilityName.Ballista.Machine,
                     displayName: nameof(AbilityName.Ballista.Machine).CamelCaseToWords(),
@@ -616,16 +745,16 @@ namespace low_age_data.Collections
                     onHitEffects: null,
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Ballista.MachineApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Ballista.AddOn,
                     displayName: nameof(AbilityName.Ballista.AddOn).CamelCaseToWords(),
                     description: "Can only be built on a Watchtower.",
                     hasButton: true),
-                
+
                 new Target(
                     name: AbilityName.Ballista.Aim,
-                    turnPhase: TurnPhase.Action, 
+                    turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Ballista.Aim).CamelCaseToWords(),
                     description: "Spends 1 action aiming, when attacking a new target. A dotted line to the target " +
                                  "indicates aiming. The target can stop this process if it moves out of Ballista's Attack " +
@@ -642,8 +771,8 @@ namespace low_age_data.Collections
                     {
                         Attacks.Ranged
                     },
-                    fallbackToAttack: false), 
-                
+                    fallbackToAttack: false),
+
                 new Passive(
                     name: AbilityName.Radar.Machine,
                     displayName: nameof(AbilityName.Radar.Machine).CamelCaseToWords(),
@@ -655,7 +784,7 @@ namespace low_age_data.Collections
                     onHitEffects: null,
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Radar.MachineApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Radar.PowerDependency,
                     displayName: nameof(AbilityName.Radar.PowerDependency).CamelCaseToWords(),
@@ -667,19 +796,20 @@ namespace low_age_data.Collections
                     onHitEffects: null,
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Radar.PowerDependencyApplyBehaviour),
-                
+
                 new Target(
                     name: AbilityName.Radar.ResonatingSweep,
-                    turnPhase: TurnPhase.Action, 
+                    turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Radar.ResonatingSweep).CamelCaseToWords(),
-                    description: "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start " +
-                                 "of the next planning phase.",
+                    description:
+                    "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start " +
+                    "of the next planning phase.",
                     distance: 15,
                     effects: new List<EffectName>
                     {
                         EffectName.Radar.ResonatingSweepCreateEntity
                     }),
-                
+
                 new Passive(
                     name: AbilityName.Radar.RadioLocation,
                     displayName: nameof(AbilityName.Radar.RadioLocation).CamelCaseToWords(),
@@ -690,7 +820,7 @@ namespace low_age_data.Collections
                     {
                         Research.Uee.CelestiumCoatedMaterials
                     }),
-                
+
                 new Passive(
                     name: AbilityName.Vessel.Machine,
                     displayName: nameof(AbilityName.Vessel.Machine).CamelCaseToWords(),
@@ -702,15 +832,16 @@ namespace low_age_data.Collections
                     onHitEffects: null,
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Vessel.MachineApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Vessel.AbsorbentField,
                     displayName: nameof(AbilityName.Vessel.AbsorbentField).CamelCaseToWords(),
-                    description: "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, " +
-                                 "which is instead dealt to Vessel.",
+                    description:
+                    "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, " +
+                    "which is instead dealt to Vessel.",
                     hasButton: true,
                     periodicEffect: EffectName.Vessel.AbsorbentFieldSearch),
-                
+
                 new Instant(
                     name: AbilityName.Vessel.Fortify,
                     turnPhase: TurnPhase.Action,
@@ -726,10 +857,10 @@ namespace low_age_data.Collections
                         Research.Uee.HardenedMatrix
                     },
                     cooldown: EndsAt.EndOf.Second.ActionPhase),
-                
+
                 new Target(
                     name: AbilityName.Omen.Rendition,
-                    turnPhase: TurnPhase.Action, 
+                    turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Omen.Rendition).CamelCaseToWords(),
                     description: "Place a ghostly rendition of a selected enemy unit in 7 Attack Distance to an " +
                                  "unoccupied space in a 3 Attack Distance from the selected target. The rendition has the same " +
@@ -744,10 +875,10 @@ namespace low_age_data.Collections
                         EffectName.Omen.RenditionPlacementApplyBehaviour
                     },
                     cooldown: EndsAt.EndOf.Second.ActionPhase),
-                
+
                 new Target(
                     name: AbilityName.Omen.RenditionPlacement,
-                    turnPhase: TurnPhase.Action, 
+                    turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Omen.RenditionPlacement).CamelCaseToWords(),
                     description: "Select an unoccupied space in a 3 Attack Distance to place the rendition of the " +
                                  "selected target.",
