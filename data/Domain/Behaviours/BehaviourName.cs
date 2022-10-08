@@ -8,6 +8,11 @@ namespace low_age_data.Domain.Behaviours
         {
         }
 
+        public static class Citadel
+        {
+            public static BehaviourName PassiveIncomeIncome => new($"{nameof(Citadel)}{nameof(PassiveIncomeIncome)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static BehaviourName AllForOneBuff => new($"{nameof(Leader)}{nameof(AllForOneBuff)}".ToKebabCase());

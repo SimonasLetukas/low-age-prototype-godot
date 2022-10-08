@@ -8,6 +8,11 @@ namespace low_age_data.Domain.Abilities
         {
         }
 
+        public static class Citadel
+        {
+            public static AbilityName PassiveIncome => new($"{nameof(Citadel)}{nameof(PassiveIncome)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static AbilityName AllForOne => new($"{nameof(Leader)}{nameof(AllForOne)}".ToKebabCase());

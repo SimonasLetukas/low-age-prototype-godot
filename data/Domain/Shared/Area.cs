@@ -1,20 +1,27 @@
 ﻿namespace low_age_data.Domain.Shared
 {
-    public struct Rectangle
+    public struct Area
     {
-        public static readonly Rectangle Empty = new Rectangle();
-
-        private int x; // Do not rename (binary serialization) 
-        private int y; // Do not rename (binary serialization) 
-        private int width; // Do not rename (binary serialization) 
-        private int height; // Do not rename (binary serialization) 
-        
-        public Rectangle(int x, int y, int width, int height)
+        public Area(Vector2<int> size)
         {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+            Start = new Vector2<int>(0, 0);
+            Size = size;
         }
+
+        public Area(Vector2<int> start, Vector2<int> size)
+        {
+            Start = start;
+            Size = size;
+        }
+
+        /// <summary>
+        /// Starting coordinates. Starts from 0.
+        /// </summary>
+        public Vector2<int> Start { get; }
+        
+        /// <summary>
+        /// Size of the area. Starts from 1.
+        /// </summary>
+        public Vector2<int> Size { get; }
     }
 }

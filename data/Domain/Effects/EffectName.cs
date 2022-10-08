@@ -8,6 +8,11 @@ namespace low_age_data.Domain.Effects
         {
         }
 
+        public static class Citadel
+        {
+            public static EffectName PassiveIncomeApplyBehaviour => new($"{nameof(Citadel)}{nameof(PassiveIncomeApplyBehaviour)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static EffectName AllForOneApplyBehaviour => new($"{nameof(Leader)}{nameof(AllForOneApplyBehaviour)}".ToKebabCase());

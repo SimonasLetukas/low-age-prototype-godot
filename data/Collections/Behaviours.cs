@@ -16,6 +16,20 @@ namespace low_age_data.Collections
         {
             return new List<Behaviour>
             {
+                new Income(
+                    name: BehaviourName.Citadel.PassiveIncomeIncome,
+                    displayName: nameof(BehaviourName.Citadel.PassiveIncomeIncome).CamelCaseToWords(),
+                    description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent,
+                            amount: 3,
+                            resource: Resources.Scraps),
+                        new(change: Change.AddCurrent, 
+                            amount: 7,
+                            resource: Resources.Celestium)
+                    }),
+                
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,
                     displayName: nameof(BehaviourName.Leader.AllForOneBuff).CamelCaseToWords(),
@@ -1233,25 +1247,25 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new InterceptDamage(
-                    BehaviourName.Vessel.AbsorbentFieldInterceptDamage,
-                    nameof(BehaviourName.Vessel.AbsorbentFieldInterceptDamage).CamelCaseToWords(),
-                    "The melee and ranged damage this unit receives is reduced by 50%, but this amount is " +
-                    "also dealt to a nearby Vessel.",
-                    EndsAt.Death,
-                    0,
-                    new List<DamageType>
+                    name: BehaviourName.Vessel.AbsorbentFieldInterceptDamage,
+                    displayName: nameof(BehaviourName.Vessel.AbsorbentFieldInterceptDamage).CamelCaseToWords(),
+                    description: "The melee and ranged damage this unit receives is reduced by 50%, but this amount is " +
+                                 "also dealt to a nearby Vessel.",
+                    endsAt: EndsAt.Death,
+                    numberOfInterceptions: 0,
+                    damageTypes: new List<DamageType>
                     {
                         DamageType.Melee,
                         DamageType.Ranged
                     },
-                    null,
-                    null,
-                    Location.Origin,
-                    new Amount(0, 0.5f),
-                    null,
-                    true,
-                    true,
-                    false),
+                    amountDealtInstead: null,
+                    damageTypeDealtInstead: null,
+                    shareWith: Location.Origin,
+                    amountShared: new Amount(flat: 0, multiplier: 0.5f),
+                    damageTypeShared: null,
+                    reduceByTheSharedAmount: true,
+                    ownerAllowed: true,
+                    hasSameInstanceForAllOwners: false),
 
                 new Buff(
                     name: BehaviourName.Vessel.FortifyDestroyBuff,

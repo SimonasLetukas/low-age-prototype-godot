@@ -18,6 +18,14 @@ namespace low_age_data.Collections
             return new List<Effect>
             {
                 new ApplyBehaviour(
+                    name: EffectName.Citadel.PassiveIncomeApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Citadel.PassiveIncomeIncome
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
                     name: EffectName.Leader.AllForOneApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {

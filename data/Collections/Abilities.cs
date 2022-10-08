@@ -18,6 +18,17 @@ namespace low_age_data.Collections
             return new List<Ability>
             {
                 new Passive(
+                    name: AbilityName.Citadel.PassiveIncome,
+                    displayName: nameof(AbilityName.Citadel.PassiveIncome).CamelCaseToWords(),
+                    description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
+                    hasButton: true,
+                    periodicEffect: null,
+                    researchNeeded: null,
+                    onHitEffects: null,
+                    onHitAttackTypes: null,
+                    onBirthEffect: EffectName.Citadel.PassiveIncomeApplyBehaviour),
+                
+                new Passive(
                     name: AbilityName.Leader.AllForOne,
                     displayName: nameof(AbilityName.Leader.AllForOne).CamelCaseToWords(),
                     description: "Revelators faction loses if Leader dies.",
