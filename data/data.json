@@ -1,4 +1,83 @@
 {
+  "resources": [
+    {
+      "name": "resource-scraps",
+      "displayName": "Scraps",
+      "description": "",
+      "hasLimit": false,
+      "isConsumable": true,
+      "hasBank": true
+    },
+    {
+      "name": "resource-celestium",
+      "displayName": "Celestium",
+      "description": "",
+      "hasLimit": false,
+      "isConsumable": false,
+      "hasBank": false
+    },
+    {
+      "name": "resource-population",
+      "displayName": "Population",
+      "description": "",
+      "hasLimit": true,
+      "isConsumable": true,
+      "hasBank": false
+    },
+    {
+      "name": "resource-melee-weapon",
+      "displayName": "Melee Weapon",
+      "description": "",
+      "hasLimit": true,
+      "isConsumable": true,
+      "hasBank": true
+    },
+    {
+      "name": "resource-ranged-weapon",
+      "displayName": "Melee Weapon",
+      "description": "",
+      "hasLimit": true,
+      "isConsumable": true,
+      "hasBank": true
+    },
+    {
+      "name": "resource-special-weapon",
+      "displayName": "Melee Weapon",
+      "description": "",
+      "hasLimit": true,
+      "isConsumable": true,
+      "hasBank": true
+    }
+  ],
+  "factions": [
+    {
+      "name": "faction-revelators",
+      "displayName": "Revelators",
+      "description": "",
+      "availableResources": [
+        "resource-scraps",
+        "resource-celestium",
+        "resource-population",
+        "resource-melee-weapon",
+        "resource-ranged-weapon",
+        "resource-special-weapon"
+      ],
+      "startingEntities": [
+        "structure-citadel",
+        "unit-leader"
+      ]
+    },
+    {
+      "name": "faction-uee",
+      "displayName": "Uee",
+      "description": "",
+      "availableResources": [
+        "resource-scraps",
+        "resource-celestium"
+      ],
+      "startingEntities": []
+    }
+  ],
   "entities": {
     "tiles": [
       {
@@ -87,7 +166,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Biological"
@@ -144,7 +223,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Armoured",
           "CombatAttributes.Celestial"
@@ -210,7 +289,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Biological",
@@ -267,7 +346,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Armoured",
           "CombatAttributes.Biological"
@@ -323,7 +402,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Biological"
@@ -388,7 +467,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Armoured",
           "CombatAttributes.Biological",
@@ -453,7 +532,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Mechanical",
@@ -510,7 +589,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Giant",
           "CombatAttributes.Biological"
@@ -565,7 +644,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Biological"
@@ -621,7 +700,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Armoured",
           "CombatAttributes.Biological"
@@ -677,7 +756,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Celestial"
@@ -737,7 +816,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Armoured",
           "CombatAttributes.Biological"
@@ -807,7 +886,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Biological",
@@ -868,7 +947,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Biological"
@@ -937,7 +1016,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Armoured",
           "CombatAttributes.Biological",
@@ -1000,7 +1079,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Biological"
@@ -1062,7 +1141,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Biological"
@@ -1124,7 +1203,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Armoured",
           "CombatAttributes.Mechanical",
@@ -1187,7 +1266,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Mechanical",
@@ -1242,7 +1321,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Light",
           "CombatAttributes.Mechanical"
@@ -1306,7 +1385,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Giant",
           "CombatAttributes.Mechanical"
@@ -1377,7 +1456,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.UEE",
+        "originalFaction": "faction-uee",
         "combatAttributes": [
           "CombatAttributes.Celestial",
           "CombatAttributes.Ranged"
@@ -1401,7 +1480,6 @@
           "y": 1
         },
         "destructible": false,
-        "startingStructure": true,
         "walkableArea": {
           "start": {
             "x": 0,
@@ -1419,7 +1497,7 @@
             "hasCurrent": false
           }
         ],
-        "originalFaction": "Factions.Revelators",
+        "originalFaction": "faction-revelators",
         "combatAttributes": [],
         "abilities": [
           "ability-citadel-passive-income"
@@ -1573,15 +1651,15 @@
           "entityName": "unit-slave",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 4
             },
             {
-              "type": "Resources.MeleeWeapon",
+              "type": "resource-melee-weapon",
               "amount": 1
             },
             {
-              "type": "Resources.Population",
+              "type": "resource-population",
               "amount": 1
             }
           ]
@@ -1590,15 +1668,15 @@
           "entityName": "unit-quickdraw",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 9
             },
             {
-              "type": "Resources.RangedWeapon",
+              "type": "resource-ranged-weapon",
               "amount": 2
             },
             {
-              "type": "Resources.Population",
+              "type": "resource-population",
               "amount": 1
             }
           ]
@@ -1607,15 +1685,15 @@
           "entityName": "unit-gorger",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 7
             },
             {
-              "type": "Resources.MeleeWeapon",
+              "type": "resource-melee-weapon",
               "amount": 2
             },
             {
-              "type": "Resources.Population",
+              "type": "resource-population",
               "amount": 1
             }
           ]
@@ -1624,19 +1702,19 @@
           "entityName": "unit-camou",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 11
             },
             {
-              "type": "Resources.MeleeWeapon",
+              "type": "resource-melee-weapon",
               "amount": 2
             },
             {
-              "type": "Resources.SpecialWeapon",
+              "type": "resource-special-weapon",
               "amount": 1
             },
             {
-              "type": "Resources.Population",
+              "type": "resource-population",
               "amount": 1
             }
           ]
@@ -1645,19 +1723,19 @@
           "entityName": "unit-shaman",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 10
             },
             {
-              "type": "Resources.RangedWeapon",
+              "type": "resource-ranged-weapon",
               "amount": 1
             },
             {
-              "type": "Resources.SpecialWeapon",
+              "type": "resource-special-weapon",
               "amount": 2
             },
             {
-              "type": "Resources.Population",
+              "type": "resource-population",
               "amount": 1
             }
           ]
@@ -1666,15 +1744,15 @@
           "entityName": "unit-pyre",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 15
             },
             {
-              "type": "Resources.RangedWeapon",
+              "type": "resource-ranged-weapon",
               "amount": 4
             },
             {
-              "type": "Resources.Population",
+              "type": "resource-population",
               "amount": 1
             }
           ]
@@ -1683,15 +1761,15 @@
           "entityName": "unit-big-bad-bull",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 14
             },
             {
-              "type": "Resources.MeleeWeapon",
+              "type": "resource-melee-weapon",
               "amount": 4
             },
             {
-              "type": "Resources.Population",
+              "type": "resource-population",
               "amount": 1
             }
           ]
@@ -1700,15 +1778,15 @@
           "entityName": "unit-mummy",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 29
             },
             {
-              "type": "Resources.SpecialWeapon",
+              "type": "resource-special-weapon",
               "amount": 5
             },
             {
-              "type": "Resources.Population",
+              "type": "resource-population",
               "amount": 1
             }
           ]
@@ -1717,23 +1795,23 @@
           "entityName": "unit-parasite",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 21
             },
             {
-              "type": "Resources.MeleeWeapon",
+              "type": "resource-melee-weapon",
               "amount": 2
             },
             {
-              "type": "Resources.RangedWeapon",
+              "type": "resource-ranged-weapon",
               "amount": 2
             },
             {
-              "type": "Resources.SpecialWeapon",
+              "type": "resource-special-weapon",
               "amount": 2
             },
             {
-              "type": "Resources.Population",
+              "type": "resource-population",
               "amount": 1
             }
           ]
@@ -1804,11 +1882,11 @@
           "entityName": "structure-hut",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 5
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 40
             }
           ]
@@ -1817,11 +1895,11 @@
           "entityName": "structure-obelisk",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 12
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 30
             }
           ]
@@ -1830,11 +1908,11 @@
           "entityName": "structure-shack",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 15
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 40
             }
           ]
@@ -1843,11 +1921,11 @@
           "entityName": "structure-smith",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 11
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 50
             }
           ]
@@ -1856,11 +1934,11 @@
           "entityName": "structure-fletcher",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 17
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 75
             }
           ]
@@ -1869,11 +1947,11 @@
           "entityName": "structure-alchemy",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 23
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 100
             }
           ]
@@ -1882,11 +1960,11 @@
           "entityName": "structure-depot",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 20
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 65
             }
           ]
@@ -1895,11 +1973,11 @@
           "entityName": "structure-workshop",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 20
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 50
             }
           ]
@@ -1908,11 +1986,11 @@
           "entityName": "structure-outpost",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 18
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 45
             }
           ]
@@ -1921,11 +1999,11 @@
           "entityName": "structure-barricade",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 16
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 35
             }
           ]
@@ -2429,11 +2507,11 @@
           "entityName": "unit-cannon",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 18
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 120
             }
           ]
@@ -2442,11 +2520,11 @@
           "entityName": "unit-ballista",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 7
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 106
             }
           ]
@@ -2455,11 +2533,11 @@
           "entityName": "unit-radar",
           "cost": [
             {
-              "type": "Resources.Scraps",
+              "type": "resource-scraps",
               "amount": 15
             },
             {
-              "type": "Resources.Celestium",
+              "type": "resource-celestium",
               "amount": 84
             }
           ]
@@ -2999,7 +3077,7 @@
       "resourceModifications": [
         {
           "type": "Modification.ResourceModification",
-          "resource": "Resources.Scraps",
+          "resource": "resource-scraps",
           "change": "Change.AddCurrent",
           "amount": 2.0
         }
@@ -4715,13 +4793,13 @@
       "resources": [
         {
           "type": "Modification.ResourceModification",
-          "resource": "Resources.Scraps",
+          "resource": "resource-scraps",
           "change": "Change.AddCurrent",
           "amount": 3.0
         },
         {
           "type": "Modification.ResourceModification",
-          "resource": "Resources.Celestium",
+          "resource": "resource-celestium",
           "change": "Change.AddCurrent",
           "amount": 7.0
         }

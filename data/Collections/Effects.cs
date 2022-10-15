@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Features;
+using low_age_data.Domain.Resources;
 
 namespace low_age_data.Collections
 {
@@ -195,7 +196,7 @@ namespace low_age_data.Collections
                         new(
                             change: Change.AddCurrent,
                             amount: 2.0f,
-                            resource: Resources.Scraps)
+                            resource: ResourceName.Scraps)
                     }),
 
                 new ApplyBehaviour(

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Factions;
 using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Entities.Actors
@@ -11,7 +12,7 @@ namespace low_age_data.Domain.Entities.Actors
             string displayName, 
             string description,
             IList<Stat> statistics,
-            Factions originalFaction,
+            FactionName originalFaction,
             IList<CombatAttributes> combatAttributes,
             IList<AbilityName> abilities) : base(name, displayName, description)
         {
@@ -22,7 +23,7 @@ namespace low_age_data.Domain.Entities.Actors
         }
 
         public IList<Stat> Statistics { get; }
-        public Factions OriginalFaction { get; }
+        public FactionName OriginalFaction { get; }
         public IList<CombatAttributes> CombatAttributes { get; }
         public IList<AbilityName> Abilities { get; }
     }

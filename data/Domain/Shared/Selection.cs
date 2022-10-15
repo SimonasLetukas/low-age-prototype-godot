@@ -7,13 +7,13 @@ namespace low_age_data.Domain.Shared
     {
         public Selection(
             EntityName entityName,
-            IList<Resource>? cost = null)
+            IList<Cost>? cost = null)
         {
             EntityName = entityName;
-            Cost = cost ?? new List<Resource>();
+            Cost = cost ?? new List<Cost>();
         }
         
         public EntityName EntityName { get; }
-        public IList<Resource> Cost { get; }
+        public IList<Cost> Cost { get; }
     }
 }

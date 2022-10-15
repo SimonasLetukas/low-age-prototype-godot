@@ -7,6 +7,7 @@ using low_age_data.Domain.Shared.Durations;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
+using low_age_data.Domain.Resources;
 
 namespace low_age_data.Collections
 {
@@ -24,10 +25,10 @@ namespace low_age_data.Collections
                     {
                         new(change: Change.AddCurrent,
                             amount: 3,
-                            resource: Resources.Scraps),
+                            resource: ResourceName.Scraps),
                         new(change: Change.AddCurrent, 
                             amount: 7,
-                            resource: Resources.Celestium)
+                            resource: ResourceName.Celestium)
                     }),
                 
                 new Buff(

@@ -2,6 +2,7 @@
 using low_age_data.Common;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Entities.Actors.Units;
+using low_age_data.Domain.Factions;
 using low_age_data.Domain.Shared;
 
 namespace low_age_data.Collections
@@ -30,7 +31,7 @@ namespace low_age_data.Collections
                             minimumDistance: 1, 
                             maximumDistance: 1)
                     },
-                    originalFaction: Factions.Revelators,
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -63,7 +64,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Biological, 
                             bonusAmount: 7)
                     },
-                    originalFaction: Factions.Revelators,
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -101,7 +102,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Light,
                             bonusAmount: 2)
                     },
-                    originalFaction: Factions.Revelators, 
+                    originalFaction: FactionName.Revelators, 
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -134,7 +135,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Biological,
                             bonusAmount: 3)
                     },
-                    originalFaction: Factions.Revelators,
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -166,7 +167,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Armoured,
                             bonusAmount: 4)
                     },
-                    originalFaction: Factions.Revelators,
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -203,7 +204,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Ranged,
                             bonusAmount: 9)
                     },
-                    originalFaction: Factions.Revelators,
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -240,7 +241,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Armoured,
                             bonusAmount: 8)
                     },
-                    originalFaction: Factions.Revelators,
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -273,7 +274,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Giant,
                             bonusAmount: 6)
                     },
-                    originalFaction: Factions.Revelators,
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Giant,
@@ -303,7 +304,7 @@ namespace low_age_data.Collections
                             minimumDistance: 1,
                             maximumDistance: 1)
                     },
-                    originalFaction: Factions.Revelators,
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -335,7 +336,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Mechanical,
                             bonusAmount: 4)
                     },
-                    originalFaction: Factions.Revelators,
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -365,7 +366,7 @@ namespace low_age_data.Collections
                             minimumDistance: 1,
                             maximumDistance: 1)
                     },
-                    originalFaction: Factions.Revelators,
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -397,7 +398,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Armoured,
                             bonusAmount: 4)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -435,7 +436,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Ranged,
                             bonusAmount: 3)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -468,7 +469,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Light,
                             bonusAmount: 4)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -505,7 +506,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Armoured,
                             bonusAmount: 9)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -540,7 +541,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Celestial,
                             bonusAmount: 3)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -574,7 +575,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Mechanical,
                             bonusAmount: 5)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -608,7 +609,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Structure,
                             bonusAmount: 20)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -643,7 +644,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Giant,
                             bonusAmount: 6)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -672,7 +673,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 8, hasCurrent: false, combatType: Stats.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -708,7 +709,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Mechanical,
                             bonusAmount: 8)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Giant,
@@ -750,7 +751,7 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttributes.Biological,
                             bonusAmount: 5)
                     },
-                    originalFaction: Factions.UEE,
+                    originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Celestial,

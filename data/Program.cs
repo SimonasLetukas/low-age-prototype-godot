@@ -21,6 +21,8 @@ namespace low_age_data
 
         static void Main(string[] args)
         {
+            var resources = Resources.Get();
+            var factions = Factions.Get();
             var tiles = Tiles.Get();
             var units = Units.Get();
             var structures = Structures.Get();
@@ -29,9 +31,11 @@ namespace low_age_data
             var effects = Effects.Get();
             var behaviours = Behaviours.Get();
 
-            var outputObject = new OutputObject
+            var outputObject = new
             {
-                Entities = new OutputEntities
+                Resources = resources,
+                Factions = factions,
+                Entities = new
                 {
                     Tiles = tiles,
                     Units = units,
@@ -64,21 +68,5 @@ namespace low_age_data
 
             File.WriteAllText(path, outputJson);
         }
-    }
-
-    class OutputObject
-    {
-        public OutputEntities Entities { get; set; } = new();
-        public IList<Ability> Abilities { get; set; } = new List<Ability>();
-        public IList<Effect> Effects { get; set; } = new List<Effect>();
-        public IList<Behaviour> Behaviours { get; set; } = new List<Behaviour>();
-    }
-
-    class OutputEntities
-    {
-        public IList<Tile> Tiles { get; set; } = new List<Tile>();
-        public IList<Unit> Units { get; set; } = new List<Unit>();
-        public IList<Structure> Structures { get; set; } = new List<Structure>();
-        public IList<Feature> Features { get; set; } = new List<Feature>();
     }
 }

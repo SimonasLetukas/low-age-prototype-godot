@@ -5,6 +5,7 @@ using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
+using low_age_data.Domain.Resources;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
@@ -33,63 +34,63 @@ namespace low_age_data.Collections
                     description: "Promote a new Revelators goon from the remaining population.",
                     selection: new List<Selection>
                     {
-                        new(entityName: UnitName.Slave, cost: new List<Resource>
+                        new(entityName: UnitName.Slave, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 4),
-                            new(type: Resources.MeleeWeapon, amount: 1),
-                            new(type: Resources.Population, amount: 1)
+                            new(type: ResourceName.Scraps, amount: 4),
+                            new(type: ResourceName.MeleeWeapon, amount: 1),
+                            new(type: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Quickdraw, cost: new List<Resource>
+                        new(entityName: UnitName.Quickdraw, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 9),
-                            new(type: Resources.RangedWeapon, amount: 2),
-                            new(type: Resources.Population, amount: 1)
+                            new(type: ResourceName.Scraps, amount: 9),
+                            new(type: ResourceName.RangedWeapon, amount: 2),
+                            new(type: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Gorger, cost: new List<Resource>
+                        new(entityName: UnitName.Gorger, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 7),
-                            new(type: Resources.MeleeWeapon, amount: 2),
-                            new(type: Resources.Population, amount: 1)
+                            new(type: ResourceName.Scraps, amount: 7),
+                            new(type: ResourceName.MeleeWeapon, amount: 2),
+                            new(type: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Camou, cost: new List<Resource>
+                        new(entityName: UnitName.Camou, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 11),
-                            new(type: Resources.MeleeWeapon, amount: 2),
-                            new(type: Resources.SpecialWeapon, amount: 1),
-                            new(type: Resources.Population, amount: 1)
+                            new(type: ResourceName.Scraps, amount: 11),
+                            new(type: ResourceName.MeleeWeapon, amount: 2),
+                            new(type: ResourceName.SpecialWeapon, amount: 1),
+                            new(type: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Shaman, cost: new List<Resource>
+                        new(entityName: UnitName.Shaman, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 10),
-                            new(type: Resources.RangedWeapon, amount: 1),
-                            new(type: Resources.SpecialWeapon, amount: 2),
-                            new(type: Resources.Population, amount: 1)
+                            new(type: ResourceName.Scraps, amount: 10),
+                            new(type: ResourceName.RangedWeapon, amount: 1),
+                            new(type: ResourceName.SpecialWeapon, amount: 2),
+                            new(type: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Pyre, cost: new List<Resource>
+                        new(entityName: UnitName.Pyre, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 15),
-                            new(type: Resources.RangedWeapon, amount: 4),
-                            new(type: Resources.Population, amount: 1)
+                            new(type: ResourceName.Scraps, amount: 15),
+                            new(type: ResourceName.RangedWeapon, amount: 4),
+                            new(type: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.BigBadBull, cost: new List<Resource>
+                        new(entityName: UnitName.BigBadBull, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 14),
-                            new(type: Resources.MeleeWeapon, amount: 4),
-                            new(type: Resources.Population, amount: 1)
+                            new(type: ResourceName.Scraps, amount: 14),
+                            new(type: ResourceName.MeleeWeapon, amount: 4),
+                            new(type: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Mummy, cost: new List<Resource>
+                        new(entityName: UnitName.Mummy, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 29),
-                            new(type: Resources.SpecialWeapon, amount: 5),
-                            new(type: Resources.Population, amount: 1)
+                            new(type: ResourceName.Scraps, amount: 29),
+                            new(type: ResourceName.SpecialWeapon, amount: 5),
+                            new(type: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Parasite, cost: new List<Resource>
+                        new(entityName: UnitName.Parasite, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 21),
-                            new(type: Resources.MeleeWeapon, amount: 2),
-                            new(type: Resources.RangedWeapon, amount: 2),
-                            new(type: Resources.SpecialWeapon, amount: 2),
-                            new(type: Resources.Population, amount: 1)
+                            new(type: ResourceName.Scraps, amount: 21),
+                            new(type: ResourceName.MeleeWeapon, amount: 2),
+                            new(type: ResourceName.RangedWeapon, amount: 2),
+                            new(type: ResourceName.SpecialWeapon, amount: 2),
+                            new(type: ResourceName.Population, amount: 1)
                         }),
                     },
                     canPlaceInWalkableAreaOnly: true,
@@ -136,55 +137,55 @@ namespace low_age_data.Collections
                     distance: 1,
                     selection: new List<Selection>
                     {
-                        new(entityName: StructureName.Hut, cost: new List<Resource>
+                        new(entityName: StructureName.Hut, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 5),
-                            new(type: Resources.Celestium, amount: 40)
+                            new(type: ResourceName.Scraps, amount: 5),
+                            new(type: ResourceName.Celestium, amount: 40)
                         }),
-                        new(entityName: StructureName.Obelisk, cost: new List<Resource>
+                        new(entityName: StructureName.Obelisk, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 12),
-                            new(type: Resources.Celestium, amount: 30)
+                            new(type: ResourceName.Scraps, amount: 12),
+                            new(type: ResourceName.Celestium, amount: 30)
                         }),
-                        new(entityName: StructureName.Shack, cost: new List<Resource>
+                        new(entityName: StructureName.Shack, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 15),
-                            new(type: Resources.Celestium, amount: 40)
+                            new(type: ResourceName.Scraps, amount: 15),
+                            new(type: ResourceName.Celestium, amount: 40)
                         }),
-                        new(entityName: StructureName.Smith, cost: new List<Resource>
+                        new(entityName: StructureName.Smith, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 11),
-                            new(type: Resources.Celestium, amount: 50)
+                            new(type: ResourceName.Scraps, amount: 11),
+                            new(type: ResourceName.Celestium, amount: 50)
                         }),
-                        new(entityName: StructureName.Fletcher, cost: new List<Resource>
+                        new(entityName: StructureName.Fletcher, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 17),
-                            new(type: Resources.Celestium, amount: 75)
+                            new(type: ResourceName.Scraps, amount: 17),
+                            new(type: ResourceName.Celestium, amount: 75)
                         }),
-                        new(entityName: StructureName.Alchemy, cost: new List<Resource>
+                        new(entityName: StructureName.Alchemy, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 23),
-                            new(type: Resources.Celestium, amount: 100)
+                            new(type: ResourceName.Scraps, amount: 23),
+                            new(type: ResourceName.Celestium, amount: 100)
                         }),
-                        new(entityName: StructureName.Depot, cost: new List<Resource>
+                        new(entityName: StructureName.Depot, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 20),
-                            new(type: Resources.Celestium, amount: 65)
+                            new(type: ResourceName.Scraps, amount: 20),
+                            new(type: ResourceName.Celestium, amount: 65)
                         }),
-                        new(entityName: StructureName.Workshop, cost: new List<Resource>
+                        new(entityName: StructureName.Workshop, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 20),
-                            new(type: Resources.Celestium, amount: 50)
+                            new(type: ResourceName.Scraps, amount: 20),
+                            new(type: ResourceName.Celestium, amount: 50)
                         }),
-                        new(entityName: StructureName.Outpost, cost: new List<Resource>
+                        new(entityName: StructureName.Outpost, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 18),
-                            new(type: Resources.Celestium, amount: 45)
+                            new(type: ResourceName.Scraps, amount: 18),
+                            new(type: ResourceName.Celestium, amount: 45)
                         }),
-                        new(entityName: StructureName.Barricade, cost: new List<Resource>
+                        new(entityName: StructureName.Barricade, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 16),
-                            new(type: Resources.Celestium, amount: 35)
+                            new(type: ResourceName.Scraps, amount: 16),
+                            new(type: ResourceName.Celestium, amount: 35)
                         }),
                     },
                     casterConsumesAction: true,
@@ -615,20 +616,20 @@ namespace low_age_data.Collections
                     distance: 1,
                     selection: new List<Selection>
                     {
-                        new(entityName: UnitName.Cannon, cost: new List<Resource>
+                        new(entityName: UnitName.Cannon, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 18),
-                            new(type: Resources.Celestium, amount: 120)
+                            new(type: ResourceName.Scraps, amount: 18),
+                            new(type: ResourceName.Celestium, amount: 120)
                         }),
-                        new(entityName: UnitName.Ballista, cost: new List<Resource>
+                        new(entityName: UnitName.Ballista, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 7),
-                            new(type: Resources.Celestium, amount: 106)
+                            new(type: ResourceName.Scraps, amount: 7),
+                            new(type: ResourceName.Celestium, amount: 106)
                         }),
-                        new(entityName: UnitName.Radar, cost: new List<Resource>
+                        new(entityName: UnitName.Radar, cost: new List<Cost>
                         {
-                            new(type: Resources.Scraps, amount: 15),
-                            new(type: Resources.Celestium, amount: 84)
+                            new(type: ResourceName.Scraps, amount: 15),
+                            new(type: ResourceName.Celestium, amount: 84)
                         }),
                     },
                     casterConsumesAction: true,
