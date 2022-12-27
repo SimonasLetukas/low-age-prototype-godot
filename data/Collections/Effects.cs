@@ -27,6 +27,14 @@ namespace low_age_data.Collections
                     location: Location.Self),
                 
                 new ApplyBehaviour(
+                    name: EffectName.Citadel.ExecutiveStashApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Citadel.ExecutiveStashIncome
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
                     name: EffectName.Leader.AllForOneApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {

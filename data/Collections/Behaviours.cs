@@ -31,6 +31,20 @@ namespace low_age_data.Collections
                             resource: ResourceName.Celestium)
                     }),
                 
+                new Income(
+                    name: BehaviourName.Citadel.ExecutiveStashIncome,
+                    displayName: nameof(BehaviourName.Citadel.ExecutiveStashIncome).CamelCaseToWords(),
+                    description: "Provides 4 Population and 4 spaces of storage for Weapons.",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent,
+                            amount: 4,
+                            resource: ResourceName.Population),
+                        new(change: Change.AddCurrent,
+                            amount: 4,
+                            resource: ResourceName.WeaponStorage)
+                    }),
+                
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,
                     displayName: nameof(BehaviourName.Leader.AllForOneBuff).CamelCaseToWords(),

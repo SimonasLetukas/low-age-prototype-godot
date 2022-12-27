@@ -28,10 +28,17 @@ namespace low_age_data.Collections
                     onHitAttackTypes: null,
                     onBirthEffect: EffectName.Citadel.PassiveIncomeApplyBehaviour),
                 
+                new Passive(
+                    name: AbilityName.Citadel.ExecutiveStash,
+                    displayName: nameof(AbilityName.Citadel.ExecutiveStash).CamelCaseToWords(),
+                    description: "Provides 4 Population and 4 spaces of storage for Weapons.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Citadel.ExecutiveStashApplyBehaviour),
+                
                 new Produce(
-                    name: AbilityName.Citadel.PromoteGoon,
-                    displayName: nameof(AbilityName.Citadel.PassiveIncome).CamelCaseToWords(),
-                    description: "Promote a new Revelators goon from the remaining population.",
+                    name: AbilityName.Citadel.PromoteGoons,
+                    displayName: nameof(AbilityName.Citadel.PromoteGoons).CamelCaseToWords(),
+                    description: "Promote a new Revelators goon from the remaining Population.",
                     selection: new List<Selection>
                     {
                         new(entityName: UnitName.Slave, cost: new List<Cost>

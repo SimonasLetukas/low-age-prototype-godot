@@ -11,6 +11,7 @@ namespace low_age_data.Domain.Behaviours
         public static class Citadel
         {
             public static BehaviourName PassiveIncomeIncome => new($"{nameof(Citadel)}{nameof(PassiveIncomeIncome)}".ToKebabCase());
+            public static BehaviourName ExecutiveStashIncome => new($"{nameof(Citadel)}{nameof(ExecutiveStashIncome)}".ToKebabCase());
         }
 
         public static class Leader
