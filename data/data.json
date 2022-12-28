@@ -1508,7 +1508,7 @@
             "y": 2
           },
           "size": {
-            "x": 2,
+            "x": 3,
             "y": 2
           }
         },
@@ -1677,6 +1677,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Executive Stash",
       "description": "Provides 4 Population and 4 spaces of storage for Weapons."
+    },
+    {
+      "name": "ability-citadel-ascendable",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-citadel-ascendable-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Ascendable",
+      "description": "Can be navigated through to go up to high ground."
     },
     {
       "name": "ability-citadel-promote-goons",
@@ -2908,6 +2923,18 @@
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
         "behaviour-citadel-executive-stash-income"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-citadel-ascendable-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-citadel-ascendable-ascendable"
       ],
       "location": "Location.Self",
       "filterFlags": [],
@@ -4885,6 +4912,27 @@
       "hasSameInstanceForAllOwners": false
     },
     {
+      "name": "behaviour-citadel-ascendable-ascendable",
+      "type": "Behaviour.Ascendable",
+      "path": [
+        {
+          "start": {
+            "x": 1,
+            "y": 1
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          }
+        }
+      ],
+      "displayName": "Ascendable Ascendable",
+      "description": "Can be navigated through to go up to high ground.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
       "name": "behaviour-leader-all-for-one-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [],
@@ -5857,7 +5905,7 @@
     },
     {
       "name": "behaviour-cannon-assembling-buildable",
-      "type": "Behaviour.Counter",
+      "type": "Behaviour.Buildable",
       "placementValidators": [
         {
           "type": "Validator",
@@ -5881,7 +5929,7 @@
     },
     {
       "name": "behaviour-ballista-assembling-buildable",
-      "type": "Behaviour.Counter",
+      "type": "Behaviour.Buildable",
       "placementValidators": [
         {
           "type": "Validator",
@@ -5905,7 +5953,7 @@
     },
     {
       "name": "behaviour-radar-assembling-buildable",
-      "type": "Behaviour.Counter",
+      "type": "Behaviour.Buildable",
       "placementValidators": [
         {
           "type": "Validator",

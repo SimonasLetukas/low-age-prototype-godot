@@ -12,6 +12,7 @@ namespace low_age_data.Domain.Effects
         {
             public static EffectName PassiveIncomeApplyBehaviour => new($"{nameof(Citadel)}{nameof(PassiveIncomeApplyBehaviour)}".ToKebabCase());
             public static EffectName ExecutiveStashApplyBehaviour => new($"{nameof(Citadel)}{nameof(ExecutiveStashApplyBehaviour)}".ToKebabCase());
+            public static EffectName AscendableApplyBehaviour => new($"{nameof(Citadel)}{nameof(AscendableApplyBehaviour)}".ToKebabCase());
         }
 
         public static class Leader

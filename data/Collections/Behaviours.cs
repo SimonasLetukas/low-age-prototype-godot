@@ -45,6 +45,16 @@ namespace low_age_data.Collections
                             resource: ResourceName.WeaponStorage)
                     }),
                 
+                new Ascendable(
+                    name: BehaviourName.Citadel.AscendableAscendable,
+                    displayName: nameof(BehaviourName.Citadel.AscendableAscendable).CamelCaseToWords(),
+                    description: "Can be navigated through to go up to high ground.",
+                    path: new List<Area>
+                    {
+                       new(start: new Vector2<int>(x: 1, y: 1), 
+                           size: new Vector2<int>(x: 1, y: 1)) 
+                    }),
+                
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,
                     displayName: nameof(BehaviourName.Leader.AllForOneBuff).CamelCaseToWords(),

@@ -16,7 +16,7 @@ namespace low_age_data.Domain.Behaviours
             string displayName, 
             string description,
             IList<Validator>? placementValidators = null,
-            int? maximumHelpers = null) : base(name, $"{nameof(Behaviour)}.{nameof(Counter)}", displayName, description, EndsAt.Death)
+            int? maximumHelpers = null) : base(name, $"{nameof(Behaviour)}.{nameof(Buildable)}", displayName, description, EndsAt.Death)
         {
             PlacementValidators = placementValidators ?? new List<Validator>();
             MaximumHelpers = maximumHelpers ?? -1;

@@ -35,6 +35,13 @@ namespace low_age_data.Collections
                     hasButton: true,
                     onBirthEffect: EffectName.Citadel.ExecutiveStashApplyBehaviour),
                 
+                new Passive(
+                    name: AbilityName.Citadel.Ascendable,
+                    displayName: nameof(AbilityName.Citadel.Ascendable).CamelCaseToWords(),
+                    description: "Can be navigated through to go up to high ground.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Citadel.AscendableApplyBehaviour),
+                
                 new Produce(
                     name: AbilityName.Citadel.PromoteGoons,
                     displayName: nameof(AbilityName.Citadel.PromoteGoons).CamelCaseToWords(),

@@ -33,7 +33,7 @@ namespace low_age_data.Collections
                     destructible: false,
                     walkableArea: new Area(
                         start: new Vector2<int>(x: 0, y: 2), 
-                        size: new Vector2<int>(x: 2, y: 2)))
+                        size: new Vector2<int>(x: 3, y: 2)))
             };
         }
     }
