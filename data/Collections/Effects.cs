@@ -18,6 +18,33 @@ namespace low_age_data.Collections
         {
             return new List<Effect>
             {
+                new Search(
+                    name: EffectName.Shared.HighGroundSearch,
+                    radius: 0,
+                    searchFlags: new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnEnter,
+                        Flag.Effect.Search.RemovedOnExit
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Shared.HighGroundApplyBehaviour
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Shared.HighGroundApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Shared.HighGroundBuff
+                    }),
+                
                 new ApplyBehaviour(
                     name: EffectName.Citadel.PassiveIncomeApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -39,6 +66,14 @@ namespace low_age_data.Collections
                     behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Citadel.AscendableAscendable
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Citadel.HighGroundApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Citadel.HighGroundHighGround
                     },
                     location: Location.Self),
                 

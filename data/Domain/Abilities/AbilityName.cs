@@ -13,6 +13,7 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName PassiveIncome => new($"{nameof(Citadel)}{nameof(PassiveIncome)}".ToKebabCase());
             public static AbilityName ExecutiveStash => new($"{nameof(Citadel)}{nameof(ExecutiveStash)}".ToKebabCase());
             public static AbilityName Ascendable => new($"{nameof(Citadel)}{nameof(Ascendable)}".ToKebabCase());
+            public static AbilityName HighGround => new($"{nameof(Citadel)}{nameof(HighGround)}".ToKebabCase());
             public static AbilityName PromoteGoons => new($"{nameof(Citadel)}{nameof(PromoteGoons)}".ToKebabCase());
         }
 

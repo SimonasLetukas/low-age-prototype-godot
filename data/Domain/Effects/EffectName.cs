@@ -8,11 +8,18 @@ namespace low_age_data.Domain.Effects
         {
         }
 
+        public static class Shared
+        {
+            public static EffectName HighGroundSearch => new($"{nameof(Shared)}{nameof(HighGroundSearch)}".ToKebabCase());
+            public static EffectName HighGroundApplyBehaviour => new($"{nameof(Shared)}{nameof(HighGroundApplyBehaviour)}".ToKebabCase());
+        }
+        
         public static class Citadel
         {
             public static EffectName PassiveIncomeApplyBehaviour => new($"{nameof(Citadel)}{nameof(PassiveIncomeApplyBehaviour)}".ToKebabCase());
             public static EffectName ExecutiveStashApplyBehaviour => new($"{nameof(Citadel)}{nameof(ExecutiveStashApplyBehaviour)}".ToKebabCase());
             public static EffectName AscendableApplyBehaviour => new($"{nameof(Citadel)}{nameof(AscendableApplyBehaviour)}".ToKebabCase());
+            public static EffectName HighGroundApplyBehaviour => new($"{nameof(Citadel)}{nameof(HighGroundApplyBehaviour)}".ToKebabCase());
         }
 
         public static class Leader

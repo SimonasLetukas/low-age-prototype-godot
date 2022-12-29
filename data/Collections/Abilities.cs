@@ -42,6 +42,14 @@ namespace low_age_data.Collections
                     hasButton: true,
                     onBirthEffect: EffectName.Citadel.AscendableApplyBehaviour),
                 
+                new Passive(
+                    name: AbilityName.Citadel.HighGround,
+                    displayName: nameof(AbilityName.Citadel.HighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +1 Attack Distance " +
+                                 "for their ranged attacks.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Citadel.HighGroundApplyBehaviour),
+                
                 new Produce(
                     name: AbilityName.Citadel.PromoteGoons,
                     displayName: nameof(AbilityName.Citadel.PromoteGoons).CamelCaseToWords(),

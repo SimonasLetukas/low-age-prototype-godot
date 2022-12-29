@@ -8,11 +8,17 @@ namespace low_age_data.Domain.Behaviours
         {
         }
 
+        public static class Shared
+        {
+            public static BehaviourName HighGroundBuff => new($"{nameof(Shared)}{nameof(HighGroundBuff)}".ToKebabCase());
+        }
+        
         public static class Citadel
         {
             public static BehaviourName PassiveIncomeIncome => new($"{nameof(Citadel)}{nameof(PassiveIncomeIncome)}".ToKebabCase());
             public static BehaviourName ExecutiveStashIncome => new($"{nameof(Citadel)}{nameof(ExecutiveStashIncome)}".ToKebabCase());
             public static BehaviourName AscendableAscendable => new($"{nameof(Citadel)}{nameof(AscendableAscendable)}".ToKebabCase());
+            public static BehaviourName HighGroundHighGround => new($"{nameof(Citadel)}{nameof(HighGroundHighGround)}".ToKebabCase());
         }
 
         public static class Leader

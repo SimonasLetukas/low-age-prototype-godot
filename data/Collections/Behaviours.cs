@@ -17,6 +17,23 @@ namespace low_age_data.Collections
         {
             return new List<Behaviour>
             {
+                new Buff(
+                    name: BehaviourName.Shared.HighGroundBuff,
+                    displayName: nameof(BehaviourName.Shared.HighGroundBuff).CamelCaseToWords(),
+                    description: "Unit is on high ground and has +1 Attack Distance for ranged attacks.",
+                    initialModifications: new List<Modification>
+                    {
+                        new AttackModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            attackType: Attacks.Ranged,
+                            attribute: AttackAttribute.MaxDistance)
+                    },
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    restoreChangesOnEnd: true),
+                
                 new Income(
                     name: BehaviourName.Citadel.PassiveIncomeIncome,
                     displayName: nameof(BehaviourName.Citadel.PassiveIncomeIncome).CamelCaseToWords(),
@@ -53,6 +70,17 @@ namespace low_age_data.Collections
                     {
                        new(start: new Vector2<int>(x: 1, y: 1), 
                            size: new Vector2<int>(x: 1, y: 1)) 
+                    }),
+                
+                new HighGround(
+                    BehaviourName.Citadel.HighGroundHighGround,
+                    nameof(BehaviourName.Citadel.HighGroundHighGround).CamelCaseToWords(),
+                    "Provides an area of high ground to other units, who all gain +1 Attack Distance " +
+                    "for their ranged attacks.",
+                    new List<Area>
+                    {
+                        new(start: new Vector2<int>(x: 0, y: 0), 
+                            size: new Vector2<int>(x: 3, y: 2)) 
                     }),
                 
                 new Buff(
