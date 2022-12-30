@@ -26,6 +26,11 @@ namespace low_age_data.Domain.Effects
         {
             public static EffectName ScrapsIncomeApplyBehaviour => new($"{nameof(Hut)}{nameof(ScrapsIncomeApplyBehaviour)}".ToKebabCase());
         }
+        
+        public static class Obelisk
+        {
+            public static EffectName CelestiumIncomeApplyBehaviour => new($"{nameof(Obelisk)}{nameof(CelestiumIncomeApplyBehaviour)}".ToKebabCase());
+        }
 
         public static class Leader
         {

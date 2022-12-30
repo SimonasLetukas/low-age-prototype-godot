@@ -35,8 +35,8 @@ namespace low_age_data.Domain.Behaviours
         
         /// <summary>
         /// Value which is deducted from the <see cref="Resources"/> <see cref="Modification.Amount"/> for each
-        /// <see cref="Income"/> of the same <see cref="BehaviourName"/>. Final <see cref="Modification.Amount"/>
-        /// cannot be lower than 1.
+        /// subsequent <see cref="Income"/> of the same <see cref="BehaviourName"/>. Final
+        /// <see cref="Modification.Amount"/> cannot be lower than 1.
         /// </summary>
         public int DiminishingReturn { get; }
     }

@@ -86,6 +86,14 @@ namespace low_age_data.Collections
                     location: Location.Self),
                 
                 new ApplyBehaviour(
+                    name: EffectName.Obelisk.CelestiumIncomeApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Obelisk.CelestiumIncomeIncome
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
                     name: EffectName.Leader.AllForOneApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {

@@ -125,6 +125,14 @@ namespace low_age_data.Collections
                     description: "At the start of each planning phase provides 5 Scraps.",
                     hasButton: true,
                     onBirthEffect: EffectName.Hut.ScrapsIncomeApplyBehaviour),
+                
+                new Passive(
+                    name: AbilityName.Obelisk.CelestiumIncome,
+                    displayName: nameof(AbilityName.Obelisk.CelestiumIncome).CamelCaseToWords(),
+                    description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
+                                 "constructed Obelisk, total minimum of 1).",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Obelisk.CelestiumIncomeApplyBehaviour),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,

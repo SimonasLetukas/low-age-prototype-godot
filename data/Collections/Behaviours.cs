@@ -95,6 +95,19 @@ namespace low_age_data.Collections
                             resource: ResourceName.Scraps)
                     }),
                 
+                new Income(
+                    name: BehaviourName.Obelisk.CelestiumIncomeIncome,
+                    displayName: nameof(BehaviourName.Obelisk.CelestiumIncomeIncome).CamelCaseToWords(),
+                    description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
+                                 "constructed Obelisk, total minimum of 1).",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent,
+                            amount: 5,
+                            resource: ResourceName.Celestium)
+                    },
+                    diminishingReturn: 2),
+                
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,
                     displayName: nameof(BehaviourName.Leader.AllForOneBuff).CamelCaseToWords(),

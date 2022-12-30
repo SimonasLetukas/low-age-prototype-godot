@@ -1585,6 +1585,61 @@
         ],
         "displayName": "Hut",
         "description": ""
+      },
+      {
+        "name": "structure-obelisk",
+        "size": {
+          "x": 2,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 60,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 3,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-obelisk-building",
+          "ability-obelisk-celestium-income"
+        ],
+        "displayName": "Obelisk",
+        "description": ""
       }
     ],
     "features": [
@@ -1965,6 +2020,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Scraps Income",
       "description": "At the start of each planning phase provides 5 Scraps."
+    },
+    {
+      "name": "ability-obelisk-celestium-income",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-obelisk-celestium-income-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Celestium Income",
+      "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1)."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -3233,6 +3303,18 @@
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
         "behaviour-hut-scraps-income-income"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-obelisk-celestium-income-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-obelisk-celestium-income-income"
       ],
       "location": "Location.Self",
       "filterFlags": [],
@@ -5285,6 +5367,24 @@
       "diminishingReturn": 0,
       "displayName": "Scraps Income Income",
       "description": "At the start of each planning phase provides 5 Scraps.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-obelisk-celestium-income-income",
+      "type": "Behaviour.Income",
+      "resources": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "resource-celestium",
+          "change": "Change.AddCurrent",
+          "amount": 5.0
+        }
+      ],
+      "diminishingReturn": 2,
+      "displayName": "Celestium Income Income",
+      "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1).",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false

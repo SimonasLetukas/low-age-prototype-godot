@@ -61,6 +61,30 @@ namespace low_age_data.Collections
                         AbilityName.Hut.ScrapsIncome
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
+                
+                new(
+                    name: StructureName.Obelisk, 
+                    displayName: nameof(StructureName.Obelisk).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 60, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 3, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Revelators, 
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Obelisk.Building,
+                        AbilityName.Obelisk.CelestiumIncome
+                    },
+                    size: new Vector2<int>(x: 2, y: 2)),
             };
         }
     }

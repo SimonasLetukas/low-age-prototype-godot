@@ -26,6 +26,7 @@ namespace low_age_data.Domain.Abilities
         public static class Obelisk
         {
             public static AbilityName Building => new($"{nameof(Obelisk)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName CelestiumIncome => new($"{nameof(Obelisk)}{nameof(CelestiumIncome)}".ToKebabCase());
         }
         
         public static class Shack

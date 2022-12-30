@@ -30,6 +30,7 @@ namespace low_age_data.Domain.Behaviours
         public static class Obelisk
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Obelisk)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName CelestiumIncomeIncome => new($"{nameof(Obelisk)}{nameof(CelestiumIncomeIncome)}".ToKebabCase());
         }
         
         public static class Shack
