@@ -78,6 +78,14 @@ namespace low_age_data.Collections
                     location: Location.Self),
                 
                 new ApplyBehaviour(
+                    name: EffectName.Hut.ScrapsIncomeApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Hut.ScrapsIncomeIncome
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
                     name: EffectName.Leader.AllForOneApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
@@ -146,7 +154,8 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
                                 conditionedBehaviour: BehaviourName.Leader.OneForAllObeliskBuff)
                         })
                     }),
@@ -222,7 +231,8 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
                                 conditionedBehaviour: BehaviourName.Slave.ManualLabourBuff)
                         })
                     }),
@@ -608,7 +618,8 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
                                 conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspTether)
                         })
                     }),
@@ -630,7 +641,8 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
                                 conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspBuff)
                         })
                     }),
@@ -651,7 +663,8 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
                                 conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspSelfBuff)
                         })
                     }),
@@ -896,17 +909,20 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
                                 conditionedBehaviour: BehaviourName.Cannon.AssemblingBuildable)
                         }),
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
                                 conditionedBehaviour: BehaviourName.Ballista.AssemblingBuildable)
                         }),
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourDoesNotExist, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
                                 conditionedBehaviour: BehaviourName.Radar.AssemblingBuildable)
                         })
                     }),
@@ -915,8 +931,10 @@ namespace low_age_data.Collections
                     name: EffectName.Engineer.OperateModifyCounter,
                     countersToModify: new List<BehaviourName>
                     {
-                        BehaviourName.Cannon.MachineCounter
-                        // TODO add with each machine
+                        BehaviourName.Cannon.MachineCounter,
+                        BehaviourName.Ballista.MachineCounter,
+                        BehaviourName.Radar.MachineCounter,
+                        BehaviourName.Vessel.MachineCounter
                     },
                     change: Change.AddCurrent, 
                     amount: 1,
@@ -994,7 +1012,8 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourExists, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.Exists, 
                                 conditionedBehaviour: BehaviourName.Horrior.MountWait)
                         })
                     }),
@@ -1136,7 +1155,8 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourExists, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.Exists, 
                                 conditionedBehaviour: BehaviourName.Ballista.AimBuff, 
                                 behaviourOwner: Location.Origin)
                         })
@@ -1273,7 +1293,8 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourExists, 
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.Exists, 
                                 conditionedBehaviour: BehaviourName.Radar.RadioLocationFeatureBuff,
                                 behaviourOwner: Location.Origin)
                         })

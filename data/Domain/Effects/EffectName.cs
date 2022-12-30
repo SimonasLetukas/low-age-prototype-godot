@@ -22,6 +22,11 @@ namespace low_age_data.Domain.Effects
             public static EffectName HighGroundApplyBehaviour => new($"{nameof(Citadel)}{nameof(HighGroundApplyBehaviour)}".ToKebabCase());
         }
 
+        public static class Hut
+        {
+            public static EffectName ScrapsIncomeApplyBehaviour => new($"{nameof(Hut)}{nameof(ScrapsIncomeApplyBehaviour)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static EffectName AllForOneApplyBehaviour => new($"{nameof(Leader)}{nameof(AllForOneApplyBehaviour)}".ToKebabCase());

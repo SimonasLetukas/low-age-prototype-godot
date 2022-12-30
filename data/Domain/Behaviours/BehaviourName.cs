@@ -21,6 +21,57 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName HighGroundHighGround => new($"{nameof(Citadel)}{nameof(HighGroundHighGround)}".ToKebabCase());
         }
 
+        public static class Hut
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Hut)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName ScrapsIncomeIncome => new($"{nameof(Hut)}{nameof(ScrapsIncomeIncome)}".ToKebabCase());
+        }
+        
+        public static class Obelisk
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Obelisk)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+        
+        public static class Shack
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Shack)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+        
+        public static class Smith
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Smith)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+        
+        public static class Fletcher
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Fletcher)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+        
+        public static class Alchemy
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Alchemy)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+        
+        public static class Depot
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Depot)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+        
+        public static class Workshop
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Workshop)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+        
+        public static class Outpost
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Outpost)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+        
+        public static class Barricade
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Barricade)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static BehaviourName AllForOneBuff => new($"{nameof(Leader)}{nameof(AllForOneBuff)}".ToKebabCase());

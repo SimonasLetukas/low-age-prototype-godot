@@ -1,36 +1,34 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Flags;
+﻿using low_age_data.Domain.Shared.Flags;
+using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Logic
 {
+    /// <summary>
+    /// Base condition for a target.
+    /// </summary>
     public class Condition
     {
+        internal Condition(
+            string type,
+            Flag conditionFlag)
+        {
+            Type = type;
+            ConditionFlag = conditionFlag;
+        }
+
         public Condition(
-            Flag conditionFlag, 
-            BehaviourName? conditionedBehaviour = null, 
-            Location? behaviourOwner = null)
+            Flag conditionFlag)
         {
             Type = $"{nameof(Condition)}";
             ConditionFlag = conditionFlag;
-            ConditionedBehaviour = conditionedBehaviour;
-            BehaviourOwner = behaviourOwner;
         }
         
+        [JsonProperty(Order = -3)]
         public string Type { get; }
+        
+        /// <summary>
+        /// Used to specify how the target is conditioned.
+        /// </summary>
         public Flag ConditionFlag { get; }
-        
-        /// <summary>
-        /// Used if the condition flag requires to check for a specific behaviour
-        /// </summary>
-        public BehaviourName? ConditionedBehaviour { get; }
-        
-        /// <summary>
-        /// Used if the <see cref="ConditionedBehaviour"/> has to be owned by a specific <see cref="Actor"/>.
-        /// </summary>
-        public Location? BehaviourOwner { get; }
     }
 }

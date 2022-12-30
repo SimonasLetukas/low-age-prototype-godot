@@ -1522,9 +1522,68 @@
         "originalFaction": "faction-revelators",
         "combatAttributes": [],
         "abilities": [
-          "ability-citadel-passive-income"
+          "ability-citadel-passive-income",
+          "ability-citadel-executive-stash",
+          "ability-citadel-ascendable",
+          "ability-citadel-high-ground",
+          "ability-citadel-promote-goons"
         ],
         "displayName": "Citadel",
+        "description": ""
+      },
+      {
+        "name": "structure-hut",
+        "size": {
+          "x": 2,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 50,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-revelators",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-hut-building",
+          "ability-hut-scraps-income"
+        ],
+        "displayName": "Hut",
         "description": ""
       }
     ],
@@ -1893,6 +1952,21 @@
       "description": "Promote a new Revelators goon from the remaining Population."
     },
     {
+      "name": "ability-hut-scraps-income",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-hut-scraps-income-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Scraps Income",
+      "description": "At the start of each planning phase provides 5 Scraps."
+    },
+    {
       "name": "ability-leader-all-for-one",
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
@@ -2083,6 +2157,156 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Build",
       "description": "Start building a Revelators' structure on an adjacent tile. Multiple Slaves can build the structure, each additional one after the first provides half of the Celestium production to the construction than the previous Slave."
+    },
+    {
+      "name": "ability-hut-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-hut-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-obelisk-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-obelisk-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-shack-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-shack-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-smith-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-smith-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-fletcher-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-fletcher-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-alchemy-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-alchemy-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-depot-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-depot-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-workshop-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-workshop-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-outpost-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-outpost-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-barricade-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-barricade-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
     },
     {
       "name": "ability-slave-repair",
@@ -2394,7 +2618,8 @@
       "periodicEffect": null,
       "onHitEffects": [
         "effect-parasite-paralysing-grasp-apply-tether-behaviour",
-        "effect-parasite-paralysing-grasp-apply-attack-behaviour"
+        "effect-parasite-paralysing-grasp-apply-attack-behaviour",
+        "effect-parasite-paralysing-grasp-apply-self-behaviour"
       ],
       "onHitAttackTypes": [
         "Attacks.Melee"
@@ -3004,6 +3229,18 @@
       "validators": []
     },
     {
+      "name": "effect-hut-scraps-income-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-hut-scraps-income-income"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
       "name": "effect-leader-all-for-one-apply-behaviour",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
@@ -3083,10 +3320,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-leader-one-for-all-obelisk-buff",
-              "behaviourOwner": null
+              "behaviourOwner": null,
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
             }
           ],
           "filterFlags": []
@@ -3142,9 +3379,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth"
             }
           ],
           "filterFlags": []
@@ -3182,10 +3417,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-slave-manual-labour-buff",
-              "behaviourOwner": null
+              "behaviourOwner": null,
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
             }
           ],
           "filterFlags": []
@@ -3343,9 +3578,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect"
             }
           ],
           "filterFlags": []
@@ -3372,9 +3605,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect"
             }
           ],
           "filterFlags": []
@@ -3385,9 +3616,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect"
             }
           ],
           "filterFlags": []
@@ -3436,9 +3665,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsHighGround",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "conditionFlag": "Flag.ConditionTargetIsHighGround"
             }
           ],
           "filterFlags": []
@@ -3448,9 +3675,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsUnoccupied",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "conditionFlag": "Flag.ConditionTargetIsUnoccupied"
             }
           ],
           "filterFlags": []
@@ -3789,10 +4014,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-tether",
-              "behaviourOwner": null
+              "behaviourOwner": null,
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
             }
           ],
           "filterFlags": []
@@ -3817,10 +4042,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-buff",
-              "behaviourOwner": null
+              "behaviourOwner": null,
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
             }
           ],
           "filterFlags": []
@@ -3844,10 +4069,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-self-buff",
-              "behaviourOwner": null
+              "behaviourOwner": null,
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
             }
           ],
           "filterFlags": []
@@ -4170,10 +4395,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-cannon-assembling-buildable",
-              "behaviourOwner": null
+              "behaviourOwner": null,
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
             }
           ],
           "filterFlags": []
@@ -4182,10 +4407,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-ballista-assembling-buildable",
-              "behaviourOwner": null
+              "behaviourOwner": null,
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
             }
           ],
           "filterFlags": []
@@ -4194,10 +4419,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-radar-assembling-buildable",
-              "behaviourOwner": null
+              "behaviourOwner": null,
+              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
             }
           ],
           "filterFlags": []
@@ -4208,7 +4433,10 @@
       "name": "effect-engineer-operate-modify-counter",
       "type": "Effect.ModifyCounter",
       "countersToModify": [
-        "behaviour-cannon-machine-counter"
+        "behaviour-cannon-machine-counter",
+        "behaviour-ballista-machine-counter",
+        "behaviour-radar-machine-counter",
+        "behaviour-vessel-machine-counter"
       ],
       "change": "Change.AddCurrent",
       "amount": 1,
@@ -4244,9 +4472,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth"
             }
           ],
           "filterFlags": []
@@ -4276,9 +4502,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth"
             }
           ],
           "filterFlags": []
@@ -4304,10 +4528,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourExists",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-horrior-mount-wait",
-              "behaviourOwner": null
+              "behaviourOwner": null,
+              "conditionFlag": "Flag.ConditionBehaviourExists"
             }
           ],
           "filterFlags": []
@@ -4502,10 +4726,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourExists",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-ballista-aim-buff",
-              "behaviourOwner": "Location.Origin"
+              "behaviourOwner": "Location.Origin",
+              "conditionFlag": "Flag.ConditionBehaviourExists"
             }
           ],
           "filterFlags": []
@@ -4682,10 +4906,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourExists",
+              "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-radar-radio-location-feature-buff",
-              "behaviourOwner": "Location.Origin"
+              "behaviourOwner": "Location.Origin",
+              "conditionFlag": "Flag.ConditionBehaviourExists"
             }
           ],
           "filterFlags": []
@@ -5048,6 +5272,24 @@
       "hasSameInstanceForAllOwners": false
     },
     {
+      "name": "behaviour-hut-scraps-income-income",
+      "type": "Behaviour.Income",
+      "resources": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "resource-scraps",
+          "change": "Change.AddCurrent",
+          "amount": 5.0
+        }
+      ],
+      "diminishingReturn": 0,
+      "displayName": "Scraps Income Income",
+      "description": "At the start of each planning phase provides 5 Scraps.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
       "name": "behaviour-leader-all-for-one-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [],
@@ -5156,6 +5398,250 @@
       "displayName": "One For All Heal Buff",
       "description": "Heals for 2 Health.",
       "endsAt": "EndsAt.Instant",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-hut-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        },
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition.EntityCondition",
+              "conditionedEntity": "tile-scraps",
+              "amountOfEntitiesRequired": 2,
+              "conditionFlag": "Flag.ConditionEntityExists"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground Scraps tiles, and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-obelisk-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        },
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition.EntityCondition",
+              "conditionedEntity": "tile-celestium",
+              "amountOfEntitiesRequired": 2,
+              "conditionFlag": "Flag.ConditionEntityExists"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground Celestium tiles, and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-shack-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-smith-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-fletcher-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-alchemy-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-depot-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-workshop-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-outpost-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-barricade-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -5770,9 +6256,7 @@
               "conditions": [
                 {
                   "type": "Condition",
-                  "conditionFlag": "Flag.ConditionTargetIsDifferentTypeThanOrigin",
-                  "conditionedBehaviour": null,
-                  "behaviourOwner": null
+                  "conditionFlag": "Flag.ConditionTargetIsDifferentTypeThanOrigin"
                 }
               ],
               "filterFlags": [
@@ -6027,9 +6511,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -6050,10 +6532,10 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionBehaviourExists",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "type": "Condition.BehaviourCondition",
+              "conditionedBehaviour": "behaviour-ballista-aim-buff",
+              "behaviourOwner": null,
+              "conditionFlag": "Flag.ConditionBehaviourExists"
             }
           ],
           "filterFlags": []
@@ -6075,9 +6557,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround",
-              "conditionedBehaviour": null,
-              "behaviourOwner": null
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -6365,9 +6845,7 @@
               "conditions": [
                 {
                   "type": "Condition",
-                  "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect",
-                  "conditionedBehaviour": null,
-                  "behaviourOwner": null
+                  "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect"
                 }
               ],
               "filterFlags": []

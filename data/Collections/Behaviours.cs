@@ -7,6 +7,7 @@ using low_age_data.Domain.Shared.Durations;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
+using low_age_data.Domain.Entities.Tiles;
 using low_age_data.Domain.Resources;
 
 namespace low_age_data.Collections
@@ -73,14 +74,25 @@ namespace low_age_data.Collections
                     }),
                 
                 new HighGround(
-                    BehaviourName.Citadel.HighGroundHighGround,
-                    nameof(BehaviourName.Citadel.HighGroundHighGround).CamelCaseToWords(),
-                    "Provides an area of high ground to other units, who all gain +1 Attack Distance " +
-                    "for their ranged attacks.",
-                    new List<Area>
+                    name: BehaviourName.Citadel.HighGroundHighGround,
+                    displayName: nameof(BehaviourName.Citadel.HighGroundHighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +1 Attack Distance " +
+                                 "for their ranged attacks.",
+                    highGroundAreas: new List<Area>
                     {
                         new(start: new Vector2<int>(x: 0, y: 0), 
                             size: new Vector2<int>(x: 3, y: 2)) 
+                    }),
+                
+                new Income(
+                    name: BehaviourName.Hut.ScrapsIncomeIncome,
+                    displayName: nameof(BehaviourName.Hut.ScrapsIncomeIncome).CamelCaseToWords(),
+                    description: "At the start of each planning phase provides 5 Scraps.",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent,
+                            amount: 5,
+                            resource: ResourceName.Scraps)
                     }),
                 
                 new Buff(
@@ -162,6 +174,150 @@ namespace low_age_data.Collections
                     canStack: false,
                     canResetDuration: false,
                     alignment: Alignment.Positive),
+                
+                new Buildable(
+                    name: BehaviourName.Hut.BuildingBuildable,
+                    displayName: nameof(BehaviourName.Hut.BuildingBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground Scraps tiles, and can be built " +
+                                 "by multiple Slaves simultaneously.",
+                    placementValidators: new List<Validator>
+                    {
+                        new(conditions: new List<Condition>
+                        {
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                        }),
+                        new (conditions: new List<Condition>
+                        {
+                            new EntityCondition(
+                                conditionFlag: Flag.Condition.Entity.Exists,
+                                conditionedEntity: TileName.Scraps,
+                                amountOfEntitiesRequired: 2)
+                        })
+                    }),
+                
+                new Buildable(
+                    name: BehaviourName.Obelisk.BuildingBuildable,
+                    displayName: nameof(BehaviourName.Obelisk.BuildingBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground Celestium tiles, and can be " +
+                                 "built by multiple Slaves simultaneously.",
+                    placementValidators: new List<Validator>
+                    {
+                        new(conditions: new List<Condition>
+                        {
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                        }),
+                        new (conditions: new List<Condition>
+                        {
+                            new EntityCondition(
+                                conditionFlag: Flag.Condition.Entity.Exists,
+                                conditionedEntity: TileName.Celestium,
+                                amountOfEntitiesRequired: 2)
+                        })
+                    }),
+                
+                new Buildable(
+                    name: BehaviourName.Shack.BuildingBuildable,
+                    displayName: nameof(BehaviourName.Shack.BuildingBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground and can be built by multiple " +
+                                 "Slaves simultaneously.",
+                    placementValidators: new List<Validator>
+                    {
+                        new(conditions: new List<Condition>
+                        {
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                        })
+                    }),
+                
+                new Buildable(
+                    name: BehaviourName.Smith.BuildingBuildable,
+                    displayName: nameof(BehaviourName.Smith.BuildingBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground and can be built by multiple " +
+                                 "Slaves simultaneously.",
+                    placementValidators: new List<Validator>
+                    {
+                        new(conditions: new List<Condition>
+                        {
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                        })
+                    }),
+                
+                new Buildable(
+                    name: BehaviourName.Fletcher.BuildingBuildable,
+                    displayName: nameof(BehaviourName.Fletcher.BuildingBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground and can be built by multiple " +
+                                 "Slaves simultaneously.",
+                    placementValidators: new List<Validator>
+                    {
+                        new(conditions: new List<Condition>
+                        {
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                        })
+                    }),
+                
+                new Buildable(
+                    name: BehaviourName.Alchemy.BuildingBuildable,
+                    displayName: nameof(BehaviourName.Alchemy.BuildingBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground and can be built by multiple " +
+                                 "Slaves simultaneously.",
+                    placementValidators: new List<Validator>
+                    {
+                        new(conditions: new List<Condition>
+                        {
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                        })
+                    }),
+                
+                new Buildable(
+                    name: BehaviourName.Depot.BuildingBuildable,
+                    displayName: nameof(BehaviourName.Depot.BuildingBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground and can be built by multiple " +
+                                 "Slaves simultaneously.",
+                    placementValidators: new List<Validator>
+                    {
+                        new(conditions: new List<Condition>
+                        {
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                        })
+                    }),
+                
+                new Buildable(
+                    name: BehaviourName.Workshop.BuildingBuildable,
+                    displayName: nameof(BehaviourName.Workshop.BuildingBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground and can be built by multiple " +
+                                 "Slaves simultaneously.",
+                    placementValidators: new List<Validator>
+                    {
+                        new(conditions: new List<Condition>
+                        {
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                        })
+                    }),
+                
+                new Buildable(
+                    name: BehaviourName.Outpost.BuildingBuildable,
+                    displayName: nameof(BehaviourName.Outpost.BuildingBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground and can be built by multiple " +
+                                 "Slaves simultaneously.",
+                    placementValidators: new List<Validator>
+                    {
+                        new(conditions: new List<Condition>
+                        {
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                        })
+                    }),
+                
+                new Buildable(
+                    name: BehaviourName.Barricade.BuildingBuildable,
+                    displayName: nameof(BehaviourName.Barricade.BuildingBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground and can be built by multiple " +
+                                 "Slaves simultaneously.",
+                    placementValidators: new List<Validator>
+                    {
+                        new(conditions: new List<Condition>
+                        {
+                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                        })
+                    }),
 
                 new Buff(
                     name: BehaviourName.Slave.RepairStructureBuff,
@@ -859,8 +1015,11 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.BehaviourExists) // TODO add when the Watchtower structure has
-                                                                          // the appropriate behaviour created
+                            new BehaviourCondition(
+                                conditionFlag: Flag.Condition.Behaviour.Exists,
+                                conditionedBehaviour: BehaviourName.Ballista.AimBuff) // TODO change when the Watchtower structure has
+                                                                // the appropriate behaviour created or use the
+                                                                // entity behaviour
                         })
                     },
                     maximumHelpers: 1),

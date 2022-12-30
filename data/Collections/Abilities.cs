@@ -118,6 +118,13 @@ namespace low_age_data.Collections
                     canPlaceInWalkableAreaOnly: true,
                     hasQueue: false,
                     producedInstantly: true),
+                
+                new Passive(
+                    name: AbilityName.Hut.ScrapsIncome,
+                    displayName: nameof(AbilityName.Hut.ScrapsIncome).CamelCaseToWords(),
+                    description: "At the start of each planning phase provides 5 Scraps.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Hut.ScrapsIncomeApplyBehaviour),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,
@@ -213,6 +220,76 @@ namespace low_age_data.Collections
                     casterConsumesAction: true,
                     canHelp: true,
                     helpEfficiency: 0.5f),
+                
+                new Passive(
+                    name: AbilityName.Hut.Building,
+                    displayName: nameof(AbilityName.Hut.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Hut.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Obelisk.Building,
+                    displayName: nameof(AbilityName.Obelisk.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Obelisk.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Shack.Building,
+                    displayName: nameof(AbilityName.Shack.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Shack.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Smith.Building,
+                    displayName: nameof(AbilityName.Smith.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Smith.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Fletcher.Building,
+                    displayName: nameof(AbilityName.Fletcher.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Fletcher.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Alchemy.Building,
+                    displayName: nameof(AbilityName.Alchemy.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Alchemy.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Depot.Building,
+                    displayName: nameof(AbilityName.Depot.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Depot.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Workshop.Building,
+                    displayName: nameof(AbilityName.Workshop.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Workshop.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Outpost.Building,
+                    displayName: nameof(AbilityName.Outpost.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Outpost.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Barricade.Building,
+                    displayName: nameof(AbilityName.Barricade.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Barricade.BuildingBuildable),
 
                 new Target(
                     name: AbilityName.Slave.Repair,
@@ -493,7 +570,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Parasite.ParalysingGraspApplyTetherBehaviour,
                         EffectName.Parasite.ParalysingGraspApplyAttackBehaviour,
-                        //EffectName.Parasite.ParalysingGraspApplySelfBehaviour,
+                        EffectName.Parasite.ParalysingGraspApplySelfBehaviour,
                     },
                     onHitAttackTypes: new List<Attacks>
                     {
@@ -663,11 +740,6 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Cannon.Assembling).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    periodicEffect: null,
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
-                    onBirthEffect: null,
                     onBuildBehaviour: BehaviourName.Cannon.AssemblingBuildable),
 
                 new Passive(
@@ -675,11 +747,6 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Ballista.Assembling).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    periodicEffect: null,
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
-                    onBirthEffect: null,
                     onBuildBehaviour: BehaviourName.Ballista.AssemblingBuildable),
 
                 new Passive(
@@ -687,11 +754,6 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Radar.Assembling).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    periodicEffect: null,
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
-                    onBirthEffect: null,
                     onBuildBehaviour: BehaviourName.Radar.AssemblingBuildable),
 
                 new Target(

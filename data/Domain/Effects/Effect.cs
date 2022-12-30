@@ -17,6 +17,10 @@ namespace low_age_data.Domain.Effects
         public EffectName Name { get; }
         [JsonProperty(Order = -2)]
         public string Type { get; }
-        public IList<Validator> Validators { get; } // Must all return true for the effect to be executed
+        
+        /// <summary>
+        /// Must all return true for the effect to be executed
+        /// </summary>
+        public IList<Validator> Validators { get; }
     }
 }

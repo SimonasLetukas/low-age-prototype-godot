@@ -17,6 +17,57 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName PromoteGoons => new($"{nameof(Citadel)}{nameof(PromoteGoons)}".ToKebabCase());
         }
 
+        public static class Hut
+        {
+            public static AbilityName Building => new($"{nameof(Hut)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName ScrapsIncome => new($"{nameof(Hut)}{nameof(ScrapsIncome)}".ToKebabCase());
+        }
+        
+        public static class Obelisk
+        {
+            public static AbilityName Building => new($"{nameof(Obelisk)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class Shack
+        {
+            public static AbilityName Building => new($"{nameof(Shack)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class Smith
+        {
+            public static AbilityName Building => new($"{nameof(Smith)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class Fletcher
+        {
+            public static AbilityName Building => new($"{nameof(Fletcher)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class Alchemy
+        {
+            public static AbilityName Building => new($"{nameof(Alchemy)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class Depot
+        {
+            public static AbilityName Building => new($"{nameof(Depot)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class Workshop
+        {
+            public static AbilityName Building => new($"{nameof(Workshop)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class Outpost
+        {
+            public static AbilityName Building => new($"{nameof(Outpost)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class Barricade
+        {
+            public static AbilityName Building => new($"{nameof(Barricade)}{nameof(Building)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static AbilityName AllForOne => new($"{nameof(Leader)}{nameof(AllForOne)}".ToKebabCase());
