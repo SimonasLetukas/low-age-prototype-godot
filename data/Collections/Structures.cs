@@ -25,7 +25,7 @@ namespace low_age_data.Collections
                     combatAttributes: new List<CombatAttributes>(),
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Citadel.PassiveIncome,
+                        AbilityName.Shared.PassiveIncome,
                         AbilityName.Citadel.ExecutiveStash,
                         AbilityName.Citadel.Ascendable,
                         AbilityName.Citadel.HighGround,
@@ -58,7 +58,7 @@ namespace low_age_data.Collections
                     abilities: new List<AbilityName>
                     {
                         AbilityName.Hut.Building, // TODO add to all buildings
-                        AbilityName.Hut.ScrapsIncome
+                        AbilityName.Shared.ScrapsIncome
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
                 
@@ -82,7 +82,8 @@ namespace low_age_data.Collections
                     abilities: new List<AbilityName>
                     {
                         AbilityName.Obelisk.Building,
-                        AbilityName.Obelisk.CelestiumIncome
+                        AbilityName.Shared.CelestiumIncome,
+                        AbilityName.Obelisk.CelestiumDischarge
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
             };

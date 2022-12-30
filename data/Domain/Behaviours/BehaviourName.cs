@@ -11,11 +11,13 @@ namespace low_age_data.Domain.Behaviours
         public static class Shared
         {
             public static BehaviourName HighGroundBuff => new($"{nameof(Shared)}{nameof(HighGroundBuff)}".ToKebabCase());
+            public static BehaviourName PassiveIncomeIncome => new($"{nameof(Shared)}{nameof(PassiveIncomeIncome)}".ToKebabCase());
+            public static BehaviourName ScrapsIncomeIncome => new($"{nameof(Shared)}{nameof(ScrapsIncomeIncome)}".ToKebabCase());
+            public static BehaviourName CelestiumIncomeIncome => new($"{nameof(Shared)}{nameof(CelestiumIncomeIncome)}".ToKebabCase());
         }
         
         public static class Citadel
         {
-            public static BehaviourName PassiveIncomeIncome => new($"{nameof(Citadel)}{nameof(PassiveIncomeIncome)}".ToKebabCase());
             public static BehaviourName ExecutiveStashIncome => new($"{nameof(Citadel)}{nameof(ExecutiveStashIncome)}".ToKebabCase());
             public static BehaviourName AscendableAscendable => new($"{nameof(Citadel)}{nameof(AscendableAscendable)}".ToKebabCase());
             public static BehaviourName HighGroundHighGround => new($"{nameof(Citadel)}{nameof(HighGroundHighGround)}".ToKebabCase());
@@ -24,13 +26,14 @@ namespace low_age_data.Domain.Behaviours
         public static class Hut
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Hut)}{nameof(BuildingBuildable)}".ToKebabCase());
-            public static BehaviourName ScrapsIncomeIncome => new($"{nameof(Hut)}{nameof(ScrapsIncomeIncome)}".ToKebabCase());
         }
         
         public static class Obelisk
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Obelisk)}{nameof(BuildingBuildable)}".ToKebabCase());
-            public static BehaviourName CelestiumIncomeIncome => new($"{nameof(Obelisk)}{nameof(CelestiumIncomeIncome)}".ToKebabCase());
+            public static BehaviourName CelestiumDischargeBuffLong => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeBuffLong)}".ToKebabCase());
+            public static BehaviourName CelestiumDischargeBuffShort => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeBuffShort)}".ToKebabCase());
+            public static BehaviourName CelestiumDischargeBuffNegative => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeBuffNegative)}".ToKebabCase());
         }
         
         public static class Shack

@@ -36,8 +36,8 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
                 
                 new Income(
-                    name: BehaviourName.Citadel.PassiveIncomeIncome,
-                    displayName: nameof(BehaviourName.Citadel.PassiveIncomeIncome).CamelCaseToWords(),
+                    name: BehaviourName.Shared.PassiveIncomeIncome,
+                    displayName: nameof(BehaviourName.Shared.PassiveIncomeIncome).CamelCaseToWords(),
                     description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
                     resources: new List<ResourceModification>
                     {
@@ -49,6 +49,30 @@ namespace low_age_data.Collections
                             resource: ResourceName.Celestium)
                     }),
                 
+                new Income(
+                    name: BehaviourName.Shared.ScrapsIncomeIncome,
+                    displayName: nameof(BehaviourName.Shared.ScrapsIncomeIncome).CamelCaseToWords(),
+                    description: "At the start of each planning phase provides 5 Scraps.",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent,
+                            amount: 5,
+                            resource: ResourceName.Scraps)
+                    }),
+                
+                new Income(
+                    name: BehaviourName.Shared.CelestiumIncomeIncome,
+                    displayName: nameof(BehaviourName.Shared.CelestiumIncomeIncome).CamelCaseToWords(),
+                    description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
+                                 "constructed Obelisk, total minimum of 1).",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent,
+                            amount: 5,
+                            resource: ResourceName.Celestium)
+                    },
+                    diminishingReturn: 2),
+
                 new Income(
                     name: BehaviourName.Citadel.ExecutiveStashIncome,
                     displayName: nameof(BehaviourName.Citadel.ExecutiveStashIncome).CamelCaseToWords(),
@@ -84,38 +108,71 @@ namespace low_age_data.Collections
                             size: new Vector2<int>(x: 3, y: 2)) 
                     }),
                 
-                new Income(
-                    name: BehaviourName.Hut.ScrapsIncomeIncome,
-                    displayName: nameof(BehaviourName.Hut.ScrapsIncomeIncome).CamelCaseToWords(),
-                    description: "At the start of each planning phase provides 5 Scraps.",
-                    resources: new List<ResourceModification>
+                new Buff(
+                    name: BehaviourName.Obelisk.CelestiumDischargeBuffLong,
+                    displayName: nameof(BehaviourName.Obelisk.CelestiumDischargeBuffLong).CamelCaseToWords(),
+                    description: "",
+                    initialModifications: new List<Modification>
                     {
-                        new(change: Change.AddCurrent,
-                            amount: 5,
-                            resource: ResourceName.Scraps)
-                    }),
-                
-                new Income(
-                    name: BehaviourName.Obelisk.CelestiumIncomeIncome,
-                    displayName: nameof(BehaviourName.Obelisk.CelestiumIncomeIncome).CamelCaseToWords(),
-                    description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
-                                 "constructed Obelisk, total minimum of 1).",
-                    resources: new List<ResourceModification>
-                    {
-                        new(change: Change.AddCurrent,
-                            amount: 5,
-                            resource: ResourceName.Celestium)
+                        new StatModification(
+                            change: Change.AddCurrent, 
+                            amount: 5, 
+                            stat: Stats.Health)
                     },
-                    diminishingReturn: 2),
+                    endsAt: EndsAt.Instant,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive),
                 
+                new Buff(
+                    name: BehaviourName.Obelisk.CelestiumDischargeBuffShort,
+                    displayName: nameof(BehaviourName.Obelisk.CelestiumDischargeBuffShort).CamelCaseToWords(),
+                    description: "",
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.AddCurrent, 
+                            amount: 15, 
+                            stat: Stats.Health)
+                    },
+                    initialEffects: new List<EffectName>
+                    {
+                        EffectName.Obelisk.CelestiumDischargeApplyBehaviourNegative
+                    },
+                    endsAt: EndsAt.Instant,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive),
+                
+                new Buff(
+                    name: BehaviourName.Obelisk.CelestiumDischargeBuffNegative,
+                    displayName: nameof(BehaviourName.Obelisk.CelestiumDischargeBuffNegative).CamelCaseToWords(),
+                    description: "This unit has its vision, Melee and Range Armour all reduced by 3 for 3 actions.",
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.SubtractCurrent, 
+                            amount: 3, 
+                            stat: Stats.Vision),
+                        new StatModification(
+                            change: Change.SubtractCurrent, 
+                            amount: 3, 
+                            stat: Stats.MeleeArmour),
+                        new StatModification(
+                            change: Change.SubtractCurrent, 
+                            amount: 3, 
+                            stat: Stats.RangedArmour)
+                    },
+                    endsAt: EndsAt.EndOf.Third.Action,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Negative,
+                    restoreChangesOnEnd: true),
+
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,
                     displayName: nameof(BehaviourName.Leader.AllForOneBuff).CamelCaseToWords(),
                     description: "Revelators faction loses when this unit dies.",
-                    modificationFlags: null,
-                    initialModifications: null,
-                    initialEffects: null,
-                    finalModifications: null,
                     finalEffects: new List<EffectName>
                     {
                         EffectName.Leader.AllForOnePlayerLoses
@@ -125,7 +182,6 @@ namespace low_age_data.Collections
                     name: BehaviourName.Leader.MenacingPresenceBuff,
                     displayName: nameof(BehaviourName.Leader.MenacingPresenceBuff).CamelCaseToWords(),
                     description: "Melee and Range Damage for this unit is reduced by 2.",
-                    modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
                         new AttackModification(
@@ -139,16 +195,11 @@ namespace low_age_data.Collections
                             attackType: Attacks.Ranged,
                             attribute: AttackAttribute.MaxAmount)
                     },
-                    initialEffects: null,
-                    finalModifications: null,
-                    finalEffects: null,
                     endsAt: EndsAt.EndOf.This.Action,
                     canStack: false,
                     canResetDuration: true,
                     alignment: Alignment.Negative,
-                    triggers: null,
                     destroyOnConditionsMet: false,
-                    conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
                 new Buff(

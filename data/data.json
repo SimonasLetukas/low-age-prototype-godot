@@ -1522,7 +1522,7 @@
         "originalFaction": "faction-revelators",
         "combatAttributes": [],
         "abilities": [
-          "ability-citadel-passive-income",
+          "ability-shared-passive-income",
           "ability-citadel-executive-stash",
           "ability-citadel-ascendable",
           "ability-citadel-high-ground",
@@ -1581,7 +1581,7 @@
         ],
         "abilities": [
           "ability-hut-building",
-          "ability-hut-scraps-income"
+          "ability-shared-scraps-income"
         ],
         "displayName": "Hut",
         "description": ""
@@ -1636,7 +1636,8 @@
         ],
         "abilities": [
           "ability-obelisk-building",
-          "ability-obelisk-celestium-income"
+          "ability-shared-celestium-income",
+          "ability-obelisk-celestium-discharge"
         ],
         "displayName": "Obelisk",
         "description": ""
@@ -1763,19 +1764,49 @@
   },
   "abilities": [
     {
-      "name": "ability-citadel-passive-income",
+      "name": "ability-shared-passive-income",
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-citadel-passive-income-apply-behaviour",
+      "onBirthEffect": "effect-shared-passive-income-apply-behaviour",
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "Passive Income",
       "description": "Provides 3 Scraps and 7 Celestium at the start of each planning phase."
+    },
+    {
+      "name": "ability-shared-scraps-income",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-shared-scraps-income-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Scraps Income",
+      "description": "At the start of each planning phase provides 5 Scraps."
+    },
+    {
+      "name": "ability-shared-celestium-income",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-shared-celestium-income-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Celestium Income",
+      "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1)."
     },
     {
       "name": "ability-citadel-executive-stash",
@@ -2007,34 +2038,18 @@
       "description": "Promote a new Revelators goon from the remaining Population."
     },
     {
-      "name": "ability-hut-scraps-income",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
+      "name": "ability-obelisk-celestium-discharge",
+      "type": "Ability.Instant",
+      "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": "effect-hut-scraps-income-apply-behaviour",
-      "onBuildBehaviour": null,
+      "effects": [
+        "effect-obelisk-celestium-discharge-search-long",
+        "effect-obelisk-celestium-discharge-search-short"
+      ],
       "hasButton": true,
-      "cooldown": "EndsAt.Instant",
-      "displayName": "Scraps Income",
-      "description": "At the start of each planning phase provides 5 Scraps."
-    },
-    {
-      "name": "ability-obelisk-celestium-income",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": "effect-obelisk-celestium-income-apply-behaviour",
-      "onBuildBehaviour": null,
-      "hasButton": true,
-      "cooldown": "EndsAt.Instant",
-      "displayName": "Celestium Income",
-      "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1)."
+      "cooldown": "EndsAt.EndOfFourthActionPhase",
+      "displayName": "Celestium Discharge",
+      "description": "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 actions."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -3234,7 +3249,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -3251,10 +3266,34 @@
       "validators": []
     },
     {
-      "name": "effect-citadel-passive-income-apply-behaviour",
+      "name": "effect-shared-passive-income-apply-behaviour",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
-        "behaviour-citadel-passive-income-income"
+        "behaviour-shared-passive-income-income"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-shared-scraps-income-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-shared-scraps-income-income"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-shared-celestium-income-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-shared-celestium-income-income"
       ],
       "location": "Location.Self",
       "filterFlags": [],
@@ -3299,10 +3338,41 @@
       "validators": []
     },
     {
-      "name": "effect-hut-scraps-income-apply-behaviour",
+      "name": "effect-obelisk-celestium-discharge-search-long",
+      "type": "Effect.Search",
+      "radius": 5,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-obelisk-celestium-discharge-apply-behaviour-long"
+      ],
+      "location": "Location.Origin",
+      "shape": "Shape.Circle",
+      "ignoreRadius": 1,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-obelisk-celestium-discharge-apply-behaviour-long",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
-        "behaviour-hut-scraps-income-income"
+        "behaviour-obelisk-celestium-discharge-buff-long"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-obelisk-celestium-discharge-apply-behaviour-negative",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-obelisk-celestium-discharge-buff-negative"
       ],
       "location": "Location.Self",
       "filterFlags": [],
@@ -3311,12 +3381,31 @@
       "validators": []
     },
     {
-      "name": "effect-obelisk-celestium-income-apply-behaviour",
+      "name": "effect-obelisk-celestium-discharge-search-short",
+      "type": "Effect.Search",
+      "radius": 1,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-obelisk-celestium-discharge-apply-behaviour-short"
+      ],
+      "location": "Location.Origin",
+      "shape": "Shape.Circle",
+      "ignoreRadius": 0,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-obelisk-celestium-discharge-apply-behaviour-short",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
-        "behaviour-obelisk-celestium-income-income"
+        "behaviour-obelisk-celestium-discharge-buff-short"
       ],
-      "location": "Location.Self",
+      "location": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -3367,7 +3456,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -3426,7 +3515,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Map",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -3604,7 +3693,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -3717,7 +3806,7 @@
       "effects": [],
       "location": "Location.Origin",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": true,
       "validators": []
     },
@@ -3733,7 +3822,7 @@
       "effects": [],
       "location": "Location.Actor",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": true,
       "validators": []
     },
@@ -3806,7 +3895,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -3929,7 +4018,7 @@
       ],
       "location": "Location.Point",
       "shape": "Shape.Line",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -4180,7 +4269,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -4317,7 +4406,7 @@
       ],
       "location": "Location.Inherited",
       "shape": "Shape.Circle",
-      "ignoreCenter": true,
+      "ignoreRadius": 0,
       "usedForValidator": false,
       "validators": []
     },
@@ -4440,7 +4529,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": true,
+      "ignoreRadius": 0,
       "usedForValidator": false,
       "validators": []
     },
@@ -4702,7 +4791,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -4846,7 +4935,7 @@
       "effects": [],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": true,
       "validators": []
     },
@@ -4974,7 +5063,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Map",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -5012,7 +5101,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": true,
+      "ignoreRadius": 0,
       "usedForValidator": false,
       "validators": []
     },
@@ -5073,7 +5162,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -5126,7 +5215,7 @@
       ],
       "location": "Location.Self",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -5202,7 +5291,7 @@
       ],
       "location": "Location.Source",
       "shape": "Shape.Circle",
-      "ignoreCenter": false,
+      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -5261,7 +5350,7 @@
       "hasSameInstanceForAllOwners": false
     },
     {
-      "name": "behaviour-citadel-passive-income-income",
+      "name": "behaviour-shared-passive-income-income",
       "type": "Behaviour.Income",
       "resources": [
         {
@@ -5280,6 +5369,42 @@
       "diminishingReturn": 0,
       "displayName": "Passive Income Income",
       "description": "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-shared-scraps-income-income",
+      "type": "Behaviour.Income",
+      "resources": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "resource-scraps",
+          "change": "Change.AddCurrent",
+          "amount": 5.0
+        }
+      ],
+      "diminishingReturn": 0,
+      "displayName": "Scraps Income Income",
+      "description": "At the start of each planning phase provides 5 Scraps.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-shared-celestium-income-income",
+      "type": "Behaviour.Income",
+      "resources": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "resource-celestium",
+          "change": "Change.AddCurrent",
+          "amount": 5.0
+        }
+      ],
+      "diminishingReturn": 2,
+      "displayName": "Celestium Income Income",
+      "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1).",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
@@ -5354,38 +5479,100 @@
       "hasSameInstanceForAllOwners": false
     },
     {
-      "name": "behaviour-hut-scraps-income-income",
-      "type": "Behaviour.Income",
-      "resources": [
+      "name": "behaviour-obelisk-celestium-discharge-buff-long",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
         {
-          "type": "Modification.ResourceModification",
-          "resource": "resource-scraps",
+          "type": "Modification.StatModification",
+          "stat": "Stats.Health",
           "change": "Change.AddCurrent",
           "amount": 5.0
         }
       ],
-      "diminishingReturn": 0,
-      "displayName": "Scraps Income Income",
-      "description": "At the start of each planning phase provides 5 Scraps.",
-      "endsAt": "EndsAt.Death",
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Celestium Discharge Buff Long",
+      "description": "",
+      "endsAt": "EndsAt.Instant",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
     {
-      "name": "behaviour-obelisk-celestium-income-income",
-      "type": "Behaviour.Income",
-      "resources": [
+      "name": "behaviour-obelisk-celestium-discharge-buff-short",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
         {
-          "type": "Modification.ResourceModification",
-          "resource": "resource-celestium",
+          "type": "Modification.StatModification",
+          "stat": "Stats.Health",
           "change": "Change.AddCurrent",
-          "amount": 5.0
+          "amount": 15.0
         }
       ],
-      "diminishingReturn": 2,
-      "displayName": "Celestium Income Income",
-      "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1).",
-      "endsAt": "EndsAt.Death",
+      "initialEffects": [
+        "effect-obelisk-celestium-discharge-apply-behaviour-negative"
+      ],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Celestium Discharge Buff Short",
+      "description": "",
+      "endsAt": "EndsAt.Instant",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-obelisk-celestium-discharge-buff-negative",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Vision",
+          "change": "Change.SubtractCurrent",
+          "amount": 3.0
+        },
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.MeleeArmour",
+          "change": "Change.SubtractCurrent",
+          "amount": 3.0
+        },
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.RangedArmour",
+          "change": "Change.SubtractCurrent",
+          "amount": 3.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": true,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Celestium Discharge Buff Negative",
+      "description": "This unit has its vision, Melee and Range Armour all reduced by 3 for 3 actions.",
+      "endsAt": "EndsAt.EndOfThirdAction",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },

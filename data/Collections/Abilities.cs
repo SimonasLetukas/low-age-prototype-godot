@@ -18,16 +18,27 @@ namespace low_age_data.Collections
             return new List<Ability>
             {
                 new Passive(
-                    name: AbilityName.Citadel.PassiveIncome,
-                    displayName: nameof(AbilityName.Citadel.PassiveIncome).CamelCaseToWords(),
+                    name: AbilityName.Shared.PassiveIncome,
+                    displayName: nameof(AbilityName.Shared.PassiveIncome).CamelCaseToWords(),
                     description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
                     hasButton: true,
-                    periodicEffect: null,
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Citadel.PassiveIncomeApplyBehaviour),
+                    onBirthEffect: EffectName.Shared.PassiveIncomeApplyBehaviour),
                 
+                new Passive(
+                    name: AbilityName.Shared.ScrapsIncome,
+                    displayName: nameof(AbilityName.Shared.ScrapsIncome).CamelCaseToWords(),
+                    description: "At the start of each planning phase provides 5 Scraps.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Shared.ScrapsIncomeApplyBehaviour),
+                
+                new Passive(
+                    name: AbilityName.Shared.CelestiumIncome,
+                    displayName: nameof(AbilityName.Shared.CelestiumIncome).CamelCaseToWords(),
+                    description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
+                                 "constructed Obelisk, total minimum of 1).",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Shared.CelestiumIncomeApplyBehaviour),
+
                 new Passive(
                     name: AbilityName.Citadel.ExecutiveStash,
                     displayName: nameof(AbilityName.Citadel.ExecutiveStash).CamelCaseToWords(),
@@ -118,31 +129,26 @@ namespace low_age_data.Collections
                     canPlaceInWalkableAreaOnly: true,
                     hasQueue: false,
                     producedInstantly: true),
-                
-                new Passive(
-                    name: AbilityName.Hut.ScrapsIncome,
-                    displayName: nameof(AbilityName.Hut.ScrapsIncome).CamelCaseToWords(),
-                    description: "At the start of each planning phase provides 5 Scraps.",
-                    hasButton: true,
-                    onBirthEffect: EffectName.Hut.ScrapsIncomeApplyBehaviour),
-                
-                new Passive(
-                    name: AbilityName.Obelisk.CelestiumIncome,
-                    displayName: nameof(AbilityName.Obelisk.CelestiumIncome).CamelCaseToWords(),
-                    description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
-                                 "constructed Obelisk, total minimum of 1).",
-                    hasButton: true,
-                    onBirthEffect: EffectName.Obelisk.CelestiumIncomeApplyBehaviour),
+
+                new Instant(
+                    name: AbilityName.Obelisk.CelestiumDischarge,
+                    turnPhase: TurnPhase.Planning, 
+                    displayName: nameof(AbilityName.Obelisk.CelestiumDischarge).CamelCaseToWords(),
+                    description: "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed " +
+                                 "by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 " +
+                                 "actions.",
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Obelisk.CelestiumDischargeSearchLong,
+                        EffectName.Obelisk.CelestiumDischargeSearchShort
+                    },
+                    cooldown: EndsAt.EndOf.Fourth.ActionPhase),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,
                     displayName: nameof(AbilityName.Leader.AllForOne).CamelCaseToWords(),
                     description: "Revelators faction loses if Leader dies.",
                     hasButton: true,
-                    periodicEffect: null,
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffect: EffectName.Leader.AllForOneApplyBehaviour),
 
                 new Passive(
@@ -329,10 +335,6 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Quickdraw.Doubleshot).CamelCaseToWords(),
                     description: "Ranged attacks twice.",
                     hasButton: true,
-                    periodicEffect: null,
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffect: EffectName.Quickdraw.DoubleshotApplyBehaviour),
 
                 new Passive(
@@ -342,7 +344,6 @@ namespace low_age_data.Collections
                                  "this time target has 60% of their maximum Movement (rounded up) and cannot receive healing " +
                                  "from any sources. Multiple attacks on a crippled target have no additional effects.",
                     hasButton: true,
-                    periodicEffect: null,
                     researchNeeded: new List<Research>
                     {
                         Research.Revelators.PoisonedSlits
@@ -361,8 +362,6 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Gorger.FanaticSuicidePassive).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    periodicEffect: null,
-                    researchNeeded: null,
                     onHitEffects: new List<EffectName>
                     {
                         EffectName.Gorger.FanaticSuicideDestroy
@@ -394,8 +393,6 @@ namespace low_age_data.Collections
                                  "in the same radius, Camou silences the target for 2 of its actions, disabling the use of any " +
                                  "abilities or passives.",
                     hasButton: true,
-                    periodicEffect: null,
-                    researchNeeded: null,
                     onHitEffects: new List<EffectName>
                     {
                         EffectName.Camou.SilentAssassinOnHitDamage,
@@ -433,8 +430,6 @@ namespace low_age_data.Collections
                     {
                         Research.Revelators.SpikedRope
                     },
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffect: EffectName.Camou.ClimbApplyBehaviour),
 
                 new Target(
@@ -450,7 +445,6 @@ namespace low_age_data.Collections
                     {
                         EffectName.Shaman.WondrousGooCreateEntity
                     },
-                    researchNeeded: null,
                     cooldown: EndsAt.EndOf.Second.ActionPhase),
 
                 new Passive(
@@ -460,10 +454,6 @@ namespace low_age_data.Collections
                                  "next Pyre's action or until death. Any unit which starts its turn or moves onto the flames " +
                                  "receives 5 Melee Damage.",
                     hasButton: true,
-                    periodicEffect: null,
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffect: EffectName.Pyre.CargoCreateEntity),
 
                 new Passive(
@@ -471,13 +461,10 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Pyre.PhantomMenace).CamelCaseToWords(),
                     description: "Can move through enemy units (but not buildings).",
                     hasButton: true,
-                    periodicEffect: null,
                     researchNeeded: new List<Research>
                     {
                         Research.Revelators.QuestionableCargo
                     },
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffect: EffectName.Pyre.PhantomMenaceApplyBehaviour),
 
                 new Target(
@@ -492,7 +479,6 @@ namespace low_age_data.Collections
                     {
                         EffectName.BigBadBull.UnleashTheRageSearch
                     },
-                    researchNeeded: null,
                     cooldown: EndsAt.EndOf.Next.ActionPhase),
 
                 new Target(

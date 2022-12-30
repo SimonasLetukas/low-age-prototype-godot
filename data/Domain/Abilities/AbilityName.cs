@@ -8,9 +8,15 @@ namespace low_age_data.Domain.Abilities
         {
         }
 
+        public static class Shared
+        {
+            public static AbilityName PassiveIncome => new($"{nameof(Shared)}{nameof(PassiveIncome)}".ToKebabCase());
+            public static AbilityName ScrapsIncome => new($"{nameof(Shared)}{nameof(ScrapsIncome)}".ToKebabCase());
+            public static AbilityName CelestiumIncome => new($"{nameof(Shared)}{nameof(CelestiumIncome)}".ToKebabCase());
+        }
+
         public static class Citadel
         {
-            public static AbilityName PassiveIncome => new($"{nameof(Citadel)}{nameof(PassiveIncome)}".ToKebabCase());
             public static AbilityName ExecutiveStash => new($"{nameof(Citadel)}{nameof(ExecutiveStash)}".ToKebabCase());
             public static AbilityName Ascendable => new($"{nameof(Citadel)}{nameof(Ascendable)}".ToKebabCase());
             public static AbilityName HighGround => new($"{nameof(Citadel)}{nameof(HighGround)}".ToKebabCase());
@@ -20,13 +26,12 @@ namespace low_age_data.Domain.Abilities
         public static class Hut
         {
             public static AbilityName Building => new($"{nameof(Hut)}{nameof(Building)}".ToKebabCase());
-            public static AbilityName ScrapsIncome => new($"{nameof(Hut)}{nameof(ScrapsIncome)}".ToKebabCase());
         }
         
         public static class Obelisk
         {
             public static AbilityName Building => new($"{nameof(Obelisk)}{nameof(Building)}".ToKebabCase());
-            public static AbilityName CelestiumIncome => new($"{nameof(Obelisk)}{nameof(CelestiumIncome)}".ToKebabCase());
+            public static AbilityName CelestiumDischarge => new($"{nameof(Obelisk)}{nameof(CelestiumDischarge)}".ToKebabCase());
         }
         
         public static class Shack

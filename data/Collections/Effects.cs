@@ -46,10 +46,26 @@ namespace low_age_data.Collections
                     }),
                 
                 new ApplyBehaviour(
-                    name: EffectName.Citadel.PassiveIncomeApplyBehaviour,
+                    name: EffectName.Shared.PassiveIncomeApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
-                        BehaviourName.Citadel.PassiveIncomeIncome
+                        BehaviourName.Shared.PassiveIncomeIncome
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Shared.ScrapsIncomeApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Shared.ScrapsIncomeIncome
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Shared.CelestiumIncomeApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Shared.CelestiumIncomeIncome
                     },
                     location: Location.Self),
                 
@@ -77,22 +93,64 @@ namespace low_age_data.Collections
                     },
                     location: Location.Self),
                 
+                new Search(
+                    name: EffectName.Obelisk.CelestiumDischargeSearchLong,
+                    radius: 5,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Obelisk.CelestiumDischargeApplyBehaviourLong
+                    },
+                    location: Location.Origin,
+                    shape: Shape.Circle,
+                    ignoreRadius: 1),
+                
                 new ApplyBehaviour(
-                    name: EffectName.Hut.ScrapsIncomeApplyBehaviour,
+                    name: EffectName.Obelisk.CelestiumDischargeApplyBehaviourLong,
                     behavioursToApply: new List<BehaviourName>
                     {
-                        BehaviourName.Hut.ScrapsIncomeIncome
+                        BehaviourName.Obelisk.CelestiumDischargeBuffLong
+                    }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Obelisk.CelestiumDischargeApplyBehaviourNegative,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Obelisk.CelestiumDischargeBuffNegative
                     },
                     location: Location.Self),
                 
+                new Search(
+                    name: EffectName.Obelisk.CelestiumDischargeSearchShort,
+                    radius: 1,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Obelisk.CelestiumDischargeApplyBehaviourShort
+                    },
+                    location: Location.Origin,
+                    shape: Shape.Circle,
+                    ignoreRadius: 0),
+                
                 new ApplyBehaviour(
-                    name: EffectName.Obelisk.CelestiumIncomeApplyBehaviour,
+                    name: EffectName.Obelisk.CelestiumDischargeApplyBehaviourShort,
                     behavioursToApply: new List<BehaviourName>
                     {
-                        BehaviourName.Obelisk.CelestiumIncomeIncome
-                    },
-                    location: Location.Self),
-                
+                        BehaviourName.Obelisk.CelestiumDischargeBuffShort
+                    }),
+
                 new ApplyBehaviour(
                     name: EffectName.Leader.AllForOneApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -395,11 +453,8 @@ namespace low_age_data.Collections
                         Flag.Filter.Unit,
                         Flag.Filter.Ally
                     },
-                    effects: null,
                     location: Location.Origin,
                     shape: Shape.Circle,
-                    ignoreCenter: null,
-                    validators: null,
                     usedForValidator: true),
 
                 new Search(
@@ -411,11 +466,8 @@ namespace low_age_data.Collections
                         Flag.Filter.Unit,
                         Flag.Filter.Enemy
                     },
-                    effects: null,
                     location: Location.Actor,
                     shape: Shape.Circle,
-                    ignoreCenter: null,
-                    validators: null,
                     usedForValidator: true),
 
                 new Teleport(
@@ -796,7 +848,7 @@ namespace low_age_data.Collections
                     },
                     location: Location.Inherited,
                     shape: Shape.Circle,
-                    ignoreCenter: true),
+                    ignoreRadius: 0),
                 
                 new Damage(
                     name: EffectName.Mortar.DeadlyAmmunitionDamage,
@@ -888,7 +940,7 @@ namespace low_age_data.Collections
                     },
                     location: Location.Self,
                     shape: Shape.Circle,
-                    ignoreCenter: true),
+                    ignoreRadius: 0),
                 
                 new ApplyBehaviour(
                     name: EffectName.Hawk.HealthKitHealApplyBehaviour,
@@ -1194,11 +1246,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Origin,
                         Flag.Filter.SpecificUnit.Ballista
                     },
-                    effects: null,
                     location: Location.Self,
-                    shape: null,
-                    ignoreCenter: null,
-                    validators: null,
                     usedForValidator: true),
                 
                 new ApplyBehaviour(
@@ -1323,7 +1371,7 @@ namespace low_age_data.Collections
                     },
                     location: Location.Self,
                     shape: Shape.Circle,
-                    ignoreCenter: true
+                    ignoreRadius: 0
                 ),
                 
                 new CreateEntity(
@@ -1425,8 +1473,7 @@ namespace low_age_data.Collections
                         EffectName.Vessel.FortifyApplyBehaviour
                     },
                     location: Location.Self,
-                    shape: Shape.Circle,
-                    ignoreCenter: false),
+                    shape: Shape.Circle),
                 
                 new ApplyBehaviour(
                     name: EffectName.Vessel.FortifyApplyBehaviour,

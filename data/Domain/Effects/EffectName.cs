@@ -12,11 +12,13 @@ namespace low_age_data.Domain.Effects
         {
             public static EffectName HighGroundSearch => new($"{nameof(Shared)}{nameof(HighGroundSearch)}".ToKebabCase());
             public static EffectName HighGroundApplyBehaviour => new($"{nameof(Shared)}{nameof(HighGroundApplyBehaviour)}".ToKebabCase());
+            public static EffectName PassiveIncomeApplyBehaviour => new($"{nameof(Shared)}{nameof(PassiveIncomeApplyBehaviour)}".ToKebabCase());
+            public static EffectName ScrapsIncomeApplyBehaviour => new($"{nameof(Shared)}{nameof(ScrapsIncomeApplyBehaviour)}".ToKebabCase());
+            public static EffectName CelestiumIncomeApplyBehaviour => new($"{nameof(Shared)}{nameof(CelestiumIncomeApplyBehaviour)}".ToKebabCase());
         }
         
         public static class Citadel
         {
-            public static EffectName PassiveIncomeApplyBehaviour => new($"{nameof(Citadel)}{nameof(PassiveIncomeApplyBehaviour)}".ToKebabCase());
             public static EffectName ExecutiveStashApplyBehaviour => new($"{nameof(Citadel)}{nameof(ExecutiveStashApplyBehaviour)}".ToKebabCase());
             public static EffectName AscendableApplyBehaviour => new($"{nameof(Citadel)}{nameof(AscendableApplyBehaviour)}".ToKebabCase());
             public static EffectName HighGroundApplyBehaviour => new($"{nameof(Citadel)}{nameof(HighGroundApplyBehaviour)}".ToKebabCase());
@@ -24,12 +26,15 @@ namespace low_age_data.Domain.Effects
 
         public static class Hut
         {
-            public static EffectName ScrapsIncomeApplyBehaviour => new($"{nameof(Hut)}{nameof(ScrapsIncomeApplyBehaviour)}".ToKebabCase());
         }
         
         public static class Obelisk
         {
-            public static EffectName CelestiumIncomeApplyBehaviour => new($"{nameof(Obelisk)}{nameof(CelestiumIncomeApplyBehaviour)}".ToKebabCase());
+            public static EffectName CelestiumDischargeSearchLong => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeSearchLong)}".ToKebabCase());
+            public static EffectName CelestiumDischargeApplyBehaviourLong => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeApplyBehaviourLong)}".ToKebabCase());
+            public static EffectName CelestiumDischargeSearchShort => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeSearchShort)}".ToKebabCase());
+            public static EffectName CelestiumDischargeApplyBehaviourShort => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeApplyBehaviourShort)}".ToKebabCase());
+            public static EffectName CelestiumDischargeApplyBehaviourNegative => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeApplyBehaviourNegative)}".ToKebabCase());
         }
 
         public static class Leader
