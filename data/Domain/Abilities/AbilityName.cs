@@ -37,6 +37,7 @@ namespace low_age_data.Domain.Abilities
         public static class Shack
         {
             public static AbilityName Building => new($"{nameof(Shack)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName Accommodation => new($"{nameof(Shack)}{nameof(Accommodation)}".ToKebabCase());
         }
         
         public static class Smith

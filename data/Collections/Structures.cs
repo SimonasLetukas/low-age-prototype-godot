@@ -86,6 +86,30 @@ namespace low_age_data.Collections
                         AbilityName.Obelisk.CelestiumDischarge
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
+                    
+                new(
+                    name: StructureName.Shack, 
+                    displayName: nameof(StructureName.Shack).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 35, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Revelators, 
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Light,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shack.Building,
+                        AbilityName.Shack.Accommodation
+                    },
+                    size: new Vector2<int>(x: 1, y: 1)),
             };
         }
     }

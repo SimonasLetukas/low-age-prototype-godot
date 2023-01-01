@@ -18,6 +18,8 @@ namespace low_age_data.Collections
         {
             return new List<Effect>
             {
+                #region Shared
+                
                 new Search(
                     name: EffectName.Shared.HighGroundSearch,
                     radius: 0,
@@ -28,6 +30,7 @@ namespace low_age_data.Collections
                     },
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
@@ -69,6 +72,33 @@ namespace low_age_data.Collections
                     },
                     location: Location.Self),
                 
+                new Search(
+                    name: EffectName.Shared.NoPopulationSpaceSearch,
+                    radius: 1,
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Player,
+                        Flag.Filter.Unit
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Shared.NoPopulationSpaceApplyBehaviour
+                    },
+                    location: Location.Inherited,
+                    shape: Shape.Map),
+                
+                new ApplyBehaviour(
+                    EffectName.Shared.NoPopulationSpaceApplyBehaviour,
+                    new List<BehaviourName>
+                    {
+                        BehaviourName.Shared.NoPopulationSpaceInterceptDamage
+                    }),
+
+                #endregion
+
+                #region Structures
+
                 new ApplyBehaviour(
                     name: EffectName.Citadel.ExecutiveStashApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -99,6 +129,7 @@ namespace low_age_data.Collections
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
@@ -132,6 +163,7 @@ namespace low_age_data.Collections
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
@@ -150,6 +182,17 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Obelisk.CelestiumDischargeBuffShort
                     }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Shack.AccommodationApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Shack.AccommodationIncome
+                    }),
+
+                #endregion
+
+                #region Units
 
                 new ApplyBehaviour(
                     name: EffectName.Leader.AllForOneApplyBehaviour,
@@ -185,6 +228,7 @@ namespace low_age_data.Collections
                     },
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
@@ -211,6 +255,7 @@ namespace low_age_data.Collections
                     location: Location.Actor,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Structure,
                         Flag.Filter.SpecificStructure.Obelisk
@@ -232,6 +277,7 @@ namespace low_age_data.Collections
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     },
@@ -259,6 +305,7 @@ namespace low_age_data.Collections
                     location: Location.Actor,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Structure
                     },
@@ -288,6 +335,7 @@ namespace low_age_data.Collections
                     location: Location.Actor,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Structure,
                         Flag.Filter.SpecificStructure.Hut
@@ -373,10 +421,11 @@ namespace low_age_data.Collections
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
-                        Flag.Filter.Structure,
-                        Flag.Filter.Unit
+                        Flag.Filter.Unit,
+                        Flag.Filter.Structure
                     },
                     effects: new List<EffectName>
                     {
@@ -450,6 +499,7 @@ namespace low_age_data.Collections
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Unit,
                         Flag.Filter.Ally
                     },
@@ -515,6 +565,7 @@ namespace low_age_data.Collections
                     },
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
@@ -579,6 +630,7 @@ namespace low_age_data.Collections
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
@@ -740,6 +792,7 @@ namespace low_age_data.Collections
                     },
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
                         Flag.Filter.SpecificUnit.Horrior
@@ -838,6 +891,7 @@ namespace low_age_data.Collections
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
@@ -907,6 +961,7 @@ namespace low_age_data.Collections
                     location: Location.Actor,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
                         Flag.Filter.Attribute.Ranged
@@ -931,6 +986,7 @@ namespace low_age_data.Collections
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     },
@@ -1017,6 +1073,7 @@ namespace low_age_data.Collections
                     location: Location.Actor,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Structure
                     },
@@ -1038,6 +1095,7 @@ namespace low_age_data.Collections
                     location: Location.Actor,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
                         Flag.Filter.SpecificUnit.Cannon,
@@ -1063,6 +1121,7 @@ namespace low_age_data.Collections
                     location: Location.Actor,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit,
                         Flag.Filter.SpecificUnit.Horrior
@@ -1130,6 +1189,7 @@ namespace low_age_data.Collections
                     location: Location.Origin,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     }),
@@ -1140,6 +1200,7 @@ namespace low_age_data.Collections
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
@@ -1167,6 +1228,7 @@ namespace low_age_data.Collections
                     location: Location.Origin,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     }),
@@ -1285,6 +1347,7 @@ namespace low_age_data.Collections
                     location: Location.Self,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Self
                     }),
@@ -1303,6 +1366,7 @@ namespace low_age_data.Collections
                     location: Location.Self,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Self
                     }),
@@ -1420,6 +1484,7 @@ namespace low_age_data.Collections
                     },
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     },
@@ -1438,6 +1503,7 @@ namespace low_age_data.Collections
                     location: Location.Actor,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     },
@@ -1465,6 +1531,7 @@ namespace low_age_data.Collections
                     },
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     },
@@ -1484,6 +1551,7 @@ namespace low_age_data.Collections
                     location: Location.Actor,
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     }),
@@ -1532,6 +1600,7 @@ namespace low_age_data.Collections
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
+                        Flag.Filter.Player,
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     },
@@ -1546,6 +1615,8 @@ namespace low_age_data.Collections
                     name: EffectName.Omen.RenditionDamage,
                     damageType: DamageType.Melee,
                     amount: new Amount(flat: 10))
+
+                #endregion
             };
         }
     }

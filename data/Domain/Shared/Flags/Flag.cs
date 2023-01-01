@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Common;
 using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Entities;
+using low_age_data.Domain.Entities.Actors.Structures;
+using low_age_data.Domain.Entities.Actors.Units;
+using low_age_data.Domain.Entities.Features;
 
 namespace low_age_data.Domain.Shared.Flags
 {
@@ -124,27 +128,71 @@ namespace low_age_data.Domain.Shared.Flags
             }
         }
 
-        public static class Filter
+        /// <summary>
+        /// Used to filter out <see cref="Entity"/>s. 
+        /// </summary>
+        public static class Filter // TODO refactor into a Filter type with AND and OR collections to have clear logic
         {
+            /// <summary>
+            /// Entity is first in the effect chain
+            /// </summary>
             public static Flag Origin => new(Flags.FilterOrigin);
+            
+            /// <summary>
+            /// Entity is previous in the effect chain.
+            /// </summary>
             public static Flag Source => new(Flags.FilterSource);
+            
+            /// <summary>
+            /// Entity is itself.
+            /// </summary>
             public static Flag Self => new(Flags.FilterSelf);
+
+            /// <summary>
+            /// Entity is owned by the same player.
+            /// </summary>
+            public static Flag Player => new(Flags.FilterPlayer);
+            
+            /// <summary>
+            /// Entity is on the same team, but a different player. 
+            /// </summary>
             public static Flag Ally => new(Flags.FilterAlly);
+            
+            /// <summary>
+            /// Entity is on an enemy team.
+            /// </summary>
             public static Flag Enemy => new(Flags.FilterEnemy);
+            
+            /// <summary>
+            /// Entity is a <see cref="Unit"/>.
+            /// </summary>
             public static Flag Unit => new(Flags.FilterUnit);
+            
+            /// <summary>
+            /// Entity is a <see cref="Structure"/>.
+            /// </summary>
             public static Flag Structure => new(Flags.FilterStructure);
 
+            /// <summary>
+            /// Entity has a <see cref="CombatAttributes"/>.
+            /// </summary>
             public static class Attribute
             {
                 public static Flag Ranged => new(Flags.FilterAttributeRanged);
             }
             
+            /// <summary>
+            /// Entity has a specific <see cref="StructureName"/>.
+            /// </summary>
             public static class SpecificStructure
             {
                 public static Flag Obelisk => new(Flags.FilterSpecificStructureObelisk);
                 public static Flag Hut => new(Flags.FilterSpecificStructureHut);
             }
 
+            /// <summary>
+            /// Entity has a specific <see cref="UnitName"/>.
+            /// </summary>
             public static class SpecificUnit
             {
                 public static Flag Horrior => new(Flags.FilterSpecificUnitHorrior);
@@ -154,6 +202,9 @@ namespace low_age_data.Domain.Shared.Flags
                 public static Flag Vessel => new(Flags.FilterSpecificUnitVessel);
             }
 
+            /// <summary>
+            /// Entity has a specific <see cref="FeatureName"/>.
+            /// </summary>
             public static class SpecificFeature
             {
                 public static Flag RadarRedDot => new(Flags.FilterSpecificFeatureRadarRedDot);
@@ -205,6 +256,7 @@ namespace low_age_data.Domain.Shared.Flags
             FilterOrigin,
             FilterSource,
             FilterSelf,
+            FilterPlayer,
             FilterAlly,
             FilterEnemy,
             FilterUnit,

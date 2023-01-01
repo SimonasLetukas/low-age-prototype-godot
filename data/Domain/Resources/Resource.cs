@@ -1,4 +1,6 @@
-﻿using low_age_data.Domain.Behaviours;
+﻿using System.Collections.Generic;
+using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Shared;
 
@@ -13,8 +15,10 @@ namespace low_age_data.Domain.Resources
             bool hasLimit, 
             bool isConsumable, 
             bool hasBank,
+            ResourceName? storedAs = null,
             bool? attachesToNewActors = null,
-            ResourceName? storedAs = null)
+            IList<EffectName>? negativeIncomeEffects = null,
+            string? negativeIncomeDescription = null)
         {
             Name = name;
             DisplayName = displayName;
@@ -22,8 +26,10 @@ namespace low_age_data.Domain.Resources
             HasLimit = hasLimit;
             IsConsumable = isConsumable;
             HasBank = hasBank;
-            AttachesToNewActors = attachesToNewActors ?? false;
             StoredAs = storedAs ?? name;
+            AttachesToNewActors = attachesToNewActors ?? false;
+            NegativeIncomeEffects = negativeIncomeEffects ?? new List<EffectName>();
+            NegativeIncomeDescription = negativeIncomeDescription ?? string.Empty;
         }
 
         public ResourceName Name { get; }
@@ -48,6 +54,14 @@ namespace low_age_data.Domain.Resources
         public bool HasBank { get; }
         
         /// <summary>
+        /// Specify the <see cref="Resource"/> used for storing purposes, using and making its max amount shared
+        /// between other <see cref="Resource"/>s with the same <see cref="StoredAs"/> value. This can be
+        /// done to better control the <see cref="Income"/> of the stored resource and to group certain resources to
+        /// be stored together. <see cref="StoredAs"/> is identical to the <see cref="Name"/> by default.
+        /// </summary>
+        public ResourceName StoredAs { get; }
+        
+        /// <summary>
         /// If true, spending this resource as part of <see cref="Cost"/> during <see cref="Selection"/> retains the
         /// value spent for as long as the <see cref="Actor"/> that was spawned is not destroyed (technically, each
         /// such <see cref="Actor"/> gets a negative <see cref="Income"/> for as long as it's not destroyed, so it
@@ -55,13 +69,17 @@ namespace low_age_data.Domain.Resources
         /// behaviour is required). False by default.
         /// </summary>
         public bool AttachesToNewActors { get; }
+
+        /// <summary>
+        /// List of <see cref="Effect"/>s to be executed at the start of each action phase if the income for this
+        /// <see cref="Resource"/> is negative (zero excluded).
+        /// </summary>
+        public IList<EffectName> NegativeIncomeEffects { get; }
         
         /// <summary>
-        /// Specify the <see cref="Resource"/> used for storing purposes, using and making its max amount shared
-        /// between other <see cref="Resource"/>s with the same <see cref="StoredAs"/> value. This can be
-        /// done to better control the <see cref="Income"/> of the stored resource and to group certain resources to
-        /// be stored together. <see cref="StoredAs"/> is identical to the <see cref="Name"/> by default.
+        /// Additional text added to the <see cref="Description"/> when the income for this <see cref="Resource"/> is
+        /// negative (zero excluded).
         /// </summary>
-        public ResourceName StoredAs { get; }
+        public string NegativeIncomeDescription { get; }
     }
 }

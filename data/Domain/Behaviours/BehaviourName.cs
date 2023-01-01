@@ -14,6 +14,7 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName PassiveIncomeIncome => new($"{nameof(Shared)}{nameof(PassiveIncomeIncome)}".ToKebabCase());
             public static BehaviourName ScrapsIncomeIncome => new($"{nameof(Shared)}{nameof(ScrapsIncomeIncome)}".ToKebabCase());
             public static BehaviourName CelestiumIncomeIncome => new($"{nameof(Shared)}{nameof(CelestiumIncomeIncome)}".ToKebabCase());
+            public static BehaviourName NoPopulationSpaceInterceptDamage => new($"{nameof(Shared)}{nameof(NoPopulationSpaceInterceptDamage)}".ToKebabCase());
         }
         
         public static class Citadel
@@ -39,6 +40,7 @@ namespace low_age_data.Domain.Behaviours
         public static class Shack
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Shack)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName AccommodationIncome => new($"{nameof(Shack)}{nameof(AccommodationIncome)}".ToKebabCase());
         }
         
         public static class Smith

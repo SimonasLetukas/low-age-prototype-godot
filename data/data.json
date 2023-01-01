@@ -7,8 +7,10 @@
       "hasLimit": false,
       "isConsumable": true,
       "hasBank": true,
+      "storedAs": "resource-scraps",
       "attachesToNewActors": false,
-      "storedAs": "resource-scraps"
+      "negativeIncomeEffects": [],
+      "negativeIncomeDescription": ""
     },
     {
       "name": "resource-celestium",
@@ -17,18 +19,24 @@
       "hasLimit": false,
       "isConsumable": false,
       "hasBank": false,
+      "storedAs": "resource-celestium",
       "attachesToNewActors": false,
-      "storedAs": "resource-celestium"
+      "negativeIncomeEffects": [],
+      "negativeIncomeDescription": ""
     },
     {
       "name": "resource-population",
       "displayName": "Population",
-      "description": "",
+      "description": "Each unit requires a population space, new units can be promoted from the remaining population space. If there are more units than the amount of supported population space, all units will start receiving double damage from all sources.",
       "hasLimit": false,
       "isConsumable": true,
       "hasBank": false,
+      "storedAs": "resource-population",
       "attachesToNewActors": true,
-      "storedAs": "resource-population"
+      "negativeIncomeEffects": [
+        "effect-shared-no-population-space-search"
+      ],
+      "negativeIncomeDescription": "Caution, there are more units than the supported population."
     },
     {
       "name": "resource-weapon-storage",
@@ -37,8 +45,10 @@
       "hasLimit": false,
       "isConsumable": false,
       "hasBank": false,
+      "storedAs": "resource-weapon-storage",
       "attachesToNewActors": false,
-      "storedAs": "resource-weapon-storage"
+      "negativeIncomeEffects": [],
+      "negativeIncomeDescription": ""
     },
     {
       "name": "resource-melee-weapon",
@@ -47,8 +57,10 @@
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
+      "storedAs": "resource-weapon-storage",
       "attachesToNewActors": false,
-      "storedAs": "resource-weapon-storage"
+      "negativeIncomeEffects": [],
+      "negativeIncomeDescription": ""
     },
     {
       "name": "resource-ranged-weapon",
@@ -57,8 +69,10 @@
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
+      "storedAs": "resource-weapon-storage",
       "attachesToNewActors": false,
-      "storedAs": "resource-weapon-storage"
+      "negativeIncomeEffects": [],
+      "negativeIncomeDescription": ""
     },
     {
       "name": "resource-special-weapon",
@@ -67,8 +81,10 @@
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
+      "storedAs": "resource-weapon-storage",
       "attachesToNewActors": false,
-      "storedAs": "resource-weapon-storage"
+      "negativeIncomeEffects": [],
+      "negativeIncomeDescription": ""
     }
   ],
   "factions": [
@@ -1641,6 +1657,61 @@
         ],
         "displayName": "Obelisk",
         "description": ""
+      },
+      {
+        "name": "structure-shack",
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "centerPoint": {
+          "x": 0,
+          "y": 0
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 35,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 2,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-revelators",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shack-building",
+          "ability-shack-accommodation"
+        ],
+        "displayName": "Shack",
+        "description": ""
       }
     ],
     "features": [
@@ -2050,6 +2121,21 @@
       "cooldown": "EndsAt.EndOfFourthActionPhase",
       "displayName": "Celestium Discharge",
       "description": "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 actions."
+    },
+    {
+      "name": "ability-shack-accommodation",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-shack-accommodation-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Accommodation",
+      "description": "Provides 2 Population"
     },
     {
       "name": "ability-leader-all-for-one",
@@ -3240,6 +3326,7 @@
         "Flag.EffectSearchRemovedOnExit"
       ],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -3302,6 +3389,36 @@
       "validators": []
     },
     {
+      "name": "effect-shared-no-population-space-search",
+      "type": "Effect.Search",
+      "radius": 1,
+      "searchFlags": [],
+      "filterFlags": [
+        "Flag.FilterPlayer",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-shared-no-population-space-apply-behaviour"
+      ],
+      "location": "Location.Inherited",
+      "shape": "Shape.Map",
+      "ignoreRadius": -1,
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-shared-no-population-space-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-shared-no-population-space-intercept-damage"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
       "name": "effect-citadel-executive-stash-apply-behaviour",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
@@ -3343,6 +3460,7 @@
       "radius": 5,
       "searchFlags": [],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -3386,6 +3504,7 @@
       "radius": 1,
       "searchFlags": [],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -3404,6 +3523,18 @@
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
         "behaviour-obelisk-celestium-discharge-buff-short"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-shack-accommodation-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-shack-accommodation-income"
       ],
       "location": "Location.Inherited",
       "filterFlags": [],
@@ -3447,6 +3578,7 @@
         "Flag.EffectSearchRemovedOnExit"
       ],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -3480,6 +3612,7 @@
       ],
       "location": "Location.Actor",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterStructure",
         "Flag.FilterSpecificStructureObelisk"
@@ -3507,6 +3640,7 @@
       "radius": 1,
       "searchFlags": [],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
@@ -3539,6 +3673,7 @@
       ],
       "location": "Location.Actor",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterStructure"
       ],
@@ -3577,6 +3712,7 @@
       ],
       "location": "Location.Actor",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterStructure",
         "Flag.FilterSpecificStructureHut"
@@ -3683,10 +3819,11 @@
       "radius": 1,
       "searchFlags": [],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterEnemy",
-        "Flag.FilterStructure",
-        "Flag.FilterUnit"
+        "Flag.FilterUnit",
+        "Flag.FilterStructure"
       ],
       "effects": [
         "effect-gorger-fanatic-suicide-damage"
@@ -3800,6 +3937,7 @@
       "radius": 4,
       "searchFlags": [],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterUnit",
         "Flag.FilterAlly"
       ],
@@ -3886,6 +4024,7 @@
         "Flag.EffectSearchAppliedOnEnter"
       ],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -4008,6 +4147,7 @@
       "radius": 1,
       "searchFlags": [],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -4260,6 +4400,7 @@
         "Flag.EffectSearchRemovedOnExit"
       ],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit",
         "Flag.FilterSpecificUnitHorrior"
@@ -4397,6 +4538,7 @@
       "radius": 1,
       "searchFlags": [],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -4492,6 +4634,7 @@
       ],
       "location": "Location.Actor",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit",
         "Flag.FilterAttributeRanged"
@@ -4521,6 +4664,7 @@
       "radius": 1,
       "searchFlags": [],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
@@ -4632,6 +4776,7 @@
       ],
       "location": "Location.Actor",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterStructure"
       ],
@@ -4658,6 +4803,7 @@
       ],
       "location": "Location.Actor",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit",
         "Flag.FilterSpecificUnitCannon",
@@ -4688,6 +4834,7 @@
       ],
       "location": "Location.Actor",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit",
         "Flag.FilterSpecificUnitHorrior"
@@ -4769,6 +4916,7 @@
       ],
       "location": "Location.Origin",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
@@ -4782,6 +4930,7 @@
       "radius": 0,
       "searchFlags": [],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -4832,6 +4981,7 @@
       ],
       "location": "Location.Origin",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
@@ -4977,6 +5127,7 @@
       ],
       "location": "Location.Self",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterSelf"
       ],
@@ -5014,6 +5165,7 @@
       ],
       "location": "Location.Self",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterSelf"
       ],
@@ -5154,6 +5306,7 @@
         "Flag.EffectSearchRemovedOnExit"
       ],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
@@ -5174,6 +5327,7 @@
       ],
       "location": "Location.Actor",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
@@ -5207,6 +5361,7 @@
         "Flag.EffectSearchRemovedOnExit"
       ],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
@@ -5227,6 +5382,7 @@
       ],
       "location": "Location.Actor",
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
@@ -5282,6 +5438,7 @@
       "radius": 1,
       "searchFlags": [],
       "filterFlags": [
+        "Flag.FilterPlayer",
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
@@ -5406,6 +5563,28 @@
       "displayName": "Celestium Income Income",
       "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1).",
       "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-shared-no-population-space-intercept-damage",
+      "type": "Behaviour.InterceptDamage",
+      "numberOfInterceptions": 0,
+      "damageTypes": [],
+      "amountDealtInstead": {
+        "flat": 0,
+        "multiplier": 2.0,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "damageTypeDealtInstead": null,
+      "shareWith": null,
+      "amountShared": null,
+      "damageTypeShared": null,
+      "reduceByTheSharedAmount": false,
+      "displayName": "No Population Space Intercept Damage",
+      "description": "This unit receives double damage from all sources, because there's not enough population space.",
+      "endsAt": "EndsAt.EndOfThisPlanning",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -5573,6 +5752,24 @@
       "displayName": "Celestium Discharge Buff Negative",
       "description": "This unit has its vision, Melee and Range Armour all reduced by 3 for 3 actions.",
       "endsAt": "EndsAt.EndOfThirdAction",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-shack-accommodation-income",
+      "type": "Behaviour.Income",
+      "resources": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "resource-population",
+          "change": "Change.AddCurrent",
+          "amount": 2.0
+        }
+      ],
+      "diminishingReturn": 0,
+      "displayName": "Accommodation Income",
+      "description": "Provides 2 Population.",
+      "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },

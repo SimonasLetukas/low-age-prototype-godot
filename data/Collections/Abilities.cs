@@ -143,6 +143,13 @@ namespace low_age_data.Collections
                         EffectName.Obelisk.CelestiumDischargeSearchShort
                     },
                     cooldown: EndsAt.EndOf.Fourth.ActionPhase),
+                
+                new Passive(
+                    name: AbilityName.Shack.Accommodation,
+                    displayName: nameof(AbilityName.Shack.Accommodation).CamelCaseToWords(),
+                    description: "Provides 2 Population",
+                    hasButton: true, 
+                    onBirthEffect: EffectName.Shack.AccommodationApplyBehaviour),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,

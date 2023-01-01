@@ -72,6 +72,16 @@ namespace low_age_data.Collections
                             resource: ResourceName.Celestium)
                     },
                     diminishingReturn: 2),
+                
+                new InterceptDamage(
+                    name: BehaviourName.Shared.NoPopulationSpaceInterceptDamage,
+                    displayName: nameof(BehaviourName.Shared.NoPopulationSpaceInterceptDamage).CamelCaseToWords(),
+                    description: "This unit receives double damage from all sources, because there's not enough " +
+                                 "population space.",
+                    endsAt: EndsAt.EndOf.This.Planning,
+                    amountDealtInstead: new Amount(
+                        flat: 0,
+                        multiplier: 2)),
 
                 new Income(
                     name: BehaviourName.Citadel.ExecutiveStashIncome,
@@ -168,6 +178,17 @@ namespace low_age_data.Collections
                     canResetDuration: true,
                     alignment: Alignment.Negative,
                     restoreChangesOnEnd: true),
+                
+                new Income(
+                    name: BehaviourName.Shack.AccommodationIncome,
+                    displayName: nameof(BehaviourName.Shack.AccommodationIncome).CamelCaseToWords(),
+                    description: "Provides 2 Population.",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent,
+                            amount: 2,
+                            resource: ResourceName.Population)
+                    }),
 
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,

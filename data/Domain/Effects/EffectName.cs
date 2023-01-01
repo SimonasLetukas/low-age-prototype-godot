@@ -15,6 +15,8 @@ namespace low_age_data.Domain.Effects
             public static EffectName PassiveIncomeApplyBehaviour => new($"{nameof(Shared)}{nameof(PassiveIncomeApplyBehaviour)}".ToKebabCase());
             public static EffectName ScrapsIncomeApplyBehaviour => new($"{nameof(Shared)}{nameof(ScrapsIncomeApplyBehaviour)}".ToKebabCase());
             public static EffectName CelestiumIncomeApplyBehaviour => new($"{nameof(Shared)}{nameof(CelestiumIncomeApplyBehaviour)}".ToKebabCase());
+            public static EffectName NoPopulationSpaceSearch => new($"{nameof(Shared)}{nameof(NoPopulationSpaceSearch)}".ToKebabCase());
+            public static EffectName NoPopulationSpaceApplyBehaviour => new($"{nameof(Shared)}{nameof(NoPopulationSpaceApplyBehaviour)}".ToKebabCase());
         }
         
         public static class Citadel
@@ -35,6 +37,11 @@ namespace low_age_data.Domain.Effects
             public static EffectName CelestiumDischargeSearchShort => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeSearchShort)}".ToKebabCase());
             public static EffectName CelestiumDischargeApplyBehaviourShort => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeApplyBehaviourShort)}".ToKebabCase());
             public static EffectName CelestiumDischargeApplyBehaviourNegative => new($"{nameof(Obelisk)}{nameof(CelestiumDischargeApplyBehaviourNegative)}".ToKebabCase());
+        }
+
+        public static class Shack
+        {
+            public static EffectName AccommodationApplyBehaviour => new($"{nameof(Shack)}{nameof(AccommodationApplyBehaviour)}".ToKebabCase());
         }
 
         public static class Leader
