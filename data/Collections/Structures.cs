@@ -95,7 +95,7 @@ namespace low_age_data.Collections
                     {
                         new CombatStat(maxAmount: 35, hasCurrent: true, combatType: Stats.Health),
                         new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators, 
@@ -110,6 +110,30 @@ namespace low_age_data.Collections
                         AbilityName.Shack.Accommodation
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
+                
+                new(
+                    name: StructureName.Smith, 
+                    displayName: nameof(StructureName.Smith).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 75, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Revelators, 
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Smith.Building,
+                        AbilityName.Smith.MeleeWeaponProduction,
+                    },
+                    size: new Vector2<int>(x: 1, y: 2)),
             };
         }
     }

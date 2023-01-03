@@ -46,6 +46,7 @@ namespace low_age_data.Domain.Behaviours
         public static class Smith
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Smith)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName MeleeWeaponProductionIncome => new($"{nameof(Smith)}{nameof(MeleeWeaponProductionIncome)}".ToKebabCase());
         }
         
         public static class Fletcher

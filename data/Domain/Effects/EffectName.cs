@@ -43,6 +43,11 @@ namespace low_age_data.Domain.Effects
         {
             public static EffectName AccommodationApplyBehaviour => new($"{nameof(Shack)}{nameof(AccommodationApplyBehaviour)}".ToKebabCase());
         }
+        
+        public static class Smith
+        {
+            public static EffectName MeleeWeaponProductionApplyBehaviour => new($"{nameof(Smith)}{nameof(MeleeWeaponProductionApplyBehaviour)}".ToKebabCase());
+        }
 
         public static class Leader
         {

@@ -1692,7 +1692,7 @@
           },
           {
             "combatType": "Stats.RangedArmour",
-            "maxAmount": 20,
+            "maxAmount": 15,
             "hasCurrent": false
           },
           {
@@ -1711,6 +1711,61 @@
           "ability-shack-accommodation"
         ],
         "displayName": "Shack",
+        "description": ""
+      },
+      {
+        "name": "structure-smith",
+        "size": {
+          "x": 1,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 0,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 75,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-smith-building",
+          "ability-smith-melee-weapon-production"
+        ],
+        "displayName": "Smith",
         "description": ""
       }
     ],
@@ -2136,6 +2191,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Accommodation",
       "description": "Provides 2 Population"
+    },
+    {
+      "name": "ability-smith-melee-weapon-production",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-smith-melee-weapon-production-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Melee Weapon Production",
+      "description": "Every 20 Celestium generates a Melee Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
     },
     {
       "name": "ability-leader-all-for-one",
@@ -3535,6 +3605,18 @@
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
         "behaviour-shack-accommodation-income"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-smith-melee-weapon-production-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-smith-melee-weapon-production-income"
       ],
       "location": "Location.Inherited",
       "filterFlags": [],
@@ -5524,6 +5606,8 @@
         }
       ],
       "diminishingReturn": 0,
+      "cost": [],
+      "waitForAvailableStorage": false,
       "displayName": "Passive Income Income",
       "description": "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
       "endsAt": "EndsAt.Death",
@@ -5542,6 +5626,8 @@
         }
       ],
       "diminishingReturn": 0,
+      "cost": [],
+      "waitForAvailableStorage": false,
       "displayName": "Scraps Income Income",
       "description": "At the start of each planning phase provides 5 Scraps.",
       "endsAt": "EndsAt.Death",
@@ -5560,6 +5646,8 @@
         }
       ],
       "diminishingReturn": 2,
+      "cost": [],
+      "waitForAvailableStorage": false,
       "displayName": "Celestium Income Income",
       "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1).",
       "endsAt": "EndsAt.Death",
@@ -5606,6 +5694,8 @@
         }
       ],
       "diminishingReturn": 0,
+      "cost": [],
+      "waitForAvailableStorage": false,
       "displayName": "Executive Stash Income",
       "description": "Provides 4 Population and 4 spaces of storage for Weapons.",
       "endsAt": "EndsAt.Death",
@@ -5767,8 +5857,35 @@
         }
       ],
       "diminishingReturn": 0,
+      "cost": [],
+      "waitForAvailableStorage": false,
       "displayName": "Accommodation Income",
       "description": "Provides 2 Population.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-smith-melee-weapon-production-income",
+      "type": "Behaviour.Income",
+      "resources": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "resource-melee-weapon",
+          "change": "Change.AddCurrent",
+          "amount": 1.0
+        }
+      ],
+      "diminishingReturn": 0,
+      "cost": [
+        {
+          "type": "resource-celestium",
+          "amount": 20
+        }
+      ],
+      "waitForAvailableStorage": true,
+      "displayName": "Melee Weapon Production Income",
+      "description": "Every 20 Celestium generates a Melee Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false

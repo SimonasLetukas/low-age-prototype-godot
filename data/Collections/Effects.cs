@@ -189,6 +189,13 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Shack.AccommodationIncome
                     }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Smith.MeleeWeaponProductionApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Smith.MeleeWeaponProductionIncome
+                    }),
 
                 #endregion
 

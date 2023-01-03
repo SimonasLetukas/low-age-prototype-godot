@@ -150,6 +150,14 @@ namespace low_age_data.Collections
                     description: "Provides 2 Population",
                     hasButton: true, 
                     onBirthEffect: EffectName.Shack.AccommodationApplyBehaviour),
+                
+                new Passive(
+                    name: AbilityName.Smith.MeleeWeaponProduction,
+                    displayName: nameof(AbilityName.Smith.MeleeWeaponProduction).CamelCaseToWords(),
+                    description: "Every 20 Celestium generates a Melee Weapon and either stores it to an empty " +
+                                 "Weapon space or waits until there is a free space available. ",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Smith.MeleeWeaponProductionApplyBehaviour),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,

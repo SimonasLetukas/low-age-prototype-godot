@@ -43,6 +43,7 @@ namespace low_age_data.Domain.Abilities
         public static class Smith
         {
             public static AbilityName Building => new($"{nameof(Smith)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName MeleeWeaponProduction => new($"{nameof(Smith)}{nameof(MeleeWeaponProduction)}".ToKebabCase());
         }
         
         public static class Fletcher

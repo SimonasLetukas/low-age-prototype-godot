@@ -189,6 +189,24 @@ namespace low_age_data.Collections
                             amount: 2,
                             resource: ResourceName.Population)
                     }),
+                
+                new Income(
+                    name: BehaviourName.Smith.MeleeWeaponProductionIncome,
+                    displayName: nameof(BehaviourName.Smith.MeleeWeaponProductionIncome).CamelCaseToWords(),
+                    description: "Every 20 Celestium generates a Melee Weapon and either stores it to an empty " +
+                                 "Weapon space or waits until there is a free space available. ",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent, 
+                            amount: 1,
+                            resource: ResourceName.MeleeWeapon)
+                    },
+                    cost: new List<Cost>
+                    {
+                        new(type: ResourceName.Celestium,
+                            amount: 20)
+                    },
+                    waitForAvailableStorage: true),
 
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,
