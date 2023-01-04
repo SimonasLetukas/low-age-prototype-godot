@@ -207,6 +207,42 @@ namespace low_age_data.Collections
                             amount: 20)
                     },
                     waitForAvailableStorage: true),
+                
+                new Income(
+                    name: BehaviourName.Fletcher.RangedWeaponProductionIncome,
+                    displayName: nameof(BehaviourName.Fletcher.RangedWeaponProductionIncome).CamelCaseToWords(),
+                    description: "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty " +
+                                 "Weapon space or waits until there is a free space available. ",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent, 
+                            amount: 1,
+                            resource: ResourceName.RangedWeapon)
+                    },
+                    cost: new List<Cost>
+                    {
+                        new(type: ResourceName.Celestium,
+                            amount: 25)
+                    },
+                    waitForAvailableStorage: true),
+                
+                new Income(
+                    name: BehaviourName.Alchemy.SpecialWeaponProductionIncome,
+                    displayName: nameof(BehaviourName.Alchemy.SpecialWeaponProductionIncome).CamelCaseToWords(),
+                    description: "Every 30 Celestium generates a Special Weapon and either stores it to an empty " +
+                                 "Weapon space or waits until there is a free space available. ",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent, 
+                            amount: 1,
+                            resource: ResourceName.SpecialWeapon)
+                    },
+                    cost: new List<Cost>
+                    {
+                        new(type: ResourceName.Celestium,
+                            amount: 30)
+                    },
+                    waitForAvailableStorage: true),
 
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,

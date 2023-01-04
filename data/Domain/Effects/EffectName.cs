@@ -49,6 +49,16 @@ namespace low_age_data.Domain.Effects
             public static EffectName MeleeWeaponProductionApplyBehaviour => new($"{nameof(Smith)}{nameof(MeleeWeaponProductionApplyBehaviour)}".ToKebabCase());
         }
 
+        public static class Fletcher
+        {
+            public static EffectName RangedWeaponProductionApplyBehaviour => new($"{nameof(Fletcher)}{nameof(RangedWeaponProductionApplyBehaviour)}".ToKebabCase());
+        }
+        
+        public static class Alchemy
+        {
+            public static EffectName SpecialWeaponProductionApplyBehaviour => new($"{nameof(Alchemy)}{nameof(SpecialWeaponProductionApplyBehaviour)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static EffectName AllForOneApplyBehaviour => new($"{nameof(Leader)}{nameof(AllForOneApplyBehaviour)}".ToKebabCase());

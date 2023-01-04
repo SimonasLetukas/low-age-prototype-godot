@@ -158,6 +158,22 @@ namespace low_age_data.Collections
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
                     onBirthEffect: EffectName.Smith.MeleeWeaponProductionApplyBehaviour),
+                
+                new Passive(
+                    name: AbilityName.Fletcher.RangedWeaponProduction,
+                    displayName: nameof(AbilityName.Fletcher.RangedWeaponProduction).CamelCaseToWords(),
+                    description: "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty " +
+                                 "Weapon space or waits until there is a free space available. ",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Fletcher.RangedWeaponProductionApplyBehaviour),
+                
+                new Passive(
+                    name: AbilityName.Alchemy.SpecialWeaponProduction,
+                    displayName: nameof(AbilityName.Alchemy.SpecialWeaponProduction).CamelCaseToWords(),
+                    description: "Every 30 Celestium generates a Special Weapon and either stores it to an empty " +
+                                 "Weapon space or waits until there is a free space available. ",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Alchemy.SpecialWeaponProductionApplyBehaviour),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,

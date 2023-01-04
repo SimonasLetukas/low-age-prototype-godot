@@ -49,11 +49,13 @@ namespace low_age_data.Domain.Abilities
         public static class Fletcher
         {
             public static AbilityName Building => new($"{nameof(Fletcher)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName RangedWeaponProduction => new($"{nameof(Fletcher)}{nameof(RangedWeaponProduction)}".ToKebabCase());
         }
         
         public static class Alchemy
         {
             public static AbilityName Building => new($"{nameof(Alchemy)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName SpecialWeaponProduction => new($"{nameof(Alchemy)}{nameof(SpecialWeaponProduction)}".ToKebabCase());
         }
         
         public static class Depot

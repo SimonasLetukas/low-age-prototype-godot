@@ -52,11 +52,13 @@ namespace low_age_data.Domain.Behaviours
         public static class Fletcher
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Fletcher)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName RangedWeaponProductionIncome => new($"{nameof(Fletcher)}{nameof(RangedWeaponProductionIncome)}".ToKebabCase());
         }
         
         public static class Alchemy
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Alchemy)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName SpecialWeaponProductionIncome => new($"{nameof(Alchemy)}{nameof(SpecialWeaponProductionIncome)}".ToKebabCase());
         }
         
         public static class Depot

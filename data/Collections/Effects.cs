@@ -196,6 +196,20 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Smith.MeleeWeaponProductionIncome
                     }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Fletcher.RangedWeaponProductionApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Fletcher.RangedWeaponProductionIncome
+                    }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Alchemy.SpecialWeaponProductionApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Alchemy.SpecialWeaponProductionIncome
+                    }),
 
                 #endregion
 

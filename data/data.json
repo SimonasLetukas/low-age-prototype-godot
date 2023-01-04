@@ -1767,6 +1767,116 @@
         ],
         "displayName": "Smith",
         "description": ""
+      },
+      {
+        "name": "structure-fletcher",
+        "size": {
+          "x": 2,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 80,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-fletcher-building",
+          "ability-fletcher-ranged-weapon-production"
+        ],
+        "displayName": "Fletcher",
+        "description": ""
+      },
+      {
+        "name": "structure-alchemy",
+        "size": {
+          "x": 2,
+          "y": 3
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 90,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-alchemy-building",
+          "ability-alchemy-special-weapon-production"
+        ],
+        "displayName": "Alchemy",
+        "description": ""
       }
     ],
     "features": [
@@ -2206,6 +2316,36 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Melee Weapon Production",
       "description": "Every 20 Celestium generates a Melee Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
+    },
+    {
+      "name": "ability-fletcher-ranged-weapon-production",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-fletcher-ranged-weapon-production-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Ranged Weapon Production",
+      "description": "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
+    },
+    {
+      "name": "ability-alchemy-special-weapon-production",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-alchemy-special-weapon-production-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Special Weapon Production",
+      "description": "Every 30 Celestium generates a Special Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
     },
     {
       "name": "ability-leader-all-for-one",
@@ -3617,6 +3757,30 @@
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
         "behaviour-smith-melee-weapon-production-income"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-fletcher-ranged-weapon-production-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-fletcher-ranged-weapon-production-income"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-alchemy-special-weapon-production-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-alchemy-special-weapon-production-income"
       ],
       "location": "Location.Inherited",
       "filterFlags": [],
@@ -5886,6 +6050,56 @@
       "waitForAvailableStorage": true,
       "displayName": "Melee Weapon Production Income",
       "description": "Every 20 Celestium generates a Melee Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-fletcher-ranged-weapon-production-income",
+      "type": "Behaviour.Income",
+      "resources": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "resource-ranged-weapon",
+          "change": "Change.AddCurrent",
+          "amount": 1.0
+        }
+      ],
+      "diminishingReturn": 0,
+      "cost": [
+        {
+          "type": "resource-celestium",
+          "amount": 25
+        }
+      ],
+      "waitForAvailableStorage": true,
+      "displayName": "Ranged Weapon Production Income",
+      "description": "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-alchemy-special-weapon-production-income",
+      "type": "Behaviour.Income",
+      "resources": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "resource-special-weapon",
+          "change": "Change.AddCurrent",
+          "amount": 1.0
+        }
+      ],
+      "diminishingReturn": 0,
+      "cost": [
+        {
+          "type": "resource-celestium",
+          "amount": 30
+        }
+      ],
+      "waitForAvailableStorage": true,
+      "displayName": "Special Weapon Production Income",
+      "description": "Every 30 Celestium generates a Special Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
