@@ -58,6 +58,11 @@ namespace low_age_data.Domain.Effects
         {
             public static EffectName SpecialWeaponProductionApplyBehaviour => new($"{nameof(Alchemy)}{nameof(SpecialWeaponProductionApplyBehaviour)}".ToKebabCase());
         }
+        
+        public static class Depot
+        {
+            public static EffectName WeaponStorageApplyBehaviour => new($"{nameof(Depot)}{nameof(WeaponStorageApplyBehaviour)}".ToKebabCase());
+        }
 
         public static class Leader
         {

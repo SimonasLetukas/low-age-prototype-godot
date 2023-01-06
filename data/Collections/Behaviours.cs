@@ -243,6 +243,17 @@ namespace low_age_data.Collections
                             amount: 30)
                     },
                     waitForAvailableStorage: true),
+                
+                new Income(
+                    name: BehaviourName.Depot.WeaponStorageIncome,
+                    displayName: nameof(BehaviourName.Depot.WeaponStorageIncome).CamelCaseToWords(),
+                    description: "Provides 4 spaces of storage for Weapons.",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent,
+                            amount: 4,
+                            resource: ResourceName.WeaponStorage)
+                    }),
 
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,

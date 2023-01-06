@@ -1877,6 +1877,61 @@
         ],
         "displayName": "Alchemy",
         "description": ""
+      },
+      {
+        "name": "structure-depot",
+        "size": {
+          "x": 2,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 65,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-depot-building",
+          "ability-depot-weapon-storage"
+        ],
+        "displayName": "Depot",
+        "description": ""
       }
     ],
     "features": [
@@ -2346,6 +2401,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Special Weapon Production",
       "description": "Every 30 Celestium generates a Special Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
+    },
+    {
+      "name": "ability-depot-weapon-storage",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-depot-weapon-storage-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Weapon Storage",
+      "description": "Provides 4 spaces of storage for Weapons which are used for new unit production."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -3781,6 +3851,18 @@
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
         "behaviour-alchemy-special-weapon-production-income"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-depot-weapon-storage-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-depot-weapon-storage-income"
       ],
       "location": "Location.Inherited",
       "filterFlags": [],
@@ -6100,6 +6182,26 @@
       "waitForAvailableStorage": true,
       "displayName": "Special Weapon Production Income",
       "description": "Every 30 Celestium generates a Special Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-depot-weapon-storage-income",
+      "type": "Behaviour.Income",
+      "resources": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "resource-weapon-storage",
+          "change": "Change.AddCurrent",
+          "amount": 4.0
+        }
+      ],
+      "diminishingReturn": 0,
+      "cost": [],
+      "waitForAvailableStorage": false,
+      "displayName": "Weapon Storage Income",
+      "description": "Provides 4 spaces of storage for Weapons.",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false

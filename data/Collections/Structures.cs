@@ -182,6 +182,30 @@ namespace low_age_data.Collections
                         AbilityName.Alchemy.SpecialWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 3)),
+                    
+                new(
+                    name: StructureName.Depot, 
+                    displayName: nameof(StructureName.Depot).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 65, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Revelators, 
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Depot.Building,
+                        AbilityName.Depot.WeaponStorage,
+                    },
+                    size: new Vector2<int>(x: 2, y: 2)),
             };
         }
     }

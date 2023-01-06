@@ -64,6 +64,7 @@ namespace low_age_data.Domain.Behaviours
         public static class Depot
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Depot)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName WeaponStorageIncome => new($"{nameof(Depot)}{nameof(WeaponStorageIncome)}".ToKebabCase());
         }
         
         public static class Workshop

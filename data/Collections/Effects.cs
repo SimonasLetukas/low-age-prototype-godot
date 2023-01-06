@@ -210,6 +210,13 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Alchemy.SpecialWeaponProductionIncome
                     }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Depot.WeaponStorageApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Depot.WeaponStorageIncome
+                    }),
 
                 #endregion
 

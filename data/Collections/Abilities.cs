@@ -174,6 +174,13 @@ namespace low_age_data.Collections
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
                     onBirthEffect: EffectName.Alchemy.SpecialWeaponProductionApplyBehaviour),
+                
+                new Passive(
+                    name: AbilityName.Depot.WeaponStorage,
+                    displayName: nameof(AbilityName.Depot.WeaponStorage).CamelCaseToWords(),
+                    description: "Provides 4 spaces of storage for Weapons which are used for new unit production.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Depot.WeaponStorageApplyBehaviour),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,

@@ -61,6 +61,7 @@ namespace low_age_data.Domain.Abilities
         public static class Depot
         {
             public static AbilityName Building => new($"{nameof(Depot)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName WeaponStorage => new($"{nameof(Depot)}{nameof(WeaponStorage)}".ToKebabCase());
         }
         
         public static class Workshop
