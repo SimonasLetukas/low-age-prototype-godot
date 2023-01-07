@@ -13,13 +13,21 @@ namespace low_age_data.Domain.Abilities
         /// </summary>
         public Build(
             AbilityName name,
-            string displayName, 
+            string displayName,
             string description,
             int distance,
-            IList<Selection> selection,
+            IList<Selection<EntityName>> selection,
             bool casterConsumesAction = false,
             bool canHelp = false,
-            float? helpEfficiency = null) : base(name, $"{nameof(Ability)}.{nameof(Build)}", TurnPhase.Planning, new List<Research>(), true, displayName, description)
+            float? helpEfficiency = null)
+            : base(
+                name,
+                $"{nameof(Ability)}.{nameof(Build)}",
+                TurnPhase.Planning,
+                new List<ResearchName>(),
+                true,
+                displayName,
+                description)
         {
             Distance = distance;
             Selection = selection;
@@ -29,10 +37,10 @@ namespace low_age_data.Domain.Abilities
         }
 
         public int Distance { get; }
-        public IList<Selection> Selection { get; }
+        public IList<Selection<EntityName>> Selection { get; }
         public bool CasterConsumesAction { get; }
         public bool CanHelp { get; }
-        
+
         /// <summary>
         /// Factor of production each additional helper provides compared to the previous one.
         /// E.g. with 0.5 efficiency first builder provides 1 production, second 0.5, third 0.25, etc. 

@@ -4,13 +4,13 @@ namespace low_age_data.Domain.Shared
 {
     public class Cost
     {
-        public Cost(ResourceName type, int amount = 0)
+        public Cost(ResourceName resource, int amount = 0)
         {
-            Type = type;
+            Resource = resource;
             Amount = amount;
         }
 
-        public ResourceName Type { get; }
+        public ResourceName Resource { get; }
         public int Amount { get; }
     }
 }

@@ -19,7 +19,7 @@ namespace low_age_data.Collections
             return new List<Effect>
             {
                 #region Shared
-                
+
                 new Search(
                     name: EffectName.Shared.HighGroundSearch,
                     radius: 0,
@@ -40,14 +40,14 @@ namespace low_age_data.Collections
                         EffectName.Shared.HighGroundApplyBehaviour
                     },
                     location: Location.Self),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Shared.HighGroundApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Shared.HighGroundBuff
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Shared.PassiveIncomeApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -55,7 +55,7 @@ namespace low_age_data.Collections
                         BehaviourName.Shared.PassiveIncomeIncome
                     },
                     location: Location.Self),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Shared.ScrapsIncomeApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -63,7 +63,7 @@ namespace low_age_data.Collections
                         BehaviourName.Shared.ScrapsIncomeIncome
                     },
                     location: Location.Self),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Shared.CelestiumIncomeApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -71,7 +71,7 @@ namespace low_age_data.Collections
                         BehaviourName.Shared.CelestiumIncomeIncome
                     },
                     location: Location.Self),
-                
+
                 new Search(
                     name: EffectName.Shared.NoPopulationSpaceSearch,
                     radius: 1,
@@ -87,7 +87,7 @@ namespace low_age_data.Collections
                     },
                     location: Location.Inherited,
                     shape: Shape.Map),
-                
+
                 new ApplyBehaviour(
                     EffectName.Shared.NoPopulationSpaceApplyBehaviour,
                     new List<BehaviourName>
@@ -106,7 +106,7 @@ namespace low_age_data.Collections
                         BehaviourName.Citadel.ExecutiveStashIncome
                     },
                     location: Location.Self),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Citadel.AscendableApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -114,7 +114,7 @@ namespace low_age_data.Collections
                         BehaviourName.Citadel.AscendableAscendable
                     },
                     location: Location.Self),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Citadel.HighGroundApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -122,7 +122,7 @@ namespace low_age_data.Collections
                         BehaviourName.Citadel.HighGroundHighGround
                     },
                     location: Location.Self),
-                
+
                 new Search(
                     name: EffectName.Obelisk.CelestiumDischargeSearchLong,
                     radius: 5,
@@ -141,14 +141,14 @@ namespace low_age_data.Collections
                     location: Location.Origin,
                     shape: Shape.Circle,
                     ignoreRadius: 1),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Obelisk.CelestiumDischargeApplyBehaviourLong,
                     behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Obelisk.CelestiumDischargeBuffLong
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Obelisk.CelestiumDischargeApplyBehaviourNegative,
                     behavioursToApply: new List<BehaviourName>
@@ -156,7 +156,7 @@ namespace low_age_data.Collections
                         BehaviourName.Obelisk.CelestiumDischargeBuffNegative
                     },
                     location: Location.Self),
-                
+
                 new Search(
                     name: EffectName.Obelisk.CelestiumDischargeSearchShort,
                     radius: 1,
@@ -175,42 +175,42 @@ namespace low_age_data.Collections
                     location: Location.Origin,
                     shape: Shape.Circle,
                     ignoreRadius: 0),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Obelisk.CelestiumDischargeApplyBehaviourShort,
                     behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Obelisk.CelestiumDischargeBuffShort
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Shack.AccommodationApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Shack.AccommodationIncome
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Smith.MeleeWeaponProductionApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Smith.MeleeWeaponProductionIncome
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Fletcher.RangedWeaponProductionApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Fletcher.RangedWeaponProductionIncome
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Alchemy.SpecialWeaponProductionApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Alchemy.SpecialWeaponProductionIncome
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Depot.WeaponStorageApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -294,7 +294,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Leader.OneForAllObeliskBuff)
                         })
                     }),
@@ -374,7 +374,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Slave.ManualLabourBuff)
                         })
                     }),
@@ -677,7 +677,7 @@ namespace low_age_data.Collections
 
                 new Force(
                     name: EffectName.BigBadBull.UnleashTheRageForce,
-                    @from: Location.Origin, 
+                    @from: Location.Origin,
                     amount: 1,
                     onCollisionEffects: new List<EffectName>
                     {
@@ -759,7 +759,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspTether)
                         })
                     }),
@@ -782,7 +782,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspBuff)
                         })
                     }),
@@ -804,7 +804,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspSelfBuff)
                         })
                     }),
@@ -870,7 +870,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     }),
-                
+
                 new Damage(
                     name: EffectName.Marksman.CriticalMarkDamage,
                     damageType: DamageType.Melee,
@@ -883,7 +883,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Enemy,
                         Flag.Filter.Unit
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Surfer.DismountApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -895,11 +895,11 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Self
                     }),
-                
+
                 new CreateEntity(
                     name: EffectName.Surfer.DismountCreateEntity,
                     entityToCreate: UnitName.Horrior),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Mortar.DeadlyAmmunitionApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -912,7 +912,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new Search(
                     name: EffectName.Mortar.DeadlyAmmunitionSearch,
                     radius: 1,
@@ -931,11 +931,11 @@ namespace low_age_data.Collections
                     location: Location.Inherited,
                     shape: Shape.Circle,
                     ignoreRadius: 0),
-                
+
                 new Damage(
                     name: EffectName.Mortar.DeadlyAmmunitionDamage,
                     damageType: DamageType.OverrideRanged),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Mortar.ReloadApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -948,12 +948,12 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new Reload(
                     name: EffectName.Mortar.ReloadReload,
                     ammunitionToTarget: BehaviourName.Mortar.DeadlyAmmunitionAmmunition,
                     location: Location.Self),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Mortar.PiercingBlastApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -966,7 +966,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Hawk.TacticalGogglesApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -979,7 +979,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Hawk.LeadershipApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -994,7 +994,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Unit,
                         Flag.Filter.Attribute.Ranged
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Hawk.HealthKitApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1007,7 +1007,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new Search(
                     name: EffectName.Hawk.HealthKitSearch,
                     radius: 1,
@@ -1025,7 +1025,7 @@ namespace low_age_data.Collections
                     location: Location.Self,
                     shape: Shape.Circle,
                     ignoreRadius: 0),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Hawk.HealthKitHealApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1054,23 +1054,23 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Cannon.AssemblingBuildable)
                         }),
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Ballista.AssemblingBuildable)
                         }),
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist, 
+                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Radar.AssemblingBuildable)
                         })
                     }),
-                
+
                 new ModifyCounter(
                     name: EffectName.Engineer.OperateModifyCounter,
                     countersToModify: new List<BehaviourName>
@@ -1080,18 +1080,18 @@ namespace low_age_data.Collections
                         BehaviourName.Radar.MachineCounter,
                         BehaviourName.Vessel.MachineCounter
                     },
-                    change: Change.AddCurrent, 
+                    change: Change.AddCurrent,
                     amount: 1,
                     location: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
                     }),
-                
+
                 new Destroy(
                     name: EffectName.Engineer.OperateDestroy,
                     target: Location.Origin),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Engineer.RepairStructureApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1113,7 +1113,7 @@ namespace low_age_data.Collections
                             new(conditionFlag: Flag.Condition.TargetDoesNotHaveFullHealth)
                         })
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Engineer.RepairMachineApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1139,8 +1139,8 @@ namespace low_age_data.Collections
                             new(conditionFlag: Flag.Condition.TargetDoesNotHaveFullHealth)
                         })
                     }),
-                
-                new ApplyBehaviour( 
+
+                new ApplyBehaviour(
                     name: EffectName.Engineer.RepairHorriorApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
@@ -1160,11 +1160,11 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.Exists, 
+                                conditionFlag: Flag.Condition.Behaviour.Exists,
                                 conditionedBehaviour: BehaviourName.Horrior.MountWait)
                         })
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Engineer.RepairApplyBehaviourSelf,
                     behavioursToApply: new List<BehaviourName>
@@ -1172,7 +1172,7 @@ namespace low_age_data.Collections
                         BehaviourName.Engineer.RepairWait
                     },
                     location: Location.Origin),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Cannon.MachineApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1186,7 +1186,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new RemoveBehaviour(
                     name: EffectName.Cannon.MachineRemoveBehaviour,
                     behavioursToRemove: new List<BehaviourName>
@@ -1199,7 +1199,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new CreateEntity(
                     name: EffectName.Cannon.HeatUpCreateEntity,
                     entityToCreate: FeatureName.CannonHeatUpDangerZone,
@@ -1207,7 +1207,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Cannon.HeatUpDangerZoneBuff
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Cannon.HeatUpApplyWaitBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1221,7 +1221,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     }),
-                
+
                 new Search(
                     name: EffectName.Cannon.HeatUpSearch,
                     radius: 0,
@@ -1238,15 +1238,15 @@ namespace low_age_data.Collections
                         EffectName.Cannon.HeatUpDamage
                     },
                     location: Location.Self),
-                
+
                 new Damage(
                     name: EffectName.Cannon.HeatUpDamage,
                     damageType: DamageType.OverrideRanged),
-                
+
                 new Destroy(
                     name: EffectName.Cannon.HeatUpDestroy,
                     target: Location.Self),
-                
+
                 new RemoveBehaviour(
                     name: EffectName.Cannon.HeatUpRemoveBehaviour,
                     behavioursToRemove: new List<BehaviourName>
@@ -1260,7 +1260,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Ballista.MachineApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1274,7 +1274,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new RemoveBehaviour(
                     name: EffectName.Ballista.MachineRemoveBehaviour,
                     behavioursToRemove: new List<BehaviourName>
@@ -1287,7 +1287,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new Damage(
                     name: EffectName.Ballista.AimDamage,
                     damageType: DamageType.OverrideRanged,
@@ -1306,12 +1306,12 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.Exists, 
-                                conditionedBehaviour: BehaviourName.Ballista.AimBuff, 
+                                conditionFlag: Flag.Condition.Behaviour.Exists,
+                                conditionedBehaviour: BehaviourName.Ballista.AimBuff,
                                 behaviourOwner: Location.Origin)
                         })
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Ballista.AimApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1326,7 +1326,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Unit
                     },
                     behaviourOwner: Location.Origin),
-                
+
                 new Search(
                     name: EffectName.Ballista.AimSearch,
                     radius: 9,
@@ -1338,7 +1338,7 @@ namespace low_age_data.Collections
                     },
                     location: Location.Self,
                     usedForValidator: true),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Radar.MachineApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1352,7 +1352,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new RemoveBehaviour(
                     name: EffectName.Radar.MachineRemoveBehaviour,
                     behavioursToRemove: new List<BehaviourName>
@@ -1365,7 +1365,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Radar.PowerDependencyApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1379,12 +1379,12 @@ namespace low_age_data.Collections
                         Flag.Filter.Ally,
                         Flag.Filter.Self
                     }),
-                
+
                 new Damage(
                     name: EffectName.Radar.PowerDependencyDamage,
                     damageType: DamageType.Pure,
                     amount: new Amount(flat: 1)),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Radar.PowerDependencyApplyBehaviourDisable,
                     behavioursToApply: new List<BehaviourName>
@@ -1398,7 +1398,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Ally,
                         Flag.Filter.Self
                     }),
-                
+
                 new CreateEntity(
                     name: EffectName.Radar.ResonatingSweepCreateEntity,
                     entityToCreate: FeatureName.RadarResonatingSweep,
@@ -1406,11 +1406,11 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Radar.ResonatingSweepBuff
                     }),
-                
+
                 new Destroy(
                     name: EffectName.Radar.ResonatingSweepDestroy,
                     target: Location.Self),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Radar.RadioLocationApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1418,7 +1418,7 @@ namespace low_age_data.Collections
                         BehaviourName.Radar.RadioLocationBuff
                     },
                     location: Location.Self),
-                
+
                 new Search(
                     name: EffectName.Radar.RadioLocationSearchDestroy,
                     radius: 1,
@@ -1433,7 +1433,7 @@ namespace low_age_data.Collections
                     },
                     location: Location.Self,
                     shape: Shape.Map),
-                
+
                 new Destroy(
                     name: EffectName.Radar.RadioLocationDestroy,
                     target: Location.Inherited,
@@ -1442,12 +1442,12 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.Exists, 
+                                conditionFlag: Flag.Condition.Behaviour.Exists,
                                 conditionedBehaviour: BehaviourName.Radar.RadioLocationFeatureBuff,
                                 behaviourOwner: Location.Origin)
                         })
                     }),
-                
+
                 new Search(
                     name: EffectName.Radar.RadioLocationSearchCreate,
                     radius: 15,
@@ -1465,7 +1465,7 @@ namespace low_age_data.Collections
                     shape: Shape.Circle,
                     ignoreRadius: 0
                 ),
-                
+
                 new CreateEntity(
                     name: EffectName.Radar.RadioLocationCreateEntity,
                     entityToCreate: FeatureName.RadarRedDot,
@@ -1474,7 +1474,7 @@ namespace low_age_data.Collections
                         BehaviourName.Radar.RadioLocationFeatureBuff
                     },
                     behaviourOwner: Location.Origin),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Vessel.MachineApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1488,7 +1488,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new RemoveBehaviour(
                     name: EffectName.Vessel.MachineRemoveBehaviour,
                     behavioursToRemove: new List<BehaviourName>
@@ -1501,7 +1501,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Self,
                         Flag.Filter.Unit
                     }),
-                
+
                 new Search(
                     name: EffectName.Vessel.AbsorbentFieldSearch,
                     radius: 3,
@@ -1521,7 +1521,7 @@ namespace low_age_data.Collections
                         EffectName.Vessel.AbsorbentFieldApplyBehaviour
                     },
                     location: Location.Self),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Vessel.AbsorbentFieldApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1544,7 +1544,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Vessel.FortifyDestroyBuff
                     }),
-                
+
                 new Destroy(
                     name: EffectName.Vessel.FortifyDestroy,
                     target: Location.Self),
@@ -1569,7 +1569,7 @@ namespace low_age_data.Collections
                     },
                     location: Location.Self,
                     shape: Shape.Circle),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Vessel.FortifyApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1583,7 +1583,7 @@ namespace low_age_data.Collections
                         Flag.Filter.Ally,
                         Flag.Filter.Unit
                     }),
-                
+
                 new ApplyBehaviour(
                     name: EffectName.Omen.RenditionPlacementApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -1597,31 +1597,31 @@ namespace low_age_data.Collections
                         Flag.Filter.Unit
                     },
                     waitForInitialEffects: true),
-                
+
                 new ExecuteAbility(
                     name: EffectName.Omen.RenditionPlacementExecuteAbility,
                     abilityToExecute: AbilityName.Omen.RenditionPlacement,
                     executingPlayer: Location.Origin,
                     cancelSynchronised: true),
-                
+
                 new CreateEntity(
                     name: EffectName.Omen.RenditionPlacementCreateEntity,
                     entityToCreate: FeatureName.OmenRendition,
                     initialEntityBehaviours: new List<BehaviourName>
                     {
-                        BehaviourName.Omen.RenditionInterceptDamage, 
+                        BehaviourName.Omen.RenditionInterceptDamage,
                         BehaviourName.Omen.RenditionBuffDeath,
                         // Order is important, death check should happen first through the FinalEffect, because 
                         // the timer check disables any further Behaviours when it goes through the destroy
                         BehaviourName.Omen.RenditionBuffTimer
                     }),
-                
+
                 new Destroy(
                     name: EffectName.Omen.RenditionDestroy,
                     target: Location.Self,
                     validators: null,
                     blocksBehaviours: true),
-                
+
                 new Search(
                     name: EffectName.Omen.RenditionSearch,
                     radius: 1,
@@ -1638,7 +1638,7 @@ namespace low_age_data.Collections
                         EffectName.Omen.RenditionApplyBehaviourSlow
                     },
                     location: Location.Source),
-                
+
                 new Damage(
                     name: EffectName.Omen.RenditionDamage,
                     damageType: DamageType.Melee,

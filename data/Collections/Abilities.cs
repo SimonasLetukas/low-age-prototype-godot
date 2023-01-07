@@ -3,6 +3,7 @@ using low_age_data.Common;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
+using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Resources;
@@ -23,14 +24,14 @@ namespace low_age_data.Collections
                     description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
                     hasButton: true,
                     onBirthEffect: EffectName.Shared.PassiveIncomeApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Shared.ScrapsIncome,
                     displayName: nameof(AbilityName.Shared.ScrapsIncome).CamelCaseToWords(),
                     description: "At the start of each planning phase provides 5 Scraps.",
                     hasButton: true,
                     onBirthEffect: EffectName.Shared.ScrapsIncomeApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Shared.CelestiumIncome,
                     displayName: nameof(AbilityName.Shared.CelestiumIncome).CamelCaseToWords(),
@@ -45,14 +46,14 @@ namespace low_age_data.Collections
                     description: "Provides 4 Population and 4 spaces of storage for Weapons.",
                     hasButton: true,
                     onBirthEffect: EffectName.Citadel.ExecutiveStashApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Citadel.Ascendable,
                     displayName: nameof(AbilityName.Citadel.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
                     onBirthEffect: EffectName.Citadel.AscendableApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Citadel.HighGround,
                     displayName: nameof(AbilityName.Citadel.HighGround).CamelCaseToWords(),
@@ -60,70 +61,70 @@ namespace low_age_data.Collections
                                  "for their ranged attacks.",
                     hasButton: true,
                     onBirthEffect: EffectName.Citadel.HighGroundApplyBehaviour),
-                
+
                 new Produce(
                     name: AbilityName.Citadel.PromoteGoons,
                     displayName: nameof(AbilityName.Citadel.PromoteGoons).CamelCaseToWords(),
                     description: "Promote a new Revelators goon from the remaining Population.",
-                    selection: new List<Selection>
+                    selection: new List<Selection<EntityName>>
                     {
-                        new(entityName: UnitName.Slave, cost: new List<Cost>
+                        new(name: UnitName.Slave, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 4),
-                            new(type: ResourceName.MeleeWeapon, amount: 1),
-                            new(type: ResourceName.Population, amount: 1)
+                            new(resource: ResourceName.Scraps, amount: 4),
+                            new(resource: ResourceName.MeleeWeapon, amount: 1),
+                            new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Quickdraw, cost: new List<Cost>
+                        new(name: UnitName.Quickdraw, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 9),
-                            new(type: ResourceName.RangedWeapon, amount: 2),
-                            new(type: ResourceName.Population, amount: 1)
+                            new(resource: ResourceName.Scraps, amount: 9),
+                            new(resource: ResourceName.RangedWeapon, amount: 2),
+                            new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Gorger, cost: new List<Cost>
+                        new(name: UnitName.Gorger, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 7),
-                            new(type: ResourceName.MeleeWeapon, amount: 2),
-                            new(type: ResourceName.Population, amount: 1)
+                            new(resource: ResourceName.Scraps, amount: 7),
+                            new(resource: ResourceName.MeleeWeapon, amount: 2),
+                            new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Camou, cost: new List<Cost>
+                        new(name: UnitName.Camou, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 11),
-                            new(type: ResourceName.MeleeWeapon, amount: 2),
-                            new(type: ResourceName.SpecialWeapon, amount: 1),
-                            new(type: ResourceName.Population, amount: 1)
+                            new(resource: ResourceName.Scraps, amount: 11),
+                            new(resource: ResourceName.MeleeWeapon, amount: 2),
+                            new(resource: ResourceName.SpecialWeapon, amount: 1),
+                            new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Shaman, cost: new List<Cost>
+                        new(name: UnitName.Shaman, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 10),
-                            new(type: ResourceName.RangedWeapon, amount: 1),
-                            new(type: ResourceName.SpecialWeapon, amount: 2),
-                            new(type: ResourceName.Population, amount: 1)
+                            new(resource: ResourceName.Scraps, amount: 10),
+                            new(resource: ResourceName.RangedWeapon, amount: 1),
+                            new(resource: ResourceName.SpecialWeapon, amount: 2),
+                            new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Pyre, cost: new List<Cost>
+                        new(name: UnitName.Pyre, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 15),
-                            new(type: ResourceName.RangedWeapon, amount: 4),
-                            new(type: ResourceName.Population, amount: 1)
+                            new(resource: ResourceName.Scraps, amount: 15),
+                            new(resource: ResourceName.RangedWeapon, amount: 4),
+                            new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.BigBadBull, cost: new List<Cost>
+                        new(name: UnitName.BigBadBull, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 14),
-                            new(type: ResourceName.MeleeWeapon, amount: 4),
-                            new(type: ResourceName.Population, amount: 1)
+                            new(resource: ResourceName.Scraps, amount: 14),
+                            new(resource: ResourceName.MeleeWeapon, amount: 4),
+                            new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Mummy, cost: new List<Cost>
+                        new(name: UnitName.Mummy, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 29),
-                            new(type: ResourceName.SpecialWeapon, amount: 5),
-                            new(type: ResourceName.Population, amount: 1)
+                            new(resource: ResourceName.Scraps, amount: 29),
+                            new(resource: ResourceName.SpecialWeapon, amount: 5),
+                            new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(entityName: UnitName.Parasite, cost: new List<Cost>
+                        new(name: UnitName.Parasite, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 21),
-                            new(type: ResourceName.MeleeWeapon, amount: 2),
-                            new(type: ResourceName.RangedWeapon, amount: 2),
-                            new(type: ResourceName.SpecialWeapon, amount: 2),
-                            new(type: ResourceName.Population, amount: 1)
+                            new(resource: ResourceName.Scraps, amount: 21),
+                            new(resource: ResourceName.MeleeWeapon, amount: 2),
+                            new(resource: ResourceName.RangedWeapon, amount: 2),
+                            new(resource: ResourceName.SpecialWeapon, amount: 2),
+                            new(resource: ResourceName.Population, amount: 1)
                         }),
                     },
                     canPlaceInWalkableAreaOnly: true,
@@ -132,7 +133,7 @@ namespace low_age_data.Collections
 
                 new Instant(
                     name: AbilityName.Obelisk.CelestiumDischarge,
-                    turnPhase: TurnPhase.Planning, 
+                    turnPhase: TurnPhase.Planning,
                     displayName: nameof(AbilityName.Obelisk.CelestiumDischarge).CamelCaseToWords(),
                     description: "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed " +
                                  "by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 " +
@@ -143,14 +144,14 @@ namespace low_age_data.Collections
                         EffectName.Obelisk.CelestiumDischargeSearchShort
                     },
                     cooldown: EndsAt.EndOf.Fourth.ActionPhase),
-                
+
                 new Passive(
                     name: AbilityName.Shack.Accommodation,
                     displayName: nameof(AbilityName.Shack.Accommodation).CamelCaseToWords(),
                     description: "Provides 2 Population",
-                    hasButton: true, 
+                    hasButton: true,
                     onBirthEffect: EffectName.Shack.AccommodationApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Smith.MeleeWeaponProduction,
                     displayName: nameof(AbilityName.Smith.MeleeWeaponProduction).CamelCaseToWords(),
@@ -158,7 +159,7 @@ namespace low_age_data.Collections
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
                     onBirthEffect: EffectName.Smith.MeleeWeaponProductionApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Fletcher.RangedWeaponProduction,
                     displayName: nameof(AbilityName.Fletcher.RangedWeaponProduction).CamelCaseToWords(),
@@ -166,7 +167,7 @@ namespace low_age_data.Collections
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
                     onBirthEffect: EffectName.Fletcher.RangedWeaponProductionApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Alchemy.SpecialWeaponProduction,
                     displayName: nameof(AbilityName.Alchemy.SpecialWeaponProduction).CamelCaseToWords(),
@@ -174,13 +175,66 @@ namespace low_age_data.Collections
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
                     onBirthEffect: EffectName.Alchemy.SpecialWeaponProductionApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.Depot.WeaponStorage,
                     displayName: nameof(AbilityName.Depot.WeaponStorage).CamelCaseToWords(),
                     description: "Provides 4 spaces of storage for Weapons which are used for new unit production.",
                     hasButton: true,
                     onBirthEffect: EffectName.Depot.WeaponStorageApplyBehaviour),
+
+                new Research(
+                    name: AbilityName.Workshop.Research,
+                    displayName: nameof(AbilityName.Workshop.Research).CamelCaseToWords(),
+                    description: "Open a selection of research available for Revelators to unlock.",
+                    selectionOfResearchToBeUnlocked: new List<Selection<ResearchName>>
+                    {
+                        new(name: ResearchName.Revelators.PoisonedSlits,
+                            cost: new List<Cost>
+                            {
+                                new(resource: ResourceName.Scraps,
+                                    amount: 5),
+                                new(resource: ResourceName.Celestium,
+                                    amount: 50)
+                            },
+                            grayOutIfAlreadyExists: true),
+                        new(name: ResearchName.Revelators.SpikedRope,
+                            cost: new List<Cost>
+                            {
+                                new(resource: ResourceName.Scraps,
+                                    amount: 20),
+                                new(resource: ResourceName.Celestium,
+                                    amount: 38)
+                            },
+                            grayOutIfAlreadyExists: true),
+                        new(name: ResearchName.Revelators.QuestionableCargo,
+                            cost: new List<Cost>
+                            {
+                                new(resource: ResourceName.Scraps,
+                                    amount: 4),
+                                new(resource: ResourceName.Celestium,
+                                    amount: 75)
+                            },
+                            grayOutIfAlreadyExists: true),
+                        new(name: ResearchName.Revelators.HumanfleshRations,
+                            cost: new List<Cost>
+                            {
+                                new(resource: ResourceName.Scraps,
+                                    amount: 15),
+                                new(resource: ResourceName.Celestium,
+                                    amount: 70)
+                            },
+                            grayOutIfAlreadyExists: true),
+                        new(name: ResearchName.Revelators.AdaptiveDigestion,
+                            cost: new List<Cost>
+                            {
+                                new(resource: ResourceName.Scraps,
+                                    amount: 15),
+                                new(resource: ResourceName.Celestium,
+                                    amount: 60)
+                            },
+                            grayOutIfAlreadyExists: true),
+                    }),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,
@@ -216,126 +270,126 @@ namespace low_age_data.Collections
                                  "can build the structure, each additional one after the first provides half of the " +
                                  "Celestium production to the construction than the previous Slave.",
                     distance: 1,
-                    selection: new List<Selection>
+                    selection: new List<Selection<EntityName>>
                     {
-                        new(entityName: StructureName.Hut, cost: new List<Cost>
+                        new(name: StructureName.Hut, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 5),
-                            new(type: ResourceName.Celestium, amount: 40)
+                            new(resource: ResourceName.Scraps, amount: 5),
+                            new(resource: ResourceName.Celestium, amount: 40)
                         }),
-                        new(entityName: StructureName.Obelisk, cost: new List<Cost>
+                        new(name: StructureName.Obelisk, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 12),
-                            new(type: ResourceName.Celestium, amount: 30)
+                            new(resource: ResourceName.Scraps, amount: 12),
+                            new(resource: ResourceName.Celestium, amount: 30)
                         }),
-                        new(entityName: StructureName.Shack, cost: new List<Cost>
+                        new(name: StructureName.Shack, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 15),
-                            new(type: ResourceName.Celestium, amount: 40)
+                            new(resource: ResourceName.Scraps, amount: 15),
+                            new(resource: ResourceName.Celestium, amount: 40)
                         }),
-                        new(entityName: StructureName.Smith, cost: new List<Cost>
+                        new(name: StructureName.Smith, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 11),
-                            new(type: ResourceName.Celestium, amount: 50)
+                            new(resource: ResourceName.Scraps, amount: 11),
+                            new(resource: ResourceName.Celestium, amount: 50)
                         }),
-                        new(entityName: StructureName.Fletcher, cost: new List<Cost>
+                        new(name: StructureName.Fletcher, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 17),
-                            new(type: ResourceName.Celestium, amount: 75)
+                            new(resource: ResourceName.Scraps, amount: 17),
+                            new(resource: ResourceName.Celestium, amount: 75)
                         }),
-                        new(entityName: StructureName.Alchemy, cost: new List<Cost>
+                        new(name: StructureName.Alchemy, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 23),
-                            new(type: ResourceName.Celestium, amount: 100)
+                            new(resource: ResourceName.Scraps, amount: 23),
+                            new(resource: ResourceName.Celestium, amount: 100)
                         }),
-                        new(entityName: StructureName.Depot, cost: new List<Cost>
+                        new(name: StructureName.Depot, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 20),
-                            new(type: ResourceName.Celestium, amount: 65)
+                            new(resource: ResourceName.Scraps, amount: 20),
+                            new(resource: ResourceName.Celestium, amount: 65)
                         }),
-                        new(entityName: StructureName.Workshop, cost: new List<Cost>
+                        new(name: StructureName.Workshop, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 20),
-                            new(type: ResourceName.Celestium, amount: 50)
+                            new(resource: ResourceName.Scraps, amount: 20),
+                            new(resource: ResourceName.Celestium, amount: 50)
                         }),
-                        new(entityName: StructureName.Outpost, cost: new List<Cost>
+                        new(name: StructureName.Outpost, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 18),
-                            new(type: ResourceName.Celestium, amount: 45)
+                            new(resource: ResourceName.Scraps, amount: 18),
+                            new(resource: ResourceName.Celestium, amount: 45)
                         }),
-                        new(entityName: StructureName.Barricade, cost: new List<Cost>
+                        new(name: StructureName.Barricade, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 16),
-                            new(type: ResourceName.Celestium, amount: 35)
+                            new(resource: ResourceName.Scraps, amount: 16),
+                            new(resource: ResourceName.Celestium, amount: 35)
                         }),
                     },
                     casterConsumesAction: true,
                     canHelp: true,
                     helpEfficiency: 0.5f),
-                
+
                 new Passive(
                     name: AbilityName.Hut.Building,
                     displayName: nameof(AbilityName.Hut.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Hut.BuildingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Obelisk.Building,
                     displayName: nameof(AbilityName.Obelisk.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Obelisk.BuildingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Shack.Building,
                     displayName: nameof(AbilityName.Shack.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Shack.BuildingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Smith.Building,
                     displayName: nameof(AbilityName.Smith.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Smith.BuildingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Fletcher.Building,
                     displayName: nameof(AbilityName.Fletcher.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Fletcher.BuildingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Alchemy.Building,
                     displayName: nameof(AbilityName.Alchemy.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Alchemy.BuildingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Depot.Building,
                     displayName: nameof(AbilityName.Depot.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Depot.BuildingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Workshop.Building,
                     displayName: nameof(AbilityName.Workshop.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Workshop.BuildingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Outpost.Building,
                     displayName: nameof(AbilityName.Outpost.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Outpost.BuildingBuildable),
-                
+
                 new Passive(
                     name: AbilityName.Barricade.Building,
                     displayName: nameof(AbilityName.Barricade.Building).CamelCaseToWords(),
@@ -382,9 +436,9 @@ namespace low_age_data.Collections
                                  "this time target has 60% of their maximum Movement (rounded up) and cannot receive healing " +
                                  "from any sources. Multiple attacks on a crippled target have no additional effects.",
                     hasButton: true,
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Revelators.PoisonedSlits
+                        ResearchName.Revelators.PoisonedSlits
                     },
                     onHitEffects: new List<EffectName>
                     {
@@ -453,9 +507,9 @@ namespace low_age_data.Collections
                     {
                         EffectName.Camou.ClimbTeleport
                     },
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Revelators.SpikedRope
+                        ResearchName.Revelators.SpikedRope
                     }),
 
                 new Passive(
@@ -464,9 +518,9 @@ namespace low_age_data.Collections
                     description: "",
                     hasButton: false,
                     periodicEffect: null,
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Revelators.SpikedRope
+                        ResearchName.Revelators.SpikedRope
                     },
                     onBirthEffect: EffectName.Camou.ClimbApplyBehaviour),
 
@@ -499,9 +553,9 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Pyre.PhantomMenace).CamelCaseToWords(),
                     description: "Can move through enemy units (but not buildings).",
                     hasButton: true,
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Revelators.QuestionableCargo
+                        ResearchName.Revelators.QuestionableCargo
                     },
                     onBirthEffect: EffectName.Pyre.PhantomMenaceApplyBehaviour),
 
@@ -538,9 +592,9 @@ namespace low_age_data.Collections
                     description: "Roach creation range is increased to 4 Distance.",
                     hasButton: true,
                     periodicEffect: null,
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Revelators.HumanfleshRations
+                        ResearchName.Revelators.HumanfleshRations
                     },
                     onHitEffects: null,
                     onHitAttackTypes: null,
@@ -580,9 +634,9 @@ namespace low_age_data.Collections
                     {
                         EffectName.Roach.CorrosiveSpitDamage
                     },
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Revelators.AdaptiveDigestion
+                        ResearchName.Revelators.AdaptiveDigestion
                     },
                     cooldown: EndsAt.EndOf.Second.ActionPhase),
 
@@ -627,9 +681,9 @@ namespace low_age_data.Collections
                     {
                         EffectName.Horrior.MountApplyBehaviour
                     },
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Uee.HoverboardReignition
+                        ResearchName.Uee.HoverboardReignition
                     }),
 
                 new Passive(
@@ -691,9 +745,9 @@ namespace low_age_data.Collections
                     description: "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
                     hasButton: true,
                     periodicEffect: null,
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Uee.ExplosiveShrapnel
+                        ResearchName.Uee.ExplosiveShrapnel
                     },
                     onHitEffects: null,
                     onHitAttackTypes: null,
@@ -729,9 +783,9 @@ namespace low_age_data.Collections
                     "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
                     hasButton: true,
                     periodicEffect: null,
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Uee.MDPractice
+                        ResearchName.Uee.MdPractice
                     },
                     onHitEffects: null,
                     onHitAttackTypes: null,
@@ -745,22 +799,22 @@ namespace low_age_data.Collections
                     "up to a number needed to operate the Machine. Each Engineer provides current Celestium " +
                     "production to the construction.",
                     distance: 1,
-                    selection: new List<Selection>
+                    selection: new List<Selection<EntityName>>
                     {
-                        new(entityName: UnitName.Cannon, cost: new List<Cost>
+                        new(name: UnitName.Cannon, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 18),
-                            new(type: ResourceName.Celestium, amount: 120)
+                            new(resource: ResourceName.Scraps, amount: 18),
+                            new(resource: ResourceName.Celestium, amount: 120)
                         }),
-                        new(entityName: UnitName.Ballista, cost: new List<Cost>
+                        new(name: UnitName.Ballista, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 7),
-                            new(type: ResourceName.Celestium, amount: 106)
+                            new(resource: ResourceName.Scraps, amount: 7),
+                            new(resource: ResourceName.Celestium, amount: 106)
                         }),
-                        new(entityName: UnitName.Radar, cost: new List<Cost>
+                        new(name: UnitName.Radar, cost: new List<Cost>
                         {
-                            new(type: ResourceName.Scraps, amount: 15),
-                            new(type: ResourceName.Celestium, amount: 84)
+                            new(resource: ResourceName.Scraps, amount: 15),
+                            new(resource: ResourceName.Celestium, amount: 84)
                         }),
                     },
                     casterConsumesAction: true,
@@ -933,9 +987,9 @@ namespace low_age_data.Collections
                     description: "Enemy units in 15 Attack Distance are shown as red dots in the fog of war.",
                     hasButton: true,
                     periodicEffect: EffectName.Radar.RadioLocationApplyBehaviour,
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Uee.CelestiumCoatedMaterials
+                        ResearchName.Uee.CelestiumCoatedMaterials
                     }),
 
                 new Passive(
@@ -969,9 +1023,9 @@ namespace low_age_data.Collections
                     {
                         EffectName.Vessel.FortifyCreateEntity,
                     },
-                    researchNeeded: new List<Research>
+                    researchNeeded: new List<ResearchName>
                     {
-                        Research.Uee.HardenedMatrix
+                        ResearchName.Uee.HardenedMatrix
                     },
                     cooldown: EndsAt.EndOf.Second.ActionPhase),
 

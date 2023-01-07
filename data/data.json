@@ -1932,6 +1932,61 @@
         ],
         "displayName": "Depot",
         "description": ""
+      },
+      {
+        "name": "structure-workshop",
+        "size": {
+          "x": 2,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 55,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 2,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-workshop-building",
+          "ability-workshop-research"
+        ],
+        "displayName": "Workshop",
+        "description": ""
       }
     ],
     "features": [
@@ -2151,173 +2206,191 @@
       "researchNeeded": [],
       "selection": [
         {
-          "entityName": "unit-slave",
+          "name": "unit-slave",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 4
             },
             {
-              "type": "resource-melee-weapon",
+              "resource": "resource-melee-weapon",
               "amount": 1
             },
             {
-              "type": "resource-population",
+              "resource": "resource-population",
               "amount": 1
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "unit-quickdraw",
+          "name": "unit-quickdraw",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 9
             },
             {
-              "type": "resource-ranged-weapon",
+              "resource": "resource-ranged-weapon",
               "amount": 2
             },
             {
-              "type": "resource-population",
+              "resource": "resource-population",
               "amount": 1
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "unit-gorger",
+          "name": "unit-gorger",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 7
             },
             {
-              "type": "resource-melee-weapon",
+              "resource": "resource-melee-weapon",
               "amount": 2
             },
             {
-              "type": "resource-population",
+              "resource": "resource-population",
               "amount": 1
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "unit-camou",
+          "name": "unit-camou",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 11
             },
             {
-              "type": "resource-melee-weapon",
+              "resource": "resource-melee-weapon",
               "amount": 2
             },
             {
-              "type": "resource-special-weapon",
+              "resource": "resource-special-weapon",
               "amount": 1
             },
             {
-              "type": "resource-population",
+              "resource": "resource-population",
               "amount": 1
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "unit-shaman",
+          "name": "unit-shaman",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 10
             },
             {
-              "type": "resource-ranged-weapon",
+              "resource": "resource-ranged-weapon",
               "amount": 1
             },
             {
-              "type": "resource-special-weapon",
+              "resource": "resource-special-weapon",
               "amount": 2
             },
             {
-              "type": "resource-population",
+              "resource": "resource-population",
               "amount": 1
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "unit-pyre",
+          "name": "unit-pyre",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 15
             },
             {
-              "type": "resource-ranged-weapon",
+              "resource": "resource-ranged-weapon",
               "amount": 4
             },
             {
-              "type": "resource-population",
+              "resource": "resource-population",
               "amount": 1
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "unit-big-bad-bull",
+          "name": "unit-big-bad-bull",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 14
             },
             {
-              "type": "resource-melee-weapon",
+              "resource": "resource-melee-weapon",
               "amount": 4
             },
             {
-              "type": "resource-population",
+              "resource": "resource-population",
               "amount": 1
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "unit-mummy",
+          "name": "unit-mummy",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 29
             },
             {
-              "type": "resource-special-weapon",
+              "resource": "resource-special-weapon",
               "amount": 5
             },
             {
-              "type": "resource-population",
+              "resource": "resource-population",
               "amount": 1
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "unit-parasite",
+          "name": "unit-parasite",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 21
             },
             {
-              "type": "resource-melee-weapon",
+              "resource": "resource-melee-weapon",
               "amount": 2
             },
             {
-              "type": "resource-ranged-weapon",
+              "resource": "resource-ranged-weapon",
               "amount": 2
             },
             {
-              "type": "resource-special-weapon",
+              "resource": "resource-special-weapon",
               "amount": 2
             },
             {
-              "type": "resource-population",
+              "resource": "resource-population",
               "amount": 1
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         }
       ],
       "canPlaceInWalkableAreaOnly": true,
@@ -2418,6 +2491,93 @@
       "description": "Provides 4 spaces of storage for Weapons which are used for new unit production."
     },
     {
+      "name": "ability-workshop-research",
+      "type": "Ability.Research",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "selectionOfResearchToBeUnlocked": [
+        {
+          "name": "research-revelators-poisoned-slits",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 5
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 50
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": true
+        },
+        {
+          "name": "research-revelators-spiked-rope",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 20
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 38
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": true
+        },
+        {
+          "name": "research-revelators-questionable-cargo",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 4
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 75
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": true
+        },
+        {
+          "name": "research-revelators-humanflesh-rations",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 15
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 70
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": true
+        },
+        {
+          "name": "research-revelators-adaptive-digestion",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 15
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 60
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": true
+        }
+      ],
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Research",
+      "description": "Open a selection of research available for Revelators to unlock."
+    },
+    {
       "name": "ability-leader-all-for-one",
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
@@ -2471,134 +2631,154 @@
       "distance": 1,
       "selection": [
         {
-          "entityName": "structure-hut",
+          "name": "structure-hut",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 5
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 40
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "structure-obelisk",
+          "name": "structure-obelisk",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 12
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 30
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "structure-shack",
+          "name": "structure-shack",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 15
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 40
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "structure-smith",
+          "name": "structure-smith",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 11
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 50
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "structure-fletcher",
+          "name": "structure-fletcher",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 17
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 75
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "structure-alchemy",
+          "name": "structure-alchemy",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 23
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 100
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "structure-depot",
+          "name": "structure-depot",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 20
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 65
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "structure-workshop",
+          "name": "structure-workshop",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 20
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 50
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "structure-outpost",
+          "name": "structure-outpost",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 18
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 45
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "structure-barricade",
+          "name": "structure-barricade",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 16
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 35
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         }
       ],
       "casterConsumesAction": true,
@@ -2811,7 +2991,7 @@
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [
-        "Research.PoisonedSlits"
+        "research-revelators-poisoned-slits"
       ],
       "periodicEffect": null,
       "onHitEffects": [
@@ -2885,7 +3065,7 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [
-        "Research.SpikedRope"
+        "research-revelators-spiked-rope"
       ],
       "distance": 1,
       "effects": [
@@ -2903,7 +3083,7 @@
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [
-        "Research.SpikedRope"
+        "research-revelators-spiked-rope"
       ],
       "periodicEffect": null,
       "onHitEffects": [],
@@ -2951,7 +3131,7 @@
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [
-        "Research.QuestionableCargo"
+        "research-revelators-questionable-cargo"
       ],
       "periodicEffect": null,
       "onHitEffects": [],
@@ -3000,7 +3180,7 @@
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [
-        "Research.HumanfleshRations"
+        "research-revelators-humanflesh-rations"
       ],
       "periodicEffect": null,
       "onHitEffects": [],
@@ -3048,7 +3228,7 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [
-        "Research.AdaptiveDigestion"
+        "research-revelators-adaptive-digestion"
       ],
       "distance": 4,
       "effects": [
@@ -3102,7 +3282,7 @@
       "type": "Ability.Instant",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [
-        "Research.HoverboardReignition"
+        "research-uee-hoverboard-reignition"
       ],
       "effects": [
         "effect-horrior-mount-apply-behaviour"
@@ -3179,7 +3359,7 @@
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [
-        "Research.ExplosiveShrapnel"
+        "research-uee-explosive-shrapnel"
       ],
       "periodicEffect": null,
       "onHitEffects": [],
@@ -3227,7 +3407,7 @@
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [
-        "Research.MDPractice"
+        "research-uee-md-practice"
       ],
       "periodicEffect": null,
       "onHitEffects": [],
@@ -3247,43 +3427,49 @@
       "distance": 1,
       "selection": [
         {
-          "entityName": "unit-cannon",
+          "name": "unit-cannon",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 18
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 120
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "unit-ballista",
+          "name": "unit-ballista",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 7
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 106
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         },
         {
-          "entityName": "unit-radar",
+          "name": "unit-radar",
           "cost": [
             {
-              "type": "resource-scraps",
+              "resource": "resource-scraps",
               "amount": 15
             },
             {
-              "type": "resource-celestium",
+              "resource": "resource-celestium",
               "amount": 84
             }
-          ]
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
         }
       ],
       "casterConsumesAction": true,
@@ -3506,7 +3692,7 @@
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [
-        "Research.CelestiumCoatedMaterials"
+        "research-uee-celestium-coated-materials"
       ],
       "periodicEffect": "effect-radar-radio-location-apply-behaviour",
       "onHitEffects": [],
@@ -3553,7 +3739,7 @@
       "type": "Ability.Instant",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [
-        "Research.HardenedMatrix"
+        "research-uee-hardened-matrix"
       ],
       "effects": [
         "effect-vessel-fortify-create-entity"
@@ -6125,7 +6311,7 @@
       "diminishingReturn": 0,
       "cost": [
         {
-          "type": "resource-celestium",
+          "resource": "resource-celestium",
           "amount": 20
         }
       ],
@@ -6150,7 +6336,7 @@
       "diminishingReturn": 0,
       "cost": [
         {
-          "type": "resource-celestium",
+          "resource": "resource-celestium",
           "amount": 25
         }
       ],
@@ -6175,7 +6361,7 @@
       "diminishingReturn": 0,
       "cost": [
         {
-          "type": "resource-celestium",
+          "resource": "resource-celestium",
           "amount": 30
         }
       ],

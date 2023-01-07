@@ -13,32 +13,40 @@ namespace low_age_data.Domain.Abilities
         /// </summary>
         public Produce(
             AbilityName name,
-            string displayName, 
-            string description, 
-            IList<Selection> selection, 
-            bool? canPlaceInWalkableAreaOnly = null, 
+            string displayName,
+            string description,
+            IList<Selection<EntityName>> selection,
+            bool? canPlaceInWalkableAreaOnly = null,
             bool? hasQueue = null,
-            bool? producedInstantly = null) : base(name, $"{nameof(Ability)}.{nameof(Produce)}", TurnPhase.Planning, new List<Research>(), true, displayName, description)
+            bool? producedInstantly = null)
+            : base(
+                name,
+                $"{nameof(Ability)}.{nameof(Produce)}",
+                TurnPhase.Planning,
+                new List<ResearchName>(),
+                true,
+                displayName,
+                description)
         {
             Selection = selection;
             CanPlaceInWalkableAreaOnly = canPlaceInWalkableAreaOnly ?? false;
             HasQueue = hasQueue ?? false;
             ProducedInstantly = producedInstantly ?? false;
         }
-        
-        public IList<Selection> Selection { get; }
-        
+
+        public IList<Selection<EntityName>> Selection { get; }
+
         /// <summary>
         /// If true, placement for a new <see cref="Entity"/> to <see cref="Produce"/> in is only allowed inside
         /// <see cref="Structure"/>'s <see cref="Structure.WalkableArea"/>.
         /// </summary>
         public bool CanPlaceInWalkableAreaOnly { get; }
-        
+
         /// <summary>
         /// If true, producing new entities puts them in a queue.
         /// </summary>
         public bool HasQueue { get; }
-        
+
         /// <summary>
         /// If true, <see cref="Entity"/> is <see cref="Produce"/>d instantly after placing it and paying the cost.
         /// </summary>

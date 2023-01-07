@@ -14,14 +14,14 @@ namespace low_age_data.Collections
             return new List<Structure>
             {
                 new(
-                    name: StructureName.Citadel, 
+                    name: StructureName.Citadel,
                     displayName: nameof(StructureName.Citadel).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators, 
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>(),
                     abilities: new List<AbilityName>
                     {
@@ -35,11 +35,11 @@ namespace low_age_data.Collections
                     centerPoint: new Vector2<int>(x: 1, y: 1),
                     destructible: false,
                     walkableArea: new Area(
-                        start: new Vector2<int>(x: 0, y: 2), 
+                        start: new Vector2<int>(x: 0, y: 2),
                         size: new Vector2<int>(x: 3, y: 2))),
-                
+
                 new(
-                    name: StructureName.Hut, 
+                    name: StructureName.Hut,
                     displayName: nameof(StructureName.Hut).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
@@ -49,7 +49,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators, 
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -61,9 +61,9 @@ namespace low_age_data.Collections
                         AbilityName.Shared.ScrapsIncome
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
-                
+
                 new(
-                    name: StructureName.Obelisk, 
+                    name: StructureName.Obelisk,
                     displayName: nameof(StructureName.Obelisk).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
@@ -73,7 +73,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators, 
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -86,9 +86,9 @@ namespace low_age_data.Collections
                         AbilityName.Obelisk.CelestiumDischarge
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
-                    
+
                 new(
-                    name: StructureName.Shack, 
+                    name: StructureName.Shack,
                     displayName: nameof(StructureName.Shack).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
@@ -98,7 +98,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators, 
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Light,
@@ -110,9 +110,9 @@ namespace low_age_data.Collections
                         AbilityName.Shack.Accommodation
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
-                
+
                 new(
-                    name: StructureName.Smith, 
+                    name: StructureName.Smith,
                     displayName: nameof(StructureName.Smith).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
@@ -122,7 +122,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators, 
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -134,9 +134,9 @@ namespace low_age_data.Collections
                         AbilityName.Smith.MeleeWeaponProduction,
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
-                
+
                 new(
-                    name: StructureName.Fletcher, 
+                    name: StructureName.Fletcher,
                     displayName: nameof(StructureName.Fletcher).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
@@ -146,7 +146,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators, 
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -158,9 +158,9 @@ namespace low_age_data.Collections
                         AbilityName.Fletcher.RangedWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
-                
+
                 new(
-                    name: StructureName.Alchemy, 
+                    name: StructureName.Alchemy,
                     displayName: nameof(StructureName.Alchemy).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
@@ -170,7 +170,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators, 
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -182,9 +182,9 @@ namespace low_age_data.Collections
                         AbilityName.Alchemy.SpecialWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 3)),
-                    
+
                 new(
-                    name: StructureName.Depot, 
+                    name: StructureName.Depot,
                     displayName: nameof(StructureName.Depot).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
@@ -194,7 +194,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators, 
+                    originalFaction: FactionName.Revelators,
                     combatAttributes: new List<CombatAttributes>
                     {
                         CombatAttributes.Armoured,
@@ -204,6 +204,30 @@ namespace low_age_data.Collections
                     {
                         AbilityName.Depot.Building,
                         AbilityName.Depot.WeaponStorage,
+                    },
+                    size: new Vector2<int>(x: 2, y: 2)),
+
+                new(
+                    name: StructureName.Workshop,
+                    displayName: nameof(StructureName.Workshop).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 55, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Revelators,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Workshop.Building,
+                        AbilityName.Workshop.Research
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
             };

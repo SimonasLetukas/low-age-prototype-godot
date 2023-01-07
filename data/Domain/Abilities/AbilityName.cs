@@ -27,53 +27,54 @@ namespace low_age_data.Domain.Abilities
         {
             public static AbilityName Building => new($"{nameof(Hut)}{nameof(Building)}".ToKebabCase());
         }
-        
+
         public static class Obelisk
         {
             public static AbilityName Building => new($"{nameof(Obelisk)}{nameof(Building)}".ToKebabCase());
             public static AbilityName CelestiumDischarge => new($"{nameof(Obelisk)}{nameof(CelestiumDischarge)}".ToKebabCase());
         }
-        
+
         public static class Shack
         {
             public static AbilityName Building => new($"{nameof(Shack)}{nameof(Building)}".ToKebabCase());
             public static AbilityName Accommodation => new($"{nameof(Shack)}{nameof(Accommodation)}".ToKebabCase());
         }
-        
+
         public static class Smith
         {
             public static AbilityName Building => new($"{nameof(Smith)}{nameof(Building)}".ToKebabCase());
             public static AbilityName MeleeWeaponProduction => new($"{nameof(Smith)}{nameof(MeleeWeaponProduction)}".ToKebabCase());
         }
-        
+
         public static class Fletcher
         {
             public static AbilityName Building => new($"{nameof(Fletcher)}{nameof(Building)}".ToKebabCase());
             public static AbilityName RangedWeaponProduction => new($"{nameof(Fletcher)}{nameof(RangedWeaponProduction)}".ToKebabCase());
         }
-        
+
         public static class Alchemy
         {
             public static AbilityName Building => new($"{nameof(Alchemy)}{nameof(Building)}".ToKebabCase());
             public static AbilityName SpecialWeaponProduction => new($"{nameof(Alchemy)}{nameof(SpecialWeaponProduction)}".ToKebabCase());
         }
-        
+
         public static class Depot
         {
             public static AbilityName Building => new($"{nameof(Depot)}{nameof(Building)}".ToKebabCase());
             public static AbilityName WeaponStorage => new($"{nameof(Depot)}{nameof(WeaponStorage)}".ToKebabCase());
         }
-        
+
         public static class Workshop
         {
             public static AbilityName Building => new($"{nameof(Workshop)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName Research => new($"{nameof(Workshop)}{nameof(Research)}".ToKebabCase());
         }
-        
+
         public static class Outpost
         {
             public static AbilityName Building => new($"{nameof(Outpost)}{nameof(Building)}".ToKebabCase());
         }
-        
+
         public static class Barricade
         {
             public static AbilityName Building => new($"{nameof(Barricade)}{nameof(Building)}".ToKebabCase());
@@ -213,7 +214,7 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName AbsorbentField => new($"{nameof(Vessel)}{nameof(AbsorbentField)}".ToKebabCase());
             public static AbilityName Fortify => new($"{nameof(Vessel)}{nameof(Fortify)}".ToKebabCase());
         }
-        
+
         public static class Omen
         {
             public static AbilityName Rendition => new($"{nameof(Omen)}{nameof(Rendition)}".ToKebabCase());
