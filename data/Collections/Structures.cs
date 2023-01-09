@@ -230,6 +230,31 @@ namespace low_age_data.Collections
                         AbilityName.Workshop.Research
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
+                
+                new(
+                    name: StructureName.Outpost,
+                    displayName: nameof(StructureName.Outpost).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 90, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Revelators,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Outpost.Building,
+                        AbilityName.Outpost.Ascendable,
+                        AbilityName.Outpost.HighGround
+                    },
+                    size: new Vector2<int>(x: 1, y: 1)),
             };
         }
     }

@@ -21,14 +21,19 @@ namespace low_age_data.Collections
                 new Buff(
                     name: BehaviourName.Shared.HighGroundBuff,
                     displayName: nameof(BehaviourName.Shared.HighGroundBuff).CamelCaseToWords(),
-                    description: "Unit is on high ground and has +1 Attack Distance for ranged attacks.",
+                    description: "Unit is on high ground and has +1 vision range and +1 Attack Distance for " +
+                                 "ranged attacks.",
                     initialModifications: new List<Modification>
                     {
                         new AttackModification(
                             change: Change.AddMax,
                             amount: 1,
                             attackType: Attacks.Ranged,
-                            attribute: AttackAttribute.MaxDistance)
+                            attribute: AttackAttribute.MaxDistance),
+                        new StatModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            stat: Stats.Vision)
                     },
                     canStack: false,
                     canResetDuration: false,
@@ -110,8 +115,8 @@ namespace low_age_data.Collections
                 new HighGround(
                     name: BehaviourName.Citadel.HighGroundHighGround,
                     displayName: nameof(BehaviourName.Citadel.HighGroundHighGround).CamelCaseToWords(),
-                    description: "Provides an area of high ground to other units, who all gain +1 Attack Distance " +
-                                 "for their ranged attacks.",
+                    description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
+                                 "+1 Attack Distance for their ranged attacks.",
                     highGroundAreas: new List<Area>
                     {
                         new(start: new Vector2<int>(x: 0, y: 0),
@@ -253,6 +258,27 @@ namespace low_age_data.Collections
                         new(change: Change.AddCurrent,
                             amount: 4,
                             resource: ResourceName.WeaponStorage)
+                    }),
+                
+                new Ascendable(
+                    name: BehaviourName.Outpost.AscendableAscendable,
+                    displayName: nameof(BehaviourName.Outpost.AscendableAscendable).CamelCaseToWords(),
+                    description: "Can be navigated through to go up to high ground.",
+                    path: new List<Area>
+                    {
+                        new(start: new Vector2<int>(x: 0, y: 0),
+                            size: new Vector2<int>(x: 1, y: 1))
+                    }),
+
+                new HighGround(
+                    name: BehaviourName.Outpost.HighGroundHighGround,
+                    displayName: nameof(BehaviourName.Outpost.HighGroundHighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
+                                 "+1 Attack Distance for their ranged attacks.",
+                    highGroundAreas: new List<Area>
+                    {
+                        new(start: new Vector2<int>(x: 0, y: 0),
+                            size: new Vector2<int>(x: 1, y: 1))
                     }),
 
                 new Buff(

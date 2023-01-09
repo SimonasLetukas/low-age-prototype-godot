@@ -57,8 +57,8 @@ namespace low_age_data.Collections
                 new Passive(
                     name: AbilityName.Citadel.HighGround,
                     displayName: nameof(AbilityName.Citadel.HighGround).CamelCaseToWords(),
-                    description: "Provides an area of high ground to other units, who all gain +1 Attack Distance " +
-                                 "for their ranged attacks.",
+                    description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
+                                 "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
                     onBirthEffect: EffectName.Citadel.HighGroundApplyBehaviour),
 
@@ -235,6 +235,21 @@ namespace low_age_data.Collections
                             },
                             grayOutIfAlreadyExists: true),
                     }),
+                
+                new Passive(
+                    name: AbilityName.Outpost.Ascendable,
+                    displayName: nameof(AbilityName.Outpost.Ascendable).CamelCaseToWords(),
+                    description: "Can be navigated through to go up to high ground.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Outpost.AscendableApplyBehaviour),
+
+                new Passive(
+                    name: AbilityName.Outpost.HighGround,
+                    displayName: nameof(AbilityName.Outpost.HighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
+                                 "+1 Attack Distance for their ranged attacks.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Outpost.HighGroundApplyBehaviour),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,

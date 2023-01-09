@@ -1987,6 +1987,62 @@
         ],
         "displayName": "Workshop",
         "description": ""
+      },
+      {
+        "name": "structure-outpost",
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "centerPoint": {
+          "x": 0,
+          "y": 0
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 90,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-revelators",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-outpost-building",
+          "ability-outpost-ascendable",
+          "ability-outpost-high-ground"
+        ],
+        "displayName": "Outpost",
+        "description": ""
       }
     ],
     "features": [
@@ -2197,7 +2253,7 @@
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "displayName": "High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 Attack Distance for their ranged attacks."
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks."
     },
     {
       "name": "ability-citadel-promote-goons",
@@ -2576,6 +2632,36 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Research",
       "description": "Open a selection of research available for Revelators to unlock."
+    },
+    {
+      "name": "ability-outpost-ascendable",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-outpost-ascendable-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Ascendable",
+      "description": "Can be navigated through to go up to high ground."
+    },
+    {
+      "name": "ability-outpost-high-ground",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-outpost-high-ground-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "High Ground",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -4051,6 +4137,30 @@
         "behaviour-depot-weapon-storage-income"
       ],
       "location": "Location.Inherited",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-outpost-ascendable-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-outpost-ascendable-ascendable"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-outpost-high-ground-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-outpost-high-ground-high-ground"
+      ],
+      "location": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -6002,6 +6112,12 @@
           "modificationFlags": [],
           "change": "Change.AddMax",
           "amount": 1.0
+        },
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Vision",
+          "change": "Change.AddMax",
+          "amount": 1.0
         }
       ],
       "initialEffects": [],
@@ -6015,7 +6131,7 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "High Ground Buff",
-      "description": "Unit is on high ground and has +1 Attack Distance for ranged attacks.",
+      "description": "Unit is on high ground and has +1 vision range and +1 Attack Distance for ranged attacks.",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
@@ -6174,7 +6290,7 @@
         "effect-shared-high-ground-search"
       ],
       "displayName": "High Ground High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 Attack Distance for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
@@ -6388,6 +6504,51 @@
       "waitForAvailableStorage": false,
       "displayName": "Weapon Storage Income",
       "description": "Provides 4 spaces of storage for Weapons.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-outpost-ascendable-ascendable",
+      "type": "Behaviour.Ascendable",
+      "path": [
+        {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          }
+        }
+      ],
+      "displayName": "Ascendable Ascendable",
+      "description": "Can be navigated through to go up to high ground.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-outpost-high-ground-high-ground",
+      "type": "Behaviour.HighGround",
+      "highGroundAreas": [
+        {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          }
+        }
+      ],
+      "onCollisionEffects": [
+        "effect-shared-high-ground-search"
+      ],
+      "displayName": "High Ground High Ground",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false

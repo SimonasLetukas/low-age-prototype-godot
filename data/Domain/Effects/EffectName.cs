@@ -64,6 +64,16 @@ namespace low_age_data.Domain.Effects
             public static EffectName WeaponStorageApplyBehaviour => new($"{nameof(Depot)}{nameof(WeaponStorageApplyBehaviour)}".ToKebabCase());
         }
 
+        public static class Workshop
+        {
+        }
+
+        public static class Outpost
+        {
+            public static EffectName AscendableApplyBehaviour => new($"{nameof(Outpost)}{nameof(AscendableApplyBehaviour)}".ToKebabCase());
+            public static EffectName HighGroundApplyBehaviour => new($"{nameof(Outpost)}{nameof(HighGroundApplyBehaviour)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static EffectName AllForOneApplyBehaviour => new($"{nameof(Leader)}{nameof(AllForOneApplyBehaviour)}".ToKebabCase());

@@ -217,6 +217,22 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Depot.WeaponStorageIncome
                     }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Outpost.AscendableApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Outpost.AscendableAscendable
+                    },
+                    location: Location.Self),
+
+                new ApplyBehaviour(
+                    name: EffectName.Outpost.HighGroundApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Outpost.HighGroundHighGround
+                    },
+                    location: Location.Self),
 
                 #endregion
 

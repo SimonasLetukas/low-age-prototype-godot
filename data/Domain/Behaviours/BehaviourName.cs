@@ -75,6 +75,8 @@ namespace low_age_data.Domain.Behaviours
         public static class Outpost
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Outpost)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName AscendableAscendable => new($"{nameof(Outpost)}{nameof(AscendableAscendable)}".ToKebabCase());
+            public static BehaviourName HighGroundHighGround => new($"{nameof(Outpost)}{nameof(HighGroundHighGround)}".ToKebabCase());
         }
         
         public static class Barricade

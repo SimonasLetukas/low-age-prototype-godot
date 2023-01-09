@@ -73,6 +73,8 @@ namespace low_age_data.Domain.Abilities
         public static class Outpost
         {
             public static AbilityName Building => new($"{nameof(Outpost)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName Ascendable => new($"{nameof(Outpost)}{nameof(Ascendable)}".ToKebabCase());
+            public static AbilityName HighGround => new($"{nameof(Outpost)}{nameof(HighGround)}".ToKebabCase());
         }
 
         public static class Barricade
