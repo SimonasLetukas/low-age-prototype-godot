@@ -8,17 +8,20 @@ namespace low_age_data.Domain.Shared
     {
         public Selection(
             T name, 
-            IList<Cost>? cost, 
+            string? description = null,
+            IList<Cost>? cost = null, 
             IList<ResearchName>? researchNeeded = null, 
             bool? grayOutIfAlreadyExists = null)
         {
             Name = name;
+            Description = description ?? string.Empty;
             Cost = cost ?? new List<Cost>();
             ResearchNeeded = researchNeeded ?? new List<ResearchName>();
             GrayOutIfAlreadyExists = grayOutIfAlreadyExists ?? false;
         }
         
         public T Name { get; }
+        public string Description { get; }
         public IList<Cost> Cost { get; }
         
         /// <summary>

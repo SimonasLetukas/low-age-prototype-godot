@@ -255,6 +255,32 @@ namespace low_age_data.Collections
                         AbilityName.Outpost.HighGround
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
+                
+                new(
+                    name: StructureName.Barricade,
+                    displayName: nameof(StructureName.Barricade).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 65, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Revelators,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Light,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Barricade.Building,
+                        AbilityName.Barricade.ProtectiveShield,
+                        AbilityName.Barricade.Caltrops,
+                        //TODO
+                    },
+                    size: new Vector2<int>(x: 1, y: 2)),
             };
         }
     }

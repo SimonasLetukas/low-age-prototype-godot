@@ -280,6 +280,24 @@ namespace low_age_data.Collections
                         new(start: new Vector2<int>(x: 0, y: 0),
                             size: new Vector2<int>(x: 1, y: 1))
                     }),
+                
+                new Buff(
+                    name: BehaviourName.Barricade.ProtectiveShieldBuff,
+                    displayName: nameof(BehaviourName.Barricade.ProtectiveShieldBuff).CamelCaseToWords(),
+                    description: "Range Armour for this unit is increased by 2 because of a nearby Barricade's shield.",
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.AddMax,
+                            amount: 2,
+                            stat: Stats.RangedArmour)
+                    },
+                    endsAt: EndsAt.EndOf.This.Planning,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Positive,
+                    destroyOnConditionsMet: false,
+                    restoreChangesOnEnd: true),
 
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,

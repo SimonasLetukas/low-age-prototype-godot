@@ -2043,6 +2043,62 @@
         ],
         "displayName": "Outpost",
         "description": ""
+      },
+      {
+        "name": "structure-barricade",
+        "size": {
+          "x": 1,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 0,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 65,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-revelators",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-barricade-building",
+          "ability-barricade-protective-shield",
+          "ability-barricade-caltrops"
+        ],
+        "displayName": "Barricade",
+        "description": ""
       }
     ],
     "features": [
@@ -2263,6 +2319,7 @@
       "selection": [
         {
           "name": "unit-slave",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2282,6 +2339,7 @@
         },
         {
           "name": "unit-quickdraw",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2301,6 +2359,7 @@
         },
         {
           "name": "unit-gorger",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2320,6 +2379,7 @@
         },
         {
           "name": "unit-camou",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2343,6 +2403,7 @@
         },
         {
           "name": "unit-shaman",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2366,6 +2427,7 @@
         },
         {
           "name": "unit-pyre",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2385,6 +2447,7 @@
         },
         {
           "name": "unit-big-bad-bull",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2404,6 +2467,7 @@
         },
         {
           "name": "unit-mummy",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2423,6 +2487,7 @@
         },
         {
           "name": "unit-parasite",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2554,6 +2619,7 @@
       "selectionOfResearchToBeUnlocked": [
         {
           "name": "research-revelators-poisoned-slits",
+          "description": "Unlock Cripple for Quickdraw.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2569,6 +2635,7 @@
         },
         {
           "name": "research-revelators-spiked-rope",
+          "description": "Unlock Climb for Camou.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2584,6 +2651,7 @@
         },
         {
           "name": "research-revelators-questionable-cargo",
+          "description": "Unlock Phantom Menace for Pyre.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2599,6 +2667,7 @@
         },
         {
           "name": "research-revelators-humanflesh-rations",
+          "description": "Unlock Leap Of Hunger for Mummy.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2614,6 +2683,7 @@
         },
         {
           "name": "research-revelators-adaptive-digestion",
+          "description": "Unlock Corrosive Spit for Roach.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2662,6 +2732,36 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks."
+    },
+    {
+      "name": "ability-barricade-protective-shield",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": "effect-barricade-protective-shield-search",
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Protective Shield",
+      "description": "Every unit adjacent to the shield of this Barricade receives +2 Range Armour."
+    },
+    {
+      "name": "ability-barricade-caltrops",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": "effect-barricade-caltrops-search",
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Caltrops",
+      "description": "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the start of each action phase."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -2718,6 +2818,7 @@
       "selection": [
         {
           "name": "structure-hut",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2733,6 +2834,7 @@
         },
         {
           "name": "structure-obelisk",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2748,6 +2850,7 @@
         },
         {
           "name": "structure-shack",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2763,6 +2866,7 @@
         },
         {
           "name": "structure-smith",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2778,6 +2882,7 @@
         },
         {
           "name": "structure-fletcher",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2793,6 +2898,7 @@
         },
         {
           "name": "structure-alchemy",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2808,6 +2914,7 @@
         },
         {
           "name": "structure-depot",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2823,6 +2930,7 @@
         },
         {
           "name": "structure-workshop",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2838,6 +2946,7 @@
         },
         {
           "name": "structure-outpost",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -2853,6 +2962,7 @@
         },
         {
           "name": "structure-barricade",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -3514,6 +3624,7 @@
       "selection": [
         {
           "name": "unit-cannon",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -3529,6 +3640,7 @@
         },
         {
           "name": "unit-ballista",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -3544,6 +3656,7 @@
         },
         {
           "name": "unit-radar",
+          "description": "",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -3872,7 +3985,11 @@
     {
       "name": "effect-shared-high-ground-search",
       "type": "Effect.Search",
-      "radius": 0,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 0,
+        "ignoreRadius": -1
+      },
       "searchFlags": [
         "Flag.EffectSearchAppliedOnEnter",
         "Flag.EffectSearchRemovedOnExit"
@@ -3887,8 +4004,6 @@
         "effect-shared-high-ground-apply-behaviour"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -3943,7 +4058,9 @@
     {
       "name": "effect-shared-no-population-space-search",
       "type": "Effect.Search",
-      "radius": 1,
+      "shape": {
+        "type": "Shape.Map"
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -3953,8 +4070,6 @@
         "effect-shared-no-population-space-apply-behaviour"
       ],
       "location": "Location.Inherited",
-      "shape": "Shape.Map",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -4009,7 +4124,11 @@
     {
       "name": "effect-obelisk-celestium-discharge-search-long",
       "type": "Effect.Search",
-      "radius": 5,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 5,
+        "ignoreRadius": 1
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -4021,8 +4140,6 @@
         "effect-obelisk-celestium-discharge-apply-behaviour-long"
       ],
       "location": "Location.Origin",
-      "shape": "Shape.Circle",
-      "ignoreRadius": 1,
       "usedForValidator": false,
       "validators": []
     },
@@ -4053,7 +4170,11 @@
     {
       "name": "effect-obelisk-celestium-discharge-search-short",
       "type": "Effect.Search",
-      "radius": 1,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -4065,8 +4186,6 @@
         "effect-obelisk-celestium-discharge-apply-behaviour-short"
       ],
       "location": "Location.Origin",
-      "shape": "Shape.Circle",
-      "ignoreRadius": 0,
       "usedForValidator": false,
       "validators": []
     },
@@ -4167,6 +4286,110 @@
       "validators": []
     },
     {
+      "name": "effect-barricade-protective-shield-search",
+      "type": "Effect.Search",
+      "shape": {
+        "type": "Shape.Custom",
+        "areas": [
+          {
+            "start": {
+              "x": -1,
+              "y": -1
+            },
+            "size": {
+              "x": 3,
+              "y": 2
+            }
+          }
+        ]
+      },
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnEnter",
+        "Flag.EffectSearchAppliedOnActionPhaseStart",
+        "Flag.EffectSearchRemovedOnExit"
+      ],
+      "filterFlags": [
+        "Flag.FilterPlayer",
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-barricade-protective-shield-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-barricade-protective-shield-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-barricade-protective-shield-buff"
+      ],
+      "location": "Location.Inherited",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-barricade-caltrops-search",
+      "type": "Effect.Search",
+      "shape": {
+        "type": "Shape.Custom",
+        "areas": [
+          {
+            "start": {
+              "x": -1,
+              "y": 1
+            },
+            "size": {
+              "x": 3,
+              "y": 2
+            }
+          }
+        ]
+      },
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnActionPhaseStart"
+      ],
+      "filterFlags": [
+        "Flag.FilterPlayer",
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-barricade-caltrops-damage"
+      ],
+      "location": "Location.Self",
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-barricade-caltrops-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Pure",
+      "amount": {
+        "flat": 5,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Inherited",
+      "ignoresArmor": false,
+      "filterFlags": [],
+      "validators": []
+    },
+    {
       "name": "effect-leader-all-for-one-apply-behaviour",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
@@ -4195,10 +4418,14 @@
     {
       "name": "effect-leader-menacing-presence-search",
       "type": "Effect.Search",
-      "radius": 6,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 6,
+        "ignoreRadius": -1
+      },
       "searchFlags": [
         "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchAppliedOnActorAction",
+        "Flag.EffectSearchAppliedOnSourceAction",
         "Flag.EffectSearchRemovedOnExit"
       ],
       "filterFlags": [
@@ -4211,8 +4438,6 @@
         "effect-leader-menacing-presence-apply-behaviour"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -4261,7 +4486,9 @@
     {
       "name": "effect-leader-one-for-all-search",
       "type": "Effect.Search",
-      "radius": 1,
+      "shape": {
+        "type": "Shape.Map"
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -4272,8 +4499,6 @@
         "effect-leader-one-for-all-apply-behaviour-heal"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Map",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -4440,7 +4665,11 @@
     {
       "name": "effect-gorger-fanatic-suicide-search",
       "type": "Effect.Search",
-      "radius": 1,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": -1
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -4453,8 +4682,6 @@
         "effect-gorger-fanatic-suicide-damage"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -4558,7 +4785,11 @@
     {
       "name": "effect-camou-silent-assassin-search-friendly",
       "type": "Effect.Search",
-      "radius": 4,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 4,
+        "ignoreRadius": -1
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -4567,15 +4798,17 @@
       ],
       "effects": [],
       "location": "Location.Origin",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": true,
       "validators": []
     },
     {
       "name": "effect-camou-silent-assassin-search-enemy",
       "type": "Effect.Search",
-      "radius": 4,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 4,
+        "ignoreRadius": -1
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterUnit",
@@ -4583,8 +4816,6 @@
       ],
       "effects": [],
       "location": "Location.Actor",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": true,
       "validators": []
     },
@@ -4642,7 +4873,11 @@
     {
       "name": "effect-shaman-wondrous-goo-search",
       "type": "Effect.Search",
-      "radius": 0,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 0,
+        "ignoreRadius": -1
+      },
       "searchFlags": [
         "Flag.EffectSearchAppliedOnEveryAction",
         "Flag.EffectSearchAppliedOnEnter"
@@ -4657,8 +4892,6 @@
         "effect-shaman-wondrous-goo-apply-behaviour"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -4768,7 +5001,11 @@
     {
       "name": "effect-big-bad-bull-unleash-the-rage-search",
       "type": "Effect.Search",
-      "radius": 1,
+      "shape": {
+        "type": "Shape.Line",
+        "length": 1,
+        "ignoreLength": -1
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -4781,8 +5018,6 @@
         "effect-big-bad-bull-unleash-the-rage-force"
       ],
       "location": "Location.Point",
-      "shape": "Shape.Line",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -5017,7 +5252,11 @@
     {
       "name": "effect-horrior-expert-formation-search",
       "type": "Effect.Search",
-      "radius": 1,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": -1
+      },
       "searchFlags": [
         "Flag.EffectSearchAppliedOnEnter",
         "Flag.EffectSearchAppliedOnEveryAction",
@@ -5033,8 +5272,6 @@
         "effect-horrior-expert-formation-apply-behaviour"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -5159,7 +5396,11 @@
     {
       "name": "effect-mortar-deadly-ammunition-search",
       "type": "Effect.Search",
-      "radius": 1,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -5171,8 +5412,6 @@
         "effect-mortar-deadly-ammunition-damage"
       ],
       "location": "Location.Inherited",
-      "shape": "Shape.Circle",
-      "ignoreRadius": 0,
       "usedForValidator": false,
       "validators": []
     },
@@ -5285,7 +5524,11 @@
     {
       "name": "effect-hawk-health-kit-search",
       "type": "Effect.Search",
-      "radius": 1,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -5296,8 +5539,6 @@
         "effect-hawk-health-kit-heal-apply-behaviour"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": 0,
       "usedForValidator": false,
       "validators": []
     },
@@ -5551,7 +5792,11 @@
     {
       "name": "effect-cannon-heat-up-search",
       "type": "Effect.Search",
-      "radius": 0,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 0,
+        "ignoreRadius": -1
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -5563,8 +5808,6 @@
         "effect-cannon-heat-up-damage"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -5700,7 +5943,11 @@
     {
       "name": "effect-ballista-aim-search",
       "type": "Effect.Search",
-      "radius": 9,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 9,
+        "ignoreRadius": -1
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterOrigin",
@@ -5708,8 +5955,6 @@
       ],
       "effects": [],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": true,
       "validators": []
     },
@@ -5829,7 +6074,9 @@
     {
       "name": "effect-radar-radio-location-search-destroy",
       "type": "Effect.Search",
-      "radius": 1,
+      "shape": {
+        "type": "Shape.Map"
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterSpecificFeatureRadarRedDot"
@@ -5838,8 +6085,6 @@
         "effect-radar-radio-location-destroy"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Map",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -5866,7 +6111,11 @@
     {
       "name": "effect-radar-radio-location-search-create",
       "type": "Effect.Search",
-      "radius": 15,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 15,
+        "ignoreRadius": 0
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterEnemy",
@@ -5876,8 +6125,6 @@
         "effect-radar-radio-location-create-entity"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": 0,
       "usedForValidator": false,
       "validators": []
     },
@@ -5924,7 +6171,11 @@
     {
       "name": "effect-vessel-absorbent-field-search",
       "type": "Effect.Search",
-      "radius": 3,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 3,
+        "ignoreRadius": -1
+      },
       "searchFlags": [
         "Flag.EffectSearchAppliedOnEnter",
         "Flag.EffectSearchRemovedOnExit"
@@ -5938,8 +6189,6 @@
         "effect-vessel-absorbent-field-apply-behaviour"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -5979,7 +6228,11 @@
     {
       "name": "effect-vessel-fortify-search",
       "type": "Effect.Search",
-      "radius": 0,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 0,
+        "ignoreRadius": -1
+      },
       "searchFlags": [
         "Flag.EffectSearchAppliedOnEnter",
         "Flag.EffectSearchRemovedOnExit"
@@ -5993,8 +6246,6 @@
         "effect-vessel-fortify-apply-behaviour"
       ],
       "location": "Location.Self",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -6059,7 +6310,11 @@
     {
       "name": "effect-omen-rendition-search",
       "type": "Effect.Search",
-      "radius": 1,
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": -1
+      },
       "searchFlags": [],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -6071,8 +6326,6 @@
         "effect-omen-rendition-apply-behaviour-slow"
       ],
       "location": "Location.Source",
-      "shape": "Shape.Circle",
-      "ignoreRadius": -1,
       "usedForValidator": false,
       "validators": []
     },
@@ -6550,6 +6803,34 @@
       "displayName": "High Ground High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
       "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-barricade-protective-shield-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.RangedArmour",
+          "change": "Change.AddMax",
+          "amount": 2.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "canStack": false,
+      "canResetDuration": true,
+      "alignment": "Alignment.Positive",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Protective Shield Buff",
+      "description": "Range Armour for this unit is increased by 2 because of a nearby Barricade's shield.",
+      "endsAt": "EndsAt.EndOfThisPlanning",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },

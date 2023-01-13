@@ -82,6 +82,7 @@ namespace low_age_data.Domain.Behaviours
         public static class Barricade
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Barricade)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName ProtectiveShieldBuff => new($"{nameof(Barricade)}{nameof(ProtectiveShieldBuff)}".ToKebabCase());
         }
 
         public static class Leader

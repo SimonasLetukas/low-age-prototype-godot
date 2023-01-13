@@ -74,6 +74,14 @@ namespace low_age_data.Domain.Effects
             public static EffectName HighGroundApplyBehaviour => new($"{nameof(Outpost)}{nameof(HighGroundApplyBehaviour)}".ToKebabCase());
         }
 
+        public static class Barricade
+        {
+            public static EffectName ProtectiveShieldSearch => new($"{nameof(Barricade)}{nameof(ProtectiveShieldSearch)}".ToKebabCase());
+            public static EffectName ProtectiveShieldApplyBehaviour => new($"{nameof(Barricade)}{nameof(ProtectiveShieldApplyBehaviour)}".ToKebabCase());
+            public static EffectName CaltropsSearch => new($"{nameof(Barricade)}{nameof(CaltropsSearch)}".ToKebabCase());
+            public static EffectName CaltropsDamage => new($"{nameof(Barricade)}{nameof(CaltropsDamage)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static EffectName AllForOneApplyBehaviour => new($"{nameof(Leader)}{nameof(AllForOneApplyBehaviour)}".ToKebabCase());

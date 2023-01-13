@@ -87,9 +87,10 @@ namespace low_age_data.Domain.Shared.Flags
                 
                 /// <summary>
                 /// Applies <see cref="Effects.Search"/> after <see cref="Durations.EndsAt"/> (at the end of action
-                /// for the actor which issued this <see cref="Passive.PeriodicEffect"/>).
+                /// for the <see cref="Flag.Filter.Source"/> <see cref="Entity"/> -- which issued this
+                /// <see cref="Passive.PeriodicEffect"/>).
                 /// </summary>
-                public static Flag AppliedOnActorAction => new(Flags.EffectSearchAppliedOnActorAction);
+                public static Flag AppliedOnSourceAction => new(Flags.EffectSearchAppliedOnSourceAction);
                 
                 /// <summary>
                 /// Applies <see cref="Effects.Search"/> after <see cref="Durations.EndsAt"/> for every action in
@@ -246,7 +247,7 @@ namespace low_age_data.Domain.Shared.Flags
             ModificationOnlyVisibleInFogOfWar,
             EffectModifyPlayerGameLost,
             EffectSearchAppliedOnEnter,
-            EffectSearchAppliedOnActorAction,
+            EffectSearchAppliedOnSourceAction,
             EffectSearchAppliedOnEveryAction,
             EffectSearchAppliedOnActionPhaseStart,
             EffectSearchAppliedOnActionPhaseEnd,

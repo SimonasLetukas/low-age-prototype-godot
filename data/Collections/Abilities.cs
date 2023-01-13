@@ -190,6 +190,8 @@ namespace low_age_data.Collections
                     selectionOfResearchToBeUnlocked: new List<Selection<ResearchName>>
                     {
                         new(name: ResearchName.Revelators.PoisonedSlits,
+                            description: $"Unlock {nameof(AbilityName.Quickdraw.Cripple).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitName.Quickdraw).CamelCaseToWords()}.",
                             cost: new List<Cost>
                             {
                                 new(resource: ResourceName.Scraps,
@@ -199,6 +201,8 @@ namespace low_age_data.Collections
                             },
                             grayOutIfAlreadyExists: true),
                         new(name: ResearchName.Revelators.SpikedRope,
+                            description: $"Unlock {nameof(AbilityName.Camou.Climb).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitName.Camou).CamelCaseToWords()}.",
                             cost: new List<Cost>
                             {
                                 new(resource: ResourceName.Scraps,
@@ -208,6 +212,8 @@ namespace low_age_data.Collections
                             },
                             grayOutIfAlreadyExists: true),
                         new(name: ResearchName.Revelators.QuestionableCargo,
+                            description: $"Unlock {nameof(AbilityName.Pyre.PhantomMenace).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitName.Pyre).CamelCaseToWords()}.",
                             cost: new List<Cost>
                             {
                                 new(resource: ResourceName.Scraps,
@@ -217,6 +223,8 @@ namespace low_age_data.Collections
                             },
                             grayOutIfAlreadyExists: true),
                         new(name: ResearchName.Revelators.HumanfleshRations,
+                            description: $"Unlock {nameof(AbilityName.Mummy.LeapOfHunger).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitName.Mummy).CamelCaseToWords()}.",
                             cost: new List<Cost>
                             {
                                 new(resource: ResourceName.Scraps,
@@ -226,6 +234,8 @@ namespace low_age_data.Collections
                             },
                             grayOutIfAlreadyExists: true),
                         new(name: ResearchName.Revelators.AdaptiveDigestion,
+                            description: $"Unlock {nameof(AbilityName.Roach.CorrosiveSpit).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitName.Roach).CamelCaseToWords()}.",
                             cost: new List<Cost>
                             {
                                 new(resource: ResourceName.Scraps,
@@ -250,6 +260,21 @@ namespace low_age_data.Collections
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
                     onBirthEffect: EffectName.Outpost.HighGroundApplyBehaviour),
+                
+                new Passive(
+                    name: AbilityName.Barricade.ProtectiveShield,
+                    displayName: nameof(AbilityName.Barricade.ProtectiveShield).CamelCaseToWords(),
+                    description: "Every unit adjacent to the shield of this Barricade receives +2 Range Armour.",
+                    hasButton: true,
+                    periodicEffect: EffectName.Barricade.ProtectiveShieldSearch),
+                    
+                new Passive(
+                    name: AbilityName.Barricade.Caltrops,
+                    displayName: nameof(AbilityName.Barricade.Caltrops).CamelCaseToWords(),
+                    description: "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the " +
+                                 "start of each action phase.",
+                    hasButton: true,
+                    periodicEffect: EffectName.Barricade.CaltropsSearch),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,

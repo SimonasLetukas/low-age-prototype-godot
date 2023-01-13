@@ -9,6 +9,7 @@ using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Features;
 using low_age_data.Domain.Resources;
+using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Collections
 {
@@ -22,7 +23,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Shared.HighGroundSearch,
-                    radius: 0,
+                    shape: new Circle(radius: 0),
                     searchFlags: new List<Flag>
                     {
                         Flag.Effect.Search.AppliedOnEnter,
@@ -74,7 +75,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Shared.NoPopulationSpaceSearch,
-                    radius: 1,
+                    shape: new Map(),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -85,12 +86,11 @@ namespace low_age_data.Collections
                     {
                         EffectName.Shared.NoPopulationSpaceApplyBehaviour
                     },
-                    location: Location.Inherited,
-                    shape: Shape.Map),
+                    location: Location.Inherited),
 
                 new ApplyBehaviour(
-                    EffectName.Shared.NoPopulationSpaceApplyBehaviour,
-                    new List<BehaviourName>
+                    name: EffectName.Shared.NoPopulationSpaceApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Shared.NoPopulationSpaceInterceptDamage
                     }),
@@ -125,7 +125,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Obelisk.CelestiumDischargeSearchLong,
-                    radius: 5,
+                    shape: new Circle(radius: 5, ignoreRadius: 1),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -138,9 +138,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Obelisk.CelestiumDischargeApplyBehaviourLong
                     },
-                    location: Location.Origin,
-                    shape: Shape.Circle,
-                    ignoreRadius: 1),
+                    location: Location.Origin),
 
                 new ApplyBehaviour(
                     name: EffectName.Obelisk.CelestiumDischargeApplyBehaviourLong,
@@ -159,7 +157,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Obelisk.CelestiumDischargeSearchShort,
-                    radius: 1,
+                    shape: new Circle(radius: 1, ignoreRadius: 0),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -172,9 +170,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Obelisk.CelestiumDischargeApplyBehaviourShort
                     },
-                    location: Location.Origin,
-                    shape: Shape.Circle,
-                    ignoreRadius: 0),
+                    location: Location.Origin),
 
                 new ApplyBehaviour(
                     name: EffectName.Obelisk.CelestiumDischargeApplyBehaviourShort,
@@ -233,6 +229,68 @@ namespace low_age_data.Collections
                         BehaviourName.Outpost.HighGroundHighGround
                     },
                     location: Location.Self),
+                
+                new Search(
+                    name: EffectName.Barricade.ProtectiveShieldSearch,
+                    shape: new Custom(areas: new List<Area>
+                    {
+                        new(start: new Vector2<int>(x: -1,y: -1), 
+                            size: new Vector2<int> (x: 3, y: 2))
+                    }),
+                    searchFlags: new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnEnter,
+                        Flag.Effect.Search.AppliedOnActionPhaseStart,
+                        Flag.Effect.Search.RemovedOnExit
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Player,
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Barricade.ProtectiveShieldApplyBehaviour
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Barricade.ProtectiveShieldApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Barricade.ProtectiveShieldBuff
+                    }),
+                
+                new Search(
+                    name: EffectName.Barricade.CaltropsSearch,
+                    shape: new Custom(areas: new List<Area>
+                    {
+                        new(start: new Vector2<int>(x: -1,y: 1), 
+                            size: new Vector2<int> (x: 3, y: 2))
+                    }),
+                    searchFlags: new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnActionPhaseStart,
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Player,
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Barricade.CaltropsDamage
+                    },
+                    location: Location.Self),
+                
+                new Damage(
+                    name: EffectName.Barricade.CaltropsDamage,
+                    damageType: DamageType.Pure,
+                    amount: new Amount(flat: 5)),
 
                 #endregion
 
@@ -263,11 +321,11 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Leader.MenacingPresenceSearch,
-                    radius: 6,
+                    shape: new Circle(radius: 6),
                     searchFlags: new List<Flag>
                     {
                         Flag.Effect.Search.AppliedOnEnter,
-                        Flag.Effect.Search.AppliedOnActorAction,
+                        Flag.Effect.Search.AppliedOnSourceAction,
                         Flag.Effect.Search.RemovedOnExit
                     },
                     filterFlags: new List<Flag>
@@ -317,7 +375,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Leader.OneForAllSearch,
-                    radius: 1,
+                    shape: new Map(),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -329,8 +387,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Leader.OneForAllApplyBehaviourHeal
                     },
-                    location: Location.Self,
-                    shape: Shape.Map),
+                    location: Location.Self),
 
                 new ApplyBehaviour(
                     name: EffectName.Leader.OneForAllApplyBehaviourHeal,
@@ -461,7 +518,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Gorger.FanaticSuicideSearch,
-                    radius: 1,
+                    shape: new Circle(radius: 1),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -539,7 +596,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Camou.SilentAssassinSearchFriendly,
-                    radius: 4,
+                    shape: new Circle(radius: 4),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -548,12 +605,11 @@ namespace low_age_data.Collections
                         Flag.Filter.Ally
                     },
                     location: Location.Origin,
-                    shape: Shape.Circle,
                     usedForValidator: true),
 
                 new Search(
                     name: EffectName.Camou.SilentAssassinSearchEnemy,
-                    radius: 4,
+                    shape: new Circle(radius: 4),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -561,7 +617,6 @@ namespace low_age_data.Collections
                         Flag.Filter.Enemy
                     },
                     location: Location.Actor,
-                    shape: Shape.Circle,
                     usedForValidator: true),
 
                 new Teleport(
@@ -601,7 +656,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Shaman.WondrousGooSearch,
-                    radius: 0,
+                    shape: new Circle(radius: 0),
                     searchFlags: new List<Flag>
                     {
                         Flag.Effect.Search.AppliedOnEveryAction,
@@ -670,7 +725,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.BigBadBull.UnleashTheRageSearch,
-                    radius: 1,
+                    shape: new Line(length: 1),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -684,8 +739,7 @@ namespace low_age_data.Collections
                         EffectName.BigBadBull.UnleashTheRageDamage,
                         EffectName.BigBadBull.UnleashTheRageForce
                     },
-                    location: Location.Point,
-                    shape: Shape.Line),
+                    location: Location.Point),
 
                 new Damage(
                     name: EffectName.BigBadBull.UnleashTheRageDamage,
@@ -827,7 +881,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Horrior.ExpertFormationSearch,
-                    radius: 1,
+                    shape: new Circle(radius: 1),
                     searchFlags: new List<Flag>
                     {
                         Flag.Effect.Search.AppliedOnEnter,
@@ -931,7 +985,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Mortar.DeadlyAmmunitionSearch,
-                    radius: 1,
+                    shape: new Circle(radius: 1, ignoreRadius: 0),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -944,9 +998,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Mortar.DeadlyAmmunitionDamage
                     },
-                    location: Location.Inherited,
-                    shape: Shape.Circle,
-                    ignoreRadius: 0),
+                    location: Location.Inherited),
 
                 new Damage(
                     name: EffectName.Mortar.DeadlyAmmunitionDamage,
@@ -1026,7 +1078,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Hawk.HealthKitSearch,
-                    radius: 1,
+                    shape: new Circle(radius: 1, ignoreRadius: 0),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -1038,9 +1090,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Hawk.HealthKitHealApplyBehaviour
                     },
-                    location: Location.Self,
-                    shape: Shape.Circle,
-                    ignoreRadius: 0),
+                    location: Location.Self),
 
                 new ApplyBehaviour(
                     name: EffectName.Hawk.HealthKitHealApplyBehaviour,
@@ -1240,7 +1290,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Cannon.HeatUpSearch,
-                    radius: 0,
+                    shape: new Circle(radius: 0),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -1345,7 +1395,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Ballista.AimSearch,
-                    radius: 9,
+                    shape: new Circle(radius: 9),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -1437,7 +1487,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Radar.RadioLocationSearchDestroy,
-                    radius: 1,
+                    shape: new Map(),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -1447,8 +1497,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Radar.RadioLocationDestroy
                     },
-                    location: Location.Self,
-                    shape: Shape.Map),
+                    location: Location.Self),
 
                 new Destroy(
                     name: EffectName.Radar.RadioLocationDestroy,
@@ -1466,7 +1515,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Radar.RadioLocationSearchCreate,
-                    radius: 15,
+                    shape: new Circle(radius: 15, ignoreRadius: 0),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {
@@ -1477,10 +1526,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Radar.RadioLocationCreateEntity
                     },
-                    location: Location.Self,
-                    shape: Shape.Circle,
-                    ignoreRadius: 0
-                ),
+                    location: Location.Self),
 
                 new CreateEntity(
                     name: EffectName.Radar.RadioLocationCreateEntity,
@@ -1520,7 +1566,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Vessel.AbsorbentFieldSearch,
-                    radius: 3,
+                    shape: new Circle(radius: 3),
                     searchFlags: new List<Flag>
                     {
                         Flag.Effect.Search.AppliedOnEnter,
@@ -1567,7 +1613,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Vessel.FortifySearch,
-                    radius: 0,
+                    shape: new Circle(radius: 0),
                     searchFlags: new List<Flag>
                     {
                         Flag.Effect.Search.AppliedOnEnter,
@@ -1583,8 +1629,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Vessel.FortifyApplyBehaviour
                     },
-                    location: Location.Self,
-                    shape: Shape.Circle),
+                    location: Location.Self),
 
                 new ApplyBehaviour(
                     name: EffectName.Vessel.FortifyApplyBehaviour,
@@ -1640,7 +1685,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Omen.RenditionSearch,
-                    radius: 1,
+                    shape: new Circle(radius: 1),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
                     {

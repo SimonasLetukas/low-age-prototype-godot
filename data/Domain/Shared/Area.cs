@@ -15,7 +15,8 @@
         }
 
         /// <summary>
-        /// Starting coordinates. Starts from 0.
+        /// Starting coordinates. Starts from 0. Could also have negative values to indicate starting outside of
+        /// the usual boundaries.
         /// </summary>
         public Vector2<int> Start { get; }
         
