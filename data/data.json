@@ -2095,7 +2095,8 @@
         "abilities": [
           "ability-barricade-building",
           "ability-barricade-protective-shield",
-          "ability-barricade-caltrops"
+          "ability-barricade-caltrops",
+          "ability-barricade-decompose"
         ],
         "displayName": "Barricade",
         "description": ""
@@ -2762,6 +2763,23 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Caltrops",
       "description": "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the start of each action phase."
+    },
+    {
+      "name": "ability-barricade-decompose",
+      "type": "Ability.Toggle",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "onActivatedEffects": [
+        "effect-barricade-decompose-apply-behaviour"
+      ],
+      "onDeactivatedEffects": [
+        "effect-barricade-decompose-remove-behaviour"
+      ],
+      "deactivationDescription": "Toggle to stop inflicting 15 Pure Damage to itself at the start of each action phase.",
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Decompose",
+      "description": "Toggle to start inflicting 15 Pure Damage to itself at the start of each action phase."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -4385,6 +4403,51 @@
         "multiplierFlags": []
       },
       "location": "Location.Inherited",
+      "ignoresArmor": false,
+      "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-barricade-decompose-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-barricade-decompose-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-barricade-decompose-remove-behaviour",
+      "type": "Effect.RemoveBehaviour",
+      "behavioursToRemove": [
+        "behaviour-barricade-decompose-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-barricade-decompose-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Pure",
+      "amount": {
+        "flat": 15,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Self",
       "ignoresArmor": false,
       "filterFlags": [],
       "validators": []
@@ -6831,6 +6894,30 @@
       "displayName": "Protective Shield Buff",
       "description": "Range Armour for this unit is increased by 2 because of a nearby Barricade's shield.",
       "endsAt": "EndsAt.EndOfThisPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-barricade-decompose-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-barricade-decompose-damage",
+        "effect-barricade-decompose-apply-behaviour"
+      ],
+      "canStack": false,
+      "canResetDuration": true,
+      "alignment": "Alignment.Negative",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Decompose Buff",
+      "description": "This Barricade is decomposing and will receive 15 Pure Damage at the start of each action phase.",
+      "endsAt": "EndsAt.StartOfNextActionPhase",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },

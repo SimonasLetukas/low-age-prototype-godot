@@ -57,7 +57,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Hut.Building, // TODO add to all buildings
+                        AbilityName.Hut.Building,
                         AbilityName.Shared.ScrapsIncome
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
@@ -278,7 +278,7 @@ namespace low_age_data.Collections
                         AbilityName.Barricade.Building,
                         AbilityName.Barricade.ProtectiveShield,
                         AbilityName.Barricade.Caltrops,
-                        //TODO
+                        AbilityName.Barricade.Decompose
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
             };

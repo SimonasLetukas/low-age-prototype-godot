@@ -275,6 +275,23 @@ namespace low_age_data.Collections
                                  "start of each action phase.",
                     hasButton: true,
                     periodicEffect: EffectName.Barricade.CaltropsSearch),
+                
+                new Toggle(
+                    name: AbilityName.Barricade.Decompose,
+                    displayName: nameof(AbilityName.Barricade.Decompose).CamelCaseToWords(),
+                    turnPhase: TurnPhase.Planning, 
+                    activationDescription: "Toggle to start inflicting 15 Pure Damage to itself at the start of " +
+                                           "each action phase.",
+                    onActivatedEffects: new List<EffectName>
+                    {
+                        EffectName.Barricade.DecomposeApplyBehaviour
+                    },
+                    onDeactivatedEffects: new List<EffectName>
+                    {
+                        EffectName.Barricade.DecomposeRemoveBehaviour
+                    },
+                    deactivationDescription: "Toggle to stop inflicting 15 Pure Damage to itself at the start of " +
+                                             "each action phase."),
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,

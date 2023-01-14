@@ -291,6 +291,28 @@ namespace low_age_data.Collections
                     name: EffectName.Barricade.CaltropsDamage,
                     damageType: DamageType.Pure,
                     amount: new Amount(flat: 5)),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Barricade.DecomposeApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Barricade.DecomposeBuff
+                    },
+                    location: Location.Self),
+                
+                new RemoveBehaviour(
+                    name: EffectName.Barricade.DecomposeRemoveBehaviour,
+                    behavioursToRemove: new List<BehaviourName>
+                    {
+                        BehaviourName.Barricade.DecomposeBuff
+                    },
+                    location: Location.Self),
+                
+                new Damage(
+                    name: EffectName.Barricade.DecomposeDamage,
+                    damageType: DamageType.Pure,
+                    amount: new Amount(flat: 15),
+                    location: Location.Self),
 
                 #endregion
 

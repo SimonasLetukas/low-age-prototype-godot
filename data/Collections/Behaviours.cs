@@ -298,6 +298,21 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive,
                     destroyOnConditionsMet: false,
                     restoreChangesOnEnd: true),
+                
+                new Buff(
+                    name: BehaviourName.Barricade.DecomposeBuff,
+                    displayName: nameof(BehaviourName.Barricade.DecomposeBuff).CamelCaseToWords(),
+                    description: "This Barricade is decomposing and will receive 15 Pure Damage at the start of " +
+                                 "each action phase.",
+                    finalEffects: new List<EffectName>
+                    {
+                        EffectName.Barricade.DecomposeDamage,
+                        EffectName.Barricade.DecomposeApplyBehaviour
+                    },
+                    endsAt: EndsAt.StartOf.Next.ActionPhase,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Negative),
 
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,

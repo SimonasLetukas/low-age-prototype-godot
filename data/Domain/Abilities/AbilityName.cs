@@ -82,6 +82,7 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName Building => new($"{nameof(Barricade)}{nameof(Building)}".ToKebabCase());
             public static AbilityName ProtectiveShield => new($"{nameof(Barricade)}{nameof(ProtectiveShield)}".ToKebabCase());
             public static AbilityName Caltrops => new($"{nameof(Barricade)}{nameof(Caltrops)}".ToKebabCase());
+            public static AbilityName Decompose => new($"{nameof(Barricade)}{nameof(Decompose)}".ToKebabCase());
         }
 
         public static class Leader

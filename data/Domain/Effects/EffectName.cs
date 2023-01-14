@@ -80,6 +80,9 @@ namespace low_age_data.Domain.Effects
             public static EffectName ProtectiveShieldApplyBehaviour => new($"{nameof(Barricade)}{nameof(ProtectiveShieldApplyBehaviour)}".ToKebabCase());
             public static EffectName CaltropsSearch => new($"{nameof(Barricade)}{nameof(CaltropsSearch)}".ToKebabCase());
             public static EffectName CaltropsDamage => new($"{nameof(Barricade)}{nameof(CaltropsDamage)}".ToKebabCase());
+            public static EffectName DecomposeApplyBehaviour => new($"{nameof(Barricade)}{nameof(DecomposeApplyBehaviour)}".ToKebabCase());
+            public static EffectName DecomposeRemoveBehaviour => new($"{nameof(Barricade)}{nameof(DecomposeRemoveBehaviour)}".ToKebabCase());
+            public static EffectName DecomposeDamage => new($"{nameof(Barricade)}{nameof(DecomposeDamage)}".ToKebabCase());
         }
 
         public static class Leader
