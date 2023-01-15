@@ -18,6 +18,8 @@ namespace low_age_data.Collections
         {
             return new List<Behaviour>
             {
+                #region Structures
+
                 new Buff(
                     name: BehaviourName.Shared.HighGroundBuff,
                     displayName: nameof(BehaviourName.Shared.HighGroundBuff).CamelCaseToWords(),
@@ -313,6 +315,19 @@ namespace low_age_data.Collections
                     canStack: false,
                     canResetDuration: true,
                     alignment: Alignment.Negative),
+                
+                new Buff(
+                    name: BehaviourName.BatteryCore.PowerGeneratorBuff,
+                    displayName: nameof(BehaviourName.BatteryCore.PowerGeneratorBuff).CamelCaseToWords(),
+                    description: "UEE faction loses when this structure is destroyed.",
+                    finalEffects: new List<EffectName>
+                    {
+                        EffectName.BatteryCore.PowerGeneratorModifyPlayer
+                    }),
+                
+                #endregion
+
+                #region Units
 
                 new Buff(
                     name: BehaviourName.Leader.AllForOneBuff,
@@ -320,7 +335,7 @@ namespace low_age_data.Collections
                     description: "Revelators faction loses when this unit dies.",
                     finalEffects: new List<EffectName>
                     {
-                        EffectName.Leader.AllForOnePlayerLoses
+                        EffectName.Leader.AllForOneModifyPlayer
                     }),
 
                 new Buff(
@@ -1860,6 +1875,8 @@ namespace low_age_data.Collections
                     destroyOnConditionsMet: null,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true)
+                
+                #endregion
             };
         }
     }

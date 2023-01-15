@@ -19,5 +19,9 @@ namespace low_age_data.Domain.Entities.Actors.Structures
         public static StructureName Workshop => new(nameof(Workshop).ToKebabCase());
         public static StructureName Outpost => new(nameof(Outpost).ToKebabCase());
         public static StructureName Barricade => new(nameof(Barricade).ToKebabCase());
+
+        public static StructureName BatteryCore => new(nameof(BatteryCore).ToKebabCase());
+        public static StructureName FusionCore => new(nameof(FusionCore).ToKebabCase());
+        public static StructureName CelestiumCore => new(nameof(CelestiumCore).ToKebabCase());
     }
 }

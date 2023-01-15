@@ -2100,6 +2100,65 @@
         ],
         "displayName": "Barricade",
         "description": ""
+      },
+      {
+        "name": "structure-battery-core",
+        "size": {
+          "x": 3,
+          "y": 3
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 100,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 0,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-battery-core-power-generator"
+        ],
+        "displayName": "Battery Core",
+        "description": ""
       }
     ],
     "features": [
@@ -2780,6 +2839,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Decompose",
       "description": "Toggle to start inflicting 15 Pure Damage to itself at the start of each action phase."
+    },
+    {
+      "name": "ability-battery-core-power-generator",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-battery-core-power-generator-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Power Generator",
+      "description": "UEE faction loses if Battery Core is destroyed."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -4453,21 +4527,43 @@
       "validators": []
     },
     {
+      "name": "effect-battery-core-power-generator-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-battery-core-power-generator-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-battery-core-power-generator-modify-player",
+      "type": "Effect.ModifyPlayer",
+      "playerFilterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "modifyFlags": [
+        "Flag.EffectModifyPlayerGameLost"
+      ],
+      "resourceModifications": [],
+      "validators": []
+    },
+    {
       "name": "effect-leader-all-for-one-apply-behaviour",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
         "behaviour-leader-all-for-one-buff"
       ],
       "location": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf"
-      ],
+      "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
     },
     {
-      "name": "effect-leader-all-for-one-player-loses",
+      "name": "effect-leader-all-for-one-modify-player",
       "type": "Effect.ModifyPlayer",
       "playerFilterFlags": [
         "Flag.FilterSelf"
@@ -6922,6 +7018,29 @@
       "hasSameInstanceForAllOwners": false
     },
     {
+      "name": "behaviour-battery-core-power-generator-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-battery-core-power-generator-modify-player"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Power Generator Buff",
+      "description": "UEE faction loses when this structure is destroyed.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
       "name": "behaviour-leader-all-for-one-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [],
@@ -6929,7 +7048,7 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [
-        "effect-leader-all-for-one-player-loses"
+        "effect-leader-all-for-one-modify-player"
       ],
       "canStack": false,
       "canResetDuration": false,

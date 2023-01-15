@@ -18,6 +18,8 @@ namespace low_age_data.Collections
         {
             return new List<Ability>
             {
+                #region Structures
+
                 new Passive(
                     name: AbilityName.Shared.PassiveIncome,
                     displayName: nameof(AbilityName.Shared.PassiveIncome).CamelCaseToWords(),
@@ -292,6 +294,17 @@ namespace low_age_data.Collections
                     },
                     deactivationDescription: "Toggle to stop inflicting 15 Pure Damage to itself at the start of " +
                                              "each action phase."),
+                
+                new Passive(
+                    name: AbilityName.BatteryCore.PowerGenerator,
+                    displayName: nameof(AbilityName.BatteryCore.PowerGenerator).CamelCaseToWords(),
+                    description: "UEE faction loses if Battery Core is destroyed.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.BatteryCore.PowerGeneratorApplyBehaviour),
+
+                #endregion
+                
+                #region Units
 
                 new Passive(
                     name: AbilityName.Leader.AllForOne,
@@ -1115,6 +1128,8 @@ namespace low_age_data.Collections
                     {
                         EffectName.Omen.RenditionPlacementCreateEntity
                     })
+                
+                #endregion
             };
         }
     }

@@ -84,11 +84,17 @@ namespace low_age_data.Domain.Effects
             public static EffectName DecomposeRemoveBehaviour => new($"{nameof(Barricade)}{nameof(DecomposeRemoveBehaviour)}".ToKebabCase());
             public static EffectName DecomposeDamage => new($"{nameof(Barricade)}{nameof(DecomposeDamage)}".ToKebabCase());
         }
+        
+        public static class BatteryCore
+        {
+            public static EffectName PowerGeneratorApplyBehaviour => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorApplyBehaviour)}".ToKebabCase());
+            public static EffectName PowerGeneratorModifyPlayer => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorModifyPlayer)}".ToKebabCase());
+        }
 
         public static class Leader
         {
             public static EffectName AllForOneApplyBehaviour => new($"{nameof(Leader)}{nameof(AllForOneApplyBehaviour)}".ToKebabCase());
-            public static EffectName AllForOnePlayerLoses => new($"{nameof(Leader)}{nameof(AllForOnePlayerLoses)}".ToKebabCase());
+            public static EffectName AllForOneModifyPlayer => new($"{nameof(Leader)}{nameof(AllForOneModifyPlayer)}".ToKebabCase());
             public static EffectName MenacingPresenceSearch => new($"{nameof(Leader)}{nameof(MenacingPresenceSearch)}".ToKebabCase());
             public static EffectName MenacingPresenceApplyBehaviour => new($"{nameof(Leader)}{nameof(MenacingPresenceApplyBehaviour)}".ToKebabCase());
             public static EffectName OneForAllApplyBehaviourObelisk => new($"{nameof(Leader)}{nameof(OneForAllApplyBehaviourObelisk)}".ToKebabCase());

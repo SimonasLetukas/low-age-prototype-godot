@@ -85,6 +85,11 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName ProtectiveShieldBuff => new($"{nameof(Barricade)}{nameof(ProtectiveShieldBuff)}".ToKebabCase());
             public static BehaviourName DecomposeBuff => new($"{nameof(Barricade)}{nameof(DecomposeBuff)}".ToKebabCase());
         }
+        
+        public static class BatteryCore
+        {
+            public static BehaviourName PowerGeneratorBuff => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorBuff)}".ToKebabCase());
+        }
 
         public static class Leader
         {

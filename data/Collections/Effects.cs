@@ -313,6 +313,25 @@ namespace low_age_data.Collections
                     damageType: DamageType.Pure,
                     amount: new Amount(flat: 15),
                     location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.BatteryCore.PowerGeneratorApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.BatteryCore.PowerGeneratorBuff
+                    },
+                    location: Location.Self),
+
+                new ModifyPlayer(
+                    name: EffectName.BatteryCore.PowerGeneratorModifyPlayer,
+                    playerFilterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    },
+                    modifyFlags: new List<Flag>
+                    {
+                        Flag.Effect.ModifyPlayer.GameLost
+                    }),
 
                 #endregion
 
@@ -324,14 +343,10 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Leader.AllForOneBuff
                     },
-                    location: Location.Self,
-                    filterFlags: new List<Flag>
-                    {
-                        Flag.Filter.Self
-                    }),
+                    location: Location.Self),
 
                 new ModifyPlayer(
-                    name: EffectName.Leader.AllForOnePlayerLoses,
+                    name: EffectName.Leader.AllForOneModifyPlayer,
                     playerFilterFlags: new List<Flag>
                     {
                         Flag.Filter.Self

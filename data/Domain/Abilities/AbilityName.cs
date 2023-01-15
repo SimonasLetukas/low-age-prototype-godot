@@ -85,6 +85,11 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName Decompose => new($"{nameof(Barricade)}{nameof(Decompose)}".ToKebabCase());
         }
 
+        public static class BatteryCore
+        {
+            public static AbilityName PowerGenerator => new($"{nameof(BatteryCore)}{nameof(PowerGenerator)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static AbilityName AllForOne => new($"{nameof(Leader)}{nameof(AllForOne)}".ToKebabCase());
