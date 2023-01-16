@@ -8,7 +8,9 @@ using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
 using low_age_data.Domain.Entities.Tiles;
+using low_age_data.Domain.Masks;
 using low_age_data.Domain.Resources;
+using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Collections
 {
@@ -324,6 +326,13 @@ namespace low_age_data.Collections
                     {
                         EffectName.BatteryCore.PowerGeneratorModifyPlayer
                     }),
+                
+                new MaskProvider(
+                    name: BehaviourName.BatteryCore.PowerGridMaskProvider,
+                    displayName: nameof(BehaviourName.BatteryCore.PowerGridMaskProvider).CamelCaseToWords(),
+                    description: "Provides Power in 4 Distance.",
+                    maskCreated: MaskName.Power, 
+                    maskShape: new Circle(radius: 4, ignoreRadius: 0)),
                 
                 #endregion
 
@@ -1559,23 +1568,40 @@ namespace low_age_data.Collections
                 new Buff(
                     name: BehaviourName.Radar.PowerDependencyBuff,
                     displayName: nameof(BehaviourName.Radar.PowerDependencyBuff).CamelCaseToWords(),
-                    description:
-                    "If this unit is not connected to Power, all abilities get disabled and it loses 1 Health " +
-                    "at the start of its action.",
-                    modificationFlags: null,
-                    initialModifications: null,
-                    initialEffects: null,
-                    finalModifications: null,
-                    finalEffects: null,
+                    description: "If this unit is not connected to Power, all abilities get disabled and it loses 1 " +
+                                 "Health at the start of its action.",
                     endsAt: EndsAt.Death,
                     canStack: false,
                     canResetDuration: false,
                     alignment: Alignment.Neutral,
                     triggers: new List<Trigger>
                     {
+                        // TODO make one shared behaviour for units and one shared for structures (units should have
+                        // EntityStartedAction, structures should have EntityStartedActionPhase events only)
                         new(events: new List<Event>
                         {
-                            Event.EntityStartsActionNotOnPower
+                            Event.EntityStartedActionPhase
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
+                                    conditionedMask: MaskName.Power)
+                            })
+                        }), 
+                        // OR
+                        new(events: new List<Event>
+                        {
+                            Event.EntityStartedAction
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
+                                    conditionedMask: MaskName.Power)
+                            })
                         })
                     },
                     destroyOnConditionsMet: false,
@@ -1593,10 +1619,6 @@ namespace low_age_data.Collections
                     {
                         Flag.Modification.AbilitiesDisabled
                     },
-                    initialModifications: null,
-                    initialEffects: null,
-                    finalModifications: null,
-                    finalEffects: null,
                     endsAt: EndsAt.StartOf.Next.ActionPhase,
                     canStack: false,
                     canResetDuration: true,
@@ -1605,11 +1627,18 @@ namespace low_age_data.Collections
                     {
                         new(events: new List<Event>
                         {
-                            Event.EntityReceivedPower
+                            Event.EntityMaskChanged
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.Exists, 
+                                    conditionedMask: MaskName.Power)
+                            })
                         })
                     },
                     destroyOnConditionsMet: true,
-                    conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
                 new Buff(

@@ -301,6 +301,13 @@ namespace low_age_data.Collections
                     description: "UEE faction loses if Battery Core is destroyed.",
                     hasButton: true,
                     onBirthEffect: EffectName.BatteryCore.PowerGeneratorApplyBehaviour),
+                
+                new Passive(
+                    name: AbilityName.BatteryCore.PowerGrid,
+                    displayName: nameof(AbilityName.BatteryCore.PowerGrid).CamelCaseToWords(),
+                    description: "Provides Power in 4 Distance.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.BatteryCore.PowerGridApplyBehaviour),
 
                 #endregion
                 
@@ -1020,10 +1027,6 @@ namespace low_age_data.Collections
                     description: "Can be built and operated by Engineers only. The Machine is functional and can act " +
                                  "only if maximum number of 1 Engineer is operating it.",
                     hasButton: true,
-                    periodicEffect: null,
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffect: EffectName.Radar.MachineApplyBehaviour),
 
                 new Passive(
@@ -1032,10 +1035,6 @@ namespace low_age_data.Collections
                     description: "All abilities get disabled and loses 1 Health at the start of its action if not " +
                                  "connected to Power.",
                     hasButton: true,
-                    periodicEffect: null,
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffect: EffectName.Radar.PowerDependencyApplyBehaviour),
 
                 new Target(

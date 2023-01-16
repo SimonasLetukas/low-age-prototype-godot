@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Common;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
@@ -12,7 +13,13 @@ namespace low_age_data.Domain.Behaviours
             string description,
             IList<Attacks> attackTypes,
             EndsAt? endsAt = null,
-            bool canStack = false) : base(name, $"{nameof(Behaviour)}.{nameof(ExtraAttack)}", displayName, description, endsAt ?? EndsAt.Death)
+            bool canStack = false) 
+            : base(
+                name, 
+                $"{nameof(Behaviour)}.{nameof(ExtraAttack)}", 
+                displayName, 
+                description, 
+                endsAt ?? EndsAt.Death)
         {
             AttackTypes = attackTypes;
             CanStack = canStack;

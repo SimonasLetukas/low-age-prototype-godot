@@ -89,6 +89,7 @@ namespace low_age_data.Domain.Effects
         {
             public static EffectName PowerGeneratorApplyBehaviour => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorApplyBehaviour)}".ToKebabCase());
             public static EffectName PowerGeneratorModifyPlayer => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorModifyPlayer)}".ToKebabCase());
+            public static EffectName PowerGridApplyBehaviour => new($"{nameof(BatteryCore)}{nameof(PowerGridApplyBehaviour)}".ToKebabCase());
         }
 
         public static class Leader

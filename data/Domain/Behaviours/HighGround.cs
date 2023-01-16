@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using low_age_data.Common;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Entities.Actors.Units;
@@ -20,7 +21,13 @@ namespace low_age_data.Domain.Behaviours
             string displayName, 
             string description,
             IList<Area> highGroundAreas,
-            IList<EffectName>? onCollisionEffects = null) : base(name, $"{nameof(Behaviour)}.{nameof(HighGround)}", displayName, description, EndsAt.Death)
+            IList<EffectName>? onCollisionEffects = null) 
+            : base(
+                name, 
+                $"{nameof(Behaviour)}.{nameof(HighGround)}", 
+                displayName, 
+                description, 
+                EndsAt.Death)
         {
             HighGroundAreas = highGroundAreas.Count == 0
                 ? throw new ArgumentOutOfRangeException(nameof(highGroundAreas), 

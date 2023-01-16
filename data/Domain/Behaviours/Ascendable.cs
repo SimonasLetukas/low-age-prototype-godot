@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using low_age_data.Common;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Entities.Tiles;
 using low_age_data.Domain.Shared;
@@ -16,7 +17,13 @@ namespace low_age_data.Domain.Behaviours
             BehaviourName name,
             string displayName, 
             string description,
-            IList<Area> path) : base(name, $"{nameof(Behaviour)}.{nameof(Ascendable)}", displayName, description, EndsAt.Death)
+            IList<Area> path) 
+            : base(
+                name, 
+                $"{nameof(Behaviour)}.{nameof(Ascendable)}", 
+                displayName, 
+                description, 
+                EndsAt.Death)
         {
             Path = path.Count == 0
                 ? throw new ArgumentOutOfRangeException(nameof(path), 

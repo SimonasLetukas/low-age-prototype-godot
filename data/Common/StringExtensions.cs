@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 
 namespace low_age_data.Common
 {
@@ -38,6 +39,37 @@ namespace low_age_data.Common
                 " $1", 
                 System.Text.RegularExpressions.RegexOptions.Compiled)
                 .Trim();
+        }
+
+        public static string KebabCaseToWords(this string input)
+        {
+            var builder = new StringBuilder();
+            var caseFlag = true;
+            foreach (var c in input)
+            {
+                if (c == '-')
+                {
+                    caseFlag = true;
+                }
+                else if (caseFlag)
+                {
+                    builder.Append(" ");
+                    builder.Append(char.ToUpper(c));
+                    caseFlag = false;
+                }
+                else
+                {
+                    builder.Append(char.ToLower(c));
+                }
+            }
+            return builder.ToString().Trim();
+        }
+
+        public static string RemoveWordsFromEnd(this string input, int wordCountToRemove)
+        {
+            var punctuation = input.Where(char.IsPunctuation).Distinct().ToArray();
+            var allWords = input.Split().Select(x => x.Trim(punctuation));
+            return string.Join(" ", allWords.SkipLast(wordCountToRemove));
         }
     }
 }

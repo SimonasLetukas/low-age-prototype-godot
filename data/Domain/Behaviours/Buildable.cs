@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Common;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared.Durations;
@@ -16,7 +17,13 @@ namespace low_age_data.Domain.Behaviours
             string displayName, 
             string description,
             IList<Validator>? placementValidators = null,
-            int? maximumHelpers = null) : base(name, $"{nameof(Behaviour)}.{nameof(Buildable)}", displayName, description, EndsAt.Death)
+            int? maximumHelpers = null) 
+            : base(
+                name, 
+                $"{nameof(Behaviour)}.{nameof(Buildable)}",
+                displayName, 
+                description, 
+                EndsAt.Death)
         {
             PlacementValidators = placementValidators ?? new List<Validator>();
             MaximumHelpers = maximumHelpers ?? -1;

@@ -1,4 +1,5 @@
-﻿using low_age_data.Domain.Shared;
+﻿using low_age_data.Common;
+using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
 namespace low_age_data.Domain.Behaviours
@@ -15,7 +16,13 @@ namespace low_age_data.Domain.Behaviours
             bool? sharedDamage = null,
             int? maximumLeashRange = null,
             bool? calculatedForSourcePathfinding = null,
-            EndsAt? endsAt = null) : base(name, $"{nameof(Behaviour)}.{nameof(Tether)}", displayName, description, endsAt ?? EndsAt.Death)
+            EndsAt? endsAt = null) 
+            : base(
+                name, 
+                $"{nameof(Behaviour)}.{nameof(Tether)}", 
+                displayName, 
+                description, 
+                endsAt ?? EndsAt.Death)
         {
             Source = source ?? Location.Inherited;
             ExtendsSelection = extendsSelection ?? false;

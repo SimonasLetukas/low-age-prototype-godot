@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Common;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
@@ -20,7 +21,13 @@ namespace low_age_data.Domain.Behaviours
             int? ammunitionAmountLostOnHit = null,
             IList<EffectName>? onHitEffects = null,
             int? ammunitionRecoveredOnReload = null, 
-            bool? applyOriginalAttackToTarget = null) : base(name, $"{nameof(Behaviour)}.{nameof(Ammunition)}", displayName, description, EndsAt.Death)
+            bool? applyOriginalAttackToTarget = null) 
+            : base(
+                name, 
+                $"{nameof(Behaviour)}.{nameof(Ammunition)}", 
+                displayName, 
+                description, 
+                EndsAt.Death)
         {
             MaxAmmunitionAmount = maxAmmunitionAmount;
             AmmunitionAmountLostOnHit = ammunitionAmountLostOnHit ?? 1;

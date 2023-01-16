@@ -332,6 +332,14 @@ namespace low_age_data.Collections
                     {
                         Flag.Effect.ModifyPlayer.GameLost
                     }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.BatteryCore.PowerGridApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.BatteryCore.PowerGridMaskProvider
+                    },
+                    location: Location.Self),
 
                 #endregion
 
@@ -1475,13 +1483,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Radar.PowerDependencyBuff
                     },
-                    location: Location.Self,
-                    filterFlags: new List<Flag>
-                    {
-                        Flag.Filter.Player,
-                        Flag.Filter.Ally,
-                        Flag.Filter.Self
-                    }),
+                    location: Location.Self),
 
                 new Damage(
                     name: EffectName.Radar.PowerDependencyDamage,

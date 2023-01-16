@@ -17,6 +17,12 @@ namespace low_age_data.Domain.Shared.Flags
 
         public static class Condition
         {
+            public static class Mask
+            {
+                public static Flag DoesNotExist => new(Flags.ConditionMaskDoesNotExist);
+                public static Flag Exists => new(Flags.ConditionMaskExists);
+            }
+            
             public static class Behaviour
             {
                 public static Flag DoesNotExist => new(Flags.ConditionBehaviourDoesNotExist);
@@ -28,7 +34,7 @@ namespace low_age_data.Domain.Shared.Flags
                 public static Flag DoesNotExist => new(Flags.ConditionEntityDoesNotExist);
                 public static Flag Exists => new(Flags.ConditionEntityExists);
             }
-            
+
             public static Flag TargetDoesNotHaveFullHealth => new(Flags.ConditionTargetDoesNotHaveFullHealth);
             public static Flag NoActorsFoundFromEffect => new(Flags.ConditionNoActorsFoundFromEffect);
             public static Flag TargetIsLowGround => new(Flags.ConditionTargetIsLowGround);
@@ -231,6 +237,8 @@ namespace low_age_data.Domain.Shared.Flags
             ConditionTargetIsHighGround,
             ConditionTargetIsUnoccupied,
             ConditionTargetIsDifferentTypeThanOrigin,
+            ConditionMaskDoesNotExist,
+            ConditionMaskExists,
             AmountFromMissingHealth,
             ModificationCannotBeHealed,
             ModificationAbilitiesDisabled,
@@ -270,7 +278,7 @@ namespace low_age_data.Domain.Shared.Flags
             FilterSpecificUnitBallista,
             FilterSpecificUnitRadar,
             FilterSpecificUnitVessel,
-            FilterSpecificFeatureRadarRedDot
+            FilterSpecificFeatureRadarRedDot, // TODO generalize specific units to not have hardcoded values
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

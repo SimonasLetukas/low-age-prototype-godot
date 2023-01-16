@@ -30,6 +30,7 @@ namespace low_age_data
             var abilities = Abilities.Get();
             var effects = Effects.Get();
             var behaviours = Behaviours.Get();
+            var masks = Masks.Get();
 
             var outputObject = new
             {
@@ -44,7 +45,8 @@ namespace low_age_data
                 },
                 Abilities = abilities,
                 Effects = effects,
-                Behaviours = behaviours
+                Behaviours = behaviours,
+                Masks = masks
             };
 
             var jsonSettings = new JsonSerializerSettings

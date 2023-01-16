@@ -89,6 +89,7 @@ namespace low_age_data.Domain.Behaviours
         public static class BatteryCore
         {
             public static BehaviourName PowerGeneratorBuff => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorBuff)}".ToKebabCase());
+            public static BehaviourName PowerGridMaskProvider => new($"{nameof(BatteryCore)}{nameof(PowerGridMaskProvider)}".ToKebabCase());
         }
 
         public static class Leader

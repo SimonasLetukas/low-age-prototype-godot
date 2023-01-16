@@ -2155,7 +2155,9 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
-          "ability-battery-core-power-generator"
+          "ability-battery-core-power-generator",
+          "ability-shared-passive-income",
+          "ability-battery-core-power-grid"
         ],
         "displayName": "Battery Core",
         "description": ""
@@ -2854,6 +2856,21 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Power Generator",
       "description": "UEE faction loses if Battery Core is destroyed."
+    },
+    {
+      "name": "ability-battery-core-power-grid",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-battery-core-power-grid-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Power Grid",
+      "description": "Provides Power in 4 Distance."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -4551,6 +4568,18 @@
       "validators": []
     },
     {
+      "name": "effect-battery-core-power-grid-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-battery-core-power-grid-mask-provider"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
       "name": "effect-leader-all-for-one-apply-behaviour",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
@@ -6154,11 +6183,7 @@
         "behaviour-radar-power-dependency-buff"
       ],
       "location": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterSelf"
-      ],
+      "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7036,6 +7061,21 @@
       "restoreChangesOnEnd": false,
       "displayName": "Power Generator Buff",
       "description": "UEE faction loses when this structure is destroyed.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-battery-core-power-grid-mask-provider",
+      "type": "Behaviour.MaskProvider",
+      "maskCreated": "mask-power",
+      "maskShape": {
+        "type": "Shape.Circle",
+        "radius": 4,
+        "ignoreRadius": 0
+      },
+      "displayName": "Power Grid Mask Provider",
+      "description": "Provides Power in 4 Distance.",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
@@ -8674,9 +8714,39 @@
       "triggers": [
         {
           "events": [
-            "Event.EntityStartsActionNotOnPower"
+            "Event.EntityStartsActionPhase"
           ],
-          "validators": []
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
+        },
+        {
+          "events": [
+            "Event.EntityStartsAction"
+          ],
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
         }
       ],
       "destroyOnConditionsMet": false,
@@ -8707,9 +8777,21 @@
       "triggers": [
         {
           "events": [
-            "Event.EntityReceivedPower"
+            "Event.EntityMaskChanged"
           ],
-          "validators": []
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskExists"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
         }
       ],
       "destroyOnConditionsMet": true,
@@ -9054,6 +9136,11 @@
       "endsAt": "EndsAt.EndOfNextAction",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
+    }
+  ],
+  "masks": [
+    {
+      "name": "mask-power"
     }
   ]
 }

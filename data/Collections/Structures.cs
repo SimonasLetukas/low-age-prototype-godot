@@ -303,7 +303,8 @@ namespace low_age_data.Collections
                     abilities: new List<AbilityName>
                     {
                         AbilityName.BatteryCore.PowerGenerator,
-                        //TODO
+                        AbilityName.Shared.PassiveIncome,
+                        AbilityName.BatteryCore.PowerGrid
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
             };
