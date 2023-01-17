@@ -106,7 +106,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Shack.Building,
+                        AbilityName.Shared.Revelators.Building,
                         AbilityName.Shack.Accommodation
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
@@ -130,7 +130,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Smith.Building,
+                        AbilityName.Shared.Revelators.Building,
                         AbilityName.Smith.MeleeWeaponProduction,
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
@@ -154,7 +154,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Fletcher.Building,
+                        AbilityName.Shared.Revelators.Building,
                         AbilityName.Fletcher.RangedWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
@@ -178,7 +178,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Alchemy.Building,
+                        AbilityName.Shared.Revelators.Building,
                         AbilityName.Alchemy.SpecialWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 3)),
@@ -202,7 +202,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Depot.Building,
+                        AbilityName.Shared.Revelators.Building,
                         AbilityName.Depot.WeaponStorage,
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
@@ -226,7 +226,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Workshop.Building,
+                        AbilityName.Shared.Revelators.Building,
                         AbilityName.Workshop.Research
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
@@ -250,7 +250,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Outpost.Building,
+                        AbilityName.Shared.Revelators.Building,
                         AbilityName.Outpost.Ascendable,
                         AbilityName.Outpost.HighGround
                     },
@@ -275,7 +275,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Barricade.Building,
+                        AbilityName.Shared.Revelators.Building,
                         AbilityName.Barricade.ProtectiveShield,
                         AbilityName.Barricade.Caltrops,
                         AbilityName.Barricade.Decompose
@@ -304,7 +304,9 @@ namespace low_age_data.Collections
                     {
                         AbilityName.BatteryCore.PowerGenerator,
                         AbilityName.Shared.PassiveIncome,
-                        AbilityName.BatteryCore.PowerGrid
+                        AbilityName.BatteryCore.PowerGrid,
+                        AbilityName.BatteryCore.Build,
+                        // TODO
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
             };

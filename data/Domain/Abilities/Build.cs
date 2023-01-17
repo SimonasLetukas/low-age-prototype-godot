@@ -3,6 +3,7 @@ using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Shared;
+using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Domain.Abilities
 {
@@ -15,7 +16,7 @@ namespace low_age_data.Domain.Abilities
             AbilityName name,
             string displayName,
             string description,
-            int distance,
+            Shape placementArea,
             IList<Selection<EntityName>> selection,
             bool casterConsumesAction = false,
             bool canHelp = false,
@@ -29,14 +30,14 @@ namespace low_age_data.Domain.Abilities
                 displayName,
                 description)
         {
-            Distance = distance;
+            PlacementArea = placementArea;
             Selection = selection;
             CasterConsumesAction = casterConsumesAction;
             CanHelp = canHelp;
             HelpEfficiency = helpEfficiency ?? 1;
         }
 
-        public int Distance { get; }
+        public Shape PlacementArea { get; }
         public IList<Selection<EntityName>> Selection { get; }
         public bool CasterConsumesAction { get; }
         public bool CanHelp { get; }

@@ -9,6 +9,7 @@ using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Resources;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
+using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Collections
 {
@@ -41,6 +42,20 @@ namespace low_age_data.Collections
                                  "constructed Obelisk, total minimum of 1).",
                     hasButton: true,
                     onBirthEffect: EffectName.Shared.CelestiumIncomeApplyBehaviour),
+                
+                new Passive(
+                    name: AbilityName.Shared.Revelators.Building,
+                    displayName: nameof(AbilityName.Shared.Revelators.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Shared.Revelators.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Shared.Uee.Building,
+                    displayName: nameof(AbilityName.Shared.Uee.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Shared.Uee.BuildingBuildable),
 
                 new Passive(
                     name: AbilityName.Citadel.ExecutiveStash,
@@ -308,6 +323,104 @@ namespace low_age_data.Collections
                     description: "Provides Power in 4 Distance.",
                     hasButton: true,
                     onBirthEffect: EffectName.BatteryCore.PowerGridApplyBehaviour),
+                
+                new Build(
+                    name: AbilityName.BatteryCore.Build,
+                    displayName: nameof(AbilityName.BatteryCore.Build).CamelCaseToWords(),
+                    description: "Start building a UEE's structure in vision on a tile with Power. Collector and " +
+                                 "Extractor can be built on tiles without Power.",
+                    placementArea: new Map(),
+                    selection: new List<Selection<EntityName>>
+                    {
+                        new(name: StructureName.Collector, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 5),
+                            new(resource: ResourceName.Celestium, amount: 40)
+                        }),
+                        new(name: StructureName.Extractor, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 12),
+                            new(resource: ResourceName.Celestium, amount: 30)
+                        }),
+                        new(name: StructureName.PowerPole, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 15),
+                            new(resource: ResourceName.Celestium, amount: 38)
+                        }),
+                        new(name: StructureName.Temple, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 18),
+                            new(resource: ResourceName.Celestium, amount: 45)
+                        }),
+                        new(name: StructureName.MilitaryBase, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 14),
+                            new(resource: ResourceName.Celestium, amount: 50)
+                        }),
+                        new(name: StructureName.Factory, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 22),
+                            new(resource: ResourceName.Celestium, amount: 63)
+                        }),
+                        new(name: StructureName.Laboratory, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 30),
+                            new(resource: ResourceName.Celestium, amount: 76)
+                        }),
+                        new(name: StructureName.Armoury, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 20),
+                            new(resource: ResourceName.Celestium, amount: 50)
+                        }),
+                        new(name: StructureName.Wall, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 10),
+                            new(resource: ResourceName.Celestium, amount: 50)
+                        }),
+                        new(name: StructureName.Stairs, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 10),
+                            new(resource: ResourceName.Celestium, amount: 50)
+                        }),
+                        new(name: StructureName.Gate, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 25),
+                            new(resource: ResourceName.Celestium, amount: 80)
+                        }),
+                        new(name: StructureName.Watchtower, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 15),
+                            new(resource: ResourceName.Celestium, amount: 70)
+                        }),
+                        new(name: StructureName.Bastion, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 30),
+                            new(resource: ResourceName.Celestium, amount: 120)
+                        }),
+                    },
+                    casterConsumesAction: false,
+                    canHelp: false),
+                
+                new Passive(
+                    name: AbilityName.Collector.Building,
+                    displayName: nameof(AbilityName.Collector.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Collector.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Extractor.Building,
+                    displayName: nameof(AbilityName.Extractor.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Extractor.BuildingBuildable),
+
+                new Passive(
+                    name: AbilityName.Wall.Building,
+                    displayName: nameof(AbilityName.Wall.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Wall.BuildingBuildable),
 
                 #endregion
                 
@@ -346,7 +459,7 @@ namespace low_age_data.Collections
                     description: "Start building a Revelators' structure on an adjacent tile. Multiple Slaves " +
                                  "can build the structure, each additional one after the first provides half of the " +
                                  "Celestium production to the construction than the previous Slave.",
-                    distance: 1,
+                    placementArea: new Circle(radius: 1, ignoreRadius: 0),
                     selection: new List<Selection<EntityName>>
                     {
                         new(name: StructureName.Hut, cost: new List<Cost>
@@ -417,62 +530,6 @@ namespace low_age_data.Collections
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Obelisk.BuildingBuildable),
-
-                new Passive(
-                    name: AbilityName.Shack.Building,
-                    displayName: nameof(AbilityName.Shack.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Shack.BuildingBuildable),
-
-                new Passive(
-                    name: AbilityName.Smith.Building,
-                    displayName: nameof(AbilityName.Smith.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Smith.BuildingBuildable),
-
-                new Passive(
-                    name: AbilityName.Fletcher.Building,
-                    displayName: nameof(AbilityName.Fletcher.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Fletcher.BuildingBuildable),
-
-                new Passive(
-                    name: AbilityName.Alchemy.Building,
-                    displayName: nameof(AbilityName.Alchemy.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Alchemy.BuildingBuildable),
-
-                new Passive(
-                    name: AbilityName.Depot.Building,
-                    displayName: nameof(AbilityName.Depot.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Depot.BuildingBuildable),
-
-                new Passive(
-                    name: AbilityName.Workshop.Building,
-                    displayName: nameof(AbilityName.Workshop.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Workshop.BuildingBuildable),
-
-                new Passive(
-                    name: AbilityName.Outpost.Building,
-                    displayName: nameof(AbilityName.Outpost.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Outpost.BuildingBuildable),
-
-                new Passive(
-                    name: AbilityName.Barricade.Building,
-                    displayName: nameof(AbilityName.Barricade.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Barricade.BuildingBuildable),
 
                 new Target(
                     name: AbilityName.Slave.Repair,
@@ -875,7 +932,7 @@ namespace low_age_data.Collections
                     "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, " +
                     "up to a number needed to operate the Machine. Each Engineer provides current Celestium " +
                     "production to the construction.",
-                    distance: 1,
+                    placementArea: new Circle(radius: 1, ignoreRadius: 0),
                     selection: new List<Selection<EntityName>>
                     {
                         new(name: UnitName.Cannon, cost: new List<Cost>

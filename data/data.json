@@ -1707,7 +1707,7 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
-          "ability-shack-building",
+          "ability-shared-revelators-building",
           "ability-shack-accommodation"
         ],
         "displayName": "Shack",
@@ -1762,7 +1762,7 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
-          "ability-smith-building",
+          "ability-shared-revelators-building",
           "ability-smith-melee-weapon-production"
         ],
         "displayName": "Smith",
@@ -1817,7 +1817,7 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
-          "ability-fletcher-building",
+          "ability-shared-revelators-building",
           "ability-fletcher-ranged-weapon-production"
         ],
         "displayName": "Fletcher",
@@ -1872,7 +1872,7 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
-          "ability-alchemy-building",
+          "ability-shared-revelators-building",
           "ability-alchemy-special-weapon-production"
         ],
         "displayName": "Alchemy",
@@ -1927,7 +1927,7 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
-          "ability-depot-building",
+          "ability-shared-revelators-building",
           "ability-depot-weapon-storage"
         ],
         "displayName": "Depot",
@@ -1982,7 +1982,7 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
-          "ability-workshop-building",
+          "ability-shared-revelators-building",
           "ability-workshop-research"
         ],
         "displayName": "Workshop",
@@ -2037,7 +2037,7 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
-          "ability-outpost-building",
+          "ability-shared-revelators-building",
           "ability-outpost-ascendable",
           "ability-outpost-high-ground"
         ],
@@ -2093,7 +2093,7 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
-          "ability-barricade-building",
+          "ability-shared-revelators-building",
           "ability-barricade-protective-shield",
           "ability-barricade-caltrops",
           "ability-barricade-decompose"
@@ -2157,7 +2157,8 @@
         "abilities": [
           "ability-battery-core-power-generator",
           "ability-shared-passive-income",
-          "ability-battery-core-power-grid"
+          "ability-battery-core-power-grid",
+          "ability-battery-core-build"
         ],
         "displayName": "Battery Core",
         "description": ""
@@ -2327,6 +2328,36 @@
       "cooldown": "EndsAt.Instant",
       "displayName": "Celestium Income",
       "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1)."
+    },
+    {
+      "name": "ability-shared-revelators-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-shared-revelators-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-shared-uee-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-shared-uee-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
     },
     {
       "name": "ability-citadel-executive-stash",
@@ -2873,6 +2904,277 @@
       "description": "Provides Power in 4 Distance."
     },
     {
+      "name": "ability-battery-core-build",
+      "type": "Ability.Build",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "placementArea": {
+        "type": "Shape.Map"
+      },
+      "selection": [
+        {
+          "name": "structure-collector",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 5
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 40
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-extractor",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 12
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 30
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-power-pole",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 15
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 38
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-temple",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 18
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 45
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-military-base",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 14
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 50
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-factory",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 22
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 63
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-laboratory",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 30
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 76
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-armoury",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 20
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 50
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-wall",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 10
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 50
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-stairs",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 10
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 50
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-gate",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 25
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 80
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-watchtower",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 15
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 70
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-bastion",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 30
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 120
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        }
+      ],
+      "casterConsumesAction": false,
+      "canHelp": false,
+      "helpEfficiency": 1.0,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Build",
+      "description": "Start building a UEE's structure in vision on a tile with Power. Collector and Extractor can be built on tiles without Power."
+    },
+    {
+      "name": "ability-collector-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-collector-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-extractor-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-extractor-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-wall-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-wall-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "displayName": "Building",
+      "description": ""
+    },
+    {
       "name": "ability-leader-all-for-one",
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
@@ -2923,7 +3225,11 @@
       "type": "Ability.Build",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "distance": 1,
+      "placementArea": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "selection": [
         {
           "name": "structure-hut",
@@ -3119,126 +3425,6 @@
       "onHitAttackTypes": [],
       "onBirthEffect": null,
       "onBuildBehaviour": "behaviour-obelisk-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "displayName": "Building",
-      "description": ""
-    },
-    {
-      "name": "ability-shack-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-shack-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "displayName": "Building",
-      "description": ""
-    },
-    {
-      "name": "ability-smith-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-smith-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "displayName": "Building",
-      "description": ""
-    },
-    {
-      "name": "ability-fletcher-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-fletcher-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "displayName": "Building",
-      "description": ""
-    },
-    {
-      "name": "ability-alchemy-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-alchemy-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "displayName": "Building",
-      "description": ""
-    },
-    {
-      "name": "ability-depot-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-depot-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "displayName": "Building",
-      "description": ""
-    },
-    {
-      "name": "ability-workshop-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-workshop-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "displayName": "Building",
-      "description": ""
-    },
-    {
-      "name": "ability-outpost-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-outpost-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "displayName": "Building",
-      "description": ""
-    },
-    {
-      "name": "ability-barricade-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-barricade-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
       "displayName": "Building",
@@ -3729,7 +3915,11 @@
       "type": "Ability.Build",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "distance": 1,
+      "placementArea": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "selection": [
         {
           "name": "unit-cannon",
@@ -4186,7 +4376,7 @@
       "name": "effect-shared-no-population-space-apply-behaviour",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
-        "behaviour-shared-no-population-space-intercept-damage"
+        "behaviour-shared-revelators-no-population-space-intercept-damage"
       ],
       "location": "Location.Inherited",
       "filterFlags": [],
@@ -6640,7 +6830,30 @@
       "hasSameInstanceForAllOwners": false
     },
     {
-      "name": "behaviour-shared-no-population-space-intercept-damage",
+      "name": "behaviour-shared-revelators-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "canBeDragged": false,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-shared-revelators-no-population-space-intercept-damage",
       "type": "Behaviour.InterceptDamage",
       "numberOfInterceptions": 0,
       "damageTypes": [],
@@ -6658,6 +6871,40 @@
       "displayName": "No Population Space Intercept Damage",
       "description": "This unit receives double damage from all sources, because there's not enough population space.",
       "endsAt": "EndsAt.EndOfThisPlanning",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-shared-uee-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        },
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition.MaskCondition",
+              "conditionedMask": "mask-power",
+              "conditionFlag": "Flag.ConditionMaskExists"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "canBeDragged": false,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground tiles with Power.",
+      "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7081,6 +7328,110 @@
       "hasSameInstanceForAllOwners": false
     },
     {
+      "name": "behaviour-collector-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        },
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition.EntityCondition",
+              "conditionedEntity": "tile-scraps",
+              "amountOfEntitiesRequired": 2,
+              "conditionFlag": "Flag.ConditionEntityExists"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "canBeDragged": false,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground Scraps tiles.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-extractor-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        },
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition.EntityCondition",
+              "conditionedEntity": "tile-celestium",
+              "amountOfEntitiesRequired": 2,
+              "conditionFlag": "Flag.ConditionEntityExists"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "canBeDragged": false,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground Celestium tiles.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-wall-building-buildable",
+      "type": "Behaviour.Buildable",
+      "placementValidators": [
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition",
+              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+            }
+          ],
+          "filterFlags": []
+        },
+        {
+          "type": "Validator",
+          "conditions": [
+            {
+              "type": "Condition.MaskCondition",
+              "conditionedMask": "mask-power",
+              "conditionFlag": "Flag.ConditionMaskExists"
+            }
+          ],
+          "filterFlags": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "canBeDragged": true,
+      "displayName": "Building Buildable",
+      "description": "This building can only be placed on the low ground tiles with Power.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
       "name": "behaviour-leader-all-for-one-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [],
@@ -7220,6 +7571,7 @@
         }
       ],
       "maximumHelpers": -1,
+      "canBeDragged": false,
       "displayName": "Building Buildable",
       "description": "This building can only be placed on the low ground Scraps tiles, and can be built by multiple Slaves simultaneously.",
       "endsAt": "EndsAt.Death",
@@ -7254,184 +7606,9 @@
         }
       ],
       "maximumHelpers": -1,
+      "canBeDragged": false,
       "displayName": "Building Buildable",
       "description": "This building can only be placed on the low ground Celestium tiles, and can be built by multiple Slaves simultaneously.",
-      "endsAt": "EndsAt.Death",
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
-      "name": "behaviour-shack-building-buildable",
-      "type": "Behaviour.Buildable",
-      "placementValidators": [
-        {
-          "type": "Validator",
-          "conditions": [
-            {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
-            }
-          ],
-          "filterFlags": []
-        }
-      ],
-      "maximumHelpers": -1,
-      "displayName": "Building Buildable",
-      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
-      "endsAt": "EndsAt.Death",
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
-      "name": "behaviour-smith-building-buildable",
-      "type": "Behaviour.Buildable",
-      "placementValidators": [
-        {
-          "type": "Validator",
-          "conditions": [
-            {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
-            }
-          ],
-          "filterFlags": []
-        }
-      ],
-      "maximumHelpers": -1,
-      "displayName": "Building Buildable",
-      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
-      "endsAt": "EndsAt.Death",
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
-      "name": "behaviour-fletcher-building-buildable",
-      "type": "Behaviour.Buildable",
-      "placementValidators": [
-        {
-          "type": "Validator",
-          "conditions": [
-            {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
-            }
-          ],
-          "filterFlags": []
-        }
-      ],
-      "maximumHelpers": -1,
-      "displayName": "Building Buildable",
-      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
-      "endsAt": "EndsAt.Death",
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
-      "name": "behaviour-alchemy-building-buildable",
-      "type": "Behaviour.Buildable",
-      "placementValidators": [
-        {
-          "type": "Validator",
-          "conditions": [
-            {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
-            }
-          ],
-          "filterFlags": []
-        }
-      ],
-      "maximumHelpers": -1,
-      "displayName": "Building Buildable",
-      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
-      "endsAt": "EndsAt.Death",
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
-      "name": "behaviour-depot-building-buildable",
-      "type": "Behaviour.Buildable",
-      "placementValidators": [
-        {
-          "type": "Validator",
-          "conditions": [
-            {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
-            }
-          ],
-          "filterFlags": []
-        }
-      ],
-      "maximumHelpers": -1,
-      "displayName": "Building Buildable",
-      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
-      "endsAt": "EndsAt.Death",
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
-      "name": "behaviour-workshop-building-buildable",
-      "type": "Behaviour.Buildable",
-      "placementValidators": [
-        {
-          "type": "Validator",
-          "conditions": [
-            {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
-            }
-          ],
-          "filterFlags": []
-        }
-      ],
-      "maximumHelpers": -1,
-      "displayName": "Building Buildable",
-      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
-      "endsAt": "EndsAt.Death",
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
-      "name": "behaviour-outpost-building-buildable",
-      "type": "Behaviour.Buildable",
-      "placementValidators": [
-        {
-          "type": "Validator",
-          "conditions": [
-            {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
-            }
-          ],
-          "filterFlags": []
-        }
-      ],
-      "maximumHelpers": -1,
-      "displayName": "Building Buildable",
-      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
-      "endsAt": "EndsAt.Death",
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
-      "name": "behaviour-barricade-building-buildable",
-      "type": "Behaviour.Buildable",
-      "placementValidators": [
-        {
-          "type": "Validator",
-          "conditions": [
-            {
-              "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
-            }
-          ],
-          "filterFlags": []
-        }
-      ],
-      "maximumHelpers": -1,
-      "displayName": "Building Buildable",
-      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
       "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
@@ -8309,6 +8486,7 @@
         }
       ],
       "maximumHelpers": 3,
+      "canBeDragged": false,
       "displayName": "Assembling Buildable",
       "description": "This machine can only be placed on the low ground and can be assembled by a maximum of 3 Engineers at once.",
       "endsAt": "EndsAt.Death",
@@ -8333,6 +8511,7 @@
         }
       ],
       "maximumHelpers": 1,
+      "canBeDragged": false,
       "displayName": "Assembling Buildable",
       "description": "This machine can only be placed on a Watchtower and can be assembled by a maximum of 1 Engineer at once.",
       "endsAt": "EndsAt.Death",
@@ -8355,6 +8534,7 @@
         }
       ],
       "maximumHelpers": 1,
+      "canBeDragged": false,
       "displayName": "Assembling Buildable",
       "description": "This machine can only be placed on the low ground and can be assembled by a maximum of 1 Engineer at once.",
       "endsAt": "EndsAt.Death",
@@ -9140,7 +9320,8 @@
   ],
   "masks": [
     {
-      "name": "mask-power"
+      "name": "mask-power",
+      "maskBehaviours": []
     }
   ]
 }

@@ -216,6 +216,11 @@ namespace low_age_data.Domain.Shared.Flags
             {
                 public static Flag RadarRedDot => new(Flags.FilterSpecificFeatureRadarRedDot);
             }
+
+            public static class SpecificFaction
+            {
+                // TODO
+            }
         }
 
         private Flag(Flags @enum)

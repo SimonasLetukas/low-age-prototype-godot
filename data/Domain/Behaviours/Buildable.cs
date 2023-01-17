@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Common;
+using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared.Durations;
@@ -9,6 +11,10 @@ namespace low_age_data.Domain.Behaviours
     /// <summary>
     /// Can be added to a buildable <see cref="Actor"/> so that further building options could be configured. This
     /// behaviour is automatically removed after building process is finished.
+    /// 
+    /// <see cref="Build"/> <see cref="Ability"/> also checks for preconditions configured in this
+    /// <see cref="Behaviour"/> when selecting the <see cref="Buildable"/> <see cref="Actor"/> (but before placing it),
+    /// such as: <see cref="PlacementValidators"/> and <see cref="CanBeDragged"/>.
     /// </summary>
     public class Buildable : Behaviour
     {
@@ -17,7 +23,8 @@ namespace low_age_data.Domain.Behaviours
             string displayName, 
             string description,
             IList<Validator>? placementValidators = null,
-            int? maximumHelpers = null) 
+            int? maximumHelpers = null,
+            bool? canBeDragged = null) 
             : base(
                 name, 
                 $"{nameof(Behaviour)}.{nameof(Buildable)}",
@@ -27,6 +34,7 @@ namespace low_age_data.Domain.Behaviours
         {
             PlacementValidators = placementValidators ?? new List<Validator>();
             MaximumHelpers = maximumHelpers ?? -1;
+            CanBeDragged = canBeDragged ?? false;
         }
 
         /// <summary>
@@ -40,5 +48,11 @@ namespace low_age_data.Domain.Behaviours
         /// is no maximum.
         /// </summary>
         public int MaximumHelpers { get; }
+        
+        /// <summary>
+        /// If true, holding down the button to place the <see cref="Buildable"/> <see cref="Actor"/> will place
+        /// multiple entities of the same type in a line over the dragged distance. False by default.
+        /// </summary>
+        public bool CanBeDragged { get; }
     }
 }

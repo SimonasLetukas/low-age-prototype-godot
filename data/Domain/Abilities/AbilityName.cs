@@ -13,6 +13,16 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName PassiveIncome => new($"{nameof(Shared)}{nameof(PassiveIncome)}".ToKebabCase());
             public static AbilityName ScrapsIncome => new($"{nameof(Shared)}{nameof(ScrapsIncome)}".ToKebabCase());
             public static AbilityName CelestiumIncome => new($"{nameof(Shared)}{nameof(CelestiumIncome)}".ToKebabCase());
+
+            public static class Revelators
+            {
+                public static AbilityName Building => new($"{nameof(Shared)}{nameof(Revelators)}{nameof(Building)}".ToKebabCase());
+            }
+
+            public static class Uee
+            {
+                public static AbilityName Building => new($"{nameof(Shared)}{nameof(Uee)}{nameof(Building)}".ToKebabCase());
+            }
         }
 
         public static class Citadel
@@ -36,50 +46,42 @@ namespace low_age_data.Domain.Abilities
 
         public static class Shack
         {
-            public static AbilityName Building => new($"{nameof(Shack)}{nameof(Building)}".ToKebabCase());
             public static AbilityName Accommodation => new($"{nameof(Shack)}{nameof(Accommodation)}".ToKebabCase());
         }
 
         public static class Smith
         {
-            public static AbilityName Building => new($"{nameof(Smith)}{nameof(Building)}".ToKebabCase());
             public static AbilityName MeleeWeaponProduction => new($"{nameof(Smith)}{nameof(MeleeWeaponProduction)}".ToKebabCase());
         }
 
         public static class Fletcher
         {
-            public static AbilityName Building => new($"{nameof(Fletcher)}{nameof(Building)}".ToKebabCase());
             public static AbilityName RangedWeaponProduction => new($"{nameof(Fletcher)}{nameof(RangedWeaponProduction)}".ToKebabCase());
         }
 
         public static class Alchemy
         {
-            public static AbilityName Building => new($"{nameof(Alchemy)}{nameof(Building)}".ToKebabCase());
             public static AbilityName SpecialWeaponProduction => new($"{nameof(Alchemy)}{nameof(SpecialWeaponProduction)}".ToKebabCase());
         }
 
         public static class Depot
         {
-            public static AbilityName Building => new($"{nameof(Depot)}{nameof(Building)}".ToKebabCase());
             public static AbilityName WeaponStorage => new($"{nameof(Depot)}{nameof(WeaponStorage)}".ToKebabCase());
         }
 
         public static class Workshop
         {
-            public static AbilityName Building => new($"{nameof(Workshop)}{nameof(Building)}".ToKebabCase());
             public static AbilityName Research => new($"{nameof(Workshop)}{nameof(Research)}".ToKebabCase());
         }
 
         public static class Outpost
         {
-            public static AbilityName Building => new($"{nameof(Outpost)}{nameof(Building)}".ToKebabCase());
             public static AbilityName Ascendable => new($"{nameof(Outpost)}{nameof(Ascendable)}".ToKebabCase());
             public static AbilityName HighGround => new($"{nameof(Outpost)}{nameof(HighGround)}".ToKebabCase());
         }
 
         public static class Barricade
         {
-            public static AbilityName Building => new($"{nameof(Barricade)}{nameof(Building)}".ToKebabCase());
             public static AbilityName ProtectiveShield => new($"{nameof(Barricade)}{nameof(ProtectiveShield)}".ToKebabCase());
             public static AbilityName Caltrops => new($"{nameof(Barricade)}{nameof(Caltrops)}".ToKebabCase());
             public static AbilityName Decompose => new($"{nameof(Barricade)}{nameof(Decompose)}".ToKebabCase());
@@ -89,6 +91,70 @@ namespace low_age_data.Domain.Abilities
         {
             public static AbilityName PowerGenerator => new($"{nameof(BatteryCore)}{nameof(PowerGenerator)}".ToKebabCase());
             public static AbilityName PowerGrid => new($"{nameof(BatteryCore)}{nameof(PowerGrid)}".ToKebabCase());
+            public static AbilityName Build => new($"{nameof(BatteryCore)}{nameof(Build)}".ToKebabCase());
+        }
+
+        public static class FusionCore
+        {
+        }
+        
+        public static class CelestiumCore
+        {
+        }
+        
+        public static class Collector
+        {
+            public static AbilityName Building => new($"{nameof(Collector)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class Extractor
+        {
+            public static AbilityName Building => new($"{nameof(Extractor)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class PowerPole
+        {
+        }
+        
+        public static class Temple
+        {
+        }
+        
+        public static class MilitaryBase
+        {
+        }
+        
+        public static class Factory
+        {
+        }
+        
+        public static class Laboratory
+        {
+        }
+        
+        public static class Armoury
+        {
+        }
+        
+        public static class Wall
+        {
+            public static AbilityName Building => new($"{nameof(Wall)}{nameof(Building)}".ToKebabCase());
+        }
+        
+        public static class Stairs
+        {
+        }
+        
+        public static class Gate
+        {
+        }
+        
+        public static class Watchtower
+        {
+        }
+        
+        public static class Bastion
+        {
         }
 
         public static class Leader

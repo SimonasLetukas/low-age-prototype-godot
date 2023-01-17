@@ -92,7 +92,7 @@ namespace low_age_data.Collections
                     name: EffectName.Shared.NoPopulationSpaceApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
-                        BehaviourName.Shared.NoPopulationSpaceInterceptDamage
+                        BehaviourName.Shared.Revelators.NoPopulationSpaceInterceptDamage
                     }),
 
                 #endregion

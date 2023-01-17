@@ -91,6 +91,66 @@ namespace low_age_data.Domain.Effects
             public static EffectName PowerGeneratorModifyPlayer => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorModifyPlayer)}".ToKebabCase());
             public static EffectName PowerGridApplyBehaviour => new($"{nameof(BatteryCore)}{nameof(PowerGridApplyBehaviour)}".ToKebabCase());
         }
+        
+        public static class FusionCore
+        {
+        }
+        
+        public static class CelestiumCore
+        {
+        }
+        
+        public static class Collector
+        {
+        }
+        
+        public static class Extractor
+        {
+        }
+        
+        public static class PowerPole
+        {
+        }
+        
+        public static class Temple
+        {
+        }
+        
+        public static class MilitaryBase
+        {
+        }
+        
+        public static class Factory
+        {
+        }
+        
+        public static class Laboratory
+        {
+        }
+        
+        public static class Armoury
+        {
+        }
+        
+        public static class Wall
+        {
+        }
+        
+        public static class Stairs
+        {
+        }
+        
+        public static class Gate
+        {
+        }
+        
+        public static class Watchtower
+        {
+        }
+        
+        public static class Bastion
+        {
+        }
 
         public static class Leader
         {

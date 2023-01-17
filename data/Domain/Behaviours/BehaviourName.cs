@@ -14,7 +14,17 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName PassiveIncomeIncome => new($"{nameof(Shared)}{nameof(PassiveIncomeIncome)}".ToKebabCase());
             public static BehaviourName ScrapsIncomeIncome => new($"{nameof(Shared)}{nameof(ScrapsIncomeIncome)}".ToKebabCase());
             public static BehaviourName CelestiumIncomeIncome => new($"{nameof(Shared)}{nameof(CelestiumIncomeIncome)}".ToKebabCase());
-            public static BehaviourName NoPopulationSpaceInterceptDamage => new($"{nameof(Shared)}{nameof(NoPopulationSpaceInterceptDamage)}".ToKebabCase());
+
+            public static class Revelators
+            {
+                public static BehaviourName BuildingBuildable => new($"{nameof(Shared)}{nameof(Revelators)}{nameof(BuildingBuildable)}".ToKebabCase());
+                public static BehaviourName NoPopulationSpaceInterceptDamage => new($"{nameof(Shared)}{nameof(Revelators)}{nameof(NoPopulationSpaceInterceptDamage)}".ToKebabCase());
+            }
+            
+            public static class Uee
+            {
+                public static BehaviourName BuildingBuildable => new($"{nameof(Shared)}{nameof(Uee)}{nameof(BuildingBuildable)}".ToKebabCase());
+            }
         }
         
         public static class Citadel
@@ -39,49 +49,41 @@ namespace low_age_data.Domain.Behaviours
         
         public static class Shack
         {
-            public static BehaviourName BuildingBuildable => new($"{nameof(Shack)}{nameof(BuildingBuildable)}".ToKebabCase());
             public static BehaviourName AccommodationIncome => new($"{nameof(Shack)}{nameof(AccommodationIncome)}".ToKebabCase());
         }
         
         public static class Smith
         {
-            public static BehaviourName BuildingBuildable => new($"{nameof(Smith)}{nameof(BuildingBuildable)}".ToKebabCase());
             public static BehaviourName MeleeWeaponProductionIncome => new($"{nameof(Smith)}{nameof(MeleeWeaponProductionIncome)}".ToKebabCase());
         }
         
         public static class Fletcher
         {
-            public static BehaviourName BuildingBuildable => new($"{nameof(Fletcher)}{nameof(BuildingBuildable)}".ToKebabCase());
             public static BehaviourName RangedWeaponProductionIncome => new($"{nameof(Fletcher)}{nameof(RangedWeaponProductionIncome)}".ToKebabCase());
         }
         
         public static class Alchemy
         {
-            public static BehaviourName BuildingBuildable => new($"{nameof(Alchemy)}{nameof(BuildingBuildable)}".ToKebabCase());
             public static BehaviourName SpecialWeaponProductionIncome => new($"{nameof(Alchemy)}{nameof(SpecialWeaponProductionIncome)}".ToKebabCase());
         }
         
         public static class Depot
         {
-            public static BehaviourName BuildingBuildable => new($"{nameof(Depot)}{nameof(BuildingBuildable)}".ToKebabCase());
             public static BehaviourName WeaponStorageIncome => new($"{nameof(Depot)}{nameof(WeaponStorageIncome)}".ToKebabCase());
         }
         
         public static class Workshop
         {
-            public static BehaviourName BuildingBuildable => new($"{nameof(Workshop)}{nameof(BuildingBuildable)}".ToKebabCase());
         }
         
         public static class Outpost
         {
-            public static BehaviourName BuildingBuildable => new($"{nameof(Outpost)}{nameof(BuildingBuildable)}".ToKebabCase());
             public static BehaviourName AscendableAscendable => new($"{nameof(Outpost)}{nameof(AscendableAscendable)}".ToKebabCase());
             public static BehaviourName HighGroundHighGround => new($"{nameof(Outpost)}{nameof(HighGroundHighGround)}".ToKebabCase());
         }
         
         public static class Barricade
         {
-            public static BehaviourName BuildingBuildable => new($"{nameof(Barricade)}{nameof(BuildingBuildable)}".ToKebabCase());
             public static BehaviourName ProtectiveShieldBuff => new($"{nameof(Barricade)}{nameof(ProtectiveShieldBuff)}".ToKebabCase());
             public static BehaviourName DecomposeBuff => new($"{nameof(Barricade)}{nameof(DecomposeBuff)}".ToKebabCase());
         }
@@ -90,6 +92,29 @@ namespace low_age_data.Domain.Behaviours
         {
             public static BehaviourName PowerGeneratorBuff => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorBuff)}".ToKebabCase());
             public static BehaviourName PowerGridMaskProvider => new($"{nameof(BatteryCore)}{nameof(PowerGridMaskProvider)}".ToKebabCase());
+        }
+        
+        public static class FusionCore
+        {
+        }
+        
+        public static class CelestiumCore
+        {
+        }
+        
+        public static class Collector
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Collector)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+        
+        public static class Extractor
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Extractor)}{nameof(BuildingBuildable)}".ToKebabCase());
+        }
+        
+        public static class Wall
+        {
+            public static BehaviourName BuildingBuildable => new($"{nameof(Wall)}{nameof(BuildingBuildable)}".ToKebabCase());
         }
 
         public static class Leader

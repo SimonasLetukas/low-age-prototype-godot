@@ -1,4 +1,7 @@
-﻿using low_age_data.Domain.Behaviours;
+﻿using System.Collections.Generic;
+using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Effects;
+using low_age_data.Domain.Entities;
 using low_age_data.Domain.Logic;
 
 namespace low_age_data.Domain.Masks
@@ -11,15 +14,24 @@ namespace low_age_data.Domain.Masks
     /// 
     /// More specifically, it is used for Power field in which some entities generate the Power, while other entities
     /// require it to function, otherwise the abilities are disabled, etc.
+    ///
+    /// <see cref="Mask"/> also keeps track of the teams, used for 
     /// </summary>
     public class Mask
     {
         public Mask(
-            MaskName name)
+            MaskName name,
+            IList<EffectName>? maskBehaviours = null)
         {
             Name = name;
+            MaskBehaviours = maskBehaviours ?? new List<EffectName>();
         }
         
         public MaskName Name { get; }
+        
+        /// <summary>
+        /// Applied or removed for each <see cref="Entity"/> entering or exiting the <see cref="Mask"/>.
+        /// </summary>
+        public IList<EffectName> MaskBehaviours { get; }
     }
 }
