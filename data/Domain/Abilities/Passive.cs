@@ -2,6 +2,7 @@
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Shared;
+using low_age_data.Domain.Shared.Durations;
 
 namespace low_age_data.Domain.Abilities
 {
@@ -17,7 +18,8 @@ namespace low_age_data.Domain.Abilities
             IList<EffectName>? onHitEffects = null,
             IList<Attacks>? onHitAttackTypes = null,
             EffectName? onBirthEffect = null,
-            BehaviourName? onBuildBehaviour = null)
+            BehaviourName? onBuildBehaviour = null,
+            IList<Cost>? cost = null)
             : base(
                 name,
                 $"{nameof(Ability)}.{nameof(Passive)}",
@@ -25,7 +27,9 @@ namespace low_age_data.Domain.Abilities
                 researchNeeded ?? new List<ResearchName>(),
                 hasButton,
                 displayName,
-                description)
+                description,
+                EndsAt.Instant,
+                cost)
         {
             PeriodicEffect = periodicEffect;
             OnHitEffects = onHitEffects ?? new List<EffectName>();

@@ -92,6 +92,7 @@ namespace low_age_data.Domain.Behaviours
         {
             public static BehaviourName PowerGeneratorBuff => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorBuff)}".ToKebabCase());
             public static BehaviourName PowerGridMaskProvider => new($"{nameof(BatteryCore)}{nameof(PowerGridMaskProvider)}".ToKebabCase());
+            public static BehaviourName FusionCoreUpgradeBuff => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgradeBuff)}".ToKebabCase());
         }
         
         public static class FusionCore

@@ -13,6 +13,7 @@ namespace low_age_data.Domain.Effects
             IList<BehaviourName> behavioursToRemove,
             Location? location = null,
             IList<Flag>? filterFlags = null,
+            bool? treatAsDeath = null,
             Location? behaviourOwner = null,
             IList<Validator>? validators = null) 
             : base(
@@ -23,12 +24,19 @@ namespace low_age_data.Domain.Effects
             BehavioursToRemove = behavioursToRemove;
             Location = location ?? Location.Inherited;
             FilterFlags = filterFlags ?? new List<Flag>();
+            TreatAsDeath = treatAsDeath ?? false;
             BehaviourOwner = behaviourOwner;
         }
 
         public IList<BehaviourName> BehavioursToRemove { get; }
         public Location Location { get; }
         public IList<Flag> FilterFlags { get; }
+        
+        /// <summary>
+        /// If true, each <see cref="BehavioursToRemove"/> trigger their on-death functionalities (e.g.
+        /// <see cref="Buff"/> would execute <see cref="Buff.FinalEffects"/>). False by default.
+        /// </summary>
+        public bool TreatAsDeath { get; }
         
         /// <summary>
         /// If <see cref="Behaviour.OwnerAllowed"/> is true, this property can be used to specify the owner and only

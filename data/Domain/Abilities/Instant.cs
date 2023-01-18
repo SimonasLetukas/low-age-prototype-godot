@@ -14,7 +14,8 @@ namespace low_age_data.Domain.Abilities
             string description,
             IList<EffectName> effects,
             EndsAt? cooldown = null,
-            IList<ResearchName>? researchNeeded = null)
+            IList<ResearchName>? researchNeeded = null,
+            IList<Cost>? cost = null)
             : base(
                 name,
                 $"{nameof(Ability)}.{nameof(Instant)}",
@@ -23,7 +24,8 @@ namespace low_age_data.Domain.Abilities
                 true,
                 displayName,
                 description,
-                cooldown)
+                cooldown,
+                cost)
         {
             Effects = effects;
         }

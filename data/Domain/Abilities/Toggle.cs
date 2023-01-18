@@ -21,7 +21,8 @@ namespace low_age_data.Domain.Abilities
             IList<EffectName> onDeactivatedEffects,
             EndsAt? cooldown = null,
             IList<ResearchName>? researchNeeded = null,
-            string? deactivationDescription = null)
+            string? deactivationDescription = null,
+            IList<Cost>? cost = null)
             : base(
                 name,
                 $"{nameof(Ability)}.{nameof(Toggle)}",
@@ -30,7 +31,8 @@ namespace low_age_data.Domain.Abilities
                 true,
                 displayName,
                 activationDescription,
-                cooldown)
+                cooldown,
+                cost)
         {
             OnActivatedEffects = onActivatedEffects;
             OnDeactivatedEffects = onDeactivatedEffects;

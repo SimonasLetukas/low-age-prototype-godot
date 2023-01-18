@@ -6,6 +6,7 @@ using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Features;
 using low_age_data.Domain.Resources;
@@ -340,6 +341,23 @@ namespace low_age_data.Collections
                         BehaviourName.BatteryCore.PowerGridMaskProvider
                     },
                     location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.BatteryCore.FusionCoreUpgradeApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.BatteryCore.FusionCoreUpgradeBuff
+                    },
+                    location: Location.Self),
+
+                new CreateEntity(
+                    name: EffectName.BatteryCore.FusionCoreUpgradeCreateEntity,
+                    entityToCreate: StructureName.FusionCore),
+
+                new Destroy(
+                    name: EffectName.BatteryCore.FusionCoreUpgradeDestroy,
+                    target: Location.Self,
+                    blocksBehaviours: true),
 
                 #endregion
 

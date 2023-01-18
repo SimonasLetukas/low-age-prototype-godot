@@ -2158,7 +2158,8 @@
           "ability-battery-core-power-generator",
           "ability-shared-passive-income",
           "ability-battery-core-power-grid",
-          "ability-battery-core-build"
+          "ability-battery-core-build",
+          "ability-battery-core-fusion-core-upgrade"
         ],
         "displayName": "Battery Core",
         "description": ""
@@ -2296,6 +2297,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Passive Income",
       "description": "Provides 3 Scraps and 7 Celestium at the start of each planning phase."
     },
@@ -2311,6 +2313,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Scraps Income",
       "description": "At the start of each planning phase provides 5 Scraps."
     },
@@ -2326,6 +2329,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Celestium Income",
       "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1)."
     },
@@ -2341,6 +2345,7 @@
       "onBuildBehaviour": "behaviour-shared-revelators-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Building",
       "description": ""
     },
@@ -2356,6 +2361,7 @@
       "onBuildBehaviour": "behaviour-shared-uee-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Building",
       "description": ""
     },
@@ -2371,6 +2377,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Executive Stash",
       "description": "Provides 4 Population and 4 spaces of storage for Weapons."
     },
@@ -2386,6 +2393,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Ascendable",
       "description": "Can be navigated through to go up to high ground."
     },
@@ -2401,6 +2409,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks."
     },
@@ -2612,6 +2621,7 @@
       "producedInstantly": true,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Promote Goons",
       "description": "Promote a new Revelators goon from the remaining Population."
     },
@@ -2626,6 +2636,7 @@
       ],
       "hasButton": true,
       "cooldown": "EndsAt.EndOfFourthActionPhase",
+      "cost": [],
       "displayName": "Celestium Discharge",
       "description": "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 actions."
     },
@@ -2641,6 +2652,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Accommodation",
       "description": "Provides 2 Population"
     },
@@ -2656,6 +2668,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Melee Weapon Production",
       "description": "Every 20 Celestium generates a Melee Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
     },
@@ -2671,6 +2684,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Ranged Weapon Production",
       "description": "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
     },
@@ -2686,6 +2700,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Special Weapon Production",
       "description": "Every 30 Celestium generates a Special Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
     },
@@ -2701,6 +2716,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Weapon Storage",
       "description": "Provides 4 spaces of storage for Weapons which are used for new unit production."
     },
@@ -2793,6 +2809,7 @@
       ],
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Research",
       "description": "Open a selection of research available for Revelators to unlock."
     },
@@ -2808,6 +2825,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Ascendable",
       "description": "Can be navigated through to go up to high ground."
     },
@@ -2823,6 +2841,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks."
     },
@@ -2838,6 +2857,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Protective Shield",
       "description": "Every unit adjacent to the shield of this Barricade receives +2 Range Armour."
     },
@@ -2853,6 +2873,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Caltrops",
       "description": "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the start of each action phase."
     },
@@ -2870,6 +2891,7 @@
       "deactivationDescription": "Toggle to stop inflicting 15 Pure Damage to itself at the start of each action phase.",
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Decompose",
       "description": "Toggle to start inflicting 15 Pure Damage to itself at the start of each action phase."
     },
@@ -2885,6 +2907,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Power Generator",
       "description": "UEE faction loses if Battery Core is destroyed."
     },
@@ -2900,6 +2923,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Power Grid",
       "description": "Provides Power in 4 Distance."
     },
@@ -3126,6 +3150,7 @@
       "helpEfficiency": 1.0,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Build",
       "description": "Start building a UEE's structure in vision on a tile with Power. Collector and Extractor can be built on tiles without Power."
     },
@@ -3141,6 +3166,7 @@
       "onBuildBehaviour": "behaviour-collector-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Building",
       "description": ""
     },
@@ -3156,6 +3182,7 @@
       "onBuildBehaviour": "behaviour-extractor-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Building",
       "description": ""
     },
@@ -3171,8 +3198,32 @@
       "onBuildBehaviour": "behaviour-wall-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Building",
       "description": ""
+    },
+    {
+      "name": "ability-battery-core-fusion-core-upgrade",
+      "type": "Ability.Instant",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "effects": [
+        "effect-battery-core-fusion-core-upgrade-apply-behaviour"
+      ],
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [
+        {
+          "resource": "resource-scraps",
+          "amount": 10
+        },
+        {
+          "resource": "resource-celestium",
+          "amount": 50
+        }
+      ],
+      "displayName": "Fusion Core Upgrade",
+      "description": "Upgrade this Battery Core to Fusion Core."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -3186,6 +3237,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "All For One",
       "description": "Revelators faction loses if Leader dies."
     },
@@ -3201,6 +3253,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Menacing Presence",
       "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1)."
     },
@@ -3209,14 +3262,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "distance": 1,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-leader-one-for-all-apply-behaviour-obelisk"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "One For All",
       "description": "Select an adjacent Obelisk and sap its energy to give all friendly units +2 Health. This Obelisk cannot be sapped again for 10 turns."
     },
@@ -3397,6 +3458,7 @@
       "helpEfficiency": 0.5,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Build",
       "description": "Start building a Revelators' structure on an adjacent tile. Multiple Slaves can build the structure, each additional one after the first provides half of the Celestium production to the construction than the previous Slave."
     },
@@ -3412,6 +3474,7 @@
       "onBuildBehaviour": "behaviour-hut-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Building",
       "description": ""
     },
@@ -3427,6 +3490,7 @@
       "onBuildBehaviour": "behaviour-obelisk-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Building",
       "description": ""
     },
@@ -3435,14 +3499,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "distance": 1,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-slave-repair-apply-behaviour-structure"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Repair",
       "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be interrupted."
     },
@@ -3451,14 +3523,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "distance": 1,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-slave-manual-labour-apply-behaviour-hut"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Manual Labour",
       "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut."
     },
@@ -3474,6 +3554,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Doubleshot",
       "description": "Ranged attacks twice."
     },
@@ -3495,6 +3576,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Cripple",
       "description": "Each ranged attack cripples the target until the end of their action. During this time target has 60% of their maximum Movement (rounded up) and cannot receive healing from any sources. Multiple attacks on a crippled target have no additional effects."
     },
@@ -3514,6 +3596,7 @@
       "onBuildBehaviour": null,
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Fanatic Suicide Passive",
       "description": ""
     },
@@ -3528,6 +3611,7 @@
       ],
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Fanatic Suicide",
       "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, killing itself in the process."
     },
@@ -3548,6 +3632,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Silent Assassin",
       "description": "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly units around Camou in 4 Attack Distance. Additionally, if the target has none of its allies in the same radius, Camou silences the target for 2 of its actions, disabling the use of any abilities or passives."
     },
@@ -3558,14 +3643,22 @@
       "researchNeeded": [
         "research-revelators-spiked-rope"
       ],
-      "distance": 1,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-camou-climb-teleport"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Climb",
       "description": "Select an adjacent unoccupied space on a high ground. This space is considered occupied until the end of the action phase at which point Camou moves to it. Passively, Camou can move down from high ground at the additional cost of 1 Movement."
     },
@@ -3583,6 +3676,7 @@
       "onBuildBehaviour": null,
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Climb Passive",
       "description": ""
     },
@@ -3591,14 +3685,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 4,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 4,
+        "ignoreRadius": -1
+      },
       "effects": [
         "effect-shaman-wondrous-goo-create-entity"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.EndOfSecondActionPhase",
+      "cost": [],
       "displayName": "Wondrous Goo",
       "description": "Select a tile in 4 Attack Distance, which gets contaminated. Any unit in the contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase."
     },
@@ -3614,6 +3716,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Wall Of Flames",
       "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
     },
@@ -3631,6 +3734,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Phantom Menace",
       "description": "Can move through enemy units (but not buildings)."
     },
@@ -3639,14 +3743,62 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 1,
+      "targetArea": {
+        "type": "Shape.Custom",
+        "areas": [
+          {
+            "start": {
+              "x": 0,
+              "y": -1
+            },
+            "size": {
+              "x": 2,
+              "y": 1
+            }
+          },
+          {
+            "start": {
+              "x": 2,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 2
+            }
+          },
+          {
+            "start": {
+              "x": 0,
+              "y": 2
+            },
+            "size": {
+              "x": 2,
+              "y": 1
+            }
+          },
+          {
+            "start": {
+              "x": -1,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 2
+            }
+          }
+        ]
+      },
       "effects": [
         "effect-big-bad-bull-unleash-the-rage-search"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.EndOfNextActionPhase",
+      "cost": [],
       "displayName": "Unleash The Rage",
       "description": "Select a direction (1 out of 4) originating from Big Bad Bull. Any two adjacent units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage."
     },
@@ -3655,14 +3807,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 1,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-mummy-spawn-roach-create-entity"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.EndOfNextActionPhase",
+      "cost": [],
       "displayName": "Spawn Roach",
       "description": "Select an adjacent tile in which Roach is created."
     },
@@ -3680,6 +3840,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Leap Of Hunger",
       "description": "Roach creation range is increased to 4 Distance."
     },
@@ -3688,14 +3849,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 4,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 4,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-mummy-spawn-roach-create-entity"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.EndOfNextActionPhase",
+      "cost": [],
       "displayName": "Spawn Roach",
       "description": "Select a tile in 4 Distance in which Roach is created."
     },
@@ -3711,6 +3880,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Degrading Carapace",
       "description": "At the start of each action loses 1 Health more than the previous action."
     },
@@ -3721,14 +3891,22 @@
       "researchNeeded": [
         "research-revelators-adaptive-digestion"
       ],
-      "distance": 4,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 4,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-roach-corrosive-spit-damage"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.EndOfSecondActionPhase",
+      "cost": [],
       "displayName": "Corrosive Spit",
       "description": "Perform a ranged attack in 4 Distance dealing 6 (+8 to mechanical) Range Damage."
     },
@@ -3750,6 +3928,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Paralysing Grasp",
       "description": "Instead of attacking, Parasite attaches to the target. Both units occupy the same space and are considered enemy to all players. Parasite can only detach when the target is killed. All units who attack this combined unit do damage to both. On its turn, Parasite can move the target, using target's Movement. On target's turn, it must execute attack action to any friendly or enemy unit in range, otherwise skip turn."
     },
@@ -3765,6 +3944,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Expert Formation",
       "description": "Gains +2 Range Armour if at least one other Horrior is adjacent."
     },
@@ -3780,6 +3960,7 @@
       ],
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Mount",
       "description": "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase transform into Surfer."
     },
@@ -3799,6 +3980,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Critical Mark",
       "description": "Each ranged attack marks the target unit. If a friendly non-Marksman unit attacks the marked target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end of the next action phase."
     },
@@ -3814,6 +3996,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Dismount",
       "description": "Upon death, reemerges as Horrior."
     },
@@ -3829,6 +4012,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Deadly Ammunition",
       "description": "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target."
     },
@@ -3842,6 +4026,7 @@
       ],
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Reload",
       "description": "Spend this action phase reloading to full ammo."
     },
@@ -3859,6 +4044,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Piercing Blast",
       "description": "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition."
     },
@@ -3874,6 +4060,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Tactical Goggles",
       "description": "Gains +3 Vision range."
     },
@@ -3882,14 +4069,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 1,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-hawk-leadership-apply-behaviour"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Leadership",
       "description": "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is lost at the end of the target's next action, or if the targeted unit is no longer adjacent."
     },
@@ -3907,6 +4102,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Health Kit",
       "description": "Restores 1 Health to all adjacent friendly units at the start of each planning phase."
     },
@@ -3975,6 +4171,7 @@
       "helpEfficiency": 1.0,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Assemble Machine",
       "description": "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, up to a number needed to operate the Machine. Each Engineer provides current Celestium production to the construction."
     },
@@ -3990,6 +4187,7 @@
       "onBuildBehaviour": "behaviour-cannon-assembling-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Assembling",
       "description": ""
     },
@@ -4005,6 +4203,7 @@
       "onBuildBehaviour": "behaviour-ballista-assembling-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Assembling",
       "description": ""
     },
@@ -4020,6 +4219,7 @@
       "onBuildBehaviour": "behaviour-radar-assembling-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Assembling",
       "description": ""
     },
@@ -4028,14 +4228,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 1,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-engineer-operate-apply-behaviour"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Operate",
       "description": "Select an adjacent Machine and start operating it if the Machine is built and does not have the maximum number of operating Engineers already."
     },
@@ -4044,7 +4252,11 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "distance": 1,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-engineer-repair-structure-apply-behaviour",
         "effect-engineer-repair-machine-apply-behaviour",
@@ -4052,8 +4264,12 @@
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Repair",
       "description": "Select an adjacent structure, Machine or Horrior. At the start of the next planning phase the selected structure or Machine receives +2 Health and selected Horrior's mounting time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be interrupted."
     },
@@ -4069,6 +4285,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Machine",
       "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 3 Engineers are operating it."
     },
@@ -4077,7 +4294,11 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 10,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 10,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-cannon-heat-up-create-entity"
       ],
@@ -4085,8 +4306,12 @@
         "Attacks.Ranged"
       ],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Heat Up",
       "description": "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's action, the attack is triggered which deals massive Range Damage."
     },
@@ -4102,6 +4327,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Machine",
       "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it."
     },
@@ -4117,6 +4343,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Add On",
       "description": "Can only be built on a Watchtower."
     },
@@ -4125,7 +4352,11 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 9,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 9,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-ballista-aim-damage",
         "effect-ballista-aim-apply-behaviour"
@@ -4134,8 +4365,12 @@
         "Attacks.Ranged"
       ],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Aim",
       "description": "Spends 1 action aiming, when attacking a new target. A dotted line to the target indicates aiming. The target can stop this process if it moves out of Ballista's Attack Distance. Once aimed, same target can be attacked each action."
     },
@@ -4151,6 +4386,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Machine",
       "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it."
     },
@@ -4166,6 +4402,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Power Dependency",
       "description": "All abilities get disabled and loses 1 Health at the start of its action if not connected to Power."
     },
@@ -4174,14 +4411,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 15,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 15,
+        "ignoreRadius": -1
+      },
       "effects": [
         "effect-radar-resonating-sweep-create-entity"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Resonating Sweep",
       "description": "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start of the next planning phase."
     },
@@ -4199,6 +4444,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Radio Location",
       "description": "Enemy units in 15 Attack Distance are shown as red dots in the fog of war."
     },
@@ -4214,6 +4460,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Machine",
       "description": "Can be operated by Engineers only (after it is built from Factory). The Machine is functional and can act only if maximum number of 3 Engineers are operating it."
     },
@@ -4229,6 +4476,7 @@
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Absorbent Field",
       "description": "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, which is instead dealt to Vessel."
     },
@@ -4244,6 +4492,7 @@
       ],
       "hasButton": true,
       "cooldown": "EndsAt.EndOfSecondActionPhase",
+      "cost": [],
       "displayName": "Fortify",
       "description": "Provide +3 Melee Armour and +3 Range Armour to all friendly units in 3 Attack Distance until the start of the next Vessel's action."
     },
@@ -4252,14 +4501,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 7,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 7,
+        "ignoreRadius": 0
+      },
       "effects": [
         "effect-omen-rendition-placement-apply-behaviour"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.EndOfSecondActionPhase",
+      "cost": [],
       "displayName": "Rendition",
       "description": "Place a ghostly rendition of a selected enemy unit in 7 Attack Distance to an unoccupied space in a 3 Attack Distance from the selected target. The rendition has the same amount of Health, Melee and Range Armour as the selected target, cannot act, can be attacked and stays for 2 action phases or until the selected target is dead. 50% of all damage done to the rendition is done as Pure Damage to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows all adjacent enemies by 50% until the end of their next action."
     },
@@ -4268,14 +4525,22 @@
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
-      "distance": 3,
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 3,
+        "ignoreRadius": -1
+      },
       "effects": [
         "effect-omen-rendition-placement-create-entity"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
+      "cost": [],
       "displayName": "Rendition Placement",
       "description": "Select an unoccupied space in a 3 Attack Distance to place the rendition of the selected target."
     }
@@ -4708,6 +4973,7 @@
       ],
       "location": "Location.Self",
       "filterFlags": [],
+      "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
     },
@@ -4767,6 +5033,33 @@
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-battery-core-fusion-core-upgrade-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-battery-core-fusion-core-upgrade-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-battery-core-fusion-core-upgrade-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "structure-fusion-core",
+      "initialEntityBehaviours": [],
+      "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-battery-core-fusion-core-upgrade-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Self",
+      "blocksBehaviours": true,
       "validators": []
     },
     {
@@ -6138,6 +6431,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
     },
@@ -6230,6 +6524,7 @@
         "Flag.FilterAlly",
         "Flag.FilterUnit"
       ],
+      "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
     },
@@ -6260,6 +6555,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
     },
@@ -6363,6 +6659,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
     },
@@ -6539,6 +6836,7 @@
         "Flag.FilterSelf",
         "Flag.FilterUnit"
       ],
+      "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
     },
@@ -7428,6 +7726,31 @@
       "displayName": "Building Buildable",
       "description": "This building can only be placed on the low ground tiles with Power.",
       "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-battery-core-fusion-core-upgrade-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-battery-core-fusion-core-upgrade-create-entity"
+      ],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-battery-core-fusion-core-upgrade-destroy"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Fusion Core Upgrade Buff",
+      "description": "",
+      "endsAt": "EndsAt.Instant",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },

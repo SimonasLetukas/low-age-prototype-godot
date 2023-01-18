@@ -421,6 +421,21 @@ namespace low_age_data.Collections
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Wall.BuildingBuildable),
+                
+                new Instant(
+                    name: AbilityName.BatteryCore.FusionCoreUpgrade,
+                    displayName: nameof(AbilityName.BatteryCore.FusionCoreUpgrade).CamelCaseToWords(),
+                    turnPhase: TurnPhase.Planning,
+                    description: "Upgrade this Battery Core to Fusion Core.",
+                    effects: new List<EffectName>
+                    {
+                        EffectName.BatteryCore.FusionCoreUpgradeApplyBehaviour
+                    },
+                    cost: new List<Cost>
+                    {
+                        new(resource: ResourceName.Scraps, amount: 10),
+                        new(resource: ResourceName.Celestium, amount: 50)
+                    }),
 
                 #endregion
                 
@@ -447,7 +462,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Leader.OneForAll).CamelCaseToWords(),
                     description: "Select an adjacent Obelisk and sap its energy to give all friendly units " +
                                  "+2 Health. This Obelisk cannot be sapped again for 10 turns.",
-                    distance: 1,
+                    targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Leader.OneForAllApplyBehaviourObelisk
@@ -538,7 +553,7 @@ namespace low_age_data.Collections
                     description: "Select an adjacent structure. At the start of the next planning phase the " +
                                  "selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be " +
                                  "interrupted.",
-                    distance: 1,
+                    targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Slave.RepairApplyBehaviourStructure
@@ -550,7 +565,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Slave.ManualLabour).CamelCaseToWords(),
                     description: "Select an adjacent Hut. At the start of the next planning phase receive +2 " +
                                  "Scraps. Maximum of one Slave per Hut.",
-                    distance: 1,
+                    targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Slave.ManualLabourApplyBehaviourHut
@@ -636,7 +651,7 @@ namespace low_age_data.Collections
                     description: "Select an adjacent unoccupied space on a high ground. This space is considered " +
                                  "occupied until the end of the action phase at which point Camou moves to it. Passively, " +
                                  "Camou can move down from high ground at the additional cost of 1 Movement.",
-                    distance: 1,
+                    targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Camou.ClimbTeleport
@@ -666,7 +681,7 @@ namespace low_age_data.Collections
                                  "contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and " +
                                  "receives 1 Pure Damage at the start of its turn. At the end of this action phase, the " +
                                  "contamination area expands to adjacent tiles and stays until the end of the next action phase.",
-                    distance: 4,
+                    targetArea: new Circle(radius: 4),
                     effects: new List<EffectName>
                     {
                         EffectName.Shaman.WondrousGooCreateEntity
@@ -700,7 +715,17 @@ namespace low_age_data.Collections
                     description: "Select a direction (1 out of 4) originating from Big Bad Bull. Any two adjacent " +
                                  "units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. " +
                                  "If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage.",
-                    distance: 1,
+                    targetArea: new Custom(areas: new List<Area>
+                    {
+                        //  oo
+                        // oxxo
+                        // oxxo
+                        //  oo
+                        new(start: new Vector2<int>(x: 0, y: -1), size: new Vector2<int>(x: 2, y: 1)),
+                        new(start: new Vector2<int>(x: 2, y: 0), size: new Vector2<int>(x: 1, y: 2)),
+                        new(start: new Vector2<int>(x: 0, y: 2), size: new Vector2<int>(x: 2, y: 1)),
+                        new(start: new Vector2<int>(x: -1, y: 0), size: new Vector2<int>(x: 1, y: 2)),
+                    }),
                     effects: new List<EffectName>
                     {
                         EffectName.BigBadBull.UnleashTheRageSearch
@@ -712,7 +737,7 @@ namespace low_age_data.Collections
                     turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Mummy.SpawnRoach).CamelCaseToWords(),
                     description: "Select an adjacent tile in which Roach is created.",
-                    distance: 1,
+                    targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Mummy.SpawnRoachCreateEntity
@@ -739,7 +764,7 @@ namespace low_age_data.Collections
                     turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Mummy.SpawnRoach).CamelCaseToWords(),
                     description: "Select a tile in 4 Distance in which Roach is created.",
-                    distance: 4,
+                    targetArea: new Circle(radius: 4, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Mummy.SpawnRoachCreateEntity
@@ -763,7 +788,7 @@ namespace low_age_data.Collections
                     turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityName.Roach.CorrosiveSpit).CamelCaseToWords(),
                     description: "Perform a ranged attack in 4 Distance dealing 6 (+8 to mechanical) Range Damage.",
-                    distance: 4,
+                    targetArea: new Circle(radius: 4, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Roach.CorrosiveSpitDamage
@@ -904,7 +929,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Hawk.Leadership).CamelCaseToWords(),
                     description: "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is " +
                                  "lost at the end of the target's next action, or if the targeted unit is no longer adjacent.",
-                    distance: 1,
+                    targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Hawk.LeadershipApplyBehaviour
@@ -983,7 +1008,7 @@ namespace low_age_data.Collections
                     description:
                     "Select an adjacent Machine and start operating it if the Machine is built and does not " +
                     "have the maximum number of operating Engineers already.",
-                    distance: 1,
+                    targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Engineer.OperateApplyBehaviour
@@ -998,7 +1023,7 @@ namespace low_age_data.Collections
                     "phase the selected structure or Machine receives +2 Health and selected Horrior's mounting " +
                     "time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be " +
                     "interrupted.",
-                    distance: 1,
+                    targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Engineer.RepairStructureApplyBehaviour,
@@ -1026,7 +1051,7 @@ namespace low_age_data.Collections
                     "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is " +
                     "revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's " +
                     "action, the attack is triggered which deals massive Range Damage.",
-                    distance: 10,
+                    targetArea: new Circle(radius: 10, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Cannon.HeatUpCreateEntity
@@ -1064,7 +1089,7 @@ namespace low_age_data.Collections
                     description: "Spends 1 action aiming, when attacking a new target. A dotted line to the target " +
                                  "indicates aiming. The target can stop this process if it moves out of Ballista's Attack " +
                                  "Distance. Once aimed, same target can be attacked each action.",
-                    distance: 9,
+                    targetArea: new Circle(radius: 9, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Ballista.AimDamage,
@@ -1101,7 +1126,7 @@ namespace low_age_data.Collections
                     description:
                     "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start " +
                     "of the next planning phase.",
-                    distance: 15,
+                    targetArea: new Circle(radius: 15),
                     effects: new List<EffectName>
                     {
                         EffectName.Radar.ResonatingSweepCreateEntity
@@ -1166,7 +1191,7 @@ namespace low_age_data.Collections
                                  "the rendition is done as Pure Damage to the selected target. If the rendition is destroyed " +
                                  "before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows " +
                                  "all adjacent enemies by 50% until the end of their next action.",
-                    distance: 7,
+                    targetArea: new Circle(radius: 7, ignoreRadius: 0),
                     effects: new List<EffectName>
                     {
                         EffectName.Omen.RenditionPlacementApplyBehaviour
@@ -1179,7 +1204,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Omen.RenditionPlacement).CamelCaseToWords(),
                     description: "Select an unoccupied space in a 3 Attack Distance to place the rendition of the " +
                                  "selected target.",
-                    distance: 3,
+                    targetArea: new Circle(radius: 3),
                     effects: new List<EffectName>
                     {
                         EffectName.Omen.RenditionPlacementCreateEntity

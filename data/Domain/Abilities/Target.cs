@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Effects;
+using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
+using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Domain.Abilities
 {
@@ -13,12 +15,14 @@ namespace low_age_data.Domain.Abilities
             TurnPhase turnPhase,
             string displayName,
             string description,
-            int distance,
+            Shape targetArea,
             IList<EffectName> effects,
             IList<ResearchName>? researchNeeded = null,
             EndsAt? cooldown = null,
             IList<Attacks>? overridesAttacks = null,
-            bool? fallbackToAttack = false)
+            bool? fallbackToAttack = false,
+            IList<Cost>? cost = null,
+            Shape? leashArea = null)
             : base(
                 name,
                 $"{nameof(Ability)}.{nameof(Target)}",
@@ -27,15 +31,17 @@ namespace low_age_data.Domain.Abilities
                 true,
                 displayName,
                 description,
-                cooldown)
+                cooldown,
+                cost)
         {
-            Distance = distance;
+            TargetArea = targetArea;
             Effects = effects;
             OverridesAttacks = overridesAttacks ?? new List<Attacks>();
             FallbackToAttack = fallbackToAttack ?? false;
+            LeashArea = leashArea ?? new Map();
         }
 
-        public int Distance { get; }
+        public Shape TargetArea { get; }
         public IList<EffectName> Effects { get; }
 
         /// <summary>
@@ -48,10 +54,21 @@ namespace low_age_data.Domain.Abilities
 
         /// <summary>
         /// If true, when <see cref="Target"/> cannot override an attack listed in <see cref="OverridesAttacks"/> (e.g.
-        /// when <see cref="Distance"/>, <see cref="Ability.Cooldown"/>, <see cref="ResearchName"/> or any
+        /// when <see cref="TargetArea"/>, <see cref="Ability.Cooldown"/>, <see cref="ResearchName"/> or any
         /// <see cref="Validator"/> in underlying <see cref="Effects"/> is not satisfied), the attack will be executed
         /// instead. 
         /// </summary>
         public bool FallbackToAttack { get; }
+        
+        /// <summary>
+        /// If the execution of this <see cref="Ability"/> is ever delayed (e.g. when <see cref="Ability.Cost"/> is
+        /// being paid), <see cref="LeashArea"/> defines what is the biggest possible area for the targeted
+        /// <see cref="Actor"/>s to be inside when the execution starts. In other words, if the targeted
+        /// <see cref="Actor"/> leaves the <see cref="LeashArea"/> while the execution is delayed, the ability is
+        /// cancelled and the <see cref="Ability.Cost"/> is refunded.
+        ///
+        /// By default, the <see cref="LeashArea"/> has the size of the map. 
+        /// </summary>
+        public Shape LeashArea { get; }
     }
 }

@@ -421,6 +421,20 @@ namespace low_age_data.Collections
                         }),
                     },
                     canBeDragged: true),
+                
+                new Buff(
+                    name: BehaviourName.BatteryCore.FusionCoreUpgradeBuff,
+                    displayName: nameof(BehaviourName.BatteryCore.FusionCoreUpgradeBuff).CamelCaseToWords(),
+                    description: "",
+                    initialEffects: new List<EffectName>
+                    {
+                        EffectName.BatteryCore.FusionCoreUpgradeCreateEntity
+                    },
+                    finalEffects: new List<EffectName>
+                    {
+                        EffectName.BatteryCore.FusionCoreUpgradeDestroy
+                    },
+                    endsAt: EndsAt.Instant),
 
                 #endregion
 

@@ -90,6 +90,9 @@ namespace low_age_data.Domain.Effects
             public static EffectName PowerGeneratorApplyBehaviour => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorApplyBehaviour)}".ToKebabCase());
             public static EffectName PowerGeneratorModifyPlayer => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorModifyPlayer)}".ToKebabCase());
             public static EffectName PowerGridApplyBehaviour => new($"{nameof(BatteryCore)}{nameof(PowerGridApplyBehaviour)}".ToKebabCase());
+            public static EffectName FusionCoreUpgradeApplyBehaviour => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgradeApplyBehaviour)}".ToKebabCase());
+            public static EffectName FusionCoreUpgradeCreateEntity => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgradeCreateEntity)}".ToKebabCase());
+            public static EffectName FusionCoreUpgradeDestroy => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgradeDestroy)}".ToKebabCase());
         }
         
         public static class FusionCore

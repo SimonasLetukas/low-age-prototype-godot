@@ -306,7 +306,7 @@ namespace low_age_data.Collections
                         AbilityName.Shared.PassiveIncome,
                         AbilityName.BatteryCore.PowerGrid,
                         AbilityName.BatteryCore.Build,
-                        // TODO
+                        AbilityName.BatteryCore.FusionCoreUpgrade
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
             };

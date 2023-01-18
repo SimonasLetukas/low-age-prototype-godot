@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Common;
 using low_age_data.Domain.Effects;
+using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
@@ -67,12 +68,12 @@ namespace low_age_data.Domain.Behaviours
         public IList<EffectName> InitialEffects { get; }
         
         /// <summary>
-        /// Added right before the <see cref="EndsAt"/> of behaviour.
+        /// Added right before the <see cref="EndsAt"/> or before <see cref="Entity"/> is destroyed.
         /// </summary>
         public IList<Modification> FinalModifications { get; }
         
         /// <summary>
-        /// Executed right before behaviour <see cref="EndsAt"/>.
+        /// Executed right before the <see cref="EndsAt"/> or before <see cref="Entity"/> is destroyed.
         /// </summary>
         public IList<EffectName> FinalEffects { get; }
         

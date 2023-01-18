@@ -92,6 +92,7 @@ namespace low_age_data.Domain.Abilities
             public static AbilityName PowerGenerator => new($"{nameof(BatteryCore)}{nameof(PowerGenerator)}".ToKebabCase());
             public static AbilityName PowerGrid => new($"{nameof(BatteryCore)}{nameof(PowerGrid)}".ToKebabCase());
             public static AbilityName Build => new($"{nameof(BatteryCore)}{nameof(Build)}".ToKebabCase());
+            public static AbilityName FusionCoreUpgrade => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgrade)}".ToKebabCase());
         }
 
         public static class FusionCore
