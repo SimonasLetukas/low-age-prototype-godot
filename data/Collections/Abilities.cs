@@ -19,7 +19,7 @@ namespace low_age_data.Collections
         {
             return new List<Ability>
             {
-                #region Structures
+                #region Shared
 
                 new Passive(
                     name: AbilityName.Shared.PassiveIncome,
@@ -56,6 +56,115 @@ namespace low_age_data.Collections
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Shared.Uee.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Shared.Uee.PowerGenerator,
+                    displayName: nameof(AbilityName.Shared.Uee.PowerGenerator).CamelCaseToWords(),
+                    description: "UEE faction loses if Battery Core is destroyed.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Shared.Uee.PowerGeneratorApplyBehaviour),
+                
+                new Build(
+                    name: AbilityName.Shared.Uee.Build,
+                    displayName: nameof(AbilityName.Shared.Uee.Build).CamelCaseToWords(),
+                    description: "Start building a UEE's structure in vision on a tile with Power. Collector and " +
+                                 "Extractor can be built on tiles without Power.",
+                    placementArea: new Map(),
+                    selection: new List<Selection<EntityName>>
+                    {
+                        new(name: StructureName.Collector, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 5),
+                            new(resource: ResourceName.Celestium, amount: 40)
+                        }),
+                        new(name: StructureName.Extractor, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 12),
+                            new(resource: ResourceName.Celestium, amount: 30)
+                        }),
+                        new(name: StructureName.PowerPole, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 15),
+                            new(resource: ResourceName.Celestium, amount: 38)
+                        }),
+                        new(name: StructureName.Temple, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 18),
+                            new(resource: ResourceName.Celestium, amount: 45)
+                        }),
+                        new(name: StructureName.MilitaryBase, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 14),
+                            new(resource: ResourceName.Celestium, amount: 50)
+                        }),
+                        new(name: StructureName.Factory, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 22),
+                            new(resource: ResourceName.Celestium, amount: 63)
+                        }),
+                        new(name: StructureName.Laboratory, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 30),
+                            new(resource: ResourceName.Celestium, amount: 76)
+                        }),
+                        new(name: StructureName.Armoury, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 20),
+                            new(resource: ResourceName.Celestium, amount: 50)
+                        }),
+                        new(name: StructureName.Wall, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 10),
+                            new(resource: ResourceName.Celestium, amount: 50)
+                        }),
+                        new(name: StructureName.Stairs, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 10),
+                            new(resource: ResourceName.Celestium, amount: 50)
+                        }),
+                        new(name: StructureName.Gate, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 25),
+                            new(resource: ResourceName.Celestium, amount: 80)
+                        }),
+                        new(name: StructureName.Watchtower, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 15),
+                            new(resource: ResourceName.Celestium, amount: 70)
+                        }),
+                        new(name: StructureName.Bastion, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 30),
+                            new(resource: ResourceName.Celestium, amount: 120)
+                        }),
+                    },
+                    casterConsumesAction: false,
+                    canHelp: false),
+                
+                new Passive(
+                    name: AbilityName.Collector.Building,
+                    displayName: nameof(AbilityName.Collector.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Collector.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Extractor.Building,
+                    displayName: nameof(AbilityName.Extractor.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Extractor.BuildingBuildable),
+
+                new Passive(
+                    name: AbilityName.Wall.Building,
+                    displayName: nameof(AbilityName.Wall.Building).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    onBuildBehaviour: BehaviourName.Wall.BuildingBuildable),
+                
+                #endregion
+
+                #region Structures
 
                 new Passive(
                     name: AbilityName.Citadel.ExecutiveStash,
@@ -309,119 +418,14 @@ namespace low_age_data.Collections
                     },
                     deactivationDescription: "Toggle to stop inflicting 15 Pure Damage to itself at the start of " +
                                              "each action phase."),
-                
-                new Passive(
-                    name: AbilityName.BatteryCore.PowerGenerator,
-                    displayName: nameof(AbilityName.BatteryCore.PowerGenerator).CamelCaseToWords(),
-                    description: "UEE faction loses if Battery Core is destroyed.",
-                    hasButton: true,
-                    onBirthEffect: EffectName.BatteryCore.PowerGeneratorApplyBehaviour),
-                
+
                 new Passive(
                     name: AbilityName.BatteryCore.PowerGrid,
                     displayName: nameof(AbilityName.BatteryCore.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
                     hasButton: true,
                     onBirthEffect: EffectName.BatteryCore.PowerGridApplyBehaviour),
-                
-                new Build(
-                    name: AbilityName.BatteryCore.Build,
-                    displayName: nameof(AbilityName.BatteryCore.Build).CamelCaseToWords(),
-                    description: "Start building a UEE's structure in vision on a tile with Power. Collector and " +
-                                 "Extractor can be built on tiles without Power.",
-                    placementArea: new Map(),
-                    selection: new List<Selection<EntityName>>
-                    {
-                        new(name: StructureName.Collector, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 5),
-                            new(resource: ResourceName.Celestium, amount: 40)
-                        }),
-                        new(name: StructureName.Extractor, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 12),
-                            new(resource: ResourceName.Celestium, amount: 30)
-                        }),
-                        new(name: StructureName.PowerPole, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 15),
-                            new(resource: ResourceName.Celestium, amount: 38)
-                        }),
-                        new(name: StructureName.Temple, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 18),
-                            new(resource: ResourceName.Celestium, amount: 45)
-                        }),
-                        new(name: StructureName.MilitaryBase, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 14),
-                            new(resource: ResourceName.Celestium, amount: 50)
-                        }),
-                        new(name: StructureName.Factory, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 22),
-                            new(resource: ResourceName.Celestium, amount: 63)
-                        }),
-                        new(name: StructureName.Laboratory, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 30),
-                            new(resource: ResourceName.Celestium, amount: 76)
-                        }),
-                        new(name: StructureName.Armoury, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 20),
-                            new(resource: ResourceName.Celestium, amount: 50)
-                        }),
-                        new(name: StructureName.Wall, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 10),
-                            new(resource: ResourceName.Celestium, amount: 50)
-                        }),
-                        new(name: StructureName.Stairs, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 10),
-                            new(resource: ResourceName.Celestium, amount: 50)
-                        }),
-                        new(name: StructureName.Gate, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 25),
-                            new(resource: ResourceName.Celestium, amount: 80)
-                        }),
-                        new(name: StructureName.Watchtower, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 15),
-                            new(resource: ResourceName.Celestium, amount: 70)
-                        }),
-                        new(name: StructureName.Bastion, cost: new List<Cost>
-                        {
-                            new(resource: ResourceName.Scraps, amount: 30),
-                            new(resource: ResourceName.Celestium, amount: 120)
-                        }),
-                    },
-                    casterConsumesAction: false,
-                    canHelp: false),
-                
-                new Passive(
-                    name: AbilityName.Collector.Building,
-                    displayName: nameof(AbilityName.Collector.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Collector.BuildingBuildable),
-                
-                new Passive(
-                    name: AbilityName.Extractor.Building,
-                    displayName: nameof(AbilityName.Extractor.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Extractor.BuildingBuildable),
 
-                new Passive(
-                    name: AbilityName.Wall.Building,
-                    displayName: nameof(AbilityName.Wall.Building).CamelCaseToWords(),
-                    description: "",
-                    hasButton: false,
-                    onBuildBehaviour: BehaviourName.Wall.BuildingBuildable),
-                
                 new Instant(
                     name: AbilityName.BatteryCore.FusionCoreUpgrade,
                     displayName: nameof(AbilityName.BatteryCore.FusionCoreUpgrade).CamelCaseToWords(),

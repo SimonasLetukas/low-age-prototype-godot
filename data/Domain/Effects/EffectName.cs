@@ -15,8 +15,18 @@ namespace low_age_data.Domain.Effects
             public static EffectName PassiveIncomeApplyBehaviour => new($"{nameof(Shared)}{nameof(PassiveIncomeApplyBehaviour)}".ToKebabCase());
             public static EffectName ScrapsIncomeApplyBehaviour => new($"{nameof(Shared)}{nameof(ScrapsIncomeApplyBehaviour)}".ToKebabCase());
             public static EffectName CelestiumIncomeApplyBehaviour => new($"{nameof(Shared)}{nameof(CelestiumIncomeApplyBehaviour)}".ToKebabCase());
-            public static EffectName NoPopulationSpaceSearch => new($"{nameof(Shared)}{nameof(NoPopulationSpaceSearch)}".ToKebabCase());
-            public static EffectName NoPopulationSpaceApplyBehaviour => new($"{nameof(Shared)}{nameof(NoPopulationSpaceApplyBehaviour)}".ToKebabCase());
+
+            public static class Revelators
+            {
+                public static EffectName NoPopulationSpaceSearch => new($"{nameof(Shared)}{nameof(Revelators)}{nameof(NoPopulationSpaceSearch)}".ToKebabCase());
+                public static EffectName NoPopulationSpaceApplyBehaviour => new($"{nameof(Shared)}{nameof(Revelators)}{nameof(NoPopulationSpaceApplyBehaviour)}".ToKebabCase());
+            }
+
+            public static class Uee
+            {
+                public static EffectName PowerGeneratorApplyBehaviour => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerGeneratorApplyBehaviour)}".ToKebabCase());
+                public static EffectName PowerGeneratorModifyPlayer => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerGeneratorModifyPlayer)}".ToKebabCase());
+            }
         }
         
         public static class Citadel
@@ -87,12 +97,11 @@ namespace low_age_data.Domain.Effects
         
         public static class BatteryCore
         {
-            public static EffectName PowerGeneratorApplyBehaviour => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorApplyBehaviour)}".ToKebabCase());
-            public static EffectName PowerGeneratorModifyPlayer => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorModifyPlayer)}".ToKebabCase());
             public static EffectName PowerGridApplyBehaviour => new($"{nameof(BatteryCore)}{nameof(PowerGridApplyBehaviour)}".ToKebabCase());
             public static EffectName FusionCoreUpgradeApplyBehaviour => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgradeApplyBehaviour)}".ToKebabCase());
             public static EffectName FusionCoreUpgradeCreateEntity => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgradeCreateEntity)}".ToKebabCase());
             public static EffectName FusionCoreUpgradeDestroy => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgradeDestroy)}".ToKebabCase());
+            public static EffectName FusionCoreUpgradeModifyResearch => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgradeModifyResearch)}".ToKebabCase());
         }
         
         public static class FusionCore

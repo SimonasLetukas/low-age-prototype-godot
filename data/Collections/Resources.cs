@@ -36,7 +36,7 @@ namespace low_age_data.Collections
                     attachesToNewActors: true,
                     negativeIncomeEffects: new List<EffectName>
                     {
-                        EffectName.Shared.NoPopulationSpaceSearch
+                        EffectName.Shared.Revelators.NoPopulationSpaceSearch
                     },
                     negativeIncomeDescription: "Caution, there are more units than the supported population."),
 

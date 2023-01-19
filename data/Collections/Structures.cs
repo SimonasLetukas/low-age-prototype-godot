@@ -292,7 +292,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 0, hasCurrent: true, combatType: Stats.Shields),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
@@ -302,11 +302,39 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.BatteryCore.PowerGenerator,
+                        AbilityName.Shared.Uee.PowerGenerator,
                         AbilityName.Shared.PassiveIncome,
                         AbilityName.BatteryCore.PowerGrid,
-                        AbilityName.BatteryCore.Build,
+                        AbilityName.Shared.Uee.Build,
                         AbilityName.BatteryCore.FusionCoreUpgrade
+                    },
+                    size: new Vector2<int>(x: 3, y: 3)),
+                    
+                new(
+                    name: StructureName.FusionCore,
+                    displayName: nameof(StructureName.FusionCore).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 100, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 25, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shared.Uee.PowerGenerator,
+                        AbilityName.Shared.PassiveIncome,
+                        //AbilityName.BatteryCore.PowerGrid,
+                        AbilityName.Shared.Uee.Build,
+                        //AbilityName.BatteryCore.FusionCoreUpgrade
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
             };

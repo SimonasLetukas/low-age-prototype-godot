@@ -34,7 +34,7 @@
       "storedAs": "resource-population",
       "attachesToNewActors": true,
       "negativeIncomeEffects": [
-        "effect-shared-no-population-space-search"
+        "effect-shared-revelators-no-population-space-search"
       ],
       "negativeIncomeDescription": "Caution, there are more units than the supported population."
     },
@@ -2145,7 +2145,7 @@
           },
           {
             "combatType": "Stats.Vision",
-            "maxAmount": 4,
+            "maxAmount": 5,
             "hasCurrent": false
           }
         ],
@@ -2155,13 +2155,74 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
-          "ability-battery-core-power-generator",
+          "ability-shared-uee-power-generator",
           "ability-shared-passive-income",
           "ability-battery-core-power-grid",
-          "ability-battery-core-build",
+          "ability-shared-uee-build",
           "ability-battery-core-fusion-core-upgrade"
         ],
         "displayName": "Battery Core",
+        "description": ""
+      },
+      {
+        "name": "structure-fusion-core",
+        "size": {
+          "x": 3,
+          "y": 3
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 100,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 25,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-uee-power-generator",
+          "ability-shared-passive-income",
+          "ability-shared-uee-build"
+        ],
+        "displayName": "Fusion Core",
         "description": ""
       }
     ],
@@ -2359,6 +2420,297 @@
       "onHitAttackTypes": [],
       "onBirthEffect": null,
       "onBuildBehaviour": "behaviour-shared-uee-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-shared-uee-power-generator",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-shared-uee-power-generator-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Power Generator",
+      "description": "UEE faction loses if Battery Core is destroyed."
+    },
+    {
+      "name": "ability-shared-uee-build",
+      "type": "Ability.Build",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "placementArea": {
+        "type": "Shape.Map"
+      },
+      "selection": [
+        {
+          "name": "structure-collector",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 5
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 40
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-extractor",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 12
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 30
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-power-pole",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 15
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 38
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-temple",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 18
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 45
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-military-base",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 14
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 50
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-factory",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 22
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 63
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-laboratory",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 30
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 76
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-armoury",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 20
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 50
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-wall",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 10
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 50
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-stairs",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 10
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 50
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-gate",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 25
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 80
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-watchtower",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 15
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 70
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "structure-bastion",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 30
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 120
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        }
+      ],
+      "casterConsumesAction": false,
+      "canHelp": false,
+      "helpEfficiency": 1.0,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Build",
+      "description": "Start building a UEE's structure in vision on a tile with Power. Collector and Extractor can be built on tiles without Power."
+    },
+    {
+      "name": "ability-collector-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-collector-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-extractor-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-extractor-building-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Building",
+      "description": ""
+    },
+    {
+      "name": "ability-wall-building",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": "behaviour-wall-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
       "cost": [],
@@ -2896,22 +3248,6 @@
       "description": "Toggle to start inflicting 15 Pure Damage to itself at the start of each action phase."
     },
     {
-      "name": "ability-battery-core-power-generator",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": "effect-battery-core-power-generator-apply-behaviour",
-      "onBuildBehaviour": null,
-      "hasButton": true,
-      "cooldown": "EndsAt.Instant",
-      "cost": [],
-      "displayName": "Power Generator",
-      "description": "UEE faction loses if Battery Core is destroyed."
-    },
-    {
       "name": "ability-battery-core-power-grid",
       "type": "Ability.Passive",
       "turnPhase": "TurnPhase.Passive",
@@ -2926,281 +3262,6 @@
       "cost": [],
       "displayName": "Power Grid",
       "description": "Provides Power in 4 Distance."
-    },
-    {
-      "name": "ability-battery-core-build",
-      "type": "Ability.Build",
-      "turnPhase": "TurnPhase.Planning",
-      "researchNeeded": [],
-      "placementArea": {
-        "type": "Shape.Map"
-      },
-      "selection": [
-        {
-          "name": "structure-collector",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 5
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 40
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-extractor",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 12
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 30
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-power-pole",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 15
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 38
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-temple",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 18
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 45
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-military-base",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 14
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 50
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-factory",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 22
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 63
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-laboratory",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 30
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 76
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-armoury",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 20
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 50
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-wall",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 10
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 50
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-stairs",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 10
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 50
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-gate",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 25
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 80
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-watchtower",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 15
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 70
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        },
-        {
-          "name": "structure-bastion",
-          "description": "",
-          "cost": [
-            {
-              "resource": "resource-scraps",
-              "amount": 30
-            },
-            {
-              "resource": "resource-celestium",
-              "amount": 120
-            }
-          ],
-          "researchNeeded": [],
-          "grayOutIfAlreadyExists": false
-        }
-      ],
-      "casterConsumesAction": false,
-      "canHelp": false,
-      "helpEfficiency": 1.0,
-      "hasButton": true,
-      "cooldown": "EndsAt.Instant",
-      "cost": [],
-      "displayName": "Build",
-      "description": "Start building a UEE's structure in vision on a tile with Power. Collector and Extractor can be built on tiles without Power."
-    },
-    {
-      "name": "ability-collector-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-collector-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "cost": [],
-      "displayName": "Building",
-      "description": ""
-    },
-    {
-      "name": "ability-extractor-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-extractor-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "cost": [],
-      "displayName": "Building",
-      "description": ""
-    },
-    {
-      "name": "ability-wall-building",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": null,
-      "onBuildBehaviour": "behaviour-wall-building-buildable",
-      "hasButton": false,
-      "cooldown": "EndsAt.Instant",
-      "cost": [],
-      "displayName": "Building",
-      "description": ""
     },
     {
       "name": "ability-battery-core-fusion-core-upgrade",
@@ -4620,7 +4681,7 @@
       "validators": []
     },
     {
-      "name": "effect-shared-no-population-space-search",
+      "name": "effect-shared-revelators-no-population-space-search",
       "type": "Effect.Search",
       "shape": {
         "type": "Shape.Map"
@@ -4631,14 +4692,14 @@
         "Flag.FilterUnit"
       ],
       "effects": [
-        "effect-shared-no-population-space-apply-behaviour"
+        "effect-shared-revelators-no-population-space-apply-behaviour"
       ],
       "location": "Location.Inherited",
       "usedForValidator": false,
       "validators": []
     },
     {
-      "name": "effect-shared-no-population-space-apply-behaviour",
+      "name": "effect-shared-revelators-no-population-space-apply-behaviour",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
         "behaviour-shared-revelators-no-population-space-intercept-damage"
@@ -4647,6 +4708,30 @@
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-shared-uee-power-generator-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-shared-uee-power-generator-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-shared-uee-power-generator-modify-player",
+      "type": "Effect.ModifyPlayer",
+      "playerFilterFlags": [
+        "Flag.FilterSelf"
+      ],
+      "modifyFlags": [
+        "Flag.EffectModifyPlayerGameLost"
+      ],
+      "resourceModifications": [],
       "validators": []
     },
     {
@@ -5000,30 +5085,6 @@
       "validators": []
     },
     {
-      "name": "effect-battery-core-power-generator-apply-behaviour",
-      "type": "Effect.ApplyBehaviour",
-      "behavioursToApply": [
-        "behaviour-battery-core-power-generator-buff"
-      ],
-      "location": "Location.Self",
-      "filterFlags": [],
-      "behaviourOwner": null,
-      "waitForInitialEffects": false,
-      "validators": []
-    },
-    {
-      "name": "effect-battery-core-power-generator-modify-player",
-      "type": "Effect.ModifyPlayer",
-      "playerFilterFlags": [
-        "Flag.FilterSelf"
-      ],
-      "modifyFlags": [
-        "Flag.EffectModifyPlayerGameLost"
-      ],
-      "resourceModifications": [],
-      "validators": []
-    },
-    {
       "name": "effect-battery-core-power-grid-apply-behaviour",
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
@@ -5060,6 +5121,15 @@
       "type": "Effect.Destroy",
       "target": "Location.Self",
       "blocksBehaviours": true,
+      "validators": []
+    },
+    {
+      "name": "effect-battery-core-fusion-core-upgrade-modify-research",
+      "type": "Effect.ModifyResearch",
+      "researchToAdd": [
+        "research-uee-fusion-core-upgrade"
+      ],
+      "researchToRemove": [],
       "validators": []
     },
     {
@@ -7207,6 +7277,29 @@
       "hasSameInstanceForAllOwners": false
     },
     {
+      "name": "behaviour-shared-uee-power-generator-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-shared-uee-power-generator-modify-player"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Power Generator Buff",
+      "description": "UEE faction loses when this structure is destroyed.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
       "name": "behaviour-citadel-executive-stash-income",
       "type": "Behaviour.Income",
       "resources": [
@@ -7588,29 +7681,6 @@
       "hasSameInstanceForAllOwners": false
     },
     {
-      "name": "behaviour-battery-core-power-generator-buff",
-      "type": "Behaviour.Buff",
-      "modificationFlags": [],
-      "initialModifications": [],
-      "initialEffects": [],
-      "finalModifications": [],
-      "finalEffects": [
-        "effect-battery-core-power-generator-modify-player"
-      ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
-      "restoreChangesOnEnd": false,
-      "displayName": "Power Generator Buff",
-      "description": "UEE faction loses when this structure is destroyed.",
-      "endsAt": "EndsAt.Death",
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
       "name": "behaviour-battery-core-power-grid-mask-provider",
       "type": "Behaviour.MaskProvider",
       "maskCreated": "mask-power",
@@ -7735,7 +7805,8 @@
       "modificationFlags": [],
       "initialModifications": [],
       "initialEffects": [
-        "effect-battery-core-fusion-core-upgrade-create-entity"
+        "effect-battery-core-fusion-core-upgrade-create-entity",
+        "effect-battery-core-fusion-core-upgrade-modify-research"
       ],
       "finalModifications": [],
       "finalEffects": [

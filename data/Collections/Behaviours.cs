@@ -20,7 +20,7 @@ namespace low_age_data.Collections
         {
             return new List<Behaviour>
             {
-                #region Structures
+                #region Shared
 
                 new Buff(
                     name: BehaviourName.Shared.HighGroundBuff,
@@ -122,6 +122,19 @@ namespace low_age_data.Collections
                                 conditionedMask: MaskName.Power)
                         }),
                     }),
+                
+                new Buff(
+                    name: BehaviourName.Shared.Uee.PowerGeneratorBuff,
+                    displayName: nameof(BehaviourName.Shared.Uee.PowerGeneratorBuff).CamelCaseToWords(),
+                    description: "UEE faction loses when this structure is destroyed.",
+                    finalEffects: new List<EffectName>
+                    {
+                        EffectName.Shared.Uee.PowerGeneratorModifyPlayer
+                    }),
+                
+                #endregion
+
+                #region Structures
 
                 new Income(
                     name: BehaviourName.Citadel.ExecutiveStashIncome,
@@ -348,16 +361,7 @@ namespace low_age_data.Collections
                     canStack: false,
                     canResetDuration: true,
                     alignment: Alignment.Negative),
-                
-                new Buff(
-                    name: BehaviourName.BatteryCore.PowerGeneratorBuff,
-                    displayName: nameof(BehaviourName.BatteryCore.PowerGeneratorBuff).CamelCaseToWords(),
-                    description: "UEE faction loses when this structure is destroyed.",
-                    finalEffects: new List<EffectName>
-                    {
-                        EffectName.BatteryCore.PowerGeneratorModifyPlayer
-                    }),
-                
+
                 new MaskProvider(
                     name: BehaviourName.BatteryCore.PowerGridMaskProvider,
                     displayName: nameof(BehaviourName.BatteryCore.PowerGridMaskProvider).CamelCaseToWords(),
@@ -428,7 +432,8 @@ namespace low_age_data.Collections
                     description: "",
                     initialEffects: new List<EffectName>
                     {
-                        EffectName.BatteryCore.FusionCoreUpgradeCreateEntity
+                        EffectName.BatteryCore.FusionCoreUpgradeCreateEntity,
+                        EffectName.BatteryCore.FusionCoreUpgradeModifyResearch
                     },
                     finalEffects: new List<EffectName>
                     {

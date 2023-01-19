@@ -75,7 +75,7 @@ namespace low_age_data.Collections
                     location: Location.Self),
 
                 new Search(
-                    name: EffectName.Shared.NoPopulationSpaceSearch,
+                    name: EffectName.Shared.Revelators.NoPopulationSpaceSearch,
                     shape: new Map(),
                     searchFlags: new List<Flag>(),
                     filterFlags: new List<Flag>
@@ -85,15 +85,34 @@ namespace low_age_data.Collections
                     },
                     effects: new List<EffectName>
                     {
-                        EffectName.Shared.NoPopulationSpaceApplyBehaviour
+                        EffectName.Shared.Revelators.NoPopulationSpaceApplyBehaviour
                     },
                     location: Location.Inherited),
 
                 new ApplyBehaviour(
-                    name: EffectName.Shared.NoPopulationSpaceApplyBehaviour,
+                    name: EffectName.Shared.Revelators.NoPopulationSpaceApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
                     {
                         BehaviourName.Shared.Revelators.NoPopulationSpaceInterceptDamage
+                    }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Shared.Uee.PowerGeneratorApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Shared.Uee.PowerGeneratorBuff
+                    },
+                    location: Location.Self),
+
+                new ModifyPlayer(
+                    name: EffectName.Shared.Uee.PowerGeneratorModifyPlayer,
+                    playerFilterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Self
+                    },
+                    modifyFlags: new List<Flag>
+                    {
+                        Flag.Effect.ModifyPlayer.GameLost
                     }),
 
                 #endregion
@@ -314,26 +333,7 @@ namespace low_age_data.Collections
                     damageType: DamageType.Pure,
                     amount: new Amount(flat: 15),
                     location: Location.Self),
-                
-                new ApplyBehaviour(
-                    name: EffectName.BatteryCore.PowerGeneratorApplyBehaviour,
-                    behavioursToApply: new List<BehaviourName>
-                    {
-                        BehaviourName.BatteryCore.PowerGeneratorBuff
-                    },
-                    location: Location.Self),
 
-                new ModifyPlayer(
-                    name: EffectName.BatteryCore.PowerGeneratorModifyPlayer,
-                    playerFilterFlags: new List<Flag>
-                    {
-                        Flag.Filter.Self
-                    },
-                    modifyFlags: new List<Flag>
-                    {
-                        Flag.Effect.ModifyPlayer.GameLost
-                    }),
-                
                 new ApplyBehaviour(
                     name: EffectName.BatteryCore.PowerGridApplyBehaviour,
                     behavioursToApply: new List<BehaviourName>
@@ -358,6 +358,13 @@ namespace low_age_data.Collections
                     name: EffectName.BatteryCore.FusionCoreUpgradeDestroy,
                     target: Location.Self,
                     blocksBehaviours: true),
+                
+                new ModifyResearch(
+                    name: EffectName.BatteryCore.FusionCoreUpgradeModifyResearch,
+                    researchToAdd: new List<ResearchName>
+                    {
+                        ResearchName.Uee.FusionCoreUpgrade
+                    }),
 
                 #endregion
 

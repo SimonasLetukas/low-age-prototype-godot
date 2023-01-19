@@ -22,6 +22,8 @@ namespace low_age_data.Domain.Abilities
             public static class Uee
             {
                 public static AbilityName Building => new($"{nameof(Shared)}{nameof(Uee)}{nameof(Building)}".ToKebabCase());
+                public static AbilityName PowerGenerator => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerGenerator)}".ToKebabCase());
+                public static AbilityName Build => new($"{nameof(Shared)}{nameof(Uee)}{nameof(Build)}".ToKebabCase());
             }
         }
 
@@ -89,9 +91,7 @@ namespace low_age_data.Domain.Abilities
 
         public static class BatteryCore
         {
-            public static AbilityName PowerGenerator => new($"{nameof(BatteryCore)}{nameof(PowerGenerator)}".ToKebabCase());
             public static AbilityName PowerGrid => new($"{nameof(BatteryCore)}{nameof(PowerGrid)}".ToKebabCase());
-            public static AbilityName Build => new($"{nameof(BatteryCore)}{nameof(Build)}".ToKebabCase());
             public static AbilityName FusionCoreUpgrade => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgrade)}".ToKebabCase());
         }
 

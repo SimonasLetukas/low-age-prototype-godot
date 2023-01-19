@@ -24,6 +24,7 @@ namespace low_age_data.Domain.Behaviours
             public static class Uee
             {
                 public static BehaviourName BuildingBuildable => new($"{nameof(Shared)}{nameof(Uee)}{nameof(BuildingBuildable)}".ToKebabCase());
+                public static BehaviourName PowerGeneratorBuff => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerGeneratorBuff)}".ToKebabCase());
             }
         }
         
@@ -90,7 +91,6 @@ namespace low_age_data.Domain.Behaviours
         
         public static class BatteryCore
         {
-            public static BehaviourName PowerGeneratorBuff => new($"{nameof(BatteryCore)}{nameof(PowerGeneratorBuff)}".ToKebabCase());
             public static BehaviourName PowerGridMaskProvider => new($"{nameof(BatteryCore)}{nameof(PowerGridMaskProvider)}".ToKebabCase());
             public static BehaviourName FusionCoreUpgradeBuff => new($"{nameof(BatteryCore)}{nameof(FusionCoreUpgradeBuff)}".ToKebabCase());
         }
