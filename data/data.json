@@ -2220,7 +2220,10 @@
         "abilities": [
           "ability-shared-uee-power-generator",
           "ability-shared-passive-income",
-          "ability-shared-uee-build"
+          "ability-fusion-core-power-grid",
+          "ability-shared-uee-build",
+          "ability-fusion-core-defence-protocol",
+          "ability-fusion-core-celestium-core-upgrade"
         ],
         "displayName": "Fusion Core",
         "description": ""
@@ -3285,6 +3288,71 @@
       ],
       "displayName": "Fusion Core Upgrade",
       "description": "Upgrade this Battery Core to Fusion Core."
+    },
+    {
+      "name": "ability-fusion-core-power-grid",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-fusion-core-power-grid-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Power Grid",
+      "description": "Provides Power in 6 Distance."
+    },
+    {
+      "name": "ability-fusion-core-defence-protocol",
+      "type": "Ability.Target",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "targetArea": {
+        "type": "Shape.Circle",
+        "radius": 6,
+        "ignoreRadius": 0
+      },
+      "effects": [
+        "effect-fusion-core-defence-protocol-damage",
+        "effect-fusion-core-defence-protocol-damage",
+        "effect-fusion-core-defence-protocol-damage"
+      ],
+      "overridesAttacks": [],
+      "fallbackToAttack": false,
+      "leashArea": {
+        "type": "Shape.Map"
+      },
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Defence Protocol",
+      "description": "Select an enemy unit in 6 Distance. At the start of the action phase the target receives 3 ranged attacks, each dealing 3 Range Damage."
+    },
+    {
+      "name": "ability-fusion-core-celestium-core-upgrade",
+      "type": "Ability.Instant",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "effects": [
+        "effect-fusion-core-celestium-core-upgrade-apply-behaviour"
+      ],
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [
+        {
+          "resource": "resource-scraps",
+          "amount": 10
+        },
+        {
+          "resource": "resource-celestium",
+          "amount": 100
+        }
+      ],
+      "displayName": "Celestium Core Upgrade",
+      "description": "Upgrade this Fusion Core to Celestium Core."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -5128,6 +5196,79 @@
       "type": "Effect.ModifyResearch",
       "researchToAdd": [
         "research-uee-fusion-core-upgrade"
+      ],
+      "researchToRemove": [],
+      "validators": []
+    },
+    {
+      "name": "effect-fusion-core-power-grid-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-fusion-core-power-grid-mask-provider"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-fusion-core-defence-protocol-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Ranged",
+      "amount": {
+        "flat": 3,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Actor",
+      "ignoresArmor": false,
+      "filterFlags": [
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "validators": []
+    },
+    {
+      "name": "effect-fusion-core-celestium-core-upgrade-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-fusion-core-celestium-core-upgrade-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-fusion-core-celestium-core-upgrade-create-entity",
+      "type": "Effect.CreateEntity",
+      "entityToCreate": "structure-celestium-core",
+      "initialEntityBehaviours": [],
+      "behaviourOwner": null,
+      "validators": []
+    },
+    {
+      "name": "effect-fusion-core-celestium-core-upgrade-destroy",
+      "type": "Effect.Destroy",
+      "target": "Location.Self",
+      "blocksBehaviours": true,
+      "validators": []
+    },
+    {
+      "name": "effect-fusion-core-celestium-core-upgrade-modify-research",
+      "type": "Effect.ModifyResearch",
+      "researchToAdd": [
+        "research-uee-celestium-core-upgrade"
       ],
       "researchToRemove": [],
       "validators": []
@@ -7820,6 +7961,47 @@
       "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Fusion Core Upgrade Buff",
+      "description": "",
+      "endsAt": "EndsAt.Instant",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-fusion-core-power-grid-mask-provider",
+      "type": "Behaviour.MaskProvider",
+      "maskCreated": "mask-power",
+      "maskShape": {
+        "type": "Shape.Circle",
+        "radius": 6,
+        "ignoreRadius": 0
+      },
+      "displayName": "Power Grid Mask Provider",
+      "description": "Provides Power in 6 Distance.",
+      "endsAt": "EndsAt.Death",
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-fusion-core-celestium-core-upgrade-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [
+        "effect-fusion-core-celestium-core-upgrade-create-entity",
+        "effect-fusion-core-celestium-core-upgrade-modify-research"
+      ],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-fusion-core-celestium-core-upgrade-destroy"
+      ],
+      "canStack": false,
+      "canResetDuration": false,
+      "alignment": "Alignment.Neutral",
+      "triggers": [],
+      "destroyOnConditionsMet": false,
+      "conditionalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Celestium Core Upgrade Buff",
       "description": "",
       "endsAt": "EndsAt.Instant",
       "ownerAllowed": false,

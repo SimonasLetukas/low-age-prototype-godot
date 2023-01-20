@@ -97,6 +97,9 @@ namespace low_age_data.Domain.Abilities
 
         public static class FusionCore
         {
+            public static AbilityName PowerGrid => new($"{nameof(FusionCore)}{nameof(PowerGrid)}".ToKebabCase());
+            public static AbilityName DefenceProtocol => new($"{nameof(FusionCore)}{nameof(DefenceProtocol)}".ToKebabCase());
+            public static AbilityName CelestiumCoreUpgrade => new($"{nameof(FusionCore)}{nameof(CelestiumCoreUpgrade)}".ToKebabCase());
         }
         
         public static class CelestiumCore

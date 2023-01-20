@@ -97,6 +97,8 @@ namespace low_age_data.Domain.Behaviours
         
         public static class FusionCore
         {
+            public static BehaviourName PowerGridMaskProvider => new($"{nameof(FusionCore)}{nameof(PowerGridMaskProvider)}".ToKebabCase());
+            public static BehaviourName CelestiumCoreUpgradeBuff => new($"{nameof(FusionCore)}{nameof(CelestiumCoreUpgradeBuff)}".ToKebabCase());
         }
         
         public static class CelestiumCore

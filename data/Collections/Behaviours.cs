@@ -440,6 +440,28 @@ namespace low_age_data.Collections
                         EffectName.BatteryCore.FusionCoreUpgradeDestroy
                     },
                     endsAt: EndsAt.Instant),
+                
+                new MaskProvider(
+                    name: BehaviourName.FusionCore.PowerGridMaskProvider,
+                    displayName: nameof(BehaviourName.FusionCore.PowerGridMaskProvider).CamelCaseToWords(),
+                    description: "Provides Power in 6 Distance.",
+                    maskCreated: MaskName.Power, 
+                    maskShape: new Circle(radius: 6, ignoreRadius: 0)),
+                
+                new Buff(
+                    name: BehaviourName.FusionCore.CelestiumCoreUpgradeBuff,
+                    displayName: nameof(BehaviourName.FusionCore.CelestiumCoreUpgradeBuff).CamelCaseToWords(),
+                    description: "",
+                    initialEffects: new List<EffectName>
+                    {
+                        EffectName.FusionCore.CelestiumCoreUpgradeCreateEntity,
+                        EffectName.FusionCore.CelestiumCoreUpgradeModifyResearch
+                    },
+                    finalEffects: new List<EffectName>
+                    {
+                        EffectName.FusionCore.CelestiumCoreUpgradeDestroy
+                    },
+                    endsAt: EndsAt.Instant),
 
                 #endregion
 

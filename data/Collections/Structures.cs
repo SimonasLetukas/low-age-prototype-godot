@@ -332,9 +332,10 @@ namespace low_age_data.Collections
                     {
                         AbilityName.Shared.Uee.PowerGenerator,
                         AbilityName.Shared.PassiveIncome,
-                        //AbilityName.BatteryCore.PowerGrid,
+                        AbilityName.FusionCore.PowerGrid,
                         AbilityName.Shared.Uee.Build,
-                        //AbilityName.BatteryCore.FusionCoreUpgrade
+                        AbilityName.FusionCore.DefenceProtocol,
+                        AbilityName.FusionCore.CelestiumCoreUpgrade
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
             };

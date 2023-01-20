@@ -365,6 +365,49 @@ namespace low_age_data.Collections
                     {
                         ResearchName.Uee.FusionCoreUpgrade
                     }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.FusionCore.PowerGridApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.FusionCore.PowerGridMaskProvider
+                    },
+                    location: Location.Self),
+                
+                new Damage(
+                    name: EffectName.FusionCore.DefenceProtocolDamage,
+                    damageType: DamageType.Ranged,
+                    amount: new Amount(flat: 3),
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    }),
+
+                new ApplyBehaviour(
+                    name: EffectName.FusionCore.CelestiumCoreUpgradeApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.FusionCore.CelestiumCoreUpgradeBuff
+                    },
+                    location: Location.Self),
+
+                new CreateEntity(
+                    name: EffectName.FusionCore.CelestiumCoreUpgradeCreateEntity,
+                    entityToCreate: StructureName.CelestiumCore),
+
+                new Destroy(
+                    name: EffectName.FusionCore.CelestiumCoreUpgradeDestroy,
+                    target: Location.Self,
+                    blocksBehaviours: true),
+                
+                new ModifyResearch(
+                    name: EffectName.FusionCore.CelestiumCoreUpgradeModifyResearch,
+                    researchToAdd: new List<ResearchName>
+                    {
+                        ResearchName.Uee.CelestiumCoreUpgrade
+                    }),
 
                 #endregion
 

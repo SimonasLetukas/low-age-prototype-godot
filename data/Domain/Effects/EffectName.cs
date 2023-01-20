@@ -106,6 +106,12 @@ namespace low_age_data.Domain.Effects
         
         public static class FusionCore
         {
+            public static EffectName PowerGridApplyBehaviour => new($"{nameof(FusionCore)}{nameof(PowerGridApplyBehaviour)}".ToKebabCase());
+            public static EffectName DefenceProtocolDamage => new($"{nameof(FusionCore)}{nameof(DefenceProtocolDamage)}".ToKebabCase());
+            public static EffectName CelestiumCoreUpgradeApplyBehaviour => new($"{nameof(FusionCore)}{nameof(CelestiumCoreUpgradeApplyBehaviour)}".ToKebabCase());
+            public static EffectName CelestiumCoreUpgradeCreateEntity => new($"{nameof(FusionCore)}{nameof(CelestiumCoreUpgradeCreateEntity)}".ToKebabCase());
+            public static EffectName CelestiumCoreUpgradeDestroy => new($"{nameof(FusionCore)}{nameof(CelestiumCoreUpgradeDestroy)}".ToKebabCase());
+            public static EffectName CelestiumCoreUpgradeModifyResearch => new($"{nameof(FusionCore)}{nameof(CelestiumCoreUpgradeModifyResearch)}".ToKebabCase());
         }
         
         public static class CelestiumCore

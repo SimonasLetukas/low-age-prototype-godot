@@ -161,7 +161,7 @@ namespace low_age_data.Collections
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Wall.BuildingBuildable),
-                
+
                 #endregion
 
                 #region Structures
@@ -262,8 +262,8 @@ namespace low_age_data.Collections
                     turnPhase: TurnPhase.Planning,
                     displayName: nameof(AbilityName.Obelisk.CelestiumDischarge).CamelCaseToWords(),
                     description: "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed " +
-                                 "by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 " +
-                                 "actions.",
+                                 "by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by " +
+                                 "3 for 3 actions.",
                     effects: new List<EffectName>
                     {
                         EffectName.Obelisk.CelestiumDischargeSearchLong,
@@ -439,6 +439,42 @@ namespace low_age_data.Collections
                     {
                         new(resource: ResourceName.Scraps, amount: 10),
                         new(resource: ResourceName.Celestium, amount: 50)
+                    }),
+                
+                new Passive(
+                    name: AbilityName.FusionCore.PowerGrid,
+                    displayName: nameof(AbilityName.FusionCore.PowerGrid).CamelCaseToWords(),
+                    description: "Provides Power in 6 Distance.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.FusionCore.PowerGridApplyBehaviour),
+                
+                new Target(
+                    name: AbilityName.FusionCore.DefenceProtocol,
+                    turnPhase: TurnPhase.Planning, 
+                    displayName: nameof(AbilityName.FusionCore.DefenceProtocol).CamelCaseToWords(),
+                    description: "Select an enemy unit in 6 Distance. At the start of the action phase the target " +
+                                 "receives 3 ranged attacks, each dealing 3 Range Damage.",
+                    targetArea: new Circle(radius: 6, ignoreRadius: 0),
+                    effects: new List<EffectName>
+                    {
+                        EffectName.FusionCore.DefenceProtocolDamage,
+                        EffectName.FusionCore.DefenceProtocolDamage,
+                        EffectName.FusionCore.DefenceProtocolDamage
+                    }),
+
+                new Instant(
+                    name: AbilityName.FusionCore.CelestiumCoreUpgrade,
+                    displayName: nameof(AbilityName.FusionCore.CelestiumCoreUpgrade).CamelCaseToWords(),
+                    turnPhase: TurnPhase.Planning,
+                    description: "Upgrade this Fusion Core to Celestium Core.",
+                    effects: new List<EffectName>
+                    {
+                        EffectName.FusionCore.CelestiumCoreUpgradeApplyBehaviour
+                    },
+                    cost: new List<Cost>
+                    {
+                        new(resource: ResourceName.Scraps, amount: 10),
+                        new(resource: ResourceName.Celestium, amount: 100)
                     }),
 
                 #endregion
