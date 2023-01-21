@@ -103,6 +103,7 @@ namespace low_age_data.Domain.Behaviours
         
         public static class CelestiumCore
         {
+            public static BehaviourName PowerGridMaskProvider => new($"{nameof(CelestiumCore)}{nameof(PowerGridMaskProvider)}".ToKebabCase());
         }
         
         public static class Collector

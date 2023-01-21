@@ -476,6 +476,43 @@ namespace low_age_data.Collections
                         new(resource: ResourceName.Scraps, amount: 10),
                         new(resource: ResourceName.Celestium, amount: 100)
                     }),
+                
+                new Passive(
+                    name: AbilityName.CelestiumCore.PowerGrid,
+                    displayName: nameof(AbilityName.CelestiumCore.PowerGrid).CamelCaseToWords(),
+                    description: "Provides Power in 8 Distance.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.CelestiumCore.PowerGridApplyBehaviour),
+                
+                new Target(
+                    name: AbilityName.CelestiumCore.DefenceProtocol,
+                    turnPhase: TurnPhase.Planning, 
+                    displayName: nameof(AbilityName.CelestiumCore.DefenceProtocol).CamelCaseToWords(),
+                    description: "Select an enemy unit in 8 Distance. At the start of the action phase the target " +
+                                 "receives 4 ranged attacks, each dealing 4 Range Damage.",
+                    targetArea: new Circle(radius: 8, ignoreRadius: 0),
+                    effects: new List<EffectName>
+                    {
+                        EffectName.CelestiumCore.DefenceProtocolDamage,
+                        EffectName.CelestiumCore.DefenceProtocolDamage,
+                        EffectName.CelestiumCore.DefenceProtocolDamage,
+                        EffectName.CelestiumCore.DefenceProtocolDamage
+                    }),
+
+                new Instant(
+                    name: AbilityName.CelestiumCore.HeightenedConductivity,
+                    displayName: nameof(AbilityName.CelestiumCore.HeightenedConductivity).CamelCaseToWords(),
+                    turnPhase: TurnPhase.Planning,
+                    description: "Unlocks Improved Power Grid ability for all Power Poles.",
+                    effects: new List<EffectName>
+                    {
+                        EffectName.CelestiumCore.HeightenedConductivityModifyResearch
+                    },
+                    cost: new List<Cost>
+                    {
+                        new(resource: ResourceName.Scraps, amount: 6),
+                        new(resource: ResourceName.Celestium, amount: 40)
+                    }),
 
                 #endregion
                 

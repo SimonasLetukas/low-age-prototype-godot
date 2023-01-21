@@ -408,6 +408,32 @@ namespace low_age_data.Collections
                     {
                         ResearchName.Uee.CelestiumCoreUpgrade
                     }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.CelestiumCore.PowerGridApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.CelestiumCore.PowerGridMaskProvider
+                    },
+                    location: Location.Self),
+                
+                new Damage(
+                    name: EffectName.CelestiumCore.DefenceProtocolDamage,
+                    damageType: DamageType.Ranged,
+                    amount: new Amount(flat: 4),
+                    location: Location.Actor,
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    }),
+                
+                new ModifyResearch(
+                    name: EffectName.CelestiumCore.HeightenedConductivityModifyResearch,
+                    researchToAdd: new List<ResearchName>
+                    {
+                        ResearchName.Uee.HeightenedConductivity
+                    }),
 
                 #endregion
 

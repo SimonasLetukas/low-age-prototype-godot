@@ -21,6 +21,7 @@ namespace low_age_data.Domain.Shared
         {
             public static ResearchName FusionCoreUpgrade => new($"{nameof(Uee)}{nameof(FusionCoreUpgrade)}".ToKebabCase());
             public static ResearchName CelestiumCoreUpgrade => new($"{nameof(Uee)}{nameof(CelestiumCoreUpgrade)}".ToKebabCase());
+            public static ResearchName HeightenedConductivity => new($"{nameof(Uee)}{nameof(HeightenedConductivity)}".ToKebabCase());
             public static ResearchName HoverboardReignition => new($"{nameof(Uee)}{nameof(HoverboardReignition)}".ToKebabCase());
             public static ResearchName ExplosiveShrapnel => new($"{nameof(Uee)}{nameof(ExplosiveShrapnel)}".ToKebabCase());
             public static ResearchName MdPractice => new($"{nameof(Uee)}{nameof(MdPractice)}".ToKebabCase());

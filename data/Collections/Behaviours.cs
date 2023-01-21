@@ -462,6 +462,13 @@ namespace low_age_data.Collections
                         EffectName.FusionCore.CelestiumCoreUpgradeDestroy
                     },
                     endsAt: EndsAt.Instant),
+                
+                new MaskProvider(
+                    name: BehaviourName.CelestiumCore.PowerGridMaskProvider,
+                    displayName: nameof(BehaviourName.CelestiumCore.PowerGridMaskProvider).CamelCaseToWords(),
+                    description: "Provides Power in 8 Distance.",
+                    maskCreated: MaskName.Power, 
+                    maskShape: new Circle(radius: 8, ignoreRadius: 0)),
 
                 #endregion
 

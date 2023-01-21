@@ -116,6 +116,9 @@ namespace low_age_data.Domain.Effects
         
         public static class CelestiumCore
         {
+            public static EffectName PowerGridApplyBehaviour => new($"{nameof(CelestiumCore)}{nameof(PowerGridApplyBehaviour)}".ToKebabCase());
+            public static EffectName DefenceProtocolDamage => new($"{nameof(CelestiumCore)}{nameof(DefenceProtocolDamage)}".ToKebabCase());
+            public static EffectName HeightenedConductivityModifyResearch => new($"{nameof(CelestiumCore)}{nameof(HeightenedConductivityModifyResearch)}".ToKebabCase());
         }
         
         public static class Collector

@@ -104,6 +104,9 @@ namespace low_age_data.Domain.Abilities
         
         public static class CelestiumCore
         {
+            public static AbilityName PowerGrid => new($"{nameof(CelestiumCore)}{nameof(PowerGrid)}".ToKebabCase());
+            public static AbilityName DefenceProtocol => new($"{nameof(CelestiumCore)}{nameof(DefenceProtocol)}".ToKebabCase());
+            public static AbilityName HeightenedConductivity => new($"{nameof(CelestiumCore)}{nameof(HeightenedConductivity)}".ToKebabCase());
         }
         
         public static class Collector
