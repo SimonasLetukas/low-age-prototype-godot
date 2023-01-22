@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Entities;
-using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Shape;
 

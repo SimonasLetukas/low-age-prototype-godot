@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Common;
+using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities;
+using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 using low_age_data.Domain.Shared.Modifications;
@@ -20,13 +21,20 @@ namespace low_age_data.Domain.Behaviours
             int? diminishingReturn = null,
             EndsAt? endsAt = null,
             IList<Cost>? cost = null,
-            bool? waitForAvailableStorage = null) 
+            bool? waitForAvailableStorage = null,
+            IList<Trigger>? triggers = null,
+            bool? removeOnConditionsMet = null,
+            IList<EffectName>? conditionalEffects = null) 
             : base(
                 name, 
                 $"{nameof(Behaviour)}.{nameof(Income)}", 
                 displayName, 
                 description, 
-                endsAt ?? EndsAt.Death)
+                endsAt ?? EndsAt.Death,
+                Alignment.Positive,
+                triggers: triggers,
+                removeOnConditionsMet: removeOnConditionsMet,
+                conditionalEffects: conditionalEffects)
         {
             Resources = resources;
             DiminishingReturn = diminishingReturn ?? 0;

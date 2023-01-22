@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Abilities

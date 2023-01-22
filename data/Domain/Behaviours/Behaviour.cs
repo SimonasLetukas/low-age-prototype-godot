@@ -1,4 +1,8 @@
-﻿using low_age_data.Domain.Entities.Actors;
+﻿using System.Collections.Generic;
+using low_age_data.Domain.Effects;
+using low_age_data.Domain.Entities.Actors;
+using low_age_data.Domain.Logic;
+using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 using Newtonsoft.Json;
 
@@ -12,6 +16,12 @@ namespace low_age_data.Domain.Behaviours
             string displayName, 
             string description, 
             EndsAt endsAt, 
+            Alignment alignment,
+            bool? canStack = null,
+            bool? canResetDuration = null,
+            IList<Trigger>? triggers = null,
+            bool? removeOnConditionsMet = null,
+            IList<EffectName>? conditionalEffects = null,
             bool? ownerAllowed = null, 
             bool? hasSameInstanceForAllOwners = null)
         {
@@ -20,6 +30,12 @@ namespace low_age_data.Domain.Behaviours
             DisplayName = displayName;
             Description = description;
             EndsAt = endsAt;
+            Alignment = alignment;
+            CanStack = canStack ?? false;
+            CanResetDuration = canResetDuration ?? false;
+            Triggers = triggers ?? new List<Trigger>();
+            RemoveOnConditionsMet = removeOnConditionsMet ?? false;
+            ConditionalEffects = conditionalEffects ?? new List<EffectName>();
             OwnerAllowed = ownerAllowed ?? false;
             HasSameInstanceForAllOwners = hasSameInstanceForAllOwners ?? false;
         }
@@ -30,8 +46,48 @@ namespace low_age_data.Domain.Behaviours
         public string Type { get; }
         public string DisplayName { get; }
         public string Description { get; }
+        
+        /// <summary>
+        /// <see cref="Behaviour"/>'s duration.
+        /// </summary>
         public EndsAt EndsAt { get; }
         
+        /// <summary>
+        /// Specifies whether the <see cref="Behaviour"/> icon should be green (positive), red (negative) or gray
+        /// (neutral).
+        /// </summary>
+        public Alignment Alignment { get; }
+        
+        /// <summary>
+        /// If true, multiple <see cref="Behaviour"/>s can be added. False by default.
+        /// </summary>
+        public bool CanStack { get; }
+        
+        /// <summary>
+        /// If true, applying the same <see cref="Behaviour"/> will reset the duration (to all stacks, if
+        /// <see cref="CanStack"/> is true). False by default.
+        /// </summary>
+        public bool CanResetDuration { get; }
+
+        /// <summary>
+        /// Logical <b>OR</b> between the <see cref="Triggers"/>, but <b>AND</b> between the <see cref="Event"/>s
+        /// inside.
+        /// </summary>
+        public IList<Trigger> Triggers { get; }
+        
+        /// <summary>
+        /// If true, behaviour is removed (without triggering <see cref="Buff.FinalModifications"/> or
+        /// <see cref="Buff.FinalEffects"/>, if they exist) when all <see cref="Event"/>s and their conditions are met
+        /// in any of the <see cref="Triggers"/>. False by default.
+        /// </summary>
+        public bool RemoveOnConditionsMet { get; }
+        
+        /// <summary>
+        /// Executed when any of the <see cref="Triggers"/> condition is met (before removal of this behaviour, if
+        /// <see cref="RemoveOnConditionsMet"/> is true).
+        /// </summary>
+        public IList<EffectName> ConditionalEffects { get; }
+
         /// <summary>
         /// If true, <see cref="Behaviour"/> can be owned by <see cref="Actor"/> instance which by default allows to
         /// have multiple behaviour instances (all tracked separately) of the same type on the same entity for each

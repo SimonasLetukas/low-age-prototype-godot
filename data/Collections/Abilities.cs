@@ -513,6 +513,20 @@ namespace low_age_data.Collections
                         new(resource: ResourceName.Scraps, amount: 6),
                         new(resource: ResourceName.Celestium, amount: 40)
                     }),
+                
+                new Passive(
+                    name: AbilityName.Collector.DirectTransitSystem,
+                    displayName: nameof(AbilityName.Collector.DirectTransitSystem).CamelCaseToWords(),
+                    description: "Provides +2 Scraps at the start of each planning phase if connected to Power.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Collector.DirectTransitSystemApplyBehaviourInactive),
+                
+                new Passive(
+                    name: AbilityName.Extractor.ReinforcedInfrastructure,
+                    displayName: nameof(AbilityName.Extractor.ReinforcedInfrastructure).CamelCaseToWords(),
+                    description: "Gains additional 3 Melee Armour if connected to Power.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourInactive),
 
                 #endregion
                 

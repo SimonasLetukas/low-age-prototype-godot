@@ -367,6 +367,56 @@ namespace low_age_data.Collections
                         AbilityName.CelestiumCore.HeightenedConductivity
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
+                
+                new(
+                    name: StructureName.Collector,
+                    displayName: nameof(StructureName.Collector).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 40, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 30, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Light,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shared.ScrapsIncome,
+                        AbilityName.Collector.DirectTransitSystem
+                    },
+                    size: new Vector2<int>(x: 2, y: 2)),
+                
+                new(
+                    name: StructureName.Extractor,
+                    displayName: nameof(StructureName.Extractor).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 70, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 15, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shared.CelestiumIncome,
+                        AbilityName.Extractor.ReinforcedInfrastructure
+                    },
+                    size: new Vector2<int>(x: 2, y: 2)),
             };
         }
     }

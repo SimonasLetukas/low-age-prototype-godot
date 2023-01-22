@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Common;
 using low_age_data.Domain.Effects;
+using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
 namespace low_age_data.Domain.Behaviours
@@ -27,7 +27,9 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(Counter)}", 
                 displayName, 
                 description, 
-                endsAt ?? EndsAt.Death)
+                endsAt ?? EndsAt.Death,
+                Alignment.Neutral,
+                canResetDuration: canResetDuration)
         {
             MaxAmount = maxAmount;
             TriggerAmount = triggerAmount;
@@ -35,7 +37,6 @@ namespace low_age_data.Domain.Behaviours
             SelfRemoveAfterAmountReached = selfRemoveAfterAmountReached ?? false;
             TriggerAtMultiples = triggerAtMultiples ?? false;
             SeparateDurations = separateDurations ?? false;
-            CanResetDuration = canResetDuration ?? false;
         }
         
         /// <summary>
@@ -62,14 +63,9 @@ namespace low_age_data.Domain.Behaviours
         public IList<EffectName> TriggeredEffects { get; }
 
         /// <summary>
-        /// If true, each count has its own duration (controlled by <see cref="Behaviour.EndsAt"/>); if false,
-        /// all counts share the same duration.
+        /// If true, each count has its own duration (controlled by <see cref="Behaviour.EndsAt"/>) and
+        /// <see cref="CanResetDuration"/> cannot be true; if false, all counts share the same duration. 
         /// </summary>
         public bool SeparateDurations { get; }
-        
-        /// <summary>
-        /// If true, each new count resets the duration. Only valid if <see cref="SeparateDurations"/> is false. 
-        /// </summary>
-        public bool CanResetDuration { get; }
     }
 }

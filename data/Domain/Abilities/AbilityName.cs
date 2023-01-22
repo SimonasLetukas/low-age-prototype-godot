@@ -112,11 +112,13 @@ namespace low_age_data.Domain.Abilities
         public static class Collector
         {
             public static AbilityName Building => new($"{nameof(Collector)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName DirectTransitSystem => new($"{nameof(Collector)}{nameof(DirectTransitSystem)}".ToKebabCase());
         }
         
         public static class Extractor
         {
             public static AbilityName Building => new($"{nameof(Extractor)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName ReinforcedInfrastructure => new($"{nameof(Extractor)}{nameof(ReinforcedInfrastructure)}".ToKebabCase());
         }
         
         public static class PowerPole

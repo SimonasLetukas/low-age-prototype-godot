@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Common;
 using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Logic;
+using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
 namespace low_age_data.Domain.Behaviours
@@ -30,7 +29,8 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(Buildable)}",
                 displayName, 
                 description, 
-                EndsAt.Death)
+                EndsAt.Death,
+                Alignment.Neutral)
         {
             PlacementValidators = placementValidators ?? new List<Validator>();
             MaximumHelpers = maximumHelpers ?? -1;

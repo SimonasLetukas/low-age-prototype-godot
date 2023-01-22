@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Common;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Shared;
@@ -33,8 +32,9 @@ namespace low_age_data.Domain.Behaviours
                 displayName, 
                 description, 
                 endsAt,
-                ownerAllowed, 
-                hasSameInstanceForAllOwners)
+                Alignment.Neutral,
+                ownerAllowed: ownerAllowed, 
+                hasSameInstanceForAllOwners: hasSameInstanceForAllOwners)
         {
             NumberOfInterceptions = numberOfInterceptions;
             DamageTypes = damageTypes ?? new List<DamageType>();

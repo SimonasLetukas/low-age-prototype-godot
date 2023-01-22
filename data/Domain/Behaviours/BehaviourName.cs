@@ -109,11 +109,15 @@ namespace low_age_data.Domain.Behaviours
         public static class Collector
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Collector)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName DirectTransitSystemInactiveBuff => new($"{nameof(Collector)}{nameof(DirectTransitSystemInactiveBuff)}".ToKebabCase());
+            public static BehaviourName DirectTransitSystemActiveIncome => new($"{nameof(Collector)}{nameof(DirectTransitSystemActiveIncome)}".ToKebabCase());
         }
         
         public static class Extractor
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Extractor)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName ReinforcedInfrastructureInactiveBuff => new($"{nameof(Extractor)}{nameof(ReinforcedInfrastructureInactiveBuff)}".ToKebabCase());
+            public static BehaviourName ReinforcedInfrastructureActiveBuff => new($"{nameof(Extractor)}{nameof(ReinforcedInfrastructureActiveBuff)}".ToKebabCase());
         }
         
         public static class Wall

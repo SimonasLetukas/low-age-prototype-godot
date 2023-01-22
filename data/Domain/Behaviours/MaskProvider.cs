@@ -1,5 +1,5 @@
-﻿using low_age_data.Common;
-using low_age_data.Domain.Masks;
+﻿using low_age_data.Domain.Masks;
+using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 using low_age_data.Domain.Shared.Shape;
 
@@ -25,8 +25,9 @@ namespace low_age_data.Domain.Behaviours
                 displayName,
                 description, 
                 endsAt ?? EndsAt.Death,
-                ownerAllowed, 
-                hasSameInstanceForAllOwners)
+                Alignment.Neutral,
+                ownerAllowed: ownerAllowed, 
+                hasSameInstanceForAllOwners: hasSameInstanceForAllOwners)
         {
             MaskCreated = maskCreated;
             MaskShape = maskShape;

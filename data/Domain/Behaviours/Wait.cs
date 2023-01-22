@@ -1,4 +1,4 @@
-﻿using low_age_data.Common;
+﻿using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
 namespace low_age_data.Domain.Behaviours
@@ -16,7 +16,8 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(Wait)}", 
                 displayName, 
                 description, 
-                endsAt)
+                endsAt,
+                Alignment.Neutral)
         {
             NextBehaviour = nextBehaviour;
         }

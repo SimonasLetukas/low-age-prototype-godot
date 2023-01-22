@@ -1,10 +1,13 @@
-﻿using low_age_data.Common;
+﻿using low_age_data.Domain.Entities;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
 namespace low_age_data.Domain.Behaviours
 {
-    /// Used for entity to be moved by the source entity (automatically removed if the source is destroyed)
+    /// <summary>
+    /// Used for <see cref="Entity"/> to be moved by the <see cref="Source"/> <see cref="Entity"/> (automatically
+    /// removed if the <see cref="Source"/> is destroyed)
+    /// </summary>
     public class Tether : Behaviour
     {
         public Tether(
@@ -22,7 +25,8 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(Tether)}", 
                 displayName, 
                 description, 
-                endsAt ?? EndsAt.Death)
+                endsAt ?? EndsAt.Death,
+                Alignment.Neutral)
         {
             Source = source ?? Location.Inherited;
             ExtendsSelection = extendsSelection ?? false;
@@ -32,10 +36,25 @@ namespace low_age_data.Domain.Behaviours
         }
 
         public Location Source { get; }
-        public bool ExtendsSelection { get; } // If true, selecting the tethered entity will also select the source entity
-        public bool SharedDamage { get; } // If true, any damage done to either tethered or source entity is also done to the other one
+        
+        /// <summary>
+        /// If true, selecting the tethered <see cref="Entity"/> will also select the <see cref="Source"/>
+        /// <see cref="Entity"/>. False by default.
+        /// </summary>
+        public bool ExtendsSelection { get; }
+        
+        /// <summary>
+        /// If true, any damage done to either tethered or source entity is also done to the other one. False by
+        /// default.
+        /// </summary>
+        public bool SharedDamage { get; }
+        
         public int MaximumLeashRange { get; }
-        public bool CalculatedForSourcePathfinding { get; } // If true, source entity to which this tether is attached to
-                                                            // considers the attached entity for its pathfinding
+        
+        /// <summary>
+        /// If true, source entity, to which this tether is attached to, considers the attached entity for its
+        /// pathfinding. True by default.
+        /// </summary>
+        public bool CalculatedForSourcePathfinding { get; }
     }
 }

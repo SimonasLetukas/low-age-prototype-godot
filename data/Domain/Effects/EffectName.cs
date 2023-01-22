@@ -123,10 +123,14 @@ namespace low_age_data.Domain.Effects
         
         public static class Collector
         {
+            public static EffectName DirectTransitSystemApplyBehaviourInactive => new($"{nameof(Collector)}{nameof(DirectTransitSystemApplyBehaviourInactive)}".ToKebabCase());
+            public static EffectName DirectTransitSystemApplyBehaviourActive => new($"{nameof(Collector)}{nameof(DirectTransitSystemApplyBehaviourActive)}".ToKebabCase());
         }
         
         public static class Extractor
         {
+            public static EffectName ReinforcedInfrastructureApplyBehaviourInactive => new($"{nameof(Extractor)}{nameof(ReinforcedInfrastructureApplyBehaviourInactive)}".ToKebabCase());
+            public static EffectName ReinforcedInfrastructureApplyBehaviourActive => new($"{nameof(Extractor)}{nameof(ReinforcedInfrastructureApplyBehaviourActive)}".ToKebabCase());
         }
         
         public static class PowerPole

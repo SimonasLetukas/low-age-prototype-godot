@@ -1,16 +1,8 @@
 ﻿using low_age_data.Collections;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Entities.Actors.Units;
-using low_age_data.Domain.Entities.Features;
-using low_age_data.Domain.Entities.Tiles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace low_age_data

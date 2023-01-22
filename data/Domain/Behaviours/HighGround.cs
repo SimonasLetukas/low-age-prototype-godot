@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using low_age_data.Common;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Entities.Actors.Units;
@@ -27,7 +26,8 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(HighGround)}", 
                 displayName, 
                 description, 
-                EndsAt.Death)
+                EndsAt.Death,
+                Alignment.Neutral)
         {
             HighGroundAreas = highGroundAreas.Count == 0
                 ? throw new ArgumentOutOfRangeException(nameof(highGroundAreas), 

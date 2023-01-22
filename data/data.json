@@ -2291,6 +2291,126 @@
         ],
         "displayName": "Celestium Core",
         "description": ""
+      },
+      {
+        "name": "structure-collector",
+        "size": {
+          "x": 2,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 40,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 30,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-scraps-income",
+          "ability-collector-direct-transit-system"
+        ],
+        "displayName": "Collector",
+        "description": ""
+      },
+      {
+        "name": "structure-extractor",
+        "size": {
+          "x": 2,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 70,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 15,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 5,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-celestium-income",
+          "ability-extractor-reinforced-infrastructure"
+        ],
+        "displayName": "Extractor",
+        "description": ""
       }
     ],
     "features": [
@@ -3483,6 +3603,38 @@
       ],
       "displayName": "Heightened Conductivity",
       "description": "Unlocks Improved Power Grid ability for all Power Poles."
+    },
+    {
+      "name": "ability-collector-direct-transit-system",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-collector-direct-transit-system-apply-behaviour-inactive",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Direct Transit System",
+      "description": "Provides +2 Scraps at the start of each planning phase if connected to Power."
+    },
+    {
+      "name": "ability-extractor-reinforced-infrastructure",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-extractor-reinforced-infrastructure-apply-behaviour-inactive",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Reinforced Infrastructure",
+      "description": "Gains additional 3 Melee Armour if connected to Power."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -5447,6 +5599,54 @@
         "research-uee-heightened-conductivity"
       ],
       "researchToRemove": [],
+      "validators": []
+    },
+    {
+      "name": "effect-collector-direct-transit-system-apply-behaviour-inactive",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-collector-direct-transit-system-inactive-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-collector-direct-transit-system-apply-behaviour-active",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-collector-direct-transit-system-active-income"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-extractor-reinforced-infrastructure-apply-behaviour-inactive",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-extractor-reinforced-infrastructure-inactive-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-extractor-reinforced-infrastructure-apply-behaviour-active",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-extractor-reinforced-infrastructure-active-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -7435,16 +7635,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "High Ground Buff",
       "description": "Unit is on high ground and has +1 vision range and +1 Attack Distance for ranged attacks.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7471,6 +7671,12 @@
       "displayName": "Passive Income Income",
       "description": "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7491,6 +7697,12 @@
       "displayName": "Scraps Income Income",
       "description": "At the start of each planning phase provides 5 Scraps.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7511,6 +7723,12 @@
       "displayName": "Celestium Income Income",
       "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1).",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7534,6 +7752,12 @@
       "displayName": "Building Buildable",
       "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7556,6 +7780,12 @@
       "displayName": "No Population Space Intercept Damage",
       "description": "This unit receives double damage from all sources, because there's not enough population space.",
       "endsAt": "EndsAt.EndOfThisPlanning",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7590,6 +7820,12 @@
       "displayName": "Building Buildable",
       "description": "This building can only be placed on the low ground tiles with Power.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7603,16 +7839,16 @@
       "finalEffects": [
         "effect-shared-uee-power-generator-modify-player"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Power Generator Buff",
       "description": "UEE faction loses when this structure is destroyed.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7639,6 +7875,12 @@
       "displayName": "Executive Stash Income",
       "description": "Provides 4 Population and 4 spaces of storage for Weapons.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7660,6 +7902,12 @@
       "displayName": "Ascendable Ascendable",
       "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7684,6 +7932,12 @@
       "displayName": "High Ground High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7702,16 +7956,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Celestium Discharge Buff Long",
       "description": "",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7732,16 +7986,16 @@
       ],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Celestium Discharge Buff Short",
       "description": "",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7772,16 +8026,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": true,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Celestium Discharge Buff Negative",
       "description": "This unit has its vision, Melee and Range Armour all reduced by 3 for 3 actions.",
       "endsAt": "EndsAt.EndOfThirdAction",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": true,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7802,6 +8056,12 @@
       "displayName": "Accommodation Income",
       "description": "Provides 2 Population.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7827,6 +8087,12 @@
       "displayName": "Melee Weapon Production Income",
       "description": "Every 20 Celestium generates a Melee Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7852,6 +8118,12 @@
       "displayName": "Ranged Weapon Production Income",
       "description": "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7877,6 +8149,12 @@
       "displayName": "Special Weapon Production Income",
       "description": "Every 30 Celestium generates a Special Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7897,6 +8175,12 @@
       "displayName": "Weapon Storage Income",
       "description": "Provides 4 spaces of storage for Weapons.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7918,6 +8202,12 @@
       "displayName": "Ascendable Ascendable",
       "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7942,6 +8232,12 @@
       "displayName": "High Ground High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7960,16 +8256,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": true,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Protective Shield Buff",
       "description": "Range Armour for this unit is increased by 2 because of a nearby Barricade's shield.",
       "endsAt": "EndsAt.EndOfThisPlanning",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": true,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -7984,16 +8280,16 @@
         "effect-barricade-decompose-damage",
         "effect-barricade-decompose-apply-behaviour"
       ],
-      "canStack": false,
-      "canResetDuration": true,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Decompose Buff",
       "description": "This Barricade is decomposing and will receive 15 Pure Damage at the start of each action phase.",
       "endsAt": "EndsAt.StartOfNextActionPhase",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": true,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8009,6 +8305,12 @@
       "displayName": "Power Grid Mask Provider",
       "description": "Provides Power in 4 Distance.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8044,6 +8346,12 @@
       "displayName": "Building Buildable",
       "description": "This building can only be placed on the low ground Scraps tiles.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8079,6 +8387,12 @@
       "displayName": "Building Buildable",
       "description": "This building can only be placed on the low ground Celestium tiles.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8113,6 +8427,12 @@
       "displayName": "Building Buildable",
       "description": "This building can only be placed on the low ground tiles with Power.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8129,16 +8449,16 @@
       "finalEffects": [
         "effect-battery-core-fusion-core-upgrade-destroy"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Fusion Core Upgrade Buff",
       "description": "",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8154,6 +8474,12 @@
       "displayName": "Power Grid Mask Provider",
       "description": "Provides Power in 6 Distance.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8170,16 +8496,16 @@
       "finalEffects": [
         "effect-fusion-core-celestium-core-upgrade-destroy"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Celestium Core Upgrade Buff",
       "description": "",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8195,6 +8521,192 @@
       "displayName": "Power Grid Mask Provider",
       "description": "Provides Power in 8 Distance.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-collector-direct-transit-system-inactive-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Direct Transit System Inactive Buff",
+      "description": "Will provide +2 Scraps at the start of each planning phase when connected to Power.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityStartsActionPhase"
+          ],
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskExists"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
+        }
+      ],
+      "removeOnConditionsMet": true,
+      "conditionalEffects": [
+        "effect-collector-direct-transit-system-apply-behaviour-active"
+      ],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-collector-direct-transit-system-active-income",
+      "type": "Behaviour.Income",
+      "resources": [
+        {
+          "type": "Modification.ResourceModification",
+          "resource": "resource-scraps",
+          "change": "Change.AddCurrent",
+          "amount": 2.0
+        }
+      ],
+      "diminishingReturn": 0,
+      "cost": [],
+      "waitForAvailableStorage": false,
+      "displayName": "Direct Transit System Active Income",
+      "description": "Provides +2 Scraps at the start of each planning phase because it's connected to Power.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityStartsActionPhase"
+          ],
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
+        }
+      ],
+      "removeOnConditionsMet": true,
+      "conditionalEffects": [
+        "effect-collector-direct-transit-system-apply-behaviour-inactive"
+      ],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-extractor-reinforced-infrastructure-inactive-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Reinforced Infrastructure Inactive Buff",
+      "description": "Will gain additional 3 Melee Armour if connected to Power.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityStartsActionPhase"
+          ],
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskExists"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
+        }
+      ],
+      "removeOnConditionsMet": true,
+      "conditionalEffects": [
+        "effect-extractor-reinforced-infrastructure-apply-behaviour-active"
+      ],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-extractor-reinforced-infrastructure-active-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.MeleeArmour",
+          "change": "Change.AddMax",
+          "amount": 3.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Reinforced Infrastructure Active Buff",
+      "description": "Gains additional 3 Melee Armour because it's connected to Power.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityStartsActionPhase"
+          ],
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
+        }
+      ],
+      "removeOnConditionsMet": true,
+      "conditionalEffects": [
+        "effect-extractor-reinforced-infrastructure-apply-behaviour-inactive"
+      ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8208,16 +8720,16 @@
       "finalEffects": [
         "effect-leader-all-for-one-modify-player"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "All For One Buff",
       "description": "Revelators faction loses when this unit dies.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8246,16 +8758,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": true,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Menacing Presence Buff",
       "description": "Melee and Range Damage for this unit is reduced by 2.",
       "endsAt": "EndsAt.EndOfThisAction",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": true,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8269,16 +8781,16 @@
       ],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "One For All Obelisk Buff",
       "description": "This unit has recently been sapped for health.",
       "endsAt": "EndsAt.StartOfTenthPlanning",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8297,16 +8809,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "One For All Heal Buff",
       "description": "Heals for 2 Health.",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8342,6 +8854,12 @@
       "displayName": "Building Buildable",
       "description": "This building can only be placed on the low ground Scraps tiles, and can be built by multiple Slaves simultaneously.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8377,6 +8895,12 @@
       "displayName": "Building Buildable",
       "description": "This building can only be placed on the low ground Celestium tiles, and can be built by multiple Slaves simultaneously.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8397,9 +8921,13 @@
         }
       ],
       "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Repair Structure Buff",
+      "description": "This structure will be repaired by +1 Health at the start of the planning phase.",
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "alignment": "Alignment.Positive",
       "canStack": true,
       "canResetDuration": false,
-      "alignment": "Alignment.Positive",
       "triggers": [
         {
           "events": [
@@ -8408,12 +8936,8 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
-      "restoreChangesOnEnd": false,
-      "displayName": "Repair Structure Buff",
-      "description": "This structure will be repaired by +1 Health at the start of the planning phase.",
-      "endsAt": "EndsAt.StartOfNextPlanning",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8424,6 +8948,12 @@
       "displayName": "Repair Wait",
       "description": "Currently repairing a structure.",
       "endsAt": "EndsAt.StartOfNextPlanning",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8439,9 +8969,13 @@
       "finalEffects": [
         "effect-slave-manual-labour-modify-player"
       ],
+      "restoreChangesOnEnd": false,
+      "displayName": "Manual Labour Buff",
+      "description": "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "alignment": "Alignment.Positive",
       "canStack": false,
       "canResetDuration": false,
-      "alignment": "Alignment.Positive",
       "triggers": [
         {
           "events": [
@@ -8450,12 +8984,8 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
-      "restoreChangesOnEnd": false,
-      "displayName": "Manual Labour Buff",
-      "description": "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
-      "endsAt": "EndsAt.StartOfNextPlanning",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8466,6 +8996,12 @@
       "displayName": "Manual Labour Wait",
       "description": "Currently working on a nearby Hut.",
       "endsAt": "EndsAt.StartOfNextPlanning",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8475,10 +9011,15 @@
       "attackTypes": [
         "Attacks.Ranged"
       ],
-      "canStack": false,
       "displayName": "Doubleshot Extra Attack",
       "description": "Ranged attacks twice.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8499,16 +9040,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": true,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Cripple Buff",
       "description": "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing from any sources until the end of its action.",
       "endsAt": "EndsAt.EndOfThisAction",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": true,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8522,16 +9063,16 @@
       "finalEffects": [
         "effect-gorger-fanatic-suicide-search"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Fanatic Suicide Buff",
       "description": "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage to all friendly and enemy units in 1 Distance.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8545,16 +9086,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": true,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Silent Assassin Buff",
       "description": "This unit is silenced (use of any abilities is disabled).",
       "endsAt": "EndsAt.EndOfSecondAction",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": true,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8565,6 +9106,12 @@
       "displayName": "Climb Wait",
       "description": "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
       "endsAt": "EndsAt.EndOfThisActionPhase",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8578,16 +9125,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Climb Buff",
       "description": "Camou can move down from high ground at the additional cost of 1 Movement.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8598,6 +9145,12 @@
       "displayName": "Wondrous Goo Feature Wait",
       "description": "Effect area will expand at the end of this action phase.",
       "endsAt": "EndsAt.EndOfThisActionPhase",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8618,16 +9171,16 @@
       "finalEffects": [
         "effect-shaman-wondrous-goo-destroy"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Wondrous Goo Feature Buff",
       "description": "Effect area will disappear at the end of this action phase.",
       "endsAt": "EndsAt.EndOfThisActionPhase",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8658,16 +9211,16 @@
       "finalEffects": [
         "effect-shaman-wondrous-goo-damage"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Wondrous Goo Buff",
       "description": "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
       "endsAt": "EndsAt.StartOfNextAction",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8682,6 +9235,12 @@
       "displayName": "Cargo Tether",
       "description": "The cargo follows Pyre.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8693,9 +9252,13 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Cargo Wall Of Flames Buff",
+      "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
       "canStack": false,
       "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
       "triggers": [
         {
           "events": [
@@ -8704,14 +9267,10 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": false,
+      "removeOnConditionsMet": false,
       "conditionalEffects": [
         "effect-pyre-wall-of-flames-create-entity"
       ],
-      "restoreChangesOnEnd": false,
-      "displayName": "Cargo Wall Of Flames Buff",
-      "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
-      "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8725,9 +9284,13 @@
       "finalEffects": [
         "effect-pyre-wall-of-flames-destroy"
       ],
+      "restoreChangesOnEnd": false,
+      "displayName": "Wall Of Flames Buff",
+      "description": "",
+      "endsAt": "EndsAt.StartOfNextAction",
+      "alignment": "Alignment.Negative",
       "canStack": false,
       "canResetDuration": false,
-      "alignment": "Alignment.Negative",
       "triggers": [
         {
           "events": [
@@ -8736,14 +9299,10 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [
         "effect-pyre-wall-of-flames-destroy"
       ],
-      "restoreChangesOnEnd": false,
-      "displayName": "Wall Of Flames Buff",
-      "description": "",
-      "endsAt": "EndsAt.StartOfNextAction",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8757,16 +9316,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Phantom Menace Buff",
       "description": "Pyre can move through enemy units (but not buildings).",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8781,16 +9340,16 @@
         "effect-roach-degrading-carapace-periodic-apply-behaviour",
         "effect-roach-degrading-carapace-apply-behaviour"
       ],
-      "canStack": true,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Degrading Carapace Buff",
       "description": "Increases periodic damage by 1 at the start of each action.",
       "endsAt": "EndsAt.StartOfNextAction",
+      "alignment": "Alignment.Negative",
+      "canStack": true,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8806,16 +9365,16 @@
       "finalEffects": [
         "effect-roach-degrading-carapace-periodic-apply-behaviour"
       ],
-      "canStack": true,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Degrading Carapace Periodic Damage Buff",
       "description": "This unit will continue to receive 1 damage at every start of its action.",
       "endsAt": "EndsAt.StartOfNextAction",
+      "alignment": "Alignment.Negative",
+      "canStack": true,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8830,6 +9389,12 @@
       "displayName": "Paralysing Grasp Tether",
       "description": "This unit is possessed by Parasite. On Parasite turn, it moves both units using the movement speed that the possessed unit has. Any damage received is shared between both.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8847,9 +9412,13 @@
       ],
       "finalModifications": [],
       "finalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Paralysing Grasp Buff",
+      "description": "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it must do unless there are no legal targets.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Negative",
       "canStack": false,
       "canResetDuration": false,
-      "alignment": "Alignment.Negative",
       "triggers": [
         {
           "events": [
@@ -8858,12 +9427,8 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
-      "restoreChangesOnEnd": true,
-      "displayName": "Paralysing Grasp Buff",
-      "description": "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it must do unless there are no legal targets.",
-      "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8886,9 +9451,13 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Paralysing Grasp Self Buff",
+      "description": "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both units on Parasite's turn.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
       "canStack": false,
       "canResetDuration": false,
-      "alignment": "Alignment.Positive",
       "triggers": [
         {
           "events": [
@@ -8897,12 +9466,8 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
-      "restoreChangesOnEnd": true,
-      "displayName": "Paralysing Grasp Self Buff",
-      "description": "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both units on Parasite's turn.",
-      "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8921,16 +9486,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": true,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Expert Formation Buff",
       "description": "Range Armour for this unit is increased by 2 because it is in formation with an adjacent Horrior.",
       "endsAt": "EndsAt.EndOfThisActionPhase",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": true,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8941,6 +9506,12 @@
       "displayName": "Mount Wait",
       "description": "This unit is mounting up to transform into Surfer.",
       "endsAt": "EndsAt.StartOfFourthPlanning",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8956,16 +9527,16 @@
       "finalEffects": [
         "effect-horrior-mount-destroy"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Mount Buff",
       "description": "",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -8977,9 +9548,13 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Critical Mark Buff",
+      "description": "Marksman has marked this target until the end of the next action phase. The mark is consumed dealing 5 Melee Damage, when an ally of Marksman attacks this unit.",
+      "endsAt": "EndsAt.EndOfNextActionPhase",
+      "alignment": "Alignment.Negative",
       "canStack": false,
       "canResetDuration": true,
-      "alignment": "Alignment.Negative",
       "triggers": [
         {
           "events": [
@@ -9002,14 +9577,10 @@
           ]
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [
         "effect-marksman-critical-mark-damage"
       ],
-      "restoreChangesOnEnd": false,
-      "displayName": "Critical Mark Buff",
-      "description": "Marksman has marked this target until the end of the next action phase. The mark is consumed dealing 5 Melee Damage, when an ally of Marksman attacks this unit.",
-      "endsAt": "EndsAt.EndOfNextActionPhase",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9023,16 +9594,16 @@
       "finalEffects": [
         "effect-surfer-dismount-create-entity"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Dismount Buff",
       "description": "Upon death, reemerges as Horrior.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9052,6 +9623,12 @@
       "displayName": "Deadly Ammunition Ammunition",
       "description": "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9062,6 +9639,12 @@
       "displayName": "Reload Wait",
       "description": "Mortar will reload its ammunition at the end of this action.",
       "endsAt": "EndsAt.EndOfThisAction",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9075,16 +9658,16 @@
       ],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Reload Buff",
       "description": "",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9107,16 +9690,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Piercing Blast Buff",
       "description": "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9135,16 +9718,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Tactical Goggles Buff",
       "description": "Gains +3 Vision range.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9165,9 +9748,13 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Leadership Buff",
+      "description": "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of the next action or if Hawk is not adjacent anymore.",
+      "endsAt": "EndsAt.EndOfThisAction",
+      "alignment": "Alignment.Positive",
       "canStack": false,
       "canResetDuration": false,
-      "alignment": "Alignment.Positive",
       "triggers": [
         {
           "events": [
@@ -9176,12 +9763,8 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
-      "restoreChangesOnEnd": true,
-      "displayName": "Leadership Buff",
-      "description": "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of the next action or if Hawk is not adjacent anymore.",
-      "endsAt": "EndsAt.EndOfThisAction",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9196,16 +9779,16 @@
         "effect-hawk-health-kit-search",
         "effect-hawk-health-kit-apply-behaviour"
       ],
-      "canStack": true,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Health Kit Buff",
       "description": "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
       "endsAt": "EndsAt.StartOfNextPlanning",
+      "alignment": "Alignment.Positive",
+      "canStack": true,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9224,16 +9807,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Health Kit Heal Buff",
       "description": "Heals for 1 Health.",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9257,6 +9840,12 @@
       "displayName": "Assembling Buildable",
       "description": "This machine can only be placed on the low ground and can be assembled by a maximum of 3 Engineers at once.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9282,6 +9871,12 @@
       "displayName": "Assembling Buildable",
       "description": "This machine can only be placed on a Watchtower and can be assembled by a maximum of 1 Engineer at once.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9305,6 +9900,12 @@
       "displayName": "Assembling Buildable",
       "description": "This machine can only be placed on the low ground and can be assembled by a maximum of 1 Engineer at once.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9320,16 +9921,16 @@
       "finalEffects": [
         "effect-engineer-operate-destroy"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Operate Buff",
       "description": "",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9350,9 +9951,13 @@
         }
       ],
       "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Repair Structure Or Machine Buff",
+      "description": "This structure or machine will be repaired by +2 Health at the start of the planning phase.",
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "alignment": "Alignment.Positive",
       "canStack": true,
       "canResetDuration": false,
-      "alignment": "Alignment.Positive",
       "triggers": [
         {
           "events": [
@@ -9361,12 +9966,8 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
-      "restoreChangesOnEnd": false,
-      "displayName": "Repair Structure Or Machine Buff",
-      "description": "This structure or machine will be repaired by +2 Health at the start of the planning phase.",
-      "endsAt": "EndsAt.StartOfNextPlanning",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9387,9 +9988,13 @@
         }
       ],
       "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Repair Horrior Buff",
+      "description": "This Horrior will have their Mount duration reduced by one turn at the start of the planning phase.",
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "alignment": "Alignment.Positive",
       "canStack": true,
       "canResetDuration": false,
-      "alignment": "Alignment.Positive",
       "triggers": [
         {
           "events": [
@@ -9398,12 +10003,8 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
-      "restoreChangesOnEnd": false,
-      "displayName": "Repair Horrior Buff",
-      "description": "This Horrior will have their Mount duration reduced by one turn at the start of the planning phase.",
-      "endsAt": "EndsAt.StartOfNextPlanning",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9414,6 +10015,12 @@
       "displayName": "Repair Wait",
       "description": "Currently repairing.",
       "endsAt": "EndsAt.StartOfNextPlanning",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9428,10 +10035,15 @@
         "effect-cannon-machine-remove-behaviour"
       ],
       "separateDurations": false,
-      "canResetDuration": false,
       "displayName": "Machine Counter",
       "description": "Needs 3 Engineers to operate this machine.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9445,16 +10057,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Machine Buff",
       "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9480,9 +10092,13 @@
         "effect-cannon-heat-up-search",
         "effect-cannon-heat-up-destroy"
       ],
+      "restoreChangesOnEnd": true,
+      "displayName": "Heat Up Danger Zone Buff",
+      "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile.",
+      "endsAt": "EndsAt.EndOfNextAction",
+      "alignment": "Alignment.Positive",
       "canStack": false,
       "canResetDuration": false,
-      "alignment": "Alignment.Positive",
       "triggers": [
         {
           "events": [
@@ -9497,15 +10113,11 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [
         "effect-cannon-machine-remove-behaviour",
         "effect-cannon-heat-up-destroy"
       ],
-      "restoreChangesOnEnd": true,
-      "displayName": "Heat Up Danger Zone Buff",
-      "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile.",
-      "endsAt": "EndsAt.EndOfNextAction",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9516,6 +10128,12 @@
       "displayName": "Heat Up Wait",
       "description": "This Cannon is heating up for a blast at the danger zone.",
       "endsAt": "EndsAt.EndOfNextAction",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9530,10 +10148,15 @@
         "effect-ballista-machine-remove-behaviour"
       ],
       "separateDurations": false,
-      "canResetDuration": false,
       "displayName": "Machine Counter",
       "description": "Needs 1 Engineer to operate this machine.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9547,16 +10170,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Machine Buff",
       "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9568,9 +10191,13 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Aim Buff",
+      "description": "This unit is aimed by a Ballista, which allows it to shoot every turn as long as this unit remains in range.",
+      "endsAt": "EndsAt.EndOfNextActionPhase",
+      "alignment": "Alignment.Negative",
       "canStack": false,
       "canResetDuration": true,
-      "alignment": "Alignment.Negative",
       "triggers": [
         {
           "events": [
@@ -9597,12 +10224,8 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
-      "restoreChangesOnEnd": false,
-      "displayName": "Aim Buff",
-      "description": "This unit is aimed by a Ballista, which allows it to shoot every turn as long as this unit remains in range.",
-      "endsAt": "EndsAt.EndOfNextActionPhase",
       "ownerAllowed": true,
       "hasSameInstanceForAllOwners": false
     },
@@ -9617,10 +10240,15 @@
         "effect-radar-machine-remove-behaviour"
       ],
       "separateDurations": false,
-      "canResetDuration": false,
       "displayName": "Machine Counter",
       "description": "Needs 1 Engineer to operate this machine.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9634,16 +10262,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Machine Buff",
       "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9655,9 +10283,13 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Power Dependency Buff",
+      "description": "If this unit is not connected to Power, all abilities get disabled and it loses 1 Health at the start of its action.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
       "canStack": false,
       "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
       "triggers": [
         {
           "events": [
@@ -9696,15 +10328,11 @@
           ]
         }
       ],
-      "destroyOnConditionsMet": false,
+      "removeOnConditionsMet": false,
       "conditionalEffects": [
         "effect-radar-power-dependency-damage",
         "effect-radar-power-dependency-apply-behaviour-disable"
       ],
-      "restoreChangesOnEnd": false,
-      "displayName": "Power Dependency Buff",
-      "description": "If this unit is not connected to Power, all abilities get disabled and it loses 1 Health at the start of its action.",
-      "endsAt": "EndsAt.Death",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9718,9 +10346,13 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Power Dependency Buff Disable",
+      "description": "All abilities are disabled because Power is not supplied.",
+      "endsAt": "EndsAt.StartOfNextActionPhase",
+      "alignment": "Alignment.Negative",
       "canStack": false,
       "canResetDuration": true,
-      "alignment": "Alignment.Negative",
       "triggers": [
         {
           "events": [
@@ -9741,12 +10373,8 @@
           ]
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
-      "restoreChangesOnEnd": true,
-      "displayName": "Power Dependency Buff Disable",
-      "description": "All abilities are disabled because Power is not supplied.",
-      "endsAt": "EndsAt.StartOfNextActionPhase",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9769,16 +10397,16 @@
       "finalEffects": [
         "effect-radar-resonating-sweep-destroy"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Resonating Sweep Buff",
       "description": "Provides vision to the Radar's owner.",
       "endsAt": "EndsAt.StartOfNextPlanning",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9794,16 +10422,16 @@
       "finalEffects": [
         "effect-radar-radio-location-search-create"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Radio Location Buff",
       "description": "",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9820,16 +10448,16 @@
       "finalEffects": [
         "effect-radar-radio-location-destroy"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Neutral",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Radio Location Feature Buff",
       "description": "This red dot is able to detect enemy units in the fog of war.",
       "endsAt": "EndsAt.EndOfThisPlanning",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9844,10 +10472,15 @@
         "effect-vessel-machine-remove-behaviour"
       ],
       "separateDurations": false,
-      "canResetDuration": false,
       "displayName": "Machine Counter",
       "description": "Needs 3 Engineers to operate this machine.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9861,16 +10494,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Machine Buff",
       "description": "This machine is disabled until it is fully operated by the required number of Engineers.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9896,6 +10529,12 @@
       "displayName": "Absorbent Field Intercept Damage",
       "description": "The melee and ranged damage this unit receives is reduced by 50%, but this amount is also dealt to a nearby Vessel.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": true,
       "hasSameInstanceForAllOwners": false
     },
@@ -9909,16 +10548,16 @@
       "finalEffects": [
         "effect-vessel-fortify-destroy"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Fortify Destroy Buff",
       "description": "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of Vessel's action.",
       "endsAt": "EndsAt.StartOfNextAction",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9943,16 +10582,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Fortify Buff",
       "description": "Has +3 Melee Armour and +3 Range Armour due to a nearby fortified Vessel",
       "endsAt": "EndsAt.StartOfNextAction",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9966,16 +10605,16 @@
       ],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": true,
-      "canResetDuration": false,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Rendition Placement Buff",
       "description": "This unit is about to have its rendition placed in a 3 Attack Distance.",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Negative",
+      "canStack": true,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -9998,6 +10637,12 @@
       "displayName": "Rendition Placement Buff",
       "description": "50% of any damage dealt will be dealt as Pure Damage to the unit that was the target of this rendition.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -10011,9 +10656,13 @@
       "finalEffects": [
         "effect-omen-rendition-destroy"
       ],
+      "restoreChangesOnEnd": false,
+      "displayName": "Rendition Buff Timer",
+      "description": "The rendition stays for 2 action phases and disappears afterwards.",
+      "endsAt": "EndsAt.EndOfNextActionPhase",
+      "alignment": "Alignment.Negative",
       "canStack": false,
       "canResetDuration": false,
-      "alignment": "Alignment.Negative",
       "triggers": [
         {
           "events": [
@@ -10022,14 +10671,10 @@
           "validators": []
         }
       ],
-      "destroyOnConditionsMet": true,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [
         "effect-omen-rendition-destroy"
       ],
-      "restoreChangesOnEnd": false,
-      "displayName": "Rendition Buff Timer",
-      "description": "The rendition stays for 2 action phases and disappears afterwards.",
-      "endsAt": "EndsAt.EndOfNextActionPhase",
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -10043,16 +10688,16 @@
       "finalEffects": [
         "effect-omen-rendition-search"
       ],
-      "canStack": false,
-      "canResetDuration": false,
-      "alignment": "Alignment.Positive",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Rendition Buff Death",
       "description": "The unit that was the target of this rendition will emit a blast if this rendition is destroyed. This blast would deal 10 Melee Damage and slow all adjacent enemy units by 50% until the end of their next action.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -10071,16 +10716,16 @@
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [],
-      "canStack": false,
-      "canResetDuration": true,
-      "alignment": "Alignment.Negative",
-      "triggers": [],
-      "destroyOnConditionsMet": false,
-      "conditionalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Rendition Buff Death",
       "description": "This unit is slowed by 50% until the end of its next action.",
       "endsAt": "EndsAt.EndOfNextAction",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": true,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     }

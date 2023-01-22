@@ -434,6 +434,38 @@ namespace low_age_data.Collections
                     {
                         ResearchName.Uee.HeightenedConductivity
                     }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Collector.DirectTransitSystemApplyBehaviourInactive,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Collector.DirectTransitSystemInactiveBuff
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Collector.DirectTransitSystemApplyBehaviourActive,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Collector.DirectTransitSystemActiveIncome
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourInactive,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Extractor.ReinforcedInfrastructureInactiveBuff
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourActive,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Extractor.ReinforcedInfrastructureActiveBuff
+                    },
+                    location: Location.Self),
 
                 #endregion
 

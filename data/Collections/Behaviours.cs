@@ -344,7 +344,7 @@ namespace low_age_data.Collections
                     canStack: false,
                     canResetDuration: true,
                     alignment: Alignment.Positive,
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     restoreChangesOnEnd: true),
                 
                 new Buff(
@@ -469,6 +469,135 @@ namespace low_age_data.Collections
                     description: "Provides Power in 8 Distance.",
                     maskCreated: MaskName.Power, 
                     maskShape: new Circle(radius: 8, ignoreRadius: 0)),
+                
+                new Buff(
+                    name: BehaviourName.Collector.DirectTransitSystemInactiveBuff,
+                    displayName: nameof(BehaviourName.Collector.DirectTransitSystemInactiveBuff).CamelCaseToWords(),
+                    description: "Will provide +2 Scraps at the start of each planning phase when connected to Power.",
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Neutral,
+                    triggers: new List<Trigger>
+                    {
+                        new(events: new List<Event>
+                        {
+                            Event.EntityStartedActionPhase
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.Exists, 
+                                    conditionedMask: MaskName.Power)
+                            })
+                        }), 
+                    },
+                    removeOnConditionsMet: true,
+                    conditionalEffects: new List<EffectName>
+                    {
+                        EffectName.Collector.DirectTransitSystemApplyBehaviourActive
+                    },
+                    restoreChangesOnEnd: false),
+                
+                new Income(
+                    name: BehaviourName.Collector.DirectTransitSystemActiveIncome,
+                    displayName: nameof(BehaviourName.Collector.DirectTransitSystemActiveIncome).CamelCaseToWords(),
+                    description: "Provides +2 Scraps at the start of each planning phase because it's connected to " +
+                                 "Power.",
+                    resources: new List<ResourceModification>
+                    {
+                        new(change: Change.AddCurrent,
+                            amount: 2,
+                            resource: ResourceName.Scraps),
+                    },
+                    triggers: new List<Trigger>
+                    {
+                        new(events: new List<Event>
+                        {
+                            Event.EntityStartedActionPhase
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
+                                    conditionedMask: MaskName.Power)
+                            })
+                        }), 
+                    },
+                    removeOnConditionsMet: true,
+                    conditionalEffects: new List<EffectName>
+                    {
+                        EffectName.Collector.DirectTransitSystemApplyBehaviourInactive
+                    }),
+                
+                new Buff(
+                    name: BehaviourName.Extractor.ReinforcedInfrastructureInactiveBuff,
+                    displayName: nameof(BehaviourName.Extractor.ReinforcedInfrastructureInactiveBuff).CamelCaseToWords(),
+                    description: "Will gain additional 3 Melee Armour if connected to Power.",
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Neutral,
+                    triggers: new List<Trigger>
+                    {
+                        new(events: new List<Event>
+                        {
+                            Event.EntityStartedActionPhase
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.Exists, 
+                                    conditionedMask: MaskName.Power)
+                            })
+                        }), 
+                    },
+                    removeOnConditionsMet: true,
+                    conditionalEffects: new List<EffectName>
+                    {
+                        EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourActive
+                    },
+                    restoreChangesOnEnd: false),
+                
+                new Buff(
+                    name: BehaviourName.Extractor.ReinforcedInfrastructureActiveBuff,
+                    displayName: nameof(BehaviourName.Extractor.ReinforcedInfrastructureActiveBuff).CamelCaseToWords(),
+                    description: "Gains additional 3 Melee Armour because it's connected to Power.",
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.AddMax,
+                            amount: 3,
+                            stat: Stats.MeleeArmour)
+                    },
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    triggers: new List<Trigger>
+                    {
+                        new(events: new List<Event>
+                        {
+                            Event.EntityStartedActionPhase
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
+                                    conditionedMask: MaskName.Power)
+                            })
+                        }), 
+                    },
+                    removeOnConditionsMet: true,
+                    conditionalEffects: new List<EffectName>
+                    {
+                        EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourInactive
+                    },
+                    restoreChangesOnEnd: true),
 
                 #endregion
 
@@ -504,7 +633,7 @@ namespace low_age_data.Collections
                     canStack: false,
                     canResetDuration: true,
                     alignment: Alignment.Negative,
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     restoreChangesOnEnd: true),
 
                 new Buff(
@@ -613,7 +742,7 @@ namespace low_age_data.Collections
                             Event.OriginIsInterrupted
                         })
                     },
-                    destroyOnConditionsMet: true),
+                    removeOnConditionsMet: true),
 
                 new Wait(
                     name: BehaviourName.Slave.RepairWait,
@@ -648,7 +777,7 @@ namespace low_age_data.Collections
                             Event.OriginIsDestroyed
                         })
                     },
-                    destroyOnConditionsMet: true),
+                    removeOnConditionsMet: true),
 
                 new Wait(
                     name: BehaviourName.Slave.ManualLabourWait,
@@ -690,7 +819,7 @@ namespace low_age_data.Collections
                     canResetDuration: true,
                     alignment: Alignment.Negative,
                     triggers: null,
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -726,7 +855,7 @@ namespace low_age_data.Collections
                     canResetDuration: true,
                     alignment: Alignment.Negative,
                     triggers: null,
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -810,7 +939,7 @@ namespace low_age_data.Collections
                     canResetDuration: false,
                     alignment: Alignment.Negative,
                     triggers: null,
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -847,7 +976,7 @@ namespace low_age_data.Collections
                             Event.EntityIsAboutToMove
                         })
                     },
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     conditionalEffects: new List<EffectName>
                     {
                         EffectName.Pyre.WallOfFlamesCreateEntity
@@ -876,7 +1005,7 @@ namespace low_age_data.Collections
                             Event.OriginIsDestroyed
                         })
                     },
-                    destroyOnConditionsMet: true,
+                    removeOnConditionsMet: true,
                     conditionalEffects: new List<EffectName>
                     {
                         EffectName.Pyre.WallOfFlamesDestroy
@@ -971,7 +1100,7 @@ namespace low_age_data.Collections
                             Event.OriginIsDestroyed
                         })
                     },
-                    destroyOnConditionsMet: true,
+                    removeOnConditionsMet: true,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -1008,7 +1137,7 @@ namespace low_age_data.Collections
                             Event.SourceIsDestroyed
                         })
                     },
-                    destroyOnConditionsMet: true,
+                    removeOnConditionsMet: true,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -1033,7 +1162,7 @@ namespace low_age_data.Collections
                     canResetDuration: true,
                     alignment: Alignment.Positive,
                     triggers: null,
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -1094,7 +1223,7 @@ namespace low_age_data.Collections
                                 })
                         })
                     },
-                    destroyOnConditionsMet: true,
+                    removeOnConditionsMet: true,
                     conditionalEffects: new List<EffectName>
                     {
                         EffectName.Marksman.CriticalMarkDamage
@@ -1224,7 +1353,7 @@ namespace low_age_data.Collections
                             Event.SourceIsNotAdjacent
                         })
                     },
-                    destroyOnConditionsMet: true,
+                    removeOnConditionsMet: true,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -1364,7 +1493,7 @@ namespace low_age_data.Collections
                             Event.OriginIsInterrupted
                         })
                     },
-                    destroyOnConditionsMet: true),
+                    removeOnConditionsMet: true),
 
                 new Buff(
                     name: BehaviourName.Engineer.RepairHorriorBuff,
@@ -1397,7 +1526,7 @@ namespace low_age_data.Collections
                             Event.OriginIsInterrupted
                         })
                     },
-                    destroyOnConditionsMet: true),
+                    removeOnConditionsMet: true),
 
                 new Wait(
                     name: BehaviourName.Engineer.RepairWait,
@@ -1434,7 +1563,7 @@ namespace low_age_data.Collections
                     canResetDuration: null,
                     alignment: Alignment.Negative,
                     triggers: null,
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -1477,7 +1606,7 @@ namespace low_age_data.Collections
                             Event.OriginIsDestroyed
                         })
                     },
-                    destroyOnConditionsMet: true,
+                    removeOnConditionsMet: true,
                     conditionalEffects: new List<EffectName>
                     {
                         EffectName.Cannon.MachineRemoveBehaviour,
@@ -1520,7 +1649,7 @@ namespace low_age_data.Collections
                     canResetDuration: null,
                     alignment: Alignment.Negative,
                     triggers: null,
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -1558,7 +1687,7 @@ namespace low_age_data.Collections
                             Event.OriginIsDestroyed
                         })
                     },
-                    destroyOnConditionsMet: true,
+                    removeOnConditionsMet: true,
                     conditionalEffects: null,
                     restoreChangesOnEnd: null,
                     ownerAllowed: true,
@@ -1593,7 +1722,7 @@ namespace low_age_data.Collections
                     canResetDuration: null,
                     alignment: Alignment.Negative,
                     triggers: null,
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -1636,7 +1765,7 @@ namespace low_age_data.Collections
                             })
                         })
                     },
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     conditionalEffects: new List<EffectName>
                     {
                         EffectName.Radar.PowerDependencyDamage,
@@ -1670,7 +1799,7 @@ namespace low_age_data.Collections
                             })
                         })
                     },
-                    destroyOnConditionsMet: true,
+                    removeOnConditionsMet: true,
                     restoreChangesOnEnd: true),
 
                 new Buff(
@@ -1762,7 +1891,7 @@ namespace low_age_data.Collections
                     canResetDuration: null,
                     alignment: Alignment.Negative,
                     triggers: null,
-                    destroyOnConditionsMet: false,
+                    removeOnConditionsMet: false,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
@@ -1888,7 +2017,7 @@ namespace low_age_data.Collections
                             Event.SourceIsDestroyed
                         })
                     },
-                    destroyOnConditionsMet: true,
+                    removeOnConditionsMet: true,
                     conditionalEffects: new List<EffectName>
                     {
                         EffectName.Omen.RenditionDestroy
@@ -1933,7 +2062,7 @@ namespace low_age_data.Collections
                     canResetDuration: true,
                     alignment: Alignment.Negative,
                     triggers: null,
-                    destroyOnConditionsMet: null,
+                    removeOnConditionsMet: null,
                     conditionalEffects: null,
                     restoreChangesOnEnd: true)
                 

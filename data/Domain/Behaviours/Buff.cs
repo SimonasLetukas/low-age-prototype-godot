@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Common;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities;
-using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
@@ -27,7 +25,7 @@ namespace low_age_data.Domain.Behaviours
             bool? canResetDuration = null,
             Alignment? alignment = null,
             IList<Trigger>? triggers = null,
-            bool? destroyOnConditionsMet = null,
+            bool? removeOnConditionsMet = null,
             IList<EffectName>? conditionalEffects = null,
             bool? restoreChangesOnEnd = null,
             bool? ownerAllowed = null,
@@ -37,7 +35,13 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(Buff)}", 
                 displayName, 
                 description, 
-                endsAt ?? EndsAt.Death, 
+                endsAt ?? EndsAt.Death,
+                alignment ?? Alignment.Neutral,
+                canStack,
+                canResetDuration,
+                triggers,
+                removeOnConditionsMet,
+                conditionalEffects,
                 ownerAllowed, 
                 hasSameInstanceForAllOwners)
         {
@@ -46,12 +50,6 @@ namespace low_age_data.Domain.Behaviours
             InitialEffects = initialEffects ?? new List<EffectName>();
             FinalModifications = finalModifications ?? new List<Modification>();
             FinalEffects = finalEffects ?? new List<EffectName>();
-            CanStack = canStack ?? false;
-            CanResetDuration = canResetDuration ?? false;
-            Alignment = alignment ?? Alignment.Neutral;
-            Triggers = triggers ?? new List<Trigger>();
-            DestroyOnConditionsMet = destroyOnConditionsMet ?? false;
-            ConditionalEffects = conditionalEffects ?? new List<EffectName>();
             RestoreChangesOnEnd = restoreChangesOnEnd ?? false;
         }
 
@@ -76,36 +74,7 @@ namespace low_age_data.Domain.Behaviours
         /// Executed right before the <see cref="EndsAt"/> or before <see cref="Entity"/> is destroyed.
         /// </summary>
         public IList<EffectName> FinalEffects { get; }
-        
-        /// <summary>
-        /// If true, multiple <see cref="Buff"/>s can be added.
-        /// </summary>
-        public bool CanStack { get; }
-        
-        /// <summary>
-        /// If true, applying the same <see cref="Buff"/> will reset the duration (to all stacks, if
-        /// <see cref="CanStack"/> is true).
-        /// </summary>
-        public bool CanResetDuration { get; }
-        public Alignment Alignment { get; }
-        
-        /// <summary>
-        /// Logical <b>OR</b> between the <see cref="Triggers"/>, but <b>AND</b> between the <see cref="Event"/>s inside.
-        /// </summary>
-        public IList<Trigger> Triggers { get; }
-        
-        /// <summary>
-        /// If true, behaviour is removed (without triggering <see cref="FinalModifications"/> or <see cref="FinalEffects"/>)
-        /// when all <see cref="Event"/>s and their conditions are met in any of the <see cref="Triggers"/>.
-        /// </summary>
-        public bool DestroyOnConditionsMet { get; }
-        
-        /// <summary>
-        /// Executed when any of the <see cref="Triggers"/> condition is met (before destroy of this behaviour, if
-        /// <see cref="DestroyOnConditionsMet"/> is true).
-        /// </summary>
-        public IList<EffectName> ConditionalEffects { get; }
-        
+
         /// <summary>
         /// If true, counter-acts the <see cref="InitialModifications"/> and <see cref="ModificationFlags"/> before
         /// end or destroy.
