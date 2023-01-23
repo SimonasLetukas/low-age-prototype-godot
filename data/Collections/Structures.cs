@@ -378,7 +378,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 30, hasCurrent: true, combatType: Stats.Shields),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
@@ -388,6 +388,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
+                        AbilityName.Collector.Building,
                         AbilityName.Shared.ScrapsIncome,
                         AbilityName.Collector.DirectTransitSystem
                     },
@@ -403,7 +404,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 15, hasCurrent: true, combatType: Stats.Shields),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
@@ -413,10 +414,37 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
+                        AbilityName.Extractor.Building,
                         AbilityName.Shared.CelestiumIncome,
                         AbilityName.Extractor.ReinforcedInfrastructure
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
+                
+                new(
+                    name: StructureName.PowerPole,
+                    displayName: nameof(StructureName.PowerPole).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 6, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 60, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Light,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shared.Uee.Building, // TODO check if all UEE buildings have this
+                        AbilityName.Shared.Uee.PowerDependency,
+                        // TODO
+                    },
+                    size: new Vector2<int>(x: 1, y: 1)),
             };
         }
     }

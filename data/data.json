@@ -1325,7 +1325,7 @@
         "statistics": [
           {
             "combatType": "Stats.Health",
-            "maxAmount": 10,
+            "maxAmount": 20,
             "hasCurrent": true
           },
           {
@@ -1367,7 +1367,7 @@
         "abilities": [
           "ability-radar-assembling",
           "ability-radar-machine",
-          "ability-radar-power-dependency",
+          "ability-shared-uee-power-dependency",
           "ability-radar-resonating-sweep",
           "ability-radar-radio-location"
         ],
@@ -2336,7 +2336,7 @@
           },
           {
             "combatType": "Stats.Vision",
-            "maxAmount": 5,
+            "maxAmount": 4,
             "hasCurrent": false
           }
         ],
@@ -2346,6 +2346,7 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
+          "ability-collector-building",
           "ability-shared-scraps-income",
           "ability-collector-direct-transit-system"
         ],
@@ -2396,7 +2397,7 @@
           },
           {
             "combatType": "Stats.Vision",
-            "maxAmount": 5,
+            "maxAmount": 4,
             "hasCurrent": false
           }
         ],
@@ -2406,10 +2407,71 @@
           "CombatAttributes.Structure"
         ],
         "abilities": [
+          "ability-extractor-building",
           "ability-shared-celestium-income",
           "ability-extractor-reinforced-infrastructure"
         ],
         "displayName": "Extractor",
+        "description": ""
+      },
+      {
+        "name": "structure-power-pole",
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "centerPoint": {
+          "x": 0,
+          "y": 0
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 6,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 60,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 0,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Light",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-uee-building",
+          "ability-shared-uee-power-dependency"
+        ],
+        "displayName": "Power Pole",
         "description": ""
       }
     ],
@@ -2903,6 +2965,22 @@
       "cost": [],
       "displayName": "Building",
       "description": ""
+    },
+    {
+      "name": "ability-shared-uee-power-dependency",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-shared-uee-power-dependency-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Power Dependency",
+      "description": "All abilities get disabled and loses 5 Health at the start of its action or action phase if not connected to Power."
     },
     {
       "name": "ability-citadel-executive-stash",
@@ -4802,22 +4880,6 @@
       "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it."
     },
     {
-      "name": "ability-radar-power-dependency",
-      "type": "Ability.Passive",
-      "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
-      "periodicEffect": null,
-      "onHitEffects": [],
-      "onHitAttackTypes": [],
-      "onBirthEffect": "effect-radar-power-dependency-apply-behaviour",
-      "onBuildBehaviour": null,
-      "hasButton": true,
-      "cooldown": "EndsAt.Instant",
-      "cost": [],
-      "displayName": "Power Dependency",
-      "description": "All abilities get disabled and loses 1 Health at the start of its action if not connected to Power."
-    },
-    {
       "name": "ability-radar-resonating-sweep",
       "type": "Ability.Target",
       "turnPhase": "TurnPhase.Action",
@@ -5082,6 +5144,65 @@
         "Flag.EffectModifyPlayerGameLost"
       ],
       "resourceModifications": [],
+      "validators": []
+    },
+    {
+      "name": "effect-shared-uee-power-dependency-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-shared-uee-power-dependency-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-shared-uee-power-dependency-damage",
+      "type": "Effect.Damage",
+      "damageType": "DamageType.Pure",
+      "amount": {
+        "flat": 5,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplierFlags": []
+      },
+      "location": "Location.Inherited",
+      "ignoresArmor": false,
+      "ignoresShield": true,
+      "filterFlags": [],
+      "validators": []
+    },
+    {
+      "name": "effect-shared-uee-power-dependency-apply-behaviour-disable",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-shared-uee-power-dependency-buff-disable"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-shared-uee-power-dependency-apply-behaviour-inactive",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-shared-uee-power-dependency-buff-inactive"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -5385,6 +5506,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     },
@@ -5431,6 +5553,7 @@
       },
       "location": "Location.Self",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     },
@@ -5513,6 +5636,7 @@
       },
       "location": "Location.Actor",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -5586,6 +5710,7 @@
       },
       "location": "Location.Actor",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -5962,6 +6087,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     },
@@ -5987,6 +6113,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": [
         {
@@ -6191,6 +6318,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     },
@@ -6239,6 +6367,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     },
@@ -6298,6 +6427,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     },
@@ -6330,6 +6460,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     },
@@ -6395,6 +6526,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     },
@@ -6417,6 +6549,7 @@
       },
       "location": "Location.Actor",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterStructure",
@@ -6608,6 +6741,7 @@
       },
       "location": "Location.Self",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -6692,6 +6826,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     },
@@ -7089,6 +7224,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     },
@@ -7165,6 +7301,7 @@
       },
       "location": "Location.Actor",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterStructure",
@@ -7248,56 +7385,6 @@
       ],
       "treatAsDeath": false,
       "behaviourOwner": null,
-      "validators": []
-    },
-    {
-      "name": "effect-radar-power-dependency-apply-behaviour",
-      "type": "Effect.ApplyBehaviour",
-      "behavioursToApply": [
-        "behaviour-radar-power-dependency-buff"
-      ],
-      "location": "Location.Self",
-      "filterFlags": [],
-      "behaviourOwner": null,
-      "waitForInitialEffects": false,
-      "validators": []
-    },
-    {
-      "name": "effect-radar-power-dependency-damage",
-      "type": "Effect.Damage",
-      "damageType": "DamageType.Pure",
-      "amount": {
-        "flat": 1,
-        "multiplier": null,
-        "multiplierOf": null,
-        "multiplierFlags": []
-      },
-      "bonusTo": null,
-      "bonusAmount": {
-        "flat": 0,
-        "multiplier": null,
-        "multiplierOf": null,
-        "multiplierFlags": []
-      },
-      "location": "Location.Inherited",
-      "ignoresArmor": false,
-      "filterFlags": [],
-      "validators": []
-    },
-    {
-      "name": "effect-radar-power-dependency-apply-behaviour-disable",
-      "type": "Effect.ApplyBehaviour",
-      "behavioursToApply": [
-        "behaviour-radar-power-dependency-buff-disable"
-      ],
-      "location": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterSelf"
-      ],
-      "behaviourOwner": null,
-      "waitForInitialEffects": false,
       "validators": []
     },
     {
@@ -7607,6 +7694,7 @@
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
+      "ignoresShield": false,
       "filterFlags": [],
       "validators": []
     }
@@ -7849,6 +7937,154 @@
       "triggers": [],
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-shared-uee-power-dependency-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Power Dependency Buff",
+      "description": "If this unit is not connected to Power, all abilities get disabled and it loses 5 Health at the start of its action or action phase.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityStartsActionPhase"
+          ],
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
+        },
+        {
+          "events": [
+            "Event.EntityStartsAction"
+          ],
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
+        }
+      ],
+      "removeOnConditionsMet": true,
+      "conditionalEffects": [
+        "effect-shared-uee-power-dependency-damage",
+        "effect-shared-uee-power-dependency-apply-behaviour-disable",
+        "effect-shared-uee-power-dependency-apply-behaviour-inactive"
+      ],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-shared-uee-power-dependency-buff-disable",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [
+        "Flag.ModificationAbilitiesDisabled"
+      ],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Power Dependency Buff Disable",
+      "description": "All abilities are disabled because Power is not supplied.",
+      "endsAt": "EndsAt.StartOfNextActionPhase",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": true,
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityMaskChanged"
+          ],
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskExists"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
+        }
+      ],
+      "removeOnConditionsMet": true,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-shared-uee-power-dependency-buff-inactive",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-shared-uee-power-dependency-apply-behaviour"
+      ],
+      "restoreChangesOnEnd": false,
+      "displayName": "Power Dependency Buff Inactive",
+      "description": "If this unit is not connected to Power, all abilities get disabled and it loses 5 Health at the start of its action or action phase.",
+      "endsAt": "EndsAt.StartOfNextPlanning",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [
+        {
+          "events": [
+            "Event.EntityMaskChanged"
+          ],
+          "validators": [
+            {
+              "type": "Validator",
+              "conditions": [
+                {
+                  "type": "Condition.MaskCondition",
+                  "conditionedMask": "mask-power",
+                  "conditionFlag": "Flag.ConditionMaskExists"
+                }
+              ],
+              "filterFlags": []
+            }
+          ]
+        }
+      ],
+      "removeOnConditionsMet": true,
+      "conditionalEffects": [
+        "effect-shared-uee-power-dependency-apply-behaviour"
+      ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },
@@ -10271,109 +10507,6 @@
       "canResetDuration": false,
       "triggers": [],
       "removeOnConditionsMet": false,
-      "conditionalEffects": [],
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
-      "name": "behaviour-radar-power-dependency-buff",
-      "type": "Behaviour.Buff",
-      "modificationFlags": [],
-      "initialModifications": [],
-      "initialEffects": [],
-      "finalModifications": [],
-      "finalEffects": [],
-      "restoreChangesOnEnd": false,
-      "displayName": "Power Dependency Buff",
-      "description": "If this unit is not connected to Power, all abilities get disabled and it loses 1 Health at the start of its action.",
-      "endsAt": "EndsAt.Death",
-      "alignment": "Alignment.Neutral",
-      "canStack": false,
-      "canResetDuration": false,
-      "triggers": [
-        {
-          "events": [
-            "Event.EntityStartsActionPhase"
-          ],
-          "validators": [
-            {
-              "type": "Validator",
-              "conditions": [
-                {
-                  "type": "Condition.MaskCondition",
-                  "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
-                }
-              ],
-              "filterFlags": []
-            }
-          ]
-        },
-        {
-          "events": [
-            "Event.EntityStartsAction"
-          ],
-          "validators": [
-            {
-              "type": "Validator",
-              "conditions": [
-                {
-                  "type": "Condition.MaskCondition",
-                  "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
-                }
-              ],
-              "filterFlags": []
-            }
-          ]
-        }
-      ],
-      "removeOnConditionsMet": false,
-      "conditionalEffects": [
-        "effect-radar-power-dependency-damage",
-        "effect-radar-power-dependency-apply-behaviour-disable"
-      ],
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
-    },
-    {
-      "name": "behaviour-radar-power-dependency-buff-disable",
-      "type": "Behaviour.Buff",
-      "modificationFlags": [
-        "Flag.ModificationAbilitiesDisabled"
-      ],
-      "initialModifications": [],
-      "initialEffects": [],
-      "finalModifications": [],
-      "finalEffects": [],
-      "restoreChangesOnEnd": true,
-      "displayName": "Power Dependency Buff Disable",
-      "description": "All abilities are disabled because Power is not supplied.",
-      "endsAt": "EndsAt.StartOfNextActionPhase",
-      "alignment": "Alignment.Negative",
-      "canStack": false,
-      "canResetDuration": true,
-      "triggers": [
-        {
-          "events": [
-            "Event.EntityMaskChanged"
-          ],
-          "validators": [
-            {
-              "type": "Validator",
-              "conditions": [
-                {
-                  "type": "Condition.MaskCondition",
-                  "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskExists"
-                }
-              ],
-              "filterFlags": []
-            }
-          ]
-        }
-      ],
-      "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false

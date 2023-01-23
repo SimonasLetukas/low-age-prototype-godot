@@ -15,6 +15,7 @@ namespace low_age_data.Domain.Effects
             Amount? bonusAmount = null,
             Location? location = null,
             bool? ignoresArmor = null,
+            bool? ignoresShield = null,
             IList<Flag>? filterFlags = null,
             IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(Damage)}", validators ?? new List<Validator>())
         {
@@ -24,6 +25,7 @@ namespace low_age_data.Domain.Effects
             BonusAmount = bonusAmount ?? new Amount(0);
             Location = location ?? Location.Inherited;
             IgnoresArmor = ignoresArmor ?? false;
+            IgnoresShield = ignoresShield ?? false;
             FilterFlags = filterFlags ?? new List<Flag>();
         }
         
@@ -33,6 +35,7 @@ namespace low_age_data.Domain.Effects
         public Amount BonusAmount { get; }
         public Location Location { get; }
         public bool IgnoresArmor { get; }
+        public bool IgnoresShield { get; }
         public IList<Flag> FilterFlags { get; }
     }
 }

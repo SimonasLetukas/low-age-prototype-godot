@@ -25,6 +25,9 @@ namespace low_age_data.Domain.Behaviours
             {
                 public static BehaviourName BuildingBuildable => new($"{nameof(Shared)}{nameof(Uee)}{nameof(BuildingBuildable)}".ToKebabCase());
                 public static BehaviourName PowerGeneratorBuff => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerGeneratorBuff)}".ToKebabCase());
+                public static BehaviourName PowerDependencyBuff => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyBuff)}".ToKebabCase());
+                public static BehaviourName PowerDependencyBuffDisable => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyBuffDisable)}".ToKebabCase());
+                public static BehaviourName PowerDependencyBuffInactive => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyBuffInactive)}".ToKebabCase());
             }
         }
         
@@ -250,8 +253,6 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName AssemblingBuildable => new($"{nameof(Radar)}{nameof(AssemblingBuildable)}".ToKebabCase());
             public static BehaviourName MachineCounter => new($"{nameof(Radar)}{nameof(MachineCounter)}".ToKebabCase());
             public static BehaviourName MachineBuff => new($"{nameof(Radar)}{nameof(MachineBuff)}".ToKebabCase());
-            public static BehaviourName PowerDependencyBuff => new($"{nameof(Radar)}{nameof(PowerDependencyBuff)}".ToKebabCase());
-            public static BehaviourName PowerDependencyBuffDisable => new($"{nameof(Radar)}{nameof(PowerDependencyBuffDisable)}".ToKebabCase());
             public static BehaviourName ResonatingSweepBuff => new($"{nameof(Radar)}{nameof(ResonatingSweepBuff)}".ToKebabCase());
             public static BehaviourName RadioLocationBuff => new($"{nameof(Radar)}{nameof(RadioLocationBuff)}".ToKebabCase());
             public static BehaviourName RadioLocationFeatureBuff => new($"{nameof(Radar)}{nameof(RadioLocationFeatureBuff)}".ToKebabCase());

@@ -132,6 +132,115 @@ namespace low_age_data.Collections
                         EffectName.Shared.Uee.PowerGeneratorModifyPlayer
                     }),
                 
+                new Buff(
+                    name: BehaviourName.Shared.Uee.PowerDependencyBuff,
+                    displayName: nameof(BehaviourName.Shared.Uee.PowerDependencyBuff).CamelCaseToWords(),
+                    description: "If this unit is not connected to Power, all abilities get disabled and it loses 5 " +
+                                 "Health at the start of its action or action phase.",
+                    endsAt: EndsAt.Death,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Neutral,
+                    triggers: new List<Trigger>
+                    {
+                        new(events: new List<Event>
+                        {
+                            Event.EntityStartedActionPhase
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
+                                    conditionedMask: MaskName.Power)
+                            })
+                        }), 
+                        // OR
+                        new(events: new List<Event>
+                        {
+                            Event.EntityStartedAction
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
+                                    conditionedMask: MaskName.Power)
+                            })
+                        })
+                    },
+                    removeOnConditionsMet: true, // this buff will get recreated after PowerDependencyBuffInactive ends
+                    conditionalEffects: new List<EffectName>
+                    {
+                        EffectName.Shared.Uee.PowerDependencyDamage,
+                        EffectName.Shared.Uee.PowerDependencyApplyBehaviourDisable,
+                        EffectName.Shared.Uee.PowerDependencyApplyBehaviourInactive
+                    }),
+
+                new Buff(
+                    name: BehaviourName.Shared.Uee.PowerDependencyBuffDisable,
+                    displayName: nameof(BehaviourName.Shared.Uee.PowerDependencyBuffDisable).CamelCaseToWords(),
+                    description: "All abilities are disabled because Power is not supplied.",
+                    modificationFlags: new List<Flag>
+                    {
+                        Flag.Modification.AbilitiesDisabled
+                    },
+                    endsAt: EndsAt.StartOf.Next.ActionPhase,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
+                    {
+                        new(events: new List<Event>
+                        {
+                            Event.EntityMaskChanged
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.Exists, 
+                                    conditionedMask: MaskName.Power)
+                            })
+                        })
+                    },
+                    removeOnConditionsMet: true,
+                    restoreChangesOnEnd: true),
+                
+                new Buff( // needed so that damage is not applied twice per action phase when there is no power
+                    name: BehaviourName.Shared.Uee.PowerDependencyBuffInactive,
+                    displayName: nameof(BehaviourName.Shared.Uee.PowerDependencyBuffInactive).CamelCaseToWords(),
+                    description: "If this unit is not connected to Power, all abilities get disabled and it loses 5 " +
+                                 "Health at the start of its action or action phase.",
+                    finalEffects: new List<EffectName>
+                    {
+                        EffectName.Shared.Uee.PowerDependencyApplyBehaviour
+                    },
+                    endsAt: EndsAt.StartOf.Next.Planning,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Neutral,
+                    triggers: new List<Trigger>
+                    {
+                        new(events: new List<Event>
+                        {
+                            Event.EntityMaskChanged
+                        }, validators: new List<Validator> 
+                        {
+                            new(conditions: new List<Condition>
+                            {
+                                new MaskCondition(
+                                    conditionFlag: Flag.Condition.Mask.Exists, 
+                                    conditionedMask: MaskName.Power)
+                            })
+                        })
+                    },
+                    removeOnConditionsMet: true,
+                    conditionalEffects: new List<EffectName>
+                    {
+                        EffectName.Shared.Uee.PowerDependencyApplyBehaviour
+                    }),
+                
                 #endregion
 
                 #region Structures
@@ -1724,82 +1833,6 @@ namespace low_age_data.Collections
                     triggers: null,
                     removeOnConditionsMet: false,
                     conditionalEffects: null,
-                    restoreChangesOnEnd: true),
-
-                new Buff(
-                    name: BehaviourName.Radar.PowerDependencyBuff,
-                    displayName: nameof(BehaviourName.Radar.PowerDependencyBuff).CamelCaseToWords(),
-                    description: "If this unit is not connected to Power, all abilities get disabled and it loses 1 " +
-                                 "Health at the start of its action.",
-                    endsAt: EndsAt.Death,
-                    canStack: false,
-                    canResetDuration: false,
-                    alignment: Alignment.Neutral,
-                    triggers: new List<Trigger>
-                    {
-                        // TODO make one shared behaviour for units and one shared for structures (units should have
-                        // EntityStartedAction, structures should have EntityStartedActionPhase events only)
-                        new(events: new List<Event>
-                        {
-                            Event.EntityStartedActionPhase
-                        }, validators: new List<Validator> 
-                        {
-                            new(conditions: new List<Condition>
-                            {
-                                new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
-                                    conditionedMask: MaskName.Power)
-                            })
-                        }), 
-                        // OR
-                        new(events: new List<Event>
-                        {
-                            Event.EntityStartedAction
-                        }, validators: new List<Validator> 
-                        {
-                            new(conditions: new List<Condition>
-                            {
-                                new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
-                                    conditionedMask: MaskName.Power)
-                            })
-                        })
-                    },
-                    removeOnConditionsMet: false,
-                    conditionalEffects: new List<EffectName>
-                    {
-                        EffectName.Radar.PowerDependencyDamage,
-                        EffectName.Radar.PowerDependencyApplyBehaviourDisable,
-                    }),
-
-                new Buff(
-                    name: BehaviourName.Radar.PowerDependencyBuffDisable,
-                    displayName: nameof(BehaviourName.Radar.PowerDependencyBuffDisable).CamelCaseToWords(),
-                    description: "All abilities are disabled because Power is not supplied.",
-                    modificationFlags: new List<Flag>
-                    {
-                        Flag.Modification.AbilitiesDisabled
-                    },
-                    endsAt: EndsAt.StartOf.Next.ActionPhase,
-                    canStack: false,
-                    canResetDuration: true,
-                    alignment: Alignment.Negative,
-                    triggers: new List<Trigger>
-                    {
-                        new(events: new List<Event>
-                        {
-                            Event.EntityMaskChanged
-                        }, validators: new List<Validator> 
-                        {
-                            new(conditions: new List<Condition>
-                            {
-                                new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.Exists, 
-                                    conditionedMask: MaskName.Power)
-                            })
-                        })
-                    },
-                    removeOnConditionsMet: true,
                     restoreChangesOnEnd: true),
 
                 new Buff(

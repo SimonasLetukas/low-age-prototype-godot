@@ -24,6 +24,7 @@ namespace low_age_data.Domain.Abilities
                 public static AbilityName Building => new($"{nameof(Shared)}{nameof(Uee)}{nameof(Building)}".ToKebabCase());
                 public static AbilityName PowerGenerator => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerGenerator)}".ToKebabCase());
                 public static AbilityName Build => new($"{nameof(Shared)}{nameof(Uee)}{nameof(Build)}".ToKebabCase());
+                public static AbilityName PowerDependency => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependency)}".ToKebabCase());
             }
         }
 
@@ -289,7 +290,6 @@ namespace low_age_data.Domain.Abilities
         {
             public static AbilityName Assembling => new($"{nameof(Radar)}{nameof(Assembling)}".ToKebabCase());
             public static AbilityName Machine => new($"{nameof(Radar)}{nameof(Machine)}".ToKebabCase());
-            public static AbilityName PowerDependency => new($"{nameof(Radar)}{nameof(PowerDependency)}".ToKebabCase());
             public static AbilityName ResonatingSweep => new($"{nameof(Radar)}{nameof(ResonatingSweep)}".ToKebabCase());
             public static AbilityName RadioLocation => new($"{nameof(Radar)}{nameof(RadioLocation)}".ToKebabCase());
         }

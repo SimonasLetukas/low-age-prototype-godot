@@ -665,7 +665,7 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 20, hasCurrent: true, combatType: Stats.Health),
                         new CombatStat(maxAmount: 12, hasCurrent: true, combatType: Stats.Shields),
                         new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.RangedArmour),
@@ -683,7 +683,7 @@ namespace low_age_data.Collections
                     {
                         AbilityName.Radar.Assembling,
                         AbilityName.Radar.Machine,
-                        AbilityName.Radar.PowerDependency,
+                        AbilityName.Shared.Uee.PowerDependency,
                         AbilityName.Radar.ResonatingSweep,
                         AbilityName.Radar.RadioLocation
                     }),                

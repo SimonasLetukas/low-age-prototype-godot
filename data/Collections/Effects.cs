@@ -114,6 +114,36 @@ namespace low_age_data.Collections
                     {
                         Flag.Effect.ModifyPlayer.GameLost
                     }),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Shared.Uee.PowerDependencyApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Shared.Uee.PowerDependencyBuff
+                    },
+                    location: Location.Self),
+
+                new Damage(
+                    name: EffectName.Shared.Uee.PowerDependencyDamage,
+                    damageType: DamageType.Pure,
+                    amount: new Amount(flat: 5),
+                    ignoresShield: true),
+
+                new ApplyBehaviour(
+                    name: EffectName.Shared.Uee.PowerDependencyApplyBehaviourDisable,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Shared.Uee.PowerDependencyBuffDisable
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Shared.Uee.PowerDependencyApplyBehaviourInactive,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Shared.Uee.PowerDependencyBuffInactive
+                    },
+                    location: Location.Self),
 
                 #endregion
 
@@ -1601,33 +1631,6 @@ namespace low_age_data.Collections
                     {
                         Flag.Filter.Self,
                         Flag.Filter.Unit
-                    }),
-
-                new ApplyBehaviour(
-                    name: EffectName.Radar.PowerDependencyApplyBehaviour,
-                    behavioursToApply: new List<BehaviourName>
-                    {
-                        BehaviourName.Radar.PowerDependencyBuff
-                    },
-                    location: Location.Self),
-
-                new Damage(
-                    name: EffectName.Radar.PowerDependencyDamage,
-                    damageType: DamageType.Pure,
-                    amount: new Amount(flat: 1)),
-
-                new ApplyBehaviour(
-                    name: EffectName.Radar.PowerDependencyApplyBehaviourDisable,
-                    behavioursToApply: new List<BehaviourName>
-                    {
-                        BehaviourName.Radar.PowerDependencyBuffDisable
-                    },
-                    location: Location.Self,
-                    filterFlags: new List<Flag>
-                    {
-                        Flag.Filter.Player,
-                        Flag.Filter.Ally,
-                        Flag.Filter.Self
                     }),
 
                 new CreateEntity(

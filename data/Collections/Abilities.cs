@@ -161,6 +161,14 @@ namespace low_age_data.Collections
                     description: "",
                     hasButton: false,
                     onBuildBehaviour: BehaviourName.Wall.BuildingBuildable),
+                
+                new Passive(
+                    name: AbilityName.Shared.Uee.PowerDependency,
+                    displayName: nameof(AbilityName.Shared.Uee.PowerDependency).CamelCaseToWords(),
+                    description: "All abilities get disabled and loses 5 Health at the start of its action or action " +
+                                 "phase if not connected to Power.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.Shared.Uee.PowerDependencyApplyBehaviour),
 
                 #endregion
 
@@ -1201,14 +1209,6 @@ namespace low_age_data.Collections
                                  "only if maximum number of 1 Engineer is operating it.",
                     hasButton: true,
                     onBirthEffect: EffectName.Radar.MachineApplyBehaviour),
-
-                new Passive(
-                    name: AbilityName.Radar.PowerDependency,
-                    displayName: nameof(AbilityName.Radar.PowerDependency).CamelCaseToWords(),
-                    description: "All abilities get disabled and loses 1 Health at the start of its action if not " +
-                                 "connected to Power.",
-                    hasButton: true,
-                    onBirthEffect: EffectName.Radar.PowerDependencyApplyBehaviour),
 
                 new Target(
                     name: AbilityName.Radar.ResonatingSweep,

@@ -26,6 +26,10 @@ namespace low_age_data.Domain.Effects
             {
                 public static EffectName PowerGeneratorApplyBehaviour => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerGeneratorApplyBehaviour)}".ToKebabCase());
                 public static EffectName PowerGeneratorModifyPlayer => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerGeneratorModifyPlayer)}".ToKebabCase());
+                public static EffectName PowerDependencyApplyBehaviour => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyApplyBehaviour)}".ToKebabCase());
+                public static EffectName PowerDependencyDamage => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyDamage)}".ToKebabCase());
+                public static EffectName PowerDependencyApplyBehaviourDisable => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyApplyBehaviourDisable)}".ToKebabCase());
+                public static EffectName PowerDependencyApplyBehaviourInactive => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyApplyBehaviourInactive)}".ToKebabCase());
             }
         }
         
@@ -344,9 +348,6 @@ namespace low_age_data.Domain.Effects
         {
             public static EffectName MachineApplyBehaviour => new($"{nameof(Radar)}{nameof(MachineApplyBehaviour)}".ToKebabCase());
             public static EffectName MachineRemoveBehaviour => new($"{nameof(Radar)}{nameof(MachineRemoveBehaviour)}".ToKebabCase());
-            public static EffectName PowerDependencyApplyBehaviour => new($"{nameof(Radar)}{nameof(PowerDependencyApplyBehaviour)}".ToKebabCase());
-            public static EffectName PowerDependencyDamage => new($"{nameof(Radar)}{nameof(PowerDependencyDamage)}".ToKebabCase());
-            public static EffectName PowerDependencyApplyBehaviourDisable => new($"{nameof(Radar)}{nameof(PowerDependencyApplyBehaviourDisable)}".ToKebabCase());
             public static EffectName ResonatingSweepCreateEntity => new($"{nameof(Radar)}{nameof(ResonatingSweepCreateEntity)}".ToKebabCase());
             public static EffectName ResonatingSweepDestroy => new($"{nameof(Radar)}{nameof(ResonatingSweepDestroy)}".ToKebabCase());
             public static EffectName RadioLocationApplyBehaviour => new($"{nameof(Radar)}{nameof(RadioLocationApplyBehaviour)}".ToKebabCase());
