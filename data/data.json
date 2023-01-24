@@ -2470,7 +2470,8 @@
         "abilities": [
           "ability-shared-uee-building",
           "ability-shared-uee-power-dependency",
-          "ability-power-pole-power-grid"
+          "ability-power-pole-power-grid",
+          "ability-power-pole-excess-distribution"
         ],
         "displayName": "Power Pole",
         "description": ""
@@ -3730,6 +3731,22 @@
       "cost": [],
       "displayName": "Power Grid",
       "description": "Provides Power in 4 Distance."
+    },
+    {
+      "name": "ability-power-pole-excess-distribution",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": "effect-power-pole-excess-distribution-search",
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": null,
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Excess Distribution",
+      "description": "Regenerates +1 Shields to units and structures in 4 Distance at the start of each planning phase."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -5067,7 +5084,7 @@
       "behavioursToApply": [
         "behaviour-shared-high-ground-buff"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5079,7 +5096,7 @@
       "behavioursToApply": [
         "behaviour-shared-passive-income-income"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5091,7 +5108,7 @@
       "behavioursToApply": [
         "behaviour-shared-scraps-income-income"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5103,7 +5120,7 @@
       "behavioursToApply": [
         "behaviour-shared-celestium-income-income"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5133,7 +5150,7 @@
       "behavioursToApply": [
         "behaviour-shared-revelators-no-population-space-intercept-damage"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5145,7 +5162,7 @@
       "behavioursToApply": [
         "behaviour-shared-uee-power-generator-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5169,7 +5186,7 @@
       "behavioursToApply": [
         "behaviour-shared-uee-power-dependency-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5204,7 +5221,7 @@
       "behavioursToApply": [
         "behaviour-shared-uee-power-dependency-buff-disable"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5216,7 +5233,7 @@
       "behavioursToApply": [
         "behaviour-shared-uee-power-dependency-buff-inactive"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5228,7 +5245,7 @@
       "behavioursToApply": [
         "behaviour-citadel-executive-stash-income"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5240,7 +5257,7 @@
       "behavioursToApply": [
         "behaviour-citadel-ascendable-ascendable"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5252,7 +5269,7 @@
       "behavioursToApply": [
         "behaviour-citadel-high-ground-high-ground"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5286,7 +5303,7 @@
       "behavioursToApply": [
         "behaviour-obelisk-celestium-discharge-buff-long"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5298,7 +5315,7 @@
       "behavioursToApply": [
         "behaviour-obelisk-celestium-discharge-buff-negative"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5332,7 +5349,7 @@
       "behavioursToApply": [
         "behaviour-obelisk-celestium-discharge-buff-short"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5344,7 +5361,7 @@
       "behavioursToApply": [
         "behaviour-shack-accommodation-income"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5356,7 +5373,7 @@
       "behavioursToApply": [
         "behaviour-smith-melee-weapon-production-income"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5368,7 +5385,7 @@
       "behavioursToApply": [
         "behaviour-fletcher-ranged-weapon-production-income"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5380,7 +5397,7 @@
       "behavioursToApply": [
         "behaviour-alchemy-special-weapon-production-income"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5392,7 +5409,7 @@
       "behavioursToApply": [
         "behaviour-depot-weapon-storage-income"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5404,7 +5421,7 @@
       "behavioursToApply": [
         "behaviour-outpost-ascendable-ascendable"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5416,7 +5433,7 @@
       "behavioursToApply": [
         "behaviour-outpost-high-ground-high-ground"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5464,7 +5481,7 @@
       "behavioursToApply": [
         "behaviour-barricade-protective-shield-buff"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5533,7 +5550,7 @@
       "behavioursToApply": [
         "behaviour-barricade-decompose-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5580,7 +5597,7 @@
       "behavioursToApply": [
         "behaviour-battery-core-power-grid-mask-provider"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5592,7 +5609,7 @@
       "behavioursToApply": [
         "behaviour-battery-core-fusion-core-upgrade-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5628,7 +5645,7 @@
       "behavioursToApply": [
         "behaviour-fusion-core-power-grid-mask-provider"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5666,7 +5683,7 @@
       "behavioursToApply": [
         "behaviour-fusion-core-celestium-core-upgrade-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5702,7 +5719,7 @@
       "behavioursToApply": [
         "behaviour-celestium-core-power-grid-mask-provider"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5749,7 +5766,7 @@
       "behavioursToApply": [
         "behaviour-collector-direct-transit-system-inactive-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5761,7 +5778,7 @@
       "behavioursToApply": [
         "behaviour-collector-direct-transit-system-active-income"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5773,7 +5790,7 @@
       "behavioursToApply": [
         "behaviour-extractor-reinforced-infrastructure-inactive-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5785,7 +5802,7 @@
       "behavioursToApply": [
         "behaviour-extractor-reinforced-infrastructure-active-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5797,7 +5814,44 @@
       "behavioursToApply": [
         "behaviour-power-pole-power-grid-mask-provider"
       ],
+      "target": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-power-pole-excess-distribution-search",
+      "type": "Effect.Search",
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 4,
+        "ignoreRadius": -1
+      },
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnPlanningPhaseStart"
+      ],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit",
+        "Flag.FilterStructure",
+        "Flag.FilterPlayer",
+        "Flag.FilterSpecificFactionUee"
+      ],
+      "effects": [
+        "effect-power-pole-excess-distribution-apply-behaviour"
+      ],
       "location": "Location.Self",
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-power-pole-excess-distribution-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-power-pole-excess-distribution-buff"
+      ],
+      "target": "Location.Actor",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5809,7 +5863,7 @@
       "behavioursToApply": [
         "behaviour-leader-all-for-one-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5859,7 +5913,7 @@
       "behavioursToApply": [
         "behaviour-leader-menacing-presence-buff"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5871,7 +5925,7 @@
       "behavioursToApply": [
         "behaviour-leader-one-for-all-obelisk-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterPlayer",
         "Flag.FilterAlly",
@@ -5920,7 +5974,7 @@
       "behavioursToApply": [
         "behaviour-leader-one-for-all-heal-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5932,7 +5986,7 @@
       "behavioursToApply": [
         "behaviour-slave-repair-structure-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterPlayer",
         "Flag.FilterAlly",
@@ -5959,7 +6013,7 @@
       "behavioursToApply": [
         "behaviour-slave-repair-wait"
       ],
-      "location": "Location.Origin",
+      "target": "Location.Origin",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -5971,7 +6025,7 @@
       "behavioursToApply": [
         "behaviour-slave-manual-labour-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterPlayer",
         "Flag.FilterAlly",
@@ -6001,7 +6055,7 @@
       "behavioursToApply": [
         "behaviour-slave-manual-labour-wait"
       ],
-      "location": "Location.Origin",
+      "target": "Location.Origin",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -6030,7 +6084,7 @@
       "behavioursToApply": [
         "behaviour-quickdraw-doubleshot-extra-attack"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf"
       ],
@@ -6044,7 +6098,7 @@
       "behavioursToApply": [
         "behaviour-quickdraw-cripple-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -6059,7 +6113,7 @@
       "behavioursToApply": [
         "behaviour-gorger-fanatic-suicide-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf"
       ],
@@ -6164,7 +6218,7 @@
       "behavioursToApply": [
         "behaviour-camou-silent-assassin-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -6266,7 +6320,7 @@
       "behavioursToApply": [
         "behaviour-camou-climb-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf"
       ],
@@ -6315,7 +6369,7 @@
       "behavioursToApply": [
         "behaviour-shaman-wondrous-goo-buff"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -6406,7 +6460,7 @@
       "behavioursToApply": [
         "behaviour-pyre-phantom-menace-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf"
       ],
@@ -6514,7 +6568,7 @@
       "behavioursToApply": [
         "behaviour-roach-degrading-carapace-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf"
       ],
@@ -6528,7 +6582,7 @@
       "behavioursToApply": [
         "behaviour-roach-degrading-carapace-periodic-damage-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf"
       ],
@@ -6592,7 +6646,7 @@
       "behavioursToApply": [
         "behaviour-parasite-paralysing-grasp-tether"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -6620,7 +6674,7 @@
       "behavioursToApply": [
         "behaviour-parasite-paralysing-grasp-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -6648,7 +6702,7 @@
       "behavioursToApply": [
         "behaviour-parasite-paralysing-grasp-self-buff"
       ],
-      "location": "Location.Source",
+      "target": "Location.Source",
       "filterFlags": [
         "Flag.FilterUnit"
       ],
@@ -6701,7 +6755,7 @@
       "behavioursToApply": [
         "behaviour-horrior-expert-formation-buff"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -6713,7 +6767,7 @@
       "behavioursToApply": [
         "behaviour-horrior-mount-wait"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf"
       ],
@@ -6742,7 +6796,7 @@
       "behavioursToApply": [
         "behaviour-marksman-critical-mark-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -6783,7 +6837,7 @@
       "behavioursToApply": [
         "behaviour-surfer-dismount-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf"
       ],
@@ -6805,7 +6859,7 @@
       "behavioursToApply": [
         "behaviour-mortar-deadly-ammunition-ammunition"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf",
         "Flag.FilterUnit"
@@ -6865,7 +6919,7 @@
       "behavioursToApply": [
         "behaviour-mortar-reload-wait"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf",
         "Flag.FilterUnit"
@@ -6887,7 +6941,7 @@
       "behavioursToApply": [
         "behaviour-mortar-piercing-blast-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf",
         "Flag.FilterUnit"
@@ -6902,7 +6956,7 @@
       "behavioursToApply": [
         "behaviour-hawk-tactical-goggles-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf",
         "Flag.FilterUnit"
@@ -6917,7 +6971,7 @@
       "behavioursToApply": [
         "behaviour-hawk-leadership-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterPlayer",
         "Flag.FilterAlly",
@@ -6934,7 +6988,7 @@
       "behavioursToApply": [
         "behaviour-hawk-health-kit-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf",
         "Flag.FilterUnit"
@@ -6970,7 +7024,7 @@
       "behavioursToApply": [
         "behaviour-hawk-health-kit-heal-buff"
       ],
-      "location": "Location.Inherited",
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -6982,7 +7036,7 @@
       "behavioursToApply": [
         "behaviour-engineer-operate-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterUnit",
         "Flag.FilterSpecificUnitCannon",
@@ -7061,7 +7115,7 @@
       "behavioursToApply": [
         "behaviour-engineer-repair-structure-or-machine-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterPlayer",
         "Flag.FilterAlly",
@@ -7088,7 +7142,7 @@
       "behavioursToApply": [
         "behaviour-engineer-repair-structure-or-machine-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterPlayer",
         "Flag.FilterAlly",
@@ -7119,7 +7173,7 @@
       "behavioursToApply": [
         "behaviour-engineer-repair-horrior-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterPlayer",
         "Flag.FilterAlly",
@@ -7149,7 +7203,7 @@
       "behavioursToApply": [
         "behaviour-engineer-repair-wait"
       ],
-      "location": "Location.Origin",
+      "target": "Location.Origin",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -7162,7 +7216,7 @@
         "behaviour-cannon-machine-counter",
         "behaviour-cannon-machine-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf",
         "Flag.FilterUnit"
@@ -7202,7 +7256,7 @@
       "behavioursToApply": [
         "behaviour-cannon-heat-up-wait"
       ],
-      "location": "Location.Origin",
+      "target": "Location.Origin",
       "filterFlags": [
         "Flag.FilterPlayer",
         "Flag.FilterAlly",
@@ -7287,7 +7341,7 @@
         "behaviour-ballista-machine-counter",
         "behaviour-ballista-machine-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf",
         "Flag.FilterUnit"
@@ -7357,7 +7411,7 @@
       "behavioursToApply": [
         "behaviour-ballista-aim-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterStructure",
@@ -7392,7 +7446,7 @@
         "behaviour-radar-machine-counter",
         "behaviour-radar-machine-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf",
         "Flag.FilterUnit"
@@ -7439,7 +7493,7 @@
       "behavioursToApply": [
         "behaviour-radar-radio-location-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -7519,7 +7573,7 @@
         "behaviour-vessel-machine-counter",
         "behaviour-vessel-machine-buff"
       ],
-      "location": "Location.Self",
+      "target": "Location.Self",
       "filterFlags": [
         "Flag.FilterSelf",
         "Flag.FilterUnit"
@@ -7573,7 +7627,7 @@
       "behavioursToApply": [
         "behaviour-vessel-absorbent-field-intercept-damage"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterPlayer",
         "Flag.FilterAlly",
@@ -7630,7 +7684,7 @@
       "behavioursToApply": [
         "behaviour-vessel-fortify-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterPlayer",
         "Flag.FilterAlly",
@@ -7646,7 +7700,7 @@
       "behavioursToApply": [
         "behaviour-omen-rendition-placement-buff"
       ],
-      "location": "Location.Actor",
+      "target": "Location.Actor",
       "filterFlags": [
         "Flag.FilterEnemy",
         "Flag.FilterUnit"
@@ -8987,6 +9041,34 @@
       "displayName": "Power Grid Mask Provider",
       "description": "Provides Power in 4 Distance.",
       "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-power-pole-excess-distribution-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Shields",
+          "change": "Change.AddCurrent",
+          "amount": 1.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "restoreChangesOnEnd": false,
+      "displayName": "Excess Distribution Buff",
+      "description": "",
+      "endsAt": "EndsAt.Instant",
       "alignment": "Alignment.Neutral",
       "canStack": false,
       "canResetDuration": false,

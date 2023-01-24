@@ -5,6 +5,7 @@ using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Features;
+using low_age_data.Domain.Factions;
 
 namespace low_age_data.Domain.Shared.Flags
 {
@@ -103,7 +104,7 @@ namespace low_age_data.Domain.Shared.Flags
                 /// action phase.
                 /// </summary>
                 public static Flag AppliedOnEveryAction => new(Flags.EffectSearchAppliedOnEveryAction);
-                
+
                 /// <summary>
                 /// <see cref="Effects.Search"/> is applied at the start of every action phase.
                 /// </summary>
@@ -113,6 +114,16 @@ namespace low_age_data.Domain.Shared.Flags
                 /// <see cref="Effects.Search"/> is applied at the end of every action phase.
                 /// </summary>
                 public static Flag AppliedOnActionPhaseEnd => new(Flags.EffectSearchAppliedOnActionPhaseEnd);
+                
+                /// <summary>
+                /// <see cref="Effects.Search"/> is applied at the start of every planning phase.
+                /// </summary>
+                public static Flag AppliedOnPlanningPhaseStart => new(Flags.EffectSearchAppliedOnPlanningPhaseStart);
+                
+                /// <summary>
+                /// <see cref="Effects.Search"/> is applied at the end of every planning phase.
+                /// </summary>
+                public static Flag AppliedOnPlanningPhaseEnd => new(Flags.EffectSearchAppliedOnPlanningPhaseEnd);
                 
                 /// <summary>
                 /// Counteracts any <see cref="Effects"/> added as part of <see cref="Effects.Search"/>
@@ -217,9 +228,13 @@ namespace low_age_data.Domain.Shared.Flags
                 public static Flag RadarRedDot => new(Flags.FilterSpecificFeatureRadarRedDot);
             }
 
+            /// <summary>
+            /// <see cref="Entity"/> is from a specific <see cref="Faction"/>.
+            /// </summary>
             public static class SpecificFaction
             {
-                // TODO
+                public static Flag Revelators => new(Flags.FilterSpecificFactionRevelators);
+                public static Flag Uee => new(Flags.FilterSpecificFactionUee);
             }
         }
 
@@ -264,6 +279,8 @@ namespace low_age_data.Domain.Shared.Flags
             EffectSearchAppliedOnEveryAction,
             EffectSearchAppliedOnActionPhaseStart,
             EffectSearchAppliedOnActionPhaseEnd,
+            EffectSearchAppliedOnPlanningPhaseStart,
+            EffectSearchAppliedOnPlanningPhaseEnd,
             EffectSearchRemovedOnExit,
             EffectSearchRemovedOnPlanningPhaseStart,
             EffectSearchRemovedOnPlanningPhaseEnd,
@@ -283,7 +300,9 @@ namespace low_age_data.Domain.Shared.Flags
             FilterSpecificUnitBallista,
             FilterSpecificUnitRadar,
             FilterSpecificUnitVessel,
-            FilterSpecificFeatureRadarRedDot, // TODO generalize specific units to not have hardcoded values
+            FilterSpecificFeatureRadarRedDot, // TODO generalize specific units to not have hardcoded values as well as factions
+            FilterSpecificFactionRevelators,
+            FilterSpecificFactionUee
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

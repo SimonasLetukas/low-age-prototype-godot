@@ -56,7 +56,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Shared.PassiveIncomeIncome
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     name: EffectName.Shared.ScrapsIncomeApplyBehaviour,
@@ -64,7 +64,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Shared.ScrapsIncomeIncome
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     name: EffectName.Shared.CelestiumIncomeApplyBehaviour,
@@ -72,7 +72,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Shared.CelestiumIncomeIncome
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Search(
                     name: EffectName.Shared.Revelators.NoPopulationSpaceSearch,
@@ -102,7 +102,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Shared.Uee.PowerGeneratorBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ModifyPlayer(
                     name: EffectName.Shared.Uee.PowerGeneratorModifyPlayer,
@@ -121,7 +121,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Shared.Uee.PowerDependencyBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Damage(
                     name: EffectName.Shared.Uee.PowerDependencyDamage,
@@ -135,7 +135,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Shared.Uee.PowerDependencyBuffDisable
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new ApplyBehaviour(
                     name: EffectName.Shared.Uee.PowerDependencyApplyBehaviourInactive,
@@ -143,7 +143,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Shared.Uee.PowerDependencyBuffInactive
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 #endregion
 
@@ -155,7 +155,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Citadel.ExecutiveStashIncome
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     name: EffectName.Citadel.AscendableApplyBehaviour,
@@ -163,7 +163,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Citadel.AscendableAscendable
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     name: EffectName.Citadel.HighGroundApplyBehaviour,
@@ -171,7 +171,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Citadel.HighGroundHighGround
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Search(
                     name: EffectName.Obelisk.CelestiumDischargeSearchLong,
@@ -203,7 +203,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Obelisk.CelestiumDischargeBuffNegative
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Search(
                     name: EffectName.Obelisk.CelestiumDischargeSearchShort,
@@ -270,7 +270,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Outpost.AscendableAscendable
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     name: EffectName.Outpost.HighGroundApplyBehaviour,
@@ -278,7 +278,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Outpost.HighGroundHighGround
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new Search(
                     name: EffectName.Barricade.ProtectiveShieldSearch,
@@ -348,7 +348,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Barricade.DecomposeBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new RemoveBehaviour(
                     name: EffectName.Barricade.DecomposeRemoveBehaviour,
@@ -370,7 +370,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.BatteryCore.PowerGridMaskProvider
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new ApplyBehaviour(
                     name: EffectName.BatteryCore.FusionCoreUpgradeApplyBehaviour,
@@ -378,7 +378,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.BatteryCore.FusionCoreUpgradeBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new CreateEntity(
                     name: EffectName.BatteryCore.FusionCoreUpgradeCreateEntity,
@@ -402,7 +402,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.FusionCore.PowerGridMaskProvider
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new Damage(
                     name: EffectName.FusionCore.DefenceProtocolDamage,
@@ -421,7 +421,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.FusionCore.CelestiumCoreUpgradeBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new CreateEntity(
                     name: EffectName.FusionCore.CelestiumCoreUpgradeCreateEntity,
@@ -445,7 +445,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.CelestiumCore.PowerGridMaskProvider
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new Damage(
                     name: EffectName.CelestiumCore.DefenceProtocolDamage,
@@ -471,7 +471,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Collector.DirectTransitSystemInactiveBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new ApplyBehaviour(
                     name: EffectName.Collector.DirectTransitSystemApplyBehaviourActive,
@@ -479,7 +479,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Collector.DirectTransitSystemActiveIncome
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new ApplyBehaviour(
                     name: EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourInactive,
@@ -487,7 +487,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Extractor.ReinforcedInfrastructureInactiveBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new ApplyBehaviour(
                     name: EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourActive,
@@ -495,7 +495,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Extractor.ReinforcedInfrastructureActiveBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     name: EffectName.PowerPole.PowerGridApplyBehaviour,
@@ -503,7 +503,36 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.PowerPole.PowerGridMaskProvider
                     },
+                    target: Location.Self),
+                
+                new Search(
+                    name: EffectName.PowerPole.ExcessDistributionSearch,
+                    shape: new Circle(radius: 4),
+                    searchFlags: new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnPlanningPhaseStart
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit,
+                        Flag.Filter.Structure,
+                        Flag.Filter.Player,
+                        Flag.Filter.SpecificFaction.Uee
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.PowerPole.ExcessDistributionApplyBehaviour
+                    },
                     location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.PowerPole.ExcessDistributionApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.PowerPole.ExcessDistributionBuff
+                    },
+                    target: Location.Actor),
                 
                 #endregion
 
@@ -515,7 +544,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Leader.AllForOneBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ModifyPlayer(
                     name: EffectName.Leader.AllForOneModifyPlayer,
@@ -563,7 +592,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Leader.OneForAllObeliskBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Player,
@@ -604,7 +633,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Leader.OneForAllHealBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     name: EffectName.Slave.RepairApplyBehaviourStructure,
@@ -612,7 +641,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Slave.RepairStructureBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Player,
@@ -634,7 +663,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Slave.RepairWait
                     },
-                    location: Location.Origin),
+                    target: Location.Origin),
 
                 new ApplyBehaviour(
                     name: EffectName.Slave.ManualLabourApplyBehaviourHut,
@@ -642,7 +671,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Slave.ManualLabourBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Player,
@@ -667,7 +696,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Slave.ManualLabourWait
                     },
-                    location: Location.Origin),
+                    target: Location.Origin),
 
                 new ModifyPlayer(
                     name: EffectName.Slave.ManualLabourModifyPlayer,
@@ -690,7 +719,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Quickdraw.DoubleshotExtraAttack
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
@@ -702,7 +731,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Quickdraw.CrippleBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
@@ -715,7 +744,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Gorger.FanaticSuicideBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
@@ -779,7 +808,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Camou.SilentAssassinBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
@@ -849,7 +878,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Camou.ClimbBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
@@ -926,7 +955,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Pyre.PhantomMenaceBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
@@ -983,7 +1012,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Roach.DegradingCarapaceBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
@@ -995,7 +1024,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
@@ -1026,7 +1055,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Parasite.ParalysingGraspTether
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
@@ -1049,7 +1078,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Parasite.ParalysingGraspBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
@@ -1072,7 +1101,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Parasite.ParalysingGraspSelfBuff
                     },
-                    location: Location.Source,
+                    target: Location.Source,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Unit
@@ -1123,7 +1152,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Horrior.MountWait
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
@@ -1143,7 +1172,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Marksman.CriticalMarkBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
@@ -1169,7 +1198,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Surfer.DismountBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self
@@ -1185,7 +1214,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Mortar.DeadlyAmmunitionAmmunition
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
@@ -1219,7 +1248,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Mortar.ReloadWait
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
@@ -1237,7 +1266,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Mortar.PiercingBlastBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
@@ -1250,7 +1279,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Hawk.TacticalGogglesBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
@@ -1263,7 +1292,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Hawk.LeadershipBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Player,
@@ -1278,7 +1307,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Hawk.HealthKitBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
@@ -1314,7 +1343,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Engineer.OperateBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Unit,
@@ -1373,7 +1402,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Engineer.RepairStructureOrMachineBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Player,
@@ -1395,7 +1424,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Engineer.RepairStructureOrMachineBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Player,
@@ -1421,7 +1450,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Engineer.RepairHorriorBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Player,
@@ -1446,7 +1475,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Engineer.RepairWait
                     },
-                    location: Location.Origin),
+                    target: Location.Origin),
 
                 new ApplyBehaviour(
                     name: EffectName.Cannon.MachineApplyBehaviour,
@@ -1455,7 +1484,7 @@ namespace low_age_data.Collections
                         BehaviourName.Cannon.MachineCounter,
                         BehaviourName.Cannon.MachineBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
@@ -1489,7 +1518,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Cannon.HeatUpWait
                     },
-                    location: Location.Origin,
+                    target: Location.Origin,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Player,
@@ -1543,7 +1572,7 @@ namespace low_age_data.Collections
                         BehaviourName.Ballista.MachineCounter,
                         BehaviourName.Ballista.MachineBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
@@ -1593,7 +1622,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Ballista.AimBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,
@@ -1621,7 +1650,7 @@ namespace low_age_data.Collections
                         BehaviourName.Radar.MachineCounter,
                         BehaviourName.Radar.MachineBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
@@ -1659,7 +1688,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Radar.RadioLocationBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Search(
                     name: EffectName.Radar.RadioLocationSearchDestroy,
@@ -1720,7 +1749,7 @@ namespace low_age_data.Collections
                         BehaviourName.Vessel.MachineCounter,
                         BehaviourName.Vessel.MachineBuff
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Self,
@@ -1766,7 +1795,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Vessel.AbsorbentFieldInterceptDamage
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Player,
@@ -1813,7 +1842,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Vessel.FortifyBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Player,
@@ -1827,7 +1856,7 @@ namespace low_age_data.Collections
                     {
                         BehaviourName.Omen.RenditionPlacementBuff
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filterFlags: new List<Flag>
                     {
                         Flag.Filter.Enemy,

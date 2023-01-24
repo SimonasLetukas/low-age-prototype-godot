@@ -140,6 +140,8 @@ namespace low_age_data.Domain.Effects
         public static class PowerPole
         {
             public static EffectName PowerGridApplyBehaviour => new($"{nameof(PowerPole)}{nameof(PowerGridApplyBehaviour)}".ToKebabCase());
+            public static EffectName ExcessDistributionSearch => new($"{nameof(PowerPole)}{nameof(ExcessDistributionSearch)}".ToKebabCase());
+            public static EffectName ExcessDistributionApplyBehaviour => new($"{nameof(PowerPole)}{nameof(ExcessDistributionApplyBehaviour)}".ToKebabCase());
         }
         
         public static class Temple

@@ -12,7 +12,7 @@ namespace low_age_data.Domain.Effects
         public ApplyBehaviour(
             EffectName name,
             IList<BehaviourName> behavioursToApply,
-            Location? location = null,
+            Location? target = null,
             IList<Flag>? filterFlags = null,
             Location? behaviourOwner = null,
             bool? waitForInitialEffects = null,
@@ -23,14 +23,14 @@ namespace low_age_data.Domain.Effects
                 validators ?? new List<Validator>())
         {
             BehavioursToApply = behavioursToApply;
-            Location = location ?? Location.Inherited;
+            Target = target ?? Location.Inherited;
             FilterFlags = filterFlags ?? new List<Flag>();
             BehaviourOwner = behaviourOwner;
             WaitForInitialEffects = waitForInitialEffects ?? false;
         }
 
         public IList<BehaviourName> BehavioursToApply { get; }
-        public Location Location { get; }
+        public Location Target { get; }
         public IList<Flag> FilterFlags { get; }
         
         /// <summary>

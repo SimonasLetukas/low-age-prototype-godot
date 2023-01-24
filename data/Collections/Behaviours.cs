@@ -714,6 +714,22 @@ namespace low_age_data.Collections
                     description: "Provides Power in 4 Distance.",
                     maskCreated: MaskName.Power, 
                     maskShape: new Circle(radius: 4, ignoreRadius: 0)),
+                
+                new Buff(
+                    name: BehaviourName.PowerPole.ExcessDistributionBuff,
+                    displayName: nameof(BehaviourName.PowerPole.ExcessDistributionBuff).CamelCaseToWords(),
+                    description: "",
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.AddCurrent, 
+                            amount: 1, 
+                            stat: Stats.Shields)
+                    },
+                    endsAt: EndsAt.Instant,
+                    canStack: false,
+                    canResetDuration: false,
+                    restoreChangesOnEnd: false),
 
                 #endregion
 

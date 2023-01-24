@@ -542,6 +542,14 @@ namespace low_age_data.Collections
                     description: "Provides Power in 4 Distance.",
                     hasButton: true,
                     onBirthEffect: EffectName.PowerPole.PowerGridApplyBehaviour),
+                
+                new Passive(
+                    name: AbilityName.PowerPole.ExcessDistribution,
+                    displayName: nameof(AbilityName.PowerPole.ExcessDistribution).CamelCaseToWords(),
+                    description: "Regenerates +1 Shields to units and structures in 4 Distance at the start of each " +
+                                 "planning phase.",
+                    hasButton: true,
+                    periodicEffect: EffectName.PowerPole.ExcessDistributionSearch),
 
                 #endregion
                 
