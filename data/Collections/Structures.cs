@@ -442,7 +442,7 @@ namespace low_age_data.Collections
                     {
                         AbilityName.Shared.Uee.Building, // TODO check if all UEE buildings have this
                         AbilityName.Shared.Uee.PowerDependency,
-                        // TODO
+                        AbilityName.PowerPole.PowerGrid,
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
             };

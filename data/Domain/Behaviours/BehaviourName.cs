@@ -122,6 +122,11 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName ReinforcedInfrastructureInactiveBuff => new($"{nameof(Extractor)}{nameof(ReinforcedInfrastructureInactiveBuff)}".ToKebabCase());
             public static BehaviourName ReinforcedInfrastructureActiveBuff => new($"{nameof(Extractor)}{nameof(ReinforcedInfrastructureActiveBuff)}".ToKebabCase());
         }
+
+        public static class PowerPole
+        {
+            public static BehaviourName PowerGridMaskProvider => new($"{nameof(PowerPole)}{nameof(PowerGridMaskProvider)}".ToKebabCase());
+        }
         
         public static class Wall
         {

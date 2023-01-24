@@ -124,6 +124,7 @@ namespace low_age_data.Domain.Abilities
         
         public static class PowerPole
         {
+            public static AbilityName PowerGrid => new($"{nameof(PowerPole)}{nameof(PowerGrid)}".ToKebabCase());
         }
         
         public static class Temple

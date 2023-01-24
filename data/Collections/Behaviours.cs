@@ -707,6 +707,13 @@ namespace low_age_data.Collections
                         EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourInactive
                     },
                     restoreChangesOnEnd: true),
+                
+                new MaskProvider(
+                    name: BehaviourName.PowerPole.PowerGridMaskProvider,
+                    displayName: nameof(BehaviourName.PowerPole.PowerGridMaskProvider).CamelCaseToWords(),
+                    description: "Provides Power in 4 Distance.",
+                    maskCreated: MaskName.Power, 
+                    maskShape: new Circle(radius: 4, ignoreRadius: 0)),
 
                 #endregion
 

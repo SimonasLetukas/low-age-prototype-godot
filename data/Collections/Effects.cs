@@ -497,6 +497,14 @@ namespace low_age_data.Collections
                     },
                     location: Location.Self),
 
+                new ApplyBehaviour(
+                    name: EffectName.PowerPole.PowerGridApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.PowerPole.PowerGridMaskProvider
+                    },
+                    location: Location.Self),
+                
                 #endregion
 
                 #region Units

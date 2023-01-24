@@ -2469,7 +2469,8 @@
         ],
         "abilities": [
           "ability-shared-uee-building",
-          "ability-shared-uee-power-dependency"
+          "ability-shared-uee-power-dependency",
+          "ability-power-pole-power-grid"
         ],
         "displayName": "Power Pole",
         "description": ""
@@ -3713,6 +3714,22 @@
       "cost": [],
       "displayName": "Reinforced Infrastructure",
       "description": "Gains additional 3 Melee Armour if connected to Power."
+    },
+    {
+      "name": "ability-power-pole-power-grid",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffect": "effect-power-pole-power-grid-apply-behaviour",
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Power Grid",
+      "description": "Provides Power in 4 Distance."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -5767,6 +5784,18 @@
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
         "behaviour-extractor-reinforced-infrastructure-active-buff"
+      ],
+      "location": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-power-pole-power-grid-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-power-pole-power-grid-mask-provider"
       ],
       "location": "Location.Self",
       "filterFlags": [],
@@ -8943,6 +8972,27 @@
       "conditionalEffects": [
         "effect-extractor-reinforced-infrastructure-apply-behaviour-inactive"
       ],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-power-pole-power-grid-mask-provider",
+      "type": "Behaviour.MaskProvider",
+      "maskCreated": "mask-power",
+      "maskShape": {
+        "type": "Shape.Circle",
+        "radius": 4,
+        "ignoreRadius": 0
+      },
+      "displayName": "Power Grid Mask Provider",
+      "description": "Provides Power in 4 Distance.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false
     },

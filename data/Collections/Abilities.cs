@@ -535,6 +535,13 @@ namespace low_age_data.Collections
                     description: "Gains additional 3 Melee Armour if connected to Power.",
                     hasButton: true,
                     onBirthEffect: EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourInactive),
+                
+                new Passive(
+                    name: AbilityName.PowerPole.PowerGrid,
+                    displayName: nameof(AbilityName.PowerPole.PowerGrid).CamelCaseToWords(),
+                    description: "Provides Power in 4 Distance.",
+                    hasButton: true,
+                    onBirthEffect: EffectName.PowerPole.PowerGridApplyBehaviour),
 
                 #endregion
                 
