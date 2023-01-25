@@ -142,6 +142,10 @@ namespace low_age_data.Domain.Effects
             public static EffectName PowerGridApplyBehaviour => new($"{nameof(PowerPole)}{nameof(PowerGridApplyBehaviour)}".ToKebabCase());
             public static EffectName ExcessDistributionSearch => new($"{nameof(PowerPole)}{nameof(ExcessDistributionSearch)}".ToKebabCase());
             public static EffectName ExcessDistributionApplyBehaviour => new($"{nameof(PowerPole)}{nameof(ExcessDistributionApplyBehaviour)}".ToKebabCase());
+            public static EffectName ImprovedPowerGridModifyAbilityPowerGrid => new($"{nameof(PowerPole)}{nameof(ImprovedPowerGridModifyAbilityPowerGrid)}".ToKebabCase());
+            public static EffectName ImprovedPowerGridModifyAbilityExcessDistribution => new($"{nameof(PowerPole)}{nameof(ImprovedPowerGridModifyAbilityExcessDistribution)}".ToKebabCase());
+            public static EffectName PowerGridImprovedApplyBehaviour => new($"{nameof(PowerPole)}{nameof(PowerGridImprovedApplyBehaviour)}".ToKebabCase());
+            public static EffectName ExcessDistributionImprovedSearch => new($"{nameof(PowerPole)}{nameof(ExcessDistributionImprovedSearch)}".ToKebabCase());
         }
         
         public static class Temple

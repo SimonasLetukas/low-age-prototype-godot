@@ -730,6 +730,13 @@ namespace low_age_data.Collections
                     canStack: false,
                     canResetDuration: false,
                     restoreChangesOnEnd: false),
+                
+                new MaskProvider(
+                    name: BehaviourName.PowerPole.PowerGridImprovedMaskProvider,
+                    displayName: nameof(BehaviourName.PowerPole.PowerGridImprovedMaskProvider).CamelCaseToWords(),
+                    description: "Provides Power in 6 Distance.",
+                    maskCreated: MaskName.Power, 
+                    maskShape: new Circle(radius: 6, ignoreRadius: 0)),
 
                 #endregion
 

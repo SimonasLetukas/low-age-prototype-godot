@@ -26,14 +26,20 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Shared.PassiveIncome).CamelCaseToWords(),
                     description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Shared.PassiveIncomeApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Shared.PassiveIncomeApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Shared.ScrapsIncome,
                     displayName: nameof(AbilityName.Shared.ScrapsIncome).CamelCaseToWords(),
                     description: "At the start of each planning phase provides 5 Scraps.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Shared.ScrapsIncomeApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Shared.ScrapsIncomeApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Shared.CelestiumIncome,
@@ -41,7 +47,10 @@ namespace low_age_data.Collections
                     description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
                                  "constructed Obelisk, total minimum of 1).",
                     hasButton: true,
-                    onBirthEffect: EffectName.Shared.CelestiumIncomeApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Shared.CelestiumIncomeApplyBehaviour
+                    }),
                 
                 new Passive(
                     name: AbilityName.Shared.Revelators.Building,
@@ -62,7 +71,10 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Shared.Uee.PowerGenerator).CamelCaseToWords(),
                     description: "UEE faction loses if Battery Core is destroyed.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Shared.Uee.PowerGeneratorApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Shared.Uee.PowerGeneratorApplyBehaviour
+                    }),
                 
                 new Build(
                     name: AbilityName.Shared.Uee.Build,
@@ -168,7 +180,10 @@ namespace low_age_data.Collections
                     description: "All abilities get disabled and loses 5 Health at the start of its action or action " +
                                  "phase if not connected to Power.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Shared.Uee.PowerDependencyApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Shared.Uee.PowerDependencyApplyBehaviour
+                    }),
 
                 #endregion
 
@@ -179,14 +194,20 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Citadel.ExecutiveStash).CamelCaseToWords(),
                     description: "Provides 4 Population and 4 spaces of storage for Weapons.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Citadel.ExecutiveStashApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Citadel.ExecutiveStashApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Citadel.Ascendable,
                     displayName: nameof(AbilityName.Citadel.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Citadel.AscendableApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Citadel.AscendableApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Citadel.HighGround,
@@ -194,7 +215,10 @@ namespace low_age_data.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Citadel.HighGroundApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Citadel.HighGroundApplyBehaviour
+                    }),
 
                 new Produce(
                     name: AbilityName.Citadel.PromoteGoons,
@@ -284,7 +308,10 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Shack.Accommodation).CamelCaseToWords(),
                     description: "Provides 2 Population",
                     hasButton: true,
-                    onBirthEffect: EffectName.Shack.AccommodationApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Shack.AccommodationApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Smith.MeleeWeaponProduction,
@@ -292,7 +319,10 @@ namespace low_age_data.Collections
                     description: "Every 20 Celestium generates a Melee Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
-                    onBirthEffect: EffectName.Smith.MeleeWeaponProductionApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Smith.MeleeWeaponProductionApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Fletcher.RangedWeaponProduction,
@@ -300,7 +330,10 @@ namespace low_age_data.Collections
                     description: "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
-                    onBirthEffect: EffectName.Fletcher.RangedWeaponProductionApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Fletcher.RangedWeaponProductionApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Alchemy.SpecialWeaponProduction,
@@ -308,14 +341,20 @@ namespace low_age_data.Collections
                     description: "Every 30 Celestium generates a Special Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
-                    onBirthEffect: EffectName.Alchemy.SpecialWeaponProductionApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Alchemy.SpecialWeaponProductionApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Depot.WeaponStorage,
                     displayName: nameof(AbilityName.Depot.WeaponStorage).CamelCaseToWords(),
                     description: "Provides 4 spaces of storage for Weapons which are used for new unit production.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Depot.WeaponStorageApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Depot.WeaponStorageApplyBehaviour
+                    }),
 
                 new Research(
                     name: AbilityName.Workshop.Research,
@@ -385,7 +424,10 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Outpost.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Outpost.AscendableApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Outpost.AscendableApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Outpost.HighGround,
@@ -393,7 +435,10 @@ namespace low_age_data.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Outpost.HighGroundApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Outpost.HighGroundApplyBehaviour
+                    }),
                 
                 new Passive(
                     name: AbilityName.Barricade.ProtectiveShield,
@@ -432,7 +477,10 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.BatteryCore.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
                     hasButton: true,
-                    onBirthEffect: EffectName.BatteryCore.PowerGridApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.BatteryCore.PowerGridApplyBehaviour
+                    }),
 
                 new Instant(
                     name: AbilityName.BatteryCore.FusionCoreUpgrade,
@@ -454,7 +502,10 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.FusionCore.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 6 Distance.",
                     hasButton: true,
-                    onBirthEffect: EffectName.FusionCore.PowerGridApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.FusionCore.PowerGridApplyBehaviour
+                    }),
                 
                 new Target(
                     name: AbilityName.FusionCore.DefenceProtocol,
@@ -490,7 +541,10 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.CelestiumCore.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 8 Distance.",
                     hasButton: true,
-                    onBirthEffect: EffectName.CelestiumCore.PowerGridApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.CelestiumCore.PowerGridApplyBehaviour
+                    }),
                 
                 new Target(
                     name: AbilityName.CelestiumCore.DefenceProtocol,
@@ -527,21 +581,30 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Collector.DirectTransitSystem).CamelCaseToWords(),
                     description: "Provides +2 Scraps at the start of each planning phase if connected to Power.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Collector.DirectTransitSystemApplyBehaviourInactive),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Collector.DirectTransitSystemApplyBehaviourInactive
+                    }),
                 
                 new Passive(
                     name: AbilityName.Extractor.ReinforcedInfrastructure,
                     displayName: nameof(AbilityName.Extractor.ReinforcedInfrastructure).CamelCaseToWords(),
                     description: "Gains additional 3 Melee Armour if connected to Power.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourInactive),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourInactive
+                    }),
                 
                 new Passive(
                     name: AbilityName.PowerPole.PowerGrid,
                     displayName: nameof(AbilityName.PowerPole.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
                     hasButton: true,
-                    onBirthEffect: EffectName.PowerPole.PowerGridApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.PowerPole.PowerGridApplyBehaviour
+                    }),
                 
                 new Passive(
                     name: AbilityName.PowerPole.ExcessDistribution,
@@ -549,7 +612,41 @@ namespace low_age_data.Collections
                     description: "Regenerates +1 Shields to units and structures in 4 Distance at the start of each " +
                                  "planning phase.",
                     hasButton: true,
-                    periodicEffect: EffectName.PowerPole.ExcessDistributionSearch),
+                    periodicEffect: EffectName.PowerPole.ExcessDistributionSearch
+                    ),
+                
+                new Passive(
+                    name: AbilityName.PowerPole.ImprovedPowerGrid,
+                    displayName: nameof(AbilityName.PowerPole.ImprovedPowerGrid).CamelCaseToWords(),
+                    description: "Distance of provided Power and shield regeneration is increased to 6.",
+                    hasButton: true,
+                    researchNeeded: new List<ResearchName>
+                    {
+                        ResearchName.Uee.HeightenedConductivity
+                    },
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.PowerPole.ImprovedPowerGridModifyAbilityPowerGrid,
+                        EffectName.PowerPole.ImprovedPowerGridModifyAbilityExcessDistribution
+                    }),
+                
+                new Passive(
+                    name: AbilityName.PowerPole.PowerGridImproved,
+                    displayName: nameof(AbilityName.PowerPole.PowerGridImproved).CamelCaseToWords(),
+                    description: "Provides Power in 6 Distance.",
+                    hasButton: true,
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.PowerPole.PowerGridImprovedApplyBehaviour
+                    }),
+                
+                new Passive(
+                    name: AbilityName.PowerPole.ExcessDistributionImproved,
+                    displayName: nameof(AbilityName.PowerPole.ExcessDistributionImproved).CamelCaseToWords(),
+                    description: "Regenerates +1 Shields to units and structures in 6 Distance at the start of each " +
+                                 "planning phase.",
+                    hasButton: true,
+                    periodicEffect: EffectName.PowerPole.ExcessDistributionImprovedSearch),
 
                 #endregion
                 
@@ -560,7 +657,10 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Leader.AllForOne).CamelCaseToWords(),
                     description: "Revelators faction loses if Leader dies.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Leader.AllForOneApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Leader.AllForOneApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Leader.MenacingPresence,
@@ -690,7 +790,10 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Quickdraw.Doubleshot).CamelCaseToWords(),
                     description: "Ranged attacks twice.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Quickdraw.DoubleshotApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Quickdraw.DoubleshotApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Quickdraw.Cripple,
@@ -725,7 +828,10 @@ namespace low_age_data.Collections
                     {
                         Attacks.Melee
                     },
-                    onBirthEffect: EffectName.Gorger.FanaticSuicideApplyBehaviourBuff),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Gorger.FanaticSuicideApplyBehaviourBuff
+                    }),
 
                 new Instant(
                     name: AbilityName.Gorger.FanaticSuicide,
@@ -785,7 +891,10 @@ namespace low_age_data.Collections
                     {
                         ResearchName.Revelators.SpikedRope
                     },
-                    onBirthEffect: EffectName.Camou.ClimbApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Camou.ClimbApplyBehaviour
+                    }),
 
                 new Target(
                     name: AbilityName.Shaman.WondrousGoo,
@@ -809,7 +918,10 @@ namespace low_age_data.Collections
                                  "next Pyre's action or until death. Any unit which starts its turn or moves onto the flames " +
                                  "receives 5 Melee Damage.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Pyre.CargoCreateEntity),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Pyre.CargoCreateEntity
+                    }),
 
                 new Passive(
                     name: AbilityName.Pyre.PhantomMenace,
@@ -820,7 +932,10 @@ namespace low_age_data.Collections
                     {
                         ResearchName.Revelators.QuestionableCargo
                     },
-                    onBirthEffect: EffectName.Pyre.PhantomMenaceApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Pyre.PhantomMenaceApplyBehaviour
+                    }),
 
                 new Target(
                     name: AbilityName.BigBadBull.UnleashTheRage,
@@ -864,14 +979,14 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityName.Mummy.LeapOfHunger).CamelCaseToWords(),
                     description: "Roach creation range is increased to 4 Distance.",
                     hasButton: true,
-                    periodicEffect: null,
                     researchNeeded: new List<ResearchName>
                     {
                         ResearchName.Revelators.HumanfleshRations
                     },
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Mummy.LeapOfHungerModifyAbility),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Mummy.LeapOfHungerModifyAbility
+                    }),
 
                 new Target(
                     name: AbilityName.Mummy.SpawnRoachModified,
@@ -895,7 +1010,10 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Roach.DegradingCarapaceApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Roach.DegradingCarapaceApplyBehaviour
+                    }),
 
                 new Target(
                     name: AbilityName.Roach.CorrosiveSpit,
@@ -987,7 +1105,10 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Surfer.DismountApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Surfer.DismountApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Mortar.DeadlyAmmunition,
@@ -1000,7 +1121,10 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Mortar.DeadlyAmmunitionApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Mortar.DeadlyAmmunitionApplyBehaviour
+                    }),
 
                 new Instant(
                     name: AbilityName.Mortar.Reload,
@@ -1024,7 +1148,10 @@ namespace low_age_data.Collections
                     },
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Mortar.PiercingBlastApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Mortar.PiercingBlastApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Hawk.TacticalGoggles,
@@ -1035,7 +1162,10 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Hawk.TacticalGogglesApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Hawk.TacticalGogglesApplyBehaviour
+                    }),
 
                 new Target(
                     name: AbilityName.Hawk.Leadership,
@@ -1062,7 +1192,10 @@ namespace low_age_data.Collections
                     },
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Hawk.HealthKitApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Hawk.HealthKitApplyBehaviour
+                    }),
 
                 new Build(
                     name: AbilityName.Engineer.AssembleMachine,
@@ -1155,7 +1288,10 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Cannon.MachineApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Cannon.MachineApplyBehaviour
+                    }),
 
                 new Target(
                     name: AbilityName.Cannon.HeatUp,
@@ -1188,7 +1324,10 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Ballista.MachineApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Ballista.MachineApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Ballista.AddOn,
@@ -1223,7 +1362,10 @@ namespace low_age_data.Collections
                     description: "Can be built and operated by Engineers only. The Machine is functional and can act " +
                                  "only if maximum number of 1 Engineer is operating it.",
                     hasButton: true,
-                    onBirthEffect: EffectName.Radar.MachineApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Radar.MachineApplyBehaviour
+                    }),
 
                 new Target(
                     name: AbilityName.Radar.ResonatingSweep,
@@ -1259,7 +1401,10 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffect: EffectName.Vessel.MachineApplyBehaviour),
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Vessel.MachineApplyBehaviour
+                    }),
 
                 new Passive(
                     name: AbilityName.Vessel.AbsorbentField,

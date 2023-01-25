@@ -126,6 +126,9 @@ namespace low_age_data.Domain.Abilities
         {
             public static AbilityName PowerGrid => new($"{nameof(PowerPole)}{nameof(PowerGrid)}".ToKebabCase());
             public static AbilityName ExcessDistribution => new($"{nameof(PowerPole)}{nameof(ExcessDistribution)}".ToKebabCase());
+            public static AbilityName ImprovedPowerGrid => new($"{nameof(PowerPole)}{nameof(ImprovedPowerGrid)}".ToKebabCase());
+            public static AbilityName PowerGridImproved => new($"{nameof(PowerPole)}{nameof(PowerGridImproved)}".ToKebabCase());
+            public static AbilityName ExcessDistributionImproved => new($"{nameof(PowerPole)}{nameof(ExcessDistributionImproved)}".ToKebabCase());
         }
         
         public static class Temple

@@ -127,6 +127,7 @@ namespace low_age_data.Domain.Behaviours
         {
             public static BehaviourName PowerGridMaskProvider => new($"{nameof(PowerPole)}{nameof(PowerGridMaskProvider)}".ToKebabCase());
             public static BehaviourName ExcessDistributionBuff => new($"{nameof(PowerPole)}{nameof(ExcessDistributionBuff)}".ToKebabCase());
+            public static BehaviourName PowerGridImprovedMaskProvider => new($"{nameof(PowerPole)}{nameof(PowerGridImprovedMaskProvider)}".ToKebabCase());
         }
         
         public static class Wall

@@ -17,7 +17,7 @@ namespace low_age_data.Domain.Abilities
             IList<ResearchName>? researchNeeded = null,
             IList<EffectName>? onHitEffects = null,
             IList<Attacks>? onHitAttackTypes = null,
-            EffectName? onBirthEffect = null,
+            IList<EffectName>? onBirthEffects = null,
             BehaviourName? onBuildBehaviour = null,
             IList<Cost>? cost = null)
             : base(
@@ -34,7 +34,7 @@ namespace low_age_data.Domain.Abilities
             PeriodicEffect = periodicEffect;
             OnHitEffects = onHitEffects ?? new List<EffectName>();
             OnHitAttackTypes = onHitAttackTypes ?? new List<Attacks>();
-            OnBirthEffect = onBirthEffect;
+            OnBirthEffects = onBirthEffects ?? new List<EffectName>();
             OnBuildBehaviour = onBuildBehaviour;
         }
 
@@ -56,7 +56,7 @@ namespace low_age_data.Domain.Abilities
         /// <summary>
         /// Executes effect upon birth or upon research completion on an entity with this ability.
         /// </summary>
-        public EffectName? OnBirthEffect { get; }
+        public IList<EffectName> OnBirthEffects { get; }
 
         /// <summary>
         /// <see cref="Buildable"/> behaviour checked before and applied after <see cref="Build"/> start.

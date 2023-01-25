@@ -444,6 +444,7 @@ namespace low_age_data.Collections
                         AbilityName.Shared.Uee.PowerDependency,
                         AbilityName.PowerPole.PowerGrid,
                         AbilityName.PowerPole.ExcessDistribution,
+                        AbilityName.PowerPole.ImprovedPowerGrid
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
             };

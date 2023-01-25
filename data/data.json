@@ -2471,7 +2471,8 @@
           "ability-shared-uee-building",
           "ability-shared-uee-power-dependency",
           "ability-power-pole-power-grid",
-          "ability-power-pole-excess-distribution"
+          "ability-power-pole-excess-distribution",
+          "ability-power-pole-improved-power-grid"
         ],
         "displayName": "Power Pole",
         "description": ""
@@ -2605,7 +2606,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-shared-passive-income-apply-behaviour",
+      "onBirthEffects": [
+        "effect-shared-passive-income-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -2621,7 +2624,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-shared-scraps-income-apply-behaviour",
+      "onBirthEffects": [
+        "effect-shared-scraps-income-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -2637,7 +2642,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-shared-celestium-income-apply-behaviour",
+      "onBirthEffects": [
+        "effect-shared-celestium-income-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -2653,7 +2660,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": "behaviour-shared-revelators-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -2669,7 +2676,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": "behaviour-shared-uee-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -2685,7 +2692,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-shared-uee-power-generator-apply-behaviour",
+      "onBirthEffects": [
+        "effect-shared-uee-power-generator-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -2928,7 +2937,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": "behaviour-collector-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -2944,7 +2953,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": "behaviour-extractor-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -2960,7 +2969,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": "behaviour-wall-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -2976,7 +2985,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-shared-uee-power-dependency-apply-behaviour",
+      "onBirthEffects": [
+        "effect-shared-uee-power-dependency-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -2992,7 +3003,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-citadel-executive-stash-apply-behaviour",
+      "onBirthEffects": [
+        "effect-citadel-executive-stash-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3008,7 +3021,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-citadel-ascendable-apply-behaviour",
+      "onBirthEffects": [
+        "effect-citadel-ascendable-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3024,7 +3039,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-citadel-high-ground-apply-behaviour",
+      "onBirthEffects": [
+        "effect-citadel-high-ground-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3267,7 +3284,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-shack-accommodation-apply-behaviour",
+      "onBirthEffects": [
+        "effect-shack-accommodation-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3283,7 +3302,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-smith-melee-weapon-production-apply-behaviour",
+      "onBirthEffects": [
+        "effect-smith-melee-weapon-production-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3299,7 +3320,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-fletcher-ranged-weapon-production-apply-behaviour",
+      "onBirthEffects": [
+        "effect-fletcher-ranged-weapon-production-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3315,7 +3338,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-alchemy-special-weapon-production-apply-behaviour",
+      "onBirthEffects": [
+        "effect-alchemy-special-weapon-production-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3331,7 +3356,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-depot-weapon-storage-apply-behaviour",
+      "onBirthEffects": [
+        "effect-depot-weapon-storage-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3440,7 +3467,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-outpost-ascendable-apply-behaviour",
+      "onBirthEffects": [
+        "effect-outpost-ascendable-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3456,7 +3485,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-outpost-high-ground-apply-behaviour",
+      "onBirthEffects": [
+        "effect-outpost-high-ground-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3472,7 +3503,7 @@
       "periodicEffect": "effect-barricade-protective-shield-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3488,7 +3519,7 @@
       "periodicEffect": "effect-barricade-caltrops-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3522,7 +3553,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-battery-core-power-grid-apply-behaviour",
+      "onBirthEffects": [
+        "effect-battery-core-power-grid-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3561,7 +3594,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-fusion-core-power-grid-apply-behaviour",
+      "onBirthEffects": [
+        "effect-fusion-core-power-grid-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3626,7 +3661,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-celestium-core-power-grid-apply-behaviour",
+      "onBirthEffects": [
+        "effect-celestium-core-power-grid-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3692,7 +3729,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-collector-direct-transit-system-apply-behaviour-inactive",
+      "onBirthEffects": [
+        "effect-collector-direct-transit-system-apply-behaviour-inactive"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3708,7 +3747,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-extractor-reinforced-infrastructure-apply-behaviour-inactive",
+      "onBirthEffects": [
+        "effect-extractor-reinforced-infrastructure-apply-behaviour-inactive"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3724,7 +3765,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-power-pole-power-grid-apply-behaviour",
+      "onBirthEffects": [
+        "effect-power-pole-power-grid-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3740,13 +3783,68 @@
       "periodicEffect": "effect-power-pole-excess-distribution-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Excess Distribution",
       "description": "Regenerates +1 Shields to units and structures in 4 Distance at the start of each planning phase."
+    },
+    {
+      "name": "ability-power-pole-improved-power-grid",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [
+        "research-uee-heightened-conductivity"
+      ],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffects": [
+        "effect-power-pole-improved-power-grid-modify-ability-power-grid",
+        "effect-power-pole-improved-power-grid-modify-ability-excess-distribution"
+      ],
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Improved Power Grid",
+      "description": "Distance of provided Power and shield regeneration is increased to 6."
+    },
+    {
+      "name": "ability-power-pole-power-grid-improved",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffects": [
+        "effect-power-pole-power-grid-improved-apply-behaviour"
+      ],
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Power Grid Improved",
+      "description": "Provides Power in 6 Distance."
+    },
+    {
+      "name": "ability-power-pole-excess-distribution-improved",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": "effect-power-pole-excess-distribution-improved-search",
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffects": [],
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Excess Distribution Improved",
+      "description": "Regenerates +1 Shields to units and structures in 6 Distance at the start of each planning phase."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -3756,7 +3854,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-leader-all-for-one-apply-behaviour",
+      "onBirthEffects": [
+        "effect-leader-all-for-one-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3772,7 +3872,7 @@
       "periodicEffect": "effect-leader-menacing-presence-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -3993,7 +4093,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": "behaviour-hut-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -4009,7 +4109,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": "behaviour-obelisk-building-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -4073,7 +4173,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-quickdraw-doubleshot-apply-behaviour",
+      "onBirthEffects": [
+        "effect-quickdraw-doubleshot-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4095,7 +4197,7 @@
       "onHitAttackTypes": [
         "Attacks.Ranged"
       ],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4115,7 +4217,9 @@
       "onHitAttackTypes": [
         "Attacks.Melee"
       ],
-      "onBirthEffect": "effect-gorger-fanatic-suicide-apply-behaviour-buff",
+      "onBirthEffects": [
+        "effect-gorger-fanatic-suicide-apply-behaviour-buff"
+      ],
       "onBuildBehaviour": null,
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -4151,7 +4255,7 @@
       "onHitAttackTypes": [
         "Attacks.Melee"
       ],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4195,7 +4299,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-camou-climb-apply-behaviour",
+      "onBirthEffects": [
+        "effect-camou-climb-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -4235,7 +4341,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-pyre-cargo-create-entity",
+      "onBirthEffects": [
+        "effect-pyre-cargo-create-entity"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4253,7 +4361,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-pyre-phantom-menace-apply-behaviour",
+      "onBirthEffects": [
+        "effect-pyre-phantom-menace-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4359,7 +4469,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-mummy-leap-of-hunger-modify-ability",
+      "onBirthEffects": [
+        "effect-mummy-leap-of-hunger-modify-ability"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4399,7 +4511,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-roach-degrading-carapace-apply-behaviour",
+      "onBirthEffects": [
+        "effect-roach-degrading-carapace-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4447,7 +4561,7 @@
       "onHitAttackTypes": [
         "Attacks.Melee"
       ],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4463,7 +4577,7 @@
       "periodicEffect": "effect-horrior-expert-formation-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4499,7 +4613,7 @@
       "onHitAttackTypes": [
         "Attacks.Ranged"
       ],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4515,7 +4629,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-surfer-dismount-apply-behaviour",
+      "onBirthEffects": [
+        "effect-surfer-dismount-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4531,7 +4647,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-mortar-deadly-ammunition-apply-behaviour",
+      "onBirthEffects": [
+        "effect-mortar-deadly-ammunition-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4563,7 +4681,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-mortar-piercing-blast-apply-behaviour",
+      "onBirthEffects": [
+        "effect-mortar-piercing-blast-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4579,7 +4699,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-hawk-tactical-goggles-apply-behaviour",
+      "onBirthEffects": [
+        "effect-hawk-tactical-goggles-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4621,7 +4743,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-hawk-health-kit-apply-behaviour",
+      "onBirthEffects": [
+        "effect-hawk-health-kit-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4706,7 +4830,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": "behaviour-cannon-assembling-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -4722,7 +4846,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": "behaviour-ballista-assembling-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -4738,7 +4862,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": "behaviour-radar-assembling-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
@@ -4804,7 +4928,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-cannon-machine-apply-behaviour",
+      "onBirthEffects": [
+        "effect-cannon-machine-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4846,7 +4972,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-ballista-machine-apply-behaviour",
+      "onBirthEffects": [
+        "effect-ballista-machine-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4862,7 +4990,7 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4905,7 +5033,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-radar-machine-apply-behaviour",
+      "onBirthEffects": [
+        "effect-radar-machine-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4947,7 +5077,7 @@
       "periodicEffect": "effect-radar-radio-location-apply-behaviour",
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4963,7 +5093,9 @@
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": "effect-vessel-machine-apply-behaviour",
+      "onBirthEffects": [
+        "effect-vessel-machine-apply-behaviour"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -4979,7 +5111,7 @@
       "periodicEffect": "effect-vessel-absorbent-field-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffect": null,
+      "onBirthEffects": [],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
@@ -5855,6 +5987,57 @@
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-power-pole-improved-power-grid-modify-ability-power-grid",
+      "type": "Effect.ModifyAbility",
+      "abilityToModify": "ability-power-pole-power-grid",
+      "modifiedAbility": "ability-power-pole-power-grid-improved",
+      "validators": []
+    },
+    {
+      "name": "effect-power-pole-improved-power-grid-modify-ability-excess-distribution",
+      "type": "Effect.ModifyAbility",
+      "abilityToModify": "ability-power-pole-excess-distribution",
+      "modifiedAbility": "ability-power-pole-excess-distribution-improved",
+      "validators": []
+    },
+    {
+      "name": "effect-power-pole-power-grid-improved-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-power-pole-power-grid-improved-mask-provider"
+      ],
+      "target": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-power-pole-excess-distribution-improved-search",
+      "type": "Effect.Search",
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 6,
+        "ignoreRadius": -1
+      },
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnPlanningPhaseStart"
+      ],
+      "filterFlags": [
+        "Flag.FilterAlly",
+        "Flag.FilterUnit",
+        "Flag.FilterStructure",
+        "Flag.FilterPlayer",
+        "Flag.FilterSpecificFactionUee"
+      ],
+      "effects": [
+        "effect-power-pole-excess-distribution-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "usedForValidator": false,
       "validators": []
     },
     {
@@ -9069,6 +9252,27 @@
       "displayName": "Excess Distribution Buff",
       "description": "",
       "endsAt": "EndsAt.Instant",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-power-pole-power-grid-improved-mask-provider",
+      "type": "Behaviour.MaskProvider",
+      "maskCreated": "mask-power",
+      "maskShape": {
+        "type": "Shape.Circle",
+        "radius": 6,
+        "ignoreRadius": 0
+      },
+      "displayName": "Power Grid Improved Mask Provider",
+      "description": "Provides Power in 6 Distance.",
+      "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,
       "canResetDuration": false,

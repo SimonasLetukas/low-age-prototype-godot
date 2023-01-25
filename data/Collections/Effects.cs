@@ -534,6 +534,45 @@ namespace low_age_data.Collections
                     },
                     target: Location.Actor),
                 
+                new ModifyAbility(
+                    name: EffectName.PowerPole.ImprovedPowerGridModifyAbilityPowerGrid,
+                    abilityToModify: AbilityName.PowerPole.PowerGrid,
+                    modifiedAbility: AbilityName.PowerPole.PowerGridImproved),
+                
+                new ModifyAbility(
+                    name: EffectName.PowerPole.ImprovedPowerGridModifyAbilityExcessDistribution,
+                    abilityToModify: AbilityName.PowerPole.ExcessDistribution,
+                    modifiedAbility: AbilityName.PowerPole.ExcessDistributionImproved),
+                
+                new ApplyBehaviour(
+                    name: EffectName.PowerPole.PowerGridImprovedApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.PowerPole.PowerGridImprovedMaskProvider
+                    },
+                    target: Location.Self),
+                
+                new Search(
+                    name: EffectName.PowerPole.ExcessDistributionImprovedSearch,
+                    shape: new Circle(radius: 6),
+                    searchFlags: new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnPlanningPhaseStart
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit,
+                        Flag.Filter.Structure,
+                        Flag.Filter.Player,
+                        Flag.Filter.SpecificFaction.Uee
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.PowerPole.ExcessDistributionApplyBehaviour
+                    },
+                    location: Location.Self),
+                
                 #endregion
 
                 #region Units
