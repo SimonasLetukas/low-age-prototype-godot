@@ -101,8 +101,8 @@ namespace low_age_data.Collections
                         }),
                         new(name: StructureName.Temple, cost: new List<Cost>
                         {
-                            new(resource: ResourceName.Scraps, amount: 18),
-                            new(resource: ResourceName.Celestium, amount: 45)
+                            new(resource: ResourceName.Scraps, amount: 25),
+                            new(resource: ResourceName.Celestium, amount: 40)
                         }),
                         new(name: StructureName.MilitaryBase, cost: new List<Cost>
                         {
@@ -647,6 +647,19 @@ namespace low_age_data.Collections
                                  "planning phase.",
                     hasButton: true,
                     periodicEffect: EffectName.PowerPole.ExcessDistributionImprovedSearch),
+                
+                new Passive(
+                    name: AbilityName.Temple.KeepingTheFaith,
+                    displayName: nameof(AbilityName.Temple.KeepingTheFaith).CamelCaseToWords(),
+                    description: "Provides +2 Movement to friendly units in 6 Distance at the start of each action " +
+                                 "phase. Additionally provides +1 Faith. Each point of Faith increases the " +
+                                 "Initiative of all owned units by 1.",
+                    hasButton: true,
+                    periodicEffect: EffectName.Temple.KeepingTheFaithSearch,
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Temple.KeepingTheFaithApplyBehaviourIncome
+                    }),
 
                 #endregion
                 

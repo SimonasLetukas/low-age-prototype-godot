@@ -39,7 +39,7 @@ namespace low_age_data.Collections
                     {
                         ResourceName.Scraps,
                         ResourceName.Celestium,
-                        // TODO
+                        ResourceName.Faith
                     },
                     startingEntities: new List<EntityName>
                     {

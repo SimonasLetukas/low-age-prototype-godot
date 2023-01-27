@@ -241,6 +241,20 @@ namespace low_age_data.Collections
                         EffectName.Shared.Uee.PowerDependencyApplyBehaviour
                     }),
                 
+                new Buff(
+                    name: BehaviourName.Shared.Uee.PositiveFaithBuff,
+                    displayName: nameof(BehaviourName.Shared.Uee.PositiveFaithBuff).CamelCaseToWords(),
+                    description: "This unit has increased Initiative because of the positive Faith.",
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(change: Change.AddMax, amount: 1, stat: Stats.Initiative),
+                    },
+                    endsAt: EndsAt.StartOf.Next.Planning,
+                    canStack: true,
+                    canResetDuration: true,
+                    alignment: Alignment.Positive,
+                    restoreChangesOnEnd: true),
+                
                 #endregion
 
                 #region Structures
@@ -737,6 +751,30 @@ namespace low_age_data.Collections
                     description: "Provides Power in 6 Distance.",
                     maskCreated: MaskName.Power, 
                     maskShape: new Circle(radius: 6, ignoreRadius: 0)),
+                
+                new Buff(
+                    name: BehaviourName.Temple.KeepingTheFaithBuff,
+                    displayName: nameof(BehaviourName.Temple.KeepingTheFaithBuff).CamelCaseToWords(),
+                    description: "This unit has +2 Movement because of a nearby Temple.",
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(change: Change.AddMax, amount: 2, stat: Stats.Movement)
+                    },
+                    endsAt: EndsAt.EndOf.This.ActionPhase,
+                    canStack: false,
+                    canResetDuration: true,
+                    alignment: Alignment.Positive,
+                    removeOnConditionsMet: true),
+                
+                new Income(
+                    name: BehaviourName.Temple.KeepingTheFaithIncome,
+                    displayName: nameof(BehaviourName.Temple.KeepingTheFaithIncome).CamelCaseToWords(),
+                    description: "Provides 1 Faith. Each point of Faith increases the Initiative of all of this " +
+                                 "player units.",
+                    resources: new List<ResourceModification>
+                    {
+                        new ResourceModification(change: Change.AddCurrent, amount: 1, ResourceName.Faith)
+                    }),
 
                 #endregion
 

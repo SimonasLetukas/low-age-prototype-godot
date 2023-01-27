@@ -17,8 +17,10 @@ namespace low_age_data.Domain.Resources
             bool hasBank,
             ResourceName? storedAs = null,
             bool? attachesToNewActors = null,
+            IList<EffectName>? positiveIncomeEffects = null,
             IList<EffectName>? negativeIncomeEffects = null,
-            string? negativeIncomeDescription = null)
+            string? negativeIncomeDescription = null,
+            bool? effectAmountMultipliedByResourceAmount = null)
         {
             Name = name;
             DisplayName = displayName;
@@ -28,8 +30,10 @@ namespace low_age_data.Domain.Resources
             HasBank = hasBank;
             StoredAs = storedAs ?? name;
             AttachesToNewActors = attachesToNewActors ?? false;
+            PositiveIncomeEffects = positiveIncomeEffects ?? new List<EffectName>();
             NegativeIncomeEffects = negativeIncomeEffects ?? new List<EffectName>();
             NegativeIncomeDescription = negativeIncomeDescription ?? string.Empty;
+            EffectAmountMultipliedByResourceAmount = effectAmountMultipliedByResourceAmount ?? false;
         }
 
         public ResourceName Name { get; }
@@ -69,9 +73,15 @@ namespace low_age_data.Domain.Resources
         /// behaviour is required). False by default.
         /// </summary>
         public bool AttachesToNewActors { get; }
+        
+        /// <summary>
+        /// List of <see cref="Effect"/>s to be executed at the start of each action phase if the current value of this
+        /// <see cref="Resource"/> is positive (zero excluded).
+        /// </summary>
+        public IList<EffectName> PositiveIncomeEffects { get; }
 
         /// <summary>
-        /// List of <see cref="Effect"/>s to be executed at the start of each action phase if the income for this
+        /// List of <see cref="Effect"/>s to be executed at the start of each action phase if the current value of this
         /// <see cref="Resource"/> is negative (zero excluded).
         /// </summary>
         public IList<EffectName> NegativeIncomeEffects { get; }
@@ -81,5 +91,12 @@ namespace low_age_data.Domain.Resources
         /// negative (zero excluded).
         /// </summary>
         public string NegativeIncomeDescription { get; }
+        
+        /// <summary>
+        /// If true, each time <see cref="PositiveIncomeEffects"/> or <see cref="NegativeIncomeEffects"/> are
+        /// triggered, the amount of effects executed is multiplied by the current amount of resources (positive
+        /// or negative, zero excluded). False by default.
+        /// </summary>
+        public bool EffectAmountMultipliedByResourceAmount { get; }
     }
 }

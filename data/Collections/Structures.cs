@@ -447,6 +447,32 @@ namespace low_age_data.Collections
                         AbilityName.PowerPole.ImprovedPowerGrid
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
+                    
+                new(
+                    name: StructureName.Temple,
+                    displayName: nameof(StructureName.Temple).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 35, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shared.Uee.Building,
+                        AbilityName.Shared.Uee.PowerDependency,
+                        AbilityName.Temple.KeepingTheFaith
+                    },
+                    size: new Vector2<int>(x: 1, y: 2)),
             };
         }
     }

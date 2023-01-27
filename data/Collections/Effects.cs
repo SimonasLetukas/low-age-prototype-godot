@@ -144,6 +144,29 @@ namespace low_age_data.Collections
                         BehaviourName.Shared.Uee.PowerDependencyBuffInactive
                     },
                     target: Location.Self),
+                
+                new Search(
+                    name: EffectName.Shared.Uee.PositiveFaithSearch,
+                    shape: new Map(),
+                    searchFlags: new List<Flag>(),
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Unit,
+                        Flag.Filter.Player
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Shared.Uee.PositiveFaithApplyBehaviour
+                    },
+                    Location.Inherited),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Shared.Uee.PositiveFaithApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Shared.Uee.PositiveFaithBuff
+                    },
+                    target: Location.Actor),
 
                 #endregion
 
@@ -572,6 +595,41 @@ namespace low_age_data.Collections
                         EffectName.PowerPole.ExcessDistributionApplyBehaviour
                     },
                     location: Location.Self),
+                
+                new Search(
+                    name: EffectName.Temple.KeepingTheFaithSearch,
+                    shape: new Circle(radius: 6),
+                    searchFlags: new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnActionPhaseStart
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Ally,
+                        Flag.Filter.Unit,
+                        Flag.Filter.Player
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Temple.KeepingTheFaithApplyBehaviourBuff
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Temple.KeepingTheFaithApplyBehaviourBuff,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Temple.KeepingTheFaithBuff
+                    },
+                    target: Location.Actor),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Temple.KeepingTheFaithApplyBehaviourIncome,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Temple.KeepingTheFaithIncome
+                    },
+                    target: Location.Self),
                 
                 #endregion
 

@@ -30,6 +30,8 @@ namespace low_age_data.Domain.Effects
                 public static EffectName PowerDependencyDamage => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyDamage)}".ToKebabCase());
                 public static EffectName PowerDependencyApplyBehaviourDisable => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyApplyBehaviourDisable)}".ToKebabCase());
                 public static EffectName PowerDependencyApplyBehaviourInactive => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyApplyBehaviourInactive)}".ToKebabCase());
+                public static EffectName PositiveFaithSearch => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PositiveFaithSearch)}".ToKebabCase());
+                public static EffectName PositiveFaithApplyBehaviour => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PositiveFaithApplyBehaviour)}".ToKebabCase());
             }
         }
         
@@ -150,6 +152,9 @@ namespace low_age_data.Domain.Effects
         
         public static class Temple
         {
+            public static EffectName KeepingTheFaithSearch => new($"{nameof(Temple)}{nameof(KeepingTheFaithSearch)}".ToKebabCase());
+            public static EffectName KeepingTheFaithApplyBehaviourBuff => new($"{nameof(Temple)}{nameof(KeepingTheFaithApplyBehaviourBuff)}".ToKebabCase());
+            public static EffectName KeepingTheFaithApplyBehaviourIncome => new($"{nameof(Temple)}{nameof(KeepingTheFaithApplyBehaviourIncome)}".ToKebabCase());
         }
         
         public static class MilitaryBase

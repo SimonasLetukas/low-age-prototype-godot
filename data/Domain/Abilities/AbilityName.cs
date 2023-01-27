@@ -133,6 +133,7 @@ namespace low_age_data.Domain.Abilities
         
         public static class Temple
         {
+            public static AbilityName KeepingTheFaith => new($"{nameof(Temple)}{nameof(KeepingTheFaith)}".ToKebabCase());
         }
         
         public static class MilitaryBase

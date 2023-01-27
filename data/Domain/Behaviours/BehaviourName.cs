@@ -28,6 +28,7 @@ namespace low_age_data.Domain.Behaviours
                 public static BehaviourName PowerDependencyBuff => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyBuff)}".ToKebabCase());
                 public static BehaviourName PowerDependencyBuffDisable => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyBuffDisable)}".ToKebabCase());
                 public static BehaviourName PowerDependencyBuffInactive => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyBuffInactive)}".ToKebabCase());
+                public static BehaviourName PositiveFaithBuff => new($"{nameof(Shared)}{nameof(Uee)}{nameof(PositiveFaithBuff)}".ToKebabCase());
             }
         }
         
@@ -128,6 +129,12 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName PowerGridMaskProvider => new($"{nameof(PowerPole)}{nameof(PowerGridMaskProvider)}".ToKebabCase());
             public static BehaviourName ExcessDistributionBuff => new($"{nameof(PowerPole)}{nameof(ExcessDistributionBuff)}".ToKebabCase());
             public static BehaviourName PowerGridImprovedMaskProvider => new($"{nameof(PowerPole)}{nameof(PowerGridImprovedMaskProvider)}".ToKebabCase());
+        }
+        
+        public static class Temple
+        {
+            public static BehaviourName KeepingTheFaithBuff => new($"{nameof(Temple)}{nameof(KeepingTheFaithBuff)}".ToKebabCase());
+            public static BehaviourName KeepingTheFaithIncome => new($"{nameof(Temple)}{nameof(KeepingTheFaithIncome)}".ToKebabCase());
         }
         
         public static class Wall

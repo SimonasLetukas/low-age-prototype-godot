@@ -69,7 +69,20 @@ namespace low_age_data.Collections
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
-                    storedAs: ResourceName.WeaponStorage)
+                    storedAs: ResourceName.WeaponStorage),
+                
+                new(name: ResourceName.Faith,
+                    displayName: nameof(ResourceName.Faith).CamelCaseToWords(),
+                    description: "Each point of Faith provides +1 Initiative to all owned units. Faith is generated " +
+                                 "by Temples.",
+                    hasLimit: false,
+                    isConsumable: false,
+                    hasBank: false,
+                    positiveIncomeEffects: new List<EffectName>
+                    {
+                        EffectName.Shared.Uee.PositiveFaithSearch
+                    },
+                    effectAmountMultipliedByResourceAmount: true),
             };
         }
     }
