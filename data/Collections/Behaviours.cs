@@ -773,7 +773,7 @@ namespace low_age_data.Collections
                                  "player units.",
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent, amount: 1, ResourceName.Faith)
+                        new ResourceModification(change: Change.AddCurrent, amount: 1, resource: ResourceName.Faith)
                     }),
 
                 #endregion

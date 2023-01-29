@@ -158,7 +158,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.Shared.Uee.PositiveFaithApplyBehaviour
                     },
-                    Location.Inherited),
+                    location: Location.Inherited),
                 
                 new ApplyBehaviour(
                     name: EffectName.Shared.Uee.PositiveFaithApplyBehaviour,

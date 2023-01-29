@@ -2568,6 +2568,67 @@
         ],
         "displayName": "Temple",
         "description": ""
+      },
+      {
+        "name": "structure-military-base",
+        "size": {
+          "x": 1,
+          "y": 3
+        },
+        "centerPoint": {
+          "x": 0,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 2
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 80,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 15,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-uee-building",
+          "ability-shared-uee-power-dependency",
+          "ability-military-base-train"
+        ],
+        "displayName": "Military Base",
+        "description": ""
       }
     ],
     "features": [
@@ -2896,7 +2957,9 @@
               "amount": 63
             }
           ],
-          "researchNeeded": [],
+          "researchNeeded": [
+            "research-uee-fusion-core-upgrade"
+          ],
           "grayOutIfAlreadyExists": false
         },
         {
@@ -2912,7 +2975,9 @@
               "amount": 76
             }
           ],
-          "researchNeeded": [],
+          "researchNeeded": [
+            "research-uee-celestium-core-upgrade"
+          ],
           "grayOutIfAlreadyExists": false
         },
         {
@@ -3008,7 +3073,9 @@
               "amount": 120
             }
           ],
-          "researchNeeded": [],
+          "researchNeeded": [
+            "research-uee-celestium-core-upgrade"
+          ],
           "grayOutIfAlreadyExists": false
         }
       ],
@@ -3955,6 +4022,108 @@
       "cost": [],
       "displayName": "Keeping The Faith",
       "description": "Provides +2 Movement to friendly units in 6 Distance at the start of each action phase. Additionally provides +1 Faith. Each point of Faith increases the Initiative of all owned units by 1."
+    },
+    {
+      "name": "ability-military-base-train",
+      "type": "Ability.Produce",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "selection": [
+        {
+          "name": "unit-horrior",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 14
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 52
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "unit-surfer",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 20
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 52
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-fusion-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "unit-marksman",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 10
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 60
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "unit-mortar",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 16
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 60
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-fusion-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "unit-hawk",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 20
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 50
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-celestium-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": false
+        }
+      ],
+      "canPlaceInWalkableAreaOnly": true,
+      "hasQueue": true,
+      "producedInstantly": false,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Train",
+      "description": "Select a unit to be created at the specified location using Celestium for production."
     },
     {
       "name": "ability-leader-all-for-one",

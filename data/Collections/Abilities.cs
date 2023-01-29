@@ -113,11 +113,17 @@ namespace low_age_data.Collections
                         {
                             new(resource: ResourceName.Scraps, amount: 22),
                             new(resource: ResourceName.Celestium, amount: 63)
+                        }, researchNeeded: new List<ResearchName> 
+                        {
+                            ResearchName.Uee.FusionCoreUpgrade
                         }),
                         new(name: StructureName.Laboratory, cost: new List<Cost>
                         {
                             new(resource: ResourceName.Scraps, amount: 30),
                             new(resource: ResourceName.Celestium, amount: 76)
+                        }, researchNeeded: new List<ResearchName> 
+                        {
+                            ResearchName.Uee.CelestiumCoreUpgrade
                         }),
                         new(name: StructureName.Armoury, cost: new List<Cost>
                         {
@@ -148,6 +154,9 @@ namespace low_age_data.Collections
                         {
                             new(resource: ResourceName.Scraps, amount: 30),
                             new(resource: ResourceName.Celestium, amount: 120)
+                        }, researchNeeded: new List<ResearchName> 
+                        {
+                            ResearchName.Uee.CelestiumCoreUpgrade
                         }),
                     },
                     casterConsumesAction: false,
@@ -660,6 +669,52 @@ namespace low_age_data.Collections
                     {
                         EffectName.Temple.KeepingTheFaithApplyBehaviourIncome
                     }),
+                
+                new Produce(
+                    name: AbilityName.MilitaryBase.Train,
+                    displayName: nameof(AbilityName.MilitaryBase.Train).CamelCaseToWords(),
+                    description: "Select a unit to be created at the specified location using Celestium for " +
+                                 "production.",
+                    selection: new List<Selection<EntityName>>
+                    {
+                        new(name: UnitName.Horrior, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 14),
+                            new(resource: ResourceName.Celestium, amount: 52)
+                        }),
+                        new(name: UnitName.Surfer, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 20),
+                            new(resource: ResourceName.Celestium, amount: 52)
+                        }, researchNeeded: new List<ResearchName> 
+                        {
+                            ResearchName.Uee.FusionCoreUpgrade
+                        }),
+                        new(name: UnitName.Marksman, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 10),
+                            new(resource: ResourceName.Celestium, amount: 60)
+                        }),
+                        new(name: UnitName.Mortar, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 16),
+                            new(resource: ResourceName.Celestium, amount: 60)
+                        }, researchNeeded: new List<ResearchName> 
+                        {
+                            ResearchName.Uee.FusionCoreUpgrade
+                        }),
+                        new(name: UnitName.Hawk, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 20),
+                            new(resource: ResourceName.Celestium, amount: 50)
+                        }, researchNeeded: new List<ResearchName> 
+                        {
+                            ResearchName.Uee.CelestiumCoreUpgrade
+                        })
+                    },
+                    canPlaceInWalkableAreaOnly: true,
+                    hasQueue: true,
+                    producedInstantly: false),
 
                 #endregion
                 
