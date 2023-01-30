@@ -143,6 +143,7 @@ namespace low_age_data.Domain.Abilities
         
         public static class Factory
         {
+            public static AbilityName Train => new($"{nameof(Factory)}{nameof(Train)}".ToKebabCase());
         }
         
         public static class Laboratory

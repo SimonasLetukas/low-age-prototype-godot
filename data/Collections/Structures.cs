@@ -502,6 +502,35 @@ namespace low_age_data.Collections
                     walkableArea: new Area(
                         start: new Vector2<int>(x: 0, y: 2), 
                         size: new Vector2<int>(x: 1, y: 1))),
+                
+                new(
+                    name: StructureName.Factory,
+                    displayName: nameof(StructureName.Factory).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 95, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 20, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shared.Uee.Building,
+                        AbilityName.Shared.Uee.PowerDependency,
+                        AbilityName.Factory.Train
+                    },
+                    size: new Vector2<int>(x: 2, y: 5),
+                    walkableArea: new Area(
+                        start: new Vector2<int>(x: 0, y: 2), 
+                        size: new Vector2<int>(x: 2, y: 2))),
             };
         }
     }

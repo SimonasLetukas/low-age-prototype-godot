@@ -2629,6 +2629,67 @@
         ],
         "displayName": "Military Base",
         "description": ""
+      },
+      {
+        "name": "structure-factory",
+        "size": {
+          "x": 2,
+          "y": 5
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 2
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 2
+          },
+          "size": {
+            "x": 2,
+            "y": 2
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 95,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 20,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-uee-building",
+          "ability-shared-uee-power-dependency",
+          "ability-factory-train"
+        ],
+        "displayName": "Factory",
+        "description": ""
       }
     ],
     "features": [
@@ -4108,6 +4169,58 @@
             {
               "resource": "resource-celestium",
               "amount": 50
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-celestium-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": false
+        }
+      ],
+      "canPlaceInWalkableAreaOnly": true,
+      "hasQueue": true,
+      "producedInstantly": false,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Train",
+      "description": "Select a unit to be created at the specified location using Celestium for production."
+    },
+    {
+      "name": "ability-factory-train",
+      "type": "Ability.Produce",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "selection": [
+        {
+          "name": "unit-engineer",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 6
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 55
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-fusion-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": false
+        },
+        {
+          "name": "unit-vessel",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 22
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 99
             }
           ],
           "researchNeeded": [

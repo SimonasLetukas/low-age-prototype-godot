@@ -715,6 +715,34 @@ namespace low_age_data.Collections
                     canPlaceInWalkableAreaOnly: true,
                     hasQueue: true,
                     producedInstantly: false),
+                
+                new Produce(
+                    name: AbilityName.Factory.Train,
+                    displayName: nameof(AbilityName.Factory.Train).CamelCaseToWords(),
+                    description: "Select a unit to be created at the specified location using Celestium for " +
+                                 "production.",
+                    selection: new List<Selection<EntityName>>
+                    {
+                        new(name: UnitName.Engineer, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 6),
+                            new(resource: ResourceName.Celestium, amount: 55)
+                        }, researchNeeded: new List<ResearchName> 
+                        {
+                            ResearchName.Uee.FusionCoreUpgrade
+                        }),
+                        new(name: UnitName.Vessel, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 22),
+                            new(resource: ResourceName.Celestium, amount: 99)
+                        }, researchNeeded: new List<ResearchName> 
+                        {
+                            ResearchName.Uee.CelestiumCoreUpgrade
+                        })
+                    },
+                    canPlaceInWalkableAreaOnly: true,
+                    hasQueue: true,
+                    producedInstantly: false),
 
                 #endregion
                 
