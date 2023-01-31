@@ -531,6 +531,61 @@ namespace low_age_data.Collections
                     walkableArea: new Area(
                         start: new Vector2<int>(x: 0, y: 2), 
                         size: new Vector2<int>(x: 2, y: 2))),
+                
+                new(
+                    name: StructureName.Laboratory,
+                    displayName: nameof(StructureName.Laboratory).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 110, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 30, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shared.Uee.Building,
+                        AbilityName.Shared.Uee.PowerDependency,
+                        AbilityName.Laboratory.Train
+                    },
+                    size: new Vector2<int>(x: 3, y: 3),
+                    walkableArea: new Area(
+                        start: new Vector2<int>(x: 0, y: 1), 
+                        size: new Vector2<int>(x: 1, y: 1))),
+                
+                new(
+                    name: StructureName.Armoury,
+                    displayName: nameof(StructureName.Armoury).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 65, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 25, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shared.Uee.Building,
+                        AbilityName.Shared.Uee.PowerDependency,
+                        AbilityName.Armoury.Research
+                    },
+                    size: new Vector2<int>(x: 1, y: 2)),
             };
         }
     }

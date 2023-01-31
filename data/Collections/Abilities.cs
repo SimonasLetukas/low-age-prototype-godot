@@ -129,6 +129,9 @@ namespace low_age_data.Collections
                         {
                             new(resource: ResourceName.Scraps, amount: 20),
                             new(resource: ResourceName.Celestium, amount: 50)
+                        }, researchNeeded: new List<ResearchName> 
+                        {
+                            ResearchName.Uee.FusionCoreUpgrade
                         }),
                         new(name: StructureName.Wall, cost: new List<Cost>
                         {
@@ -743,6 +746,109 @@ namespace low_age_data.Collections
                     canPlaceInWalkableAreaOnly: true,
                     hasQueue: true,
                     producedInstantly: false),
+                
+                new Produce(
+                    name: AbilityName.Laboratory.Train,
+                    displayName: nameof(AbilityName.Laboratory.Train).CamelCaseToWords(),
+                    description: "Select a unit to be created at the specified location using Celestium for " +
+                                 "production.",
+                    selection: new List<Selection<EntityName>>
+                    {
+                        new(name: UnitName.Omen, cost: new List<Cost>
+                        {
+                            new(resource: ResourceName.Scraps, amount: 30),
+                            new(resource: ResourceName.Celestium, amount: 90)
+                        }, researchNeeded: new List<ResearchName> 
+                        {
+                            ResearchName.Uee.CelestiumCoreUpgrade
+                        })
+                    },
+                    canPlaceInWalkableAreaOnly: true,
+                    hasQueue: true,
+                    producedInstantly: false),
+                
+                new Research(
+                    name: AbilityName.Armoury.Research,
+                    displayName: nameof(AbilityName.Armoury.Research).CamelCaseToWords(),
+                    description: "Open a selection of research available for UEE to unlock.",
+                    selectionOfResearchToBeUnlocked: new List<Selection<ResearchName>>
+                    {
+                        new(name: ResearchName.Uee.HoverboardReignition,
+                            description: $"Unlock {nameof(AbilityName.Horrior.Mount).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitName.Horrior).CamelCaseToWords()}.",
+                            cost: new List<Cost>
+                            {
+                                new(resource: ResourceName.Scraps,
+                                    amount: 6),
+                                new(resource: ResourceName.Celestium,
+                                    amount: 70)
+                            },
+                            grayOutIfAlreadyExists: true,
+                            researchNeeded: new List<ResearchName>
+                            {
+                                ResearchName.Uee.FusionCoreUpgrade
+                            }),
+                        new(name: ResearchName.Uee.MdPractice,
+                            description: $"Unlock {nameof(AbilityName.Hawk.HealthKit).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitName.Hawk).CamelCaseToWords()}.",
+                            cost: new List<Cost>
+                            {
+                                new(resource: ResourceName.Scraps,
+                                    amount: 12),
+                                new(resource: ResourceName.Celestium,
+                                    amount: 40)
+                            },
+                            grayOutIfAlreadyExists: true,
+                            researchNeeded: new List<ResearchName>
+                            {
+                                ResearchName.Uee.FusionCoreUpgrade
+                            }),
+                        new(name: ResearchName.Uee.CelestiumCoatedMaterials,
+                            description: $"Unlock {nameof(AbilityName.Radar.RadioLocation).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitName.Radar).CamelCaseToWords()}.",
+                            cost: new List<Cost>
+                            {
+                                new(resource: ResourceName.Scraps,
+                                    amount: 8),
+                                new(resource: ResourceName.Celestium,
+                                    amount: 55)
+                            },
+                            grayOutIfAlreadyExists: true,
+                            researchNeeded: new List<ResearchName>
+                            {
+                                ResearchName.Uee.FusionCoreUpgrade
+                            }),
+                        new(name: ResearchName.Uee.ExplosiveShrapnel,
+                            description: $"Unlock {nameof(AbilityName.Mortar.PiercingBlast).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitName.Mortar).CamelCaseToWords()}.",
+                            cost: new List<Cost>
+                            {
+                                new(resource: ResourceName.Scraps,
+                                    amount: 14),
+                                new(resource: ResourceName.Celestium,
+                                    amount: 60)
+                            },
+                            grayOutIfAlreadyExists: true,
+                            researchNeeded: new List<ResearchName>
+                            {
+                                ResearchName.Uee.CelestiumCoreUpgrade
+                            }),
+                        new(name: ResearchName.Uee.HardenedMatrix,
+                            description: $"Unlock {nameof(AbilityName.Vessel.Fortify).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitName.Vessel).CamelCaseToWords()}.",
+                            cost: new List<Cost>
+                            {
+                                new(resource: ResourceName.Scraps,
+                                    amount: 18),
+                                new(resource: ResourceName.Celestium,
+                                    amount: 65)
+                            },
+                            grayOutIfAlreadyExists: true,
+                            researchNeeded: new List<ResearchName>
+                            {
+                                ResearchName.Uee.CelestiumCoreUpgrade
+                            }),
+                    }),
 
                 #endregion
                 

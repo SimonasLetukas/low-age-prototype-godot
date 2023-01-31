@@ -148,10 +148,12 @@ namespace low_age_data.Domain.Abilities
         
         public static class Laboratory
         {
+            public static AbilityName Train => new($"{nameof(Laboratory)}{nameof(Train)}".ToKebabCase());
         }
         
         public static class Armoury
         {
+            public static AbilityName Research => new($"{nameof(Armoury)}{nameof(Research)}".ToKebabCase());
         }
         
         public static class Wall

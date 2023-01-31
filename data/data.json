@@ -2690,6 +2690,128 @@
         ],
         "displayName": "Factory",
         "description": ""
+      },
+      {
+        "name": "structure-laboratory",
+        "size": {
+          "x": 3,
+          "y": 3
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 1
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 110,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 30,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-uee-building",
+          "ability-shared-uee-power-dependency",
+          "ability-laboratory-train"
+        ],
+        "displayName": "Laboratory",
+        "description": ""
+      },
+      {
+        "name": "structure-armoury",
+        "size": {
+          "x": 1,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 0,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 65,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 25,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 1,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-uee-building",
+          "ability-shared-uee-power-dependency",
+          "ability-armoury-research"
+        ],
+        "displayName": "Armoury",
+        "description": ""
       }
     ],
     "features": [
@@ -3054,7 +3176,9 @@
               "amount": 50
             }
           ],
-          "researchNeeded": [],
+          "researchNeeded": [
+            "research-uee-fusion-core-upgrade"
+          ],
           "grayOutIfAlreadyExists": false
         },
         {
@@ -4237,6 +4361,143 @@
       "cost": [],
       "displayName": "Train",
       "description": "Select a unit to be created at the specified location using Celestium for production."
+    },
+    {
+      "name": "ability-laboratory-train",
+      "type": "Ability.Produce",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "selection": [
+        {
+          "name": "unit-omen",
+          "description": "",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 30
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 90
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-celestium-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": false
+        }
+      ],
+      "canPlaceInWalkableAreaOnly": true,
+      "hasQueue": true,
+      "producedInstantly": false,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Train",
+      "description": "Select a unit to be created at the specified location using Celestium for production."
+    },
+    {
+      "name": "ability-armoury-research",
+      "type": "Ability.Research",
+      "turnPhase": "TurnPhase.Planning",
+      "researchNeeded": [],
+      "selectionOfResearchToBeUnlocked": [
+        {
+          "name": "research-uee-hoverboard-reignition",
+          "description": "Unlock Mount for Horrior.",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 6
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 70
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-fusion-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": true
+        },
+        {
+          "name": "research-uee-md-practice",
+          "description": "Unlock Health Kit for Hawk.",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 12
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 40
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-fusion-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": true
+        },
+        {
+          "name": "research-uee-celestium-coated-materials",
+          "description": "Unlock Radio Location for Radar.",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 8
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 55
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-fusion-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": true
+        },
+        {
+          "name": "research-uee-explosive-shrapnel",
+          "description": "Unlock Piercing Blast for Mortar.",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 14
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 60
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-celestium-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": true
+        },
+        {
+          "name": "research-uee-hardened-matrix",
+          "description": "Unlock Fortify for Vessel.",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 18
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 65
+            }
+          ],
+          "researchNeeded": [
+            "research-uee-celestium-core-upgrade"
+          ],
+          "grayOutIfAlreadyExists": true
+        }
+      ],
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Research",
+      "description": "Open a selection of research available for UEE to unlock."
     },
     {
       "name": "ability-leader-all-for-one",
