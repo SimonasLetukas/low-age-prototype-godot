@@ -586,6 +586,32 @@ namespace low_age_data.Collections
                         AbilityName.Armoury.Research
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
+                
+                new(
+                    name: StructureName.Wall,
+                    displayName: nameof(StructureName.Wall).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 100, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Wall.Building,
+                        AbilityName.Shared.Uee.PowerDependency,
+                        AbilityName.Wall.HighGround
+                    },
+                    size: new Vector2<int>(x: 1, y: 1)),
             };
         }
     }

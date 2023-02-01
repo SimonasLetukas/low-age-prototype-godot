@@ -175,6 +175,7 @@ namespace low_age_data.Domain.Effects
         
         public static class Wall
         {
+            public static EffectName HighGroundApplyBehaviour => new($"{nameof(Wall)}{nameof(HighGroundApplyBehaviour)}".ToKebabCase());
         }
         
         public static class Stairs

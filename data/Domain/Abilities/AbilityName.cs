@@ -159,6 +159,7 @@ namespace low_age_data.Domain.Abilities
         public static class Wall
         {
             public static AbilityName Building => new($"{nameof(Wall)}{nameof(Building)}".ToKebabCase());
+            public static AbilityName HighGround => new($"{nameof(Wall)}{nameof(HighGround)}".ToKebabCase());
         }
         
         public static class Stairs

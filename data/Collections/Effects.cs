@@ -631,6 +631,14 @@ namespace low_age_data.Collections
                     },
                     target: Location.Self),
                 
+                new ApplyBehaviour(
+                    name: EffectName.Wall.HighGroundApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Wall.HighGroundHighGround
+                    },
+                    target: Location.Self),
+                
                 #endregion
 
                 #region Units

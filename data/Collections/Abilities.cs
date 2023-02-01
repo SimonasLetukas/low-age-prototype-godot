@@ -849,6 +849,17 @@ namespace low_age_data.Collections
                                 ResearchName.Uee.CelestiumCoreUpgrade
                             }),
                     }),
+                
+                new Passive(
+                    name: AbilityName.Wall.HighGround,
+                    displayName: nameof(AbilityName.Wall.HighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
+                                 "+1 Attack Distance for their ranged attacks.",
+                    hasButton: true,
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Wall.HighGroundApplyBehaviour
+                    }),
 
                 #endregion
                 

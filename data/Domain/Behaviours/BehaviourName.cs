@@ -140,6 +140,7 @@ namespace low_age_data.Domain.Behaviours
         public static class Wall
         {
             public static BehaviourName BuildingBuildable => new($"{nameof(Wall)}{nameof(BuildingBuildable)}".ToKebabCase());
+            public static BehaviourName HighGroundHighGround => new($"{nameof(Wall)}{nameof(HighGroundHighGround)}".ToKebabCase());
         }
 
         public static class Leader

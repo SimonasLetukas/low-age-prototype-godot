@@ -773,7 +773,18 @@ namespace low_age_data.Collections
                                  "player units.",
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent, amount: 1, resource: ResourceName.Faith)
+                        new(change: Change.AddCurrent, amount: 1, resource: ResourceName.Faith)
+                    }),
+                
+                new HighGround(
+                    name: BehaviourName.Wall.HighGroundHighGround,
+                    displayName: nameof(BehaviourName.Wall.HighGroundHighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
+                                 "+1 Attack Distance for their ranged attacks.",
+                    highGroundAreas: new List<Area>
+                    {
+                        new(start: new Vector2<int>(x: 0, y: 0),
+                            size: new Vector2<int>(x: 1, y: 1))
                     }),
 
                 #endregion
