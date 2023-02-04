@@ -33,9 +33,9 @@ namespace low_age_data.Domain.Behaviours
         
         /// <summary>
         /// Configures a path from low to high ground, this path has to be inside the area (size) of the
-        /// <see cref="Actor"/>. The first path element connects to all adjacent low ground <see cref="Tile"/>s;
-        /// the last element in the list connects to all adjacent high ground <see cref="Tile"/>s; the path elements
-        /// between the first and the last connect to each other in sequence. Only the last element can also be layered
+        /// <see cref="Actor"/>. The first path element connects to all adjacent high ground <see cref="Tile"/>s;
+        /// the last element in the list connects to all adjacent low ground <see cref="Tile"/>s; the path elements
+        /// between the first and the last connect to each other in sequence. Only the first element can also be layered
         /// with a <see cref="HighGround"/>'s <see cref="HighGround.HighGroundAreas"/>. 
         /// </summary>
         public IList<Area> Path { get; }

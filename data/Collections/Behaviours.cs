@@ -786,6 +786,18 @@ namespace low_age_data.Collections
                         new(start: new Vector2<int>(x: 0, y: 0),
                             size: new Vector2<int>(x: 1, y: 1))
                     }),
+                
+                new Ascendable(
+                    name: BehaviourName.Stairs.AscendableAscendable,
+                    displayName: nameof(BehaviourName.Stairs.AscendableAscendable).CamelCaseToWords(),
+                    description: "Can be navigated through to go up to high ground.",
+                    path: new List<Area>
+                    {
+                        new(start: new Vector2<int>(x: 0, y: 0),
+                            size: new Vector2<int>(x: 1, y: 1)),
+                        new(start: new Vector2<int>(x: 0, y: 1),
+                            size: new Vector2<int>(x: 1, y: 1))
+                    }),
 
                 #endregion
 

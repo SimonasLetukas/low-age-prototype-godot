@@ -639,6 +639,14 @@ namespace low_age_data.Collections
                     },
                     target: Location.Self),
                 
+                new ApplyBehaviour(
+                    name: EffectName.Stairs.AscendableApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Stairs.AscendableAscendable
+                    },
+                    target: Location.Self), 
+                
                 #endregion
 
                 #region Units

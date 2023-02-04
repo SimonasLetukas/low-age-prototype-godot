@@ -164,6 +164,7 @@ namespace low_age_data.Domain.Abilities
         
         public static class Stairs
         {
+            public static AbilityName Ascendable => new($"{nameof(Stairs)}{nameof(Ascendable)}".ToKebabCase());
         }
         
         public static class Gate

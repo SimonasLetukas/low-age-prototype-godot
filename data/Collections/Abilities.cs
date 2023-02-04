@@ -860,6 +860,16 @@ namespace low_age_data.Collections
                     {
                         EffectName.Wall.HighGroundApplyBehaviour
                     }),
+                
+                new Passive(
+                    name: AbilityName.Stairs.Ascendable,
+                    displayName: nameof(AbilityName.Stairs.Ascendable).CamelCaseToWords(),
+                    description: "Can be navigated through to go up to high ground.",
+                    hasButton: true,
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Stairs.AscendableApplyBehaviour
+                    }),
 
                 #endregion
                 

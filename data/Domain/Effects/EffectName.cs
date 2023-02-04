@@ -180,6 +180,7 @@ namespace low_age_data.Domain.Effects
         
         public static class Stairs
         {
+            public static EffectName AscendableApplyBehaviour => new($"{nameof(Stairs)}{nameof(AscendableApplyBehaviour)}".ToKebabCase());
         }
         
         public static class Gate

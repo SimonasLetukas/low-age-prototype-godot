@@ -2873,6 +2873,67 @@
         ],
         "displayName": "Wall",
         "description": ""
+      },
+      {
+        "name": "structure-stairs",
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "centerPoint": {
+          "x": 0,
+          "y": 0
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 60,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 10,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 2,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-uee-building",
+          "ability-shared-uee-power-dependency",
+          "ability-stairs-ascendable"
+        ],
+        "displayName": "Stairs",
+        "description": ""
       }
     ],
     "features": [
@@ -4577,6 +4638,24 @@
       "cost": [],
       "displayName": "High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks."
+    },
+    {
+      "name": "ability-stairs-ascendable",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffects": [
+        "effect-stairs-ascendable-apply-behaviour"
+      ],
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Ascendable",
+      "description": "Can be navigated through to go up to high ground."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -6854,6 +6933,18 @@
       "type": "Effect.ApplyBehaviour",
       "behavioursToApply": [
         "behaviour-wall-high-ground-high-ground"
+      ],
+      "target": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-stairs-ascendable-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-stairs-ascendable-ascendable"
       ],
       "target": "Location.Self",
       "filterFlags": [],
@@ -10205,6 +10296,43 @@
       ],
       "displayName": "High Ground High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-stairs-ascendable-ascendable",
+      "type": "Behaviour.Ascendable",
+      "path": [
+        {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "start": {
+            "x": 0,
+            "y": 1
+          },
+          "size": {
+            "x": 1,
+            "y": 1
+          }
+        }
+      ],
+      "displayName": "Ascendable Ascendable",
+      "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,
