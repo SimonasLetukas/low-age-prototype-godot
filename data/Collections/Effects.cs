@@ -671,6 +671,62 @@ namespace low_age_data.Collections
                     },
                     target: Location.Self), 
                 
+                new Search(
+                    name: EffectName.Watchtower.VantagePointSearch,
+                    shape: new Circle(radius: 0),
+                    searchFlags: new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnEnter,
+                        Flag.Effect.Search.RemovedOnExit
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Player,
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Watchtower.VantagePointApplyBehaviour
+                    },
+                    location: Location.Self),
+
+                new ApplyBehaviour(
+                    name: EffectName.Watchtower.VantagePointApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Watchtower.VantagePointBuff
+                    }), 
+                
+                new Search(
+                    name: EffectName.Bastion.BattlementSearch,
+                    shape: new Circle(radius: 0),
+                    searchFlags: new List<Flag>
+                    {
+                        Flag.Effect.Search.AppliedOnEnter,
+                        Flag.Effect.Search.RemovedOnExit
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Player,
+                        Flag.Filter.Ally,
+                        Flag.Filter.Enemy,
+                        Flag.Filter.Unit
+                    },
+                    effects: new List<EffectName>
+                    {
+                        EffectName.Bastion.BattlementApplyBehaviour
+                    },
+                    location: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Bastion.BattlementApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Bastion.BattlementBuff
+                    }), 
+                
                 #endregion
 
                 #region Units

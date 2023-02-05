@@ -901,6 +901,20 @@ namespace low_age_data.Collections
                     {
                         EffectName.Gate.EntranceApplyBehaviour
                     }),
+                
+                new Passive(
+                    name: AbilityName.Watchtower.VantagePoint,
+                    displayName: nameof(AbilityName.Watchtower.VantagePoint).CamelCaseToWords(),
+                    description: "Provides additional +1 vision range and +1 Range Damage to ranged units.",
+                    hasButton: true,
+                    periodicEffect: EffectName.Watchtower.VantagePointSearch),
+                
+                new Passive(
+                    name: AbilityName.Bastion.Battlement,
+                    displayName: nameof(AbilityName.Bastion.Battlement).CamelCaseToWords(),
+                    description: "Provides additional +1 Range Armour to all units on top.",
+                    hasButton: true,
+                    periodicEffect: EffectName.Bastion.BattlementSearch),
 
                 #endregion
                 

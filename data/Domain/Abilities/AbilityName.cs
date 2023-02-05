@@ -176,10 +176,12 @@ namespace low_age_data.Domain.Abilities
         
         public static class Watchtower
         {
+            public static AbilityName VantagePoint => new($"{nameof(Watchtower)}{nameof(VantagePoint)}".ToKebabCase());
         }
         
         public static class Bastion
         {
+            public static AbilityName Battlement => new($"{nameof(Bastion)}{nameof(Battlement)}".ToKebabCase());
         }
 
         public static class Leader

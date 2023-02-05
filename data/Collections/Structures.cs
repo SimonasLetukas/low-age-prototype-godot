@@ -666,6 +666,58 @@ namespace low_age_data.Collections
                         AbilityName.Gate.Entrance
                     },
                     size: new Vector2<int>(x: 1, y: 4)),
+                
+                new(
+                    name: StructureName.Watchtower,
+                    displayName: nameof(StructureName.Watchtower).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 95, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shared.Uee.Building,
+                        AbilityName.Shared.Uee.PowerDependency,
+                        AbilityName.Watchtower.VantagePoint
+                    },
+                    size: new Vector2<int>(x: 1, y: 1)),
+                
+                new(
+                    name: StructureName.Bastion,
+                    displayName: nameof(StructureName.Bastion).CamelCaseToWords(),
+                    description: "",
+                    statistics: new List<Stat>
+                    {
+                        new CombatStat(maxAmount: 550, hasCurrent: true, combatType: Stats.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: true, combatType: Stats.Shields),
+                        new CombatStat(maxAmount: 3, hasCurrent: false, combatType: Stats.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                    },
+                    originalFaction: FactionName.Uee,
+                    combatAttributes: new List<CombatAttributes>
+                    {
+                        CombatAttributes.Armoured,
+                        CombatAttributes.Structure
+                    },
+                    abilities: new List<AbilityName>
+                    {
+                        AbilityName.Shared.Uee.Building,
+                        AbilityName.Shared.Uee.PowerDependency,
+                        AbilityName.Bastion.Battlement
+                    },
+                    size: new Vector2<int>(x: 2, y: 2)),
             };
         }
     }

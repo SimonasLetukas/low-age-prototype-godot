@@ -1,5 +1,4 @@
 ﻿using low_age_data.Common;
-using low_age_data.Domain.Abilities;
 
 namespace low_age_data.Domain.Effects
 {
@@ -193,10 +192,14 @@ namespace low_age_data.Domain.Effects
         
         public static class Watchtower
         {
+            public static EffectName VantagePointSearch => new($"{nameof(Watchtower)}{nameof(VantagePointSearch)}".ToKebabCase());
+            public static EffectName VantagePointApplyBehaviour => new($"{nameof(Watchtower)}{nameof(VantagePointApplyBehaviour)}".ToKebabCase());
         }
         
         public static class Bastion
         {
+            public static EffectName BattlementSearch => new($"{nameof(Bastion)}{nameof(BattlementSearch)}".ToKebabCase());
+            public static EffectName BattlementApplyBehaviour => new($"{nameof(Bastion)}{nameof(BattlementApplyBehaviour)}".ToKebabCase());
         }
 
         public static class Leader

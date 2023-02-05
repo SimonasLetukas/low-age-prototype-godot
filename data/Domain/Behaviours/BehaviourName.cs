@@ -155,6 +155,16 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourName EntranceMovementBlock => new($"{nameof(Gate)}{nameof(EntranceMovementBlock)}".ToKebabCase());
         }
 
+        public static class Watchtower
+        {
+            public static BehaviourName VantagePointBuff => new($"{nameof(Watchtower)}{nameof(VantagePointBuff)}".ToKebabCase());
+        }
+
+        public static class Bastion
+        {
+            public static BehaviourName BattlementBuff => new($"{nameof(Bastion)}{nameof(BattlementBuff)}".ToKebabCase());
+        }
+
         public static class Leader
         {
             public static BehaviourName AllForOneBuff => new($"{nameof(Leader)}{nameof(AllForOneBuff)}".ToKebabCase());

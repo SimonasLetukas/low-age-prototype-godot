@@ -834,6 +834,44 @@ namespace low_age_data.Collections
                         Flag.Filter.Unit,
                         Flag.Filter.Enemy
                     }),
+                
+                new Buff(
+                    name: BehaviourName.Watchtower.VantagePointBuff,
+                    displayName: nameof(BehaviourName.Watchtower.VantagePointBuff).CamelCaseToWords(),
+                    description: "Unit is on a Watchtower and has +1 vision range and +1 Range Damage for ranged " +
+                                 "attacks.",
+                    initialModifications: new List<Modification>
+                    {
+                        new AttackModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            attackType: Attacks.Ranged,
+                            attribute: AttackAttribute.MaxAmount),
+                        new StatModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            stat: Stats.Vision)
+                    },
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    restoreChangesOnEnd: true),
+                
+                new Buff(
+                    name: BehaviourName.Bastion.BattlementBuff,
+                    displayName: nameof(BehaviourName.Bastion.BattlementBuff).CamelCaseToWords(),
+                    description: "Unit is on a Bastion and has +1 Range Armour.",
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            stat: Stats.RangedArmour)
+                    },
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    restoreChangesOnEnd: true),
 
                 #endregion
 

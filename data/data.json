@@ -2997,6 +2997,128 @@
         ],
         "displayName": "Gate",
         "description": ""
+      },
+      {
+        "name": "structure-watchtower",
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "centerPoint": {
+          "x": 0,
+          "y": 0
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 95,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 0,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 2,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-uee-building",
+          "ability-shared-uee-power-dependency",
+          "ability-watchtower-vantage-point"
+        ],
+        "displayName": "Watchtower",
+        "description": ""
+      },
+      {
+        "name": "structure-bastion",
+        "size": {
+          "x": 2,
+          "y": 2
+        },
+        "centerPoint": {
+          "x": 1,
+          "y": 1
+        },
+        "destructible": true,
+        "walkableArea": {
+          "start": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "statistics": [
+          {
+            "combatType": "Stats.Health",
+            "maxAmount": 550,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.Shields",
+            "maxAmount": 0,
+            "hasCurrent": true
+          },
+          {
+            "combatType": "Stats.MeleeArmour",
+            "maxAmount": 3,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.RangedArmour",
+            "maxAmount": 20,
+            "hasCurrent": false
+          },
+          {
+            "combatType": "Stats.Vision",
+            "maxAmount": 4,
+            "hasCurrent": false
+          }
+        ],
+        "originalFaction": "faction-uee",
+        "combatAttributes": [
+          "CombatAttributes.Armoured",
+          "CombatAttributes.Structure"
+        ],
+        "abilities": [
+          "ability-shared-uee-building",
+          "ability-shared-uee-power-dependency",
+          "ability-bastion-battlement"
+        ],
+        "displayName": "Bastion",
+        "description": ""
       }
     ],
     "features": [
@@ -4773,6 +4895,38 @@
       "cost": [],
       "displayName": "Entrance",
       "description": "Allows movement through for friendly units and blocks it for enemy units."
+    },
+    {
+      "name": "ability-watchtower-vantage-point",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": "effect-watchtower-vantage-point-search",
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffects": [],
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Vantage Point",
+      "description": "Provides additional +1 vision range and +1 Range Damage to ranged units."
+    },
+    {
+      "name": "ability-bastion-battlement",
+      "type": "Ability.Passive",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": "effect-bastion-battlement-search",
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffects": [],
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Battlement",
+      "description": "Provides additional +1 Range Armour to all units on top."
     },
     {
       "name": "ability-leader-all-for-one",
@@ -7100,6 +7254,80 @@
         "behaviour-gate-entrance-movement-block"
       ],
       "target": "Location.Self",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-watchtower-vantage-point-search",
+      "type": "Effect.Search",
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 0,
+        "ignoreRadius": -1
+      },
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnEnter",
+        "Flag.EffectSearchRemovedOnExit"
+      ],
+      "filterFlags": [
+        "Flag.FilterPlayer",
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-watchtower-vantage-point-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-watchtower-vantage-point-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-watchtower-vantage-point-buff"
+      ],
+      "target": "Location.Inherited",
+      "filterFlags": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "name": "effect-bastion-battlement-search",
+      "type": "Effect.Search",
+      "shape": {
+        "type": "Shape.Circle",
+        "radius": 0,
+        "ignoreRadius": -1
+      },
+      "searchFlags": [
+        "Flag.EffectSearchAppliedOnEnter",
+        "Flag.EffectSearchRemovedOnExit"
+      ],
+      "filterFlags": [
+        "Flag.FilterPlayer",
+        "Flag.FilterAlly",
+        "Flag.FilterEnemy",
+        "Flag.FilterUnit"
+      ],
+      "effects": [
+        "effect-bastion-battlement-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "usedForValidator": false,
+      "validators": []
+    },
+    {
+      "name": "effect-bastion-battlement-apply-behaviour",
+      "type": "Effect.ApplyBehaviour",
+      "behavioursToApply": [
+        "behaviour-bastion-battlement-buff"
+      ],
+      "target": "Location.Inherited",
       "filterFlags": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -10576,6 +10804,70 @@
       "description": "Allows movement through for friendly units and blocks it for enemy units.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-watchtower-vantage-point-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.AttackModification",
+          "attackType": "Attacks.Ranged",
+          "attribute": "AttackAttribute.MaxAmount",
+          "modificationFlags": [],
+          "change": "Change.AddMax",
+          "amount": 1.0
+        },
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.Vision",
+          "change": "Change.AddMax",
+          "amount": 1.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Vantage Point Buff",
+      "description": "Unit is on a Watchtower and has +1 vision range and +1 Range Damage for ranged attacks.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false
+    },
+    {
+      "name": "behaviour-bastion-battlement-buff",
+      "type": "Behaviour.Buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "type": "Modification.StatModification",
+          "stat": "Stats.RangedArmour",
+          "change": "Change.AddMax",
+          "amount": 1.0
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [],
+      "restoreChangesOnEnd": true,
+      "displayName": "Battlement Buff",
+      "description": "Unit is on a Bastion and has +1 Range Armour.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Positive",
       "canStack": false,
       "canResetDuration": false,
       "triggers": [],
