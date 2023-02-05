@@ -169,6 +169,9 @@ namespace low_age_data.Domain.Abilities
         
         public static class Gate
         {
+            public static AbilityName HighGround => new($"{nameof(Gate)}{nameof(HighGround)}".ToKebabCase());
+            public static AbilityName Ascendable => new($"{nameof(Gate)}{nameof(Ascendable)}".ToKebabCase());
+            public static AbilityName Entrance => new($"{nameof(Gate)}{nameof(Entrance)}".ToKebabCase());
         }
         
         public static class Watchtower

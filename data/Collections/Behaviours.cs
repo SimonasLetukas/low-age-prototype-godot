@@ -798,6 +798,42 @@ namespace low_age_data.Collections
                         new(start: new Vector2<int>(x: 0, y: 1),
                             size: new Vector2<int>(x: 1, y: 1))
                     }),
+                
+                new HighGround(
+                    name: BehaviourName.Gate.HighGroundHighGround,
+                    displayName: nameof(BehaviourName.Gate.HighGroundHighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
+                                 "+1 Attack Distance for their ranged attacks.",
+                    highGroundAreas: new List<Area>
+                    {
+                        new(start: new Vector2<int>(x: 0, y: 0),
+                            size: new Vector2<int>(x: 1, y: 4))
+                    }),
+                
+                new Ascendable(
+                    name: BehaviourName.Gate.AscendableAscendable,
+                    displayName: nameof(BehaviourName.Gate.AscendableAscendable).CamelCaseToWords(),
+                    description: "Can be navigated through to go up to high ground.",
+                    path: new List<Area>
+                    {
+                        new(start: new Vector2<int>(x: 0, y: 1),
+                            size: new Vector2<int>(x: 1, y: 2)),
+                    }),
+                
+                new MovementBlock(
+                    name: BehaviourName.Gate.EntranceMovementBlock,
+                    displayName: nameof(BehaviourName.Gate.EntranceMovementBlock).CamelCaseToWords(),
+                    description: "Allows movement through for friendly units and blocks it for enemy units.",
+                    blockedAreas: new List<Area>
+                    {
+                        new(start: new Vector2<int>(x: 0, y: 1),
+                            size: new Vector2<int>(x: 1, y: 2)),
+                    },
+                    filterFlags: new List<Flag>
+                    {
+                        Flag.Filter.Unit,
+                        Flag.Filter.Enemy
+                    }),
 
                 #endregion
 

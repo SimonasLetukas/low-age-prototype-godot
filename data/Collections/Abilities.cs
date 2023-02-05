@@ -870,6 +870,37 @@ namespace low_age_data.Collections
                     {
                         EffectName.Stairs.AscendableApplyBehaviour
                     }),
+                
+                new Passive(
+                    name: AbilityName.Gate.HighGround,
+                    displayName: nameof(AbilityName.Gate.HighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
+                                 "+1 Attack Distance for their ranged attacks.",
+                    hasButton: true,
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Gate.HighGroundApplyBehaviour
+                    }),
+                
+                new Passive(
+                    name: AbilityName.Gate.Ascendable,
+                    displayName: nameof(AbilityName.Gate.Ascendable).CamelCaseToWords(),
+                    description: "Can be navigated through to go up to high ground.",
+                    hasButton: true,
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Gate.AscendableApplyBehaviour
+                    }),
+                
+                new Passive(
+                    name: AbilityName.Gate.Entrance,
+                    displayName: nameof(AbilityName.Gate.Entrance).CamelCaseToWords(),
+                    description: "Allows movement through for friendly units and blocks it for enemy units.",
+                    hasButton: true,
+                    onBirthEffects: new List<EffectName>
+                    {
+                        EffectName.Gate.EntranceApplyBehaviour
+                    }),
 
                 #endregion
                 

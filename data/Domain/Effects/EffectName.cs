@@ -1,4 +1,5 @@
 ﻿using low_age_data.Common;
+using low_age_data.Domain.Abilities;
 
 namespace low_age_data.Domain.Effects
 {
@@ -185,6 +186,9 @@ namespace low_age_data.Domain.Effects
         
         public static class Gate
         {
+            public static EffectName HighGroundApplyBehaviour => new($"{nameof(Gate)}{nameof(HighGroundApplyBehaviour)}".ToKebabCase());
+            public static EffectName AscendableApplyBehaviour => new($"{nameof(Gate)}{nameof(AscendableApplyBehaviour)}".ToKebabCase());
+            public static EffectName EntranceApplyBehaviour => new($"{nameof(Gate)}{nameof(EntranceApplyBehaviour)}".ToKebabCase());
         }
         
         public static class Watchtower

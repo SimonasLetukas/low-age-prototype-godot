@@ -647,6 +647,30 @@ namespace low_age_data.Collections
                     },
                     target: Location.Self), 
                 
+                new ApplyBehaviour(
+                    name: EffectName.Gate.HighGroundApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Gate.HighGroundHighGround
+                    },
+                    target: Location.Self),
+                
+                new ApplyBehaviour(
+                    name: EffectName.Gate.AscendableApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Gate.AscendableAscendable
+                    },
+                    target: Location.Self), 
+                
+                new ApplyBehaviour(
+                    name: EffectName.Gate.EntranceApplyBehaviour,
+                    behavioursToApply: new List<BehaviourName>
+                    {
+                        BehaviourName.Gate.EntranceMovementBlock
+                    },
+                    target: Location.Self), 
+                
                 #endregion
 
                 #region Units
