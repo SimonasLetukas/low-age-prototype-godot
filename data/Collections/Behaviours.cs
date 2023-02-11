@@ -182,9 +182,9 @@ namespace low_age_data.Collections
                     name: BehaviourName.Shared.Uee.PowerDependencyBuffDisable,
                     displayName: nameof(BehaviourName.Shared.Uee.PowerDependencyBuffDisable).CamelCaseToWords(),
                     description: "All abilities are disabled because Power is not supplied.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.AbilitiesDisabled
+                        ModificationFlag.AbilitiesDisabled
                     },
                     endsAt: EndsAt.StartOf.Next.ActionPhase,
                     canStack: false,
@@ -1075,9 +1075,9 @@ namespace low_age_data.Collections
                     description:
                     "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing " +
                     "from any sources until the end of its action.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.CannotBeHealed
+                        ModificationFlag.CannotBeHealed
                     },
                     initialModifications: new List<Modification>
                     {
@@ -1117,9 +1117,9 @@ namespace low_age_data.Collections
                     name: BehaviourName.Camou.SilentAssassinBuff,
                     displayName: nameof(BehaviourName.Camou.SilentAssassinBuff).CamelCaseToWords(),
                     description: "This unit is silenced (use of any abilities is disabled).",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.AbilitiesDisabled
+                        ModificationFlag.AbilitiesDisabled
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -1145,9 +1145,9 @@ namespace low_age_data.Collections
                     name: BehaviourName.Camou.ClimbBuff,
                     displayName: nameof(BehaviourName.Camou.ClimbBuff).CamelCaseToWords(),
                     description: "Camou can move down from high ground at the additional cost of 1 Movement.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.ClimbsDown
+                        ModificationFlag.ClimbsDown
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -1290,9 +1290,9 @@ namespace low_age_data.Collections
                     name: BehaviourName.Pyre.PhantomMenaceBuff,
                     displayName: nameof(BehaviourName.Pyre.PhantomMenaceBuff).CamelCaseToWords(),
                     description: "Pyre can move through enemy units (but not buildings).",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.MovesThroughEnemyUnits
+                        ModificationFlag.MovesThroughEnemyUnits
                     }),
 
                 new Buff(
@@ -1351,11 +1351,11 @@ namespace low_age_data.Collections
                     description:
                     "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it " +
                     "must do unless there are no legal targets.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.CanAttackAnyTeam,
-                        Flag.Modification.MovementDisabled,
-                        Flag.Modification.MustExecuteAttack
+                        ModificationFlag.CanAttackAnyTeam,
+                        ModificationFlag.MovementDisabled,
+                        ModificationFlag.MustExecuteAttack
                     },
                     initialModifications: null,
                     initialEffects: new List<EffectName>
@@ -1385,10 +1385,10 @@ namespace low_age_data.Collections
                     description:
                     "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both " +
                     "units on Parasite's turn.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.AbilitiesDisabled,
-                        Flag.Modification.CannotAttack
+                        ModificationFlag.AbilitiesDisabled,
+                        ModificationFlag.CannotAttack
                     },
                     initialModifications: new List<Modification>
                     {
@@ -1570,9 +1570,9 @@ namespace low_age_data.Collections
                     {
                         new AttackModification(
                             attackType: Attacks.Ranged,
-                            modificationFlags: new List<Flag>
+                            modificationFlags: new List<ModificationFlag>
                             {
-                                Flag.Modification.IgnoreArmour
+                                ModificationFlag.IgnoreArmour
                             })
                     },
                     initialEffects: null,
@@ -1826,9 +1826,9 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourName.Cannon.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.FullyDisabled
+                        ModificationFlag.FullyDisabled
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -1849,9 +1849,9 @@ namespace low_age_data.Collections
                     description:
                     "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's " +
                     "owner has vision of this tile.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.ProvidesVision
+                        ModificationFlag.ProvidesVision
                     },
                     initialModifications: new List<Modification>
                     {
@@ -1912,9 +1912,9 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourName.Ballista.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.FullyDisabled
+                        ModificationFlag.FullyDisabled
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -1985,9 +1985,9 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourName.Radar.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.FullyDisabled
+                        ModificationFlag.FullyDisabled
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -2006,9 +2006,9 @@ namespace low_age_data.Collections
                     name: BehaviourName.Radar.ResonatingSweepBuff,
                     displayName: nameof(BehaviourName.Radar.ResonatingSweepBuff).CamelCaseToWords(),
                     description: "Provides vision to the Radar's owner.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.ProvidesVision
+                        ModificationFlag.ProvidesVision
                     },
                     initialModifications: new List<Modification>
                     {
@@ -2048,10 +2048,10 @@ namespace low_age_data.Collections
                     name: BehaviourName.Radar.RadioLocationFeatureBuff,
                     displayName: nameof(BehaviourName.Radar.RadioLocationFeatureBuff).CamelCaseToWords(),
                     description: "This red dot is able to detect enemy units in the fog of war.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.OnlyVisibleToAllies,
-                        Flag.Modification.OnlyVisibleInFogOfWar
+                        ModificationFlag.OnlyVisibleToAllies,
+                        ModificationFlag.OnlyVisibleInFogOfWar
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -2078,9 +2078,9 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourName.Vessel.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
-                    modificationFlags: new List<Flag>
+                    modificationFlags: new List<ModificationFlag>
                     {
-                        Flag.Modification.FullyDisabled
+                        ModificationFlag.FullyDisabled
                     },
                     initialModifications: null,
                     initialEffects: null,

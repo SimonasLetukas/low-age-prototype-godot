@@ -7666,7 +7666,7 @@
       "amount": {
         "flat": 0,
         "multiplier": 0.5,
-        "multiplierOf": "Flag.AmountFromMissingHealth",
+        "multiplierOf": "AmountFlag.FromMissingHealth",
         "multiplierFlags": [
           "Flag.FilterEnemy",
           "Flag.FilterUnit"
@@ -9574,7 +9574,7 @@
       "name": "behaviour-shared-uee-power-dependency-buff-disable",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationAbilitiesDisabled"
+        "ModificationFlag.AbilitiesDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -11202,7 +11202,7 @@
       "name": "behaviour-quickdraw-cripple-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationCannotBeHealed"
+        "ModificationFlag.CannotBeHealed"
       ],
       "initialModifications": [
         {
@@ -11255,7 +11255,7 @@
       "name": "behaviour-camou-silent-assassin-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationAbilitiesDisabled"
+        "ModificationFlag.AbilitiesDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -11294,7 +11294,7 @@
       "name": "behaviour-camou-climb-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationClimbsDown"
+        "ModificationFlag.ClimbsDown"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -11485,7 +11485,7 @@
       "name": "behaviour-pyre-phantom-menace-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationMovesThroughEnemyUnits"
+        "ModificationFlag.MovesThroughEnemyUnits"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -11577,9 +11577,9 @@
       "name": "behaviour-parasite-paralysing-grasp-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationCanAttackAnyTeam",
-        "Flag.ModificationMovementDisabled",
-        "Flag.ModificationMustExecuteAttack"
+        "ModificationFlag.CanAttackAnyTeam",
+        "ModificationFlag.MovementDisabled",
+        "ModificationFlag.MustExecuteAttack"
       ],
       "initialModifications": [],
       "initialEffects": [
@@ -11611,8 +11611,8 @@
       "name": "behaviour-parasite-paralysing-grasp-self-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationAbilitiesDisabled",
-        "Flag.ModificationCannotAttack"
+        "ModificationFlag.AbilitiesDisabled",
+        "ModificationFlag.CannotAttack"
       ],
       "initialModifications": [
         {
@@ -11856,7 +11856,7 @@
           "attackType": "Attacks.Ranged",
           "attribute": "AttackAttribute.MaxAmount",
           "modificationFlags": [
-            "Flag.ModificationIgnoreArmour"
+            "ModificationFlag.IgnoreArmour"
           ],
           "change": "Change.AddCurrent",
           "amount": 0.0
@@ -12232,7 +12232,7 @@
       "name": "behaviour-cannon-machine-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationFullyDisabled"
+        "ModificationFlag.FullyDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -12255,7 +12255,7 @@
       "name": "behaviour-cannon-heat-up-danger-zone-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationProvidesVision"
+        "ModificationFlag.ProvidesVision"
       ],
       "initialModifications": [
         {
@@ -12345,7 +12345,7 @@
       "name": "behaviour-ballista-machine-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationFullyDisabled"
+        "ModificationFlag.FullyDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -12437,7 +12437,7 @@
       "name": "behaviour-radar-machine-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationFullyDisabled"
+        "ModificationFlag.FullyDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -12460,7 +12460,7 @@
       "name": "behaviour-radar-resonating-sweep-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationProvidesVision"
+        "ModificationFlag.ProvidesVision"
       ],
       "initialModifications": [
         {
@@ -12517,8 +12517,8 @@
       "name": "behaviour-radar-radio-location-feature-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationOnlyVisibleToAllies",
-        "Flag.ModificationOnlyVisibleInFogOfWar"
+        "ModificationFlag.OnlyVisibleToAllies",
+        "ModificationFlag.OnlyVisibleInFogOfWar"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -12566,7 +12566,7 @@
       "name": "behaviour-vessel-machine-buff",
       "type": "Behaviour.Buff",
       "modificationFlags": [
-        "Flag.ModificationFullyDisabled"
+        "ModificationFlag.FullyDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],

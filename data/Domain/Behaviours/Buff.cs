@@ -15,7 +15,7 @@ namespace low_age_data.Domain.Behaviours
             BehaviourName name,
             string displayName, 
             string description,
-            IList<Flag>? modificationFlags = null,
+            IList<ModificationFlag>? modificationFlags = null,
             IList<Modification>? initialModifications = null,
             IList<EffectName>? initialEffects = null,
             IList<Modification>? finalModifications = null,
@@ -45,7 +45,7 @@ namespace low_age_data.Domain.Behaviours
                 ownerAllowed, 
                 hasSameInstanceForAllOwners)
         {
-            ModificationFlags = modificationFlags ?? new List<Flag>();
+            ModificationFlags = modificationFlags ?? new List<ModificationFlag>();
             InitialModifications = initialModifications ?? new List<Modification>();
             InitialEffects = initialEffects ?? new List<EffectName>();
             FinalModifications = finalModifications ?? new List<Modification>();
@@ -53,7 +53,7 @@ namespace low_age_data.Domain.Behaviours
             RestoreChangesOnEnd = restoreChangesOnEnd ?? false;
         }
 
-        public IList<Flag> ModificationFlags { get; }
+        public IList<ModificationFlag> ModificationFlags { get; }
         
         /// <summary>
         /// Added at the start of behaviour.

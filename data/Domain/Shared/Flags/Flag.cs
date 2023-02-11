@@ -16,33 +16,6 @@ namespace low_age_data.Domain.Shared.Flags
             return $"{nameof(Flag)}.{Value}";
         }
 
-        public static class Amount
-        {
-            public static Flag FromMissingHealth => new(Flags.AmountFromMissingHealth);
-        }
-
-        public static class Modification
-        {
-            public static Flag CannotBeHealed => new(Flags.ModificationCannotBeHealed);
-            public static Flag AbilitiesDisabled => new(Flags.ModificationAbilitiesDisabled);
-            public static Flag ClimbsDown => new(Flags.ModificationClimbsDown);
-            public static Flag MovesThroughEnemyUnits => new(Flags.ModificationMovesThroughEnemyUnits);
-            public static Flag MustExecuteAttack => new(Flags.ModificationMustExecuteAttack);
-            public static Flag CannotAttack => new(Flags.ModificationCannotAttack);
-            public static Flag MovementDisabled => new(Flags.ModificationMovementDisabled);
-            public static Flag CanAttackAnyTeam => new(Flags.ModificationCanAttackAnyTeam);
-            public static Flag IgnoreArmour => new(Flags.ModificationIgnoreArmour);
-            public static Flag ProvidesVision => new(Flags.ModificationProvidesVision);
-            public static Flag OnlyVisibleToAllies => new(Flags.ModificationOnlyVisibleToAllies);
-            public static Flag OnlyVisibleInFogOfWar => new(Flags.ModificationOnlyVisibleInFogOfWar);
-            
-            /// <summary>
-            /// Includes <see cref="MovementDisabled"/>, <see cref="CannotAttack"/>, <see cref="AbilitiesDisabled"/>.
-            /// Action turn is always skipped.
-            /// </summary>
-            public static Flag FullyDisabled => new(Flags.ModificationFullyDisabled);
-        }
-
         public static class Effect
         {
             public static class ModifyPlayer

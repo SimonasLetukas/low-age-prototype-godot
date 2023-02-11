@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Shared
         public Amount(
             int flat, 
             float? multiplier = null, 
-            Flag? multiplierOf = null,
+            AmountFlag? multiplierOf = null,
             IList<Flag>? multiplierFlags = null)
         {
             Flat = flat;
@@ -19,7 +19,7 @@ namespace low_age_data.Domain.Shared
 
         public int Flat { get; }
         public float? Multiplier { get; }
-        public Flag? MultiplierOf { get; }
+        public AmountFlag? MultiplierOf { get; }
         public IList<Flag> MultiplierFlags { get; }
     }
 }

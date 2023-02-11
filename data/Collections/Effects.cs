@@ -975,7 +975,7 @@ namespace low_age_data.Collections
                     amount: new Amount(
                         flat: 0,
                         multiplier: 0.5f,
-                        multiplierOf: Flag.Amount.FromMissingHealth,
+                        multiplierOf: AmountFlag.FromMissingHealth,
                         multiplierFlags: new List<Flag>
                         {
                             Flag.Filter.Enemy,

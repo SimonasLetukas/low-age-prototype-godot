@@ -10,16 +10,16 @@ namespace low_age_data.Domain.Shared.Modifications
             float amount,
             Attacks attackType,
             AttackAttribute attribute,
-            IList<Flag>? modificationFlags = null) : base($"{nameof(Modification)}.{nameof(AttackModification)}", change, amount)
+            IList<ModificationFlag>? modificationFlags = null) : base($"{nameof(Modification)}.{nameof(AttackModification)}", change, amount)
         {
             AttackType = attackType;
             Attribute = attribute;
-            ModificationFlags = modificationFlags ?? new List<Flag>();
+            ModificationFlags = modificationFlags ?? new List<ModificationFlag>();
         }
         
         public AttackModification(
             Attacks attackType,
-            IList<Flag> modificationFlags) : base($"{nameof(Modification)}.{nameof(AttackModification)}", Change.AddCurrent, 0)
+            IList<ModificationFlag> modificationFlags) : base($"{nameof(Modification)}.{nameof(AttackModification)}", Change.AddCurrent, 0)
         {
             AttackType = attackType;
             Attribute = AttackAttribute.MaxAmount;
@@ -28,6 +28,6 @@ namespace low_age_data.Domain.Shared.Modifications
 
         public Attacks AttackType { get; }
         public AttackAttribute Attribute { get; }
-        public IList<Flag> ModificationFlags { get; }
+        public IList<ModificationFlag> ModificationFlags { get; }
     }
 }
