@@ -3223,7 +3223,7 @@
         "name": "feature-vessel-fortification",
         "onCollisionEffect": null,
         "collisionFilters": [],
-        "periodicEffect": null,
+        "periodicEffect": "effect-vessel-fortify-search",
         "size": 7,
         "canBeAttacked": false,
         "occupiesSpace": false,
@@ -7427,7 +7427,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-leader-one-for-all-obelisk-buff",
               "behaviourOwner": null,
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filterFlags": []
@@ -7485,7 +7485,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth"
+              "conditionFlag": "ConditionFlag.TargetDoesNotHaveFullHealth"
             }
           ],
           "filterFlags": []
@@ -7527,7 +7527,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-slave-manual-labour-buff",
               "behaviourOwner": null,
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filterFlags": []
@@ -7690,7 +7690,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect"
+              "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
             }
           ],
           "filterFlags": []
@@ -7717,7 +7717,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect"
+              "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
             }
           ],
           "filterFlags": []
@@ -7728,7 +7728,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect"
+              "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
             }
           ],
           "filterFlags": []
@@ -7782,7 +7782,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsHighGround"
+              "conditionFlag": "ConditionFlag.TargetIsHighGround"
             }
           ],
           "filterFlags": []
@@ -7792,7 +7792,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsUnoccupied"
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
             }
           ],
           "filterFlags": []
@@ -8146,7 +8146,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-tether",
               "behaviourOwner": null,
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filterFlags": []
@@ -8174,7 +8174,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-buff",
               "behaviourOwner": null,
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filterFlags": []
@@ -8201,7 +8201,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-parasite-paralysing-grasp-self-buff",
               "behaviourOwner": null,
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filterFlags": []
@@ -8539,7 +8539,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-cannon-assembling-buildable",
               "behaviourOwner": null,
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filterFlags": []
@@ -8551,7 +8551,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-ballista-assembling-buildable",
               "behaviourOwner": null,
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filterFlags": []
@@ -8563,7 +8563,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-radar-assembling-buildable",
               "behaviourOwner": null,
-              "conditionFlag": "Flag.ConditionBehaviourDoesNotExist"
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filterFlags": []
@@ -8614,7 +8614,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth"
+              "conditionFlag": "ConditionFlag.TargetDoesNotHaveFullHealth"
             }
           ],
           "filterFlags": []
@@ -8645,7 +8645,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetDoesNotHaveFullHealth"
+              "conditionFlag": "ConditionFlag.TargetDoesNotHaveFullHealth"
             }
           ],
           "filterFlags": []
@@ -8675,7 +8675,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-horrior-mount-wait",
               "behaviourOwner": null,
-              "conditionFlag": "Flag.ConditionBehaviourExists"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filterFlags": []
@@ -8883,7 +8883,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-ballista-aim-buff",
               "behaviourOwner": "Location.Origin",
-              "conditionFlag": "Flag.ConditionBehaviourExists"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filterFlags": []
@@ -9014,7 +9014,7 @@
               "type": "Condition.BehaviourCondition",
               "conditionedBehaviour": "behaviour-radar-radio-location-feature-buff",
               "behaviourOwner": "Location.Origin",
-              "conditionFlag": "Flag.ConditionBehaviourExists"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filterFlags": []
@@ -9397,7 +9397,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -9454,7 +9454,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -9465,7 +9465,7 @@
             {
               "type": "Condition.MaskCondition",
               "conditionedMask": "mask-power",
-              "conditionFlag": "Flag.ConditionMaskExists"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filterFlags": []
@@ -9535,7 +9535,7 @@
                 {
                   "type": "Condition.MaskCondition",
                   "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
+                  "conditionFlag": "ConditionFlag.DoesNotExist"
                 }
               ],
               "filterFlags": []
@@ -9553,7 +9553,7 @@
                 {
                   "type": "Condition.MaskCondition",
                   "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
+                  "conditionFlag": "ConditionFlag.DoesNotExist"
                 }
               ],
               "filterFlags": []
@@ -9599,7 +9599,7 @@
                 {
                   "type": "Condition.MaskCondition",
                   "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskExists"
+                  "conditionFlag": "ConditionFlag.Exists"
                 }
               ],
               "filterFlags": []
@@ -9641,7 +9641,7 @@
                 {
                   "type": "Condition.MaskCondition",
                   "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskExists"
+                  "conditionFlag": "ConditionFlag.Exists"
                 }
               ],
               "filterFlags": []
@@ -10155,7 +10155,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -10167,7 +10167,7 @@
               "type": "Condition.EntityCondition",
               "conditionedEntity": "tile-scraps",
               "amountOfEntitiesRequired": 2,
-              "conditionFlag": "Flag.ConditionEntityExists"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filterFlags": []
@@ -10196,7 +10196,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -10208,7 +10208,7 @@
               "type": "Condition.EntityCondition",
               "conditionedEntity": "tile-celestium",
               "amountOfEntitiesRequired": 2,
-              "conditionFlag": "Flag.ConditionEntityExists"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filterFlags": []
@@ -10237,7 +10237,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -10248,7 +10248,7 @@
             {
               "type": "Condition.MaskCondition",
               "conditionedMask": "mask-power",
-              "conditionFlag": "Flag.ConditionMaskExists"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filterFlags": []
@@ -10389,7 +10389,7 @@
                 {
                   "type": "Condition.MaskCondition",
                   "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskExists"
+                  "conditionFlag": "ConditionFlag.Exists"
                 }
               ],
               "filterFlags": []
@@ -10436,7 +10436,7 @@
                 {
                   "type": "Condition.MaskCondition",
                   "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
+                  "conditionFlag": "ConditionFlag.DoesNotExist"
                 }
               ],
               "filterFlags": []
@@ -10478,7 +10478,7 @@
                 {
                   "type": "Condition.MaskCondition",
                   "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskExists"
+                  "conditionFlag": "ConditionFlag.Exists"
                 }
               ],
               "filterFlags": []
@@ -10527,7 +10527,7 @@
                 {
                   "type": "Condition.MaskCondition",
                   "conditionedMask": "mask-power",
-                  "conditionFlag": "Flag.ConditionMaskDoesNotExist"
+                  "conditionFlag": "ConditionFlag.DoesNotExist"
                 }
               ],
               "filterFlags": []
@@ -11006,7 +11006,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -11018,7 +11018,7 @@
               "type": "Condition.EntityCondition",
               "conditionedEntity": "tile-scraps",
               "amountOfEntitiesRequired": 2,
-              "conditionFlag": "Flag.ConditionEntityExists"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filterFlags": []
@@ -11047,7 +11047,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -11059,7 +11059,7 @@
               "type": "Condition.EntityCondition",
               "conditionedEntity": "tile-celestium",
               "amountOfEntitiesRequired": 2,
-              "conditionFlag": "Flag.ConditionEntityExists"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filterFlags": []
@@ -11741,7 +11741,7 @@
               "conditions": [
                 {
                   "type": "Condition",
-                  "conditionFlag": "Flag.ConditionTargetIsDifferentTypeThanOrigin"
+                  "conditionFlag": "ConditionFlag.TargetIsDifferentTypeThanOrigin"
                 }
               ],
               "filterFlags": [
@@ -12004,7 +12004,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -12035,13 +12035,13 @@
               "type": "Condition.EntityCondition",
               "conditionedEntity": "structure-watchtower",
               "amountOfEntitiesRequired": 1,
-              "conditionFlag": "Flag.ConditionEntityExists"
+              "conditionFlag": "ConditionFlag.Exists"
             },
             {
               "type": "Condition.EntityCondition",
               "conditionedEntity": "structure-bastion",
               "amountOfEntitiesRequired": 1,
-              "conditionFlag": "Flag.ConditionEntityExists"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filterFlags": []
@@ -12070,7 +12070,7 @@
           "conditions": [
             {
               "type": "Condition",
-              "conditionFlag": "Flag.ConditionTargetIsLowGround"
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
           "filterFlags": []
@@ -12391,7 +12391,7 @@
               "conditions": [
                 {
                   "type": "Condition",
-                  "conditionFlag": "Flag.ConditionNoActorsFoundFromEffect"
+                  "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
                 }
               ],
               "filterFlags": []

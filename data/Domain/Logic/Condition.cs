@@ -10,14 +10,14 @@ namespace low_age_data.Domain.Logic
     {
         internal Condition(
             string type,
-            Flag conditionFlag)
+            ConditionFlag conditionFlag)
         {
             Type = type;
             ConditionFlag = conditionFlag;
         }
 
         public Condition(
-            Flag conditionFlag)
+            ConditionFlag conditionFlag)
         {
             Type = $"{nameof(Condition)}";
             ConditionFlag = conditionFlag;
@@ -29,6 +29,6 @@ namespace low_age_data.Domain.Logic
         /// <summary>
         /// Used to specify how the target is conditioned.
         /// </summary>
-        public Flag ConditionFlag { get; }
+        public ConditionFlag ConditionFlag { get; }
     }
 }

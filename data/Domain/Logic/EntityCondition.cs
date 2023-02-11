@@ -9,7 +9,7 @@ namespace low_age_data.Domain.Logic
     public class EntityCondition : Condition
     {
         public EntityCondition(
-            Flag conditionFlag,
+            ConditionFlag conditionFlag,
             EntityName conditionedEntity,
             int? amountOfEntitiesRequired = null) : base($"{nameof(Condition)}.{nameof(EntityCondition)}", conditionFlag)
         {

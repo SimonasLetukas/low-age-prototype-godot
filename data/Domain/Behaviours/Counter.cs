@@ -64,7 +64,7 @@ namespace low_age_data.Domain.Behaviours
 
         /// <summary>
         /// If true, each count has its own duration (controlled by <see cref="Behaviour.EndsAt"/>) and
-        /// <see cref="CanResetDuration"/> cannot be true; if false, all counts share the same duration. 
+        /// <see cref="Behaviour.CanResetDuration"/> cannot be true; if false, all counts share the same duration. 
         /// </summary>
         public bool SeparateDurations { get; }
     }

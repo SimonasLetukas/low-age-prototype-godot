@@ -799,7 +799,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
+                                conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Leader.OneForAllObeliskBuff)
                         })
                     }),
@@ -846,7 +846,7 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetDoesNotHaveFullHealth)
+                            new(conditionFlag: ConditionFlag.TargetDoesNotHaveFullHealth)
                         })
                     }),
 
@@ -878,7 +878,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
+                                conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Slave.ManualLabourBuff)
                         })
                     }),
@@ -991,7 +991,7 @@ namespace low_age_data.Collections
                             searchEffect: EffectName.Camou.SilentAssassinSearchFriendly,
                             conditions: new List<Condition>
                             {
-                                new(conditionFlag: Flag.Condition.NoActorsFoundFromEffect)
+                                new(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
                             })
                     }),
 
@@ -1014,14 +1014,14 @@ namespace low_age_data.Collections
                             searchEffect: EffectName.Camou.SilentAssassinSearchFriendly,
                             conditions: new List<Condition>
                             {
-                                new(conditionFlag: Flag.Condition.NoActorsFoundFromEffect)
+                                new(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
                             }),
 
                         new ResultValidator(
                             searchEffect: EffectName.Camou.SilentAssassinSearchEnemy,
                             conditions: new List<Condition>
                             {
-                                new(conditionFlag: Flag.Condition.NoActorsFoundFromEffect)
+                                new(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
                             })
                     }),
 
@@ -1057,11 +1057,11 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsHighGround)
+                            new(conditionFlag: ConditionFlag.TargetIsHighGround)
                         }),
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsUnoccupied)
+                            new(conditionFlag: ConditionFlag.TargetIsUnoccupied)
                         })
                     }),
 
@@ -1260,7 +1260,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
+                                conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspTether)
                         })
                     }),
@@ -1283,7 +1283,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
+                                conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspBuff)
                         })
                     }),
@@ -1305,7 +1305,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
+                                conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Parasite.ParalysingGraspSelfBuff)
                         })
                     }),
@@ -1551,19 +1551,19 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
+                                conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Cannon.AssemblingBuildable)
                         }),
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
+                                conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Ballista.AssemblingBuildable)
                         }),
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.DoesNotExist,
+                                conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Radar.AssemblingBuildable)
                         })
                     }),
@@ -1607,7 +1607,7 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetDoesNotHaveFullHealth)
+                            new(conditionFlag: ConditionFlag.TargetDoesNotHaveFullHealth)
                         })
                     }),
 
@@ -1633,7 +1633,7 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetDoesNotHaveFullHealth)
+                            new(conditionFlag: ConditionFlag.TargetDoesNotHaveFullHealth)
                         })
                     }),
 
@@ -1657,7 +1657,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.Exists,
+                                conditionFlag: ConditionFlag.Exists,
                                 conditionedBehaviour: BehaviourName.Horrior.MountWait)
                         })
                     }),
@@ -1803,7 +1803,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.Exists,
+                                conditionFlag: ConditionFlag.Exists,
                                 conditionedBehaviour: BehaviourName.Ballista.AimBuff,
                                 behaviourOwner: Location.Origin)
                         })
@@ -1905,7 +1905,7 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.Exists,
+                                conditionFlag: ConditionFlag.Exists,
                                 conditionedBehaviour: BehaviourName.Radar.RadioLocationFeatureBuff,
                                 behaviourOwner: Location.Origin)
                         })

@@ -92,7 +92,7 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
                         })
                     }),
 
@@ -114,12 +114,12 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
                         new(conditions: new List<Condition>
                         {
                             new MaskCondition(
-                                conditionFlag: Flag.Condition.Mask.Exists, 
+                                conditionFlag: ConditionFlag.Exists, 
                                 conditionedMask: MaskName.Power)
                         }),
                     }),
@@ -152,7 +152,7 @@ namespace low_age_data.Collections
                             new(conditions: new List<Condition>
                             {
                                 new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
+                                    conditionFlag: ConditionFlag.DoesNotExist, 
                                     conditionedMask: MaskName.Power)
                             })
                         }), 
@@ -165,7 +165,7 @@ namespace low_age_data.Collections
                             new(conditions: new List<Condition>
                             {
                                 new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
+                                    conditionFlag: ConditionFlag.DoesNotExist, 
                                     conditionedMask: MaskName.Power)
                             })
                         })
@@ -200,7 +200,7 @@ namespace low_age_data.Collections
                             new(conditions: new List<Condition>
                             {
                                 new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.Exists, 
+                                    conditionFlag: ConditionFlag.Exists, 
                                     conditionedMask: MaskName.Power)
                             })
                         })
@@ -231,7 +231,7 @@ namespace low_age_data.Collections
                             new(conditions: new List<Condition>
                             {
                                 new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.Exists, 
+                                    conditionFlag: ConditionFlag.Exists, 
                                     conditionedMask: MaskName.Power)
                             })
                         })
@@ -501,12 +501,12 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
                         new(conditions: new List<Condition>
                         {
                             new EntityCondition(
-                                conditionFlag: Flag.Condition.Entity.Exists,
+                                conditionFlag: ConditionFlag.Exists,
                                 conditionedEntity: TileName.Scraps,
                                 amountOfEntitiesRequired: 2)
                         })
@@ -520,12 +520,12 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
                         new(conditions: new List<Condition>
                         {
                             new EntityCondition(
-                                conditionFlag: Flag.Condition.Entity.Exists,
+                                conditionFlag: ConditionFlag.Exists,
                                 conditionedEntity: TileName.Celestium,
                                 amountOfEntitiesRequired: 2)
                         })
@@ -539,12 +539,12 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
                         new(conditions: new List<Condition>
                         {
                             new MaskCondition(
-                                conditionFlag: Flag.Condition.Mask.Exists, 
+                                conditionFlag: ConditionFlag.Exists, 
                                 conditionedMask: MaskName.Power)
                         }),
                     },
@@ -612,7 +612,7 @@ namespace low_age_data.Collections
                             new(conditions: new List<Condition>
                             {
                                 new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.Exists, 
+                                    conditionFlag: ConditionFlag.Exists, 
                                     conditionedMask: MaskName.Power)
                             })
                         }), 
@@ -645,7 +645,7 @@ namespace low_age_data.Collections
                             new(conditions: new List<Condition>
                             {
                                 new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
+                                    conditionFlag: ConditionFlag.DoesNotExist, 
                                     conditionedMask: MaskName.Power)
                             })
                         }), 
@@ -674,7 +674,7 @@ namespace low_age_data.Collections
                             new(conditions: new List<Condition>
                             {
                                 new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.Exists, 
+                                    conditionFlag: ConditionFlag.Exists, 
                                     conditionedMask: MaskName.Power)
                             })
                         }), 
@@ -711,7 +711,7 @@ namespace low_age_data.Collections
                             new(conditions: new List<Condition>
                             {
                                 new MaskCondition(
-                                    conditionFlag: Flag.Condition.Mask.DoesNotExist, 
+                                    conditionFlag: ConditionFlag.DoesNotExist, 
                                     conditionedMask: MaskName.Power)
                             })
                         }), 
@@ -957,12 +957,12 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
                         new(conditions: new List<Condition>
                         {
                             new EntityCondition(
-                                conditionFlag: Flag.Condition.Entity.Exists,
+                                conditionFlag: ConditionFlag.Exists,
                                 conditionedEntity: TileName.Scraps,
                                 amountOfEntitiesRequired: 2)
                         })
@@ -977,12 +977,12 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
                         new(conditions: new List<Condition>
                         {
                             new EntityCondition(
-                                conditionFlag: Flag.Condition.Entity.Exists,
+                                conditionFlag: ConditionFlag.Exists,
                                 conditionedEntity: TileName.Celestium,
                                 amountOfEntitiesRequired: 2)
                         })
@@ -1489,7 +1489,7 @@ namespace low_age_data.Collections
                             new(
                                 conditions: new List<Condition>
                                 {
-                                    new(conditionFlag: Flag.Condition.TargetIsDifferentTypeThanOrigin)
+                                    new(conditionFlag: ConditionFlag.TargetIsDifferentTypeThanOrigin)
                                 },
                                 filterFlags: new List<Flag>
                                 {
@@ -1681,7 +1681,7 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
                         })
                     },
                     maximumHelpers: 3),
@@ -1697,11 +1697,11 @@ namespace low_age_data.Collections
                         new(conditions: new List<Condition>
                         {
                             new EntityCondition(
-                                conditionFlag: Flag.Condition.Entity.Exists,
+                                conditionFlag: ConditionFlag.Exists,
                                 conditionedEntity: StructureName.Watchtower), 
                             // OR
                             new EntityCondition(
-                                conditionFlag: Flag.Condition.Entity.Exists,
+                                conditionFlag: ConditionFlag.Exists,
                                 conditionedEntity: StructureName.Bastion)
                         })
                     },
@@ -1717,7 +1717,7 @@ namespace low_age_data.Collections
                     {
                         new(conditions: new List<Condition>
                         {
-                            new(conditionFlag: Flag.Condition.TargetIsLowGround)
+                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
                         })
                     },
                     maximumHelpers: 1),
@@ -1955,7 +1955,7 @@ namespace low_age_data.Collections
                                 searchEffect: EffectName.Ballista.AimSearch,
                                 conditions: new List<Condition>
                                 {
-                                    new(conditionFlag: Flag.Condition.NoActorsFoundFromEffect)
+                                    new(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
                                 })
                         }),
                         new(events: new List<Event>

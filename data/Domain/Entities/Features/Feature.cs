@@ -27,6 +27,7 @@ namespace low_age_data.Domain.Entities.Features
         {
             OnCollisionEffect = onCollisionEffect;
             CollisionFilters = collisionFilters ?? new List<Flag>();
+            PeriodicEffect = periodicEffect;
             Size = size ?? 1;
             CanBeAttacked = canBeAttacked ?? false;
             OccupiesSpace = occupiesSpace ?? false;

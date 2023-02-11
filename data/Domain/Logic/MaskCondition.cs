@@ -9,7 +9,7 @@ namespace low_age_data.Domain.Logic
     public class MaskCondition : Condition
     {
         public MaskCondition(
-            Flag conditionFlag,
+            ConditionFlag conditionFlag,
             MaskName conditionedMask) : base($"{nameof(Condition)}.{nameof(MaskCondition)}", conditionFlag)
         {
             ConditionedMask = conditionedMask;

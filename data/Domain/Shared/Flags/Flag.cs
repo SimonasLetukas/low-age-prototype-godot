@@ -16,34 +16,6 @@ namespace low_age_data.Domain.Shared.Flags
             return $"{nameof(Flag)}.{Value}";
         }
 
-        public static class Condition
-        {
-            public static class Mask
-            {
-                public static Flag DoesNotExist => new(Flags.ConditionMaskDoesNotExist);
-                public static Flag Exists => new(Flags.ConditionMaskExists);
-            }
-            
-            public static class Behaviour
-            {
-                public static Flag DoesNotExist => new(Flags.ConditionBehaviourDoesNotExist);
-                public static Flag Exists => new(Flags.ConditionBehaviourExists);
-            }
-
-            public static class Entity
-            {
-                public static Flag DoesNotExist => new(Flags.ConditionEntityDoesNotExist);
-                public static Flag Exists => new(Flags.ConditionEntityExists);
-            }
-
-            public static Flag TargetDoesNotHaveFullHealth => new(Flags.ConditionTargetDoesNotHaveFullHealth);
-            public static Flag NoActorsFoundFromEffect => new(Flags.ConditionNoActorsFoundFromEffect);
-            public static Flag TargetIsLowGround => new(Flags.ConditionTargetIsLowGround);
-            public static Flag TargetIsHighGround => new(Flags.ConditionTargetIsHighGround);
-            public static Flag TargetIsUnoccupied => new(Flags.ConditionTargetIsUnoccupied);
-            public static Flag TargetIsDifferentTypeThanOrigin => new(Flags.ConditionTargetIsDifferentTypeThanOrigin);
-        }
-
         public static class Amount
         {
             public static Flag FromMissingHealth => new(Flags.AmountFromMissingHealth);
@@ -88,7 +60,7 @@ namespace low_age_data.Domain.Shared.Flags
             {
                 /// <summary>
                 /// Applies <see cref="Effects.Search"/> whenever a new actor enters the
-                /// <see cref="Effects.Search.Radius"/>).
+                /// <see cref="Effects.Search.Shape"/>).
                 /// </summary>
                 public static Flag AppliedOnEnter => new(Flags.EffectSearchAppliedOnEnter);
                 
@@ -128,7 +100,7 @@ namespace low_age_data.Domain.Shared.Flags
                 /// <summary>
                 /// Counteracts any <see cref="Effects"/> added as part of <see cref="Effects.Search"/>
                 /// <see cref="Effects.Search.Effects"/> for an <see cref="Entities.Actors.Actor"/> that leaves the
-                /// <see cref="Effects.Search.Radius"/>.
+                /// <see cref="Effects.Search.Shape"/>.
                 /// </summary>
                 public static Flag RemovedOnExit => new(Flags.EffectSearchRemovedOnExit);
                 

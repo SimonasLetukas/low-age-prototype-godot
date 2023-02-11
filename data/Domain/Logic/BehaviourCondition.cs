@@ -11,7 +11,7 @@ namespace low_age_data.Domain.Logic
     public class BehaviourCondition : Condition
     {
         public BehaviourCondition(
-            Flag conditionFlag,
+            ConditionFlag conditionFlag,
             BehaviourName conditionedBehaviour,
             Location? behaviourOwner = null) : base($"{nameof(Condition)}.{nameof(BehaviourCondition)}", conditionFlag)
         {

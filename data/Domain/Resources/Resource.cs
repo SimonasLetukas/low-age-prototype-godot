@@ -66,7 +66,7 @@ namespace low_age_data.Domain.Resources
         public ResourceName StoredAs { get; }
         
         /// <summary>
-        /// If true, spending this resource as part of <see cref="Payment"/> during <see cref="Selection"/> retains the
+        /// If true, spending this resource as part of <see cref="Payment"/> during <see cref="Selection{T}"/> retains the
         /// value spent for as long as the <see cref="Actor"/> that was spawned is not destroyed (technically, each
         /// such <see cref="Actor"/> gets a negative <see cref="Income"/> for as long as it's not destroyed, so it
         /// mostly makes sense to use this property together with <see cref="HasBank"/> set to false, unless funky
