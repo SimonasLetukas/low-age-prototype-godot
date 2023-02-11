@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Common;
-using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
@@ -14,81 +13,6 @@ namespace low_age_data.Domain.Shared.Flags
         public override string ToString()
         {
             return $"{nameof(Flag)}.{Value}";
-        }
-
-        public static class Effect
-        {
-            public static class ModifyPlayer
-            {
-                public static Flag GameLost => new(Flags.EffectModifyPlayerGameLost);
-            }
-
-            /// <summary>
-            /// Used to control events when the effects should be applied or removed when <see cref="Search"/> is used
-            /// as a <see cref="Passive.PeriodicEffect"/>. When counteracting the applied effects, any
-            /// <see cref="Behaviours.Buff"/>s down the line are allowed to execute their
-            /// <see cref="Behaviours.Buff.ConditionalEffects"/> before removal.
-            /// </summary>
-            public static class Search
-            {
-                /// <summary>
-                /// Applies <see cref="Effects.Search"/> whenever a new actor enters the
-                /// <see cref="Effects.Search.Shape"/>).
-                /// </summary>
-                public static Flag AppliedOnEnter => new(Flags.EffectSearchAppliedOnEnter);
-                
-                /// <summary>
-                /// Applies <see cref="Effects.Search"/> after <see cref="Durations.EndsAt"/> (at the end of action
-                /// for the <see cref="Flag.Filter.Source"/> <see cref="Entity"/> -- which issued this
-                /// <see cref="Passive.PeriodicEffect"/>).
-                /// </summary>
-                public static Flag AppliedOnSourceAction => new(Flags.EffectSearchAppliedOnSourceAction);
-                
-                /// <summary>
-                /// Applies <see cref="Effects.Search"/> after <see cref="Durations.EndsAt"/> for every action in
-                /// action phase.
-                /// </summary>
-                public static Flag AppliedOnEveryAction => new(Flags.EffectSearchAppliedOnEveryAction);
-
-                /// <summary>
-                /// <see cref="Effects.Search"/> is applied at the start of every action phase.
-                /// </summary>
-                public static Flag AppliedOnActionPhaseStart => new(Flags.EffectSearchAppliedOnActionPhaseStart);
-                
-                /// <summary>
-                /// <see cref="Effects.Search"/> is applied at the end of every action phase.
-                /// </summary>
-                public static Flag AppliedOnActionPhaseEnd => new(Flags.EffectSearchAppliedOnActionPhaseEnd);
-                
-                /// <summary>
-                /// <see cref="Effects.Search"/> is applied at the start of every planning phase.
-                /// </summary>
-                public static Flag AppliedOnPlanningPhaseStart => new(Flags.EffectSearchAppliedOnPlanningPhaseStart);
-                
-                /// <summary>
-                /// <see cref="Effects.Search"/> is applied at the end of every planning phase.
-                /// </summary>
-                public static Flag AppliedOnPlanningPhaseEnd => new(Flags.EffectSearchAppliedOnPlanningPhaseEnd);
-                
-                /// <summary>
-                /// Counteracts any <see cref="Effects"/> added as part of <see cref="Effects.Search"/>
-                /// <see cref="Effects.Search.Effects"/> for an <see cref="Entities.Actors.Actor"/> that leaves the
-                /// <see cref="Effects.Search.Shape"/>.
-                /// </summary>
-                public static Flag RemovedOnExit => new(Flags.EffectSearchRemovedOnExit);
-                
-                /// <summary>
-                /// At the start of every planning phase, counteracts any <see cref="Effects"/> added as part of
-                /// <see cref="Effects.Search"/> <see cref="Effects.Search.Effects"/>.
-                /// </summary>
-                public static Flag RemovedOnPlanningPhaseStart => new(Flags.EffectSearchRemovedOnPlanningPhaseStart);
-                
-                /// <summary>
-                /// At the end of every planning phase, counteracts any <see cref="Effects"/> added as part of
-                /// <see cref="Effects.Search"/> <see cref="Effects.Search.Effects"/>.
-                /// </summary>
-                public static Flag RemovedOnPlanningPhaseEnd => new(Flags.EffectSearchRemovedOnPlanningPhaseEnd);
-            }
         }
 
         /// <summary>

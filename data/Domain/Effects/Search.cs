@@ -12,7 +12,7 @@ namespace low_age_data.Domain.Effects
         public Search(
             EffectName name,
             Shape shape,
-            IList<Flag> searchFlags,
+            IList<SearchFlag> searchFlags,
             IList<Flag> filterFlags,
             IList<EffectName>? effects = null,
             Location? location = null,
@@ -33,9 +33,9 @@ namespace low_age_data.Domain.Effects
         public Shape Shape { get; }
         
         /// <summary>
-        /// For <see cref="Flag.Effect.Search"/> flags.
+        /// For <see cref="SearchFlag"/> flags.
         /// </summary>
-        public IList<Flag> SearchFlags { get; }
+        public IList<SearchFlag> SearchFlags { get; }
         
         /// <summary>
         /// For <see cref="Flag.Filter"/> flags.

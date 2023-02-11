@@ -6285,8 +6285,8 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchRemovedOnExit"
+        "SearchFlag.AppliedOnEnter",
+        "SearchFlag.RemovedOnExit"
       ],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -6398,7 +6398,7 @@
         "Flag.FilterSelf"
       ],
       "modifyFlags": [
-        "Flag.EffectModifyPlayerGameLost"
+        "ModifyPlayerFlag.GameLost"
       ],
       "resourceModifications": [],
       "validators": []
@@ -6711,9 +6711,9 @@
         ]
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchAppliedOnActionPhaseStart",
-        "Flag.EffectSearchRemovedOnExit"
+        "SearchFlag.AppliedOnEnter",
+        "SearchFlag.AppliedOnActionPhaseStart",
+        "SearchFlag.RemovedOnExit"
       ],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -6759,7 +6759,7 @@
         ]
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnActionPhaseStart"
+        "SearchFlag.AppliedOnActionPhaseStart"
       ],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -7082,7 +7082,7 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnPlanningPhaseStart"
+        "SearchFlag.AppliedOnPlanningPhaseStart"
       ],
       "filterFlags": [
         "Flag.FilterAlly",
@@ -7145,7 +7145,7 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnPlanningPhaseStart"
+        "SearchFlag.AppliedOnPlanningPhaseStart"
       ],
       "filterFlags": [
         "Flag.FilterAlly",
@@ -7170,7 +7170,7 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnActionPhaseStart"
+        "SearchFlag.AppliedOnActionPhaseStart"
       ],
       "filterFlags": [
         "Flag.FilterAlly",
@@ -7277,8 +7277,8 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchRemovedOnExit"
+        "SearchFlag.AppliedOnEnter",
+        "SearchFlag.RemovedOnExit"
       ],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -7314,8 +7314,8 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchRemovedOnExit"
+        "SearchFlag.AppliedOnEnter",
+        "SearchFlag.RemovedOnExit"
       ],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -7361,7 +7361,7 @@
         "Flag.FilterSelf"
       ],
       "modifyFlags": [
-        "Flag.EffectModifyPlayerGameLost"
+        "ModifyPlayerFlag.GameLost"
       ],
       "resourceModifications": [],
       "validators": []
@@ -7375,9 +7375,9 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchAppliedOnSourceAction",
-        "Flag.EffectSearchRemovedOnExit"
+        "SearchFlag.AppliedOnEnter",
+        "SearchFlag.AppliedOnSourceAction",
+        "SearchFlag.RemovedOnExit"
       ],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -7832,8 +7832,8 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnEveryAction",
-        "Flag.EffectSearchAppliedOnEnter"
+        "SearchFlag.AppliedOnEveryAction",
+        "SearchFlag.AppliedOnEnter"
       ],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -8217,9 +8217,9 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchAppliedOnEveryAction",
-        "Flag.EffectSearchRemovedOnExit"
+        "SearchFlag.AppliedOnEnter",
+        "SearchFlag.AppliedOnEveryAction",
+        "SearchFlag.RemovedOnExit"
       ],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -9091,8 +9091,8 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchRemovedOnExit"
+        "SearchFlag.AppliedOnEnter",
+        "SearchFlag.RemovedOnExit"
       ],
       "filterFlags": [
         "Flag.FilterPlayer",
@@ -9148,8 +9148,8 @@
         "ignoreRadius": -1
       },
       "searchFlags": [
-        "Flag.EffectSearchAppliedOnEnter",
-        "Flag.EffectSearchRemovedOnExit"
+        "SearchFlag.AppliedOnEnter",
+        "SearchFlag.RemovedOnExit"
       ],
       "filterFlags": [
         "Flag.FilterPlayer",

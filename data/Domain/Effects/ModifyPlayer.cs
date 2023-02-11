@@ -10,17 +10,17 @@ namespace low_age_data.Domain.Effects
         public ModifyPlayer(
             EffectName name,
             IList<Flag> playerFilterFlags,
-            IList<Flag>? modifyFlags = null,
+            IList<ModifyPlayerFlag>? modifyFlags = null,
             IList<ResourceModification>? resourceModifications = null,
             IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(ModifyPlayer)}", validators ?? new List<Validator>())
         {
             PlayerFilterFlags = playerFilterFlags;
-            ModifyFlags = modifyFlags ?? new List<Flag>();
+            ModifyFlags = modifyFlags ?? new List<ModifyPlayerFlag>();
             ResourceModifications = resourceModifications ?? new List<ResourceModification>();
         }
 
         public IList<Flag> PlayerFilterFlags { get; }
-        public IList<Flag> ModifyFlags { get; }
+        public IList<ModifyPlayerFlag> ModifyFlags { get; }
         public IList<ResourceModification> ResourceModifications { get; }
     }
 }
