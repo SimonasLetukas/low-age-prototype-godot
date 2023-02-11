@@ -1600,7 +1600,7 @@ namespace low_age_data.Collections
                 new Passive(
                     name: AbilityName.Ballista.AddOn,
                     displayName: nameof(AbilityName.Ballista.AddOn).CamelCaseToWords(),
-                    description: "Can only be built on a Watchtower.",
+                    description: "Can only be built on a Watchtower or Bastion.",
                     hasButton: true),
 
                 new Target(

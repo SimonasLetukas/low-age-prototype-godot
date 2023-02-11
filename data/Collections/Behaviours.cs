@@ -7,6 +7,7 @@ using low_age_data.Domain.Shared.Durations;
 using low_age_data.Domain.Shared.Flags;
 using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
+using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Tiles;
 using low_age_data.Domain.Masks;
 using low_age_data.Domain.Resources;
@@ -1689,18 +1690,19 @@ namespace low_age_data.Collections
                     name: BehaviourName.Ballista.AssemblingBuildable,
                     displayName: nameof(BehaviourName.Ballista.AssemblingBuildable).CamelCaseToWords(),
                     description:
-                    "This machine can only be placed on a Watchtower and can be assembled by a maximum of " +
-                    "1 Engineer at once.",
+                    "This machine can only be placed on a Watchtower or Bastion and can be assembled by a maximum " +
+                    "of 1 Engineer at once.",
                     placementValidators: new List<Validator>
                     {
                         new(conditions: new List<Condition>
                         {
-                            new BehaviourCondition(
-                                conditionFlag: Flag.Condition.Behaviour.Exists,
-                                conditionedBehaviour: BehaviourName.Ballista
-                                    .AimBuff) // TODO change when the Watchtower structure has
-                            // the appropriate behaviour created or use the
-                            // entity behaviour
+                            new EntityCondition(
+                                conditionFlag: Flag.Condition.Entity.Exists,
+                                conditionedEntity: StructureName.Watchtower), 
+                            // OR
+                            new EntityCondition(
+                                conditionFlag: Flag.Condition.Entity.Exists,
+                                conditionedEntity: StructureName.Bastion)
                         })
                     },
                     maximumHelpers: 1),

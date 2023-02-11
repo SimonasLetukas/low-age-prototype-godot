@@ -6078,7 +6078,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Add On",
-      "description": "Can only be built on a Watchtower."
+      "description": "Can only be built on a Watchtower or Bastion."
     },
     {
       "name": "ability-ballista-aim",
@@ -12023,10 +12023,16 @@
           "type": "Validator",
           "conditions": [
             {
-              "type": "Condition.BehaviourCondition",
-              "conditionedBehaviour": "behaviour-ballista-aim-buff",
-              "behaviourOwner": null,
-              "conditionFlag": "Flag.ConditionBehaviourExists"
+              "type": "Condition.EntityCondition",
+              "conditionedEntity": "structure-watchtower",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "Flag.ConditionEntityExists"
+            },
+            {
+              "type": "Condition.EntityCondition",
+              "conditionedEntity": "structure-bastion",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "Flag.ConditionEntityExists"
             }
           ],
           "filterFlags": []
@@ -12035,7 +12041,7 @@
       "maximumHelpers": 1,
       "canBeDragged": false,
       "displayName": "Assembling Buildable",
-      "description": "This machine can only be placed on a Watchtower and can be assembled by a maximum of 1 Engineer at once.",
+      "description": "This machine can only be placed on a Watchtower or Bastion and can be assembled by a maximum of 1 Engineer at once.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,
