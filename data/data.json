@@ -133,6 +133,12 @@
       "startingEntities": [
         "structure-citadel",
         "unit-leader"
+      ],
+      "bonusStartingResources": [
+        {
+          "resource": "resource-melee-weapon",
+          "amount": 4
+        }
       ]
     },
     {
@@ -144,7 +150,10 @@
         "resource-celestium",
         "resource-faith"
       ],
-      "startingEntities": []
+      "startingEntities": [
+        "structure-battery-core"
+      ],
+      "bonusStartingResources": []
     }
   ],
   "entities": {
@@ -2176,7 +2185,7 @@
           },
           {
             "combatType": "Stats.Vision",
-            "maxAmount": 5,
+            "maxAmount": 15,
             "hasCurrent": false
           }
         ],
@@ -2239,7 +2248,7 @@
           },
           {
             "combatType": "Stats.Vision",
-            "maxAmount": 5,
+            "maxAmount": 15,
             "hasCurrent": false
           }
         ],
@@ -2303,7 +2312,7 @@
           },
           {
             "combatType": "Stats.Vision",
-            "maxAmount": 5,
+            "maxAmount": 15,
             "hasCurrent": false
           }
         ],

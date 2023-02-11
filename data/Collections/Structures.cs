@@ -292,7 +292,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 0, hasCurrent: true, combatType: Stats.Shields),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
@@ -320,7 +320,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 25, hasCurrent: true, combatType: Stats.Shields),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>
@@ -349,7 +349,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 50, hasCurrent: true, combatType: Stats.Shields),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
                     combatAttributes: new List<CombatAttributes>

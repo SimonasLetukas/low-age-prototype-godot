@@ -20,7 +20,7 @@ namespace low_age_data.Domain.Behaviours
             IList<ResourceModification> resources,
             int? diminishingReturn = null,
             EndsAt? endsAt = null,
-            IList<Cost>? cost = null,
+            IList<Payment>? cost = null,
             bool? waitForAvailableStorage = null,
             IList<Trigger>? triggers = null,
             bool? removeOnConditionsMet = null,
@@ -38,7 +38,7 @@ namespace low_age_data.Domain.Behaviours
         {
             Resources = resources;
             DiminishingReturn = diminishingReturn ?? 0;
-            Cost = cost ?? new List<Cost>();
+            Cost = cost ?? new List<Payment>();
             WaitForAvailableStorage = waitForAvailableStorage ?? false;
         }
 
@@ -59,7 +59,7 @@ namespace low_age_data.Domain.Behaviours
         /// <see cref="Resources"/> are gained as <see cref="Income"/>. Otherwise, <see cref="Cost"/> accumulates
         /// until it is fulfilled.
         /// </summary>
-        public IList<Cost> Cost { get; }
+        public IList<Payment> Cost { get; }
         
         /// <summary>
         /// If true, <see cref="Resources"/> are not gained and <see cref="Cost"/> is paused if there is not enough

@@ -3,6 +3,7 @@ using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Resources;
+using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Factions
 {
@@ -13,13 +14,15 @@ namespace low_age_data.Domain.Factions
             string displayName, 
             string description,
             IList<ResourceName> availableResources,
-            IList<EntityName> startingEntities)
+            IList<EntityName> startingEntities,
+            IList<Payment>? bonusStartingResources = null)
         {
             Name = name;
             DisplayName = displayName;
             Description = description;
             AvailableResources = availableResources;
             StartingEntities = startingEntities;
+            BonusStartingResources = bonusStartingResources ?? new List<Payment>();
         }
 
         public FactionName Name { get; }
@@ -39,5 +42,10 @@ namespace low_age_data.Domain.Factions
         /// <see cref="Entity"/> is also rotated to face as many enemies as possible. 
         /// </summary>
         public IList<EntityName> StartingEntities { get; }
+        
+        /// <summary>
+        /// <see cref="Resource"/> added on game start to the default starting <see cref="Resource"/>s.
+        /// </summary>
+        public IList<Payment> BonusStartingResources { get; }
     }
 }

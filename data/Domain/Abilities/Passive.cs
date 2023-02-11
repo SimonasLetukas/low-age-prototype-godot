@@ -19,7 +19,7 @@ namespace low_age_data.Domain.Abilities
             IList<Attacks>? onHitAttackTypes = null,
             IList<EffectName>? onBirthEffects = null,
             BehaviourName? onBuildBehaviour = null,
-            IList<Cost>? cost = null)
+            IList<Payment>? cost = null)
             : base(
                 name,
                 $"{nameof(Ability)}.{nameof(Passive)}",

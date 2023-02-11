@@ -15,7 +15,7 @@ namespace low_age_data.Domain.Abilities
             IList<EffectName> effects,
             EndsAt? cooldown = null,
             IList<ResearchName>? researchNeeded = null,
-            IList<Cost>? cost = null)
+            IList<Payment>? cost = null)
             : base(
                 name,
                 $"{nameof(Ability)}.{nameof(Instant)}",

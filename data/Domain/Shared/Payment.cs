@@ -2,9 +2,9 @@
 
 namespace low_age_data.Domain.Shared
 {
-    public class Cost
+    public class Payment
     {
-        public Cost(ResourceName resource, int amount = 0)
+        public Payment(ResourceName resource, int amount = 0)
         {
             Resource = resource;
             Amount = amount;

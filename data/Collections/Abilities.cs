@@ -84,32 +84,32 @@ namespace low_age_data.Collections
                     placementArea: new Map(),
                     selection: new List<Selection<EntityName>>
                     {
-                        new(name: StructureName.Collector, cost: new List<Cost>
+                        new(name: StructureName.Collector, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 5),
                             new(resource: ResourceName.Celestium, amount: 40)
                         }),
-                        new(name: StructureName.Extractor, cost: new List<Cost>
+                        new(name: StructureName.Extractor, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 12),
                             new(resource: ResourceName.Celestium, amount: 30)
                         }),
-                        new(name: StructureName.PowerPole, cost: new List<Cost>
+                        new(name: StructureName.PowerPole, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 15),
                             new(resource: ResourceName.Celestium, amount: 38)
                         }),
-                        new(name: StructureName.Temple, cost: new List<Cost>
+                        new(name: StructureName.Temple, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 25),
                             new(resource: ResourceName.Celestium, amount: 40)
                         }),
-                        new(name: StructureName.MilitaryBase, cost: new List<Cost>
+                        new(name: StructureName.MilitaryBase, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 14),
                             new(resource: ResourceName.Celestium, amount: 50)
                         }),
-                        new(name: StructureName.Factory, cost: new List<Cost>
+                        new(name: StructureName.Factory, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 22),
                             new(resource: ResourceName.Celestium, amount: 63)
@@ -117,7 +117,7 @@ namespace low_age_data.Collections
                         {
                             ResearchName.Uee.FusionCoreUpgrade
                         }),
-                        new(name: StructureName.Laboratory, cost: new List<Cost>
+                        new(name: StructureName.Laboratory, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 30),
                             new(resource: ResourceName.Celestium, amount: 76)
@@ -125,7 +125,7 @@ namespace low_age_data.Collections
                         {
                             ResearchName.Uee.CelestiumCoreUpgrade
                         }),
-                        new(name: StructureName.Armoury, cost: new List<Cost>
+                        new(name: StructureName.Armoury, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 20),
                             new(resource: ResourceName.Celestium, amount: 50)
@@ -133,27 +133,27 @@ namespace low_age_data.Collections
                         {
                             ResearchName.Uee.FusionCoreUpgrade
                         }),
-                        new(name: StructureName.Wall, cost: new List<Cost>
+                        new(name: StructureName.Wall, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 10),
                             new(resource: ResourceName.Celestium, amount: 50)
                         }),
-                        new(name: StructureName.Stairs, cost: new List<Cost>
+                        new(name: StructureName.Stairs, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 10),
                             new(resource: ResourceName.Celestium, amount: 50)
                         }),
-                        new(name: StructureName.Gate, cost: new List<Cost>
+                        new(name: StructureName.Gate, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 25),
                             new(resource: ResourceName.Celestium, amount: 80)
                         }),
-                        new(name: StructureName.Watchtower, cost: new List<Cost>
+                        new(name: StructureName.Watchtower, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 15),
                             new(resource: ResourceName.Celestium, amount: 70)
                         }),
-                        new(name: StructureName.Bastion, cost: new List<Cost>
+                        new(name: StructureName.Bastion, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 30),
                             new(resource: ResourceName.Celestium, amount: 120)
@@ -238,57 +238,57 @@ namespace low_age_data.Collections
                     description: "Promote a new Revelators goon from the remaining Population.",
                     selection: new List<Selection<EntityName>>
                     {
-                        new(name: UnitName.Slave, cost: new List<Cost>
+                        new(name: UnitName.Slave, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 4),
                             new(resource: ResourceName.MeleeWeapon, amount: 1),
                             new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(name: UnitName.Quickdraw, cost: new List<Cost>
+                        new(name: UnitName.Quickdraw, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 9),
                             new(resource: ResourceName.RangedWeapon, amount: 2),
                             new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(name: UnitName.Gorger, cost: new List<Cost>
+                        new(name: UnitName.Gorger, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 7),
                             new(resource: ResourceName.MeleeWeapon, amount: 2),
                             new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(name: UnitName.Camou, cost: new List<Cost>
+                        new(name: UnitName.Camou, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 11),
                             new(resource: ResourceName.MeleeWeapon, amount: 2),
                             new(resource: ResourceName.SpecialWeapon, amount: 1),
                             new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(name: UnitName.Shaman, cost: new List<Cost>
+                        new(name: UnitName.Shaman, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 10),
                             new(resource: ResourceName.RangedWeapon, amount: 1),
                             new(resource: ResourceName.SpecialWeapon, amount: 2),
                             new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(name: UnitName.Pyre, cost: new List<Cost>
+                        new(name: UnitName.Pyre, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 15),
                             new(resource: ResourceName.RangedWeapon, amount: 4),
                             new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(name: UnitName.BigBadBull, cost: new List<Cost>
+                        new(name: UnitName.BigBadBull, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 14),
                             new(resource: ResourceName.MeleeWeapon, amount: 4),
                             new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(name: UnitName.Mummy, cost: new List<Cost>
+                        new(name: UnitName.Mummy, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 29),
                             new(resource: ResourceName.SpecialWeapon, amount: 5),
                             new(resource: ResourceName.Population, amount: 1)
                         }),
-                        new(name: UnitName.Parasite, cost: new List<Cost>
+                        new(name: UnitName.Parasite, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 21),
                             new(resource: ResourceName.MeleeWeapon, amount: 2),
@@ -377,7 +377,7 @@ namespace low_age_data.Collections
                         new(name: ResearchName.Revelators.PoisonedSlits,
                             description: $"Unlock {nameof(AbilityName.Quickdraw.Cripple).CamelCaseToWords()} for " +
                                          $"{nameof(UnitName.Quickdraw).CamelCaseToWords()}.",
-                            cost: new List<Cost>
+                            cost: new List<Payment>
                             {
                                 new(resource: ResourceName.Scraps,
                                     amount: 5),
@@ -388,7 +388,7 @@ namespace low_age_data.Collections
                         new(name: ResearchName.Revelators.SpikedRope,
                             description: $"Unlock {nameof(AbilityName.Camou.Climb).CamelCaseToWords()} for " +
                                          $"{nameof(UnitName.Camou).CamelCaseToWords()}.",
-                            cost: new List<Cost>
+                            cost: new List<Payment>
                             {
                                 new(resource: ResourceName.Scraps,
                                     amount: 20),
@@ -399,7 +399,7 @@ namespace low_age_data.Collections
                         new(name: ResearchName.Revelators.QuestionableCargo,
                             description: $"Unlock {nameof(AbilityName.Pyre.PhantomMenace).CamelCaseToWords()} for " +
                                          $"{nameof(UnitName.Pyre).CamelCaseToWords()}.",
-                            cost: new List<Cost>
+                            cost: new List<Payment>
                             {
                                 new(resource: ResourceName.Scraps,
                                     amount: 4),
@@ -410,7 +410,7 @@ namespace low_age_data.Collections
                         new(name: ResearchName.Revelators.HumanfleshRations,
                             description: $"Unlock {nameof(AbilityName.Mummy.LeapOfHunger).CamelCaseToWords()} for " +
                                          $"{nameof(UnitName.Mummy).CamelCaseToWords()}.",
-                            cost: new List<Cost>
+                            cost: new List<Payment>
                             {
                                 new(resource: ResourceName.Scraps,
                                     amount: 15),
@@ -421,7 +421,7 @@ namespace low_age_data.Collections
                         new(name: ResearchName.Revelators.AdaptiveDigestion,
                             description: $"Unlock {nameof(AbilityName.Roach.CorrosiveSpit).CamelCaseToWords()} for " +
                                          $"{nameof(UnitName.Roach).CamelCaseToWords()}.",
-                            cost: new List<Cost>
+                            cost: new List<Payment>
                             {
                                 new(resource: ResourceName.Scraps,
                                     amount: 15),
@@ -503,7 +503,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.BatteryCore.FusionCoreUpgradeApplyBehaviour
                     },
-                    cost: new List<Cost>
+                    cost: new List<Payment>
                     {
                         new(resource: ResourceName.Scraps, amount: 10),
                         new(resource: ResourceName.Celestium, amount: 50)
@@ -542,7 +542,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.FusionCore.CelestiumCoreUpgradeApplyBehaviour
                     },
-                    cost: new List<Cost>
+                    cost: new List<Payment>
                     {
                         new(resource: ResourceName.Scraps, amount: 10),
                         new(resource: ResourceName.Celestium, amount: 100)
@@ -582,7 +582,7 @@ namespace low_age_data.Collections
                     {
                         EffectName.CelestiumCore.HeightenedConductivityModifyResearch
                     },
-                    cost: new List<Cost>
+                    cost: new List<Payment>
                     {
                         new(resource: ResourceName.Scraps, amount: 6),
                         new(resource: ResourceName.Celestium, amount: 40)
@@ -680,12 +680,12 @@ namespace low_age_data.Collections
                                  "production.",
                     selection: new List<Selection<EntityName>>
                     {
-                        new(name: UnitName.Horrior, cost: new List<Cost>
+                        new(name: UnitName.Horrior, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 14),
                             new(resource: ResourceName.Celestium, amount: 52)
                         }),
-                        new(name: UnitName.Surfer, cost: new List<Cost>
+                        new(name: UnitName.Surfer, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 20),
                             new(resource: ResourceName.Celestium, amount: 52)
@@ -693,12 +693,12 @@ namespace low_age_data.Collections
                         {
                             ResearchName.Uee.FusionCoreUpgrade
                         }),
-                        new(name: UnitName.Marksman, cost: new List<Cost>
+                        new(name: UnitName.Marksman, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 10),
                             new(resource: ResourceName.Celestium, amount: 60)
                         }),
-                        new(name: UnitName.Mortar, cost: new List<Cost>
+                        new(name: UnitName.Mortar, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 16),
                             new(resource: ResourceName.Celestium, amount: 60)
@@ -706,7 +706,7 @@ namespace low_age_data.Collections
                         {
                             ResearchName.Uee.FusionCoreUpgrade
                         }),
-                        new(name: UnitName.Hawk, cost: new List<Cost>
+                        new(name: UnitName.Hawk, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 20),
                             new(resource: ResourceName.Celestium, amount: 50)
@@ -726,7 +726,7 @@ namespace low_age_data.Collections
                                  "production.",
                     selection: new List<Selection<EntityName>>
                     {
-                        new(name: UnitName.Engineer, cost: new List<Cost>
+                        new(name: UnitName.Engineer, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 6),
                             new(resource: ResourceName.Celestium, amount: 55)
@@ -734,7 +734,7 @@ namespace low_age_data.Collections
                         {
                             ResearchName.Uee.FusionCoreUpgrade
                         }),
-                        new(name: UnitName.Vessel, cost: new List<Cost>
+                        new(name: UnitName.Vessel, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 22),
                             new(resource: ResourceName.Celestium, amount: 99)
@@ -754,7 +754,7 @@ namespace low_age_data.Collections
                                  "production.",
                     selection: new List<Selection<EntityName>>
                     {
-                        new(name: UnitName.Omen, cost: new List<Cost>
+                        new(name: UnitName.Omen, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 30),
                             new(resource: ResourceName.Celestium, amount: 90)
@@ -776,7 +776,7 @@ namespace low_age_data.Collections
                         new(name: ResearchName.Uee.HoverboardReignition,
                             description: $"Unlock {nameof(AbilityName.Horrior.Mount).CamelCaseToWords()} for " +
                                          $"{nameof(UnitName.Horrior).CamelCaseToWords()}.",
-                            cost: new List<Cost>
+                            cost: new List<Payment>
                             {
                                 new(resource: ResourceName.Scraps,
                                     amount: 6),
@@ -791,7 +791,7 @@ namespace low_age_data.Collections
                         new(name: ResearchName.Uee.MdPractice,
                             description: $"Unlock {nameof(AbilityName.Hawk.HealthKit).CamelCaseToWords()} for " +
                                          $"{nameof(UnitName.Hawk).CamelCaseToWords()}.",
-                            cost: new List<Cost>
+                            cost: new List<Payment>
                             {
                                 new(resource: ResourceName.Scraps,
                                     amount: 12),
@@ -806,7 +806,7 @@ namespace low_age_data.Collections
                         new(name: ResearchName.Uee.CelestiumCoatedMaterials,
                             description: $"Unlock {nameof(AbilityName.Radar.RadioLocation).CamelCaseToWords()} for " +
                                          $"{nameof(UnitName.Radar).CamelCaseToWords()}.",
-                            cost: new List<Cost>
+                            cost: new List<Payment>
                             {
                                 new(resource: ResourceName.Scraps,
                                     amount: 8),
@@ -821,7 +821,7 @@ namespace low_age_data.Collections
                         new(name: ResearchName.Uee.ExplosiveShrapnel,
                             description: $"Unlock {nameof(AbilityName.Mortar.PiercingBlast).CamelCaseToWords()} for " +
                                          $"{nameof(UnitName.Mortar).CamelCaseToWords()}.",
-                            cost: new List<Cost>
+                            cost: new List<Payment>
                             {
                                 new(resource: ResourceName.Scraps,
                                     amount: 14),
@@ -836,7 +836,7 @@ namespace low_age_data.Collections
                         new(name: ResearchName.Uee.HardenedMatrix,
                             description: $"Unlock {nameof(AbilityName.Vessel.Fortify).CamelCaseToWords()} for " +
                                          $"{nameof(UnitName.Vessel).CamelCaseToWords()}.",
-                            cost: new List<Cost>
+                            cost: new List<Payment>
                             {
                                 new(resource: ResourceName.Scraps,
                                     amount: 18),
@@ -959,52 +959,52 @@ namespace low_age_data.Collections
                     placementArea: new Circle(radius: 1, ignoreRadius: 0),
                     selection: new List<Selection<EntityName>>
                     {
-                        new(name: StructureName.Hut, cost: new List<Cost>
+                        new(name: StructureName.Hut, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 5),
                             new(resource: ResourceName.Celestium, amount: 40)
                         }),
-                        new(name: StructureName.Obelisk, cost: new List<Cost>
+                        new(name: StructureName.Obelisk, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 12),
                             new(resource: ResourceName.Celestium, amount: 30)
                         }),
-                        new(name: StructureName.Shack, cost: new List<Cost>
+                        new(name: StructureName.Shack, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 15),
                             new(resource: ResourceName.Celestium, amount: 40)
                         }),
-                        new(name: StructureName.Smith, cost: new List<Cost>
+                        new(name: StructureName.Smith, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 11),
                             new(resource: ResourceName.Celestium, amount: 50)
                         }),
-                        new(name: StructureName.Fletcher, cost: new List<Cost>
+                        new(name: StructureName.Fletcher, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 17),
                             new(resource: ResourceName.Celestium, amount: 75)
                         }),
-                        new(name: StructureName.Alchemy, cost: new List<Cost>
+                        new(name: StructureName.Alchemy, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 23),
                             new(resource: ResourceName.Celestium, amount: 100)
                         }),
-                        new(name: StructureName.Depot, cost: new List<Cost>
+                        new(name: StructureName.Depot, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 20),
                             new(resource: ResourceName.Celestium, amount: 65)
                         }),
-                        new(name: StructureName.Workshop, cost: new List<Cost>
+                        new(name: StructureName.Workshop, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 20),
                             new(resource: ResourceName.Celestium, amount: 50)
                         }),
-                        new(name: StructureName.Outpost, cost: new List<Cost>
+                        new(name: StructureName.Outpost, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 18),
                             new(resource: ResourceName.Celestium, amount: 45)
                         }),
-                        new(name: StructureName.Barricade, cost: new List<Cost>
+                        new(name: StructureName.Barricade, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 16),
                             new(resource: ResourceName.Celestium, amount: 35)
@@ -1475,17 +1475,17 @@ namespace low_age_data.Collections
                     placementArea: new Circle(radius: 1, ignoreRadius: 0),
                     selection: new List<Selection<EntityName>>
                     {
-                        new(name: UnitName.Cannon, cost: new List<Cost>
+                        new(name: UnitName.Cannon, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 18),
                             new(resource: ResourceName.Celestium, amount: 120)
                         }),
-                        new(name: UnitName.Ballista, cost: new List<Cost>
+                        new(name: UnitName.Ballista, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 7),
                             new(resource: ResourceName.Celestium, amount: 106)
                         }),
-                        new(name: UnitName.Radar, cost: new List<Cost>
+                        new(name: UnitName.Radar, cost: new List<Payment>
                         {
                             new(resource: ResourceName.Scraps, amount: 15),
                             new(resource: ResourceName.Celestium, amount: 84)

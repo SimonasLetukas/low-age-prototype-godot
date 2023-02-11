@@ -5,6 +5,7 @@ using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Factions;
 using low_age_data.Domain.Resources;
+using low_age_data.Domain.Shared;
 
 namespace low_age_data.Collections
 {
@@ -30,6 +31,10 @@ namespace low_age_data.Collections
                     {
                         StructureName.Citadel,
                         UnitName.Leader
+                    },
+                    bonusStartingResources: new List<Payment>
+                    {
+                        new(resource: ResourceName.MeleeWeapon, amount: 4)
                     }),
 
                 new(name: FactionName.Uee,
@@ -43,7 +48,7 @@ namespace low_age_data.Collections
                     },
                     startingEntities: new List<EntityName>
                     {
-                        // TODO
+                        StructureName.BatteryCore
                     })
             };
         }

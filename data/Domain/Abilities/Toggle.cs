@@ -22,7 +22,7 @@ namespace low_age_data.Domain.Abilities
             EndsAt? cooldown = null,
             IList<ResearchName>? researchNeeded = null,
             string? deactivationDescription = null,
-            IList<Cost>? cost = null)
+            IList<Payment>? cost = null)
             : base(
                 name,
                 $"{nameof(Ability)}.{nameof(Toggle)}",

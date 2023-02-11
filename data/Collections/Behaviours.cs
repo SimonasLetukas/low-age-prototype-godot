@@ -378,7 +378,7 @@ namespace low_age_data.Collections
                             amount: 1,
                             resource: ResourceName.MeleeWeapon)
                     },
-                    cost: new List<Cost>
+                    cost: new List<Payment>
                     {
                         new(resource: ResourceName.Celestium,
                             amount: 20)
@@ -396,7 +396,7 @@ namespace low_age_data.Collections
                             amount: 1,
                             resource: ResourceName.RangedWeapon)
                     },
-                    cost: new List<Cost>
+                    cost: new List<Payment>
                     {
                         new(resource: ResourceName.Celestium,
                             amount: 25)
@@ -414,7 +414,7 @@ namespace low_age_data.Collections
                             amount: 1,
                             resource: ResourceName.SpecialWeapon)
                     },
-                    cost: new List<Cost>
+                    cost: new List<Payment>
                     {
                         new(resource: ResourceName.Celestium,
                             amount: 30)

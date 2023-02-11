@@ -17,7 +17,7 @@ namespace low_age_data.Domain.Abilities
             string displayName,
             string description,
             EndsAt? cooldown = null,
-            IList<Cost>? cost = null)
+            IList<Payment>? cost = null)
         {
             Name = name;
             Type = type;
@@ -25,7 +25,7 @@ namespace low_age_data.Domain.Abilities
             ResearchNeeded = researchNeeded;
             HasButton = hasButton;
             Cooldown = cooldown ?? EndsAt.Instant;
-            Cost = cost ?? new List<Cost>();
+            Cost = cost ?? new List<Payment>();
             DisplayName = displayName;
             Description = description;
         }
@@ -62,7 +62,7 @@ namespace low_age_data.Domain.Abilities
         /// action phase; <see cref="Domain.Shared.TurnPhase.Action"/> - first paid when activated during the
         /// <see cref="Actor"/>'s action, then at the start of the action phase.
         /// </summary>
-        public IList<Cost> Cost { get; }
+        public IList<Payment> Cost { get; }
         
         public string DisplayName { get; }
         public string Description { get; }

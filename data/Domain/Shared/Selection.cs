@@ -9,20 +9,20 @@ namespace low_age_data.Domain.Shared
         public Selection(
             T name, 
             string? description = null,
-            IList<Cost>? cost = null, 
+            IList<Payment>? cost = null, 
             IList<ResearchName>? researchNeeded = null, 
             bool? grayOutIfAlreadyExists = null)
         {
             Name = name;
             Description = description ?? string.Empty;
-            Cost = cost ?? new List<Cost>();
+            Cost = cost ?? new List<Payment>();
             ResearchNeeded = researchNeeded ?? new List<ResearchName>();
             GrayOutIfAlreadyExists = grayOutIfAlreadyExists ?? false;
         }
         
         public T Name { get; }
         public string Description { get; }
-        public IList<Cost> Cost { get; }
+        public IList<Payment> Cost { get; }
         
         /// <summary>
         /// List of <see cref="ResearchName"/> that all need to be true for this <see cref="Selection{T}"/> item to

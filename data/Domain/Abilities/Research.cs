@@ -4,7 +4,7 @@ using low_age_data.Domain.Shared;
 namespace low_age_data.Domain.Abilities
 {
     /// <summary>
-    /// Used for opening a selection of <see cref="ResearchName"/> to be researched by paying the <see cref="Cost"/>.
+    /// Used for opening a selection of <see cref="ResearchName"/> to be researched by paying the <see cref="Payment"/>.
     /// </summary>
     public class Research : Ability
     {

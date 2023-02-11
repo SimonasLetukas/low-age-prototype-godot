@@ -21,7 +21,7 @@ namespace low_age_data.Domain.Abilities
             EndsAt? cooldown = null,
             IList<Attacks>? overridesAttacks = null,
             bool? fallbackToAttack = false,
-            IList<Cost>? cost = null,
+            IList<Payment>? cost = null,
             Shape? leashArea = null)
             : base(
                 name,
