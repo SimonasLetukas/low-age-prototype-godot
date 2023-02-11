@@ -440,7 +440,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityName>
                     {
-                        AbilityName.Shared.Uee.Building, // TODO check if all UEE buildings have this
+                        AbilityName.Shared.Uee.Building,
                         AbilityName.Shared.Uee.PowerDependency,
                         AbilityName.PowerPole.PowerGrid,
                         AbilityName.PowerPole.ExcessDistribution,

@@ -13,14 +13,15 @@ namespace low_age_data.Collections
             {
                 new(name: ResourceName.Scraps,
                     displayName: nameof(ResourceName.Scraps).CamelCaseToWords(),
-                    description: "", // TODO
+                    description: "Used for buying units, structures, research, and anything else.",
                     hasLimit: false,
                     isConsumable: true,
                     hasBank: true),
 
                 new(name: ResourceName.Celestium,
                     displayName: nameof(ResourceName.Celestium).CamelCaseToWords(),
-                    description: "", // TODO
+                    description: "Used for production. Higher amounts of Celestium allow for quicker production of " +
+                                 "units, structures, research, and anything else.",
                     hasLimit: false,
                     isConsumable: false,
                     hasBank: false),
@@ -42,14 +43,15 @@ namespace low_age_data.Collections
 
                 new(name: ResourceName.WeaponStorage,
                     displayName: nameof(ResourceName.WeaponStorage).CamelCaseToWords(),
-                    description: "", // TODO
+                    description: "Maximum amount of storage for all melee, ranged and special weapons. The most " +
+                                 "valuable weapons are lost if the maximum storage is decreased for any reason.",
                     hasLimit: false,
                     isConsumable: false,
                     hasBank: false),
 
                 new(name: ResourceName.MeleeWeapon,
                     displayName: nameof(ResourceName.MeleeWeapon).CamelCaseToWords(),
-                    description: "", // TODO
+                    description: "Weapon used for promotion of units with melee qualities.",
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
@@ -57,7 +59,7 @@ namespace low_age_data.Collections
 
                 new(name: ResourceName.RangedWeapon,
                     displayName: nameof(ResourceName.MeleeWeapon).CamelCaseToWords(),
-                    description: "", // TODO
+                    description: "Weapon used for promotion of units with ranged qualities.",
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
@@ -65,7 +67,7 @@ namespace low_age_data.Collections
 
                 new(name: ResourceName.SpecialWeapon,
                     displayName: nameof(ResourceName.MeleeWeapon).CamelCaseToWords(),
-                    description: "", // TODO
+                    description: "Weapon used for promotion of units with special qualities.",
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,

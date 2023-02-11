@@ -3,7 +3,7 @@
     {
       "name": "resource-scraps",
       "displayName": "Scraps",
-      "description": "",
+      "description": "Used for buying units, structures, research, and anything else.",
       "hasLimit": false,
       "isConsumable": true,
       "hasBank": true,
@@ -17,7 +17,7 @@
     {
       "name": "resource-celestium",
       "displayName": "Celestium",
-      "description": "",
+      "description": "Used for production. Higher amounts of Celestium allow for quicker production of units, structures, research, and anything else.",
       "hasLimit": false,
       "isConsumable": false,
       "hasBank": false,
@@ -47,7 +47,7 @@
     {
       "name": "resource-weapon-storage",
       "displayName": "Weapon Storage",
-      "description": "",
+      "description": "Maximum amount of storage for all melee, ranged and special weapons. The most valuable weapons are lost if the maximum storage is decreased for any reason.",
       "hasLimit": false,
       "isConsumable": false,
       "hasBank": false,
@@ -61,7 +61,7 @@
     {
       "name": "resource-melee-weapon",
       "displayName": "Melee Weapon",
-      "description": "",
+      "description": "Weapon used for promotion of units with melee qualities.",
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
@@ -75,7 +75,7 @@
     {
       "name": "resource-ranged-weapon",
       "displayName": "Melee Weapon",
-      "description": "",
+      "description": "Weapon used for promotion of units with ranged qualities.",
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
@@ -89,7 +89,7 @@
     {
       "name": "resource-special-weapon",
       "displayName": "Melee Weapon",
-      "description": "",
+      "description": "Weapon used for promotion of units with special qualities.",
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
