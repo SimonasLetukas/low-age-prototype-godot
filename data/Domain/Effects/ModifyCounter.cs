@@ -2,7 +2,7 @@
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Flags;
+using low_age_data.Domain.Shared.Filters;
 using low_age_data.Domain.Shared.Modifications;
 
 namespace low_age_data.Domain.Effects
@@ -15,14 +15,14 @@ namespace low_age_data.Domain.Effects
             Change change,
             int amount,
             Location? location = null,
-            IList<Flag>? filterFlags = null,
+            IList<IFilterItem>? filters = null,
             IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(ModifyCounter)}", validators ?? new List<Validator>())
         {
             CountersToModify = countersToModify;
             Change = change;
             Amount = amount;
             Location = location ?? Location.Inherited;
-            FilterFlags = filterFlags ?? new List<Flag>();
+            Filters = filters ?? new List<IFilterItem>();
         }
         
         /// <summary>
@@ -32,6 +32,6 @@ namespace low_age_data.Domain.Effects
         public Change Change { get; }
         public int Amount { get; }
         public Location Location { get; }
-        public IList<Flag> FilterFlags { get; }
+        public IList<IFilterItem> Filters { get; }
     }
 }

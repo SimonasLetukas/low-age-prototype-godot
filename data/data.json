@@ -246,8 +246,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Biological"
+          "CombatAttribute.Light",
+          "CombatAttribute.Biological"
         ],
         "abilities": [
           "ability-slave-build",
@@ -295,7 +295,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 2,
-            "bonusTo": "CombatAttributes.Biological",
+            "bonusTo": "CombatAttribute.Biological",
             "bonusAmount": 7,
             "maxAmount": 5,
             "hasCurrent": false
@@ -303,8 +303,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Celestial"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Celestial"
         ],
         "abilities": [
           "ability-leader-all-for-one",
@@ -361,7 +361,7 @@
             "attackType": "Attacks.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 6,
-            "bonusTo": "CombatAttributes.Light",
+            "bonusTo": "CombatAttribute.Light",
             "bonusAmount": 2,
             "maxAmount": 3,
             "hasCurrent": false
@@ -369,9 +369,9 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Biological",
-          "CombatAttributes.Ranged"
+          "CombatAttribute.Light",
+          "CombatAttribute.Biological",
+          "CombatAttribute.Ranged"
         ],
         "abilities": [
           "ability-quickdraw-doubleshot",
@@ -418,7 +418,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Biological",
+            "bonusTo": "CombatAttribute.Biological",
             "bonusAmount": 3,
             "maxAmount": 3,
             "hasCurrent": false
@@ -426,8 +426,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Biological"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Biological"
         ],
         "abilities": [
           "ability-gorger-fanatic-suicide",
@@ -474,7 +474,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Armoured",
+            "bonusTo": "CombatAttribute.Armoured",
             "bonusAmount": 4,
             "maxAmount": 6,
             "hasCurrent": false
@@ -482,8 +482,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Biological"
+          "CombatAttribute.Light",
+          "CombatAttribute.Biological"
         ],
         "abilities": [
           "ability-camou-silent-assassin",
@@ -539,7 +539,7 @@
             "attackType": "Attacks.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 4,
-            "bonusTo": "CombatAttributes.Ranged",
+            "bonusTo": "CombatAttribute.Ranged",
             "bonusAmount": 9,
             "maxAmount": 2,
             "hasCurrent": false
@@ -547,9 +547,9 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Biological",
-          "CombatAttributes.Ranged"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Biological",
+          "CombatAttribute.Ranged"
         ],
         "abilities": [
           "ability-shaman-wondrous-goo"
@@ -604,7 +604,7 @@
             "attackType": "Attacks.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 5,
-            "bonusTo": "CombatAttributes.Armoured",
+            "bonusTo": "CombatAttribute.Armoured",
             "bonusAmount": 8,
             "maxAmount": 6,
             "hasCurrent": false
@@ -612,9 +612,9 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Mechanical",
-          "CombatAttributes.Ranged"
+          "CombatAttribute.Light",
+          "CombatAttribute.Mechanical",
+          "CombatAttribute.Ranged"
         ],
         "abilities": [
           "ability-pyre-wall-of-flames",
@@ -661,7 +661,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Giant",
+            "bonusTo": "CombatAttribute.Giant",
             "bonusAmount": 6,
             "maxAmount": 8,
             "hasCurrent": false
@@ -669,8 +669,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Giant",
-          "CombatAttributes.Biological"
+          "CombatAttribute.Giant",
+          "CombatAttribute.Biological"
         ],
         "abilities": [
           "ability-big-bad-bull-unleash-the-rage"
@@ -724,8 +724,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Biological"
+          "CombatAttribute.Light",
+          "CombatAttribute.Biological"
         ],
         "abilities": [
           "ability-mummy-spawn-roach",
@@ -772,7 +772,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Mechanical",
+            "bonusTo": "CombatAttribute.Mechanical",
             "bonusAmount": 4,
             "maxAmount": 6,
             "hasCurrent": false
@@ -780,8 +780,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Biological"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Biological"
         ],
         "abilities": [
           "ability-roach-degrading-carapace",
@@ -836,8 +836,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Celestial"
+          "CombatAttribute.Light",
+          "CombatAttribute.Celestial"
         ],
         "abilities": [
           "ability-parasite-paralysing-grasp"
@@ -888,7 +888,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Armoured",
+            "bonusTo": "CombatAttribute.Armoured",
             "bonusAmount": 4,
             "maxAmount": 9,
             "hasCurrent": false
@@ -896,8 +896,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Biological"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Biological"
         ],
         "abilities": [
           "ability-horrior-expert-formation",
@@ -958,7 +958,7 @@
             "attackType": "Attacks.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 7,
-            "bonusTo": "CombatAttributes.Ranged",
+            "bonusTo": "CombatAttribute.Ranged",
             "bonusAmount": 3,
             "maxAmount": 4,
             "hasCurrent": false
@@ -966,9 +966,9 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Biological",
-          "CombatAttributes.Ranged"
+          "CombatAttribute.Light",
+          "CombatAttribute.Biological",
+          "CombatAttribute.Ranged"
         ],
         "abilities": [
           "ability-marksman-critical-mark"
@@ -1019,7 +1019,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Light",
+            "bonusTo": "CombatAttribute.Light",
             "bonusAmount": 4,
             "maxAmount": 5,
             "hasCurrent": false
@@ -1027,8 +1027,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Biological"
+          "CombatAttribute.Light",
+          "CombatAttribute.Biological"
         ],
         "abilities": [
           "ability-surfer-dismount"
@@ -1088,7 +1088,7 @@
             "attackType": "Attacks.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 5,
-            "bonusTo": "CombatAttributes.Armoured",
+            "bonusTo": "CombatAttribute.Armoured",
             "bonusAmount": 9,
             "maxAmount": 8,
             "hasCurrent": false
@@ -1096,9 +1096,9 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Biological",
-          "CombatAttributes.Ranged"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Biological",
+          "CombatAttribute.Ranged"
         ],
         "abilities": [
           "ability-mortar-deadly-ammunition",
@@ -1151,7 +1151,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Celestial",
+            "bonusTo": "CombatAttribute.Celestial",
             "bonusAmount": 3,
             "maxAmount": 3,
             "hasCurrent": false
@@ -1159,8 +1159,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Biological"
+          "CombatAttribute.Light",
+          "CombatAttribute.Biological"
         ],
         "abilities": [
           "ability-hawk-tactical-goggles",
@@ -1213,7 +1213,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Mechanical",
+            "bonusTo": "CombatAttribute.Mechanical",
             "bonusAmount": 5,
             "maxAmount": 1,
             "hasCurrent": false
@@ -1221,8 +1221,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Biological"
+          "CombatAttribute.Light",
+          "CombatAttribute.Biological"
         ],
         "abilities": [
           "ability-engineer-assemble-machine",
@@ -1275,7 +1275,7 @@
             "attackType": "Attacks.Ranged",
             "minimumDistance": 1,
             "maximumDistance": 10,
-            "bonusTo": "CombatAttributes.Structure",
+            "bonusTo": "CombatAttribute.Structure",
             "bonusAmount": 20,
             "maxAmount": 20,
             "hasCurrent": false
@@ -1283,9 +1283,9 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Mechanical",
-          "CombatAttributes.Ranged"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Mechanical",
+          "CombatAttribute.Ranged"
         ],
         "abilities": [
           "ability-cannon-assembling",
@@ -1338,7 +1338,7 @@
             "attackType": "Attacks.Ranged",
             "minimumDistance": 1,
             "maximumDistance": 9,
-            "bonusTo": "CombatAttributes.Giant",
+            "bonusTo": "CombatAttribute.Giant",
             "bonusAmount": 6,
             "maxAmount": 9,
             "hasCurrent": false
@@ -1346,9 +1346,9 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Mechanical",
-          "CombatAttributes.Ranged"
+          "CombatAttribute.Light",
+          "CombatAttribute.Mechanical",
+          "CombatAttribute.Ranged"
         ],
         "abilities": [
           "ability-ballista-assembling",
@@ -1401,8 +1401,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Mechanical"
+          "CombatAttribute.Light",
+          "CombatAttribute.Mechanical"
         ],
         "abilities": [
           "ability-radar-assembling",
@@ -1457,7 +1457,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Mechanical",
+            "bonusTo": "CombatAttribute.Mechanical",
             "bonusAmount": 8,
             "maxAmount": 2,
             "hasCurrent": false
@@ -1465,8 +1465,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Giant",
-          "CombatAttributes.Mechanical"
+          "CombatAttribute.Giant",
+          "CombatAttribute.Mechanical"
         ],
         "abilities": [
           "ability-vessel-machine",
@@ -1519,7 +1519,7 @@
             "attackType": "Attacks.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
-            "bonusTo": "CombatAttributes.Biological",
+            "bonusTo": "CombatAttribute.Biological",
             "bonusAmount": 10,
             "maxAmount": 10,
             "hasCurrent": false
@@ -1528,7 +1528,7 @@
             "attackType": "Attacks.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 4,
-            "bonusTo": "CombatAttributes.Biological",
+            "bonusTo": "CombatAttribute.Biological",
             "bonusAmount": 5,
             "maxAmount": 5,
             "hasCurrent": false
@@ -1536,8 +1536,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Celestial",
-          "CombatAttributes.Ranged"
+          "CombatAttribute.Celestial",
+          "CombatAttribute.Ranged"
         ],
         "abilities": [
           "ability-omen-rendition"
@@ -1632,8 +1632,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Light",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-hut-building",
@@ -1687,8 +1687,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-obelisk-building",
@@ -1743,8 +1743,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Light",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-revelators-building",
@@ -1798,8 +1798,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-revelators-building",
@@ -1853,8 +1853,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-revelators-building",
@@ -1908,8 +1908,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-revelators-building",
@@ -1963,8 +1963,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-revelators-building",
@@ -2018,8 +2018,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-revelators-building",
@@ -2073,8 +2073,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-revelators-building",
@@ -2129,8 +2129,8 @@
         ],
         "originalFaction": "faction-revelators",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Light",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-revelators-building",
@@ -2191,8 +2191,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-power-generator",
@@ -2254,8 +2254,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-power-generator",
@@ -2318,8 +2318,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-power-generator",
@@ -2382,8 +2382,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Light",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-collector-building",
@@ -2443,8 +2443,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-extractor-building",
@@ -2504,8 +2504,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Light",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Light",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-building",
@@ -2567,8 +2567,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-building",
@@ -2628,8 +2628,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-building",
@@ -2689,8 +2689,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-building",
@@ -2750,8 +2750,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-building",
@@ -2811,8 +2811,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-building",
@@ -2872,8 +2872,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-wall-building",
@@ -2933,8 +2933,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-building",
@@ -2994,8 +2994,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-building",
@@ -3057,8 +3057,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-building",
@@ -3118,8 +3118,8 @@
         ],
         "originalFaction": "faction-uee",
         "combatAttributes": [
-          "CombatAttributes.Armoured",
-          "CombatAttributes.Structure"
+          "CombatAttribute.Armoured",
+          "CombatAttribute.Structure"
         ],
         "abilities": [
           "ability-shared-uee-building",
@@ -3135,7 +3135,10 @@
         "name": "feature-shaman-wondrous-goo",
         "onCollisionEffect": "effect-shaman-wondrous-goo-search",
         "collisionFilters": [
-          "Flag.FilterUnit"
+          {
+            "type": "SpecificFlag",
+            "value": "FilterFlag.Unit"
+          }
         ],
         "periodicEffect": null,
         "size": 1,
@@ -3165,7 +3168,10 @@
         "name": "feature-pyre-flames",
         "onCollisionEffect": "effect-pyre-wall-of-flames-damage",
         "collisionFilters": [
-          "Flag.FilterUnit"
+          {
+            "type": "SpecificFlag",
+            "value": "FilterFlag.Unit"
+          }
         ],
         "periodicEffect": null,
         "size": 1,
@@ -6288,11 +6294,30 @@
         "SearchFlag.AppliedOnEnter",
         "SearchFlag.RemovedOnExit"
       ],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-shared-high-ground-apply-behaviour"
@@ -6308,7 +6333,7 @@
         "behaviour-shared-high-ground-buff"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6320,7 +6345,7 @@
         "behaviour-shared-passive-income-income"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6332,7 +6357,7 @@
         "behaviour-shared-scraps-income-income"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6344,7 +6369,7 @@
         "behaviour-shared-celestium-income-income"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6356,9 +6381,22 @@
         "type": "Shape.Map"
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-shared-revelators-no-population-space-apply-behaviour"
@@ -6374,7 +6412,7 @@
         "behaviour-shared-revelators-no-population-space-intercept-damage"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6386,7 +6424,7 @@
         "behaviour-shared-uee-power-generator-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6394,8 +6432,11 @@
     {
       "name": "effect-shared-uee-power-generator-modify-player",
       "type": "Effect.ModifyPlayer",
-      "playerFilterFlags": [
-        "Flag.FilterSelf"
+      "playerFilters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Self"
+        }
       ],
       "modifyFlags": [
         "ModifyPlayerFlag.GameLost"
@@ -6410,7 +6451,7 @@
         "behaviour-shared-uee-power-dependency-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6423,19 +6464,19 @@
         "flat": 5,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": true,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -6445,7 +6486,7 @@
         "behaviour-shared-uee-power-dependency-buff-disable"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6457,7 +6498,7 @@
         "behaviour-shared-uee-power-dependency-buff-inactive"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6469,9 +6510,15 @@
         "type": "Shape.Map"
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterUnit",
-        "Flag.FilterPlayer"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Player"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-shared-uee-positive-faith-apply-behaviour"
@@ -6487,7 +6534,7 @@
         "behaviour-shared-uee-positive-faith-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6499,7 +6546,7 @@
         "behaviour-citadel-executive-stash-income"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6511,7 +6558,7 @@
         "behaviour-citadel-ascendable-ascendable"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6523,7 +6570,7 @@
         "behaviour-citadel-high-ground-high-ground"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6537,11 +6584,30 @@
         "ignoreRadius": 1
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-obelisk-celestium-discharge-apply-behaviour-long"
@@ -6557,7 +6623,7 @@
         "behaviour-obelisk-celestium-discharge-buff-long"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6569,7 +6635,7 @@
         "behaviour-obelisk-celestium-discharge-buff-negative"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6583,11 +6649,30 @@
         "ignoreRadius": 0
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-obelisk-celestium-discharge-apply-behaviour-short"
@@ -6603,7 +6688,7 @@
         "behaviour-obelisk-celestium-discharge-buff-short"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6615,7 +6700,7 @@
         "behaviour-shack-accommodation-income"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6627,7 +6712,7 @@
         "behaviour-smith-melee-weapon-production-income"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6639,7 +6724,7 @@
         "behaviour-fletcher-ranged-weapon-production-income"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6651,7 +6736,7 @@
         "behaviour-alchemy-special-weapon-production-income"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6663,7 +6748,7 @@
         "behaviour-depot-weapon-storage-income"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6675,7 +6760,7 @@
         "behaviour-outpost-ascendable-ascendable"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6687,7 +6772,7 @@
         "behaviour-outpost-high-ground-high-ground"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6715,11 +6800,30 @@
         "SearchFlag.AppliedOnActionPhaseStart",
         "SearchFlag.RemovedOnExit"
       ],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-barricade-protective-shield-apply-behaviour"
@@ -6735,7 +6839,7 @@
         "behaviour-barricade-protective-shield-buff"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6761,11 +6865,30 @@
       "searchFlags": [
         "SearchFlag.AppliedOnActionPhaseStart"
       ],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-barricade-caltrops-damage"
@@ -6782,19 +6905,19 @@
         "flat": 5,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -6804,7 +6927,7 @@
         "behaviour-barricade-decompose-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6816,7 +6939,7 @@
         "behaviour-barricade-decompose-buff"
       ],
       "location": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
@@ -6829,19 +6952,19 @@
         "flat": 15,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Self",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -6851,7 +6974,7 @@
         "behaviour-battery-core-power-grid-mask-provider"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6863,7 +6986,7 @@
         "behaviour-battery-core-fusion-core-upgrade-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6899,7 +7022,7 @@
         "behaviour-fusion-core-power-grid-mask-provider"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6912,21 +7035,27 @@
         "flat": 3,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Actor",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "validators": []
     },
@@ -6937,7 +7066,7 @@
         "behaviour-fusion-core-celestium-core-upgrade-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6973,7 +7102,7 @@
         "behaviour-celestium-core-power-grid-mask-provider"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -6986,21 +7115,27 @@
         "flat": 4,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Actor",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "validators": []
     },
@@ -7020,7 +7155,7 @@
         "behaviour-collector-direct-transit-system-inactive-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7032,7 +7167,7 @@
         "behaviour-collector-direct-transit-system-active-income"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7044,7 +7179,7 @@
         "behaviour-extractor-reinforced-infrastructure-inactive-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7056,7 +7191,7 @@
         "behaviour-extractor-reinforced-infrastructure-active-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7068,7 +7203,7 @@
         "behaviour-power-pole-power-grid-mask-provider"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7084,12 +7219,41 @@
       "searchFlags": [
         "SearchFlag.AppliedOnPlanningPhaseStart"
       ],
-      "filterFlags": [
-        "Flag.FilterAlly",
-        "Flag.FilterUnit",
-        "Flag.FilterStructure",
-        "Flag.FilterPlayer",
-        "Flag.FilterSpecificFactionUee"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Unit"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Structure"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFaction",
+          "value": "faction-uee"
+        }
       ],
       "effects": [
         "effect-power-pole-excess-distribution-apply-behaviour"
@@ -7105,7 +7269,7 @@
         "behaviour-power-pole-excess-distribution-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7131,7 +7295,7 @@
         "behaviour-power-pole-power-grid-improved-mask-provider"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7147,12 +7311,41 @@
       "searchFlags": [
         "SearchFlag.AppliedOnPlanningPhaseStart"
       ],
-      "filterFlags": [
-        "Flag.FilterAlly",
-        "Flag.FilterUnit",
-        "Flag.FilterStructure",
-        "Flag.FilterPlayer",
-        "Flag.FilterSpecificFactionUee"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Unit"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Structure"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFaction",
+          "value": "faction-uee"
+        }
       ],
       "effects": [
         "effect-power-pole-excess-distribution-apply-behaviour"
@@ -7172,10 +7365,26 @@
       "searchFlags": [
         "SearchFlag.AppliedOnActionPhaseStart"
       ],
-      "filterFlags": [
-        "Flag.FilterAlly",
-        "Flag.FilterUnit",
-        "Flag.FilterPlayer"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-temple-keeping-the-faith-apply-behaviour-buff"
@@ -7191,7 +7400,7 @@
         "behaviour-temple-keeping-the-faith-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7203,7 +7412,7 @@
         "behaviour-temple-keeping-the-faith-income"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7215,7 +7424,7 @@
         "behaviour-wall-high-ground-high-ground"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7227,7 +7436,7 @@
         "behaviour-stairs-ascendable-ascendable"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7239,7 +7448,7 @@
         "behaviour-gate-high-ground-high-ground"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7251,7 +7460,7 @@
         "behaviour-gate-ascendable-ascendable"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7263,7 +7472,7 @@
         "behaviour-gate-entrance-movement-block"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7280,11 +7489,30 @@
         "SearchFlag.AppliedOnEnter",
         "SearchFlag.RemovedOnExit"
       ],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-watchtower-vantage-point-apply-behaviour"
@@ -7300,7 +7528,7 @@
         "behaviour-watchtower-vantage-point-buff"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7317,11 +7545,30 @@
         "SearchFlag.AppliedOnEnter",
         "SearchFlag.RemovedOnExit"
       ],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-bastion-battlement-apply-behaviour"
@@ -7337,7 +7584,7 @@
         "behaviour-bastion-battlement-buff"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7349,7 +7596,7 @@
         "behaviour-leader-all-for-one-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7357,8 +7604,11 @@
     {
       "name": "effect-leader-all-for-one-modify-player",
       "type": "Effect.ModifyPlayer",
-      "playerFilterFlags": [
-        "Flag.FilterSelf"
+      "playerFilters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Self"
+        }
       ],
       "modifyFlags": [
         "ModifyPlayerFlag.GameLost"
@@ -7379,11 +7629,30 @@
         "SearchFlag.AppliedOnSourceAction",
         "SearchFlag.RemovedOnExit"
       ],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-leader-menacing-presence-apply-behaviour"
@@ -7399,7 +7668,7 @@
         "behaviour-leader-menacing-presence-buff"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7411,11 +7680,26 @@
         "behaviour-leader-one-for-all-obelisk-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterStructure",
-        "Flag.FilterSpecificStructureObelisk"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificEntity",
+          "value": "structure-obelisk"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -7430,7 +7714,7 @@
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -7441,10 +7725,26 @@
         "type": "Shape.Map"
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-leader-one-for-all-apply-behaviour-heal"
@@ -7460,7 +7760,7 @@
         "behaviour-leader-one-for-all-heal-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7472,10 +7772,26 @@
         "behaviour-slave-repair-structure-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterStructure"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Structure"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -7488,7 +7804,7 @@
               "conditionFlag": "ConditionFlag.TargetDoesNotHaveFullHealth"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -7499,7 +7815,7 @@
         "behaviour-slave-repair-wait"
       ],
       "target": "Location.Origin",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7511,11 +7827,26 @@
         "behaviour-slave-manual-labour-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterStructure",
-        "Flag.FilterSpecificStructureHut"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificEntity",
+          "value": "structure-hut"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -7530,7 +7861,7 @@
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -7541,7 +7872,7 @@
         "behaviour-slave-manual-labour-wait"
       ],
       "target": "Location.Origin",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7549,8 +7880,11 @@
     {
       "name": "effect-slave-manual-labour-modify-player",
       "type": "Effect.ModifyPlayer",
-      "playerFilterFlags": [
-        "Flag.FilterSelf"
+      "playerFilters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Self"
+        }
       ],
       "modifyFlags": [],
       "resourceModifications": [
@@ -7570,9 +7904,7 @@
         "behaviour-quickdraw-doubleshot-extra-attack"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7584,9 +7916,15 @@
         "behaviour-quickdraw-cripple-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -7599,9 +7937,7 @@
         "behaviour-gorger-fanatic-suicide-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7622,12 +7958,41 @@
         "ignoreRadius": -1
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit",
-        "Flag.FilterStructure"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Unit"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Structure"
+            }
+          ]
+        }
       ],
       "effects": [
         "effect-gorger-fanatic-suicide-damage"
@@ -7644,19 +8009,19 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -7667,9 +8032,15 @@
         "flat": 0,
         "multiplier": 0.5,
         "multiplierOf": "AmountFlag.FromMissingHealth",
-        "multiplierFlags": [
-          "Flag.FilterEnemy",
-          "Flag.FilterUnit"
+        "multiplierFilters": [
+          {
+            "type": "SpecificFlag",
+            "value": "FilterFlag.Enemy"
+          },
+          {
+            "type": "SpecificFlag",
+            "value": "FilterFlag.Unit"
+          }
         ]
       },
       "bonusTo": null,
@@ -7677,12 +8048,12 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": [
         {
           "searchEffect": "effect-camou-silent-assassin-search-friendly",
@@ -7693,7 +8064,7 @@
               "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -7704,9 +8075,15 @@
         "behaviour-camou-silent-assassin-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -7720,7 +8097,7 @@
               "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
             }
           ],
-          "filterFlags": []
+          "filters": []
         },
         {
           "searchEffect": "effect-camou-silent-assassin-search-enemy",
@@ -7731,7 +8108,7 @@
               "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -7744,10 +8121,26 @@
         "ignoreRadius": -1
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterUnit",
-        "Flag.FilterAlly"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [],
       "location": "Location.Origin",
@@ -7763,9 +8156,15 @@
         "ignoreRadius": -1
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterUnit",
-        "Flag.FilterEnemy"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [],
       "location": "Location.Actor",
@@ -7785,7 +8184,7 @@
               "conditionFlag": "ConditionFlag.TargetIsHighGround"
             }
           ],
-          "filterFlags": []
+          "filters": []
         },
         {
           "type": "Validator",
@@ -7795,7 +8194,7 @@
               "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -7806,9 +8205,7 @@
         "behaviour-camou-climb-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7835,11 +8232,30 @@
         "SearchFlag.AppliedOnEveryAction",
         "SearchFlag.AppliedOnEnter"
       ],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-shaman-wondrous-goo-apply-behaviour"
@@ -7855,7 +8271,7 @@
         "behaviour-shaman-wondrous-goo-buff"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7875,19 +8291,19 @@
         "flat": 1,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -7924,19 +8340,19 @@
         "flat": 5,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -7946,9 +8362,7 @@
         "behaviour-pyre-phantom-menace-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -7962,11 +8376,30 @@
         "ignoreLength": -1
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-big-bad-bull-unleash-the-rage-damage",
@@ -7984,19 +8417,19 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -8017,19 +8450,19 @@
         "flat": 5,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -8054,9 +8487,7 @@
         "behaviour-roach-degrading-carapace-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8068,9 +8499,7 @@
         "behaviour-roach-degrading-carapace-periodic-damage-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8083,19 +8512,19 @@
         "flat": 1,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -8106,22 +8535,38 @@
         "flat": 6,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
-      "bonusTo": "CombatAttributes.Mechanical",
+      "bonusTo": "CombatAttribute.Mechanical",
       "bonusAmount": {
         "flat": 8,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Actor",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterStructure",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Structure"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Unit"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        }
       ],
       "validators": []
     },
@@ -8132,9 +8577,15 @@
         "behaviour-parasite-paralysing-grasp-tether"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8149,7 +8600,7 @@
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -8160,9 +8611,15 @@
         "behaviour-parasite-paralysing-grasp-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8177,7 +8634,7 @@
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -8188,8 +8645,11 @@
         "behaviour-parasite-paralysing-grasp-self-buff"
       ],
       "target": "Location.Source",
-      "filterFlags": [
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8204,7 +8664,7 @@
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -8221,11 +8681,26 @@
         "SearchFlag.AppliedOnEveryAction",
         "SearchFlag.RemovedOnExit"
       ],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit",
-        "Flag.FilterSpecificUnitHorrior"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificEntity",
+          "value": "unit-horrior"
+        }
       ],
       "effects": [
         "effect-horrior-expert-formation-apply-behaviour"
@@ -8241,7 +8716,7 @@
         "behaviour-horrior-expert-formation-buff"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8253,9 +8728,7 @@
         "behaviour-horrior-mount-wait"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8282,9 +8755,15 @@
         "behaviour-marksman-critical-mark-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8298,21 +8777,27 @@
         "flat": 5,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Self",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "validators": []
     },
@@ -8323,9 +8808,7 @@
         "behaviour-surfer-dismount-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8345,10 +8828,7 @@
         "behaviour-mortar-deadly-ammunition-ammunition"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8362,11 +8842,30 @@
         "ignoreRadius": 0
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-mortar-deadly-ammunition-damage"
@@ -8383,19 +8882,19 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -8405,10 +8904,7 @@
         "behaviour-mortar-reload-wait"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8427,10 +8923,7 @@
         "behaviour-mortar-piercing-blast-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8442,10 +8935,7 @@
         "behaviour-hawk-tactical-goggles-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8457,11 +8947,30 @@
         "behaviour-hawk-leadership-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit",
-        "Flag.FilterAttributeRanged"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        },
+        {
+          "type": "SpecificCombatAttribute",
+          "value": "CombatAttribute.Ranged"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8474,10 +8983,7 @@
         "behaviour-hawk-health-kit-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8491,10 +8997,26 @@
         "ignoreRadius": 0
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-hawk-health-kit-heal-apply-behaviour"
@@ -8510,7 +9032,7 @@
         "behaviour-hawk-health-kit-heal-buff"
       ],
       "target": "Location.Inherited",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8522,12 +9044,34 @@
         "behaviour-engineer-operate-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterUnit",
-        "Flag.FilterSpecificUnitCannon",
-        "Flag.FilterSpecificUnitBallista",
-        "Flag.FilterSpecificUnitRadar",
-        "Flag.FilterSpecificUnitVessel"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificEntity",
+              "value": "unit-cannon"
+            },
+            {
+              "type": "SpecificEntity",
+              "value": "unit-ballista"
+            },
+            {
+              "type": "SpecificEntity",
+              "value": "unit-radar"
+            },
+            {
+              "type": "SpecificEntity",
+              "value": "unit-vessel"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8542,7 +9086,7 @@
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
-          "filterFlags": []
+          "filters": []
         },
         {
           "type": "Validator",
@@ -8554,7 +9098,7 @@
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
-          "filterFlags": []
+          "filters": []
         },
         {
           "type": "Validator",
@@ -8566,7 +9110,7 @@
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -8582,9 +9126,7 @@
       "change": "Change.AddCurrent",
       "amount": 1,
       "location": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf"
-      ],
+      "filters": [],
       "validators": []
     },
     {
@@ -8601,10 +9143,26 @@
         "behaviour-engineer-repair-structure-or-machine-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterStructure"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Structure"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8617,7 +9175,7 @@
               "conditionFlag": "ConditionFlag.TargetDoesNotHaveFullHealth"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -8628,14 +9186,49 @@
         "behaviour-engineer-repair-structure-or-machine-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit",
-        "Flag.FilterSpecificUnitCannon",
-        "Flag.FilterSpecificUnitBallista",
-        "Flag.FilterSpecificUnitRadar",
-        "Flag.FilterSpecificUnitVessel"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificEntity",
+              "value": "unit-cannon"
+            },
+            {
+              "type": "SpecificEntity",
+              "value": "unit-ballista"
+            },
+            {
+              "type": "SpecificEntity",
+              "value": "unit-radar"
+            },
+            {
+              "type": "SpecificEntity",
+              "value": "unit-vessel"
+            }
+          ]
+        },
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8648,7 +9241,7 @@
               "conditionFlag": "ConditionFlag.TargetDoesNotHaveFullHealth"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -8659,11 +9252,26 @@
         "behaviour-engineer-repair-horrior-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit",
-        "Flag.FilterSpecificUnitHorrior"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificEntity",
+          "value": "unit-horrior"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8678,7 +9286,7 @@
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -8689,7 +9297,7 @@
         "behaviour-engineer-repair-wait"
       ],
       "target": "Location.Origin",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8702,10 +9310,7 @@
         "behaviour-cannon-machine-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8717,10 +9322,7 @@
         "behaviour-cannon-machine-buff"
       ],
       "location": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
@@ -8742,10 +9344,26 @@
         "behaviour-cannon-heat-up-wait"
       ],
       "target": "Location.Origin",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8760,11 +9378,30 @@
         "ignoreRadius": -1
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-cannon-heat-up-damage"
@@ -8781,19 +9418,19 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     },
     {
@@ -8810,10 +9447,26 @@
         "behaviour-cannon-heat-up-wait"
       ],
       "location": "Location.Origin",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "treatAsDeath": false,
       "behaviourOwner": null,
@@ -8827,10 +9480,7 @@
         "behaviour-ballista-machine-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8842,10 +9492,7 @@
         "behaviour-ballista-machine-buff"
       ],
       "location": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
@@ -8858,22 +9505,38 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Actor",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterStructure",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Structure"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Unit"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        }
       ],
       "validators": [
         {
@@ -8886,7 +9549,7 @@
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -8897,10 +9560,26 @@
         "behaviour-ballista-aim-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterStructure",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Structure"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Unit"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        }
       ],
       "behaviourOwner": "Location.Origin",
       "waitForInitialEffects": false,
@@ -8915,9 +9594,15 @@
         "ignoreRadius": -1
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterOrigin",
-        "Flag.FilterSpecificUnitBallista"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Origin"
+        },
+        {
+          "type": "SpecificEntity",
+          "value": "unit-ballista"
+        }
       ],
       "effects": [],
       "location": "Location.Self",
@@ -8932,10 +9617,7 @@
         "behaviour-radar-machine-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8947,10 +9629,7 @@
         "behaviour-radar-machine-buff"
       ],
       "location": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
@@ -8979,7 +9658,7 @@
         "behaviour-radar-radio-location-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -8991,8 +9670,11 @@
         "type": "Shape.Map"
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterSpecificFeatureRadarRedDot"
+      "filters": [
+        {
+          "type": "SpecificEntity",
+          "value": "feature-radar-red-dot"
+        }
       ],
       "effects": [
         "effect-radar-radio-location-destroy"
@@ -9017,7 +9699,7 @@
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ]
     },
@@ -9030,9 +9712,15 @@
         "ignoreRadius": 0
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-radar-radio-location-create-entity"
@@ -9059,10 +9747,7 @@
         "behaviour-vessel-machine-buff"
       ],
       "target": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
       "validators": []
@@ -9074,10 +9759,7 @@
         "behaviour-vessel-machine-buff"
       ],
       "location": "Location.Self",
-      "filterFlags": [
-        "Flag.FilterSelf",
-        "Flag.FilterUnit"
-      ],
+      "filters": [],
       "treatAsDeath": false,
       "behaviourOwner": null,
       "validators": []
@@ -9094,10 +9776,26 @@
         "SearchFlag.AppliedOnEnter",
         "SearchFlag.RemovedOnExit"
       ],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-vessel-absorbent-field-apply-behaviour"
@@ -9113,10 +9811,26 @@
         "behaviour-vessel-absorbent-field-intercept-damage"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": "Location.Origin",
       "waitForInitialEffects": false,
@@ -9151,10 +9865,26 @@
         "SearchFlag.AppliedOnEnter",
         "SearchFlag.RemovedOnExit"
       ],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-vessel-fortify-apply-behaviour"
@@ -9170,10 +9900,26 @@
         "behaviour-vessel-fortify-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -9186,9 +9932,15 @@
         "behaviour-omen-rendition-placement-buff"
       ],
       "target": "Location.Actor",
-      "filterFlags": [
-        "Flag.FilterEnemy",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": true,
@@ -9230,10 +9982,26 @@
         "ignoreRadius": -1
       },
       "searchFlags": [],
-      "filterFlags": [
-        "Flag.FilterPlayer",
-        "Flag.FilterAlly",
-        "Flag.FilterUnit"
+      "filters": [
+        {
+          "type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "items": [
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            }
+          ]
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "effects": [
         "effect-omen-rendition-damage",
@@ -9251,19 +10019,19 @@
         "flat": 10,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
-      "filterFlags": [],
+      "filters": [],
       "validators": []
     }
   ],
@@ -9400,7 +10168,7 @@
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ],
       "maximumHelpers": -1,
@@ -9426,7 +10194,7 @@
         "flat": 0,
         "multiplier": 2.0,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "damageTypeDealtInstead": null,
       "shareWith": null,
@@ -9457,7 +10225,7 @@
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
-          "filterFlags": []
+          "filters": []
         },
         {
           "type": "Validator",
@@ -9468,7 +10236,7 @@
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ],
       "maximumHelpers": -1,
@@ -9538,7 +10306,7 @@
                   "conditionFlag": "ConditionFlag.DoesNotExist"
                 }
               ],
-              "filterFlags": []
+              "filters": []
             }
           ]
         },
@@ -9556,7 +10324,7 @@
                   "conditionFlag": "ConditionFlag.DoesNotExist"
                 }
               ],
-              "filterFlags": []
+              "filters": []
             }
           ]
         }
@@ -9602,7 +10370,7 @@
                   "conditionFlag": "ConditionFlag.Exists"
                 }
               ],
-              "filterFlags": []
+              "filters": []
             }
           ]
         }
@@ -9644,7 +10412,7 @@
                   "conditionFlag": "ConditionFlag.Exists"
                 }
               ],
-              "filterFlags": []
+              "filters": []
             }
           ]
         }
@@ -10158,7 +10926,7 @@
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
-          "filterFlags": []
+          "filters": []
         },
         {
           "type": "Validator",
@@ -10170,7 +10938,7 @@
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ],
       "maximumHelpers": -1,
@@ -10199,7 +10967,7 @@
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
-          "filterFlags": []
+          "filters": []
         },
         {
           "type": "Validator",
@@ -10211,7 +10979,7 @@
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ],
       "maximumHelpers": -1,
@@ -10240,7 +11008,7 @@
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
-          "filterFlags": []
+          "filters": []
         },
         {
           "type": "Validator",
@@ -10251,7 +11019,7 @@
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ],
       "maximumHelpers": -1,
@@ -10392,7 +11160,7 @@
                   "conditionFlag": "ConditionFlag.Exists"
                 }
               ],
-              "filterFlags": []
+              "filters": []
             }
           ]
         }
@@ -10439,7 +11207,7 @@
                   "conditionFlag": "ConditionFlag.DoesNotExist"
                 }
               ],
-              "filterFlags": []
+              "filters": []
             }
           ]
         }
@@ -10481,7 +11249,7 @@
                   "conditionFlag": "ConditionFlag.Exists"
                 }
               ],
-              "filterFlags": []
+              "filters": []
             }
           ]
         }
@@ -10530,7 +11298,7 @@
                   "conditionFlag": "ConditionFlag.DoesNotExist"
                 }
               ],
-              "filterFlags": []
+              "filters": []
             }
           ]
         }
@@ -10805,9 +11573,15 @@
           }
         }
       ],
-      "filterFlags": [
-        "Flag.FilterUnit",
-        "Flag.FilterEnemy"
+      "filters": [
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Enemy"
+        },
+        {
+          "type": "SpecificFlag",
+          "value": "FilterFlag.Unit"
+        }
       ],
       "displayName": "Entrance Movement Block",
       "description": "Allows movement through for friendly units and blocks it for enemy units.",
@@ -11009,7 +11783,7 @@
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
-          "filterFlags": []
+          "filters": []
         },
         {
           "type": "Validator",
@@ -11021,7 +11795,7 @@
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ],
       "maximumHelpers": -1,
@@ -11050,7 +11824,7 @@
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
-          "filterFlags": []
+          "filters": []
         },
         {
           "type": "Validator",
@@ -11062,7 +11836,7 @@
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ],
       "maximumHelpers": -1,
@@ -11744,9 +12518,15 @@
                   "conditionFlag": "ConditionFlag.TargetIsDifferentTypeThanOrigin"
                 }
               ],
-              "filterFlags": [
-                "Flag.FilterEnemy",
-                "Flag.FilterUnit"
+              "filters": [
+                {
+                  "type": "SpecificFlag",
+                  "value": "FilterFlag.Enemy"
+                },
+                {
+                  "type": "SpecificFlag",
+                  "value": "FilterFlag.Unit"
+                }
               ]
             }
           ]
@@ -12007,7 +12787,7 @@
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ],
       "maximumHelpers": 3,
@@ -12044,7 +12824,7 @@
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ],
       "maximumHelpers": 1,
@@ -12073,7 +12853,7 @@
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
             }
           ],
-          "filterFlags": []
+          "filters": []
         }
       ],
       "maximumHelpers": 1,
@@ -12394,7 +13174,7 @@
                   "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
                 }
               ],
-              "filterFlags": []
+              "filters": []
             }
           ]
         },
@@ -12600,7 +13380,7 @@
         "flat": 0,
         "multiplier": 0.5,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "damageTypeShared": null,
       "reduceByTheSharedAmount": true,
@@ -12708,7 +13488,7 @@
         "flat": 0,
         "multiplier": 0.5,
         "multiplierOf": null,
-        "multiplierFlags": []
+        "multiplierFilters": []
       },
       "damageTypeShared": "DamageType.Pure",
       "reduceByTheSharedAmount": false,

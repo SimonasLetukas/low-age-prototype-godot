@@ -26,7 +26,7 @@ namespace low_age_data.Domain.Shared.Flags
                 
         /// <summary>
         /// Applies <see cref="Effects.Search"/> after <see cref="Durations.EndsAt"/> (at the end of action
-        /// for the <see cref="Flag.Filter.Source"/> <see cref="Entity"/> -- which issued this
+        /// for the <see cref="FilterFlag.Source"/> <see cref="Entity"/> -- which issued this
         /// <see cref="Passive.PeriodicEffect"/>).
         /// </summary>
         public static SearchFlag AppliedOnSourceAction => new(SearchFlags.AppliedOnSourceAction);

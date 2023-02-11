@@ -3,6 +3,7 @@ using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Flags;
 using System.Collections.Generic;
 using low_age_data.Domain.Entities;
+using low_age_data.Domain.Shared.Filters;
 using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Domain.Effects
@@ -13,7 +14,7 @@ namespace low_age_data.Domain.Effects
             EffectName name,
             Shape shape,
             IList<SearchFlag> searchFlags,
-            IList<Flag> filterFlags,
+            IList<IFilterItem> filters,
             IList<EffectName>? effects = null,
             Location? location = null,
             IList<Validator>? validators = null,
@@ -21,7 +22,7 @@ namespace low_age_data.Domain.Effects
         {
             Shape = shape;
             SearchFlags = searchFlags;
-            FilterFlags = filterFlags;
+            Filters = filters;
             Effects = effects ?? new List<EffectName>();
             Location = location ?? Location.Inherited;
             UsedForValidator = usedForValidator ?? false;
@@ -38,9 +39,9 @@ namespace low_age_data.Domain.Effects
         public IList<SearchFlag> SearchFlags { get; }
         
         /// <summary>
-        /// For <see cref="Flag.Filter"/> flags.
+        /// For <see cref="Shared.Filters"/>.
         /// </summary>
-        public IList<Flag> FilterFlags { get; }
+        public IList<IFilterItem> Filters { get; }
         
         /// <summary>
         /// Effects executed on each <see cref="Entity"/> found.

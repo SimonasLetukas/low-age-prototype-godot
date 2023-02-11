@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Flags;
+using low_age_data.Domain.Shared.Filters;
 
 namespace low_age_data.Domain.Effects
 {
@@ -11,12 +11,12 @@ namespace low_age_data.Domain.Effects
             EffectName name,
             DamageType damageType,
             Amount? amount = null,
-            CombatAttributes? bonusTo = null,
+            CombatAttribute? bonusTo = null,
             Amount? bonusAmount = null,
             Location? location = null,
             bool? ignoresArmor = null,
             bool? ignoresShield = null,
-            IList<Flag>? filterFlags = null,
+            IList<IFilterItem>? filters = null,
             IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(Damage)}", validators ?? new List<Validator>())
         {
             DamageType = damageType;
@@ -26,16 +26,16 @@ namespace low_age_data.Domain.Effects
             Location = location ?? Location.Inherited;
             IgnoresArmor = ignoresArmor ?? false;
             IgnoresShield = ignoresShield ?? false;
-            FilterFlags = filterFlags ?? new List<Flag>();
+            Filters = filters ?? new List<IFilterItem>();
         }
         
         public DamageType DamageType { get; }
         public Amount Amount { get; }
-        public CombatAttributes? BonusTo { get; }
+        public CombatAttribute? BonusTo { get; }
         public Amount BonusAmount { get; }
         public Location Location { get; }
         public bool IgnoresArmor { get; }
         public bool IgnoresShield { get; }
-        public IList<Flag> FilterFlags { get; }
+        public IList<IFilterItem> Filters { get; }
     }
 }

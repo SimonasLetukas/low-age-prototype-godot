@@ -1,9 +1,9 @@
 ﻿using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Flags;
 using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Logic;
+using low_age_data.Domain.Shared.Filters;
 
 namespace low_age_data.Domain.Effects
 {
@@ -13,7 +13,7 @@ namespace low_age_data.Domain.Effects
             EffectName name,
             IList<BehaviourName> behavioursToApply,
             Location? target = null,
-            IList<Flag>? filterFlags = null,
+            IList<IFilterItem>? filters = null,
             Location? behaviourOwner = null,
             bool? waitForInitialEffects = null,
             IList<Validator>? validators = null)
@@ -24,14 +24,14 @@ namespace low_age_data.Domain.Effects
         {
             BehavioursToApply = behavioursToApply;
             Target = target ?? Location.Inherited;
-            FilterFlags = filterFlags ?? new List<Flag>();
+            Filters = filters ?? new List<IFilterItem>();
             BehaviourOwner = behaviourOwner;
             WaitForInitialEffects = waitForInitialEffects ?? false;
         }
 
         public IList<BehaviourName> BehavioursToApply { get; }
         public Location Target { get; }
-        public IList<Flag> FilterFlags { get; }
+        public IList<IFilterItem> Filters { get; }
         
         /// <summary>
         /// If <see cref="Behaviour.OwnerAllowed"/> is true, this property can be used to specify the owner.

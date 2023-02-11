@@ -11,6 +11,7 @@ using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Tiles;
 using low_age_data.Domain.Masks;
 using low_age_data.Domain.Resources;
+using low_age_data.Domain.Shared.Filters;
 using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Collections
@@ -830,10 +831,10 @@ namespace low_age_data.Collections
                         new(start: new Vector2<int>(x: 0, y: 1),
                             size: new Vector2<int>(x: 1, y: 2)),
                     },
-                    filterFlags: new List<Flag>
+                    filters: new List<IFilterItem>
                     {
-                        Flag.Filter.Unit,
-                        Flag.Filter.Enemy
+                        new SpecificFlag(value: FilterFlag.Enemy),
+                        new SpecificFlag(value: FilterFlag.Unit)
                     }),
                 
                 new Buff(
@@ -1491,10 +1492,10 @@ namespace low_age_data.Collections
                                 {
                                     new(conditionFlag: ConditionFlag.TargetIsDifferentTypeThanOrigin)
                                 },
-                                filterFlags: new List<Flag>
+                                filters: new List<IFilterItem>
                                 {
-                                    Flag.Filter.Enemy,
-                                    Flag.Filter.Unit
+                                    new SpecificFlag(value: FilterFlag.Enemy),
+                                    new SpecificFlag(value: FilterFlag.Unit)
                                 })
                         })
                     },

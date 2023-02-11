@@ -5,7 +5,7 @@ using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Tiles;
 using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Flags;
+using low_age_data.Domain.Shared.Filters;
 
 namespace low_age_data.Domain.Entities.Features
 {
@@ -16,7 +16,7 @@ namespace low_age_data.Domain.Entities.Features
             string displayName, 
             string description,
             EffectName? onCollisionEffect = null,
-            IList<Flag>? collisionFilters = null,
+            IList<IFilterItem>? collisionFilters = null,
             EffectName? periodicEffect = null,
             int? size = null,
             bool? canBeAttacked = null,
@@ -26,7 +26,7 @@ namespace low_age_data.Domain.Entities.Features
             bool? onlyOneCanExist = null) : base(name, displayName, description)
         {
             OnCollisionEffect = onCollisionEffect;
-            CollisionFilters = collisionFilters ?? new List<Flag>();
+            CollisionFilters = collisionFilters ?? new List<IFilterItem>();
             PeriodicEffect = periodicEffect;
             Size = size ?? 1;
             CanBeAttacked = canBeAttacked ?? false;
@@ -37,7 +37,7 @@ namespace low_age_data.Domain.Entities.Features
         }
 
         public EffectName? OnCollisionEffect { get; }
-        public IList<Flag> CollisionFilters { get; }
+        public IList<IFilterItem> CollisionFilters { get; }
         
         /// <summary>
         /// Executes effect as often as possible

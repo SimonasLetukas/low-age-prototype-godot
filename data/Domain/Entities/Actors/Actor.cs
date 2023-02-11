@@ -13,7 +13,7 @@ namespace low_age_data.Domain.Entities.Actors
             string description,
             IList<Stat> statistics,
             FactionName originalFaction,
-            IList<CombatAttributes> combatAttributes,
+            IList<CombatAttribute> combatAttributes,
             IList<AbilityName> abilities) : base(name, displayName, description)
         {
             Statistics = statistics;
@@ -24,7 +24,7 @@ namespace low_age_data.Domain.Entities.Actors
 
         public IList<Stat> Statistics { get; }
         public FactionName OriginalFaction { get; }
-        public IList<CombatAttributes> CombatAttributes { get; }
+        public IList<CombatAttribute> CombatAttributes { get; }
         public IList<AbilityName> Abilities { get; }
     }
 }

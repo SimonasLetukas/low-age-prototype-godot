@@ -2,7 +2,7 @@
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Logic;
 using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Flags;
+using low_age_data.Domain.Shared.Filters;
 
 namespace low_age_data.Domain.Effects
 {
@@ -12,7 +12,7 @@ namespace low_age_data.Domain.Effects
             EffectName name,
             IList<BehaviourName> behavioursToRemove,
             Location? location = null,
-            IList<Flag>? filterFlags = null,
+            IList<IFilterItem>? filters = null,
             bool? treatAsDeath = null,
             Location? behaviourOwner = null,
             IList<Validator>? validators = null) 
@@ -23,14 +23,14 @@ namespace low_age_data.Domain.Effects
         {
             BehavioursToRemove = behavioursToRemove;
             Location = location ?? Location.Inherited;
-            FilterFlags = filterFlags ?? new List<Flag>();
+            Filters = filters ?? new List<IFilterItem>();
             TreatAsDeath = treatAsDeath ?? false;
             BehaviourOwner = behaviourOwner;
         }
 
         public IList<BehaviourName> BehavioursToRemove { get; }
         public Location Location { get; }
-        public IList<Flag> FilterFlags { get; }
+        public IList<IFilterItem> Filters { get; }
         
         /// <summary>
         /// If true, each <see cref="BehavioursToRemove"/> trigger their on-death functionalities (e.g.

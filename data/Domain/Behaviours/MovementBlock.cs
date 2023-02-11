@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
-using low_age_data.Domain.Shared.Flags;
+using low_age_data.Domain.Shared.Filters;
 
 namespace low_age_data.Domain.Behaviours
 {
@@ -18,7 +18,7 @@ namespace low_age_data.Domain.Behaviours
             string displayName, 
             string description,
             IList<Area> blockedAreas,
-            IList<Flag> filterFlags) 
+            IList<IFilterItem> filters) 
             : base(
                 name, 
                 $"{nameof(Behaviour)}.{nameof(MovementBlock)}", 
@@ -31,7 +31,7 @@ namespace low_age_data.Domain.Behaviours
                 ? throw new ArgumentOutOfRangeException(nameof(blockedAreas), 
                     $"Must contain at least one {nameof(blockedAreas)} element")
                 : blockedAreas;
-            FilterFlags = filterFlags;
+            Filters = filters;
         }
         
         /// <summary>
@@ -40,9 +40,9 @@ namespace low_age_data.Domain.Behaviours
         public IList<Area> BlockedAreas { get; }
         
         /// <summary>
-        /// <see cref="Flag.Filter"/> the <see cref="Entity"/>s which should not move through the
+        /// Filter the <see cref="Entity"/>s which should not move through the
         /// <see cref="BlockedAreas"/>.
         /// </summary>
-        public IList<Flag> FilterFlags { get; }
+        public IList<IFilterItem> Filters { get; }
     }
 }

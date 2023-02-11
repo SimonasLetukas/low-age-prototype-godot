@@ -13,7 +13,7 @@ namespace low_age_data.Domain.Entities.Actors.Units
             string description, 
             IList<Stat> statistics, 
             FactionName originalFaction, 
-            IList<CombatAttributes> combatAttributes, 
+            IList<CombatAttribute> combatAttributes, 
             IList<AbilityName> abilities,
             int? size = null) : base(name, displayName, description, statistics, originalFaction, combatAttributes, abilities)
         {

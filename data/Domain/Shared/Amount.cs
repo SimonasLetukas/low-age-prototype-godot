@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Shared.Filters;
 using low_age_data.Domain.Shared.Flags;
 
 namespace low_age_data.Domain.Shared
@@ -9,17 +10,17 @@ namespace low_age_data.Domain.Shared
             int flat, 
             float? multiplier = null, 
             AmountFlag? multiplierOf = null,
-            IList<Flag>? multiplierFlags = null)
+            IList<IFilterItem>? multiplierFilters = null)
         {
             Flat = flat;
             Multiplier = multiplier;
             MultiplierOf = multiplierOf;
-            MultiplierFlags = multiplierFlags ?? new List<Flag>();
+            MultiplierFilters = multiplierFilters ?? new List<IFilterItem>();
         }
 
         public int Flat { get; }
         public float? Multiplier { get; }
         public AmountFlag? MultiplierOf { get; }
-        public IList<Flag> MultiplierFlags { get; }
+        public IList<IFilterItem> MultiplierFilters { get; }
     }
 }

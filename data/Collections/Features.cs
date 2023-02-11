@@ -3,6 +3,7 @@ using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Features;
 using low_age_data.Domain.Shared.Flags;
 using System.Collections.Generic;
+using low_age_data.Domain.Shared.Filters;
 
 namespace low_age_data.Collections
 {
@@ -18,9 +19,9 @@ namespace low_age_data.Collections
                     description: "Any unit in this area is contaminated: has its vision and Attack Distance " +
                                  "reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn.",
                     onCollisionEffect: EffectName.Shaman.WondrousGooSearch,
-                    collisionFilters: new List<Flag>
+                    collisionFilters: new List<IFilterItem>
                     {
-                        Flag.Filter.Unit
+                        new SpecificFlag(value: FilterFlag.Unit)
                     },
                     onlyOneCanExist: true),
 
@@ -38,9 +39,9 @@ namespace low_age_data.Collections
                     displayName: nameof(FeatureName.PyreFlames).CamelCaseToWords(),
                     description: "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
                     onCollisionEffect: EffectName.Pyre.WallOfFlamesDamage,
-                    collisionFilters: new List<Flag>
+                    collisionFilters: new List<IFilterItem>
                     {
-                        Flag.Filter.Unit
+                        new SpecificFlag(value: FilterFlag.Unit)
                     },
                     onlyOneCanExist: true),
 

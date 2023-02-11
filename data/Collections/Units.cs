@@ -32,10 +32,10 @@ namespace low_age_data.Collections
                             maximumDistance: 1)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Biological
+                        CombatAttribute.Light,
+                        CombatAttribute.Biological
                     },
                     abilities: new List<AbilityName>
                     {
@@ -61,14 +61,14 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee, 
                             minimumDistance: 1, 
                             maximumDistance: 2, 
-                            bonusTo: CombatAttributes.Biological, 
+                            bonusTo: CombatAttribute.Biological, 
                             bonusAmount: 7)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Celestial
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Celestial
                     },
                     abilities: new List<AbilityName>
                     {
@@ -99,15 +99,15 @@ namespace low_age_data.Collections
                             attackType: Attacks.Ranged, 
                             minimumDistance: 2,
                             maximumDistance: 6,
-                            bonusTo: CombatAttributes.Light,
+                            bonusTo: CombatAttribute.Light,
                             bonusAmount: 2)
                     },
                     originalFaction: FactionName.Revelators, 
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Biological,
-                        CombatAttributes.Ranged
+                        CombatAttribute.Light,
+                        CombatAttribute.Biological,
+                        CombatAttribute.Ranged
                     },
                     abilities: new List<AbilityName>
                     {
@@ -132,14 +132,14 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
-                            bonusTo: CombatAttributes.Biological,
+                            bonusTo: CombatAttribute.Biological,
                             bonusAmount: 3)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Biological
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Biological
                     },
                     abilities: new List<AbilityName>
                     {
@@ -164,14 +164,14 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
-                            bonusTo: CombatAttributes.Armoured,
+                            bonusTo: CombatAttribute.Armoured,
                             bonusAmount: 4)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Biological
+                        CombatAttribute.Light,
+                        CombatAttribute.Biological
                     },
                     abilities: new List<AbilityName>
                     {
@@ -201,15 +201,15 @@ namespace low_age_data.Collections
                             attackType: Attacks.Ranged,
                             minimumDistance: 2,
                             maximumDistance: 4,
-                            bonusTo: CombatAttributes.Ranged,
+                            bonusTo: CombatAttribute.Ranged,
                             bonusAmount: 9)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Biological,
-                        CombatAttributes.Ranged
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Biological,
+                        CombatAttribute.Ranged
                     },
                     abilities: new List<AbilityName>
                     {
@@ -238,15 +238,15 @@ namespace low_age_data.Collections
                             attackType: Attacks.Ranged,
                             minimumDistance: 2,
                             maximumDistance: 5,
-                            bonusTo: CombatAttributes.Armoured,
+                            bonusTo: CombatAttribute.Armoured,
                             bonusAmount: 8)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Mechanical,
-                        CombatAttributes.Ranged
+                        CombatAttribute.Light,
+                        CombatAttribute.Mechanical,
+                        CombatAttribute.Ranged
                     },
                     abilities: new List<AbilityName>
                     {
@@ -271,14 +271,14 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
-                            bonusTo: CombatAttributes.Giant,
+                            bonusTo: CombatAttribute.Giant,
                             bonusAmount: 6)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Giant,
-                        CombatAttributes.Biological
+                        CombatAttribute.Giant,
+                        CombatAttribute.Biological
                     },
                     abilities: new List<AbilityName>
                     {
@@ -305,10 +305,10 @@ namespace low_age_data.Collections
                             maximumDistance: 1)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Biological
+                        CombatAttribute.Light,
+                        CombatAttribute.Biological
                     },
                     abilities: new List<AbilityName>
                     {
@@ -333,14 +333,14 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
-                            bonusTo: CombatAttributes.Mechanical,
+                            bonusTo: CombatAttribute.Mechanical,
                             bonusAmount: 4)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Biological
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Biological
                     },
                     abilities: new List<AbilityName>
                     {
@@ -367,10 +367,10 @@ namespace low_age_data.Collections
                             maximumDistance: 1)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Celestial
+                        CombatAttribute.Light,
+                        CombatAttribute.Celestial
                     },
                     abilities: new List<AbilityName>
                     {
@@ -395,14 +395,14 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
-                            bonusTo: CombatAttributes.Armoured,
+                            bonusTo: CombatAttribute.Armoured,
                             bonusAmount: 4)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Biological
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Biological
                     },
                     abilities: new List<AbilityName>
                     {
@@ -433,15 +433,15 @@ namespace low_age_data.Collections
                             attackType: Attacks.Ranged, 
                             minimumDistance: 2,
                             maximumDistance: 7,
-                            bonusTo: CombatAttributes.Ranged,
+                            bonusTo: CombatAttribute.Ranged,
                             bonusAmount: 3)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Biological,
-                        CombatAttributes.Ranged
+                        CombatAttribute.Light,
+                        CombatAttribute.Biological,
+                        CombatAttribute.Ranged
                     },
                     abilities: new List<AbilityName>
                     {
@@ -466,14 +466,14 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
-                            bonusTo: CombatAttributes.Light,
+                            bonusTo: CombatAttribute.Light,
                             bonusAmount: 4)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Biological
+                        CombatAttribute.Light,
+                        CombatAttribute.Biological
                     },
                     abilities: new List<AbilityName>
                     {
@@ -503,15 +503,15 @@ namespace low_age_data.Collections
                             attackType: Attacks.Ranged,
                             minimumDistance: 2,
                             maximumDistance: 5,
-                            bonusTo: CombatAttributes.Armoured,
+                            bonusTo: CombatAttribute.Armoured,
                             bonusAmount: 9)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Biological,
-                        CombatAttributes.Ranged
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Biological,
+                        CombatAttribute.Ranged
                     },
                     abilities: new List<AbilityName>
                     {
@@ -538,14 +538,14 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
-                            bonusTo: CombatAttributes.Celestial,
+                            bonusTo: CombatAttribute.Celestial,
                             bonusAmount: 3)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Biological
+                        CombatAttribute.Light,
+                        CombatAttribute.Biological
                     },
                     abilities: new List<AbilityName>
                     {
@@ -572,14 +572,14 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
-                            bonusTo: CombatAttributes.Mechanical,
+                            bonusTo: CombatAttribute.Mechanical,
                             bonusAmount: 5)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Biological
+                        CombatAttribute.Light,
+                        CombatAttribute.Biological
                     },
                     abilities: new List<AbilityName>
                     {
@@ -606,15 +606,15 @@ namespace low_age_data.Collections
                             attackType: Attacks.Ranged,
                             minimumDistance: 1,
                             maximumDistance: 10,
-                            bonusTo: CombatAttributes.Structure,
+                            bonusTo: CombatAttribute.Structure,
                             bonusAmount: 20)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Mechanical,
-                        CombatAttributes.Ranged
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Mechanical,
+                        CombatAttribute.Ranged
                     },
                     abilities: new List<AbilityName>
                     {
@@ -641,15 +641,15 @@ namespace low_age_data.Collections
                             attackType: Attacks.Ranged,
                             minimumDistance: 1,
                             maximumDistance: 9,
-                            bonusTo: CombatAttributes.Giant,
+                            bonusTo: CombatAttribute.Giant,
                             bonusAmount: 6)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Mechanical,
-                        CombatAttributes.Ranged
+                        CombatAttribute.Light,
+                        CombatAttribute.Mechanical,
+                        CombatAttribute.Ranged
                     },
                     abilities: new List<AbilityName>
                     {
@@ -674,10 +674,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Mechanical
+                        CombatAttribute.Light,
+                        CombatAttribute.Mechanical
                     },
                     abilities: new List<AbilityName>
                     {
@@ -706,14 +706,14 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
-                            bonusTo: CombatAttributes.Mechanical,
+                            bonusTo: CombatAttribute.Mechanical,
                             bonusAmount: 8)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Giant,
-                        CombatAttributes.Mechanical
+                        CombatAttribute.Giant,
+                        CombatAttribute.Mechanical
                     },
                     abilities: new List<AbilityName>
                     {
@@ -741,21 +741,21 @@ namespace low_age_data.Collections
                             attackType: Attacks.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
-                            bonusTo: CombatAttributes.Biological,
+                            bonusTo: CombatAttribute.Biological,
                             bonusAmount: 10),
                         new AttackStat(
                             maxAmount: 5,
                             attackType: Attacks.Ranged,
                             minimumDistance: 2,
                             maximumDistance: 4,
-                            bonusTo: CombatAttributes.Biological,
+                            bonusTo: CombatAttribute.Biological,
                             bonusAmount: 5)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Celestial,
-                        CombatAttributes.Ranged
+                        CombatAttribute.Celestial,
+                        CombatAttribute.Ranged
                     },
                     abilities: new List<AbilityName>
                     {

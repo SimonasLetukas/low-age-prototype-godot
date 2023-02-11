@@ -13,7 +13,7 @@ namespace low_age_data.Domain.Entities.Actors.Structures
             string description, 
             IList<Stat> statistics, 
             FactionName originalFaction, 
-            IList<CombatAttributes> combatAttributes, 
+            IList<CombatAttribute> combatAttributes, 
             IList<AbilityName> abilities,
             Vector2<int>? size = null,
             Vector2<int>? centerPoint = null,

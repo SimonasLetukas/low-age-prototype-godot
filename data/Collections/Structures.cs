@@ -22,7 +22,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>(),
+                    combatAttributes: new List<CombatAttribute>(),
                     abilities: new List<AbilityName>
                     {
                         AbilityName.Shared.PassiveIncome,
@@ -50,10 +50,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Structure
+                        CombatAttribute.Light,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -74,10 +74,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -99,10 +99,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Structure
+                        CombatAttribute.Light,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -123,10 +123,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -147,10 +147,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -171,10 +171,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -195,10 +195,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -219,10 +219,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -243,10 +243,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -268,10 +268,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Revelators,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Structure
+                        CombatAttribute.Light,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -295,10 +295,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -323,10 +323,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -352,10 +352,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -381,10 +381,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Structure
+                        CombatAttribute.Light,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -407,10 +407,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -433,10 +433,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Light,
-                        CombatAttributes.Structure
+                        CombatAttribute.Light,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -461,10 +461,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -487,10 +487,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -516,10 +516,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -545,10 +545,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -574,10 +574,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -600,10 +600,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -626,10 +626,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -652,10 +652,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -680,10 +680,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
@@ -706,10 +706,10 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
                     originalFaction: FactionName.Uee,
-                    combatAttributes: new List<CombatAttributes>
+                    combatAttributes: new List<CombatAttribute>
                     {
-                        CombatAttributes.Armoured,
-                        CombatAttributes.Structure
+                        CombatAttribute.Armoured,
+                        CombatAttribute.Structure
                     },
                     abilities: new List<AbilityName>
                     {
