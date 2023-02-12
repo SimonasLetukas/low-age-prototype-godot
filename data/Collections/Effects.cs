@@ -1139,7 +1139,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Camou.SilentAssassinSearchFriendly,
-                    shape: new Circle(radius: 4),
+                    shape: new Circle(radius: 4, ignoreRadius: 0),
                     searchFlags: new List<SearchFlag>(),
                     filters: new List<IFilterItem>
                     {
@@ -1158,7 +1158,7 @@ namespace low_age_data.Collections
 
                 new Search(
                     name: EffectName.Camou.SilentAssassinSearchEnemy,
-                    shape: new Circle(radius: 4),
+                    shape: new Circle(radius: 4, ignoreRadius: 0),
                     searchFlags: new List<SearchFlag>(),
                     filters: new List<IFilterItem>
                     {

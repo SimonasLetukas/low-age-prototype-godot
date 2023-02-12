@@ -26,7 +26,7 @@ namespace low_age_data.Domain.Shared.Flags
         /// <see cref="Entity"/> is itself. <see cref="Self"/> is never included to any of the other
         /// <see cref="Shared.Filters"/>, so it has to be explicitly added as one.
         /// </summary>
-        public static FilterFlag Self => new(FilterFlags.Self); // TODO go through all abilities to see where self could be applied 
+        public static FilterFlag Self => new(FilterFlags.Self);
 
         /// <summary>
         /// <see cref="Entity"/> is owned by the same player.

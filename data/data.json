@@ -8118,7 +8118,7 @@
       "shape": {
         "type": "Shape.Circle",
         "radius": 4,
-        "ignoreRadius": -1
+        "ignoreRadius": 0
       },
       "searchFlags": [],
       "filters": [
@@ -8153,7 +8153,7 @@
       "shape": {
         "type": "Shape.Circle",
         "radius": 4,
-        "ignoreRadius": -1
+        "ignoreRadius": 0
       },
       "searchFlags": [],
       "filters": [
