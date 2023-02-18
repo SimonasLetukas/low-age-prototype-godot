@@ -8,6 +8,6 @@ namespace low_age_data.Domain.Masks
         {
         }
 
-        public static MaskName Power => new($"{nameof(Power)}".ToKebabCase());
+        public static MaskName Power => new MaskName($"{nameof(Power)}".ToKebabCase());
     }
 }

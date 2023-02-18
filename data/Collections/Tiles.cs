@@ -10,35 +10,35 @@ namespace low_age_data.Collections
         {
             return new List<Tile>
             {
-                new(
+                new Tile(
                     name: TileName.Grass,
                     displayName: nameof(TileName.Grass),
                     description: "",
                     terrain: Terrains.Grass,
                     movementCost: 1.0f,
                     allowsBuilding: true),
-                new(
+                new Tile(
                     name: TileName.Mountains,
                     displayName: nameof(TileName.Mountains),
                     description: "",
                     terrain: Terrains.Mountains,
                     movementCost: 0.0f,
                     allowsBuilding: false),
-                new(
+                new Tile(
                     name: TileName.Marsh,
                     displayName: nameof(TileName.Marsh),
                     description: "",
                     terrain: Terrains.Marsh,
                     movementCost: 2.0f,
                     allowsBuilding: false),
-                new(
+                new Tile(
                     name: TileName.Scraps,
                     displayName: nameof(TileName.Scraps),
                     description: "",
                     terrain: Terrains.Scraps,
                     movementCost: 1.0f,
                     allowsBuilding: true),
-                new(
+                new Tile(
                     name: TileName.Celestium,
                     displayName: nameof(TileName.Celestium),
                     description: "",

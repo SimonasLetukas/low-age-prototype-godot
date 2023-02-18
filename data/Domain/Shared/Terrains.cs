@@ -10,11 +10,11 @@ namespace low_age_data.Domain.Shared
             return $"{nameof(Terrains)}.{Value}";
         }
 
-        public static Terrains Grass => new(TerrainsEnum.Grass);
-        public static Terrains Mountains => new(TerrainsEnum.Mountains);
-        public static Terrains Marsh => new(TerrainsEnum.Marsh);
-        public static Terrains Scraps => new(TerrainsEnum.Scraps);
-        public static Terrains Celestium => new(TerrainsEnum.Celestium);
+        public static Terrains Grass => new Terrains(TerrainsEnum.Grass);
+        public static Terrains Mountains => new Terrains(TerrainsEnum.Mountains);
+        public static Terrains Marsh => new Terrains(TerrainsEnum.Marsh);
+        public static Terrains Scraps => new Terrains(TerrainsEnum.Scraps);
+        public static Terrains Celestium => new Terrains(TerrainsEnum.Celestium);
 
         private Terrains(TerrainsEnum @enum)
         {
@@ -25,11 +25,11 @@ namespace low_age_data.Domain.Shared
 
         private enum TerrainsEnum
         {
-            Grass = 0,
-            Mountains = 1,
-            Marsh = 2,
-            Scraps = 3,
-            Celestium = 4
+            Grass,
+            Mountains,
+            Marsh,
+            Scraps,
+            Celestium,
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

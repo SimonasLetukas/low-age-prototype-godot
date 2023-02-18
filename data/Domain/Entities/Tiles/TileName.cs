@@ -6,10 +6,10 @@
         {
         }
 
-        public static TileName Grass => new(nameof(Grass).ToLower());
-        public static TileName Mountains => new(nameof(Mountains).ToLower());
-        public static TileName Marsh => new(nameof(Marsh).ToLower());
-        public static TileName Scraps => new(nameof(Scraps).ToLower());
-        public static TileName Celestium => new(nameof(Celestium).ToLower());
+        public static TileName Grass => new TileName(nameof(Grass).ToLower());
+        public static TileName Mountains => new TileName(nameof(Mountains).ToLower());
+        public static TileName Marsh => new TileName(nameof(Marsh).ToLower());
+        public static TileName Scraps => new TileName(nameof(Scraps).ToLower());
+        public static TileName Celestium => new TileName(nameof(Celestium).ToLower());
     }
 }

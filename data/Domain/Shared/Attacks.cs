@@ -10,8 +10,8 @@ namespace low_age_data.Domain.Shared
             return $"{nameof(Attacks)}.{Value}";
         }
 
-        public static Attacks Melee => new(AttacksEnum.Melee);
-        public static Attacks Ranged => new(AttacksEnum.Ranged);
+        public static Attacks Melee => new Attacks(AttacksEnum.Melee);
+        public static Attacks Ranged => new Attacks(AttacksEnum.Ranged);
 
         private Attacks(AttacksEnum @enum)
         {
@@ -22,8 +22,8 @@ namespace low_age_data.Domain.Shared
 
         private enum AttacksEnum
         {
-            Melee = 0,
-            Ranged = 1
+            Melee,
+            Ranged 
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

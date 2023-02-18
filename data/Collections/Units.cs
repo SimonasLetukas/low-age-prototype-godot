@@ -13,7 +13,7 @@ namespace low_age_data.Collections
         {
             return new List<Unit>
             {
-                new(
+                new Unit(
                     name: UnitName.Slave,
                     displayName: nameof(UnitName.Slave),
                     description: "",
@@ -44,7 +44,7 @@ namespace low_age_data.Collections
                         AbilityName.Slave.ManualLabour
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Leader,
                     displayName: nameof(UnitName.Leader),
                     description: "",
@@ -77,7 +77,7 @@ namespace low_age_data.Collections
                         AbilityName.Leader.OneForAll
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Quickdraw,
                     displayName: nameof(UnitName.Quickdraw),
                     description: "",
@@ -115,7 +115,7 @@ namespace low_age_data.Collections
                         AbilityName.Quickdraw.Cripple
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Gorger,
                     displayName: nameof(UnitName.Gorger),
                     description: "",
@@ -147,7 +147,7 @@ namespace low_age_data.Collections
                         AbilityName.Gorger.FanaticSuicidePassive
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Camou,
                     displayName: nameof(UnitName.Camou),
                     description: "",
@@ -179,7 +179,7 @@ namespace low_age_data.Collections
                         AbilityName.Camou.Climb
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Shaman, 
                     displayName: nameof(UnitName.Shaman),
                     description: "",
@@ -216,7 +216,7 @@ namespace low_age_data.Collections
                         AbilityName.Shaman.WondrousGoo
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Pyre,
                     displayName: nameof(UnitName.Pyre),
                     description: "",
@@ -254,7 +254,7 @@ namespace low_age_data.Collections
                         AbilityName.Pyre.PhantomMenace
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.BigBadBull,
                     displayName: nameof(UnitName.BigBadBull).CamelCaseToWords(),
                     description: "",
@@ -286,7 +286,7 @@ namespace low_age_data.Collections
                     },
                     size: 2),
 
-                new(
+                new Unit(
                     name: UnitName.Mummy,
                     displayName: nameof(UnitName.Mummy),
                     description: "",
@@ -316,7 +316,7 @@ namespace low_age_data.Collections
                         AbilityName.Mummy.LeapOfHunger
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Roach,
                     displayName: nameof(UnitName.Roach),
                     description: "",
@@ -348,7 +348,7 @@ namespace low_age_data.Collections
                         AbilityName.Roach.CorrosiveSpit
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Parasite,
                     displayName: nameof(UnitName.Parasite),
                     description: "",
@@ -377,7 +377,7 @@ namespace low_age_data.Collections
                         AbilityName.Parasite.ParalysingGrasp
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Horrior, 
                     displayName: nameof(UnitName.Horrior),
                     description: "",
@@ -410,7 +410,7 @@ namespace low_age_data.Collections
                         AbilityName.Horrior.Mount
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Marksman,
                     displayName: nameof(UnitName.Marksman),
                     description: "",
@@ -448,7 +448,7 @@ namespace low_age_data.Collections
                         AbilityName.Marksman.CriticalMark
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Surfer,
                     displayName: nameof(UnitName.Surfer),
                     description: "",
@@ -480,7 +480,7 @@ namespace low_age_data.Collections
                         AbilityName.Surfer.Dismount
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Mortar, 
                     displayName: nameof(UnitName.Mortar),
                     description: "",
@@ -520,7 +520,7 @@ namespace low_age_data.Collections
                         AbilityName.Mortar.PiercingBlast
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Hawk,
                     displayName: nameof(UnitName.Hawk),
                     description: "",
@@ -554,7 +554,7 @@ namespace low_age_data.Collections
                         AbilityName.Hawk.HealthKit
                     }),
 
-                new(
+                new Unit(
                     name: UnitName.Engineer,
                     displayName: nameof(UnitName.Engineer),
                     description: "",
@@ -588,7 +588,7 @@ namespace low_age_data.Collections
                         AbilityName.Engineer.Repair
                     }),                
                 
-                new(
+                new Unit(
                     name: UnitName.Cannon,
                     displayName: nameof(UnitName.Cannon),
                     description: "",
@@ -623,7 +623,7 @@ namespace low_age_data.Collections
                         AbilityName.Cannon.HeatUp
                     }),                
                 
-                new(
+                new Unit(
                     name: UnitName.Ballista,
                     displayName: nameof(UnitName.Ballista),
                     description: "",
@@ -659,7 +659,7 @@ namespace low_age_data.Collections
                         AbilityName.Ballista.Aim
                     }),                
                 
-                new(
+                new Unit(
                     name: UnitName.Radar,
                     displayName: nameof(UnitName.Radar),
                     description: "",
@@ -688,7 +688,7 @@ namespace low_age_data.Collections
                         AbilityName.Radar.RadioLocation
                     }),                
                 
-                new(
+                new Unit(
                     name: UnitName.Vessel,
                     displayName: nameof(UnitName.Vessel),
                     description: "",
@@ -723,7 +723,7 @@ namespace low_age_data.Collections
                     },
                     size: 2),                
                 
-                new(
+                new Unit(
                     name: UnitName.Omen,
                     displayName: nameof(UnitName.Omen),
                     description: "",

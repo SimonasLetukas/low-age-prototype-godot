@@ -21,7 +21,7 @@ namespace low_age_data.Domain.Entities.Actors.Structures
             Area? walkableArea = null) : base(name, displayName, description, statistics, originalFaction, combatAttributes, abilities)
         {
             Size = size ?? new Vector2<int>(1, 1);
-            CenterPoint = centerPoint ?? (Size == new Vector2<int>(1, 1)
+            CenterPoint = centerPoint ?? (Size.Equals(new Vector2<int>(1, 1))
                 ? new Vector2<int>(0, 0)
                 : new Vector2<int>(Size.X / 2, Size.Y / 2));
             Destructible = destructible ?? true;

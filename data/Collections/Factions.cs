@@ -15,7 +15,7 @@ namespace low_age_data.Collections
         {
             return new List<Faction>
             {
-                new(name: FactionName.Revelators,
+                new Faction(name: FactionName.Revelators,
                     displayName: nameof(FactionName.Revelators).CamelCaseToWords(),
                     description: "",
                     availableResources: new List<ResourceName>
@@ -34,10 +34,10 @@ namespace low_age_data.Collections
                     },
                     bonusStartingResources: new List<Payment>
                     {
-                        new(resource: ResourceName.MeleeWeapon, amount: 4)
+                        new Payment(resource: ResourceName.MeleeWeapon, amount: 4)
                     }),
 
-                new(name: FactionName.Uee,
+                new Faction(name: FactionName.Uee,
                     displayName: nameof(FactionName.Uee).CamelCaseToWords(),
                     description: "",
                     availableResources: new List<ResourceName>

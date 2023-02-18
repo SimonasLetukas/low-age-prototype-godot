@@ -64,12 +64,5 @@ namespace low_age_data.Common
             }
             return builder.ToString().Trim();
         }
-
-        public static string RemoveWordsFromEnd(this string input, int wordCountToRemove)
-        {
-            var punctuation = input.Where(char.IsPunctuation).Distinct().ToArray();
-            var allWords = input.Split().Select(x => x.Trim(punctuation));
-            return string.Join(" ", allWords.SkipLast(wordCountToRemove));
-        }
     }
 }

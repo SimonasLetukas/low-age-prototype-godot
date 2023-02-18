@@ -333,7 +333,7 @@ namespace low_age_data.Collections
                     name: EffectName.Barricade.ProtectiveShieldSearch,
                     shape: new Custom(areas: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: -1,y: -1), 
+                        new Area(start: new Vector2<int>(x: -1,y: -1), 
                             size: new Vector2<int> (x: 3, y: 2))
                     }),
                     searchFlags: new List<SearchFlag>
@@ -372,7 +372,7 @@ namespace low_age_data.Collections
                     name: EffectName.Barricade.CaltropsSearch,
                     shape: new Custom(areas: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: -1,y: 1), 
+                        new Area(start: new Vector2<int>(x: -1,y: 1), 
                             size: new Vector2<int> (x: 3, y: 2))
                     }),
                     searchFlags: new List<SearchFlag>
@@ -887,7 +887,7 @@ namespace low_age_data.Collections
                     behaviourOwner: null,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.DoesNotExist,
@@ -947,9 +947,9 @@ namespace low_age_data.Collections
                     behaviourOwner: null,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetDoesNotHaveFullHealth)
+                            new Condition(conditionFlag: ConditionFlag.TargetDoesNotHaveFullHealth)
                         })
                     }),
 
@@ -983,7 +983,7 @@ namespace low_age_data.Collections
                     behaviourOwner: null,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.DoesNotExist,
@@ -1008,7 +1008,7 @@ namespace low_age_data.Collections
                     modifyFlags: null,
                     resourceModifications: new List<ResourceModification>
                     {
-                        new(
+                        new ResourceModification(
                             change: Change.AddCurrent,
                             amount: 2.0f,
                             resource: ResourceName.Scraps)
@@ -1103,7 +1103,7 @@ namespace low_age_data.Collections
                             searchEffect: EffectName.Camou.SilentAssassinSearchFriendly,
                             conditions: new List<Condition>
                             {
-                                new(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
+                                new Condition(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
                             })
                     }),
 
@@ -1126,14 +1126,14 @@ namespace low_age_data.Collections
                             searchEffect: EffectName.Camou.SilentAssassinSearchFriendly,
                             conditions: new List<Condition>
                             {
-                                new(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
+                                new Condition(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
                             }),
 
                         new ResultValidator(
                             searchEffect: EffectName.Camou.SilentAssassinSearchEnemy,
                             conditions: new List<Condition>
                             {
-                                new(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
+                                new Condition(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
                             })
                     }),
 
@@ -1173,13 +1173,13 @@ namespace low_age_data.Collections
                     waitBefore: BehaviourName.Camou.ClimbWait,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsHighGround)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsHighGround)
                         }),
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
                         })
                     }),
 
@@ -1377,7 +1377,7 @@ namespace low_age_data.Collections
                     behaviourOwner: null,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.DoesNotExist,
@@ -1400,7 +1400,7 @@ namespace low_age_data.Collections
                     behaviourOwner: null,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.DoesNotExist,
@@ -1422,7 +1422,7 @@ namespace low_age_data.Collections
                     behaviourOwner: null,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.DoesNotExist,
@@ -1664,19 +1664,19 @@ namespace low_age_data.Collections
                     behaviourOwner: null,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Cannon.AssemblingBuildable)
                         }),
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourName.Ballista.AssemblingBuildable)
                         }),
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.DoesNotExist,
@@ -1723,9 +1723,9 @@ namespace low_age_data.Collections
                     behaviourOwner: null,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetDoesNotHaveFullHealth)
+                            new Condition(conditionFlag: ConditionFlag.TargetDoesNotHaveFullHealth)
                         })
                     }),
 
@@ -1761,9 +1761,9 @@ namespace low_age_data.Collections
                     behaviourOwner: null,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetDoesNotHaveFullHealth)
+                            new Condition(conditionFlag: ConditionFlag.TargetDoesNotHaveFullHealth)
                         })
                     }),
 
@@ -1789,7 +1789,7 @@ namespace low_age_data.Collections
                     behaviourOwner: null,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.Exists,
@@ -1939,7 +1939,7 @@ namespace low_age_data.Collections
                     },
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.Exists,
@@ -2037,7 +2037,7 @@ namespace low_age_data.Collections
                     target: Location.Inherited,
                     validators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.Exists,

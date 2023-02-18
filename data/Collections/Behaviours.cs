@@ -52,10 +52,10 @@ namespace low_age_data.Collections
                     description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 3,
                             resource: ResourceName.Scraps),
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 7,
                             resource: ResourceName.Celestium)
                     }),
@@ -66,7 +66,7 @@ namespace low_age_data.Collections
                     description: "At the start of each planning phase provides 5 Scraps.",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 5,
                             resource: ResourceName.Scraps)
                     }),
@@ -78,7 +78,7 @@ namespace low_age_data.Collections
                                  "constructed Obelisk, total minimum of 1).",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 5,
                             resource: ResourceName.Celestium)
                     },
@@ -91,9 +91,9 @@ namespace low_age_data.Collections
                                  "Slaves simultaneously.",
                     placementValidators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
                         })
                     }),
 
@@ -113,11 +113,11 @@ namespace low_age_data.Collections
                     description: "This building can only be placed on the low ground tiles with Power.",
                     placementValidators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new MaskCondition(
                                 conditionFlag: ConditionFlag.Exists, 
@@ -145,12 +145,12 @@ namespace low_age_data.Collections
                     alignment: Alignment.Neutral,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityStartedActionPhase
                         }, validators: new List<Validator> 
                         {
-                            new(conditions: new List<Condition>
+                            new Validator(conditions: new List<Condition>
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.DoesNotExist, 
@@ -158,12 +158,12 @@ namespace low_age_data.Collections
                             })
                         }), 
                         // OR
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityStartedAction
                         }, validators: new List<Validator> 
                         {
-                            new(conditions: new List<Condition>
+                            new Validator(conditions: new List<Condition>
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.DoesNotExist, 
@@ -193,12 +193,12 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityMaskChanged
                         }, validators: new List<Validator> 
                         {
-                            new(conditions: new List<Condition>
+                            new Validator(conditions: new List<Condition>
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.Exists, 
@@ -224,12 +224,12 @@ namespace low_age_data.Collections
                     alignment: Alignment.Neutral,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityMaskChanged
                         }, validators: new List<Validator> 
                         {
-                            new(conditions: new List<Condition>
+                            new Validator(conditions: new List<Condition>
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.Exists, 
@@ -267,10 +267,10 @@ namespace low_age_data.Collections
                     description: "Provides 4 Population and 4 spaces of storage for Weapons.",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 4,
                             resource: ResourceName.Population),
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 4,
                             resource: ResourceName.WeaponStorage)
                     }),
@@ -281,7 +281,7 @@ namespace low_age_data.Collections
                     description: "Can be navigated through to go up to high ground.",
                     path: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: 1, y: 1),
+                        new Area(start: new Vector2<int>(x: 1, y: 1),
                             size: new Vector2<int>(x: 1, y: 1))
                     }),
 
@@ -292,7 +292,7 @@ namespace low_age_data.Collections
                                  "+1 Attack Distance for their ranged attacks.",
                     highGroundAreas: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: 0, y: 0),
+                        new Area(start: new Vector2<int>(x: 0, y: 0),
                             size: new Vector2<int>(x: 3, y: 2))
                     }),
 
@@ -363,7 +363,7 @@ namespace low_age_data.Collections
                     description: "Provides 2 Population.",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 2,
                             resource: ResourceName.Population)
                     }),
@@ -375,13 +375,13 @@ namespace low_age_data.Collections
                                  "Weapon space or waits until there is a free space available. ",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 1,
                             resource: ResourceName.MeleeWeapon)
                     },
                     cost: new List<Payment>
                     {
-                        new(resource: ResourceName.Celestium,
+                        new Payment(resource: ResourceName.Celestium,
                             amount: 20)
                     },
                     waitForAvailableStorage: true),
@@ -393,13 +393,13 @@ namespace low_age_data.Collections
                                  "Weapon space or waits until there is a free space available. ",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 1,
                             resource: ResourceName.RangedWeapon)
                     },
                     cost: new List<Payment>
                     {
-                        new(resource: ResourceName.Celestium,
+                        new Payment(resource: ResourceName.Celestium,
                             amount: 25)
                     },
                     waitForAvailableStorage: true),
@@ -411,13 +411,13 @@ namespace low_age_data.Collections
                                  "Weapon space or waits until there is a free space available. ",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 1,
                             resource: ResourceName.SpecialWeapon)
                     },
                     cost: new List<Payment>
                     {
-                        new(resource: ResourceName.Celestium,
+                        new Payment(resource: ResourceName.Celestium,
                             amount: 30)
                     },
                     waitForAvailableStorage: true),
@@ -428,7 +428,7 @@ namespace low_age_data.Collections
                     description: "Provides 4 spaces of storage for Weapons.",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 4,
                             resource: ResourceName.WeaponStorage)
                     }),
@@ -439,7 +439,7 @@ namespace low_age_data.Collections
                     description: "Can be navigated through to go up to high ground.",
                     path: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: 0, y: 0),
+                        new Area(start: new Vector2<int>(x: 0, y: 0),
                             size: new Vector2<int>(x: 1, y: 1))
                     }),
 
@@ -450,7 +450,7 @@ namespace low_age_data.Collections
                                  "+1 Attack Distance for their ranged attacks.",
                     highGroundAreas: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: 0, y: 0),
+                        new Area(start: new Vector2<int>(x: 0, y: 0),
                             size: new Vector2<int>(x: 1, y: 1))
                     }),
                 
@@ -500,11 +500,11 @@ namespace low_age_data.Collections
                     description: "This building can only be placed on the low ground Scraps tiles.",
                     placementValidators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
@@ -519,11 +519,11 @@ namespace low_age_data.Collections
                     description: "This building can only be placed on the low ground Celestium tiles.",
                     placementValidators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
@@ -538,11 +538,11 @@ namespace low_age_data.Collections
                     description: "This building can only be placed on the low ground tiles with Power.",
                     placementValidators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new MaskCondition(
                                 conditionFlag: ConditionFlag.Exists, 
@@ -605,12 +605,12 @@ namespace low_age_data.Collections
                     alignment: Alignment.Neutral,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityStartedActionPhase
                         }, validators: new List<Validator> 
                         {
-                            new(conditions: new List<Condition>
+                            new Validator(conditions: new List<Condition>
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.Exists, 
@@ -632,18 +632,18 @@ namespace low_age_data.Collections
                                  "Power.",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent,
+                        new ResourceModification(change: Change.AddCurrent,
                             amount: 2,
                             resource: ResourceName.Scraps),
                     },
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityStartedActionPhase
                         }, validators: new List<Validator> 
                         {
-                            new(conditions: new List<Condition>
+                            new Validator(conditions: new List<Condition>
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.DoesNotExist, 
@@ -667,12 +667,12 @@ namespace low_age_data.Collections
                     alignment: Alignment.Neutral,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityStartedActionPhase
                         }, validators: new List<Validator> 
                         {
-                            new(conditions: new List<Condition>
+                            new Validator(conditions: new List<Condition>
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.Exists, 
@@ -704,12 +704,12 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityStartedActionPhase
                         }, validators: new List<Validator> 
                         {
-                            new(conditions: new List<Condition>
+                            new Validator(conditions: new List<Condition>
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.DoesNotExist, 
@@ -775,7 +775,7 @@ namespace low_age_data.Collections
                                  "player units.",
                     resources: new List<ResourceModification>
                     {
-                        new(change: Change.AddCurrent, amount: 1, resource: ResourceName.Faith)
+                        new ResourceModification(change: Change.AddCurrent, amount: 1, resource: ResourceName.Faith)
                     }),
                 
                 new HighGround(
@@ -785,7 +785,7 @@ namespace low_age_data.Collections
                                  "+1 Attack Distance for their ranged attacks.",
                     highGroundAreas: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: 0, y: 0),
+                        new Area(start: new Vector2<int>(x: 0, y: 0),
                             size: new Vector2<int>(x: 1, y: 1))
                     }),
                 
@@ -795,9 +795,9 @@ namespace low_age_data.Collections
                     description: "Can be navigated through to go up to high ground.",
                     path: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: 0, y: 0),
+                        new Area(start: new Vector2<int>(x: 0, y: 0),
                             size: new Vector2<int>(x: 1, y: 1)),
-                        new(start: new Vector2<int>(x: 0, y: 1),
+                        new Area(start: new Vector2<int>(x: 0, y: 1),
                             size: new Vector2<int>(x: 1, y: 1))
                     }),
                 
@@ -808,7 +808,7 @@ namespace low_age_data.Collections
                                  "+1 Attack Distance for their ranged attacks.",
                     highGroundAreas: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: 0, y: 0),
+                        new Area(start: new Vector2<int>(x: 0, y: 0),
                             size: new Vector2<int>(x: 1, y: 4))
                     }),
                 
@@ -818,7 +818,7 @@ namespace low_age_data.Collections
                     description: "Can be navigated through to go up to high ground.",
                     path: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: 0, y: 1),
+                        new Area(start: new Vector2<int>(x: 0, y: 1),
                             size: new Vector2<int>(x: 1, y: 2)),
                     }),
                 
@@ -828,7 +828,7 @@ namespace low_age_data.Collections
                     description: "Allows movement through for friendly units and blocks it for enemy units.",
                     blockedAreas: new List<Area>
                     {
-                        new(start: new Vector2<int>(x: 0, y: 1),
+                        new Area(start: new Vector2<int>(x: 0, y: 1),
                             size: new Vector2<int>(x: 1, y: 2)),
                     },
                     filters: new List<IFilterItem>
@@ -956,11 +956,11 @@ namespace low_age_data.Collections
                                  "by multiple Slaves simultaneously.",
                     placementValidators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
@@ -976,11 +976,11 @@ namespace low_age_data.Collections
                                  "built by multiple Slaves simultaneously.",
                     placementValidators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
                         }),
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
@@ -1013,7 +1013,7 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.OriginIsInterrupted
                         })
@@ -1048,7 +1048,7 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.OriginIsDestroyed
                         })
@@ -1247,7 +1247,7 @@ namespace low_age_data.Collections
                     alignment: null,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityIsAboutToMove
                         })
@@ -1276,7 +1276,7 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.OriginIsDestroyed
                         })
@@ -1371,7 +1371,7 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.OriginIsDestroyed
                         })
@@ -1408,7 +1408,7 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.SourceIsDestroyed
                         })
@@ -1482,15 +1482,15 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityIsAttacked
                         }, validators: new List<Validator>
                         {
-                            new(
+                            new Validator(
                                 conditions: new List<Condition>
                                 {
-                                    new(conditionFlag: ConditionFlag.TargetIsDifferentTypeThanOrigin)
+                                    new Condition(conditionFlag: ConditionFlag.TargetIsDifferentTypeThanOrigin)
                                 },
                                 filters: new List<IFilterItem>
                                 {
@@ -1624,7 +1624,7 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.SourceIsNotAdjacent
                         })
@@ -1680,9 +1680,9 @@ namespace low_age_data.Collections
                     "3 Engineers at once.",
                     placementValidators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
                         })
                     },
                     maximumHelpers: 3),
@@ -1695,7 +1695,7 @@ namespace low_age_data.Collections
                     "of 1 Engineer at once.",
                     placementValidators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
@@ -1716,9 +1716,9 @@ namespace low_age_data.Collections
                     "1 Engineer at once.",
                     placementValidators: new List<Validator>
                     {
-                        new(conditions: new List<Condition>
+                        new Validator(conditions: new List<Condition>
                         {
-                            new(conditionFlag: ConditionFlag.TargetIsLowGround)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
                         })
                     },
                     maximumHelpers: 1),
@@ -1765,7 +1765,7 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.OriginIsInterrupted
                         })
@@ -1798,7 +1798,7 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.OriginIsInterrupted
                         })
@@ -1874,11 +1874,11 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.OriginIsInterrupted
                         }),
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.OriginIsDestroyed
                         })
@@ -1947,7 +1947,7 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.EntityFinishedMoving
                         }, validators: new List<Validator>
@@ -1956,10 +1956,10 @@ namespace low_age_data.Collections
                                 searchEffect: EffectName.Ballista.AimSearch,
                                 conditions: new List<Condition>
                                 {
-                                    new(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
+                                    new Condition(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
                                 })
                         }),
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.OriginIsDestroyed
                         })
@@ -2213,7 +2213,7 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new(events: new List<Event>
+                        new Trigger(events: new List<Event>
                         {
                             Event.SourceIsDestroyed
                         })

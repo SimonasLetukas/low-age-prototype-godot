@@ -10,8 +10,8 @@ namespace low_age_data.Domain.Shared.Modifications
             return $"{nameof(AttackAttribute)}.{Value}";
         }
 
-        public static AttackAttribute MaxAmount => new(AttackAttributes.MaxAmount);
-        public static AttackAttribute MaxDistance => new(AttackAttributes.MaxDistance);
+        public static AttackAttribute MaxAmount => new AttackAttribute(AttackAttributes.MaxAmount);
+        public static AttackAttribute MaxDistance => new AttackAttribute(AttackAttributes.MaxDistance);
 
         private AttackAttribute(AttackAttributes @enum)
         {

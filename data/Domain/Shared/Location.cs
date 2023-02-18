@@ -13,32 +13,32 @@ namespace low_age_data.Domain.Shared
         /// <summary>
         /// Applies the same location that was set before in the chain
         /// </summary>
-        public static Location Inherited => new(Locations.Inherited);
+        public static Location Inherited => new Location(Locations.Inherited);
 
         /// <summary>
         /// Targets the current actor in the chain
         /// </summary>
-        public static Location Self => new(Locations.Self);
+        public static Location Self => new Location(Locations.Self);
 
         /// <summary>
         /// Targets single actor
         /// </summary>
-        public static Location Actor => new(Locations.Actor);
+        public static Location Actor => new Location(Locations.Actor);
 
         /// <summary>
         /// Targets point on the ground (tile)
         /// </summary>
-        public static Location Point => new(Locations.Point);
+        public static Location Point => new Location(Locations.Point);
 
         /// <summary>
         /// Targets the previous actor in the chain
         /// </summary>
-        public static Location Source => new(Locations.Source);
+        public static Location Source => new Location(Locations.Source);
 
         /// <summary>
         /// Targets origin - the first actor from which the chain started
         /// </summary>
-        public static Location Origin => new(Locations.Origin);
+        public static Location Origin => new Location(Locations.Origin);
 
         private Location(Locations @enum)
         {
@@ -49,12 +49,12 @@ namespace low_age_data.Domain.Shared
 
         private enum Locations
         {
-            Inherited = 0,
-            Self = 1,
-            Actor = 2,
-            Point = 3,
-            Source = 4,
-            Origin = 5
+            Inherited,
+            Self,
+            Actor,
+            Point,
+            Source,
+            Origin
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

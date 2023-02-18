@@ -1,0 +1,15 @@
+<Project Sdk="Godot.NET.Sdk/3.3.0">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>lowageprototypegodot</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="data\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="data\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="data\low-age-data.csproj" />
+  </ItemGroup>
+</Project>

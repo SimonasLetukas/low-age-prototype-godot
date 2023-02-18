@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Factions
         {
         }
 
-        public static FactionName Uee => new($"{nameof(Uee)}".ToKebabCase());
-        public static FactionName Revelators => new($"{nameof(Revelators)}".ToKebabCase());
+        public static FactionName Uee => new FactionName($"{nameof(Uee)}".ToKebabCase());
+        public static FactionName Revelators => new FactionName($"{nameof(Revelators)}".ToKebabCase());
     }
 }

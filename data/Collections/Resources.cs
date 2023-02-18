@@ -11,14 +11,14 @@ namespace low_age_data.Collections
         {
             return new List<Resource>
             {
-                new(name: ResourceName.Scraps,
+                new Resource(name: ResourceName.Scraps,
                     displayName: nameof(ResourceName.Scraps).CamelCaseToWords(),
                     description: "Used for buying units, structures, research, and anything else.",
                     hasLimit: false,
                     isConsumable: true,
                     hasBank: true),
 
-                new(name: ResourceName.Celestium,
+                new Resource(name: ResourceName.Celestium,
                     displayName: nameof(ResourceName.Celestium).CamelCaseToWords(),
                     description: "Used for production. Higher amounts of Celestium allow for quicker production of " +
                                  "units, structures, research, and anything else.",
@@ -26,7 +26,7 @@ namespace low_age_data.Collections
                     isConsumable: false,
                     hasBank: false),
 
-                new(name: ResourceName.Population,
+                new Resource(name: ResourceName.Population,
                     displayName: nameof(ResourceName.Population).CamelCaseToWords(),
                     description: "Each unit requires a population space, new units can be promoted from the " +
                                  "remaining population space. If there are more units than the amount of supported " +
@@ -41,7 +41,7 @@ namespace low_age_data.Collections
                     },
                     negativeIncomeDescription: "Caution, there are more units than the supported population."),
 
-                new(name: ResourceName.WeaponStorage,
+                new Resource(name: ResourceName.WeaponStorage,
                     displayName: nameof(ResourceName.WeaponStorage).CamelCaseToWords(),
                     description: "Maximum amount of storage for all melee, ranged and special weapons. The most " +
                                  "valuable weapons are lost if the maximum storage is decreased for any reason.",
@@ -49,7 +49,7 @@ namespace low_age_data.Collections
                     isConsumable: false,
                     hasBank: false),
 
-                new(name: ResourceName.MeleeWeapon,
+                new Resource(name: ResourceName.MeleeWeapon,
                     displayName: nameof(ResourceName.MeleeWeapon).CamelCaseToWords(),
                     description: "Weapon used for promotion of units with melee qualities.",
                     hasLimit: true,
@@ -57,7 +57,7 @@ namespace low_age_data.Collections
                     hasBank: true,
                     storedAs: ResourceName.WeaponStorage),
 
-                new(name: ResourceName.RangedWeapon,
+                new Resource(name: ResourceName.RangedWeapon,
                     displayName: nameof(ResourceName.MeleeWeapon).CamelCaseToWords(),
                     description: "Weapon used for promotion of units with ranged qualities.",
                     hasLimit: true,
@@ -65,7 +65,7 @@ namespace low_age_data.Collections
                     hasBank: true,
                     storedAs: ResourceName.WeaponStorage),
 
-                new(name: ResourceName.SpecialWeapon,
+                new Resource(name: ResourceName.SpecialWeapon,
                     displayName: nameof(ResourceName.MeleeWeapon).CamelCaseToWords(),
                     description: "Weapon used for promotion of units with special qualities.",
                     hasLimit: true,
@@ -73,7 +73,7 @@ namespace low_age_data.Collections
                     hasBank: true,
                     storedAs: ResourceName.WeaponStorage),
                 
-                new(name: ResourceName.Faith,
+                new Resource(name: ResourceName.Faith,
                     displayName: nameof(ResourceName.Faith).CamelCaseToWords(),
                     description: "Each point of Faith provides +1 Initiative to all owned units. Faith is generated " +
                                  "by Temples.",

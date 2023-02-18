@@ -10,7 +10,7 @@ namespace low_age_data.Domain.Shared.Flags
             return $"{nameof(AmountFlag)}.{Value}";
         }
         
-        public static AmountFlag FromMissingHealth => new(AmountFlags.FromMissingHealth);
+        public static AmountFlag FromMissingHealth => new AmountFlag(AmountFlags.FromMissingHealth);
 
         private AmountFlag(AmountFlags @enum)
         {

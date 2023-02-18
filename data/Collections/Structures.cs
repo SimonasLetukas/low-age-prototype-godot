@@ -13,7 +13,7 @@ namespace low_age_data.Collections
         {
             return new List<Structure>
             {
-                new(
+                new Structure(
                     name: StructureName.Citadel,
                     displayName: nameof(StructureName.Citadel).CamelCaseToWords(),
                     description: "",
@@ -38,7 +38,7 @@ namespace low_age_data.Collections
                         start: new Vector2<int>(x: 0, y: 2),
                         size: new Vector2<int>(x: 3, y: 2))),
 
-                new(
+                new Structure(
                     name: StructureName.Hut,
                     displayName: nameof(StructureName.Hut).CamelCaseToWords(),
                     description: "",
@@ -62,7 +62,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
 
-                new(
+                new Structure(
                     name: StructureName.Obelisk,
                     displayName: nameof(StructureName.Obelisk).CamelCaseToWords(),
                     description: "",
@@ -87,7 +87,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
 
-                new(
+                new Structure(
                     name: StructureName.Shack,
                     displayName: nameof(StructureName.Shack).CamelCaseToWords(),
                     description: "",
@@ -111,7 +111,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
 
-                new(
+                new Structure(
                     name: StructureName.Smith,
                     displayName: nameof(StructureName.Smith).CamelCaseToWords(),
                     description: "",
@@ -135,7 +135,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
 
-                new(
+                new Structure(
                     name: StructureName.Fletcher,
                     displayName: nameof(StructureName.Fletcher).CamelCaseToWords(),
                     description: "",
@@ -159,7 +159,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
 
-                new(
+                new Structure(
                     name: StructureName.Alchemy,
                     displayName: nameof(StructureName.Alchemy).CamelCaseToWords(),
                     description: "",
@@ -183,7 +183,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 2, y: 3)),
 
-                new(
+                new Structure(
                     name: StructureName.Depot,
                     displayName: nameof(StructureName.Depot).CamelCaseToWords(),
                     description: "",
@@ -207,7 +207,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
 
-                new(
+                new Structure(
                     name: StructureName.Workshop,
                     displayName: nameof(StructureName.Workshop).CamelCaseToWords(),
                     description: "",
@@ -231,7 +231,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
                 
-                new(
+                new Structure(
                     name: StructureName.Outpost,
                     displayName: nameof(StructureName.Outpost).CamelCaseToWords(),
                     description: "",
@@ -256,7 +256,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                 
-                new(
+                new Structure(
                     name: StructureName.Barricade,
                     displayName: nameof(StructureName.Barricade).CamelCaseToWords(),
                     description: "",
@@ -282,7 +282,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
                 
-                new(
+                new Structure(
                     name: StructureName.BatteryCore,
                     displayName: nameof(StructureName.BatteryCore).CamelCaseToWords(),
                     description: "",
@@ -310,7 +310,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
                     
-                new(
+                new Structure(
                     name: StructureName.FusionCore,
                     displayName: nameof(StructureName.FusionCore).CamelCaseToWords(),
                     description: "",
@@ -339,7 +339,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
                 
-                new(
+                new Structure(
                     name: StructureName.CelestiumCore,
                     displayName: nameof(StructureName.CelestiumCore).CamelCaseToWords(),
                     description: "",
@@ -368,7 +368,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
                 
-                new(
+                new Structure(
                     name: StructureName.Collector,
                     displayName: nameof(StructureName.Collector).CamelCaseToWords(),
                     description: "",
@@ -394,7 +394,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
                 
-                new(
+                new Structure(
                     name: StructureName.Extractor,
                     displayName: nameof(StructureName.Extractor).CamelCaseToWords(),
                     description: "",
@@ -420,7 +420,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
                 
-                new(
+                new Structure(
                     name: StructureName.PowerPole,
                     displayName: nameof(StructureName.PowerPole).CamelCaseToWords(),
                     description: "",
@@ -448,7 +448,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                     
-                new(
+                new Structure(
                     name: StructureName.Temple,
                     displayName: nameof(StructureName.Temple).CamelCaseToWords(),
                     description: "",
@@ -474,7 +474,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
                 
-                new(
+                new Structure(
                     name: StructureName.MilitaryBase,
                     displayName: nameof(StructureName.MilitaryBase).CamelCaseToWords(),
                     description: "",
@@ -503,7 +503,7 @@ namespace low_age_data.Collections
                         start: new Vector2<int>(x: 0, y: 2), 
                         size: new Vector2<int>(x: 1, y: 1))),
                 
-                new(
+                new Structure(
                     name: StructureName.Factory,
                     displayName: nameof(StructureName.Factory).CamelCaseToWords(),
                     description: "",
@@ -532,7 +532,7 @@ namespace low_age_data.Collections
                         start: new Vector2<int>(x: 0, y: 2), 
                         size: new Vector2<int>(x: 2, y: 2))),
                 
-                new(
+                new Structure(
                     name: StructureName.Laboratory,
                     displayName: nameof(StructureName.Laboratory).CamelCaseToWords(),
                     description: "",
@@ -561,7 +561,7 @@ namespace low_age_data.Collections
                         start: new Vector2<int>(x: 0, y: 1), 
                         size: new Vector2<int>(x: 1, y: 1))),
                 
-                new(
+                new Structure(
                     name: StructureName.Armoury,
                     displayName: nameof(StructureName.Armoury).CamelCaseToWords(),
                     description: "",
@@ -587,7 +587,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
                 
-                new(
+                new Structure(
                     name: StructureName.Wall,
                     displayName: nameof(StructureName.Wall).CamelCaseToWords(),
                     description: "",
@@ -613,7 +613,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                 
-                new(
+                new Structure(
                     name: StructureName.Stairs,
                     displayName: nameof(StructureName.Stairs).CamelCaseToWords(),
                     description: "",
@@ -639,7 +639,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                 
-                new(
+                new Structure(
                     name: StructureName.Gate,
                     displayName: nameof(StructureName.Gate).CamelCaseToWords(),
                     description: "",
@@ -667,7 +667,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 4)),
                 
-                new(
+                new Structure(
                     name: StructureName.Watchtower,
                     displayName: nameof(StructureName.Watchtower).CamelCaseToWords(),
                     description: "",
@@ -693,7 +693,7 @@ namespace low_age_data.Collections
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                 
-                new(
+                new Structure(
                     name: StructureName.Bastion,
                     displayName: nameof(StructureName.Bastion).CamelCaseToWords(),
                     description: "",

@@ -13,7 +13,7 @@ namespace low_age_data.Collections
         {
             return new List<Feature>
             {
-                new(
+                new Feature(
                     name: FeatureName.ShamanWondrousGoo,
                     displayName: nameof(FeatureName.ShamanWondrousGoo).CamelCaseToWords(),
                     description: "Any unit in this area is contaminated: has its vision and Attack Distance " +
@@ -25,7 +25,7 @@ namespace low_age_data.Collections
                     },
                     onlyOneCanExist: true),
 
-                new(
+                new Feature(
                     name: FeatureName.PyreCargo,
                     displayName: nameof(FeatureName.PyreCargo).CamelCaseToWords(),
                     description: "The cargo which is attached to Pyre leaves a path of flames when moved, which " +
@@ -34,7 +34,7 @@ namespace low_age_data.Collections
                     occupiesSpace: true,
                     onlyOneCanExist: true),
 
-                new(
+                new Feature(
                     name: FeatureName.PyreFlames,
                     displayName: nameof(FeatureName.PyreFlames).CamelCaseToWords(),
                     description: "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
@@ -45,7 +45,7 @@ namespace low_age_data.Collections
                     },
                     onlyOneCanExist: true),
 
-                new(
+                new Feature(
                     name: FeatureName.CannonHeatUpDangerZone,
                     displayName: nameof(FeatureName.CannonHeatUpDangerZone).CamelCaseToWords(),
                     description:
@@ -55,7 +55,7 @@ namespace low_age_data.Collections
                     statsCopiedFromSource: true,
                     alliesCanStack: true),
 
-                new(
+                new Feature(
                     name: FeatureName.RadarResonatingSweep,
                     displayName: nameof(FeatureName.RadarResonatingSweep).CamelCaseToWords(),
                     description:
@@ -63,13 +63,13 @@ namespace low_age_data.Collections
                     size: 3,
                     alliesCanStack: true),
 
-                new(
+                new Feature(
                     name: FeatureName.RadarRedDot,
                     displayName: nameof(FeatureName.RadarRedDot).CamelCaseToWords(),
                     description: "This red dot shows where enemy unit is currently located inside the fog of war.",
                     size: 1),
 
-                new(
+                new Feature(
                     name: FeatureName.VesselFortification,
                     displayName: nameof(FeatureName.VesselFortification).CamelCaseToWords(),
                     description:
@@ -80,7 +80,7 @@ namespace low_age_data.Collections
                     alliesCanStack: true,
                     onlyOneCanExist: false),
 
-                new(
+                new Feature(
                     name: FeatureName.OmenRendition,
                     displayName: nameof(FeatureName.OmenRendition).CamelCaseToWords(),
                     description:

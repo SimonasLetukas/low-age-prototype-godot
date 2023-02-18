@@ -10,7 +10,7 @@ namespace low_age_data.Domain.Shared.Flags
             return $"{nameof(ModifyPlayerFlag)}.{Value}";
         }
         
-        public static ModifyPlayerFlag GameLost => new(ModifyPlayerFlags.GameLost);
+        public static ModifyPlayerFlag GameLost => new ModifyPlayerFlag(ModifyPlayerFlags.GameLost);
 
         private ModifyPlayerFlag(ModifyPlayerFlags @enum)
         {

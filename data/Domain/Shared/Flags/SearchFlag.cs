@@ -22,59 +22,59 @@ namespace low_age_data.Domain.Shared.Flags
         /// Applies <see cref="Effects.Search"/> whenever a new actor enters the
         /// <see cref="Effects.Search.Shape"/>).
         /// </summary>
-        public static SearchFlag AppliedOnEnter => new(SearchFlags.AppliedOnEnter);
+        public static SearchFlag AppliedOnEnter => new SearchFlag(SearchFlags.AppliedOnEnter);
                 
         /// <summary>
         /// Applies <see cref="Effects.Search"/> after <see cref="Durations.EndsAt"/> (at the end of action
         /// for the <see cref="FilterFlag.Source"/> <see cref="Entity"/> -- which issued this
         /// <see cref="Passive.PeriodicEffect"/>).
         /// </summary>
-        public static SearchFlag AppliedOnSourceAction => new(SearchFlags.AppliedOnSourceAction);
+        public static SearchFlag AppliedOnSourceAction => new SearchFlag(SearchFlags.AppliedOnSourceAction);
                 
         /// <summary>
         /// Applies <see cref="Effects.Search"/> after <see cref="Durations.EndsAt"/> for every action in
         /// action phase.
         /// </summary>
-        public static SearchFlag AppliedOnEveryAction => new(SearchFlags.AppliedOnEveryAction);
+        public static SearchFlag AppliedOnEveryAction => new SearchFlag(SearchFlags.AppliedOnEveryAction);
 
         /// <summary>
         /// <see cref="Effects.Search"/> is applied at the start of every action phase.
         /// </summary>
-        public static SearchFlag AppliedOnActionPhaseStart => new(SearchFlags.AppliedOnActionPhaseStart);
+        public static SearchFlag AppliedOnActionPhaseStart => new SearchFlag(SearchFlags.AppliedOnActionPhaseStart);
                 
         /// <summary>
         /// <see cref="Effects.Search"/> is applied at the end of every action phase.
         /// </summary>
-        public static SearchFlag AppliedOnActionPhaseEnd => new(SearchFlags.AppliedOnActionPhaseEnd);
+        public static SearchFlag AppliedOnActionPhaseEnd => new SearchFlag(SearchFlags.AppliedOnActionPhaseEnd);
                 
         /// <summary>
         /// <see cref="Effects.Search"/> is applied at the start of every planning phase.
         /// </summary>
-        public static SearchFlag AppliedOnPlanningPhaseStart => new(SearchFlags.AppliedOnPlanningPhaseStart);
+        public static SearchFlag AppliedOnPlanningPhaseStart => new SearchFlag(SearchFlags.AppliedOnPlanningPhaseStart);
                 
         /// <summary>
         /// <see cref="Effects.Search"/> is applied at the end of every planning phase.
         /// </summary>
-        public static SearchFlag AppliedOnPlanningPhaseEnd => new(SearchFlags.AppliedOnPlanningPhaseEnd);
+        public static SearchFlag AppliedOnPlanningPhaseEnd => new SearchFlag(SearchFlags.AppliedOnPlanningPhaseEnd);
                 
         /// <summary>
         /// Counteracts any <see cref="Effects"/> added as part of <see cref="Effects.Search"/>
         /// <see cref="Effects.Search.Effects"/> for an <see cref="Entities.Actors.Actor"/> that leaves the
         /// <see cref="Effects.Search.Shape"/>.
         /// </summary>
-        public static SearchFlag RemovedOnExit => new(SearchFlags.RemovedOnExit);
+        public static SearchFlag RemovedOnExit => new SearchFlag(SearchFlags.RemovedOnExit);
                 
         /// <summary>
         /// At the start of every planning phase, counteracts any <see cref="Effects"/> added as part of
         /// <see cref="Effects.Search"/> <see cref="Effects.Search.Effects"/>.
         /// </summary>
-        public static SearchFlag RemovedOnPlanningPhaseStart => new(SearchFlags.RemovedOnPlanningPhaseStart);
+        public static SearchFlag RemovedOnPlanningPhaseStart => new SearchFlag(SearchFlags.RemovedOnPlanningPhaseStart);
                 
         /// <summary>
         /// At the end of every planning phase, counteracts any <see cref="Effects"/> added as part of
         /// <see cref="Effects.Search"/> <see cref="Effects.Search.Effects"/>.
         /// </summary>
-        public static SearchFlag RemovedOnPlanningPhaseEnd => new(SearchFlags.RemovedOnPlanningPhaseEnd);
+        public static SearchFlag RemovedOnPlanningPhaseEnd => new SearchFlag(SearchFlags.RemovedOnPlanningPhaseEnd);
 
         private SearchFlag(SearchFlags @enum)
         {
