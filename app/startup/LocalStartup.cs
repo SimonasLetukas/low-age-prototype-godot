@@ -2,7 +2,7 @@ using Godot;
 
 public class LocalStartup : HBoxContainer
 {
-    public const string ScenePath = @"res://game/startup/LocalStartup.tscn";
+    public const string ScenePath = @"res://app/startup/LocalStartup.tscn";
 
     public override void _Ready()
     {
