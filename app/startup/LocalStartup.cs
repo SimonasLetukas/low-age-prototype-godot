@@ -1,5 +1,8 @@
 using Godot;
 
+/// <summary>
+/// Allows to start as client or server when app is launched locally (usually when debugging).
+/// </summary>
 public class LocalStartup : HBoxContainer
 {
     public const string ScenePath = @"res://app/startup/LocalStartup.tscn";

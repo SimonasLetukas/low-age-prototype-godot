@@ -1,5 +1,8 @@
 using Godot;
 
+/// <summary>
+/// Determine whether application is started as client or server (or locally) and then route to the appropriate scenes.
+/// </summary>
 public class Startup : Node
 {
     public string Client = nameof(Client).ToLower();
@@ -12,7 +15,7 @@ public class Startup : Node
         if (OS.HasFeature(Client))
         {
             GD.Print($"Starting as {Client}.");
-            // TODO
+            GetTree().ChangeScene(ClientStartup.ScenePath);
         }
 
         if (OS.HasFeature(Server))
@@ -22,6 +25,6 @@ public class Startup : Node
         }
         
         GD.Print($"Unidentified startup, starting as local {Client}.");
-        GetTree().ChangeScene(LocalStartup.ScenePath);
+        var result = GetTree().ChangeScene(LocalStartup.ScenePath);
     }
 }
