@@ -52,3 +52,6 @@ msbuild.wrn
 /.vs
 /.vscode
 /addons
+/client.exe
+/client.pck
+/dijkstra_map_gd.dll

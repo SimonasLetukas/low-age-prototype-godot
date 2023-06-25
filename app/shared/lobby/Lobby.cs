@@ -1,16 +1,12 @@
 using Godot;
-using System;
 using System.Linq;
 
 public class Lobby : VBoxContainer
 {
-    public override void _Ready() // TODO: not tested (can be reached from override ServerLobby._Ready()?)
+    public override void _Ready() // TODO: not tested
     {
-        GD.Print($"{nameof(Lobby)}: {nameof(_Ready)}");
-        
-        // TODO
-        // Client.connect("player_added", self, "_on_player_added")
-        // Client.connect("player_removed", self, "_on_player_removed")
+        Client.Instance.Connect(nameof(Client.PlayerAdded), this, nameof(OnPlayerAdded));
+        Client.Instance.Connect(nameof(Network.PlayerRemoved), this, nameof(OnPlayerRemoved));
     }
 
     private void OnPlayerAdded(int playerId) // TODO: not tested

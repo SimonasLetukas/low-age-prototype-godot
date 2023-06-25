@@ -7,6 +7,8 @@ public class ServerLobby : Lobby
     
     public override void _Ready()  // TODO not tested
     {
+        base._Ready();
+        
         if (Server.Instance.IsHosting()) 
             return;
         
@@ -21,7 +23,7 @@ public class ServerLobby : Lobby
 
     private void OnGameStarted() // TODO not tested
     {
-        GD.Print("Game starting...");
-        //GetTree().ChangeScene(ServerGame.ScenePath);
+        GD.Print("Game starting for server...");
+        //GetTree().ChangeScene(ServerGame.ScenePath); todo
     }
 }

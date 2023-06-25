@@ -59,8 +59,7 @@ public class MainMenu : VBoxContainer
 
     private void OnConnectedToServer()
     {
-        // TODO
-        // GetTree().ChangeScene(ClientLobby.ScenePath);
+        GetTree().ChangeScene(ClientLobby.ScenePath);
     }
 
     private void OnConnectPressed()

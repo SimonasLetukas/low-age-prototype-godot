@@ -6,6 +6,9 @@ public class Client : Network
     
     [Signal] public delegate void PlayerAdded(int playerId);
     [Signal] public delegate void GameStarted();
+    
+    public string LocalPlayerName { get; private set; }
+    public int LocalPlayerFaction { get; private set; }
 
     public override void _Ready()
     {
@@ -19,6 +22,9 @@ public class Client : Network
     
     public bool JoinGame(string playerName, int playerFaction) // TODO not tested
     {
+        LocalPlayerName = playerName;
+        LocalPlayerFaction = playerFaction;
+        
         GetTree().Connect(Constants.ENet.ConnectedToServerEvent, this, nameof(OnConnectedToServer));
         var peer = new NetworkedMultiplayerENet();
         var result = peer.CreateClient(Constants.ServerIp, Constants.ServerPort);
