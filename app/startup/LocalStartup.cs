@@ -7,18 +7,29 @@ public class LocalStartup : HBoxContainer
 {
     public const string ScenePath = @"res://app/startup/LocalStartup.tscn";
 
+    private Button _startAsServerButton;
+    private Button _startAsClientButton;
+
     public override void _Ready()
     {
+        _startAsServerButton = GetNode<Button>("StartAsServer");
+        _startAsClientButton = GetNode<Button>("StartAsClient");
+        
         Constants.SetLocalServer();
+
+        _startAsServerButton?.Connect(nameof(_startAsServerButton.Pressed).ToLower(), this, 
+            nameof(OnStartAsServerPressed));
+        _startAsClientButton?.Connect(nameof(_startAsClientButton.Pressed).ToLower(), this, 
+            nameof(OnStartAsClientPressed));
     }
 
-    public void _on_StartAsServer_pressed()
+    private void OnStartAsServerPressed()
     {
-        // TODO
+        GetTree().ChangeScene(ServerStartup.ScenePath);
     }
-    
-    public void _on_StartAsClient_pressed()
+
+    private void OnStartAsClientPressed()
     {
-        // TODO
+        GetTree().ChangeScene(ClientStartup.ScenePath);
     }
 }

@@ -1,6 +1,6 @@
 using Godot;
 
-public class MainMenu : VBoxContainer // TODO not tested
+public class MainMenu : VBoxContainer
 {
     public const string ScenePath = @"res://app/client/menu/MainMenu.tscn";
 
@@ -11,7 +11,7 @@ public class MainMenu : VBoxContainer // TODO not tested
     private Label _errorMessage;
     private Tween _tween;
 
-    public override void _Ready() // TODO not tested
+    public override void _Ready()
     {
         _nameInput = GetNode<LineEdit>("Name/Input");
         _factionInput = GetNode<OptionButton>("Faction/Input");
@@ -49,7 +49,7 @@ public class MainMenu : VBoxContainer // TODO not tested
         _connectButton.Disabled = false;
     }
 
-    private void PutConnectionMessage(string message) // TODO not tested
+    private void PutConnectionMessage(string message)
     {
         _errorMessage.Text = message;
         _tween.InterpolateProperty(_errorMessage, "self_modulate", new Color(1, 1, 1, 1), 
@@ -63,13 +63,13 @@ public class MainMenu : VBoxContainer // TODO not tested
         // GetTree().ChangeScene(ClientLobby.ScenePath);
     }
 
-    private void OnConnectPressed() // TODO not tested
+    private void OnConnectPressed()
     {
         Constants.SetRemoteServer();
         ConnectToServer();
     }
 
-    private void OnPlayLocallyPressed() // TODO not tested
+    private void OnPlayLocallyPressed()
     {
         Constants.SetLocalServer();
         ConnectToServer();

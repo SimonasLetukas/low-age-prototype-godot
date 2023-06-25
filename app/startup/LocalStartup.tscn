@@ -25,6 +25,3 @@ margin_right = 860.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 200, 40 )
 text = "Start as Client"
-
-[connection signal="pressed" from="StartAsServer" to="." method="_on_StartAsServer_pressed"]
-[connection signal="pressed" from="StartAsClient" to="." method="_on_StartAsClient_pressed"]
