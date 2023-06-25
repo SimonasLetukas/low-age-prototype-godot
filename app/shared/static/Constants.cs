@@ -3,15 +3,19 @@
     public static class ENet
     {
         public const string ConnectedToServerEvent = "connected_to_server";
+        public const string NetworkPeerConnectedEvent = "network_peer_connected";
+        public const string NetworkPeerDisconnectedEvent = "network_peer_disconnected";
     }
 
     public static class Os
     {
         public const string Username = "USERNAME";
     }
-
+    
     public static string ServerIp { get; private set; }
     public const int ServerPort = 3000;
+    public const int ServerId = 1;
+    public const int MaxPlayers = 2;
 
     public static void SetLocalServer()
     {
