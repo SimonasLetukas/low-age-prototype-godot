@@ -41,7 +41,7 @@ public class MainMenu : VBoxContainer
         PutConnectionMessage("Connecting to server");
         _connectButton.Disabled = true;
         
-        if (Client.Instance.JoinGame(_nameInput.Text, _factionInput.Selected) is false) // TODO test if singleton pattern works as expected
+        if (Client.Instance.JoinGame(_nameInput.Text, _factionInput.Selected) is false)
         {
             PutConnectionMessage("Failed to connect");
         }

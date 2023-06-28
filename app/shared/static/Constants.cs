@@ -11,7 +11,25 @@
     {
         public const string Username = "USERNAME";
     }
-    
+
+    public static class Game
+    {
+        public enum Faction
+        {
+            Revelators,
+            Uee
+        }
+
+        public enum Terrain
+        {
+            Grass,
+            Mountains,
+            Marsh,
+            Scraps,
+            Celestium
+        }
+    }
+
     public static string ServerIp { get; private set; }
     public const int ServerPort = 3000;
     public const int ServerId = 1;
