@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/City.png-f27ad8a57b9c6f3f28e875fdd82106ea.image"
+
+[deps]
+
+source_file="res://assets/maps/City.png"
+dest_files=[ "res://.import/City.png-f27ad8a57b9c6f3f28e875fdd82106ea.image" ]
+
+[params]
+
