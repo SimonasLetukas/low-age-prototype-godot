@@ -17,7 +17,7 @@ public class Lobby : VBoxContainer
         playerInfo.SetNetworkMaster(playerId);
         playerInfo.Name = $"{playerId}";
 
-        var player = Data.Players.Single(x => x.Id.Equals(playerId));
+        var player = Data.Instance.Players.Single(x => x.Id.Equals(playerId));
         playerInfo.GetNode<Label>("Name").Text = player.Name;
         
         GetNode<VBoxContainer>("Players").AddChild(playerInfo);

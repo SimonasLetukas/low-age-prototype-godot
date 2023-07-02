@@ -23,7 +23,7 @@ public class Network : Node
 		    peer.CloseConnection();
 	    }
 
-	    Data.Reset();
+	    Data.Instance.Reset();
     }
 
     /// <summary>
@@ -32,10 +32,10 @@ public class Network : Node
     private void OnPlayerDisconnected(int playerId) // TODO not tested
     {
 	    GD.Print("Player disconnected: " + playerId);
-	    Data.RemovePlayer(playerId);
+	    Data.Instance.RemovePlayer(playerId);
 	    
 	    EmitSignal(nameof(PlayerRemoved), playerId);
 
-	    GD.Print($"Total players: {Data.Players.Count}");
+	    GD.Print($"Total players: {Data.Instance.Players.Count}");
     }
 }

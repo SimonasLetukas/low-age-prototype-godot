@@ -24,6 +24,6 @@ public class ServerLobby : Lobby
     private void OnGameStarted() // TODO not tested
     {
         GD.Print("Game starting for server...");
-        //GetTree().ChangeScene(ServerGame.ScenePath); todo
+        GetTree().ChangeScene(ServerGame.ScenePath);
     }
 }

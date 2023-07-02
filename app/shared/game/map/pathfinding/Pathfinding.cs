@@ -21,16 +21,16 @@ public class Pathfinding : Node // TODO not tested
     private Vector2 _previousPosition = Vector2.Inf;
     private float _previousRange = -1.0f;
 
-    public Pathfinding(Vector2 mapSize) // TODO not tested if this works without ready, especially caching
+    public void Initialize(Vector2 mapSize) // TODO not tested if this works without ready, especially caching
     {
 	    MapSize = mapSize;
 	    
 	    PointIdsByPositions = _pathfinding.AddSquareGrid(
-			0,
-			new Rect2(0, 0, MapSize.x, MapSize.y),
-			(int) Constants.Game.Terrain.Grass,
-			1.0f,
-			Mathf.Sqrt(2));
+		    0,
+		    new Rect2(0, 0, MapSize.x, MapSize.y),
+		    (int) Constants.Game.Terrain.Grass,
+		    1.0f,
+		    Mathf.Sqrt(2));
 
 	    PositionsByPointIds = new Godot.Collections.Dictionary<int, Vector2>();
 	    foreach (var position in PointIdsByPositions.Keys)

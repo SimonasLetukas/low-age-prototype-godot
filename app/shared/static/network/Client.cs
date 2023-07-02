@@ -53,15 +53,10 @@ public class Client : Network
     public void OnRegisterPlayer(int playerId, string playerName, int playerFaction) // TODO not tested
     {
         GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerFaction}");
-        Data.Players.Add(new Player
-        {
-            Id = playerId,
-            Name = playerName,
-            Faction = playerFaction
-        });
+        Data.Instance.AddPlayer(playerId, playerName, (Constants.Game.Faction) playerFaction);
         
         EmitSignal(nameof(PlayerAdded), playerId);
-        GD.Print($"Total players: {Data.Players.Count}");
+        GD.Print($"Total players: {Data.Instance.Players.Count}");
     }
 
     public void StartGame() // TODO not tested

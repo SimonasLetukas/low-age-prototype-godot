@@ -29,17 +29,17 @@ public class Server : Network
         Client.Instance.OnRegisterPlayer(playerId, playerName, playerFaction);
 
         // Register the new player with all existing clients
-        foreach (var currentPlayer in Data.Players)
+        foreach (var currentPlayer in Data.Instance.Players)
         {
             Client.Instance.RegisterPlayer(currentPlayer.Id, playerId, playerName, playerFaction);
         }
 
         // Catch the new player up with who is already here
-        foreach (var currentPlayer in Data.Players)
+        foreach (var currentPlayer in Data.Instance.Players)
         {
             if (currentPlayer.Id != playerId)
             {
-                Client.Instance.RegisterPlayer(playerId, currentPlayer.Id, currentPlayer.Name, currentPlayer.Faction);
+                Client.Instance.RegisterPlayer(playerId, currentPlayer.Id, currentPlayer.Name, (int) currentPlayer.Faction);
             }
         }
     }

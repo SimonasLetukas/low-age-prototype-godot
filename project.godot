@@ -29,6 +29,7 @@ config/icon="res://assets/sprites/units/uee/vessel indexed 2x2.png"
 
 [autoload]
 
+Data="*res://app/shared/static/Data.cs"
 Client="*res://app/shared/static/network/Client.cs"
 Server="*res://app/shared/static/network/Server.cs"
 
