@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://app/client/game/camera/Camera.cs" type="Script" id=1]
+
+[node name="Camera" type="Camera2D"]
+position = Vector2( 448, 196 )
+current = true
+limit_smoothed = true
+smoothing_enabled = true
+smoothing_speed = 20.0
+script = ExtResource( 1 )
