@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://app/client/game/mouse/Mouse.cs" type="Script" id=1]
+
+[node name="Mouse" type="Node2D"]
+script = ExtResource( 1 )
+ArrowCursorFileLocation = "res://assets/cursors/cursor.png"
+GrabCursorFileLocation = "res://assets/cursors/cursor grab.png"
