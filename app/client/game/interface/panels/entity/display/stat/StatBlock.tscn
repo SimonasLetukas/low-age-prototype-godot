@@ -1,0 +1,95 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/icons/icon_health_big.png" type="Texture" id=1]
+[ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=2]
+[ext_resource path="res://assets/sprites/interface/horizontal_gradient.png" type="Texture" id=3]
+[ext_resource path="res://app/shared/shaders/OffsetShadow.tres" type="Material" id=4]
+[ext_resource path="res://app/client/game/interface/panels/entity/display/stat/StatBlock.cs" type="Script" id=5]
+
+[node name="StatBlock" type="MarginContainer"]
+margin_right = 25.0
+margin_bottom = 8.0
+rect_min_size = Vector2( 100, 32 )
+size_flags_horizontal = 3
+custom_constants/margin_top = 4
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 4
+script = ExtResource( 5 )
+Icon = ExtResource( 1 )
+CurrentValue = 1.231
+ShowCurrentValue = true
+
+[node name="BackgroundMargin" type="MarginContainer" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 100.0
+margin_bottom = 28.0
+custom_constants/margin_right = 4
+
+[node name="Background" type="TextureRect" parent="BackgroundMargin"]
+modulate = Color( 0.572549, 0.572549, 0.572549, 0.117647 )
+margin_right = 92.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 92, 24 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+material = ExtResource( 4 )
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 100.0
+margin_bottom = 28.0
+custom_constants/separation = 4
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer"]
+self_modulate = Color( 0.756863, 0.843137, 0.87451, 1 )
+margin_right = 24.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="Shadow" type="TextureRect" parent="HBoxContainer/Icon"]
+self_modulate = Color( 0, 0, 0, 1 )
+show_behind_parent = true
+margin_left = 3.0
+margin_right = 27.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 6, 6 )
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+margin_left = 28.0
+margin_right = 88.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer"]
+margin_top = 3.0
+margin_right = 60.0
+margin_bottom = 21.0
+rect_min_size = Vector2( 56, 0 )
+theme = ExtResource( 2 )
+text = "999/999"
+align = 1
+
+[node name="Shadow" type="Label" parent="HBoxContainer/MarginContainer/Label"]
+self_modulate = Color( 0, 0, 0, 1 )
+show_behind_parent = true
+margin_left = 1.0
+margin_right = 60.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 56, 0 )
+theme = ExtResource( 2 )
+text = "999/999"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
