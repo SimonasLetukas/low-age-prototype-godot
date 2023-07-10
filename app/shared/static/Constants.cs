@@ -28,6 +28,26 @@
             Scraps,
             Celestium
         }
+
+        public enum EntityType
+        {
+            Light,
+            Armoured,
+            Giant,
+            Biological,
+            Mechanical,
+            Celestial,
+            Structure,
+            Ranged
+        }
+
+        public enum AbilityType
+        {
+            Passive,
+            Planning,
+            Action,
+            Movement
+        }
     }
 
     public const int TileWidth = 16;

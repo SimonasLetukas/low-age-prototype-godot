@@ -7,7 +7,8 @@ public class AttackTypeBox : MarginContainer
     [Signal] public delegate void Hovering(bool started);
     [Signal] public delegate void Clicked();
 
-    private bool _isSelected = false;
+    public bool IsSelected { get; private set; } = false;
+    
     private AttackTypePanel _attackTypePanel;
 
     public override void _Ready()
@@ -28,8 +29,8 @@ public class AttackTypeBox : MarginContainer
     
     public void SetSelected(bool to)
     {
-        _isSelected = to;
-        Highlight(_isSelected);
+        IsSelected = to;
+        Highlight(IsSelected);
     }
     
     private void Highlight(bool to)
@@ -40,7 +41,7 @@ public class AttackTypeBox : MarginContainer
     
     private void OnAttackTypePanelMouseEntered()
     {
-        if (_isSelected)
+        if (IsSelected)
             return;
         
         Highlight(true);
@@ -51,7 +52,7 @@ public class AttackTypeBox : MarginContainer
     {
         _attackTypePanel.SetClicked(false);
         
-        if (_isSelected)
+        if (IsSelected)
             return;
         
         Highlight(false);
@@ -68,6 +69,6 @@ public class AttackTypeBox : MarginContainer
         
         _attackTypePanel.SetClicked(false);
         EmitSignal(nameof(Clicked));
-        SetSelected(!_isSelected);
+        SetSelected(!IsSelected);
     }
 }
