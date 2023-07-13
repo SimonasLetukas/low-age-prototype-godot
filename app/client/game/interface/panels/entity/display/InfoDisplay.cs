@@ -3,15 +3,6 @@ using System;
 
 public class InfoDisplay : MarginContainer
 {
-    public enum View
-    {
-        UnitStats,
-        StructureStats,
-        AttackMelee,
-        AttackRanged,
-        Ability
-    }
-    
     [Signal] public delegate void AbilitiesClosed();
     [Signal] public delegate void AbilityTextResized();
 

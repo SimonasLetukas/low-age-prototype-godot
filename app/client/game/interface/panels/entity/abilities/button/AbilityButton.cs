@@ -2,6 +2,8 @@ using Godot;
 
 public class AbilityButton : NinePatchRect
 {
+    public const string ScenePath = @"res://app/client/game/interface/panels/entity/abilities/button/AbilityButton.tscn";
+    
     [Export] public Texture Icon { get; set; }
     [Export] public Texture TextureNormal { get; set; }
     [Export] public Texture TextureClicked { get; set; }
@@ -9,8 +11,8 @@ public class AbilityButton : NinePatchRect
     [Signal] public delegate void Hovering(bool started, AbilityButton abilityButton);
     [Signal] public delegate void Clicked(AbilityButton abilityButton);
 
-    private bool _isSelected = false;
-    private string _id = string.Empty;
+    public bool IsSelected { get; private set; } = false;
+    public string Id { get; private set; } = string.Empty;
 
     public override void _Ready()
     {
@@ -21,12 +23,12 @@ public class AbilityButton : NinePatchRect
         Connect("gui_input", this, nameof(OnAbilityButtonGuiInput));
     }
 
-    public void SetId(string id) => _id = id;
+    public void SetId(string id) => Id = id;
 
     public void SetSelected(bool to)
     {
-        _isSelected = to;
-        Highlight(_isSelected);
+        IsSelected = to;
+        Highlight(IsSelected);
     }
 
     public void SetClicked(bool to)
@@ -42,8 +44,9 @@ public class AbilityButton : NinePatchRect
         }
     }
 
-    private void SetIcon(Texture icon)
+    public void SetIcon(Texture icon)
     {
+        Icon = icon;
         GetNode<TextureRect>(nameof(TextureRect)).Texture = icon;
         GetNode<TextureRect>($"{nameof(TextureRect)}/Shadow").Texture = icon;
     }
@@ -56,7 +59,7 @@ public class AbilityButton : NinePatchRect
 
     private void OnAbilityButtonMouseEntered()
     {
-        if (_isSelected)
+        if (IsSelected)
             return;
         
         Highlight(true);
@@ -67,7 +70,7 @@ public class AbilityButton : NinePatchRect
     {
         SetClicked(false);
         
-        if (_isSelected)
+        if (IsSelected)
             return;
         
         Highlight(false);

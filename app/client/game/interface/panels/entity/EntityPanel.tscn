@@ -1,0 +1,252 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://app/client/game/interface/panels/entity/EntityPanel.cs" type="Script" id=1]
+[ext_resource path="res://assets/fonts/Karla-SemiBold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://app/client/game/interface/panels/entity/abilities/Abilities.cs" type="Script" id=3]
+[ext_resource path="res://app/client/game/interface/panels/entity/abilities/button/AbilityButton.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/sprites/interface/panel.png" type="Texture" id=9]
+[ext_resource path="res://app/client/game/interface/panels/entity/display/InfoDisplay.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/sprites/interface/stats-panel.png" type="Texture" id=13]
+[ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=14]
+[ext_resource path="res://app/client/game/interface/panels/entity/conditions/box/ConditionBox.tscn" type="PackedScene" id=15]
+
+[sub_resource type="DynamicFont" id=1]
+size = 15
+font_data = ExtResource( 2 )
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform vec4 outline_color : hint_color;
+uniform bool enabled;
+
+const int intensity = 250;
+const float precision = 0.0065;
+
+varying vec2 o;
+varying vec2 f;
+
+void vertex()
+{
+	o = VERTEX;
+	vec2 uv = (UV - 0.5);
+	VERTEX += uv * float(intensity);
+	f = VERTEX;
+}
+
+void fragment()
+{	
+	vec4 outline_color_changing = outline_color + ((sin(TIME * 3.5) + 1.0) / 2.0) - 0.08;
+	outline_color_changing.a = 1.0;
+	
+	ivec2 t = textureSize(TEXTURE, 0);
+	vec2 regular_uv;
+	regular_uv.x = UV.x + (f.x - o.x)/float(t.x);
+	regular_uv.y = UV.y + (f.y - o.y)/float(t.y);
+	
+	vec4 regular_color = texture(TEXTURE, regular_uv);
+	if((regular_uv.x < 0.0 || regular_uv.x > 1.0) || (regular_uv.y < 0.0 || regular_uv.y > 1.0) || regular_color.a <=0.01){
+		regular_color = vec4(0.0); 
+	}
+	
+	vec2 ps = TEXTURE_PIXEL_SIZE * float(intensity) * precision;
+	
+	vec4 final_color = regular_color;
+	if (regular_color.a <= 1.0 && enabled)
+	{
+		for(int x = -1; x <= 1; x += 1){
+			for(int y = -1; y <= 1; y += 1){
+				//Get the X and Y offset from this
+				if (x==0 && y==0)
+					continue;
+					
+				vec2 outline_uv = regular_uv + vec2(float(x) * ps.x, float(y) * ps.y); 
+				
+				//Sample here, if we are out of bounds then fail
+				vec4 outline_sample = texture(TEXTURE, outline_uv);
+				if((outline_uv.x < 0.0 || outline_uv.x > 1.0) || (outline_uv.y < 0.0 || outline_uv.y > 1.0)){
+					//We aren't a real color
+					outline_sample = vec4(0);
+				}
+				
+				//Is our sample empty? Is there something nearby?
+				if(outline_sample.a > final_color.a && outline_sample.a > 0.9){
+					final_color = outline_color_changing;
+				}
+			}
+		}
+	}
+	COLOR = final_color; 
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = SubResource( 2 )
+shader_param/outline_color = Color( 0, 0, 0, 1 )
+shader_param/enabled = false
+
+[node name="EntityPanel" type="Control"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -272.0
+margin_top = -719.0
+margin_bottom = 67.0001
+mouse_filter = 2
+theme = ExtResource( 14 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 500.0 ]
+}
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -272.0
+margin_top = -257.0
+margin_bottom = 91.0
+texture = ExtResource( 13 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InfoDisplayBackground" type="NinePatchRect" parent="Background"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -268.0
+margin_top = -264.0
+margin_right = -202.0
+margin_bottom = -205.0
+rect_scale = Vector2( 4, 4 )
+texture = ExtResource( 9 )
+patch_margin_left = 32
+patch_margin_top = 18
+patch_margin_right = 32
+patch_margin_bottom = 18
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Conditions" type="GridContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -136.0
+margin_top = -281.0
+margin_right = 6.10352e-05
+margin_bottom = -257.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 0
+custom_constants/vseparation = 4
+custom_constants/hseparation = 4
+columns = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConditionBox5" parent="Conditions" instance=ExtResource( 15 )]
+margin_right = 24.0
+margin_bottom = 24.0
+
+[node name="ConditionBox6" parent="Conditions" instance=ExtResource( 15 )]
+margin_left = 28.0
+margin_right = 52.0
+margin_bottom = 24.0
+
+[node name="EntityName" type="MarginContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -252.0
+margin_top = -253.0
+margin_right = 3.05176e-05
+margin_bottom = -219.0
+custom_constants/margin_right = 18
+custom_constants/margin_top = 9
+custom_constants/margin_bottom = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameLabel" type="Label" parent="EntityName"]
+margin_top = 9.0
+margin_right = 234.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 0, 4 )
+custom_colors/font_color = Color( 0.756863, 0.843137, 0.87451, 1 )
+custom_constants/line_spacing = -2
+custom_fonts/font = SubResource( 1 )
+text = "Big Bad Bull"
+align = 2
+valign = 2
+
+[node name="Shadow" type="Label" parent="EntityName/NameLabel"]
+self_modulate = Color( 0, 0, 0, 1 )
+show_behind_parent = true
+margin_left = 2.0
+margin_right = 236.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 0, 4 )
+custom_constants/line_spacing = -2
+custom_fonts/font = SubResource( 1 )
+text = "Big Bad Bull"
+align = 2
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -268.0
+margin_top = -213.0
+margin_right = -12.0
+margin_bottom = 59.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+custom_constants/separation = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Abilities" type="HBoxContainer" parent="Panel"]
+margin_right = 256.0
+margin_bottom = 40.0
+grow_horizontal = 0
+rect_min_size = Vector2( 0, 40 )
+custom_constants/separation = 4
+alignment = 2
+script = ExtResource( 3 )
+AbilityIconPaths = {
+"rev_slave_build": "res://assets/icons/icon_ability_build.png",
+"slave_build": "res://assets/icons/icon_ability_build.png",
+"slave_manual_labour": "res://assets/icons/icon_ability_build.png"
+}
+
+[node name="AbilityButton" parent="Panel/Abilities" instance=ExtResource( 8 )]
+material = SubResource( 3 )
+margin_left = 216.0
+margin_right = 256.0
+margin_bottom = 40.0
+
+[node name="InfoDisplay" parent="Panel" instance=ExtResource( 10 )]
+margin_top = 44.0
+margin_right = 256.0
+margin_bottom = 272.0
+
+[node name="Tween" type="Tween" parent="."]
