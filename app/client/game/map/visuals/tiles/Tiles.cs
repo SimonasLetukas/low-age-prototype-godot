@@ -162,9 +162,9 @@ public class Tiles : Node2D
             new Vector2(_mapSize.x + _mountainsFillOffset, _mapSize.y + _mountainsFillOffset));
     }
 
-    private void ClearPath() => _path.Clear();
+    public void ClearPath() => _path.Clear();
     
-    private void ClearAvailableTiles() => _availableTiles.Clear();
+    public void ClearAvailableTiles() => _availableTiles.Clear();
 
     private void ClearTilemaps()
     {

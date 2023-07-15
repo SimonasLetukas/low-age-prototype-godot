@@ -14,9 +14,10 @@ public class Entities : YSort
     
     [Signal] public delegate void NewEntityFound(Entity entity);
 
+    public bool EntityMoving { get; private set; } = false;
+    public Entity SelectedEntity { get; private set; } = null;
+
     private Vector2 _hoveredEntityPosition = Vector2.Inf;
-    private Entity _selectedEntity = null;
-    private bool _entityMoving = false;
     private Godot.Collections.Dictionary<Vector2, Entity> _entitiesByMapPositions = new Godot.Collections.Dictionary<Vector2, Entity>();
     private Godot.Collections.Dictionary<Entity, Vector2> _mapPositionsByEntities = new Godot.Collections.Dictionary<Entity, Vector2>();
 
@@ -44,30 +45,30 @@ public class Entities : YSort
 
     public void SelectEntity(Entity entity)
     {
-        if (_entityMoving) 
+        if (EntityMoving) 
             return;
         
         if (IsEntitySelected())
-            _selectedEntity.SetSelected(false);
+            SelectedEntity.SetSelected(false);
 
-        _selectedEntity = entity;
-        _selectedEntity.SetSelected(true);
+        SelectedEntity = entity;
+        SelectedEntity.SetSelected(true);
     }
 
-    public void DeselectEntity(Entity entity)
+    public void DeselectEntity()
     {
         if (IsEntitySelected() is false) 
             return;
         
-        _selectedEntity.SetSelected(false);
-        _selectedEntity = null;
+        SelectedEntity.SetSelected(false);
+        SelectedEntity = null;
     }
 
-    public bool IsEntitySelected() => _selectedEntity != null;
+    public bool IsEntitySelected() => SelectedEntity != null;
 
     public bool TryHoveringEntity(Vector2 at)
     {
-        if (_entityMoving)
+        if (EntityMoving)
             return false;
 
         if (_hoveredEntityPosition.Equals(at))
@@ -93,7 +94,7 @@ public class Entities : YSort
 
     public Entity GetHoveredEntity()
     {
-        if (_entityMoving)
+        if (EntityMoving)
             return null;
 
         return _entitiesByMapPositions.ContainsKey(_hoveredEntityPosition) 
@@ -116,7 +117,7 @@ public class Entities : YSort
         _mapPositionsByEntities[entity] = targetPosition;
         _entitiesByMapPositions.Remove(startPosition);
         _entitiesByMapPositions[targetPosition] = entity;
-        _entityMoving = true;
+        EntityMoving = true;
         entity.MoveUntilFinished(globalPath);
     }
     
@@ -163,6 +164,6 @@ public class Entities : YSort
 
     private void OnEntityFinishedMoving(Entity entity)
     {
-        _entityMoving = false;
+        EntityMoving = false;
     }
 }

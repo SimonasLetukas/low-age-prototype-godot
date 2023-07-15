@@ -69,9 +69,9 @@ public class Camera : Camera2D
         SetLimits();
     }
 
-    public void OnMouseDragged(Vector2 by) => Position += by * Zoom;
+    internal void OnMouseDragged(Vector2 by) => Position += by * Zoom;
 
-    public void OnMouseTakingControl(bool flag) => _cameraIsMoving = flag;
+    internal void OnMouseTakingControl(bool flag) => _cameraIsMoving = flag;
 
     private void SetLimits()
     {

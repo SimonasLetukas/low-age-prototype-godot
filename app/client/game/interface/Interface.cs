@@ -16,6 +16,7 @@ public class Interface : CanvasLayer
         foreach (var control in GetChildren().OfType<Control>())
         {
             GD.Print(control.Name);
+            // TODO there are mouse filters disabled on the control nodes for these signals to activate
             control.Connect("mouse_entered", this, nameof(OnControlMouseEntered), new Array { control });
             control.Connect("mouse_exited", this, nameof(OnControlMouseExited), new Array { control });
         }
@@ -42,7 +43,7 @@ public class Interface : CanvasLayer
         EmitSignal(nameof(MouseExited));
     }
 
-    private void OnMapNewTileHovered(Vector2 tileHovered, Constants.Game.Terrain terrain)
+    internal void OnMapNewTileHovered(Vector2 tileHovered, Constants.Game.Terrain terrain)
     {
         string coordinatesText;
         string terrainText;

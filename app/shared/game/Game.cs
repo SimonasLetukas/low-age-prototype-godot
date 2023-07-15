@@ -15,13 +15,12 @@ public class Game : Node2D
     /// <summary>
     /// Report that this client has done loading
     /// </summary>
-    public void MarkAsLoaded()
+    protected void MarkAsLoaded()
     {
         if (GetTree().IsNetworkServer()) 
             return;
         
-        RpcId(Constants.ServerId, "OnClientLoaded", GetTree().GetNetworkUniqueId());
-        // TODO find a way to not have the method in string and use nameof() instead 
+        RpcId(Constants.ServerId, nameof(ServerGame.OnClientLoaded), GetTree().GetNetworkUniqueId());
     }
 
     /// <summary>
@@ -35,9 +34,8 @@ public class Game : Node2D
         if (GetTree().IsNetworkServer()) 
             return;
         
-        RpcId(Constants.ServerId, "OnNewUnitPosition", GetTree().GetNetworkUniqueId(),
+        RpcId(Constants.ServerId, nameof(ServerGame.OnNewUnitPosition), GetTree().GetNetworkUniqueId(),
             entityPosition, globalPath, path);
-        // TODO find a way to not have the method in string and use nameof() instead 
     }
 
     #endregion
@@ -45,12 +43,12 @@ public class Game : Node2D
     #region Callbacks from the server
 
     [RemoteSync]
-    protected void GameEnded()
+    protected virtual void GameEnded()
     {
     }
 
     [RemoteSync]
-    protected void OnUnitPositionUpdated(Vector2 entityPosition, Vector2[] globalPath, Vector2[] path)
+    protected virtual void OnUnitPositionUpdated(Vector2 entityPosition, Vector2[] globalPath, Vector2[] path)
     {
     }
 

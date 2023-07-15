@@ -99,9 +99,9 @@ public class Mouse : Node2D
         }
     }
     
-    public void OnInterfaceMouseEntered() => _mouseIsOnUi = true;
+    internal void OnInterfaceMouseEntered() => _mouseIsOnUi = true;
 
-    public void OnInterfaceMouseExited() => _mouseIsOnUi = false;
+    internal void OnInterfaceMouseExited() => _mouseIsOnUi = false;
 
     private void SetCursorToArrow() => Input.SetCustomMouseCursor(_arrowCursor);
 
