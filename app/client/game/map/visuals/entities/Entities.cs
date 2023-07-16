@@ -24,7 +24,7 @@ public class Entities : YSort
     public void Initialize()
     {
         var units = GetNode<YSort>("Units");
-        foreach (UnitBase unit in units.GetChildren())
+        foreach (var unit in units.GetChildren().OfType<UnitBase>())
         {
             if (DebugEnabled) GD.Print($"{nameof(Entities)}: initializing {unit.Name}.");
 
@@ -130,7 +130,7 @@ public class Entities : YSort
         var intersections = GetWorld2d().DirectSpaceState.IntersectPoint(globalPosition, 32, 
             new Array(), 0x7FFFFFFF, true, true);
 
-        foreach (KinematicCollision2D node in intersections)
+        foreach (var node in intersections.OfType<KinematicCollision2D>())
         {
             if ((node.Collider is Area2D area) is false 
                 || (area.GetParent() is Entity entity) is false)

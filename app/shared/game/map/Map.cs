@@ -5,13 +5,16 @@ using Godot;
 /// </summary>
 public class Map : Node2D
 {
+    [Export] public bool DebugEnabled { get; set; } = true;
+    
     [Signal] public delegate void StartingPositionsDeclared(Vector2[] startingPositions);
     
-    public bool DebugEnabled { get; set; } = false;
     protected Pathfinding Pathfinding;
 
     public override void _Ready()
     {
+        if (DebugEnabled) GD.Print($"{nameof(Map)}: entering");
         Pathfinding = GetNode<Pathfinding>(nameof(Pathfinding)); // TODO not tested if node can be found
+        if (DebugEnabled) GD.Print($"{nameof(Map)}: found node {nameof(Pathfinding)} '{Pathfinding}'");
     }
 }

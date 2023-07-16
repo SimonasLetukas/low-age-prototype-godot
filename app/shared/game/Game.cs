@@ -17,9 +17,12 @@ public class Game : Node2D
     /// </summary>
     protected void MarkAsLoaded()
     {
+        GD.Print($"{nameof(Game)}: {nameof(MarkAsLoaded)} called.");
+        
         if (GetTree().IsNetworkServer()) 
             return;
         
+        GD.Print($"{nameof(Game)}: calling {nameof(ServerGame.OnClientLoaded)} as RPC.");
         RpcId(Constants.ServerId, nameof(ServerGame.OnClientLoaded), GetTree().GetNetworkUniqueId());
     }
 

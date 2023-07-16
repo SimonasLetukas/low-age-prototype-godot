@@ -61,12 +61,14 @@ public class Client : Network
 
     public void StartGame() // TODO not tested
     {
+        GD.Print($"{nameof(Client)}: {nameof(StartGame)} called for {LocalPlayerName}.");
         Rpc(nameof(OnStartGame));
     }
 
     [RemoteSync]
     public void OnStartGame() // TODO not tested
     {
+        GD.Print($"{nameof(Client)}: {nameof(OnStartGame)} called for {LocalPlayerName}.");
         EmitSignal(nameof(GameStarted));
     }
 }

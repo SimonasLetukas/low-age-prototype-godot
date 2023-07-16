@@ -69,7 +69,9 @@ public class Data : Node
 
     public Tile GetTile(Vector2 at) => Tiles.SingleOrDefault(x => x.Position.Equals(at));
 
-    public Constants.Game.Terrain GetTerrain(Vector2 at) => GetTile(at).Terrain;
+    public Constants.Game.Terrain GetTerrain(Vector2 at) => at.IsInBoundsOf(MapSize) 
+        ? GetTile(at).Terrain 
+        : Constants.Game.Terrain.Mountains;
 
     public void SetTerrain(Vector2 at, Constants.Game.Terrain terrain)
     {
@@ -118,6 +120,7 @@ public class Data : Node
 
     public void Synchronise()
     {
+        GD.Print($"{nameof(Data)}.{nameof(Synchronise)}: sending RPC request to synchronise data.");
         Rpc(nameof(OnSynchroniseRequested),
             JsonConvert.SerializeObject(MapSize),
             JsonConvert.SerializeObject(Tiles));
@@ -126,6 +129,8 @@ public class Data : Node
     [Remote]
     public void OnSynchroniseRequested(string mapSize, string tiles)
     {
+        GD.Print($"{nameof(Data)}.{nameof(OnSynchroniseRequested)}: synchronisation request received with " +
+                 $"{nameof(mapSize)} '{mapSize}', {nameof(tiles)} '{tiles}'.");
         MapSize = JsonConvert.DeserializeObject<Vector2>(mapSize);
         Tiles = JsonConvert.DeserializeObject<List<Tile>>(tiles);
         EmitSignal(nameof(Synchronised));

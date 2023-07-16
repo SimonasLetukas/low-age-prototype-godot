@@ -1,8 +1,11 @@
 using Godot;
 using System;
+using Newtonsoft.Json;
 
 public class ClientGame : Game
 {
+    public const string ScenePath = @"res://app/client/game/ClientGame.tscn";
+    
     private ClientMap _map;
     private Camera _camera;
     private Mouse _mouse;
@@ -32,6 +35,8 @@ public class ClientGame : Game
 
     private void ConnectSignals()
     {
+        GD.Print($"{nameof(ClientGame)}.{nameof(ConnectSignals)}: connecting signals.");
+        
         _mouse.Connect(nameof(Mouse.LeftReleasedWithoutDrag), _map, nameof(ClientMap.OnMouseLeftReleasedWithoutDrag));
         _mouse.Connect(nameof(Mouse.RightReleasedWithoutExamine), _map, nameof(ClientMap.OnMouseRightReleasedWithoutExamine));
 
@@ -59,7 +64,7 @@ public class ClientGame : Game
     [RemoteSync]
     protected override void GameEnded()
     {
-        GD.Print($"{nameof(ClientGame)}: game ended, returning to main menu.");
+        GD.Print($"{nameof(ClientGame)}.{nameof(GameEnded)}: returning to main menu.");
         Client.Instance.ResetNetwork();
         GetTree().ChangeScene(MainMenu.ScenePath);
     }
@@ -72,14 +77,17 @@ public class ClientGame : Game
 
     private void OnDataSynchronized()
     {
-        // TODO these could listen to data events themselves
+        GD.Print($"{nameof(ClientGame)}.{nameof(OnDataSynchronized)}: event received.");
         var mapSize = _data.MapSize;
         _camera.OnCreatorMapSizeDeclared(mapSize);
         _interface.OnMapCreatorMapSizeDeclared(mapSize);
+        // TODO these could listen to data events themselves
     }
 
     private void OnMapStartingPositionsDeclared(Vector2[] startingPositions)
     {
+        GD.Print($"{nameof(ClientGame)}.{nameof(OnMapStartingPositionsDeclared)}: event received with " +
+                 $"{nameof(startingPositions)} '{JsonConvert.SerializeObject(startingPositions)}'.");
         GetTree().Paused = false;
         // TODO
     }

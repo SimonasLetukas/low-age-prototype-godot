@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Newtonsoft.Json;
+using Object = Godot.Object;
 
 public class Pathfinding : Node // TODO not tested
 {
@@ -16,17 +19,20 @@ public class Pathfinding : Node // TODO not tested
     };
     
     // Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/DOCUMENTATION.md
-    private readonly DijkstraMap _pathfinding = new DijkstraMap();
+    private DijkstraMap _pathfinding = new DijkstraMap();
 
     private Vector2 _previousPosition = Vector2.Inf;
     private float _previousRange = -1.0f;
 
     public void Initialize(Vector2 mapSize) // TODO not tested if this works without ready, especially caching
     {
+	    GD.Print($"{nameof(Pathfinding)}.{nameof(Initialize)}: started.");
+	    
+	    _pathfinding = new DijkstraMap();
+	    
 	    MapSize = mapSize;
 	    
 	    PointIdsByPositions = _pathfinding.AddSquareGrid(
-		    0,
 		    new Rect2(0, 0, MapSize.x, MapSize.y),
 		    (int) Constants.Game.Terrain.Grass,
 		    1.0f,
@@ -95,25 +101,23 @@ public class Pathfinding : Node // TODO not tested
     }
 }
 
-public class DijkstraMap : Node // TODO not tested whether this works without scene + all calls
+public class DijkstraMap : Node
 {
-	private Script _dijkstraMap;
+	private Object _dijkstraMap; 
 
 	public DijkstraMap()
 	{
-		_dijkstraMap = GD.Load("res://addons/dijkstra-map/Dijkstra_map_library/nativescript.gdns") as Script;
-	}
-	
-	public override void _Ready()
-	{
-		_dijkstraMap = GD.Load("res://addons/dijkstra-map/Dijkstra_map_library/nativescript.gdns") as Script;
+		var dijkstraMapScript = GD.Load("res://addons/dijkstra-map/Dijkstra_map_library/nativescript.gdns") as NativeScript;
+		_dijkstraMap = dijkstraMapScript?.New() as Object;
+		if (_dijkstraMap is null) throw new ArgumentNullException($"{nameof(_dijkstraMap)} cannot be null.");
 	}
 
-	public Godot.Collections.Dictionary<Vector2, int> AddSquareGrid(int pointOffset, Rect2 bounds, int terrain, float orthCost,
+	public Godot.Collections.Dictionary<Vector2, int> AddSquareGrid(Rect2 bounds, int terrain, float orthCost,
 		float diagCost)
 	{
-		return _dijkstraMap.Call("add_square_grid", pointOffset, bounds, terrain, orthCost, diagCost) 
-			as Godot.Collections.Dictionary<Vector2, int>;
+		var dictionary = _dijkstraMap.Call("add_square_grid", bounds, terrain, orthCost, diagCost) 
+			as Godot.Collections.Dictionary;
+		return new Godot.Collections.Dictionary<Vector2, int>(dictionary);
 	}
 
 	public void SetTerrainForPoint(int pointId, int terrain)

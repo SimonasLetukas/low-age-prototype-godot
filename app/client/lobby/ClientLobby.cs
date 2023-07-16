@@ -12,7 +12,7 @@ public class ClientLobby : Lobby
         base._Ready();
 
         _startGameButton = GetNode<Button>("StartGame");
-        _startGameButton.Connect(nameof(_startGameButton.Pressed), this, nameof(OnStartGamePressed));
+        _startGameButton.Connect(nameof(_startGameButton.Pressed).ToLower(), this, nameof(OnStartGamePressed));
         
         Client.Instance.Connect(nameof(Client.GameStarted), this, nameof(OnGameStarted));
 
@@ -25,12 +25,13 @@ public class ClientLobby : Lobby
 
     private void OnGameStarted()
     {
-        GD.Print("Game starting for client...");
-        //GetTree().ChangeScene(ClientGame.ScenePath); todo
+        GD.Print($"{nameof(ClientLobby)}: game starting for client...");
+        GetTree().ChangeScene(ClientGame.ScenePath);
     }
 
     private void OnStartGamePressed()
     {
+        GD.Print($"{nameof(ClientLobby)}: start game button pressed.");
         Client.Instance.StartGame();
     }
 }

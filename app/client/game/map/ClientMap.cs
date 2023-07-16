@@ -9,7 +9,7 @@ public class ClientMap : Map
 
     private readonly ICollection<Vector2> _startingPositions = new List<Vector2>();
     private Vector2 _mapSize = Vector2.Inf;
-    private Vector2 _tileHovered = Vector2.Inf;
+    private Vector2 _tileHovered = Vector2.Zero;
     private Tiles _tileMap;
     private Entities _entities;
     private Data _data;
@@ -136,6 +136,8 @@ public class ClientMap : Map
 
     private void OnDataSynchronized()
     {
+        if (DebugEnabled) GD.Print($"{nameof(ClientMap)}.{nameof(OnDataSynchronized)}: event received.");
+
         OnMapCreatorMapSizeDeclared(_data.MapSize);
         
         for (var y = 0; y < _mapSize.y; y++)
