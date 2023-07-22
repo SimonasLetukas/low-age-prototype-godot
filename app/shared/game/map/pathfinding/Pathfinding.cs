@@ -5,7 +5,7 @@ using Godot;
 using Newtonsoft.Json;
 using Object = Godot.Object;
 
-public class Pathfinding : Node // TODO not tested
+public class Pathfinding : Node
 {
     public Vector2 MapSize { get; private set; }
     public Godot.Collections.Dictionary<Vector2, int> PointIdsByPositions { get; private set; }
@@ -24,7 +24,7 @@ public class Pathfinding : Node // TODO not tested
     private Vector2 _previousPosition = Vector2.Inf;
     private float _previousRange = -1.0f;
 
-    public void Initialize(Vector2 mapSize) // TODO not tested if this works without ready, especially caching
+    public void Initialize(Vector2 mapSize)
     {
 	    GD.Print($"{nameof(Pathfinding)}.{nameof(Initialize)}: started.");
 	    

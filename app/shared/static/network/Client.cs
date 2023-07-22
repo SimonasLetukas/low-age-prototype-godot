@@ -20,7 +20,7 @@ public class Client : Network
         }
     }
     
-    public bool JoinGame(string playerName, int playerFaction) // TODO not tested
+    public bool JoinGame(string playerName, int playerFaction)
     {
         LocalPlayerName = playerName;
         LocalPlayerFaction = playerFaction;
@@ -39,18 +39,18 @@ public class Client : Network
         return true;
     }
 
-    private void OnConnectedToServer() // TODO not tested
+    private void OnConnectedToServer()
     {
         GD.Print("Connected to server.");
     }
 
-    public void RegisterPlayer(int recipientId, int playerId, string playerName, int playerFaction) // TODO not tested
+    public void RegisterPlayer(int recipientId, int playerId, string playerName, int playerFaction)
     {
         RpcId(recipientId, nameof(OnRegisterPlayer), playerId, playerName, playerFaction);
     }
 
     [Remote]
-    public void OnRegisterPlayer(int playerId, string playerName, int playerFaction) // TODO not tested
+    public void OnRegisterPlayer(int playerId, string playerName, int playerFaction)
     {
         GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerFaction}");
         Data.Instance.AddPlayer(playerId, playerName, (Constants.Game.Faction) playerFaction);
@@ -59,14 +59,14 @@ public class Client : Network
         GD.Print($"Total players: {Data.Instance.Players.Count}");
     }
 
-    public void StartGame() // TODO not tested
+    public void StartGame()
     {
         GD.Print($"{nameof(Client)}: {nameof(StartGame)} called for {LocalPlayerName}.");
         Rpc(nameof(OnStartGame));
     }
 
     [RemoteSync]
-    public void OnStartGame() // TODO not tested
+    public void OnStartGame()
     {
         GD.Print($"{nameof(Client)}: {nameof(OnStartGame)} called for {LocalPlayerName}.");
         EmitSignal(nameof(GameStarted));

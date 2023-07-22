@@ -3,13 +3,13 @@ using System.Linq;
 
 public class Lobby : VBoxContainer
 {
-    public override void _Ready() // TODO: not tested
+    public override void _Ready()
     {
         Client.Instance.Connect(nameof(Client.PlayerAdded), this, nameof(OnPlayerAdded));
         Client.Instance.Connect(nameof(Network.PlayerRemoved), this, nameof(OnPlayerRemoved));
     }
 
-    private void OnPlayerAdded(int playerId) // TODO: not tested
+    private void OnPlayerAdded(int playerId)
     {
         GD.Print($"Adding player {playerId} to lobby.");
         
@@ -25,7 +25,7 @@ public class Lobby : VBoxContainer
         GD.Print($"Player {player.Name} ({player.Id}) successfully added to lobby.");
     }
 
-    private void OnPlayerRemoved(int playerId) // TODO: not tested
+    private void OnPlayerRemoved(int playerId)
     {
         GD.Print($"Removing player {playerId} from lobby.");
         

@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-public class ServerGame : Game // TODO not tested
+public class ServerGame : Game
 {
     public const string ScenePath = @"res://app/server/game/ServerGame.tscn";
     

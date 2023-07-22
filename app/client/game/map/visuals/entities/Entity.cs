@@ -9,7 +9,7 @@ public class Entity : Node2D
 
     [Signal] public delegate void FinishedMoving(Entity entity);
     
-    private ICollection<Vector2> _movePath;
+    private List<Vector2> _movePath;
     private bool _selected;
     private float _movementDuration;
     private Sprite _sprite;
@@ -63,7 +63,7 @@ public class Entity : Node2D
         _health.Visible = to;
     }
 
-    public void MoveUntilFinished(ICollection<Vector2> path)
+    public void MoveUntilFinished(List<Vector2> path)
     {
         path.Remove(path.First());
         _movePath = path;

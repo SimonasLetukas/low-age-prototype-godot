@@ -21,13 +21,13 @@ public class Camera : Camera2D
     private int _limitBottom;
     private Vector2 _viewportSize;
     private bool _cameraIsMoving = false;
-
+    
     public override void _Ready()
     {
         _viewportSize = GetViewport().Size;
 
         Position = new Vector2((float)_mapWidthPixels / 2, (float)_mapHeightPixels / 2);
-        Zoom = new Vector2(MaximumZoom, MinimumZoom);
+        Zoom = new Vector2(MaximumZoom, MaximumZoom);
 
         if (DebugEnabled)
         {
@@ -39,6 +39,7 @@ public class Camera : Camera2D
         SetLimits();
     }
 
+    // TODO force camera / map / unit positions into discrete values so that weird artifacts are avoided
     public override void _Process(float delta)
     {
         if (ZoomedIn()) ZoomIn();
@@ -83,7 +84,7 @@ public class Camera : Camera2D
     
     private bool ZoomedIn()
     {
-        if (Zoom.x >= MinimumZoom) return false;
+        if (Zoom.x <= MinimumZoom) return false;
         if (Input.IsActionJustReleased("ui_zoom_in") is false) return false;
         return true;
     }

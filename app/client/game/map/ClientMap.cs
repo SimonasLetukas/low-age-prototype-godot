@@ -33,7 +33,7 @@ public class ClientMap : Map
         GetHoveredEntity(mousePosition, mapPosition);
         if (_entities.IsEntitySelected())
         {
-            // TODO only if hovered tile changed from above, display path
+            // TODO optimization: only if hovered tile changed from above, display path
             var path = Pathfinding.FindPath(_tileHovered);
             _tileMap.SetPathTiles(path);
         }

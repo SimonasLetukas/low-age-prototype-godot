@@ -15,7 +15,7 @@ public class Network : Node
     /// <summary>
     /// Completely reset the game state and clear the network.
     /// </summary>
-    public void ResetNetwork() // TODO not tested
+    public void ResetNetwork()
     {
 	    var peer = GetTree().NetworkPeer as NetworkedMultiplayerENet;
 	    if (peer is null is false)
@@ -29,7 +29,7 @@ public class Network : Node
     /// <summary>
     /// Every network peer needs to clean up the disconnected client.
     /// </summary>
-    private void OnPlayerDisconnected(int playerId) // TODO not tested
+    private void OnPlayerDisconnected(int playerId)
     {
 	    GD.Print("Player disconnected: " + playerId);
 	    Data.Instance.RemovePlayer(playerId);

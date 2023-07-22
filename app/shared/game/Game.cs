@@ -53,6 +53,7 @@ public class Game : Node2D
     [RemoteSync]
     protected virtual void OnUnitPositionUpdated(Vector2 entityPosition, Vector2[] globalPath, Vector2[] path)
     {
+        GD.Print($"{nameof(Game)}: {nameof(OnUnitPositionUpdated)} called.");
     }
 
     #endregion

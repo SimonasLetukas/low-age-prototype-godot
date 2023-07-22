@@ -24,7 +24,7 @@ public class Entities : YSort
     public void Initialize()
     {
         var units = GetNode<YSort>("Units");
-        foreach (var unit in units.GetChildren().OfType<UnitBase>())
+        foreach (var unit in units.GetChildren().OfType<Node2D>())
         {
             if (DebugEnabled) GD.Print($"{nameof(Entities)}: initializing {unit.Name}.");
 
@@ -118,7 +118,7 @@ public class Entities : YSort
         _entitiesByMapPositions.Remove(startPosition);
         _entitiesByMapPositions[targetPosition] = entity;
         EntityMoving = true;
-        entity.MoveUntilFinished(globalPath);
+        entity.MoveUntilFinished(globalPath.ToList());
     }
     
     // TODO: seems like each entity has z_index of 0 and so this method doesn't work

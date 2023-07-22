@@ -36,7 +36,7 @@ public class MainMenu : VBoxContainer
         _playLocallyButton?.Connect(nameof(_playLocallyButton.Pressed).ToLower(), this, nameof(OnPlayLocallyPressed));
     }
 
-    private void ConnectToServer() // TODO use enum for faction instead of int
+    private void ConnectToServer()
     {
         PutConnectionMessage("Connecting to server");
         _connectButton.Disabled = true;

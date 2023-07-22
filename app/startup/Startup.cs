@@ -21,7 +21,7 @@ public class Startup : Node
         if (OS.HasFeature(Server))
         {
             GD.Print($"Starting as {Server}.");
-            // TODO
+            GetTree().ChangeScene(ServerStartup.ScenePath);
         }
         
         GD.Print($"Unidentified startup, starting as local {Client}.");

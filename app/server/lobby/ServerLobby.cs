@@ -5,7 +5,7 @@ public class ServerLobby : Lobby
 {
     public const string ScenePath = @"res://app/server/lobby/ServerLobby.tscn";
     
-    public override void _Ready()  // TODO not tested
+    public override void _Ready()
     {
         base._Ready();
         
@@ -21,7 +21,7 @@ public class ServerLobby : Lobby
         Client.Instance.Connect(nameof(Client.GameStarted), this, nameof(OnGameStarted));
     }
 
-    private void OnGameStarted() // TODO not tested
+    private void OnGameStarted()
     {
         GD.Print("Game starting for server...");
         GetTree().ChangeScene(ServerGame.ScenePath);

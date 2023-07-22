@@ -17,13 +17,13 @@ public class Server : Network
     /// <summary>
     /// Called by clients when they connect
     /// </summary>
-    public void RegisterSelf(int playerId, string playerName, int playerFaction) // TODO not tested
+    public void RegisterSelf(int playerId, string playerName, int playerFaction)
     {
         RpcId(Constants.ServerId, nameof(OnRegisterSelf), playerId, playerName, playerFaction);
     }
 
     [Remote]
-    public void OnRegisterSelf(int playerId, string playerName, int playerFaction) // TODO not tested
+    public void OnRegisterSelf(int playerId, string playerName, int playerFaction)
     {
         // Register this client with the server
         Client.Instance.OnRegisterPlayer(playerId, playerName, playerFaction);

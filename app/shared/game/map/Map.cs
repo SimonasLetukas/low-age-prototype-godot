@@ -14,7 +14,7 @@ public class Map : Node2D
     public override void _Ready()
     {
         if (DebugEnabled) GD.Print($"{nameof(Map)}: entering");
-        Pathfinding = GetNode<Pathfinding>(nameof(Pathfinding)); // TODO not tested if node can be found
+        Pathfinding = GetNode<Pathfinding>(nameof(Pathfinding));
         if (DebugEnabled) GD.Print($"{nameof(Map)}: found node {nameof(Pathfinding)} '{Pathfinding}'");
     }
 }

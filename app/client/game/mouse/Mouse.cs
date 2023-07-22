@@ -48,19 +48,10 @@ public class Mouse : Node2D
         {
 	        if (_cameraIsMoving)
 	        {
-		        // TODO test with map if the new logic works
-		        /*var travelVector = _previousPosition - _startPosition;
-		        if (travelVector.Length() > MinimumMouseDistanceToStartDrag)
-		        {*/
-			        var changeVector = _previousPosition - mousePos;
+		        var changeVector = _previousPosition - mousePos;
 			        EmitSignal(nameof(MouseDragged), changeVector);
 			        SetCursorToGrab();
 			        _previousPosition = mousePos;
-		        /*}
-		        else
-		        {
-			        _previousPosition = mousePos + travelVector;
-		        }*/
 	        }
 	        else
 	        {
@@ -68,7 +59,6 @@ public class Mouse : Node2D
 		        if (_mouseIsOnUi is false && initiationVector.Length() > MinimumMouseDistanceToStartDrag)
 		        {
 			        _previousPosition = mousePos;
-			        //_startPosition = mousePos;
 			        _cameraIsMoving = true;
 			        EmitSignal(nameof(TakingControl), true);
 		        }
@@ -80,7 +70,7 @@ public class Mouse : Node2D
 	        _cameraIsMoving = false;
 	        SetCursorToArrow();
 	        EmitSignal(nameof(TakingControl), false);
-	        var travelVector = _previousPosition - _startPosition;
+	        var travelVector = mousePos - _startPosition;
 	        if (travelVector.Length() <= MinimumMouseDistanceToStartDrag)
 	        {
 		        EmitSignal(nameof(LeftReleasedWithoutDrag));

@@ -31,6 +31,7 @@ public class ClientGame : Game
         ConnectSignals();
         //InitializeFakeMap();
         MarkAsLoaded();
+        //GetTree().Paused = false;
     }
 
     private void ConnectSignals()
