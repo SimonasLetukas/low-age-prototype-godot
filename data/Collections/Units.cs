@@ -14,8 +14,8 @@ namespace low_age_data.Collections
             return new List<Unit>
             {
                 new Unit(
-                    name: UnitName.Slave,
-                    displayName: nameof(UnitName.Slave),
+                    id: UnitId.Slave,
+                    displayName: nameof(UnitId.Slave),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -31,22 +31,22 @@ namespace low_age_data.Collections
                             minimumDistance: 1, 
                             maximumDistance: 1)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Biological
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Slave.Build,
-                        AbilityName.Slave.Repair,
-                        AbilityName.Slave.ManualLabour
+                        AbilityId.Slave.Build,
+                        AbilityId.Slave.Repair,
+                        AbilityId.Slave.ManualLabour
                     }),
 
                 new Unit(
-                    name: UnitName.Leader,
-                    displayName: nameof(UnitName.Leader),
+                    id: UnitId.Leader,
+                    displayName: nameof(UnitId.Leader),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -64,22 +64,22 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Biological, 
                             bonusAmount: 7)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Celestial
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Leader.AllForOne,
-                        AbilityName.Leader.MenacingPresence,
-                        AbilityName.Leader.OneForAll
+                        AbilityId.Leader.AllForOne,
+                        AbilityId.Leader.MenacingPresence,
+                        AbilityId.Leader.OneForAll
                     }),
 
                 new Unit(
-                    name: UnitName.Quickdraw,
-                    displayName: nameof(UnitName.Quickdraw),
+                    id: UnitId.Quickdraw,
+                    displayName: nameof(UnitId.Quickdraw),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -102,22 +102,22 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Light,
                             bonusAmount: 2)
                     },
-                    originalFaction: FactionName.Revelators, 
+                    originalFaction: FactionId.Revelators, 
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Biological,
                         CombatAttribute.Ranged
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Quickdraw.Doubleshot,
-                        AbilityName.Quickdraw.Cripple
+                        AbilityId.Quickdraw.Doubleshot,
+                        AbilityId.Quickdraw.Cripple
                     }),
 
                 new Unit(
-                    name: UnitName.Gorger,
-                    displayName: nameof(UnitName.Gorger),
+                    id: UnitId.Gorger,
+                    displayName: nameof(UnitId.Gorger),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -135,21 +135,21 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Biological,
                             bonusAmount: 3)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Biological
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Gorger.FanaticSuicide,
-                        AbilityName.Gorger.FanaticSuicidePassive
+                        AbilityId.Gorger.FanaticSuicide,
+                        AbilityId.Gorger.FanaticSuicidePassive
                     }),
 
                 new Unit(
-                    name: UnitName.Camou,
-                    displayName: nameof(UnitName.Camou),
+                    id: UnitId.Camou,
+                    displayName: nameof(UnitId.Camou),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -167,21 +167,21 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Armoured,
                             bonusAmount: 4)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Biological
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Camou.SilentAssassin,
-                        AbilityName.Camou.Climb
+                        AbilityId.Camou.SilentAssassin,
+                        AbilityId.Camou.Climb
                     }),
 
                 new Unit(
-                    name: UnitName.Shaman, 
-                    displayName: nameof(UnitName.Shaman),
+                    id: UnitId.Shaman, 
+                    displayName: nameof(UnitId.Shaman),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -204,21 +204,21 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Ranged,
                             bonusAmount: 9)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Biological,
                         CombatAttribute.Ranged
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shaman.WondrousGoo
+                        AbilityId.Shaman.WondrousGoo
                     }),
 
                 new Unit(
-                    name: UnitName.Pyre,
-                    displayName: nameof(UnitName.Pyre),
+                    id: UnitId.Pyre,
+                    displayName: nameof(UnitId.Pyre),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -241,22 +241,22 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Armoured,
                             bonusAmount: 8)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Mechanical,
                         CombatAttribute.Ranged
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Pyre.WallOfFlames,
-                        AbilityName.Pyre.PhantomMenace
+                        AbilityId.Pyre.WallOfFlames,
+                        AbilityId.Pyre.PhantomMenace
                     }),
 
                 new Unit(
-                    name: UnitName.BigBadBull,
-                    displayName: nameof(UnitName.BigBadBull).CamelCaseToWords(),
+                    id: UnitId.BigBadBull,
+                    displayName: nameof(UnitId.BigBadBull).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -274,21 +274,21 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Giant,
                             bonusAmount: 6)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Giant,
                         CombatAttribute.Biological
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.BigBadBull.UnleashTheRage
+                        AbilityId.BigBadBull.UnleashTheRage
                     },
                     size: 2),
 
                 new Unit(
-                    name: UnitName.Mummy,
-                    displayName: nameof(UnitName.Mummy),
+                    id: UnitId.Mummy,
+                    displayName: nameof(UnitId.Mummy),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -304,21 +304,21 @@ namespace low_age_data.Collections
                             minimumDistance: 1,
                             maximumDistance: 1)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Biological
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Mummy.SpawnRoach,
-                        AbilityName.Mummy.LeapOfHunger
+                        AbilityId.Mummy.SpawnRoach,
+                        AbilityId.Mummy.LeapOfHunger
                     }),
 
                 new Unit(
-                    name: UnitName.Roach,
-                    displayName: nameof(UnitName.Roach),
+                    id: UnitId.Roach,
+                    displayName: nameof(UnitId.Roach),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -336,21 +336,21 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Mechanical,
                             bonusAmount: 4)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Biological
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Roach.DegradingCarapace,
-                        AbilityName.Roach.CorrosiveSpit
+                        AbilityId.Roach.DegradingCarapace,
+                        AbilityId.Roach.CorrosiveSpit
                     }),
 
                 new Unit(
-                    name: UnitName.Parasite,
-                    displayName: nameof(UnitName.Parasite),
+                    id: UnitId.Parasite,
+                    displayName: nameof(UnitId.Parasite),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -366,20 +366,20 @@ namespace low_age_data.Collections
                             minimumDistance: 1,
                             maximumDistance: 1)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Celestial
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Parasite.ParalysingGrasp
+                        AbilityId.Parasite.ParalysingGrasp
                     }),
 
                 new Unit(
-                    name: UnitName.Horrior, 
-                    displayName: nameof(UnitName.Horrior),
+                    id: UnitId.Horrior, 
+                    displayName: nameof(UnitId.Horrior),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -398,21 +398,21 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Armoured,
                             bonusAmount: 4)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Biological
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Horrior.ExpertFormation,
-                        AbilityName.Horrior.Mount
+                        AbilityId.Horrior.ExpertFormation,
+                        AbilityId.Horrior.Mount
                     }),
 
                 new Unit(
-                    name: UnitName.Marksman,
-                    displayName: nameof(UnitName.Marksman),
+                    id: UnitId.Marksman,
+                    displayName: nameof(UnitId.Marksman),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -436,21 +436,21 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Ranged,
                             bonusAmount: 3)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Biological,
                         CombatAttribute.Ranged
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Marksman.CriticalMark
+                        AbilityId.Marksman.CriticalMark
                     }),
 
                 new Unit(
-                    name: UnitName.Surfer,
-                    displayName: nameof(UnitName.Surfer),
+                    id: UnitId.Surfer,
+                    displayName: nameof(UnitId.Surfer),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -469,20 +469,20 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Light,
                             bonusAmount: 4)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Biological
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Surfer.Dismount
+                        AbilityId.Surfer.Dismount
                     }),
 
                 new Unit(
-                    name: UnitName.Mortar, 
-                    displayName: nameof(UnitName.Mortar),
+                    id: UnitId.Mortar, 
+                    displayName: nameof(UnitId.Mortar),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -506,23 +506,23 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Armoured,
                             bonusAmount: 9)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Biological,
                         CombatAttribute.Ranged
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Mortar.DeadlyAmmunition,
-                        AbilityName.Mortar.Reload,
-                        AbilityName.Mortar.PiercingBlast
+                        AbilityId.Mortar.DeadlyAmmunition,
+                        AbilityId.Mortar.Reload,
+                        AbilityId.Mortar.PiercingBlast
                     }),
 
                 new Unit(
-                    name: UnitName.Hawk,
-                    displayName: nameof(UnitName.Hawk),
+                    id: UnitId.Hawk,
+                    displayName: nameof(UnitId.Hawk),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -541,22 +541,22 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Celestial,
                             bonusAmount: 3)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Biological
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Hawk.TacticalGoggles,
-                        AbilityName.Hawk.Leadership,
-                        AbilityName.Hawk.HealthKit
+                        AbilityId.Hawk.TacticalGoggles,
+                        AbilityId.Hawk.Leadership,
+                        AbilityId.Hawk.HealthKit
                     }),
 
                 new Unit(
-                    name: UnitName.Engineer,
-                    displayName: nameof(UnitName.Engineer),
+                    id: UnitId.Engineer,
+                    displayName: nameof(UnitId.Engineer),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -575,22 +575,22 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Mechanical,
                             bonusAmount: 5)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Biological
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Engineer.AssembleMachine,
-                        AbilityName.Engineer.Operate,
-                        AbilityName.Engineer.Repair
+                        AbilityId.Engineer.AssembleMachine,
+                        AbilityId.Engineer.Operate,
+                        AbilityId.Engineer.Repair
                     }),                
                 
                 new Unit(
-                    name: UnitName.Cannon,
-                    displayName: nameof(UnitName.Cannon),
+                    id: UnitId.Cannon,
+                    displayName: nameof(UnitId.Cannon),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -609,23 +609,23 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Structure,
                             bonusAmount: 20)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Mechanical,
                         CombatAttribute.Ranged
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Cannon.Assembling,
-                        AbilityName.Cannon.Machine,
-                        AbilityName.Cannon.HeatUp
+                        AbilityId.Cannon.Assembling,
+                        AbilityId.Cannon.Machine,
+                        AbilityId.Cannon.HeatUp
                     }),                
                 
                 new Unit(
-                    name: UnitName.Ballista,
-                    displayName: nameof(UnitName.Ballista),
+                    id: UnitId.Ballista,
+                    displayName: nameof(UnitId.Ballista),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -644,24 +644,24 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Giant,
                             bonusAmount: 6)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Mechanical,
                         CombatAttribute.Ranged
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Ballista.Assembling,
-                        AbilityName.Ballista.Machine,
-                        AbilityName.Ballista.AddOn,
-                        AbilityName.Ballista.Aim
+                        AbilityId.Ballista.Assembling,
+                        AbilityId.Ballista.Machine,
+                        AbilityId.Ballista.AddOn,
+                        AbilityId.Ballista.Aim
                     }),                
                 
                 new Unit(
-                    name: UnitName.Radar,
-                    displayName: nameof(UnitName.Radar),
+                    id: UnitId.Radar,
+                    displayName: nameof(UnitId.Radar),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -673,24 +673,24 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 8, hasCurrent: false, combatType: Stats.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Mechanical
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Radar.Assembling,
-                        AbilityName.Radar.Machine,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.Radar.ResonatingSweep,
-                        AbilityName.Radar.RadioLocation
+                        AbilityId.Radar.Assembling,
+                        AbilityId.Radar.Machine,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.Radar.ResonatingSweep,
+                        AbilityId.Radar.RadioLocation
                     }),                
                 
                 new Unit(
-                    name: UnitName.Vessel,
-                    displayName: nameof(UnitName.Vessel),
+                    id: UnitId.Vessel,
+                    displayName: nameof(UnitId.Vessel),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -709,23 +709,23 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Mechanical,
                             bonusAmount: 8)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Giant,
                         CombatAttribute.Mechanical
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Vessel.Machine,
-                        AbilityName.Vessel.AbsorbentField,
-                        AbilityName.Vessel.Fortify
+                        AbilityId.Vessel.Machine,
+                        AbilityId.Vessel.AbsorbentField,
+                        AbilityId.Vessel.Fortify
                     },
                     size: 2),                
                 
                 new Unit(
-                    name: UnitName.Omen,
-                    displayName: nameof(UnitName.Omen),
+                    id: UnitId.Omen,
+                    displayName: nameof(UnitId.Omen),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -751,15 +751,15 @@ namespace low_age_data.Collections
                             bonusTo: CombatAttribute.Biological,
                             bonusAmount: 5)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Celestial,
                         CombatAttribute.Ranged
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Omen.Rendition
+                        AbilityId.Omen.Rendition
                     })
             };
         }

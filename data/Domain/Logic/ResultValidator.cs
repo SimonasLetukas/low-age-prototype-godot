@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Logic
     /// </summary>
     public class ResultValidator : Validator
     {
-        public ResultValidator(EffectName searchEffect, IList<Condition> conditions) : base(conditions, $"{nameof(Validator)}.{nameof(ResultValidator)}")
+        public ResultValidator(EffectId searchEffect, IList<Condition> conditions) : base(conditions, $"{nameof(Validator)}.{nameof(ResultValidator)}")
         {
             SearchEffect = searchEffect;
         }
@@ -16,6 +16,6 @@ namespace low_age_data.Domain.Logic
         /// <summary>
         /// <see cref="Search"/> to collect the found targets from.
         /// </summary>
-        public EffectName SearchEffect { get; }
+        public EffectId SearchEffect { get; }
     }
 }

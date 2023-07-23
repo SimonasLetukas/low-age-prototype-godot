@@ -4,15 +4,15 @@ namespace low_age_data.Domain.Entities
 {
     public abstract class Entity
     {
-        protected Entity(EntityName name, string displayName, string description)
+        protected Entity(EntityId id, string displayName, string description)
         {
-            Name = name;
+            Id = id;
             DisplayName = displayName;
             Description = description;
         }
 
         [JsonProperty(Order = -3)]
-        public EntityName Name { get; }
+        public EntityId Id { get; }
         public string DisplayName { get; }
         public string Description { get; }
     }

@@ -14,13 +14,13 @@ namespace low_age_data.Domain.Behaviours
     public class MovementBlock : Behaviour
     {
         public MovementBlock(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
             IList<Area> blockedAreas,
             IList<IFilterItem> filters) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(MovementBlock)}", 
                 displayName, 
                 description, 

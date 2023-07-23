@@ -11,19 +11,19 @@ namespace low_age_data.Domain.Effects
     public class Search : Effect
     {
         public Search(
-            EffectName name,
+            EffectId id,
             Shape shape,
             IList<SearchFlag> searchFlags,
             IList<IFilterItem> filters,
-            IList<EffectName>? effects = null,
+            IList<EffectId>? effects = null,
             Location? location = null,
             IList<Validator>? validators = null,
-            bool? usedForValidator = null) : base(name, $"{nameof(Effect)}.{nameof(Search)}", validators ?? new List<Validator>())
+            bool? usedForValidator = null) : base(id, $"{nameof(Effect)}.{nameof(Search)}", validators ?? new List<Validator>())
         {
             Shape = shape;
             SearchFlags = searchFlags;
             Filters = filters;
-            Effects = effects ?? new List<EffectName>();
+            Effects = effects ?? new List<EffectId>();
             Location = location ?? Location.Inherited;
             UsedForValidator = usedForValidator ?? false;
         }
@@ -46,7 +46,7 @@ namespace low_age_data.Domain.Effects
         /// <summary>
         /// Effects executed on each <see cref="Entity"/> found.
         /// </summary>
-        public IList<EffectName> Effects { get; } 
+        public IList<EffectId> Effects { get; } 
         
         /// <summary>
         /// Indicates where the <see cref="Search"/> originates from. Can be used to display selection overlays. 

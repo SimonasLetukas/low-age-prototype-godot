@@ -11,16 +11,16 @@ namespace low_age_data.Domain.Behaviours
     public class MaskProvider : Behaviour
     {
         public MaskProvider(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
-            MaskName maskCreated,
+            MaskId maskCreated,
             Shape maskShape,
             EndsAt? endsAt = null,
             bool? ownerAllowed = null,
             bool? hasSameInstanceForAllOwners = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(MaskProvider)}", 
                 displayName,
                 description, 
@@ -36,7 +36,7 @@ namespace low_age_data.Domain.Behaviours
         /// <summary>
         /// Specifies what kind of <see cref="Mask"/> is created by this <see cref="MaskProvider"/>.
         /// </summary>
-        public MaskName MaskCreated { get; }
+        public MaskId MaskCreated { get; }
         
         /// <summary>
         /// The <see cref="Shape"/> and size of the <see cref="Mask"/> created.

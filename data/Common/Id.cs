@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Abilities;
 
 namespace low_age_data.Common
 {
-    public abstract class Name : ValueObject<Name>
+    public class Id : ValueObject<Id>
     {
         public override string ToString()
         {
             return Value;
         }
-
-        protected Name(string value)
+        
+        protected Id(string value)
         {
             Value = value;
         }
 
-        private string Value { get; }
+        private string Value { get; set; }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

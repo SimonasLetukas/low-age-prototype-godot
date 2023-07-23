@@ -9,17 +9,17 @@ namespace low_age_data.Domain.Abilities
     public class Ability
     {
         protected Ability(
-            AbilityName name,
+            AbilityId id,
             string type,
             TurnPhase turnPhase,
-            IList<ResearchName> researchNeeded,
+            IList<ResearchId> researchNeeded,
             bool hasButton,
             string displayName,
             string description,
             EndsAt? cooldown = null,
             IList<Payment>? cost = null)
         {
-            Name = name;
+            Id = id;
             Type = type;
             TurnPhase = turnPhase;
             ResearchNeeded = researchNeeded;
@@ -30,7 +30,7 @@ namespace low_age_data.Domain.Abilities
             Description = description;
         }
 
-        [JsonProperty(Order = -5)] public AbilityName Name { get; }
+        [JsonProperty(Order = -5)] public AbilityId Id { get; }
         [JsonProperty(Order = -4)] public string Type { get; }
         
         /// <summary>
@@ -41,7 +41,7 @@ namespace low_age_data.Domain.Abilities
         /// <summary>
         /// Required for all to be researched so that the <see cref="Ability"/> (and its button) would become active.
         /// </summary>
-        [JsonProperty(Order = -2)] public IList<ResearchName> ResearchNeeded { get; }
+        [JsonProperty(Order = -2)] public IList<ResearchId> ResearchNeeded { get; }
         
         /// <summary>
         /// If true, the button is available when the <see cref="Actor"/> is selected. Can be useful to hide certain

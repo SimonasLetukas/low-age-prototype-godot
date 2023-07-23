@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class ServerGame : Game
 {
     public const string ScenePath = @"res://app/server/game/ServerGame.tscn";
-    
+
     private List<int> _notLoadedPlayers;
     private Creator _creator;
 
@@ -87,6 +87,7 @@ public class ServerGame : Game
     {
         GD.Print($"{nameof(ServerGame)}.{nameof(OnCreatorGenerationEnded)}: generation ended, requesting " +
                  $"synchronisation with clients");
+
         Data.Instance.Synchronise();
     }
 

@@ -9,19 +9,19 @@ namespace low_age_data.Domain.Effects
     public class CreateEntity : Effect
     {
         public CreateEntity(
-            EffectName name,
-            EntityName entityToCreate,
-            IList<BehaviourName>? initialEntityBehaviours = null,
+            EffectId id,
+            EntityId entityToCreate,
+            IList<BehaviourId>? initialEntityBehaviours = null,
             Location? behaviourOwner = null,
-            IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(CreateEntity)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(CreateEntity)}", validators ?? new List<Validator>())
         {
             EntityToCreate = entityToCreate;
-            InitialEntityBehaviours = initialEntityBehaviours ?? new List<BehaviourName>();
+            InitialEntityBehaviours = initialEntityBehaviours ?? new List<BehaviourId>();
             BehaviourOwner = behaviourOwner;
         }
 
-        public EntityName EntityToCreate { get; }
-        public IList<BehaviourName> InitialEntityBehaviours { get; }
+        public EntityId EntityToCreate { get; }
+        public IList<BehaviourId> InitialEntityBehaviours { get; }
         
         /// <summary>
         /// If <see cref="Behaviour.OwnerAllowed"/> is true, this property can be used to specify the owner.

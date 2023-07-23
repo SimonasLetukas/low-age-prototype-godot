@@ -14,12 +14,6 @@
 
     public static class Game
     {
-        public enum Faction
-        {
-            Revelators,
-            Uee
-        }
-
         public enum Terrain
         {
             Grass,

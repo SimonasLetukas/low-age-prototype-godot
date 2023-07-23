@@ -9,10 +9,10 @@ namespace low_age_data.Domain.Effects
     public class Destroy : Effect
     {
         public Destroy(
-            EffectName name, 
+            EffectId id, 
             Location? target = null,
             IList<Validator>? validators = null,
-            bool blocksBehaviours = false) : base(name, $"{nameof(Effect)}.{nameof(Destroy)}", validators ?? new List<Validator>())
+            bool blocksBehaviours = false) : base(id, $"{nameof(Effect)}.{nameof(Destroy)}", validators ?? new List<Validator>())
         {
             Target = target ?? Location.Self;
             BlocksBehaviours = blocksBehaviours;

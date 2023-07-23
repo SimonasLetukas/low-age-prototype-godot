@@ -6,13 +6,13 @@ namespace low_age_data.Domain.Behaviours
     public class Wait : Behaviour
     {
         public Wait(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
             EndsAt endsAt,
-            BehaviourName? nextBehaviour = null) 
+            BehaviourId? nextBehaviour = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(Wait)}", 
                 displayName, 
                 description, 
@@ -22,6 +22,6 @@ namespace low_age_data.Domain.Behaviours
             NextBehaviour = nextBehaviour;
         }
 
-        public BehaviourName? NextBehaviour { get; }
+        public BehaviourId? NextBehaviour { get; }
     }
 }

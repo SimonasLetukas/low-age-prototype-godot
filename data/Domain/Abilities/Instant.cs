@@ -8,19 +8,19 @@ namespace low_age_data.Domain.Abilities
     public class Instant : Ability
     {
         public Instant(
-            AbilityName name,
+            AbilityId id,
             TurnPhase turnPhase,
             string displayName,
             string description,
-            IList<EffectName> effects,
+            IList<EffectId> effects,
             EndsAt? cooldown = null,
-            IList<ResearchName>? researchNeeded = null,
+            IList<ResearchId>? researchNeeded = null,
             IList<Payment>? cost = null)
             : base(
-                name,
+                id,
                 $"{nameof(Ability)}.{nameof(Instant)}",
                 turnPhase,
-                researchNeeded ?? new List<ResearchName>(),
+                researchNeeded ?? new List<ResearchId>(),
                 true,
                 displayName,
                 description,
@@ -30,6 +30,6 @@ namespace low_age_data.Domain.Abilities
             Effects = effects;
         }
 
-        public IList<EffectName> Effects { get; }
+        public IList<EffectId> Effects { get; }
     }
 }

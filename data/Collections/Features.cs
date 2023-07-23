@@ -14,11 +14,11 @@ namespace low_age_data.Collections
             return new List<Feature>
             {
                 new Feature(
-                    name: FeatureName.ShamanWondrousGoo,
-                    displayName: nameof(FeatureName.ShamanWondrousGoo).CamelCaseToWords(),
+                    id: FeatureId.ShamanWondrousGoo,
+                    displayName: nameof(FeatureId.ShamanWondrousGoo).CamelCaseToWords(),
                     description: "Any unit in this area is contaminated: has its vision and Attack Distance " +
                                  "reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn.",
-                    onCollisionEffect: EffectName.Shaman.WondrousGooSearch,
+                    onCollisionEffect: EffectId.Shaman.WondrousGooSearch,
                     collisionFilters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Unit)
@@ -26,8 +26,8 @@ namespace low_age_data.Collections
                     onlyOneCanExist: true),
 
                 new Feature(
-                    name: FeatureName.PyreCargo,
-                    displayName: nameof(FeatureName.PyreCargo).CamelCaseToWords(),
+                    id: FeatureId.PyreCargo,
+                    displayName: nameof(FeatureId.PyreCargo).CamelCaseToWords(),
                     description: "The cargo which is attached to Pyre leaves a path of flames when moved, which " +
                                  "stay until the start of the next Pyre's action or until death.",
                     canBeAttacked: true,
@@ -35,10 +35,10 @@ namespace low_age_data.Collections
                     onlyOneCanExist: true),
 
                 new Feature(
-                    name: FeatureName.PyreFlames,
-                    displayName: nameof(FeatureName.PyreFlames).CamelCaseToWords(),
+                    id: FeatureId.PyreFlames,
+                    displayName: nameof(FeatureId.PyreFlames).CamelCaseToWords(),
                     description: "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
-                    onCollisionEffect: EffectName.Pyre.WallOfFlamesDamage,
+                    onCollisionEffect: EffectId.Pyre.WallOfFlamesDamage,
                     collisionFilters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Unit)
@@ -46,8 +46,8 @@ namespace low_age_data.Collections
                     onlyOneCanExist: true),
 
                 new Feature(
-                    name: FeatureName.CannonHeatUpDangerZone,
-                    displayName: nameof(FeatureName.CannonHeatUpDangerZone).CamelCaseToWords(),
+                    id: FeatureId.CannonHeatUpDangerZone,
+                    displayName: nameof(FeatureId.CannonHeatUpDangerZone).CamelCaseToWords(),
                     description:
                     "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's " +
                     "owner has vision of this tile.",
@@ -56,33 +56,33 @@ namespace low_age_data.Collections
                     alliesCanStack: true),
 
                 new Feature(
-                    name: FeatureName.RadarResonatingSweep,
-                    displayName: nameof(FeatureName.RadarResonatingSweep).CamelCaseToWords(),
+                    id: FeatureId.RadarResonatingSweep,
+                    displayName: nameof(FeatureId.RadarResonatingSweep).CamelCaseToWords(),
                     description:
                     "These tiles are revealed for Radar's owner until the start of the next planning phase.",
                     size: 3,
                     alliesCanStack: true),
 
                 new Feature(
-                    name: FeatureName.RadarRedDot,
-                    displayName: nameof(FeatureName.RadarRedDot).CamelCaseToWords(),
+                    id: FeatureId.RadarRedDot,
+                    displayName: nameof(FeatureId.RadarRedDot).CamelCaseToWords(),
                     description: "This red dot shows where enemy unit is currently located inside the fog of war.",
                     size: 1),
 
                 new Feature(
-                    name: FeatureName.VesselFortification,
-                    displayName: nameof(FeatureName.VesselFortification).CamelCaseToWords(),
+                    id: FeatureId.VesselFortification,
+                    displayName: nameof(FeatureId.VesselFortification).CamelCaseToWords(),
                     description:
                     "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of " +
                     "Vessel's action.",
-                    periodicEffect: EffectName.Vessel.FortifySearch,
+                    periodicEffect: EffectId.Vessel.FortifySearch,
                     size: 7,
                     alliesCanStack: true,
                     onlyOneCanExist: false),
 
                 new Feature(
-                    name: FeatureName.OmenRendition,
-                    displayName: nameof(FeatureName.OmenRendition).CamelCaseToWords(),
+                    id: FeatureId.OmenRendition,
+                    displayName: nameof(FeatureId.OmenRendition).CamelCaseToWords(),
                     description:
                     "50% of all damage done to this rendition will be done as Pure Damage to the original " +
                     "target.",

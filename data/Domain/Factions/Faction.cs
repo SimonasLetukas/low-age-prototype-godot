@@ -10,14 +10,14 @@ namespace low_age_data.Domain.Factions
     public class Faction
     {
         public Faction(
-            FactionName name, 
+            FactionId id, 
             string displayName, 
             string description,
-            IList<ResourceName> availableResources,
-            IList<EntityName> startingEntities,
+            IList<ResourceId> availableResources,
+            IList<EntityId> startingEntities,
             IList<Payment>? bonusStartingResources = null)
         {
-            Name = name;
+            Id = id;
             DisplayName = displayName;
             Description = description;
             AvailableResources = availableResources;
@@ -25,14 +25,14 @@ namespace low_age_data.Domain.Factions
             BonusStartingResources = bonusStartingResources ?? new List<Payment>();
         }
 
-        public FactionName Name { get; }
+        public FactionId Id { get; }
         public string DisplayName { get; }
         public string Description { get; }
         
         /// <summary>
         /// List of <see cref="Resource"/>s to be kept track of for this <see cref="Faction"/>.
         /// </summary>
-        public IList<ResourceName> AvailableResources { get; }
+        public IList<ResourceId> AvailableResources { get; }
         
         /// <summary>
         /// List of <see cref="Entity"/> to be spawned on game start, in sequential order (could be relevant if
@@ -41,7 +41,7 @@ namespace low_age_data.Domain.Factions
         /// property, if available, otherwise keeping top-left discrete center position. The starting
         /// <see cref="Entity"/> is also rotated to face as many enemies as possible. 
         /// </summary>
-        public IList<EntityName> StartingEntities { get; }
+        public IList<EntityId> StartingEntities { get; }
         
         /// <summary>
         /// <see cref="Resource"/> added on game start to the default starting <see cref="Resource"/>s.

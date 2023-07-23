@@ -7,13 +7,13 @@ namespace low_age_data.Domain.Shared.Filters
     /// </summary>
     public class SpecificEntity : IFilterItem
     {
-        public SpecificEntity(EntityName value)
+        public SpecificEntity(EntityId value)
         {
             Type = $"{nameof(SpecificEntity)}";
             Value = value;
         }
         
         public string Type { get; }
-        public EntityName Value { get; }
+        public EntityId Value { get; }
     }
 }

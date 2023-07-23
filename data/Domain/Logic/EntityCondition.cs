@@ -10,7 +10,7 @@ namespace low_age_data.Domain.Logic
     {
         public EntityCondition(
             ConditionFlag conditionFlag,
-            EntityName conditionedEntity,
+            EntityId conditionedEntity,
             int? amountOfEntitiesRequired = null) : base($"{nameof(Condition)}.{nameof(EntityCondition)}", conditionFlag)
         {
             ConditionedEntity = conditionedEntity;
@@ -20,7 +20,7 @@ namespace low_age_data.Domain.Logic
         /// <summary>
         /// Specify the <see cref="Entity"/> to be targeted by this <see cref="EntityCondition"/>.
         /// </summary>
-        public EntityName ConditionedEntity { get; }
+        public EntityId ConditionedEntity { get; }
         
         /// <summary>
         /// How many entities should be found for this condition to return true. 

@@ -8,17 +8,17 @@ namespace low_age_data.Domain.Entities.Actors.Structures
     public class Structure : Actor
     {
         public Structure(
-            StructureName name, 
+            StructureId id, 
             string displayName, 
             string description, 
             IList<Stat> statistics, 
-            FactionName originalFaction, 
+            FactionId originalFaction, 
             IList<CombatAttribute> combatAttributes, 
-            IList<AbilityName> abilities,
+            IList<AbilityId> abilities,
             Vector2<int>? size = null,
             Vector2<int>? centerPoint = null,
             bool? destructible = null,
-            Area? walkableArea = null) : base(name, displayName, description, statistics, originalFaction, combatAttributes, abilities)
+            Area? walkableArea = null) : base(id, displayName, description, statistics, originalFaction, combatAttributes, abilities)
         {
             Size = size ?? new Vector2<int>(1, 1);
             CenterPoint = centerPoint ?? (Size.Equals(new Vector2<int>(1, 1))

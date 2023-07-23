@@ -5,12 +5,12 @@ namespace low_age_data.Domain.Entities.Tiles
     public class Tile : Entity
     {
         public Tile(
-            TileName name, 
+            TileId id, 
             string displayName, 
             string description, 
             Terrains terrain, 
             float movementCost, 
-            bool allowsBuilding) : base(name, displayName, description)
+            bool allowsBuilding) : base(id, displayName, description)
         {
             Terrain = terrain;
             MovementCost = movementCost;

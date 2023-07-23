@@ -7,14 +7,14 @@ namespace low_age_data.Domain.Behaviours
     public class ExtraAttack : Behaviour
     {
         public ExtraAttack(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
             IList<Attacks> attackTypes,
             EndsAt? endsAt = null,
             bool canStack = false) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(ExtraAttack)}", 
                 displayName, 
                 description, 

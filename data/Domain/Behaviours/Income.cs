@@ -14,7 +14,7 @@ namespace low_age_data.Domain.Behaviours
     public class Income : Behaviour
     {
         public Income(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
             IList<ResourceModification> resources,
@@ -24,9 +24,9 @@ namespace low_age_data.Domain.Behaviours
             bool? waitForAvailableStorage = null,
             IList<Trigger>? triggers = null,
             bool? removeOnConditionsMet = null,
-            IList<EffectName>? conditionalEffects = null) 
+            IList<EffectId>? conditionalEffects = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(Income)}", 
                 displayName, 
                 description, 
@@ -49,7 +49,7 @@ namespace low_age_data.Domain.Behaviours
         
         /// <summary>
         /// Value which is deducted from the <see cref="Resources"/> <see cref="Modification.Amount"/> for each
-        /// subsequent <see cref="Income"/> of the same <see cref="BehaviourName"/>. Final
+        /// subsequent <see cref="Income"/> of the same <see cref="BehaviourId"/>. Final
         /// <see cref="Modification.Amount"/> cannot be lower than 1.
         /// </summary>
         public int DiminishingReturn { get; }

@@ -11,19 +11,19 @@ namespace low_age_data.Domain.Behaviours
     public class Counter : Behaviour
     {
         public Counter(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
             int maxAmount,
             int triggerAmount,
-            IList<EffectName> triggeredEffects, 
+            IList<EffectId> triggeredEffects, 
             bool? selfRemoveAfterAmountReached = null,
             bool? triggerAtMultiples = null,
             EndsAt? endsAt = null,
             bool? separateDurations = null,
             bool? canResetDuration = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(Counter)}", 
                 displayName, 
                 description, 
@@ -60,7 +60,7 @@ namespace low_age_data.Domain.Behaviours
         /// </summary>
         public bool SelfRemoveAfterAmountReached { get; }
         
-        public IList<EffectName> TriggeredEffects { get; }
+        public IList<EffectId> TriggeredEffects { get; }
 
         /// <summary>
         /// If true, each count has its own duration (controlled by <see cref="Behaviour.EndsAt"/>) and

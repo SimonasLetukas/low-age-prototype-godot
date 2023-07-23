@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Godot;
+using low_age_data.Domain.Factions;
 using Newtonsoft.Json;
 
 /// <summary>
@@ -10,13 +10,17 @@ using Newtonsoft.Json;
 public class Data : Node
 {
     public static Data Instance = null;
-    
+
     [Signal] public delegate void Synchronised();
-    
+
+    public IList<Faction> Factions { get; private set; } = new List<Faction>();
+
     public IList<Player> Players { get; private set; } = new List<Player>();
     public Vector2 MapSize { get; private set; } = Vector2.Zero;
     public IList<Unit> Units { get; private set; } = new List<Unit>();
     public IList<Tile> Tiles { get; private set; } = new List<Tile>();
+
+    private string DataBlueprintLocation { get; set; } = "res://data/data.json";
 
     public override void _Ready()
     {
@@ -26,6 +30,23 @@ public class Data : Node
         {
             Instance = this;
         }
+    }
+
+    public void ReadBlueprint() 
+        // TODO to save resources currently both server and client read from their local files,
+        // it should be transferred by server instead to have one source of truth.
+    {
+        var dataFile = new File();
+        dataFile.Open(DataBlueprintLocation, File.ModeFlags.Read);
+        var dataJson = dataFile.GetAsText(); 
+        dataFile.Close();
+
+        var data = JsonConvert.DeserializeAnonymousType(dataJson, new
+        {
+            Factions = new Faction[] { }
+        });
+
+        Factions = data.Factions;
     }
 
     public void Initialize(Vector2 mapSize)
@@ -45,7 +66,7 @@ public class Data : Node
         }
     }
 
-    public void AddPlayer(int playerId, string playerName, Constants.Game.Faction faction)
+    public void AddPlayer(int playerId, string playerName, FactionId faction)
     {
         Players.Add(new Player
         {
@@ -141,7 +162,7 @@ public class Player
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public Constants.Game.Faction Faction { get; set; }
+    public FactionId Faction { get; set; }
 }
 
 public class Unit

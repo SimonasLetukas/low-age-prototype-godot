@@ -8,13 +8,13 @@ namespace low_age_data.Domain.Entities.Actors
     public abstract class Actor : Entity
     {
         protected Actor(
-            EntityName name, 
+            EntityId id, 
             string displayName, 
             string description,
             IList<Stat> statistics,
-            FactionName originalFaction,
+            FactionId originalFaction,
             IList<CombatAttribute> combatAttributes,
-            IList<AbilityName> abilities) : base(name, displayName, description)
+            IList<AbilityId> abilities) : base(id, displayName, description)
         {
             Statistics = statistics;
             OriginalFaction = originalFaction;
@@ -23,8 +23,8 @@ namespace low_age_data.Domain.Entities.Actors
         }
 
         public IList<Stat> Statistics { get; }
-        public FactionName OriginalFaction { get; }
+        public FactionId OriginalFaction { get; }
         public IList<CombatAttribute> CombatAttributes { get; }
-        public IList<AbilityName> Abilities { get; }
+        public IList<AbilityId> Abilities { get; }
     }
 }

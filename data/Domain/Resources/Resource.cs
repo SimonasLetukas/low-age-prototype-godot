@@ -9,34 +9,34 @@ namespace low_age_data.Domain.Resources
     public class Resource
     {
         public Resource(
-            ResourceName name, 
+            ResourceId id, 
             string displayName, 
             string description, 
             bool hasLimit, 
             bool isConsumable, 
             bool hasBank,
-            ResourceName? storedAs = null,
+            ResourceId? storedAs = null,
             bool? attachesToNewActors = null,
-            IList<EffectName>? positiveIncomeEffects = null,
-            IList<EffectName>? negativeIncomeEffects = null,
+            IList<EffectId>? positiveIncomeEffects = null,
+            IList<EffectId>? negativeIncomeEffects = null,
             string? negativeIncomeDescription = null,
             bool? effectAmountMultipliedByResourceAmount = null)
         {
-            Name = name;
+            Id = id;
             DisplayName = displayName;
             Description = description;
             HasLimit = hasLimit;
             IsConsumable = isConsumable;
             HasBank = hasBank;
-            StoredAs = storedAs ?? name;
+            StoredAs = storedAs ?? id;
             AttachesToNewActors = attachesToNewActors ?? false;
-            PositiveIncomeEffects = positiveIncomeEffects ?? new List<EffectName>();
-            NegativeIncomeEffects = negativeIncomeEffects ?? new List<EffectName>();
+            PositiveIncomeEffects = positiveIncomeEffects ?? new List<EffectId>();
+            NegativeIncomeEffects = negativeIncomeEffects ?? new List<EffectId>();
             NegativeIncomeDescription = negativeIncomeDescription ?? string.Empty;
             EffectAmountMultipliedByResourceAmount = effectAmountMultipliedByResourceAmount ?? false;
         }
 
-        public ResourceName Name { get; }
+        public ResourceId Id { get; }
         public string DisplayName { get; }
         public string Description { get; }
 
@@ -61,9 +61,9 @@ namespace low_age_data.Domain.Resources
         /// Specify the <see cref="Resource"/> used for storing purposes, using and making its max amount shared
         /// between other <see cref="Resource"/>s with the same <see cref="StoredAs"/> value. This can be
         /// done to better control the <see cref="Income"/> of the stored resource and to group certain resources to
-        /// be stored together. <see cref="StoredAs"/> is identical to the <see cref="Name"/> by default.
+        /// be stored together. <see cref="StoredAs"/> is identical to the <see cref="Id"/> by default.
         /// </summary>
-        public ResourceName StoredAs { get; }
+        public ResourceId StoredAs { get; }
         
         /// <summary>
         /// If true, spending this resource as part of <see cref="Payment"/> during <see cref="Selection{T}"/> retains the
@@ -78,13 +78,13 @@ namespace low_age_data.Domain.Resources
         /// List of <see cref="Effect"/>s to be executed at the start of each action phase if the current value of this
         /// <see cref="Resource"/> is positive (zero excluded).
         /// </summary>
-        public IList<EffectName> PositiveIncomeEffects { get; }
+        public IList<EffectId> PositiveIncomeEffects { get; }
 
         /// <summary>
         /// List of <see cref="Effect"/>s to be executed at the start of each action phase if the current value of this
         /// <see cref="Resource"/> is negative (zero excluded).
         /// </summary>
-        public IList<EffectName> NegativeIncomeEffects { get; }
+        public IList<EffectId> NegativeIncomeEffects { get; }
         
         /// <summary>
         /// Additional text added to the <see cref="Description"/> when the income for this <see cref="Resource"/> is

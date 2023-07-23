@@ -7,11 +7,11 @@ namespace low_age_data.Domain.Shared.Modifications
         public ResourceModification(
             Change change, 
             float amount,
-            ResourceName resource) : base($"{nameof(Modification)}.{nameof(ResourceModification)}", change, amount)
+            ResourceId resource) : base($"{nameof(Modification)}.{nameof(ResourceModification)}", change, amount)
         {
             Resource = resource;
         }
 
-        public ResourceName Resource { get; }
+        public ResourceId Resource { get; }
     }
 }

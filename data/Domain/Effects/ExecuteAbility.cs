@@ -8,13 +8,13 @@ namespace low_age_data.Domain.Effects
     public class ExecuteAbility : Effect
     {
         public ExecuteAbility(
-            EffectName name, 
-            AbilityName abilityToExecute,
+            EffectId id, 
+            AbilityId abilityToExecute,
             Location? executingPlayer = null,
             bool? cancelSynchronised = null,
             IList<Validator>? validators = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Effect)}.{nameof(ExecuteAbility)}", 
                 validators ?? new List<Validator>())
         {
@@ -26,7 +26,7 @@ namespace low_age_data.Domain.Effects
         /// <summary>
         /// Immediately executes the <see cref="Ability"/>.
         /// </summary>
-        public AbilityName AbilityToExecute { get; }
+        public AbilityId AbilityToExecute { get; }
         
         /// <summary>
         /// Used to specify the player who has the control over the <see cref="AbilityToExecute"/>.

@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Effects
     public class Damage : Effect
     {
         public Damage(
-            EffectName name,
+            EffectId id,
             DamageType damageType,
             Amount? amount = null,
             CombatAttribute? bonusTo = null,
@@ -17,7 +17,7 @@ namespace low_age_data.Domain.Effects
             bool? ignoresArmor = null,
             bool? ignoresShield = null,
             IList<IFilterItem>? filters = null,
-            IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(Damage)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(Damage)}", validators ?? new List<Validator>())
         {
             DamageType = damageType;
             Amount = amount ?? new Amount(0);

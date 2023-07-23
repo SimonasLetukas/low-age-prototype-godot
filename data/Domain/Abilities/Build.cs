@@ -12,19 +12,19 @@ namespace low_age_data.Domain.Abilities
         /// Used for placing and working on a <see cref="Buildable"/> <see cref="Entity"/> on top of the game map. 
         /// </summary>
         public Build(
-            AbilityName name,
+            AbilityId id,
             string displayName,
             string description,
             Shape placementArea,
-            IList<Selection<EntityName>> selection,
+            IList<Selection<EntityId>> selection,
             bool casterConsumesAction = false,
             bool canHelp = false,
             float? helpEfficiency = null)
             : base(
-                name,
+                id,
                 $"{nameof(Ability)}.{nameof(Build)}",
                 TurnPhase.Planning,
-                new List<ResearchName>(),
+                new List<ResearchId>(),
                 true,
                 displayName,
                 description)
@@ -37,7 +37,7 @@ namespace low_age_data.Domain.Abilities
         }
 
         public Shape PlacementArea { get; }
-        public IList<Selection<EntityName>> Selection { get; }
+        public IList<Selection<EntityId>> Selection { get; }
         public bool CasterConsumesAction { get; }
         public bool CanHelp { get; }
 

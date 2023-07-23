@@ -13,21 +13,21 @@ namespace low_age_data.Domain.Abilities
     public class Toggle : Ability
     {
         public Toggle(
-            AbilityName name,
+            AbilityId id,
             TurnPhase turnPhase,
             string displayName,
             string activationDescription,
-            IList<EffectName> onActivatedEffects,
-            IList<EffectName> onDeactivatedEffects,
+            IList<EffectId> onActivatedEffects,
+            IList<EffectId> onDeactivatedEffects,
             EndsAt? cooldown = null,
-            IList<ResearchName>? researchNeeded = null,
+            IList<ResearchId>? researchNeeded = null,
             string? deactivationDescription = null,
             IList<Payment>? cost = null)
             : base(
-                name,
+                id,
                 $"{nameof(Ability)}.{nameof(Toggle)}",
                 turnPhase,
-                researchNeeded ?? new List<ResearchName>(),
+                researchNeeded ?? new List<ResearchId>(),
                 true,
                 displayName,
                 activationDescription,
@@ -42,12 +42,12 @@ namespace low_age_data.Domain.Abilities
         /// <summary>
         /// <see cref="Effect"/>s executed when the <see cref="Toggle"/> is activated.
         /// </summary>
-        public IList<EffectName> OnActivatedEffects { get; }
+        public IList<EffectId> OnActivatedEffects { get; }
         
         /// <summary>
         /// <see cref="Effect"/>s executed when the <see cref="Toggle"/> is deactivated.
         /// </summary>
-        public IList<EffectName> OnDeactivatedEffects { get; }
+        public IList<EffectId> OnDeactivatedEffects { get; }
         
         /// <summary>
         /// <see cref="Ability.Description"/> shown when the <see cref="Toggle"/> is activated.

@@ -14,22 +14,22 @@ namespace low_age_data.Collections
             return new List<Structure>
             {
                 new Structure(
-                    name: StructureName.Citadel,
-                    displayName: nameof(StructureName.Citadel).CamelCaseToWords(),
+                    id: StructureId.Citadel,
+                    displayName: nameof(StructureId.Citadel).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>(),
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.PassiveIncome,
-                        AbilityName.Citadel.ExecutiveStash,
-                        AbilityName.Citadel.Ascendable,
-                        AbilityName.Citadel.HighGround,
-                        AbilityName.Citadel.PromoteGoons
+                        AbilityId.Shared.PassiveIncome,
+                        AbilityId.Citadel.ExecutiveStash,
+                        AbilityId.Citadel.Ascendable,
+                        AbilityId.Citadel.HighGround,
+                        AbilityId.Citadel.PromoteGoons
                     },
                     size: new Vector2<int>(x: 3, y: 4),
                     centerPoint: new Vector2<int>(x: 1, y: 1),
@@ -39,8 +39,8 @@ namespace low_age_data.Collections
                         size: new Vector2<int>(x: 3, y: 2))),
 
                 new Structure(
-                    name: StructureName.Hut,
-                    displayName: nameof(StructureName.Hut).CamelCaseToWords(),
+                    id: StructureId.Hut,
+                    displayName: nameof(StructureId.Hut).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -49,22 +49,22 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Hut.Building,
-                        AbilityName.Shared.ScrapsIncome
+                        AbilityId.Hut.Building,
+                        AbilityId.Shared.ScrapsIncome
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
 
                 new Structure(
-                    name: StructureName.Obelisk,
-                    displayName: nameof(StructureName.Obelisk).CamelCaseToWords(),
+                    id: StructureId.Obelisk,
+                    displayName: nameof(StructureId.Obelisk).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -73,23 +73,23 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Obelisk.Building,
-                        AbilityName.Shared.CelestiumIncome,
-                        AbilityName.Obelisk.CelestiumDischarge
+                        AbilityId.Obelisk.Building,
+                        AbilityId.Shared.CelestiumIncome,
+                        AbilityId.Obelisk.CelestiumDischarge
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
 
                 new Structure(
-                    name: StructureName.Shack,
-                    displayName: nameof(StructureName.Shack).CamelCaseToWords(),
+                    id: StructureId.Shack,
+                    displayName: nameof(StructureId.Shack).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -98,22 +98,22 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Revelators.Building,
-                        AbilityName.Shack.Accommodation
+                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Shack.Accommodation
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
 
                 new Structure(
-                    name: StructureName.Smith,
-                    displayName: nameof(StructureName.Smith).CamelCaseToWords(),
+                    id: StructureId.Smith,
+                    displayName: nameof(StructureId.Smith).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -122,22 +122,22 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Revelators.Building,
-                        AbilityName.Smith.MeleeWeaponProduction,
+                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Smith.MeleeWeaponProduction,
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
 
                 new Structure(
-                    name: StructureName.Fletcher,
-                    displayName: nameof(StructureName.Fletcher).CamelCaseToWords(),
+                    id: StructureId.Fletcher,
+                    displayName: nameof(StructureId.Fletcher).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -146,22 +146,22 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Revelators.Building,
-                        AbilityName.Fletcher.RangedWeaponProduction,
+                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Fletcher.RangedWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
 
                 new Structure(
-                    name: StructureName.Alchemy,
-                    displayName: nameof(StructureName.Alchemy).CamelCaseToWords(),
+                    id: StructureId.Alchemy,
+                    displayName: nameof(StructureId.Alchemy).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -170,22 +170,22 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Revelators.Building,
-                        AbilityName.Alchemy.SpecialWeaponProduction,
+                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Alchemy.SpecialWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 3)),
 
                 new Structure(
-                    name: StructureName.Depot,
-                    displayName: nameof(StructureName.Depot).CamelCaseToWords(),
+                    id: StructureId.Depot,
+                    displayName: nameof(StructureId.Depot).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -194,22 +194,22 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Revelators.Building,
-                        AbilityName.Depot.WeaponStorage,
+                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Depot.WeaponStorage,
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
 
                 new Structure(
-                    name: StructureName.Workshop,
-                    displayName: nameof(StructureName.Workshop).CamelCaseToWords(),
+                    id: StructureId.Workshop,
+                    displayName: nameof(StructureId.Workshop).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -218,22 +218,22 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Revelators.Building,
-                        AbilityName.Workshop.Research
+                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Workshop.Research
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
                 
                 new Structure(
-                    name: StructureName.Outpost,
-                    displayName: nameof(StructureName.Outpost).CamelCaseToWords(),
+                    id: StructureId.Outpost,
+                    displayName: nameof(StructureId.Outpost).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -242,23 +242,23 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Revelators.Building,
-                        AbilityName.Outpost.Ascendable,
-                        AbilityName.Outpost.HighGround
+                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Outpost.Ascendable,
+                        AbilityId.Outpost.HighGround
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                 
                 new Structure(
-                    name: StructureName.Barricade,
-                    displayName: nameof(StructureName.Barricade).CamelCaseToWords(),
+                    id: StructureId.Barricade,
+                    displayName: nameof(StructureId.Barricade).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -267,24 +267,24 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Revelators,
+                    originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Revelators.Building,
-                        AbilityName.Barricade.ProtectiveShield,
-                        AbilityName.Barricade.Caltrops,
-                        AbilityName.Barricade.Decompose
+                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Barricade.ProtectiveShield,
+                        AbilityId.Barricade.Caltrops,
+                        AbilityId.Barricade.Decompose
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
                 
                 new Structure(
-                    name: StructureName.BatteryCore,
-                    displayName: nameof(StructureName.BatteryCore).CamelCaseToWords(),
+                    id: StructureId.BatteryCore,
+                    displayName: nameof(StructureId.BatteryCore).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -294,25 +294,25 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.PowerGenerator,
-                        AbilityName.Shared.PassiveIncome,
-                        AbilityName.BatteryCore.PowerGrid,
-                        AbilityName.Shared.Uee.Build,
-                        AbilityName.BatteryCore.FusionCoreUpgrade
+                        AbilityId.Shared.Uee.PowerGenerator,
+                        AbilityId.Shared.PassiveIncome,
+                        AbilityId.BatteryCore.PowerGrid,
+                        AbilityId.Shared.Uee.Build,
+                        AbilityId.BatteryCore.FusionCoreUpgrade
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
                     
                 new Structure(
-                    name: StructureName.FusionCore,
-                    displayName: nameof(StructureName.FusionCore).CamelCaseToWords(),
+                    id: StructureId.FusionCore,
+                    displayName: nameof(StructureId.FusionCore).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -322,26 +322,26 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.PowerGenerator,
-                        AbilityName.Shared.PassiveIncome,
-                        AbilityName.FusionCore.PowerGrid,
-                        AbilityName.Shared.Uee.Build,
-                        AbilityName.FusionCore.DefenceProtocol,
-                        AbilityName.FusionCore.CelestiumCoreUpgrade
+                        AbilityId.Shared.Uee.PowerGenerator,
+                        AbilityId.Shared.PassiveIncome,
+                        AbilityId.FusionCore.PowerGrid,
+                        AbilityId.Shared.Uee.Build,
+                        AbilityId.FusionCore.DefenceProtocol,
+                        AbilityId.FusionCore.CelestiumCoreUpgrade
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
                 
                 new Structure(
-                    name: StructureName.CelestiumCore,
-                    displayName: nameof(StructureName.CelestiumCore).CamelCaseToWords(),
+                    id: StructureId.CelestiumCore,
+                    displayName: nameof(StructureId.CelestiumCore).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -351,26 +351,26 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.PowerGenerator,
-                        AbilityName.Shared.PassiveIncome,
-                        AbilityName.CelestiumCore.PowerGrid,
-                        AbilityName.Shared.Uee.Build,
-                        AbilityName.CelestiumCore.DefenceProtocol,
-                        AbilityName.CelestiumCore.HeightenedConductivity
+                        AbilityId.Shared.Uee.PowerGenerator,
+                        AbilityId.Shared.PassiveIncome,
+                        AbilityId.CelestiumCore.PowerGrid,
+                        AbilityId.Shared.Uee.Build,
+                        AbilityId.CelestiumCore.DefenceProtocol,
+                        AbilityId.CelestiumCore.HeightenedConductivity
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
                 
                 new Structure(
-                    name: StructureName.Collector,
-                    displayName: nameof(StructureName.Collector).CamelCaseToWords(),
+                    id: StructureId.Collector,
+                    displayName: nameof(StructureId.Collector).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -380,23 +380,23 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Collector.Building,
-                        AbilityName.Shared.ScrapsIncome,
-                        AbilityName.Collector.DirectTransitSystem
+                        AbilityId.Collector.Building,
+                        AbilityId.Shared.ScrapsIncome,
+                        AbilityId.Collector.DirectTransitSystem
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
                 
                 new Structure(
-                    name: StructureName.Extractor,
-                    displayName: nameof(StructureName.Extractor).CamelCaseToWords(),
+                    id: StructureId.Extractor,
+                    displayName: nameof(StructureId.Extractor).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -406,23 +406,23 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Extractor.Building,
-                        AbilityName.Shared.CelestiumIncome,
-                        AbilityName.Extractor.ReinforcedInfrastructure
+                        AbilityId.Extractor.Building,
+                        AbilityId.Shared.CelestiumIncome,
+                        AbilityId.Extractor.ReinforcedInfrastructure
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
                 
                 new Structure(
-                    name: StructureName.PowerPole,
-                    displayName: nameof(StructureName.PowerPole).CamelCaseToWords(),
+                    id: StructureId.PowerPole,
+                    displayName: nameof(StructureId.PowerPole).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -432,25 +432,25 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Light,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.PowerPole.PowerGrid,
-                        AbilityName.PowerPole.ExcessDistribution,
-                        AbilityName.PowerPole.ImprovedPowerGrid
+                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.PowerPole.PowerGrid,
+                        AbilityId.PowerPole.ExcessDistribution,
+                        AbilityId.PowerPole.ImprovedPowerGrid
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                     
                 new Structure(
-                    name: StructureName.Temple,
-                    displayName: nameof(StructureName.Temple).CamelCaseToWords(),
+                    id: StructureId.Temple,
+                    displayName: nameof(StructureId.Temple).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -460,23 +460,23 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.Temple.KeepingTheFaith
+                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.Temple.KeepingTheFaith
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
                 
                 new Structure(
-                    name: StructureName.MilitaryBase,
-                    displayName: nameof(StructureName.MilitaryBase).CamelCaseToWords(),
+                    id: StructureId.MilitaryBase,
+                    displayName: nameof(StructureId.MilitaryBase).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -486,17 +486,17 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.MilitaryBase.Train
+                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.MilitaryBase.Train
                     },
                     size: new Vector2<int>(x: 1, y: 3),
                     walkableArea: new Area(
@@ -504,8 +504,8 @@ namespace low_age_data.Collections
                         size: new Vector2<int>(x: 1, y: 1))),
                 
                 new Structure(
-                    name: StructureName.Factory,
-                    displayName: nameof(StructureName.Factory).CamelCaseToWords(),
+                    id: StructureId.Factory,
+                    displayName: nameof(StructureId.Factory).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -515,17 +515,17 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.Factory.Train
+                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.Factory.Train
                     },
                     size: new Vector2<int>(x: 2, y: 5),
                     walkableArea: new Area(
@@ -533,8 +533,8 @@ namespace low_age_data.Collections
                         size: new Vector2<int>(x: 2, y: 2))),
                 
                 new Structure(
-                    name: StructureName.Laboratory,
-                    displayName: nameof(StructureName.Laboratory).CamelCaseToWords(),
+                    id: StructureId.Laboratory,
+                    displayName: nameof(StructureId.Laboratory).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -544,17 +544,17 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.Laboratory.Train
+                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.Laboratory.Train
                     },
                     size: new Vector2<int>(x: 3, y: 3),
                     walkableArea: new Area(
@@ -562,8 +562,8 @@ namespace low_age_data.Collections
                         size: new Vector2<int>(x: 1, y: 1))),
                 
                 new Structure(
-                    name: StructureName.Armoury,
-                    displayName: nameof(StructureName.Armoury).CamelCaseToWords(),
+                    id: StructureId.Armoury,
+                    displayName: nameof(StructureId.Armoury).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -573,23 +573,23 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.Armoury.Research
+                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.Armoury.Research
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
                 
                 new Structure(
-                    name: StructureName.Wall,
-                    displayName: nameof(StructureName.Wall).CamelCaseToWords(),
+                    id: StructureId.Wall,
+                    displayName: nameof(StructureId.Wall).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -599,23 +599,23 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Wall.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.Wall.HighGround
+                        AbilityId.Wall.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.Wall.HighGround
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                 
                 new Structure(
-                    name: StructureName.Stairs,
-                    displayName: nameof(StructureName.Stairs).CamelCaseToWords(),
+                    id: StructureId.Stairs,
+                    displayName: nameof(StructureId.Stairs).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -625,23 +625,23 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.Stairs.Ascendable
+                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.Stairs.Ascendable
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                 
                 new Structure(
-                    name: StructureName.Gate,
-                    displayName: nameof(StructureName.Gate).CamelCaseToWords(),
+                    id: StructureId.Gate,
+                    displayName: nameof(StructureId.Gate).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -651,25 +651,25 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.Gate.HighGround,
-                        AbilityName.Gate.Ascendable,
-                        AbilityName.Gate.Entrance
+                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.Gate.HighGround,
+                        AbilityId.Gate.Ascendable,
+                        AbilityId.Gate.Entrance
                     },
                     size: new Vector2<int>(x: 1, y: 4)),
                 
                 new Structure(
-                    name: StructureName.Watchtower,
-                    displayName: nameof(StructureName.Watchtower).CamelCaseToWords(),
+                    id: StructureId.Watchtower,
+                    displayName: nameof(StructureId.Watchtower).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -679,23 +679,23 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.Watchtower.VantagePoint
+                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.Watchtower.VantagePoint
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                 
                 new Structure(
-                    name: StructureName.Bastion,
-                    displayName: nameof(StructureName.Bastion).CamelCaseToWords(),
+                    id: StructureId.Bastion,
+                    displayName: nameof(StructureId.Bastion).CamelCaseToWords(),
                     description: "",
                     statistics: new List<Stat>
                     {
@@ -705,17 +705,17 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
                     },
-                    originalFaction: FactionName.Uee,
+                    originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
                     {
                         CombatAttribute.Armoured,
                         CombatAttribute.Structure
                     },
-                    abilities: new List<AbilityName>
+                    abilities: new List<AbilityId>
                     {
-                        AbilityName.Shared.Uee.Building,
-                        AbilityName.Shared.Uee.PowerDependency,
-                        AbilityName.Bastion.Battlement
+                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.PowerDependency,
+                        AbilityId.Bastion.Battlement
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
             };

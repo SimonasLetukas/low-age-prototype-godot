@@ -10,15 +10,15 @@ namespace low_age_data.Domain.Effects
     public class ApplyBehaviour : Effect
     {
         public ApplyBehaviour(
-            EffectName name,
-            IList<BehaviourName> behavioursToApply,
+            EffectId id,
+            IList<BehaviourId> behavioursToApply,
             Location? target = null,
             IList<IFilterItem>? filters = null,
             Location? behaviourOwner = null,
             bool? waitForInitialEffects = null,
             IList<Validator>? validators = null)
             : base(
-                name, 
+                id, 
                 $"{nameof(Effect)}.{nameof(ApplyBehaviour)}", 
                 validators ?? new List<Validator>())
         {
@@ -29,7 +29,7 @@ namespace low_age_data.Domain.Effects
             WaitForInitialEffects = waitForInitialEffects ?? false;
         }
 
-        public IList<BehaviourName> BehavioursToApply { get; }
+        public IList<BehaviourId> BehavioursToApply { get; }
         public Location Target { get; }
         public IList<IFilterItem> Filters { get; }
         

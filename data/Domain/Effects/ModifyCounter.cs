@@ -10,13 +10,13 @@ namespace low_age_data.Domain.Effects
     public class ModifyCounter : Effect
     {
         public ModifyCounter(
-            EffectName name,
-            IList<BehaviourName> countersToModify,
+            EffectId id,
+            IList<BehaviourId> countersToModify,
             Change change,
             int amount,
             Location? location = null,
             IList<IFilterItem>? filters = null,
-            IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(ModifyCounter)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(ModifyCounter)}", validators ?? new List<Validator>())
         {
             CountersToModify = countersToModify;
             Change = change;
@@ -28,7 +28,7 @@ namespace low_age_data.Domain.Effects
         /// <summary>
         /// Will affect any found <see cref="Counter"/>
         /// </summary>
-        public IList<BehaviourName> CountersToModify { get; }
+        public IList<BehaviourId> CountersToModify { get; }
         public Change Change { get; }
         public int Amount { get; }
         public Location Location { get; }

@@ -9,7 +9,7 @@ namespace low_age_data.Collections
         {
             return new List<Mask>
             {
-                new Mask(name: MaskName.Power)
+                new Mask(id: MaskId.Power)
             };
         }
     }

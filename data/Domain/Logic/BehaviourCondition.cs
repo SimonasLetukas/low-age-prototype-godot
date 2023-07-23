@@ -12,7 +12,7 @@ namespace low_age_data.Domain.Logic
     {
         public BehaviourCondition(
             ConditionFlag conditionFlag,
-            BehaviourName conditionedBehaviour,
+            BehaviourId conditionedBehaviour,
             Location? behaviourOwner = null) : base($"{nameof(Condition)}.{nameof(BehaviourCondition)}", conditionFlag)
         {
             ConditionedBehaviour = conditionedBehaviour;
@@ -22,7 +22,7 @@ namespace low_age_data.Domain.Logic
         /// <summary>
         /// Used to check for a specific <see cref="Behaviour"/>.
         /// </summary>
-        public BehaviourName ConditionedBehaviour { get; }
+        public BehaviourId ConditionedBehaviour { get; }
         
         /// <summary>
         /// Used if the <see cref="ConditionedBehaviour"/> has to be owned by a specific <see cref="Actor"/>.

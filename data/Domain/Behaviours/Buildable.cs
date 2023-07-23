@@ -18,14 +18,14 @@ namespace low_age_data.Domain.Behaviours
     public class Buildable : Behaviour
     {
         public Buildable(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
             IList<Validator>? placementValidators = null,
             int? maximumHelpers = null,
             bool? canBeDragged = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(Buildable)}",
                 displayName, 
                 description, 

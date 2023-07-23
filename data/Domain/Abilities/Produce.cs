@@ -11,18 +11,18 @@ namespace low_age_data.Domain.Abilities
         /// Used for making a new <see cref="Entity"/> out of an existing <see cref="Entity"/>.
         /// </summary>
         public Produce(
-            AbilityName name,
+            AbilityId id,
             string displayName,
             string description,
-            IList<Selection<EntityName>> selection,
+            IList<Selection<EntityId>> selection,
             bool? canPlaceInWalkableAreaOnly = null,
             bool? hasQueue = null,
             bool? producedInstantly = null)
             : base(
-                name,
+                id,
                 $"{nameof(Ability)}.{nameof(Produce)}",
                 TurnPhase.Planning,
-                new List<ResearchName>(),
+                new List<ResearchId>(),
                 true,
                 displayName,
                 description)
@@ -33,7 +33,7 @@ namespace low_age_data.Domain.Abilities
             ProducedInstantly = producedInstantly ?? false;
         }
 
-        public IList<Selection<EntityName>> Selection { get; }
+        public IList<Selection<EntityId>> Selection { get; }
 
         /// <summary>
         /// If true, placement for a new <see cref="Entity"/> to <see cref="Produce"/> in is only allowed inside

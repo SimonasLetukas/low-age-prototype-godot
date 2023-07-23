@@ -10,19 +10,19 @@ namespace low_age_data.Domain.Effects
     public class Force : Effect
     {
         public Force(
-            EffectName name, 
+            EffectId id, 
             Location from,
             int amount,
-            IList<EffectName>? onCollisionEffects = null,
-            IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(Force)}", validators ?? new List<Validator>())
+            IList<EffectId>? onCollisionEffects = null,
+            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(Force)}", validators ?? new List<Validator>())
         {
             From = from;
             Amount = amount;
-            OnCollisionEffects = onCollisionEffects ?? new List<EffectName>();
+            OnCollisionEffects = onCollisionEffects ?? new List<EffectId>();
         }
 
         public Location From { get; }
         public int Amount { get; }
-        public IList<EffectName> OnCollisionEffects { get; } // Executed when force is unable to be completed due to collision
+        public IList<EffectId> OnCollisionEffects { get; } // Executed when force is unable to be completed due to collision
     }
 }

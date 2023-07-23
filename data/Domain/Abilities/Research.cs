@@ -4,21 +4,21 @@ using low_age_data.Domain.Shared;
 namespace low_age_data.Domain.Abilities
 {
     /// <summary>
-    /// Used for opening a selection of <see cref="ResearchName"/> to be researched by paying the <see cref="Payment"/>.
+    /// Used for opening a selection of <see cref="ResearchId"/> to be researched by paying the <see cref="Payment"/>.
     /// </summary>
     public class Research : Ability
     {
         public Research(
-            AbilityName name,
+            AbilityId id,
             string displayName,
             string description,
-            IList<Selection<ResearchName>> selectionOfResearchToBeUnlocked,
-            IList<ResearchName>? researchNeeded = null)
+            IList<Selection<ResearchId>> selectionOfResearchToBeUnlocked,
+            IList<ResearchId>? researchNeeded = null)
             : base(
-                name,
+                id,
                 $"{nameof(Ability)}.{nameof(Research)}",
                 TurnPhase.Planning,
-                researchNeeded ?? new List<ResearchName>(),
+                researchNeeded ?? new List<ResearchId>(),
                 true,
                 displayName,
                 description)
@@ -26,6 +26,6 @@ namespace low_age_data.Domain.Abilities
             SelectionOfResearchToBeUnlocked = selectionOfResearchToBeUnlocked;
         }
 
-        public IList<Selection<ResearchName>> SelectionOfResearchToBeUnlocked { get; }
+        public IList<Selection<ResearchId>> SelectionOfResearchToBeUnlocked { get; }
     }
 }

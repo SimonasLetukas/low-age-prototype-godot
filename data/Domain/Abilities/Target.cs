@@ -11,23 +11,23 @@ namespace low_age_data.Domain.Abilities
     public class Target : Ability
     {
         public Target(
-            AbilityName name,
+            AbilityId id,
             TurnPhase turnPhase,
             string displayName,
             string description,
             Shape targetArea,
-            IList<EffectName> effects,
-            IList<ResearchName>? researchNeeded = null,
+            IList<EffectId> effects,
+            IList<ResearchId>? researchNeeded = null,
             EndsAt? cooldown = null,
             IList<Attacks>? overridesAttacks = null,
             bool? fallbackToAttack = false,
             IList<Payment>? cost = null,
             Shape? leashArea = null)
             : base(
-                name,
+                id,
                 $"{nameof(Ability)}.{nameof(Target)}",
                 turnPhase,
-                researchNeeded ?? new List<ResearchName>(),
+                researchNeeded ?? new List<ResearchId>(),
                 true,
                 displayName,
                 description,
@@ -42,7 +42,7 @@ namespace low_age_data.Domain.Abilities
         }
 
         public Shape TargetArea { get; }
-        public IList<EffectName> Effects { get; }
+        public IList<EffectId> Effects { get; }
 
         /// <summary>
         /// Attacking using any of the listed <see cref="Attacks"/> will execute this <see cref="Target"/> ability
@@ -54,7 +54,7 @@ namespace low_age_data.Domain.Abilities
 
         /// <summary>
         /// If true, when <see cref="Target"/> cannot override an attack listed in <see cref="OverridesAttacks"/> (e.g.
-        /// when <see cref="TargetArea"/>, <see cref="Ability.Cooldown"/>, <see cref="ResearchName"/> or any
+        /// when <see cref="TargetArea"/>, <see cref="Ability.Cooldown"/>, <see cref="ResearchId"/> or any
         /// <see cref="Validator"/> in underlying <see cref="Effects"/> is not satisfied), the attack will be executed
         /// instead. 
         /// </summary>

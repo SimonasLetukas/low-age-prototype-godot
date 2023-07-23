@@ -1,4 +1,5 @@
 ﻿using Godot;
+using low_age_data.Domain.Factions;
 
 public class Server : Network
 {
@@ -17,21 +18,21 @@ public class Server : Network
     /// <summary>
     /// Called by clients when they connect
     /// </summary>
-    public void RegisterSelf(int playerId, string playerName, int playerFaction)
+    public void RegisterSelf(int playerId, string playerName, FactionId playerFaction)
     {
         RpcId(Constants.ServerId, nameof(OnRegisterSelf), playerId, playerName, playerFaction);
     }
 
     [Remote]
-    public void OnRegisterSelf(int playerId, string playerName, int playerFaction)
+    public void OnRegisterSelf(int playerId, string playerName, string playerFactionId)
     {
         // Register this client with the server
-        Client.Instance.OnRegisterPlayer(playerId, playerName, playerFaction);
+        Client.Instance.OnRegisterPlayer(playerId, playerName, playerFactionId);
 
         // Register the new player with all existing clients
         foreach (var currentPlayer in Data.Instance.Players)
         {
-            Client.Instance.RegisterPlayer(currentPlayer.Id, playerId, playerName, playerFaction);
+            Client.Instance.RegisterPlayer(currentPlayer.Id, playerId, playerName, new FactionId(playerFactionId));
         }
 
         // Catch the new player up with who is already here
@@ -39,7 +40,7 @@ public class Server : Network
         {
             if (currentPlayer.Id != playerId)
             {
-                Client.Instance.RegisterPlayer(playerId, currentPlayer.Id, currentPlayer.Name, (int) currentPlayer.Faction);
+                Client.Instance.RegisterPlayer(playerId, currentPlayer.Id, currentPlayer.Name, currentPlayer.Faction);
             }
         }
     }
@@ -71,6 +72,9 @@ public class Server : Network
 
         GetTree().NetworkPeer = peer;
         GetTree().Connect(Constants.ENet.NetworkPeerConnectedEvent, this, nameof(OnPlayerConnected));
+        
+        Data.Instance.ReadBlueprint();
+        
         GD.Print("Server started.");
         return true;
     }

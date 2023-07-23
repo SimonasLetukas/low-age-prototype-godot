@@ -11,7 +11,7 @@ namespace low_age_data.Domain.Behaviours
     public class Behaviour
     {
         protected Behaviour(
-            BehaviourName name, 
+            BehaviourId id, 
             string type, 
             string displayName, 
             string description, 
@@ -21,11 +21,11 @@ namespace low_age_data.Domain.Behaviours
             bool? canResetDuration = null,
             IList<Trigger>? triggers = null,
             bool? removeOnConditionsMet = null,
-            IList<EffectName>? conditionalEffects = null,
+            IList<EffectId>? conditionalEffects = null,
             bool? ownerAllowed = null, 
             bool? hasSameInstanceForAllOwners = null)
         {
-            Name = name;
+            Id = id;
             Type = type;
             DisplayName = displayName;
             Description = description;
@@ -35,13 +35,13 @@ namespace low_age_data.Domain.Behaviours
             CanResetDuration = canResetDuration ?? false;
             Triggers = triggers ?? new List<Trigger>();
             RemoveOnConditionsMet = removeOnConditionsMet ?? false;
-            ConditionalEffects = conditionalEffects ?? new List<EffectName>();
+            ConditionalEffects = conditionalEffects ?? new List<EffectId>();
             OwnerAllowed = ownerAllowed ?? false;
             HasSameInstanceForAllOwners = hasSameInstanceForAllOwners ?? false;
         }
 
         [JsonProperty(Order = -3)]
-        public BehaviourName Name { get; }
+        public BehaviourId Id { get; }
         [JsonProperty(Order = -2)]
         public string Type { get; }
         public string DisplayName { get; }
@@ -86,7 +86,7 @@ namespace low_age_data.Domain.Behaviours
         /// Executed when any of the <see cref="Triggers"/> condition is met (before removal of this behaviour, if
         /// <see cref="RemoveOnConditionsMet"/> is true).
         /// </summary>
-        public IList<EffectName> ConditionalEffects { get; }
+        public IList<EffectId> ConditionalEffects { get; }
 
         /// <summary>
         /// If true, <see cref="Behaviour"/> can be owned by <see cref="Actor"/> instance which by default allows to

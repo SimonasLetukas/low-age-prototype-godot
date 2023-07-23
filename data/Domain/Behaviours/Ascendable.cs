@@ -13,12 +13,12 @@ namespace low_age_data.Domain.Behaviours
     public class Ascendable : Behaviour
     {
         public Ascendable(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
             IList<Area> path) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(Ascendable)}", 
                 displayName, 
                 description, 

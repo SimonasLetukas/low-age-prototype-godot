@@ -9,11 +9,11 @@ namespace low_age_data.Domain.Effects
     public class ModifyPlayer : Effect
     {
         public ModifyPlayer(
-            EffectName name,
+            EffectId id,
             IList<IFilterItem> playerFilters,
             IList<ModifyPlayerFlag>? modifyFlags = null,
             IList<ResourceModification>? resourceModifications = null,
-            IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(ModifyPlayer)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(ModifyPlayer)}", validators ?? new List<Validator>())
         {
             PlayerFilters = playerFilters;
             ModifyFlags = modifyFlags ?? new List<ModifyPlayerFlag>();

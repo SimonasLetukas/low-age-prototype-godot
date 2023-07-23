@@ -16,13 +16,13 @@ namespace low_age_data.Domain.Behaviours
     public class HighGround : Behaviour
     {
         public HighGround(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
             IList<Area> highGroundAreas,
-            IList<EffectName>? onCollisionEffects = null) 
+            IList<EffectId>? onCollisionEffects = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(HighGround)}", 
                 displayName, 
                 description, 
@@ -33,9 +33,9 @@ namespace low_age_data.Domain.Behaviours
                 ? throw new ArgumentOutOfRangeException(nameof(highGroundAreas), 
                     $"Must contain at least one {nameof(highGroundAreas)} element")
                 : highGroundAreas;
-            OnCollisionEffects = onCollisionEffects ?? new List<EffectName>
+            OnCollisionEffects = onCollisionEffects ?? new List<EffectId>
             {
-                EffectName.Shared.HighGroundSearch
+                EffectId.Shared.HighGroundSearch
             };
         }
         
@@ -49,6 +49,6 @@ namespace low_age_data.Domain.Behaviours
         /// By default, all units gain +1 Ranged Attack Distance when on high ground, but
         /// <see cref="OnCollisionEffects"/> could also be used to add different effects.
         /// </summary>
-        public IList<EffectName> OnCollisionEffects { get; }
+        public IList<EffectId> OnCollisionEffects { get; }
     }
 }

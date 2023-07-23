@@ -12,7 +12,7 @@ namespace low_age_data.Domain.Behaviours
     public class InterceptDamage : Behaviour
     {
         public InterceptDamage(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
             EndsAt endsAt,
@@ -27,7 +27,7 @@ namespace low_age_data.Domain.Behaviours
             bool? ownerAllowed = null,
             bool? hasSameInstanceForAllOwners = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(InterceptDamage)}", 
                 displayName, 
                 description, 

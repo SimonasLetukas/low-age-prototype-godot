@@ -8,14 +8,14 @@ namespace low_age_data.Domain.Entities.Actors.Units
     public class Unit : Actor
     {
         public Unit(
-            UnitName name, 
+            UnitId id, 
             string displayName, 
             string description, 
             IList<Stat> statistics, 
-            FactionName originalFaction, 
+            FactionId originalFaction, 
             IList<CombatAttribute> combatAttributes, 
-            IList<AbilityName> abilities,
-            int? size = null) : base(name, displayName, description, statistics, originalFaction, combatAttributes, abilities)
+            IList<AbilityId> abilities,
+            int? size = null) : base(id, displayName, description, statistics, originalFaction, combatAttributes, abilities)
         {
             Size = size ?? 1;
         }

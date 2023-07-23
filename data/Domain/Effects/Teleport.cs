@@ -8,9 +8,9 @@ namespace low_age_data.Domain.Effects
     public class Teleport : Effect
     {
         public Teleport(
-            EffectName name,
-            BehaviourName? waitBefore = null, 
-            IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(Teleport)}", validators ?? new List<Validator>())
+            EffectId id,
+            BehaviourId? waitBefore = null, 
+            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(Teleport)}", validators ?? new List<Validator>())
         {
             WaitBefore = waitBefore;
         }
@@ -19,6 +19,6 @@ namespace low_age_data.Domain.Effects
         /// Puts <see cref="Wait"/> behaviour on the teleporting <see cref="Actor"/> and executes teleport afterwards.
         /// Place to which teleport will happen is considered occupied while actor is waiting.
         /// </summary>
-        public BehaviourName? WaitBefore { get; }
+        public BehaviourId? WaitBefore { get; }
     }
 }

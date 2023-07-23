@@ -20,18 +20,18 @@ namespace low_age_data.Domain.Masks
     public class Mask
     {
         public Mask(
-            MaskName name,
-            IList<EffectName>? maskBehaviours = null)
+            MaskId id,
+            IList<EffectId>? maskBehaviours = null)
         {
-            Name = name;
-            MaskBehaviours = maskBehaviours ?? new List<EffectName>();
+            Id = id;
+            MaskBehaviours = maskBehaviours ?? new List<EffectId>();
         }
         
-        public MaskName Name { get; }
+        public MaskId Id { get; }
         
         /// <summary>
         /// Applied or removed for each <see cref="Entity"/> entering or exiting the <see cref="Mask"/>.
         /// </summary>
-        public IList<EffectName> MaskBehaviours { get; }
+        public IList<EffectId> MaskBehaviours { get; }
     }
 }

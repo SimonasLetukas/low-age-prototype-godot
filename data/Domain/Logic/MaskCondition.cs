@@ -10,7 +10,7 @@ namespace low_age_data.Domain.Logic
     {
         public MaskCondition(
             ConditionFlag conditionFlag,
-            MaskName conditionedMask) : base($"{nameof(Condition)}.{nameof(MaskCondition)}", conditionFlag)
+            MaskId conditionedMask) : base($"{nameof(Condition)}.{nameof(MaskCondition)}", conditionFlag)
         {
             ConditionedMask = conditionedMask;
         }
@@ -18,6 +18,6 @@ namespace low_age_data.Domain.Logic
         /// <summary>
         /// Used to check for a specific <see cref="Mask"/>
         /// </summary>
-        public MaskName ConditionedMask { get; }
+        public MaskId ConditionedMask { get; }
     }
 }

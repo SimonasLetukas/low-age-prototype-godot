@@ -8,16 +8,16 @@ namespace low_age_data.Domain.Effects
     public class Reload : Effect
     {
         public Reload(
-            EffectName name, 
-            BehaviourName ammunitionToTarget,
+            EffectId id, 
+            BehaviourId ammunitionToTarget,
             Location? location = null,
-            IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(Reload)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(Reload)}", validators ?? new List<Validator>())
         {
             AmmunitionToTarget = ammunitionToTarget;
             Location = location ?? Location.Inherited;
         }
         
-        public BehaviourName AmmunitionToTarget { get; }
+        public BehaviourId AmmunitionToTarget { get; }
         public Location Location { get; }
     }
 }

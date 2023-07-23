@@ -1,4 +1,5 @@
 using Godot;
+using low_age_data.Domain.Factions;
 
 public class MainMenu : VBoxContainer
 {
@@ -41,7 +42,7 @@ public class MainMenu : VBoxContainer
         PutConnectionMessage("Connecting to server");
         _connectButton.Disabled = true;
         
-        if (Client.Instance.JoinGame(_nameInput.Text, _factionInput.Selected) is false)
+        if (Client.Instance.JoinGame(_nameInput.Text, FactionId.Revelators) is false) // TODO remove hardcoded faction
         {
             PutConnectionMessage("Failed to connect");
         }

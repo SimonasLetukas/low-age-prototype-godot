@@ -12,18 +12,18 @@ namespace low_age_data.Domain.Entities.Features
     public class Feature : Entity
     { 
         public Feature(
-            FeatureName name,
+            FeatureId id,
             string displayName, 
             string description,
-            EffectName? onCollisionEffect = null,
+            EffectId? onCollisionEffect = null,
             IList<IFilterItem>? collisionFilters = null,
-            EffectName? periodicEffect = null,
+            EffectId? periodicEffect = null,
             int? size = null,
             bool? canBeAttacked = null,
             bool? occupiesSpace = null,
             bool? statsCopiedFromSource = null,
             bool? alliesCanStack = null,
-            bool? onlyOneCanExist = null) : base(name, displayName, description)
+            bool? onlyOneCanExist = null) : base(id, displayName, description)
         {
             OnCollisionEffect = onCollisionEffect;
             CollisionFilters = collisionFilters ?? new List<IFilterItem>();
@@ -36,13 +36,13 @@ namespace low_age_data.Domain.Entities.Features
             OnlyOneCanExist = onlyOneCanExist ?? false;
         }
 
-        public EffectName? OnCollisionEffect { get; }
+        public EffectId? OnCollisionEffect { get; }
         public IList<IFilterItem> CollisionFilters { get; }
         
         /// <summary>
         /// Executes effect as often as possible
         /// </summary>
-        public EffectName? PeriodicEffect { get; }
+        public EffectId? PeriodicEffect { get; }
         
         public int Size { get; }
         

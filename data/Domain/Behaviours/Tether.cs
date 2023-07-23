@@ -11,7 +11,7 @@ namespace low_age_data.Domain.Behaviours
     public class Tether : Behaviour
     {
         public Tether(
-            BehaviourName name,
+            BehaviourId id,
             string displayName,
             string description,
             Location? source = null,
@@ -21,7 +21,7 @@ namespace low_age_data.Domain.Behaviours
             bool? calculatedForSourcePathfinding = null,
             EndsAt? endsAt = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(Tether)}", 
                 displayName, 
                 description, 

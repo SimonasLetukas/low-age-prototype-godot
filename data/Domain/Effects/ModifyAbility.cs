@@ -7,16 +7,16 @@ namespace low_age_data.Domain.Effects
     public class ModifyAbility : Effect
     {
         public ModifyAbility(
-            EffectName name,
-            AbilityName abilityToModify,
-            AbilityName modifiedAbility,
-            IList<Validator>? validators = null) : base(name, $"{nameof(Effect)}.{nameof(ModifyAbility)}", validators ?? new List<Validator>())
+            EffectId id,
+            AbilityId abilityToModify,
+            AbilityId modifiedAbility,
+            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(ModifyAbility)}", validators ?? new List<Validator>())
         {
             AbilityToModify = abilityToModify;
             ModifiedAbility = modifiedAbility;
         }
 
-        public AbilityName AbilityToModify { get; }
-        public AbilityName ModifiedAbility { get; }
+        public AbilityId AbilityToModify { get; }
+        public AbilityId ModifiedAbility { get; }
     }
 }

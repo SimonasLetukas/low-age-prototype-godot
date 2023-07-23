@@ -22,179 +22,179 @@ namespace low_age_data.Collections
                 #region Shared
 
                 new Passive(
-                    name: AbilityName.Shared.PassiveIncome,
-                    displayName: nameof(AbilityName.Shared.PassiveIncome).CamelCaseToWords(),
+                    id: AbilityId.Shared.PassiveIncome,
+                    displayName: nameof(AbilityId.Shared.PassiveIncome).CamelCaseToWords(),
                     description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Shared.PassiveIncomeApplyBehaviour
+                        EffectId.Shared.PassiveIncomeApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Shared.ScrapsIncome,
-                    displayName: nameof(AbilityName.Shared.ScrapsIncome).CamelCaseToWords(),
+                    id: AbilityId.Shared.ScrapsIncome,
+                    displayName: nameof(AbilityId.Shared.ScrapsIncome).CamelCaseToWords(),
                     description: "At the start of each planning phase provides 5 Scraps.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Shared.ScrapsIncomeApplyBehaviour
+                        EffectId.Shared.ScrapsIncomeApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Shared.CelestiumIncome,
-                    displayName: nameof(AbilityName.Shared.CelestiumIncome).CamelCaseToWords(),
+                    id: AbilityId.Shared.CelestiumIncome,
+                    displayName: nameof(AbilityId.Shared.CelestiumIncome).CamelCaseToWords(),
                     description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
                                  "constructed Obelisk, total minimum of 1).",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Shared.CelestiumIncomeApplyBehaviour
+                        EffectId.Shared.CelestiumIncomeApplyBehaviour
                     }),
                 
                 new Passive(
-                    name: AbilityName.Shared.Revelators.Building,
-                    displayName: nameof(AbilityName.Shared.Revelators.Building).CamelCaseToWords(),
+                    id: AbilityId.Shared.Revelators.Building,
+                    displayName: nameof(AbilityId.Shared.Revelators.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onBuildBehaviour: BehaviourName.Shared.Revelators.BuildingBuildable),
+                    onBuildBehaviour: BehaviourId.Shared.Revelators.BuildingBuildable),
                 
                 new Passive(
-                    name: AbilityName.Shared.Uee.Building,
-                    displayName: nameof(AbilityName.Shared.Uee.Building).CamelCaseToWords(),
+                    id: AbilityId.Shared.Uee.Building,
+                    displayName: nameof(AbilityId.Shared.Uee.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onBuildBehaviour: BehaviourName.Shared.Uee.BuildingBuildable),
+                    onBuildBehaviour: BehaviourId.Shared.Uee.BuildingBuildable),
                 
                 new Passive(
-                    name: AbilityName.Shared.Uee.PowerGenerator,
-                    displayName: nameof(AbilityName.Shared.Uee.PowerGenerator).CamelCaseToWords(),
+                    id: AbilityId.Shared.Uee.PowerGenerator,
+                    displayName: nameof(AbilityId.Shared.Uee.PowerGenerator).CamelCaseToWords(),
                     description: "UEE faction loses if Battery Core is destroyed.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Shared.Uee.PowerGeneratorApplyBehaviour
+                        EffectId.Shared.Uee.PowerGeneratorApplyBehaviour
                     }),
                 
                 new Build(
-                    name: AbilityName.Shared.Uee.Build,
-                    displayName: nameof(AbilityName.Shared.Uee.Build).CamelCaseToWords(),
+                    id: AbilityId.Shared.Uee.Build,
+                    displayName: nameof(AbilityId.Shared.Uee.Build).CamelCaseToWords(),
                     description: "Start building a UEE's structure in vision on a tile with Power. Collector and " +
                                  "Extractor can be built on tiles without Power.",
                     placementArea: new Map(),
-                    selection: new List<Selection<EntityName>>
+                    selection: new List<Selection<EntityId>>
                     {
-                        new Selection<EntityName>(name: StructureName.Collector, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Collector, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 5),
-                            new Payment(resource: ResourceName.Celestium, amount: 40)
+                            new Payment(resource: ResourceId.Scraps, amount: 5),
+                            new Payment(resource: ResourceId.Celestium, amount: 40)
                         }),
-                        new Selection<EntityName>(name: StructureName.Extractor, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Extractor, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 12),
-                            new Payment(resource: ResourceName.Celestium, amount: 30)
+                            new Payment(resource: ResourceId.Scraps, amount: 12),
+                            new Payment(resource: ResourceId.Celestium, amount: 30)
                         }),
-                        new Selection<EntityName>(name: StructureName.PowerPole, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.PowerPole, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 15),
-                            new Payment(resource: ResourceName.Celestium, amount: 38)
+                            new Payment(resource: ResourceId.Scraps, amount: 15),
+                            new Payment(resource: ResourceId.Celestium, amount: 38)
                         }),
-                        new Selection<EntityName>(name: StructureName.Temple, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Temple, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 25),
-                            new Payment(resource: ResourceName.Celestium, amount: 40)
+                            new Payment(resource: ResourceId.Scraps, amount: 25),
+                            new Payment(resource: ResourceId.Celestium, amount: 40)
                         }),
-                        new Selection<EntityName>(name: StructureName.MilitaryBase, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.MilitaryBase, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 14),
-                            new Payment(resource: ResourceName.Celestium, amount: 50)
+                            new Payment(resource: ResourceId.Scraps, amount: 14),
+                            new Payment(resource: ResourceId.Celestium, amount: 50)
                         }),
-                        new Selection<EntityName>(name: StructureName.Factory, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Factory, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 22),
-                            new Payment(resource: ResourceName.Celestium, amount: 63)
-                        }, researchNeeded: new List<ResearchName> 
+                            new Payment(resource: ResourceId.Scraps, amount: 22),
+                            new Payment(resource: ResourceId.Celestium, amount: 63)
+                        }, researchNeeded: new List<ResearchId> 
                         {
-                            ResearchName.Uee.FusionCoreUpgrade
+                            ResearchId.Uee.FusionCoreUpgrade
                         }),
-                        new Selection<EntityName>(name: StructureName.Laboratory, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Laboratory, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 30),
-                            new Payment(resource: ResourceName.Celestium, amount: 76)
-                        }, researchNeeded: new List<ResearchName> 
+                            new Payment(resource: ResourceId.Scraps, amount: 30),
+                            new Payment(resource: ResourceId.Celestium, amount: 76)
+                        }, researchNeeded: new List<ResearchId> 
                         {
-                            ResearchName.Uee.CelestiumCoreUpgrade
+                            ResearchId.Uee.CelestiumCoreUpgrade
                         }),
-                        new Selection<EntityName>(name: StructureName.Armoury, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Armoury, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 20),
-                            new Payment(resource: ResourceName.Celestium, amount: 50)
-                        }, researchNeeded: new List<ResearchName> 
+                            new Payment(resource: ResourceId.Scraps, amount: 20),
+                            new Payment(resource: ResourceId.Celestium, amount: 50)
+                        }, researchNeeded: new List<ResearchId> 
                         {
-                            ResearchName.Uee.FusionCoreUpgrade
+                            ResearchId.Uee.FusionCoreUpgrade
                         }),
-                        new Selection<EntityName>(name: StructureName.Wall, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Wall, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 10),
-                            new Payment(resource: ResourceName.Celestium, amount: 50)
+                            new Payment(resource: ResourceId.Scraps, amount: 10),
+                            new Payment(resource: ResourceId.Celestium, amount: 50)
                         }),
-                        new Selection<EntityName>(name: StructureName.Stairs, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Stairs, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 10),
-                            new Payment(resource: ResourceName.Celestium, amount: 50)
+                            new Payment(resource: ResourceId.Scraps, amount: 10),
+                            new Payment(resource: ResourceId.Celestium, amount: 50)
                         }),
-                        new Selection<EntityName>(name: StructureName.Gate, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Gate, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 25),
-                            new Payment(resource: ResourceName.Celestium, amount: 80)
+                            new Payment(resource: ResourceId.Scraps, amount: 25),
+                            new Payment(resource: ResourceId.Celestium, amount: 80)
                         }),
-                        new Selection<EntityName>(name: StructureName.Watchtower, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Watchtower, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 15),
-                            new Payment(resource: ResourceName.Celestium, amount: 70)
+                            new Payment(resource: ResourceId.Scraps, amount: 15),
+                            new Payment(resource: ResourceId.Celestium, amount: 70)
                         }),
-                        new Selection<EntityName>(name: StructureName.Bastion, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Bastion, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 30),
-                            new Payment(resource: ResourceName.Celestium, amount: 120)
-                        }, researchNeeded: new List<ResearchName> 
+                            new Payment(resource: ResourceId.Scraps, amount: 30),
+                            new Payment(resource: ResourceId.Celestium, amount: 120)
+                        }, researchNeeded: new List<ResearchId> 
                         {
-                            ResearchName.Uee.CelestiumCoreUpgrade
+                            ResearchId.Uee.CelestiumCoreUpgrade
                         }),
                     },
                     casterConsumesAction: false,
                     canHelp: false),
                 
                 new Passive(
-                    name: AbilityName.Collector.Building,
-                    displayName: nameof(AbilityName.Collector.Building).CamelCaseToWords(),
+                    id: AbilityId.Collector.Building,
+                    displayName: nameof(AbilityId.Collector.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onBuildBehaviour: BehaviourName.Collector.BuildingBuildable),
+                    onBuildBehaviour: BehaviourId.Collector.BuildingBuildable),
                 
                 new Passive(
-                    name: AbilityName.Extractor.Building,
-                    displayName: nameof(AbilityName.Extractor.Building).CamelCaseToWords(),
+                    id: AbilityId.Extractor.Building,
+                    displayName: nameof(AbilityId.Extractor.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onBuildBehaviour: BehaviourName.Extractor.BuildingBuildable),
+                    onBuildBehaviour: BehaviourId.Extractor.BuildingBuildable),
 
                 new Passive(
-                    name: AbilityName.Wall.Building,
-                    displayName: nameof(AbilityName.Wall.Building).CamelCaseToWords(),
+                    id: AbilityId.Wall.Building,
+                    displayName: nameof(AbilityId.Wall.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onBuildBehaviour: BehaviourName.Wall.BuildingBuildable),
+                    onBuildBehaviour: BehaviourId.Wall.BuildingBuildable),
                 
                 new Passive(
-                    name: AbilityName.Shared.Uee.PowerDependency,
-                    displayName: nameof(AbilityName.Shared.Uee.PowerDependency).CamelCaseToWords(),
+                    id: AbilityId.Shared.Uee.PowerDependency,
+                    displayName: nameof(AbilityId.Shared.Uee.PowerDependency).CamelCaseToWords(),
                     description: "All abilities get disabled and loses 5 Health at the start of its action or action " +
                                  "phase if not connected to Power.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Shared.Uee.PowerDependencyApplyBehaviour
+                        EffectId.Shared.Uee.PowerDependencyApplyBehaviour
                     }),
 
                 #endregion
@@ -202,99 +202,99 @@ namespace low_age_data.Collections
                 #region Structures
 
                 new Passive(
-                    name: AbilityName.Citadel.ExecutiveStash,
-                    displayName: nameof(AbilityName.Citadel.ExecutiveStash).CamelCaseToWords(),
+                    id: AbilityId.Citadel.ExecutiveStash,
+                    displayName: nameof(AbilityId.Citadel.ExecutiveStash).CamelCaseToWords(),
                     description: "Provides 4 Population and 4 spaces of storage for Weapons.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Citadel.ExecutiveStashApplyBehaviour
+                        EffectId.Citadel.ExecutiveStashApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Citadel.Ascendable,
-                    displayName: nameof(AbilityName.Citadel.Ascendable).CamelCaseToWords(),
+                    id: AbilityId.Citadel.Ascendable,
+                    displayName: nameof(AbilityId.Citadel.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Citadel.AscendableApplyBehaviour
+                        EffectId.Citadel.AscendableApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Citadel.HighGround,
-                    displayName: nameof(AbilityName.Citadel.HighGround).CamelCaseToWords(),
+                    id: AbilityId.Citadel.HighGround,
+                    displayName: nameof(AbilityId.Citadel.HighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Citadel.HighGroundApplyBehaviour
+                        EffectId.Citadel.HighGroundApplyBehaviour
                     }),
 
                 new Produce(
-                    name: AbilityName.Citadel.PromoteGoons,
-                    displayName: nameof(AbilityName.Citadel.PromoteGoons).CamelCaseToWords(),
+                    id: AbilityId.Citadel.PromoteGoons,
+                    displayName: nameof(AbilityId.Citadel.PromoteGoons).CamelCaseToWords(),
                     description: "Promote a new Revelators goon from the remaining Population.",
-                    selection: new List<Selection<EntityName>>
+                    selection: new List<Selection<EntityId>>
                     {
-                        new Selection<EntityName>(name: UnitName.Slave, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Slave, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 4),
-                            new Payment(resource: ResourceName.MeleeWeapon, amount: 1),
-                            new Payment(resource: ResourceName.Population, amount: 1)
+                            new Payment(resource: ResourceId.Scraps, amount: 4),
+                            new Payment(resource: ResourceId.MeleeWeapon, amount: 1),
+                            new Payment(resource: ResourceId.Population, amount: 1)
                         }),
-                        new Selection<EntityName>(name: UnitName.Quickdraw, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Quickdraw, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 9),
-                            new Payment(resource: ResourceName.RangedWeapon, amount: 2),
-                            new Payment(resource: ResourceName.Population, amount: 1)
+                            new Payment(resource: ResourceId.Scraps, amount: 9),
+                            new Payment(resource: ResourceId.RangedWeapon, amount: 2),
+                            new Payment(resource: ResourceId.Population, amount: 1)
                         }),
-                        new Selection<EntityName>(name: UnitName.Gorger, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Gorger, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 7),
-                            new Payment(resource: ResourceName.MeleeWeapon, amount: 2),
-                            new Payment(resource: ResourceName.Population, amount: 1)
+                            new Payment(resource: ResourceId.Scraps, amount: 7),
+                            new Payment(resource: ResourceId.MeleeWeapon, amount: 2),
+                            new Payment(resource: ResourceId.Population, amount: 1)
                         }),
-                        new Selection<EntityName>(name: UnitName.Camou, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Camou, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 11),
-                            new Payment(resource: ResourceName.MeleeWeapon, amount: 2),
-                            new Payment(resource: ResourceName.SpecialWeapon, amount: 1),
-                            new Payment(resource: ResourceName.Population, amount: 1)
+                            new Payment(resource: ResourceId.Scraps, amount: 11),
+                            new Payment(resource: ResourceId.MeleeWeapon, amount: 2),
+                            new Payment(resource: ResourceId.SpecialWeapon, amount: 1),
+                            new Payment(resource: ResourceId.Population, amount: 1)
                         }),
-                        new Selection<EntityName>(name: UnitName.Shaman, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Shaman, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 10),
-                            new Payment(resource: ResourceName.RangedWeapon, amount: 1),
-                            new Payment(resource: ResourceName.SpecialWeapon, amount: 2),
-                            new Payment(resource: ResourceName.Population, amount: 1)
+                            new Payment(resource: ResourceId.Scraps, amount: 10),
+                            new Payment(resource: ResourceId.RangedWeapon, amount: 1),
+                            new Payment(resource: ResourceId.SpecialWeapon, amount: 2),
+                            new Payment(resource: ResourceId.Population, amount: 1)
                         }),
-                        new Selection<EntityName>(name: UnitName.Pyre, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Pyre, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 15),
-                            new Payment(resource: ResourceName.RangedWeapon, amount: 4),
-                            new Payment(resource: ResourceName.Population, amount: 1)
+                            new Payment(resource: ResourceId.Scraps, amount: 15),
+                            new Payment(resource: ResourceId.RangedWeapon, amount: 4),
+                            new Payment(resource: ResourceId.Population, amount: 1)
                         }),
-                        new Selection<EntityName>(name: UnitName.BigBadBull, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.BigBadBull, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 14),
-                            new Payment(resource: ResourceName.MeleeWeapon, amount: 4),
-                            new Payment(resource: ResourceName.Population, amount: 1)
+                            new Payment(resource: ResourceId.Scraps, amount: 14),
+                            new Payment(resource: ResourceId.MeleeWeapon, amount: 4),
+                            new Payment(resource: ResourceId.Population, amount: 1)
                         }),
-                        new Selection<EntityName>(name: UnitName.Mummy, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Mummy, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 29),
-                            new Payment(resource: ResourceName.SpecialWeapon, amount: 5),
-                            new Payment(resource: ResourceName.Population, amount: 1)
+                            new Payment(resource: ResourceId.Scraps, amount: 29),
+                            new Payment(resource: ResourceId.SpecialWeapon, amount: 5),
+                            new Payment(resource: ResourceId.Population, amount: 1)
                         }),
-                        new Selection<EntityName>(name: UnitName.Parasite, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Parasite, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 21),
-                            new Payment(resource: ResourceName.MeleeWeapon, amount: 2),
-                            new Payment(resource: ResourceName.RangedWeapon, amount: 2),
-                            new Payment(resource: ResourceName.SpecialWeapon, amount: 2),
-                            new Payment(resource: ResourceName.Population, amount: 1)
+                            new Payment(resource: ResourceId.Scraps, amount: 21),
+                            new Payment(resource: ResourceId.MeleeWeapon, amount: 2),
+                            new Payment(resource: ResourceId.RangedWeapon, amount: 2),
+                            new Payment(resource: ResourceId.SpecialWeapon, amount: 2),
+                            new Payment(resource: ResourceId.Population, amount: 1)
                         }),
                     },
                     canPlaceInWalkableAreaOnly: true,
@@ -302,417 +302,417 @@ namespace low_age_data.Collections
                     producedInstantly: true),
 
                 new Instant(
-                    name: AbilityName.Obelisk.CelestiumDischarge,
+                    id: AbilityId.Obelisk.CelestiumDischarge,
                     turnPhase: TurnPhase.Planning,
-                    displayName: nameof(AbilityName.Obelisk.CelestiumDischarge).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Obelisk.CelestiumDischarge).CamelCaseToWords(),
                     description: "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed " +
                                  "by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by " +
                                  "3 for 3 actions.",
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Obelisk.CelestiumDischargeSearchLong,
-                        EffectName.Obelisk.CelestiumDischargeSearchShort
+                        EffectId.Obelisk.CelestiumDischargeSearchLong,
+                        EffectId.Obelisk.CelestiumDischargeSearchShort
                     },
                     cooldown: EndsAt.EndOf.Fourth.ActionPhase),
 
                 new Passive(
-                    name: AbilityName.Shack.Accommodation,
-                    displayName: nameof(AbilityName.Shack.Accommodation).CamelCaseToWords(),
+                    id: AbilityId.Shack.Accommodation,
+                    displayName: nameof(AbilityId.Shack.Accommodation).CamelCaseToWords(),
                     description: "Provides 2 Population",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Shack.AccommodationApplyBehaviour
+                        EffectId.Shack.AccommodationApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Smith.MeleeWeaponProduction,
-                    displayName: nameof(AbilityName.Smith.MeleeWeaponProduction).CamelCaseToWords(),
+                    id: AbilityId.Smith.MeleeWeaponProduction,
+                    displayName: nameof(AbilityId.Smith.MeleeWeaponProduction).CamelCaseToWords(),
                     description: "Every 20 Celestium generates a Melee Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Smith.MeleeWeaponProductionApplyBehaviour
+                        EffectId.Smith.MeleeWeaponProductionApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Fletcher.RangedWeaponProduction,
-                    displayName: nameof(AbilityName.Fletcher.RangedWeaponProduction).CamelCaseToWords(),
+                    id: AbilityId.Fletcher.RangedWeaponProduction,
+                    displayName: nameof(AbilityId.Fletcher.RangedWeaponProduction).CamelCaseToWords(),
                     description: "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Fletcher.RangedWeaponProductionApplyBehaviour
+                        EffectId.Fletcher.RangedWeaponProductionApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Alchemy.SpecialWeaponProduction,
-                    displayName: nameof(AbilityName.Alchemy.SpecialWeaponProduction).CamelCaseToWords(),
+                    id: AbilityId.Alchemy.SpecialWeaponProduction,
+                    displayName: nameof(AbilityId.Alchemy.SpecialWeaponProduction).CamelCaseToWords(),
                     description: "Every 30 Celestium generates a Special Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Alchemy.SpecialWeaponProductionApplyBehaviour
+                        EffectId.Alchemy.SpecialWeaponProductionApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Depot.WeaponStorage,
-                    displayName: nameof(AbilityName.Depot.WeaponStorage).CamelCaseToWords(),
+                    id: AbilityId.Depot.WeaponStorage,
+                    displayName: nameof(AbilityId.Depot.WeaponStorage).CamelCaseToWords(),
                     description: "Provides 4 spaces of storage for Weapons which are used for new unit production.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Depot.WeaponStorageApplyBehaviour
+                        EffectId.Depot.WeaponStorageApplyBehaviour
                     }),
 
                 new Research(
-                    name: AbilityName.Workshop.Research,
-                    displayName: nameof(AbilityName.Workshop.Research).CamelCaseToWords(),
+                    id: AbilityId.Workshop.Research,
+                    displayName: nameof(AbilityId.Workshop.Research).CamelCaseToWords(),
                     description: "Open a selection of research available for Revelators to unlock.",
-                    selectionOfResearchToBeUnlocked: new List<Selection<ResearchName>>
+                    selectionOfResearchToBeUnlocked: new List<Selection<ResearchId>>
                     {
-                        new Selection<ResearchName>(name: ResearchName.Revelators.PoisonedSlits,
-                            description: $"Unlock {nameof(AbilityName.Quickdraw.Cripple).CamelCaseToWords()} for " +
-                                         $"{nameof(UnitName.Quickdraw).CamelCaseToWords()}.",
+                        new Selection<ResearchId>(name: ResearchId.Revelators.PoisonedSlits,
+                            description: $"Unlock {nameof(AbilityId.Quickdraw.Cripple).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Quickdraw).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
-                                new Payment(resource: ResourceName.Scraps,
+                                new Payment(resource: ResourceId.Scraps,
                                     amount: 5),
-                                new Payment(resource: ResourceName.Celestium,
+                                new Payment(resource: ResourceId.Celestium,
                                     amount: 50)
                             },
                             grayOutIfAlreadyExists: true),
-                        new Selection<ResearchName>(name: ResearchName.Revelators.SpikedRope,
-                            description: $"Unlock {nameof(AbilityName.Camou.Climb).CamelCaseToWords()} for " +
-                                         $"{nameof(UnitName.Camou).CamelCaseToWords()}.",
+                        new Selection<ResearchId>(name: ResearchId.Revelators.SpikedRope,
+                            description: $"Unlock {nameof(AbilityId.Camou.Climb).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Camou).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
-                                new Payment(resource: ResourceName.Scraps,
+                                new Payment(resource: ResourceId.Scraps,
                                     amount: 20),
-                                new Payment(resource: ResourceName.Celestium,
+                                new Payment(resource: ResourceId.Celestium,
                                     amount: 38)
                             },
                             grayOutIfAlreadyExists: true),
-                        new Selection<ResearchName>(name: ResearchName.Revelators.QuestionableCargo,
-                            description: $"Unlock {nameof(AbilityName.Pyre.PhantomMenace).CamelCaseToWords()} for " +
-                                         $"{nameof(UnitName.Pyre).CamelCaseToWords()}.",
+                        new Selection<ResearchId>(name: ResearchId.Revelators.QuestionableCargo,
+                            description: $"Unlock {nameof(AbilityId.Pyre.PhantomMenace).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Pyre).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
-                                new Payment(resource: ResourceName.Scraps,
+                                new Payment(resource: ResourceId.Scraps,
                                     amount: 4),
-                                new Payment(resource: ResourceName.Celestium,
+                                new Payment(resource: ResourceId.Celestium,
                                     amount: 75)
                             },
                             grayOutIfAlreadyExists: true),
-                        new Selection<ResearchName>(name: ResearchName.Revelators.HumanfleshRations,
-                            description: $"Unlock {nameof(AbilityName.Mummy.LeapOfHunger).CamelCaseToWords()} for " +
-                                         $"{nameof(UnitName.Mummy).CamelCaseToWords()}.",
+                        new Selection<ResearchId>(name: ResearchId.Revelators.HumanfleshRations,
+                            description: $"Unlock {nameof(AbilityId.Mummy.LeapOfHunger).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Mummy).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
-                                new Payment(resource: ResourceName.Scraps,
+                                new Payment(resource: ResourceId.Scraps,
                                     amount: 15),
-                                new Payment(resource: ResourceName.Celestium,
+                                new Payment(resource: ResourceId.Celestium,
                                     amount: 70)
                             },
                             grayOutIfAlreadyExists: true),
-                        new Selection<ResearchName>(name: ResearchName.Revelators.AdaptiveDigestion,
-                            description: $"Unlock {nameof(AbilityName.Roach.CorrosiveSpit).CamelCaseToWords()} for " +
-                                         $"{nameof(UnitName.Roach).CamelCaseToWords()}.",
+                        new Selection<ResearchId>(name: ResearchId.Revelators.AdaptiveDigestion,
+                            description: $"Unlock {nameof(AbilityId.Roach.CorrosiveSpit).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Roach).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
-                                new Payment(resource: ResourceName.Scraps,
+                                new Payment(resource: ResourceId.Scraps,
                                     amount: 15),
-                                new Payment(resource: ResourceName.Celestium,
+                                new Payment(resource: ResourceId.Celestium,
                                     amount: 60)
                             },
                             grayOutIfAlreadyExists: true),
                     }),
                 
                 new Passive(
-                    name: AbilityName.Outpost.Ascendable,
-                    displayName: nameof(AbilityName.Outpost.Ascendable).CamelCaseToWords(),
+                    id: AbilityId.Outpost.Ascendable,
+                    displayName: nameof(AbilityId.Outpost.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Outpost.AscendableApplyBehaviour
+                        EffectId.Outpost.AscendableApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Outpost.HighGround,
-                    displayName: nameof(AbilityName.Outpost.HighGround).CamelCaseToWords(),
+                    id: AbilityId.Outpost.HighGround,
+                    displayName: nameof(AbilityId.Outpost.HighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Outpost.HighGroundApplyBehaviour
+                        EffectId.Outpost.HighGroundApplyBehaviour
                     }),
                 
                 new Passive(
-                    name: AbilityName.Barricade.ProtectiveShield,
-                    displayName: nameof(AbilityName.Barricade.ProtectiveShield).CamelCaseToWords(),
+                    id: AbilityId.Barricade.ProtectiveShield,
+                    displayName: nameof(AbilityId.Barricade.ProtectiveShield).CamelCaseToWords(),
                     description: "Every unit adjacent to the shield of this Barricade receives +2 Range Armour.",
                     hasButton: true,
-                    periodicEffect: EffectName.Barricade.ProtectiveShieldSearch),
+                    periodicEffect: EffectId.Barricade.ProtectiveShieldSearch),
                     
                 new Passive(
-                    name: AbilityName.Barricade.Caltrops,
-                    displayName: nameof(AbilityName.Barricade.Caltrops).CamelCaseToWords(),
+                    id: AbilityId.Barricade.Caltrops,
+                    displayName: nameof(AbilityId.Barricade.Caltrops).CamelCaseToWords(),
                     description: "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the " +
                                  "start of each action phase.",
                     hasButton: true,
-                    periodicEffect: EffectName.Barricade.CaltropsSearch),
+                    periodicEffect: EffectId.Barricade.CaltropsSearch),
                 
                 new Toggle(
-                    name: AbilityName.Barricade.Decompose,
-                    displayName: nameof(AbilityName.Barricade.Decompose).CamelCaseToWords(),
+                    id: AbilityId.Barricade.Decompose,
+                    displayName: nameof(AbilityId.Barricade.Decompose).CamelCaseToWords(),
                     turnPhase: TurnPhase.Planning, 
                     activationDescription: "Toggle to start inflicting 15 Pure Damage to itself at the start of " +
                                            "each action phase.",
-                    onActivatedEffects: new List<EffectName>
+                    onActivatedEffects: new List<EffectId>
                     {
-                        EffectName.Barricade.DecomposeApplyBehaviour
+                        EffectId.Barricade.DecomposeApplyBehaviour
                     },
-                    onDeactivatedEffects: new List<EffectName>
+                    onDeactivatedEffects: new List<EffectId>
                     {
-                        EffectName.Barricade.DecomposeRemoveBehaviour
+                        EffectId.Barricade.DecomposeRemoveBehaviour
                     },
                     deactivationDescription: "Toggle to stop inflicting 15 Pure Damage to itself at the start of " +
                                              "each action phase."),
 
                 new Passive(
-                    name: AbilityName.BatteryCore.PowerGrid,
-                    displayName: nameof(AbilityName.BatteryCore.PowerGrid).CamelCaseToWords(),
+                    id: AbilityId.BatteryCore.PowerGrid,
+                    displayName: nameof(AbilityId.BatteryCore.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.BatteryCore.PowerGridApplyBehaviour
+                        EffectId.BatteryCore.PowerGridApplyBehaviour
                     }),
 
                 new Instant(
-                    name: AbilityName.BatteryCore.FusionCoreUpgrade,
-                    displayName: nameof(AbilityName.BatteryCore.FusionCoreUpgrade).CamelCaseToWords(),
+                    id: AbilityId.BatteryCore.FusionCoreUpgrade,
+                    displayName: nameof(AbilityId.BatteryCore.FusionCoreUpgrade).CamelCaseToWords(),
                     turnPhase: TurnPhase.Planning,
                     description: "Upgrade this Battery Core to Fusion Core.",
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.BatteryCore.FusionCoreUpgradeApplyBehaviour
+                        EffectId.BatteryCore.FusionCoreUpgradeApplyBehaviour
                     },
                     cost: new List<Payment>
                     {
-                        new Payment(resource: ResourceName.Scraps, amount: 10),
-                        new Payment(resource: ResourceName.Celestium, amount: 50)
+                        new Payment(resource: ResourceId.Scraps, amount: 10),
+                        new Payment(resource: ResourceId.Celestium, amount: 50)
                     }),
                 
                 new Passive(
-                    name: AbilityName.FusionCore.PowerGrid,
-                    displayName: nameof(AbilityName.FusionCore.PowerGrid).CamelCaseToWords(),
+                    id: AbilityId.FusionCore.PowerGrid,
+                    displayName: nameof(AbilityId.FusionCore.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 6 Distance.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.FusionCore.PowerGridApplyBehaviour
+                        EffectId.FusionCore.PowerGridApplyBehaviour
                     }),
                 
                 new Target(
-                    name: AbilityName.FusionCore.DefenceProtocol,
+                    id: AbilityId.FusionCore.DefenceProtocol,
                     turnPhase: TurnPhase.Planning, 
-                    displayName: nameof(AbilityName.FusionCore.DefenceProtocol).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.FusionCore.DefenceProtocol).CamelCaseToWords(),
                     description: "Select an enemy unit in 6 Distance. At the start of the action phase the target " +
                                  "receives 3 ranged attacks, each dealing 3 Range Damage.",
                     targetArea: new Circle(radius: 6, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.FusionCore.DefenceProtocolDamage,
-                        EffectName.FusionCore.DefenceProtocolDamage,
-                        EffectName.FusionCore.DefenceProtocolDamage
+                        EffectId.FusionCore.DefenceProtocolDamage,
+                        EffectId.FusionCore.DefenceProtocolDamage,
+                        EffectId.FusionCore.DefenceProtocolDamage
                     }),
 
                 new Instant(
-                    name: AbilityName.FusionCore.CelestiumCoreUpgrade,
-                    displayName: nameof(AbilityName.FusionCore.CelestiumCoreUpgrade).CamelCaseToWords(),
+                    id: AbilityId.FusionCore.CelestiumCoreUpgrade,
+                    displayName: nameof(AbilityId.FusionCore.CelestiumCoreUpgrade).CamelCaseToWords(),
                     turnPhase: TurnPhase.Planning,
                     description: "Upgrade this Fusion Core to Celestium Core.",
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.FusionCore.CelestiumCoreUpgradeApplyBehaviour
+                        EffectId.FusionCore.CelestiumCoreUpgradeApplyBehaviour
                     },
                     cost: new List<Payment>
                     {
-                        new Payment(resource: ResourceName.Scraps, amount: 10),
-                        new Payment(resource: ResourceName.Celestium, amount: 100)
+                        new Payment(resource: ResourceId.Scraps, amount: 10),
+                        new Payment(resource: ResourceId.Celestium, amount: 100)
                     }),
                 
                 new Passive(
-                    name: AbilityName.CelestiumCore.PowerGrid,
-                    displayName: nameof(AbilityName.CelestiumCore.PowerGrid).CamelCaseToWords(),
+                    id: AbilityId.CelestiumCore.PowerGrid,
+                    displayName: nameof(AbilityId.CelestiumCore.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 8 Distance.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.CelestiumCore.PowerGridApplyBehaviour
+                        EffectId.CelestiumCore.PowerGridApplyBehaviour
                     }),
                 
                 new Target(
-                    name: AbilityName.CelestiumCore.DefenceProtocol,
+                    id: AbilityId.CelestiumCore.DefenceProtocol,
                     turnPhase: TurnPhase.Planning, 
-                    displayName: nameof(AbilityName.CelestiumCore.DefenceProtocol).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.CelestiumCore.DefenceProtocol).CamelCaseToWords(),
                     description: "Select an enemy unit in 8 Distance. At the start of the action phase the target " +
                                  "receives 4 ranged attacks, each dealing 4 Range Damage.",
                     targetArea: new Circle(radius: 8, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.CelestiumCore.DefenceProtocolDamage,
-                        EffectName.CelestiumCore.DefenceProtocolDamage,
-                        EffectName.CelestiumCore.DefenceProtocolDamage,
-                        EffectName.CelestiumCore.DefenceProtocolDamage
+                        EffectId.CelestiumCore.DefenceProtocolDamage,
+                        EffectId.CelestiumCore.DefenceProtocolDamage,
+                        EffectId.CelestiumCore.DefenceProtocolDamage,
+                        EffectId.CelestiumCore.DefenceProtocolDamage
                     }),
 
                 new Instant(
-                    name: AbilityName.CelestiumCore.HeightenedConductivity,
-                    displayName: nameof(AbilityName.CelestiumCore.HeightenedConductivity).CamelCaseToWords(),
+                    id: AbilityId.CelestiumCore.HeightenedConductivity,
+                    displayName: nameof(AbilityId.CelestiumCore.HeightenedConductivity).CamelCaseToWords(),
                     turnPhase: TurnPhase.Planning,
                     description: "Unlocks Improved Power Grid ability for all Power Poles.",
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.CelestiumCore.HeightenedConductivityModifyResearch
+                        EffectId.CelestiumCore.HeightenedConductivityModifyResearch
                     },
                     cost: new List<Payment>
                     {
-                        new Payment(resource: ResourceName.Scraps, amount: 6),
-                        new Payment(resource: ResourceName.Celestium, amount: 40)
+                        new Payment(resource: ResourceId.Scraps, amount: 6),
+                        new Payment(resource: ResourceId.Celestium, amount: 40)
                     }),
                 
                 new Passive(
-                    name: AbilityName.Collector.DirectTransitSystem,
-                    displayName: nameof(AbilityName.Collector.DirectTransitSystem).CamelCaseToWords(),
+                    id: AbilityId.Collector.DirectTransitSystem,
+                    displayName: nameof(AbilityId.Collector.DirectTransitSystem).CamelCaseToWords(),
                     description: "Provides +2 Scraps at the start of each planning phase if connected to Power.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Collector.DirectTransitSystemApplyBehaviourInactive
+                        EffectId.Collector.DirectTransitSystemApplyBehaviourInactive
                     }),
                 
                 new Passive(
-                    name: AbilityName.Extractor.ReinforcedInfrastructure,
-                    displayName: nameof(AbilityName.Extractor.ReinforcedInfrastructure).CamelCaseToWords(),
+                    id: AbilityId.Extractor.ReinforcedInfrastructure,
+                    displayName: nameof(AbilityId.Extractor.ReinforcedInfrastructure).CamelCaseToWords(),
                     description: "Gains additional 3 Melee Armour if connected to Power.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourInactive
+                        EffectId.Extractor.ReinforcedInfrastructureApplyBehaviourInactive
                     }),
                 
                 new Passive(
-                    name: AbilityName.PowerPole.PowerGrid,
-                    displayName: nameof(AbilityName.PowerPole.PowerGrid).CamelCaseToWords(),
+                    id: AbilityId.PowerPole.PowerGrid,
+                    displayName: nameof(AbilityId.PowerPole.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.PowerPole.PowerGridApplyBehaviour
+                        EffectId.PowerPole.PowerGridApplyBehaviour
                     }),
                 
                 new Passive(
-                    name: AbilityName.PowerPole.ExcessDistribution,
-                    displayName: nameof(AbilityName.PowerPole.ExcessDistribution).CamelCaseToWords(),
+                    id: AbilityId.PowerPole.ExcessDistribution,
+                    displayName: nameof(AbilityId.PowerPole.ExcessDistribution).CamelCaseToWords(),
                     description: "Regenerates +1 Shields to units and structures in 4 Distance at the start of each " +
                                  "planning phase.",
                     hasButton: true,
-                    periodicEffect: EffectName.PowerPole.ExcessDistributionSearch
+                    periodicEffect: EffectId.PowerPole.ExcessDistributionSearch
                     ),
                 
                 new Passive(
-                    name: AbilityName.PowerPole.ImprovedPowerGrid,
-                    displayName: nameof(AbilityName.PowerPole.ImprovedPowerGrid).CamelCaseToWords(),
+                    id: AbilityId.PowerPole.ImprovedPowerGrid,
+                    displayName: nameof(AbilityId.PowerPole.ImprovedPowerGrid).CamelCaseToWords(),
                     description: "Distance of provided Power and shield regeneration is increased to 6.",
                     hasButton: true,
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Uee.HeightenedConductivity
+                        ResearchId.Uee.HeightenedConductivity
                     },
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.PowerPole.ImprovedPowerGridModifyAbilityPowerGrid,
-                        EffectName.PowerPole.ImprovedPowerGridModifyAbilityExcessDistribution
+                        EffectId.PowerPole.ImprovedPowerGridModifyAbilityPowerGrid,
+                        EffectId.PowerPole.ImprovedPowerGridModifyAbilityExcessDistribution
                     }),
                 
                 new Passive(
-                    name: AbilityName.PowerPole.PowerGridImproved,
-                    displayName: nameof(AbilityName.PowerPole.PowerGridImproved).CamelCaseToWords(),
+                    id: AbilityId.PowerPole.PowerGridImproved,
+                    displayName: nameof(AbilityId.PowerPole.PowerGridImproved).CamelCaseToWords(),
                     description: "Provides Power in 6 Distance.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.PowerPole.PowerGridImprovedApplyBehaviour
+                        EffectId.PowerPole.PowerGridImprovedApplyBehaviour
                     }),
                 
                 new Passive(
-                    name: AbilityName.PowerPole.ExcessDistributionImproved,
-                    displayName: nameof(AbilityName.PowerPole.ExcessDistributionImproved).CamelCaseToWords(),
+                    id: AbilityId.PowerPole.ExcessDistributionImproved,
+                    displayName: nameof(AbilityId.PowerPole.ExcessDistributionImproved).CamelCaseToWords(),
                     description: "Regenerates +1 Shields to units and structures in 6 Distance at the start of each " +
                                  "planning phase.",
                     hasButton: true,
-                    periodicEffect: EffectName.PowerPole.ExcessDistributionImprovedSearch),
+                    periodicEffect: EffectId.PowerPole.ExcessDistributionImprovedSearch),
                 
                 new Passive(
-                    name: AbilityName.Temple.KeepingTheFaith,
-                    displayName: nameof(AbilityName.Temple.KeepingTheFaith).CamelCaseToWords(),
+                    id: AbilityId.Temple.KeepingTheFaith,
+                    displayName: nameof(AbilityId.Temple.KeepingTheFaith).CamelCaseToWords(),
                     description: "Provides +2 Movement to friendly units in 6 Distance at the start of each action " +
                                  "phase. Additionally provides +1 Faith. Each point of Faith increases the " +
                                  "Initiative of all owned units by 1.",
                     hasButton: true,
-                    periodicEffect: EffectName.Temple.KeepingTheFaithSearch,
-                    onBirthEffects: new List<EffectName>
+                    periodicEffect: EffectId.Temple.KeepingTheFaithSearch,
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Temple.KeepingTheFaithApplyBehaviourIncome
+                        EffectId.Temple.KeepingTheFaithApplyBehaviourIncome
                     }),
                 
                 new Produce(
-                    name: AbilityName.MilitaryBase.Train,
-                    displayName: nameof(AbilityName.MilitaryBase.Train).CamelCaseToWords(),
+                    id: AbilityId.MilitaryBase.Train,
+                    displayName: nameof(AbilityId.MilitaryBase.Train).CamelCaseToWords(),
                     description: "Select a unit to be created at the specified location using Celestium for " +
                                  "production.",
-                    selection: new List<Selection<EntityName>>
+                    selection: new List<Selection<EntityId>>
                     {
-                        new Selection<EntityName>(name: UnitName.Horrior, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Horrior, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 14),
-                            new Payment(resource: ResourceName.Celestium, amount: 52)
+                            new Payment(resource: ResourceId.Scraps, amount: 14),
+                            new Payment(resource: ResourceId.Celestium, amount: 52)
                         }),
-                        new Selection<EntityName>(name: UnitName.Surfer, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Surfer, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 20),
-                            new Payment(resource: ResourceName.Celestium, amount: 52)
-                        }, researchNeeded: new List<ResearchName> 
+                            new Payment(resource: ResourceId.Scraps, amount: 20),
+                            new Payment(resource: ResourceId.Celestium, amount: 52)
+                        }, researchNeeded: new List<ResearchId> 
                         {
-                            ResearchName.Uee.FusionCoreUpgrade
+                            ResearchId.Uee.FusionCoreUpgrade
                         }),
-                        new Selection<EntityName>(name: UnitName.Marksman, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Marksman, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 10),
-                            new Payment(resource: ResourceName.Celestium, amount: 60)
+                            new Payment(resource: ResourceId.Scraps, amount: 10),
+                            new Payment(resource: ResourceId.Celestium, amount: 60)
                         }),
-                        new Selection<EntityName>(name: UnitName.Mortar, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Mortar, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 16),
-                            new Payment(resource: ResourceName.Celestium, amount: 60)
-                        }, researchNeeded: new List<ResearchName> 
+                            new Payment(resource: ResourceId.Scraps, amount: 16),
+                            new Payment(resource: ResourceId.Celestium, amount: 60)
+                        }, researchNeeded: new List<ResearchId> 
                         {
-                            ResearchName.Uee.FusionCoreUpgrade
+                            ResearchId.Uee.FusionCoreUpgrade
                         }),
-                        new Selection<EntityName>(name: UnitName.Hawk, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Hawk, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 20),
-                            new Payment(resource: ResourceName.Celestium, amount: 50)
-                        }, researchNeeded: new List<ResearchName> 
+                            new Payment(resource: ResourceId.Scraps, amount: 20),
+                            new Payment(resource: ResourceId.Celestium, amount: 50)
+                        }, researchNeeded: new List<ResearchId> 
                         {
-                            ResearchName.Uee.CelestiumCoreUpgrade
+                            ResearchId.Uee.CelestiumCoreUpgrade
                         })
                     },
                     canPlaceInWalkableAreaOnly: true,
@@ -720,27 +720,27 @@ namespace low_age_data.Collections
                     producedInstantly: false),
                 
                 new Produce(
-                    name: AbilityName.Factory.Train,
-                    displayName: nameof(AbilityName.Factory.Train).CamelCaseToWords(),
+                    id: AbilityId.Factory.Train,
+                    displayName: nameof(AbilityId.Factory.Train).CamelCaseToWords(),
                     description: "Select a unit to be created at the specified location using Celestium for " +
                                  "production.",
-                    selection: new List<Selection<EntityName>>
+                    selection: new List<Selection<EntityId>>
                     {
-                        new Selection<EntityName>(name: UnitName.Engineer, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Engineer, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 6),
-                            new Payment(resource: ResourceName.Celestium, amount: 55)
-                        }, researchNeeded: new List<ResearchName> 
+                            new Payment(resource: ResourceId.Scraps, amount: 6),
+                            new Payment(resource: ResourceId.Celestium, amount: 55)
+                        }, researchNeeded: new List<ResearchId> 
                         {
-                            ResearchName.Uee.FusionCoreUpgrade
+                            ResearchId.Uee.FusionCoreUpgrade
                         }),
-                        new Selection<EntityName>(name: UnitName.Vessel, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Vessel, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 22),
-                            new Payment(resource: ResourceName.Celestium, amount: 99)
-                        }, researchNeeded: new List<ResearchName> 
+                            new Payment(resource: ResourceId.Scraps, amount: 22),
+                            new Payment(resource: ResourceId.Celestium, amount: 99)
+                        }, researchNeeded: new List<ResearchId> 
                         {
-                            ResearchName.Uee.CelestiumCoreUpgrade
+                            ResearchId.Uee.CelestiumCoreUpgrade
                         })
                     },
                     canPlaceInWalkableAreaOnly: true,
@@ -748,19 +748,19 @@ namespace low_age_data.Collections
                     producedInstantly: false),
                 
                 new Produce(
-                    name: AbilityName.Laboratory.Train,
-                    displayName: nameof(AbilityName.Laboratory.Train).CamelCaseToWords(),
+                    id: AbilityId.Laboratory.Train,
+                    displayName: nameof(AbilityId.Laboratory.Train).CamelCaseToWords(),
                     description: "Select a unit to be created at the specified location using Celestium for " +
                                  "production.",
-                    selection: new List<Selection<EntityName>>
+                    selection: new List<Selection<EntityId>>
                     {
-                        new Selection<EntityName>(name: UnitName.Omen, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Omen, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 30),
-                            new Payment(resource: ResourceName.Celestium, amount: 90)
-                        }, researchNeeded: new List<ResearchName> 
+                            new Payment(resource: ResourceId.Scraps, amount: 30),
+                            new Payment(resource: ResourceId.Celestium, amount: 90)
+                        }, researchNeeded: new List<ResearchId> 
                         {
-                            ResearchName.Uee.CelestiumCoreUpgrade
+                            ResearchId.Uee.CelestiumCoreUpgrade
                         })
                     },
                     canPlaceInWalkableAreaOnly: true,
@@ -768,246 +768,246 @@ namespace low_age_data.Collections
                     producedInstantly: false),
                 
                 new Research(
-                    name: AbilityName.Armoury.Research,
-                    displayName: nameof(AbilityName.Armoury.Research).CamelCaseToWords(),
+                    id: AbilityId.Armoury.Research,
+                    displayName: nameof(AbilityId.Armoury.Research).CamelCaseToWords(),
                     description: "Open a selection of research available for UEE to unlock.",
-                    selectionOfResearchToBeUnlocked: new List<Selection<ResearchName>>
+                    selectionOfResearchToBeUnlocked: new List<Selection<ResearchId>>
                     {
-                        new Selection<ResearchName>(name: ResearchName.Uee.HoverboardReignition,
-                            description: $"Unlock {nameof(AbilityName.Horrior.Mount).CamelCaseToWords()} for " +
-                                         $"{nameof(UnitName.Horrior).CamelCaseToWords()}.",
+                        new Selection<ResearchId>(name: ResearchId.Uee.HoverboardReignition,
+                            description: $"Unlock {nameof(AbilityId.Horrior.Mount).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Horrior).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
-                                new Payment(resource: ResourceName.Scraps,
+                                new Payment(resource: ResourceId.Scraps,
                                     amount: 6),
-                                new Payment(resource: ResourceName.Celestium,
+                                new Payment(resource: ResourceId.Celestium,
                                     amount: 70)
                             },
                             grayOutIfAlreadyExists: true,
-                            researchNeeded: new List<ResearchName>
+                            researchNeeded: new List<ResearchId>
                             {
-                                ResearchName.Uee.FusionCoreUpgrade
+                                ResearchId.Uee.FusionCoreUpgrade
                             }),
-                        new Selection<ResearchName>(name: ResearchName.Uee.MdPractice,
-                            description: $"Unlock {nameof(AbilityName.Hawk.HealthKit).CamelCaseToWords()} for " +
-                                         $"{nameof(UnitName.Hawk).CamelCaseToWords()}.",
+                        new Selection<ResearchId>(name: ResearchId.Uee.MdPractice,
+                            description: $"Unlock {nameof(AbilityId.Hawk.HealthKit).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Hawk).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
-                                new Payment(resource: ResourceName.Scraps,
+                                new Payment(resource: ResourceId.Scraps,
                                     amount: 12),
-                                new Payment(resource: ResourceName.Celestium,
+                                new Payment(resource: ResourceId.Celestium,
                                     amount: 40)
                             },
                             grayOutIfAlreadyExists: true,
-                            researchNeeded: new List<ResearchName>
+                            researchNeeded: new List<ResearchId>
                             {
-                                ResearchName.Uee.FusionCoreUpgrade
+                                ResearchId.Uee.FusionCoreUpgrade
                             }),
-                        new Selection<ResearchName>(name: ResearchName.Uee.CelestiumCoatedMaterials,
-                            description: $"Unlock {nameof(AbilityName.Radar.RadioLocation).CamelCaseToWords()} for " +
-                                         $"{nameof(UnitName.Radar).CamelCaseToWords()}.",
+                        new Selection<ResearchId>(name: ResearchId.Uee.CelestiumCoatedMaterials,
+                            description: $"Unlock {nameof(AbilityId.Radar.RadioLocation).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Radar).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
-                                new Payment(resource: ResourceName.Scraps,
+                                new Payment(resource: ResourceId.Scraps,
                                     amount: 8),
-                                new Payment(resource: ResourceName.Celestium,
+                                new Payment(resource: ResourceId.Celestium,
                                     amount: 55)
                             },
                             grayOutIfAlreadyExists: true,
-                            researchNeeded: new List<ResearchName>
+                            researchNeeded: new List<ResearchId>
                             {
-                                ResearchName.Uee.FusionCoreUpgrade
+                                ResearchId.Uee.FusionCoreUpgrade
                             }),
-                        new Selection<ResearchName>(name: ResearchName.Uee.ExplosiveShrapnel,
-                            description: $"Unlock {nameof(AbilityName.Mortar.PiercingBlast).CamelCaseToWords()} for " +
-                                         $"{nameof(UnitName.Mortar).CamelCaseToWords()}.",
+                        new Selection<ResearchId>(name: ResearchId.Uee.ExplosiveShrapnel,
+                            description: $"Unlock {nameof(AbilityId.Mortar.PiercingBlast).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Mortar).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
-                                new Payment(resource: ResourceName.Scraps,
+                                new Payment(resource: ResourceId.Scraps,
                                     amount: 14),
-                                new Payment(resource: ResourceName.Celestium,
+                                new Payment(resource: ResourceId.Celestium,
                                     amount: 60)
                             },
                             grayOutIfAlreadyExists: true,
-                            researchNeeded: new List<ResearchName>
+                            researchNeeded: new List<ResearchId>
                             {
-                                ResearchName.Uee.CelestiumCoreUpgrade
+                                ResearchId.Uee.CelestiumCoreUpgrade
                             }),
-                        new Selection<ResearchName>(name: ResearchName.Uee.HardenedMatrix,
-                            description: $"Unlock {nameof(AbilityName.Vessel.Fortify).CamelCaseToWords()} for " +
-                                         $"{nameof(UnitName.Vessel).CamelCaseToWords()}.",
+                        new Selection<ResearchId>(name: ResearchId.Uee.HardenedMatrix,
+                            description: $"Unlock {nameof(AbilityId.Vessel.Fortify).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Vessel).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
-                                new Payment(resource: ResourceName.Scraps,
+                                new Payment(resource: ResourceId.Scraps,
                                     amount: 18),
-                                new Payment(resource: ResourceName.Celestium,
+                                new Payment(resource: ResourceId.Celestium,
                                     amount: 65)
                             },
                             grayOutIfAlreadyExists: true,
-                            researchNeeded: new List<ResearchName>
+                            researchNeeded: new List<ResearchId>
                             {
-                                ResearchName.Uee.CelestiumCoreUpgrade
+                                ResearchId.Uee.CelestiumCoreUpgrade
                             }),
                     }),
                 
                 new Passive(
-                    name: AbilityName.Wall.HighGround,
-                    displayName: nameof(AbilityName.Wall.HighGround).CamelCaseToWords(),
+                    id: AbilityId.Wall.HighGround,
+                    displayName: nameof(AbilityId.Wall.HighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Wall.HighGroundApplyBehaviour
+                        EffectId.Wall.HighGroundApplyBehaviour
                     }),
                 
                 new Passive(
-                    name: AbilityName.Stairs.Ascendable,
-                    displayName: nameof(AbilityName.Stairs.Ascendable).CamelCaseToWords(),
+                    id: AbilityId.Stairs.Ascendable,
+                    displayName: nameof(AbilityId.Stairs.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Stairs.AscendableApplyBehaviour
+                        EffectId.Stairs.AscendableApplyBehaviour
                     }),
                 
                 new Passive(
-                    name: AbilityName.Gate.HighGround,
-                    displayName: nameof(AbilityName.Gate.HighGround).CamelCaseToWords(),
+                    id: AbilityId.Gate.HighGround,
+                    displayName: nameof(AbilityId.Gate.HighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Gate.HighGroundApplyBehaviour
+                        EffectId.Gate.HighGroundApplyBehaviour
                     }),
                 
                 new Passive(
-                    name: AbilityName.Gate.Ascendable,
-                    displayName: nameof(AbilityName.Gate.Ascendable).CamelCaseToWords(),
+                    id: AbilityId.Gate.Ascendable,
+                    displayName: nameof(AbilityId.Gate.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Gate.AscendableApplyBehaviour
+                        EffectId.Gate.AscendableApplyBehaviour
                     }),
                 
                 new Passive(
-                    name: AbilityName.Gate.Entrance,
-                    displayName: nameof(AbilityName.Gate.Entrance).CamelCaseToWords(),
+                    id: AbilityId.Gate.Entrance,
+                    displayName: nameof(AbilityId.Gate.Entrance).CamelCaseToWords(),
                     description: "Allows movement through for friendly units and blocks it for enemy units.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Gate.EntranceApplyBehaviour
+                        EffectId.Gate.EntranceApplyBehaviour
                     }),
                 
                 new Passive(
-                    name: AbilityName.Watchtower.VantagePoint,
-                    displayName: nameof(AbilityName.Watchtower.VantagePoint).CamelCaseToWords(),
+                    id: AbilityId.Watchtower.VantagePoint,
+                    displayName: nameof(AbilityId.Watchtower.VantagePoint).CamelCaseToWords(),
                     description: "Provides additional +1 vision range and +1 Range Damage to ranged units.",
                     hasButton: true,
-                    periodicEffect: EffectName.Watchtower.VantagePointSearch),
+                    periodicEffect: EffectId.Watchtower.VantagePointSearch),
                 
                 new Passive(
-                    name: AbilityName.Bastion.Battlement,
-                    displayName: nameof(AbilityName.Bastion.Battlement).CamelCaseToWords(),
+                    id: AbilityId.Bastion.Battlement,
+                    displayName: nameof(AbilityId.Bastion.Battlement).CamelCaseToWords(),
                     description: "Provides additional +1 Range Armour to all units on top.",
                     hasButton: true,
-                    periodicEffect: EffectName.Bastion.BattlementSearch),
+                    periodicEffect: EffectId.Bastion.BattlementSearch),
 
                 #endregion
                 
                 #region Units
 
                 new Passive(
-                    name: AbilityName.Leader.AllForOne,
-                    displayName: nameof(AbilityName.Leader.AllForOne).CamelCaseToWords(),
+                    id: AbilityId.Leader.AllForOne,
+                    displayName: nameof(AbilityId.Leader.AllForOne).CamelCaseToWords(),
                     description: "Revelators faction loses if Leader dies.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Leader.AllForOneApplyBehaviour
+                        EffectId.Leader.AllForOneApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Leader.MenacingPresence,
-                    displayName: nameof(AbilityName.Leader.MenacingPresence).CamelCaseToWords(),
+                    id: AbilityId.Leader.MenacingPresence,
+                    displayName: nameof(AbilityId.Leader.MenacingPresence).CamelCaseToWords(),
                     description: "All friendly and enemy units that enter 6 Attack Distance around Leader " +
                                  "have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1).",
                     hasButton: true,
-                    periodicEffect: EffectName.Leader.MenacingPresenceSearch),
+                    periodicEffect: EffectId.Leader.MenacingPresenceSearch),
 
                 new Target(
-                    name: AbilityName.Leader.OneForAll,
+                    id: AbilityId.Leader.OneForAll,
                     turnPhase: TurnPhase.Planning,
-                    displayName: nameof(AbilityName.Leader.OneForAll).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Leader.OneForAll).CamelCaseToWords(),
                     description: "Select an adjacent Obelisk and sap its energy to give all friendly units " +
                                  "+2 Health. This Obelisk cannot be sapped again for 10 turns.",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Leader.OneForAllApplyBehaviourObelisk
+                        EffectId.Leader.OneForAllApplyBehaviourObelisk
                     }),
 
                 new Build(
-                    name: AbilityName.Slave.Build,
-                    displayName: nameof(AbilityName.Slave.Build).CamelCaseToWords(),
+                    id: AbilityId.Slave.Build,
+                    displayName: nameof(AbilityId.Slave.Build).CamelCaseToWords(),
                     description: "Start building a Revelators' structure on an adjacent tile. Multiple Slaves " +
                                  "can build the structure, each additional one after the first provides half of the " +
                                  "Celestium production to the construction than the previous Slave.",
                     placementArea: new Circle(radius: 1, ignoreRadius: 0),
-                    selection: new List<Selection<EntityName>>
+                    selection: new List<Selection<EntityId>>
                     {
-                        new Selection<EntityName>(name: StructureName.Hut, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Hut, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 5),
-                            new Payment(resource: ResourceName.Celestium, amount: 40)
+                            new Payment(resource: ResourceId.Scraps, amount: 5),
+                            new Payment(resource: ResourceId.Celestium, amount: 40)
                         }),
-                        new Selection<EntityName>(name: StructureName.Obelisk, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Obelisk, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 12),
-                            new Payment(resource: ResourceName.Celestium, amount: 30)
+                            new Payment(resource: ResourceId.Scraps, amount: 12),
+                            new Payment(resource: ResourceId.Celestium, amount: 30)
                         }),
-                        new Selection<EntityName>(name: StructureName.Shack, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Shack, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 15),
-                            new Payment(resource: ResourceName.Celestium, amount: 40)
+                            new Payment(resource: ResourceId.Scraps, amount: 15),
+                            new Payment(resource: ResourceId.Celestium, amount: 40)
                         }),
-                        new Selection<EntityName>(name: StructureName.Smith, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Smith, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 11),
-                            new Payment(resource: ResourceName.Celestium, amount: 50)
+                            new Payment(resource: ResourceId.Scraps, amount: 11),
+                            new Payment(resource: ResourceId.Celestium, amount: 50)
                         }),
-                        new Selection<EntityName>(name: StructureName.Fletcher, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Fletcher, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 17),
-                            new Payment(resource: ResourceName.Celestium, amount: 75)
+                            new Payment(resource: ResourceId.Scraps, amount: 17),
+                            new Payment(resource: ResourceId.Celestium, amount: 75)
                         }),
-                        new Selection<EntityName>(name: StructureName.Alchemy, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Alchemy, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 23),
-                            new Payment(resource: ResourceName.Celestium, amount: 100)
+                            new Payment(resource: ResourceId.Scraps, amount: 23),
+                            new Payment(resource: ResourceId.Celestium, amount: 100)
                         }),
-                        new Selection<EntityName>(name: StructureName.Depot, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Depot, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 20),
-                            new Payment(resource: ResourceName.Celestium, amount: 65)
+                            new Payment(resource: ResourceId.Scraps, amount: 20),
+                            new Payment(resource: ResourceId.Celestium, amount: 65)
                         }),
-                        new Selection<EntityName>(name: StructureName.Workshop, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Workshop, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 20),
-                            new Payment(resource: ResourceName.Celestium, amount: 50)
+                            new Payment(resource: ResourceId.Scraps, amount: 20),
+                            new Payment(resource: ResourceId.Celestium, amount: 50)
                         }),
-                        new Selection<EntityName>(name: StructureName.Outpost, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Outpost, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 18),
-                            new Payment(resource: ResourceName.Celestium, amount: 45)
+                            new Payment(resource: ResourceId.Scraps, amount: 18),
+                            new Payment(resource: ResourceId.Celestium, amount: 45)
                         }),
-                        new Selection<EntityName>(name: StructureName.Barricade, cost: new List<Payment>
+                        new Selection<EntityId>(name: StructureId.Barricade, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 16),
-                            new Payment(resource: ResourceName.Celestium, amount: 35)
+                            new Payment(resource: ResourceId.Scraps, amount: 16),
+                            new Payment(resource: ResourceId.Celestium, amount: 35)
                         }),
                     },
                     casterConsumesAction: true,
@@ -1015,68 +1015,68 @@ namespace low_age_data.Collections
                     helpEfficiency: 0.5f),
 
                 new Passive(
-                    name: AbilityName.Hut.Building,
-                    displayName: nameof(AbilityName.Hut.Building).CamelCaseToWords(),
+                    id: AbilityId.Hut.Building,
+                    displayName: nameof(AbilityId.Hut.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onBuildBehaviour: BehaviourName.Hut.BuildingBuildable),
+                    onBuildBehaviour: BehaviourId.Hut.BuildingBuildable),
 
                 new Passive(
-                    name: AbilityName.Obelisk.Building,
-                    displayName: nameof(AbilityName.Obelisk.Building).CamelCaseToWords(),
+                    id: AbilityId.Obelisk.Building,
+                    displayName: nameof(AbilityId.Obelisk.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onBuildBehaviour: BehaviourName.Obelisk.BuildingBuildable),
+                    onBuildBehaviour: BehaviourId.Obelisk.BuildingBuildable),
 
                 new Target(
-                    name: AbilityName.Slave.Repair,
+                    id: AbilityId.Slave.Repair,
                     turnPhase: TurnPhase.Planning,
-                    displayName: nameof(AbilityName.Slave.Repair).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Slave.Repair).CamelCaseToWords(),
                     description: "Select an adjacent structure. At the start of the next planning phase the " +
                                  "selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be " +
                                  "interrupted.",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Slave.RepairApplyBehaviourStructure
+                        EffectId.Slave.RepairApplyBehaviourStructure
                     }),
 
                 new Target(
-                    name: AbilityName.Slave.ManualLabour,
+                    id: AbilityId.Slave.ManualLabour,
                     turnPhase: TurnPhase.Planning,
-                    displayName: nameof(AbilityName.Slave.ManualLabour).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Slave.ManualLabour).CamelCaseToWords(),
                     description: "Select an adjacent Hut. At the start of the next planning phase receive +2 " +
                                  "Scraps. Maximum of one Slave per Hut.",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Slave.ManualLabourApplyBehaviourHut
+                        EffectId.Slave.ManualLabourApplyBehaviourHut
                     }),
 
                 new Passive(
-                    name: AbilityName.Quickdraw.Doubleshot,
-                    displayName: nameof(AbilityName.Quickdraw.Doubleshot).CamelCaseToWords(),
+                    id: AbilityId.Quickdraw.Doubleshot,
+                    displayName: nameof(AbilityId.Quickdraw.Doubleshot).CamelCaseToWords(),
                     description: "Ranged attacks twice.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Quickdraw.DoubleshotApplyBehaviour
+                        EffectId.Quickdraw.DoubleshotApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Quickdraw.Cripple,
-                    displayName: nameof(AbilityName.Quickdraw.Cripple).CamelCaseToWords(),
+                    id: AbilityId.Quickdraw.Cripple,
+                    displayName: nameof(AbilityId.Quickdraw.Cripple).CamelCaseToWords(),
                     description: "Each ranged attack cripples the target until the end of their action. During " +
                                  "this time target has 60% of their maximum Movement (rounded up) and cannot receive healing " +
                                  "from any sources. Multiple attacks on a crippled target have no additional effects.",
                     hasButton: true,
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Revelators.PoisonedSlits
+                        ResearchId.Revelators.PoisonedSlits
                     },
-                    onHitEffects: new List<EffectName>
+                    onHitEffects: new List<EffectId>
                     {
-                        EffectName.Quickdraw.CrippleApplyBehaviour
+                        EffectId.Quickdraw.CrippleApplyBehaviour
                     },
                     onHitAttackTypes: new List<Attacks>
                     {
@@ -1084,48 +1084,48 @@ namespace low_age_data.Collections
                     }),
 
                 new Passive(
-                    name: AbilityName.Gorger.FanaticSuicidePassive,
-                    displayName: nameof(AbilityName.Gorger.FanaticSuicidePassive).CamelCaseToWords(),
+                    id: AbilityId.Gorger.FanaticSuicidePassive,
+                    displayName: nameof(AbilityId.Gorger.FanaticSuicidePassive).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onHitEffects: new List<EffectName>
+                    onHitEffects: new List<EffectId>
                     {
-                        EffectName.Gorger.FanaticSuicideDestroy
+                        EffectId.Gorger.FanaticSuicideDestroy
                     },
                     onHitAttackTypes: new List<Attacks>
                     {
                         Attacks.Melee
                     },
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Gorger.FanaticSuicideApplyBehaviourBuff
+                        EffectId.Gorger.FanaticSuicideApplyBehaviourBuff
                     }),
 
                 new Instant(
-                    name: AbilityName.Gorger.FanaticSuicide,
+                    id: AbilityId.Gorger.FanaticSuicide,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Gorger.FanaticSuicide).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Gorger.FanaticSuicide).CamelCaseToWords(),
                     description: "Either as an action, or instead of attacking, or upon getting killed Gorger " +
                                  "detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, " +
                                  "killing itself in the process.",
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Gorger.FanaticSuicideSearch,
-                        EffectName.Gorger.FanaticSuicideDestroy
+                        EffectId.Gorger.FanaticSuicideSearch,
+                        EffectId.Gorger.FanaticSuicideDestroy
                     }),
 
                 new Passive(
-                    name: AbilityName.Camou.SilentAssassin,
-                    displayName: nameof(AbilityName.Camou.SilentAssassin).CamelCaseToWords(),
+                    id: AbilityId.Camou.SilentAssassin,
+                    displayName: nameof(AbilityId.Camou.SilentAssassin).CamelCaseToWords(),
                     description: "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly " +
                                  "units around Camou in 4 Attack Distance. Additionally, if the target has none of its allies " +
                                  "in the same radius, Camou silences the target for 2 of its actions, disabling the use of any " +
                                  "abilities or passives.",
                     hasButton: true,
-                    onHitEffects: new List<EffectName>
+                    onHitEffects: new List<EffectId>
                     {
-                        EffectName.Camou.SilentAssassinOnHitDamage,
-                        EffectName.Camou.SilentAssassinOnHitSilence
+                        EffectId.Camou.SilentAssassinOnHitDamage,
+                        EffectId.Camou.SilentAssassinOnHitSilence
                     },
                     onHitAttackTypes: new List<Attacks>
                     {
@@ -1133,82 +1133,82 @@ namespace low_age_data.Collections
                     }),
 
                 new Target(
-                    name: AbilityName.Camou.Climb,
+                    id: AbilityId.Camou.Climb,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Camou.Climb).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Camou.Climb).CamelCaseToWords(),
                     description: "Select an adjacent unoccupied space on a high ground. This space is considered " +
                                  "occupied until the end of the action phase at which point Camou moves to it. Passively, " +
                                  "Camou can move down from high ground at the additional cost of 1 Movement.",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Camou.ClimbTeleport
+                        EffectId.Camou.ClimbTeleport
                     },
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Revelators.SpikedRope
+                        ResearchId.Revelators.SpikedRope
                     }),
 
                 new Passive(
-                    name: AbilityName.Camou.ClimbPassive,
-                    displayName: nameof(AbilityName.Camou.ClimbPassive).CamelCaseToWords(),
+                    id: AbilityId.Camou.ClimbPassive,
+                    displayName: nameof(AbilityId.Camou.ClimbPassive).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     periodicEffect: null,
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Revelators.SpikedRope
+                        ResearchId.Revelators.SpikedRope
                     },
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Camou.ClimbApplyBehaviour
+                        EffectId.Camou.ClimbApplyBehaviour
                     }),
 
                 new Target(
-                    name: AbilityName.Shaman.WondrousGoo,
+                    id: AbilityId.Shaman.WondrousGoo,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Shaman.WondrousGoo).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Shaman.WondrousGoo).CamelCaseToWords(),
                     description: "Select a tile in 4 Attack Distance, which gets contaminated. Any unit in the " +
                                  "contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and " +
                                  "receives 1 Pure Damage at the start of its turn. At the end of this action phase, the " +
                                  "contamination area expands to adjacent tiles and stays until the end of the next action phase.",
                     targetArea: new Circle(radius: 4),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Shaman.WondrousGooCreateEntity
+                        EffectId.Shaman.WondrousGooCreateEntity
                     },
                     cooldown: EndsAt.EndOf.Second.ActionPhase),
 
                 new Passive(
-                    name: AbilityName.Pyre.WallOfFlames,
-                    displayName: nameof(AbilityName.Pyre.WallOfFlames).CamelCaseToWords(),
+                    id: AbilityId.Pyre.WallOfFlames,
+                    displayName: nameof(AbilityId.Pyre.WallOfFlames).CamelCaseToWords(),
                     description: "The cargo leaves a path of flames when moved, which stay until the start of the " +
                                  "next Pyre's action or until death. Any unit which starts its turn or moves onto the flames " +
                                  "receives 5 Melee Damage.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Pyre.CargoCreateEntity
+                        EffectId.Pyre.CargoCreateEntity
                     }),
 
                 new Passive(
-                    name: AbilityName.Pyre.PhantomMenace,
-                    displayName: nameof(AbilityName.Pyre.PhantomMenace).CamelCaseToWords(),
+                    id: AbilityId.Pyre.PhantomMenace,
+                    displayName: nameof(AbilityId.Pyre.PhantomMenace).CamelCaseToWords(),
                     description: "Can move through enemy units (but not buildings).",
                     hasButton: true,
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Revelators.QuestionableCargo
+                        ResearchId.Revelators.QuestionableCargo
                     },
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Pyre.PhantomMenaceApplyBehaviour
+                        EffectId.Pyre.PhantomMenaceApplyBehaviour
                     }),
 
                 new Target(
-                    name: AbilityName.BigBadBull.UnleashTheRage,
+                    id: AbilityId.BigBadBull.UnleashTheRage,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.BigBadBull.UnleashTheRage).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.BigBadBull.UnleashTheRage).CamelCaseToWords(),
                     description: "Select a direction (1 out of 4) originating from Big Bad Bull. Any two adjacent " +
                                  "units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. " +
                                  "If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage.",
@@ -1223,85 +1223,85 @@ namespace low_age_data.Collections
                         new Area(start: new Vector2<int>(x: 0, y: 2), size: new Vector2<int>(x: 2, y: 1)),
                         new Area(start: new Vector2<int>(x: -1, y: 0), size: new Vector2<int>(x: 1, y: 2)),
                     }),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.BigBadBull.UnleashTheRageSearch
+                        EffectId.BigBadBull.UnleashTheRageSearch
                     },
                     cooldown: EndsAt.EndOf.Next.ActionPhase),
 
                 new Target(
-                    name: AbilityName.Mummy.SpawnRoach,
+                    id: AbilityId.Mummy.SpawnRoach,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Mummy.SpawnRoach).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Mummy.SpawnRoach).CamelCaseToWords(),
                     description: "Select an adjacent tile in which Roach is created.",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Mummy.SpawnRoachCreateEntity
+                        EffectId.Mummy.SpawnRoachCreateEntity
                     },
                     researchNeeded: null,
                     cooldown: EndsAt.EndOf.Next.ActionPhase),
 
                 new Passive(
-                    name: AbilityName.Mummy.LeapOfHunger,
-                    displayName: nameof(AbilityName.Mummy.LeapOfHunger).CamelCaseToWords(),
+                    id: AbilityId.Mummy.LeapOfHunger,
+                    displayName: nameof(AbilityId.Mummy.LeapOfHunger).CamelCaseToWords(),
                     description: "Roach creation range is increased to 4 Distance.",
                     hasButton: true,
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Revelators.HumanfleshRations
+                        ResearchId.Revelators.HumanfleshRations
                     },
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Mummy.LeapOfHungerModifyAbility
+                        EffectId.Mummy.LeapOfHungerModifyAbility
                     }),
 
                 new Target(
-                    name: AbilityName.Mummy.SpawnRoachModified,
+                    id: AbilityId.Mummy.SpawnRoachModified,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Mummy.SpawnRoach).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Mummy.SpawnRoach).CamelCaseToWords(),
                     description: "Select a tile in 4 Distance in which Roach is created.",
                     targetArea: new Circle(radius: 4, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Mummy.SpawnRoachCreateEntity
+                        EffectId.Mummy.SpawnRoachCreateEntity
                     },
                     researchNeeded: null,
                     cooldown: EndsAt.EndOf.Next.ActionPhase),
 
                 new Passive(
-                    name: AbilityName.Roach.DegradingCarapace,
-                    displayName: nameof(AbilityName.Roach.DegradingCarapace).CamelCaseToWords(),
+                    id: AbilityId.Roach.DegradingCarapace,
+                    displayName: nameof(AbilityId.Roach.DegradingCarapace).CamelCaseToWords(),
                     description: "At the start of each action loses 1 Health more than the previous action.",
                     hasButton: true,
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Roach.DegradingCarapaceApplyBehaviour
+                        EffectId.Roach.DegradingCarapaceApplyBehaviour
                     }),
 
                 new Target(
-                    name: AbilityName.Roach.CorrosiveSpit,
+                    id: AbilityId.Roach.CorrosiveSpit,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Roach.CorrosiveSpit).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Roach.CorrosiveSpit).CamelCaseToWords(),
                     description: "Perform a ranged attack in 4 Distance dealing 6 (+8 to mechanical) Range Damage.",
                     targetArea: new Circle(radius: 4, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Roach.CorrosiveSpitDamage
+                        EffectId.Roach.CorrosiveSpitDamage
                     },
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Revelators.AdaptiveDigestion
+                        ResearchId.Revelators.AdaptiveDigestion
                     },
                     cooldown: EndsAt.EndOf.Second.ActionPhase),
 
                 new Passive(
-                    name: AbilityName.Parasite.ParalysingGrasp,
-                    displayName: nameof(AbilityName.Parasite.ParalysingGrasp).CamelCaseToWords(),
+                    id: AbilityId.Parasite.ParalysingGrasp,
+                    displayName: nameof(AbilityId.Parasite.ParalysingGrasp).CamelCaseToWords(),
                     description:
                     "Instead of attacking, Parasite attaches to the target. Both units occupy the same space and " +
                     "are considered enemy to all players. Parasite can only detach when the target is killed. All units who " +
@@ -1311,11 +1311,11 @@ namespace low_age_data.Collections
                     hasButton: true,
                     periodicEffect: null,
                     researchNeeded: null,
-                    onHitEffects: new List<EffectName>
+                    onHitEffects: new List<EffectId>
                     {
-                        EffectName.Parasite.ParalysingGraspApplyTetherBehaviour,
-                        EffectName.Parasite.ParalysingGraspApplyAttackBehaviour,
-                        EffectName.Parasite.ParalysingGraspApplySelfBehaviour,
+                        EffectId.Parasite.ParalysingGraspApplyTetherBehaviour,
+                        EffectId.Parasite.ParalysingGraspApplyAttackBehaviour,
+                        EffectId.Parasite.ParalysingGraspApplySelfBehaviour,
                     },
                     onHitAttackTypes: new List<Attacks>
                     {
@@ -1323,31 +1323,31 @@ namespace low_age_data.Collections
                     }),
 
                 new Passive(
-                    name: AbilityName.Horrior.ExpertFormation,
-                    displayName: nameof(AbilityName.Horrior.ExpertFormation).CamelCaseToWords(),
+                    id: AbilityId.Horrior.ExpertFormation,
+                    displayName: nameof(AbilityId.Horrior.ExpertFormation).CamelCaseToWords(),
                     description: "Gains +2 Range Armour if at least one other Horrior is adjacent.",
                     hasButton: true,
-                    periodicEffect: EffectName.Horrior.ExpertFormationSearch),
+                    periodicEffect: EffectId.Horrior.ExpertFormationSearch),
 
                 new Instant(
-                    name: AbilityName.Horrior.Mount,
+                    id: AbilityId.Horrior.Mount,
                     turnPhase: TurnPhase.Planning,
-                    displayName: nameof(AbilityName.Horrior.Mount).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Horrior.Mount).CamelCaseToWords(),
                     description:
                     "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase " +
                     "transform into Surfer.",
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Horrior.MountApplyBehaviour
+                        EffectId.Horrior.MountApplyBehaviour
                     },
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Uee.HoverboardReignition
+                        ResearchId.Uee.HoverboardReignition
                     }),
 
                 new Passive(
-                    name: AbilityName.Marksman.CriticalMark,
-                    displayName: nameof(AbilityName.Marksman.CriticalMark).CamelCaseToWords(),
+                    id: AbilityId.Marksman.CriticalMark,
+                    displayName: nameof(AbilityId.Marksman.CriticalMark).CamelCaseToWords(),
                     description:
                     "Each ranged attack marks the target unit. If a friendly non-Marksman unit attacks the marked " +
                     "target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end " +
@@ -1355,9 +1355,9 @@ namespace low_age_data.Collections
                     hasButton: true,
                     periodicEffect: null,
                     researchNeeded: null,
-                    onHitEffects: new List<EffectName>
+                    onHitEffects: new List<EffectId>
                     {
-                        EffectName.Marksman.CriticalMarkApplyBehaviour
+                        EffectId.Marksman.CriticalMarkApplyBehaviour
                     },
                     onHitAttackTypes: new List<Attacks>
                     {
@@ -1365,22 +1365,22 @@ namespace low_age_data.Collections
                     }),
 
                 new Passive(
-                    name: AbilityName.Surfer.Dismount,
-                    displayName: nameof(AbilityName.Surfer.Dismount).CamelCaseToWords(),
+                    id: AbilityId.Surfer.Dismount,
+                    displayName: nameof(AbilityId.Surfer.Dismount).CamelCaseToWords(),
                     description: "Upon death, reemerges as Horrior.",
                     hasButton: true,
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Surfer.DismountApplyBehaviour
+                        EffectId.Surfer.DismountApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Mortar.DeadlyAmmunition,
-                    displayName: nameof(AbilityName.Mortar.DeadlyAmmunition).CamelCaseToWords(),
+                    id: AbilityId.Mortar.DeadlyAmmunition,
+                    displayName: nameof(AbilityId.Mortar.DeadlyAmmunition).CamelCaseToWords(),
                     description:
                     "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. " +
                     "Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
@@ -1389,106 +1389,106 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Mortar.DeadlyAmmunitionApplyBehaviour
+                        EffectId.Mortar.DeadlyAmmunitionApplyBehaviour
                     }),
 
                 new Instant(
-                    name: AbilityName.Mortar.Reload,
+                    id: AbilityId.Mortar.Reload,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Mortar.Reload).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Mortar.Reload).CamelCaseToWords(),
                     description: "Spend this action phase reloading to full ammo.",
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Mortar.ReloadApplyBehaviour
+                        EffectId.Mortar.ReloadApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Mortar.PiercingBlast,
-                    displayName: nameof(AbilityName.Mortar.PiercingBlast).CamelCaseToWords(),
+                    id: AbilityId.Mortar.PiercingBlast,
+                    displayName: nameof(AbilityId.Mortar.PiercingBlast).CamelCaseToWords(),
                     description: "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
                     hasButton: true,
                     periodicEffect: null,
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Uee.ExplosiveShrapnel
+                        ResearchId.Uee.ExplosiveShrapnel
                     },
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Mortar.PiercingBlastApplyBehaviour
+                        EffectId.Mortar.PiercingBlastApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Hawk.TacticalGoggles,
-                    displayName: nameof(AbilityName.Hawk.TacticalGoggles).CamelCaseToWords(),
+                    id: AbilityId.Hawk.TacticalGoggles,
+                    displayName: nameof(AbilityId.Hawk.TacticalGoggles).CamelCaseToWords(),
                     description: "Gains +3 Vision range.",
                     hasButton: true,
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Hawk.TacticalGogglesApplyBehaviour
+                        EffectId.Hawk.TacticalGogglesApplyBehaviour
                     }),
 
                 new Target(
-                    name: AbilityName.Hawk.Leadership,
+                    id: AbilityId.Hawk.Leadership,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Hawk.Leadership).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Hawk.Leadership).CamelCaseToWords(),
                     description: "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is " +
                                  "lost at the end of the target's next action, or if the targeted unit is no longer adjacent.",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Hawk.LeadershipApplyBehaviour
+                        EffectId.Hawk.LeadershipApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Hawk.HealthKit,
-                    displayName: nameof(AbilityName.Hawk.HealthKit).CamelCaseToWords(),
+                    id: AbilityId.Hawk.HealthKit,
+                    displayName: nameof(AbilityId.Hawk.HealthKit).CamelCaseToWords(),
                     description:
                     "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
                     hasButton: true,
                     periodicEffect: null,
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Uee.MdPractice
+                        ResearchId.Uee.MdPractice
                     },
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Hawk.HealthKitApplyBehaviour
+                        EffectId.Hawk.HealthKitApplyBehaviour
                     }),
 
                 new Build(
-                    name: AbilityName.Engineer.AssembleMachine,
-                    displayName: nameof(AbilityName.Engineer.AssembleMachine).CamelCaseToWords(),
+                    id: AbilityId.Engineer.AssembleMachine,
+                    displayName: nameof(AbilityId.Engineer.AssembleMachine).CamelCaseToWords(),
                     description:
                     "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, " +
                     "up to a number needed to operate the Machine. Each Engineer provides current Celestium " +
                     "production to the construction.",
                     placementArea: new Circle(radius: 1, ignoreRadius: 0),
-                    selection: new List<Selection<EntityName>>
+                    selection: new List<Selection<EntityId>>
                     {
-                        new Selection<EntityName>(name: UnitName.Cannon, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Cannon, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 18),
-                            new Payment(resource: ResourceName.Celestium, amount: 120)
+                            new Payment(resource: ResourceId.Scraps, amount: 18),
+                            new Payment(resource: ResourceId.Celestium, amount: 120)
                         }),
-                        new Selection<EntityName>(name: UnitName.Ballista, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Ballista, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 7),
-                            new Payment(resource: ResourceName.Celestium, amount: 106)
+                            new Payment(resource: ResourceId.Scraps, amount: 7),
+                            new Payment(resource: ResourceId.Celestium, amount: 106)
                         }),
-                        new Selection<EntityName>(name: UnitName.Radar, cost: new List<Payment>
+                        new Selection<EntityId>(name: UnitId.Radar, cost: new List<Payment>
                         {
-                            new Payment(resource: ResourceName.Scraps, amount: 15),
-                            new Payment(resource: ResourceName.Celestium, amount: 84)
+                            new Payment(resource: ResourceId.Scraps, amount: 15),
+                            new Payment(resource: ResourceId.Celestium, amount: 84)
                         }),
                     },
                     casterConsumesAction: true,
@@ -1496,59 +1496,59 @@ namespace low_age_data.Collections
                     helpEfficiency: 1f),
 
                 new Passive(
-                    name: AbilityName.Cannon.Assembling,
-                    displayName: nameof(AbilityName.Cannon.Assembling).CamelCaseToWords(),
+                    id: AbilityId.Cannon.Assembling,
+                    displayName: nameof(AbilityId.Cannon.Assembling).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onBuildBehaviour: BehaviourName.Cannon.AssemblingBuildable),
+                    onBuildBehaviour: BehaviourId.Cannon.AssemblingBuildable),
 
                 new Passive(
-                    name: AbilityName.Ballista.Assembling,
-                    displayName: nameof(AbilityName.Ballista.Assembling).CamelCaseToWords(),
+                    id: AbilityId.Ballista.Assembling,
+                    displayName: nameof(AbilityId.Ballista.Assembling).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onBuildBehaviour: BehaviourName.Ballista.AssemblingBuildable),
+                    onBuildBehaviour: BehaviourId.Ballista.AssemblingBuildable),
 
                 new Passive(
-                    name: AbilityName.Radar.Assembling,
-                    displayName: nameof(AbilityName.Radar.Assembling).CamelCaseToWords(),
+                    id: AbilityId.Radar.Assembling,
+                    displayName: nameof(AbilityId.Radar.Assembling).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
-                    onBuildBehaviour: BehaviourName.Radar.AssemblingBuildable),
+                    onBuildBehaviour: BehaviourId.Radar.AssemblingBuildable),
 
                 new Target(
-                    name: AbilityName.Engineer.Operate,
+                    id: AbilityId.Engineer.Operate,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Engineer.Operate).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Engineer.Operate).CamelCaseToWords(),
                     description:
                     "Select an adjacent Machine and start operating it if the Machine is built and does not " +
                     "have the maximum number of operating Engineers already.",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Engineer.OperateApplyBehaviour
+                        EffectId.Engineer.OperateApplyBehaviour
                     }),
 
                 new Target(
-                    name: AbilityName.Engineer.Repair,
+                    id: AbilityId.Engineer.Repair,
                     turnPhase: TurnPhase.Planning,
-                    displayName: nameof(AbilityName.Engineer.Repair).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Engineer.Repair).CamelCaseToWords(),
                     description:
                     "Select an adjacent structure, Machine or Horrior. At the start of the next planning " +
                     "phase the selected structure or Machine receives +2 Health and selected Horrior's mounting " +
                     "time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be " +
                     "interrupted.",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Engineer.RepairStructureApplyBehaviour,
-                        EffectName.Engineer.RepairMachineApplyBehaviour,
-                        EffectName.Engineer.RepairHorriorApplyBehaviour
+                        EffectId.Engineer.RepairStructureApplyBehaviour,
+                        EffectId.Engineer.RepairMachineApplyBehaviour,
+                        EffectId.Engineer.RepairHorriorApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Cannon.Machine,
-                    displayName: nameof(AbilityName.Cannon.Machine).CamelCaseToWords(),
+                    id: AbilityId.Cannon.Machine,
+                    displayName: nameof(AbilityId.Cannon.Machine).CamelCaseToWords(),
                     description: "Can be built and operated by Engineers only. The Machine is functional and can act " +
                                  "only if maximum number of 3 Engineers are operating it.",
                     hasButton: true,
@@ -1556,23 +1556,23 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Cannon.MachineApplyBehaviour
+                        EffectId.Cannon.MachineApplyBehaviour
                     }),
 
                 new Target(
-                    name: AbilityName.Cannon.HeatUp,
+                    id: AbilityId.Cannon.HeatUp,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Cannon.HeatUp).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Cannon.HeatUp).CamelCaseToWords(),
                     description:
                     "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is " +
                     "revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's " +
                     "action, the attack is triggered which deals massive Range Damage.",
                     targetArea: new Circle(radius: 10, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Cannon.HeatUpCreateEntity
+                        EffectId.Cannon.HeatUpCreateEntity
                     },
                     researchNeeded: null,
                     cooldown: null,
@@ -1583,8 +1583,8 @@ namespace low_age_data.Collections
                     fallbackToAttack: false),
 
                 new Passive(
-                    name: AbilityName.Ballista.Machine,
-                    displayName: nameof(AbilityName.Ballista.Machine).CamelCaseToWords(),
+                    id: AbilityId.Ballista.Machine,
+                    displayName: nameof(AbilityId.Ballista.Machine).CamelCaseToWords(),
                     description: "Can be built and operated by Engineers only. The Machine is functional and can act " +
                                  "only if maximum number of 1 Engineer is operating it.",
                     hasButton: true,
@@ -1592,29 +1592,29 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Ballista.MachineApplyBehaviour
+                        EffectId.Ballista.MachineApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Ballista.AddOn,
-                    displayName: nameof(AbilityName.Ballista.AddOn).CamelCaseToWords(),
+                    id: AbilityId.Ballista.AddOn,
+                    displayName: nameof(AbilityId.Ballista.AddOn).CamelCaseToWords(),
                     description: "Can only be built on a Watchtower or Bastion.",
                     hasButton: true),
 
                 new Target(
-                    name: AbilityName.Ballista.Aim,
+                    id: AbilityId.Ballista.Aim,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Ballista.Aim).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Ballista.Aim).CamelCaseToWords(),
                     description: "Spends 1 action aiming, when attacking a new target. A dotted line to the target " +
                                  "indicates aiming. The target can stop this process if it moves out of Ballista's Attack " +
                                  "Distance. Once aimed, same target can be attacked each action.",
                     targetArea: new Circle(radius: 9, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Ballista.AimDamage,
-                        EffectName.Ballista.AimApplyBehaviour
+                        EffectId.Ballista.AimDamage,
+                        EffectId.Ballista.AimApplyBehaviour
                     },
                     researchNeeded: null,
                     cooldown: null,
@@ -1625,43 +1625,43 @@ namespace low_age_data.Collections
                     fallbackToAttack: false),
 
                 new Passive(
-                    name: AbilityName.Radar.Machine,
-                    displayName: nameof(AbilityName.Radar.Machine).CamelCaseToWords(),
+                    id: AbilityId.Radar.Machine,
+                    displayName: nameof(AbilityId.Radar.Machine).CamelCaseToWords(),
                     description: "Can be built and operated by Engineers only. The Machine is functional and can act " +
                                  "only if maximum number of 1 Engineer is operating it.",
                     hasButton: true,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Radar.MachineApplyBehaviour
+                        EffectId.Radar.MachineApplyBehaviour
                     }),
 
                 new Target(
-                    name: AbilityName.Radar.ResonatingSweep,
+                    id: AbilityId.Radar.ResonatingSweep,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Radar.ResonatingSweep).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Radar.ResonatingSweep).CamelCaseToWords(),
                     description:
                     "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start " +
                     "of the next planning phase.",
                     targetArea: new Circle(radius: 15),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Radar.ResonatingSweepCreateEntity
+                        EffectId.Radar.ResonatingSweepCreateEntity
                     }),
 
                 new Passive(
-                    name: AbilityName.Radar.RadioLocation,
-                    displayName: nameof(AbilityName.Radar.RadioLocation).CamelCaseToWords(),
+                    id: AbilityId.Radar.RadioLocation,
+                    displayName: nameof(AbilityId.Radar.RadioLocation).CamelCaseToWords(),
                     description: "Enemy units in 15 Attack Distance are shown as red dots in the fog of war.",
                     hasButton: true,
-                    periodicEffect: EffectName.Radar.RadioLocationApplyBehaviour,
-                    researchNeeded: new List<ResearchName>
+                    periodicEffect: EffectId.Radar.RadioLocationApplyBehaviour,
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Uee.CelestiumCoatedMaterials
+                        ResearchId.Uee.CelestiumCoatedMaterials
                     }),
 
                 new Passive(
-                    name: AbilityName.Vessel.Machine,
-                    displayName: nameof(AbilityName.Vessel.Machine).CamelCaseToWords(),
+                    id: AbilityId.Vessel.Machine,
+                    displayName: nameof(AbilityId.Vessel.Machine).CamelCaseToWords(),
                     description: "Can be operated by Engineers only (after it is built from Factory). The Machine is " +
                                  "functional and can act only if maximum number of 3 Engineers are operating it.",
                     hasButton: true,
@@ -1669,40 +1669,40 @@ namespace low_age_data.Collections
                     researchNeeded: null,
                     onHitEffects: null,
                     onHitAttackTypes: null,
-                    onBirthEffects: new List<EffectName>
+                    onBirthEffects: new List<EffectId>
                     {
-                        EffectName.Vessel.MachineApplyBehaviour
+                        EffectId.Vessel.MachineApplyBehaviour
                     }),
 
                 new Passive(
-                    name: AbilityName.Vessel.AbsorbentField,
-                    displayName: nameof(AbilityName.Vessel.AbsorbentField).CamelCaseToWords(),
+                    id: AbilityId.Vessel.AbsorbentField,
+                    displayName: nameof(AbilityId.Vessel.AbsorbentField).CamelCaseToWords(),
                     description:
                     "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, " +
                     "which is instead dealt to Vessel.",
                     hasButton: true,
-                    periodicEffect: EffectName.Vessel.AbsorbentFieldSearch),
+                    periodicEffect: EffectId.Vessel.AbsorbentFieldSearch),
 
                 new Instant(
-                    name: AbilityName.Vessel.Fortify,
+                    id: AbilityId.Vessel.Fortify,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Vessel.Fortify).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Vessel.Fortify).CamelCaseToWords(),
                     description: "Provide +3 Melee Armour and +3 Range Armour to all friendly units in 3 Attack " +
                                  "Distance until the start of the next Vessel's action.",
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Vessel.FortifyCreateEntity,
+                        EffectId.Vessel.FortifyCreateEntity,
                     },
-                    researchNeeded: new List<ResearchName>
+                    researchNeeded: new List<ResearchId>
                     {
-                        ResearchName.Uee.HardenedMatrix
+                        ResearchId.Uee.HardenedMatrix
                     },
                     cooldown: EndsAt.EndOf.Second.ActionPhase),
 
                 new Target(
-                    name: AbilityName.Omen.Rendition,
+                    id: AbilityId.Omen.Rendition,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Omen.Rendition).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Omen.Rendition).CamelCaseToWords(),
                     description: "Place a ghostly rendition of a selected enemy unit in 7 Attack Distance to an " +
                                  "unoccupied space in a 3 Attack Distance from the selected target. The rendition has the same " +
                                  "amount of Health, Melee and Range Armour as the selected target, cannot act, can be attacked " +
@@ -1711,22 +1711,22 @@ namespace low_age_data.Collections
                                  "before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows " +
                                  "all adjacent enemies by 50% until the end of their next action.",
                     targetArea: new Circle(radius: 7, ignoreRadius: 0),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Omen.RenditionPlacementApplyBehaviour
+                        EffectId.Omen.RenditionPlacementApplyBehaviour
                     },
                     cooldown: EndsAt.EndOf.Second.ActionPhase),
 
                 new Target(
-                    name: AbilityName.Omen.RenditionPlacement,
+                    id: AbilityId.Omen.RenditionPlacement,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityName.Omen.RenditionPlacement).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Omen.RenditionPlacement).CamelCaseToWords(),
                     description: "Select an unoccupied space in a 3 Attack Distance to place the rendition of the " +
                                  "selected target.",
                     targetArea: new Circle(radius: 3),
-                    effects: new List<EffectName>
+                    effects: new List<EffectId>
                     {
-                        EffectName.Omen.RenditionPlacementCreateEntity
+                        EffectId.Omen.RenditionPlacementCreateEntity
                     })
                 
                 #endregion

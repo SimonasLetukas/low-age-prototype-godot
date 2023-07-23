@@ -8,13 +8,13 @@ namespace low_age_data.Domain.Shared.Filters
     /// </summary>
     public class SpecificFaction : IFilterItem
     {
-        public SpecificFaction(FactionName value)
+        public SpecificFaction(FactionId value)
         {
             Type = $"{nameof(SpecificFaction)}";
             Value = value;
         }
         
         public string Type { get; }
-        public FactionName Value { get; }
+        public FactionId Value { get; }
     }
 }

@@ -15,40 +15,40 @@ namespace low_age_data.Collections
         {
             return new List<Faction>
             {
-                new Faction(name: FactionName.Revelators,
-                    displayName: nameof(FactionName.Revelators).CamelCaseToWords(),
+                new Faction(id: FactionId.Revelators,
+                    displayName: nameof(FactionId.Revelators).CamelCaseToWords(),
                     description: "",
-                    availableResources: new List<ResourceName>
+                    availableResources: new List<ResourceId>
                     {
-                        ResourceName.Scraps,
-                        ResourceName.Celestium,
-                        ResourceName.Population,
-                        ResourceName.MeleeWeapon,
-                        ResourceName.RangedWeapon,
-                        ResourceName.SpecialWeapon
+                        ResourceId.Scraps,
+                        ResourceId.Celestium,
+                        ResourceId.Population,
+                        ResourceId.MeleeWeapon,
+                        ResourceId.RangedWeapon,
+                        ResourceId.SpecialWeapon
                     },
-                    startingEntities: new List<EntityName>
+                    startingEntities: new List<EntityId>
                     {
-                        StructureName.Citadel,
-                        UnitName.Leader
+                        StructureId.Citadel,
+                        UnitId.Leader
                     },
                     bonusStartingResources: new List<Payment>
                     {
-                        new Payment(resource: ResourceName.MeleeWeapon, amount: 4)
+                        new Payment(resource: ResourceId.MeleeWeapon, amount: 4)
                     }),
 
-                new Faction(name: FactionName.Uee,
-                    displayName: nameof(FactionName.Uee).CamelCaseToWords(),
+                new Faction(id: FactionId.Uee,
+                    displayName: nameof(FactionId.Uee).CamelCaseToWords(),
                     description: "",
-                    availableResources: new List<ResourceName>
+                    availableResources: new List<ResourceId>
                     {
-                        ResourceName.Scraps,
-                        ResourceName.Celestium,
-                        ResourceName.Faith
+                        ResourceId.Scraps,
+                        ResourceId.Celestium,
+                        ResourceId.Faith
                     },
-                    startingEntities: new List<EntityName>
+                    startingEntities: new List<EntityId>
                     {
-                        StructureName.BatteryCore
+                        StructureId.BatteryCore
                     })
             };
         }

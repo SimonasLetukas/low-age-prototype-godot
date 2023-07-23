@@ -12,17 +12,17 @@ namespace low_age_data.Domain.Behaviours
     public class Ammunition : Behaviour
     {
         public Ammunition(
-            BehaviourName name, 
+            BehaviourId id, 
             string displayName, 
             string description,
             int maxAmmunitionAmount,
             IList<Attacks> ammunitionAttackTypes,
             int? ammunitionAmountLostOnHit = null,
-            IList<EffectName>? onHitEffects = null,
+            IList<EffectId>? onHitEffects = null,
             int? ammunitionRecoveredOnReload = null, 
             bool? applyOriginalAttackToTarget = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(Ammunition)}", 
                 displayName, 
                 description, 
@@ -34,7 +34,7 @@ namespace low_age_data.Domain.Behaviours
             AmmunitionRecoveredOnReload = ammunitionRecoveredOnReload ?? maxAmmunitionAmount;
             ApplyOriginalAttackToTarget = applyOriginalAttackToTarget ?? true;
             AmmunitionAttackTypes = ammunitionAttackTypes;
-            OnHitEffects = onHitEffects ?? new List<EffectName>();
+            OnHitEffects = onHitEffects ?? new List<EffectId>();
         }
         
         public int MaxAmmunitionAmount { get; }
@@ -42,6 +42,6 @@ namespace low_age_data.Domain.Behaviours
         public int AmmunitionRecoveredOnReload { get; }
         public bool ApplyOriginalAttackToTarget { get; }
         public IList<Attacks> AmmunitionAttackTypes { get; }
-        public IList<EffectName> OnHitEffects { get; }
+        public IList<EffectId> OnHitEffects { get; }
     }
 }

@@ -25,8 +25,8 @@ namespace low_age_data.Collections
                 #region Shared
 
                 new Buff(
-                    name: BehaviourName.Shared.HighGroundBuff,
-                    displayName: nameof(BehaviourName.Shared.HighGroundBuff).CamelCaseToWords(),
+                    id: BehaviourId.Shared.HighGroundBuff,
+                    displayName: nameof(BehaviourId.Shared.HighGroundBuff).CamelCaseToWords(),
                     description: "Unit is on high ground and has +1 vision range and +1 Attack Distance for " +
                                  "ranged attacks.",
                     initialModifications: new List<Modification>
@@ -47,46 +47,46 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Income(
-                    name: BehaviourName.Shared.PassiveIncomeIncome,
-                    displayName: nameof(BehaviourName.Shared.PassiveIncomeIncome).CamelCaseToWords(),
+                    id: BehaviourId.Shared.PassiveIncomeIncome,
+                    displayName: nameof(BehaviourId.Shared.PassiveIncomeIncome).CamelCaseToWords(),
                     description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 3,
-                            resource: ResourceName.Scraps),
+                            resource: ResourceId.Scraps),
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 7,
-                            resource: ResourceName.Celestium)
+                            resource: ResourceId.Celestium)
                     }),
 
                 new Income(
-                    name: BehaviourName.Shared.ScrapsIncomeIncome,
-                    displayName: nameof(BehaviourName.Shared.ScrapsIncomeIncome).CamelCaseToWords(),
+                    id: BehaviourId.Shared.ScrapsIncomeIncome,
+                    displayName: nameof(BehaviourId.Shared.ScrapsIncomeIncome).CamelCaseToWords(),
                     description: "At the start of each planning phase provides 5 Scraps.",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 5,
-                            resource: ResourceName.Scraps)
+                            resource: ResourceId.Scraps)
                     }),
 
                 new Income(
-                    name: BehaviourName.Shared.CelestiumIncomeIncome,
-                    displayName: nameof(BehaviourName.Shared.CelestiumIncomeIncome).CamelCaseToWords(),
+                    id: BehaviourId.Shared.CelestiumIncomeIncome,
+                    displayName: nameof(BehaviourId.Shared.CelestiumIncomeIncome).CamelCaseToWords(),
                     description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
                                  "constructed Obelisk, total minimum of 1).",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 5,
-                            resource: ResourceName.Celestium)
+                            resource: ResourceId.Celestium)
                     },
                     diminishingReturn: 2),
                 
                 new Buildable(
-                    name: BehaviourName.Shared.Revelators.BuildingBuildable,
-                    displayName: nameof(BehaviourName.Shared.Revelators.BuildingBuildable).CamelCaseToWords(),
+                    id: BehaviourId.Shared.Revelators.BuildingBuildable,
+                    displayName: nameof(BehaviourId.Shared.Revelators.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground and can be built by multiple " +
                                  "Slaves simultaneously.",
                     placementValidators: new List<Validator>
@@ -98,8 +98,8 @@ namespace low_age_data.Collections
                     }),
 
                 new InterceptDamage(
-                    name: BehaviourName.Shared.Revelators.NoPopulationSpaceInterceptDamage,
-                    displayName: nameof(BehaviourName.Shared.Revelators.NoPopulationSpaceInterceptDamage).CamelCaseToWords(),
+                    id: BehaviourId.Shared.Revelators.NoPopulationSpaceInterceptDamage,
+                    displayName: nameof(BehaviourId.Shared.Revelators.NoPopulationSpaceInterceptDamage).CamelCaseToWords(),
                     description: "This unit receives double damage from all sources, because there's not enough " +
                                  "population space.",
                     endsAt: EndsAt.EndOf.This.Planning,
@@ -108,8 +108,8 @@ namespace low_age_data.Collections
                         multiplier: 2)),
                 
                 new Buildable(
-                    name: BehaviourName.Shared.Uee.BuildingBuildable,
-                    displayName: nameof(BehaviourName.Shared.Uee.BuildingBuildable).CamelCaseToWords(),
+                    id: BehaviourId.Shared.Uee.BuildingBuildable,
+                    displayName: nameof(BehaviourId.Shared.Uee.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground tiles with Power.",
                     placementValidators: new List<Validator>
                     {
@@ -121,22 +121,22 @@ namespace low_age_data.Collections
                         {
                             new MaskCondition(
                                 conditionFlag: ConditionFlag.Exists, 
-                                conditionedMask: MaskName.Power)
+                                conditionedMask: MaskId.Power)
                         }),
                     }),
                 
                 new Buff(
-                    name: BehaviourName.Shared.Uee.PowerGeneratorBuff,
-                    displayName: nameof(BehaviourName.Shared.Uee.PowerGeneratorBuff).CamelCaseToWords(),
+                    id: BehaviourId.Shared.Uee.PowerGeneratorBuff,
+                    displayName: nameof(BehaviourId.Shared.Uee.PowerGeneratorBuff).CamelCaseToWords(),
                     description: "UEE faction loses when this structure is destroyed.",
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Shared.Uee.PowerGeneratorModifyPlayer
+                        EffectId.Shared.Uee.PowerGeneratorModifyPlayer
                     }),
                 
                 new Buff(
-                    name: BehaviourName.Shared.Uee.PowerDependencyBuff,
-                    displayName: nameof(BehaviourName.Shared.Uee.PowerDependencyBuff).CamelCaseToWords(),
+                    id: BehaviourId.Shared.Uee.PowerDependencyBuff,
+                    displayName: nameof(BehaviourId.Shared.Uee.PowerDependencyBuff).CamelCaseToWords(),
                     description: "If this unit is not connected to Power, all abilities get disabled and it loses 5 " +
                                  "Health at the start of its action or action phase.",
                     endsAt: EndsAt.Death,
@@ -154,7 +154,7 @@ namespace low_age_data.Collections
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.DoesNotExist, 
-                                    conditionedMask: MaskName.Power)
+                                    conditionedMask: MaskId.Power)
                             })
                         }), 
                         // OR
@@ -167,21 +167,21 @@ namespace low_age_data.Collections
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.DoesNotExist, 
-                                    conditionedMask: MaskName.Power)
+                                    conditionedMask: MaskId.Power)
                             })
                         })
                     },
                     removeOnConditionsMet: true, // this buff will get recreated after PowerDependencyBuffInactive ends
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Shared.Uee.PowerDependencyDamage,
-                        EffectName.Shared.Uee.PowerDependencyApplyBehaviourDisable,
-                        EffectName.Shared.Uee.PowerDependencyApplyBehaviourInactive
+                        EffectId.Shared.Uee.PowerDependencyDamage,
+                        EffectId.Shared.Uee.PowerDependencyApplyBehaviourDisable,
+                        EffectId.Shared.Uee.PowerDependencyApplyBehaviourInactive
                     }),
 
                 new Buff(
-                    name: BehaviourName.Shared.Uee.PowerDependencyBuffDisable,
-                    displayName: nameof(BehaviourName.Shared.Uee.PowerDependencyBuffDisable).CamelCaseToWords(),
+                    id: BehaviourId.Shared.Uee.PowerDependencyBuffDisable,
+                    displayName: nameof(BehaviourId.Shared.Uee.PowerDependencyBuffDisable).CamelCaseToWords(),
                     description: "All abilities are disabled because Power is not supplied.",
                     modificationFlags: new List<ModificationFlag>
                     {
@@ -202,7 +202,7 @@ namespace low_age_data.Collections
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.Exists, 
-                                    conditionedMask: MaskName.Power)
+                                    conditionedMask: MaskId.Power)
                             })
                         })
                     },
@@ -210,13 +210,13 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
                 
                 new Buff( // needed so that damage is not applied twice per action phase when there is no power
-                    name: BehaviourName.Shared.Uee.PowerDependencyBuffInactive,
-                    displayName: nameof(BehaviourName.Shared.Uee.PowerDependencyBuffInactive).CamelCaseToWords(),
+                    id: BehaviourId.Shared.Uee.PowerDependencyBuffInactive,
+                    displayName: nameof(BehaviourId.Shared.Uee.PowerDependencyBuffInactive).CamelCaseToWords(),
                     description: "If this unit is not connected to Power, all abilities get disabled and it loses 5 " +
                                  "Health at the start of its action or action phase.",
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Shared.Uee.PowerDependencyApplyBehaviour
+                        EffectId.Shared.Uee.PowerDependencyApplyBehaviour
                     },
                     endsAt: EndsAt.StartOf.Next.Planning,
                     canStack: false,
@@ -233,19 +233,19 @@ namespace low_age_data.Collections
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.Exists, 
-                                    conditionedMask: MaskName.Power)
+                                    conditionedMask: MaskId.Power)
                             })
                         })
                     },
                     removeOnConditionsMet: true,
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Shared.Uee.PowerDependencyApplyBehaviour
+                        EffectId.Shared.Uee.PowerDependencyApplyBehaviour
                     }),
                 
                 new Buff(
-                    name: BehaviourName.Shared.Uee.PositiveFaithBuff,
-                    displayName: nameof(BehaviourName.Shared.Uee.PositiveFaithBuff).CamelCaseToWords(),
+                    id: BehaviourId.Shared.Uee.PositiveFaithBuff,
+                    displayName: nameof(BehaviourId.Shared.Uee.PositiveFaithBuff).CamelCaseToWords(),
                     description: "This unit has increased Initiative because of the positive Faith.",
                     initialModifications: new List<Modification>
                     {
@@ -262,22 +262,22 @@ namespace low_age_data.Collections
                 #region Structures
 
                 new Income(
-                    name: BehaviourName.Citadel.ExecutiveStashIncome,
-                    displayName: nameof(BehaviourName.Citadel.ExecutiveStashIncome).CamelCaseToWords(),
+                    id: BehaviourId.Citadel.ExecutiveStashIncome,
+                    displayName: nameof(BehaviourId.Citadel.ExecutiveStashIncome).CamelCaseToWords(),
                     description: "Provides 4 Population and 4 spaces of storage for Weapons.",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 4,
-                            resource: ResourceName.Population),
+                            resource: ResourceId.Population),
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 4,
-                            resource: ResourceName.WeaponStorage)
+                            resource: ResourceId.WeaponStorage)
                     }),
 
                 new Ascendable(
-                    name: BehaviourName.Citadel.AscendableAscendable,
-                    displayName: nameof(BehaviourName.Citadel.AscendableAscendable).CamelCaseToWords(),
+                    id: BehaviourId.Citadel.AscendableAscendable,
+                    displayName: nameof(BehaviourId.Citadel.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     path: new List<Area>
                     {
@@ -286,8 +286,8 @@ namespace low_age_data.Collections
                     }),
 
                 new HighGround(
-                    name: BehaviourName.Citadel.HighGroundHighGround,
-                    displayName: nameof(BehaviourName.Citadel.HighGroundHighGround).CamelCaseToWords(),
+                    id: BehaviourId.Citadel.HighGroundHighGround,
+                    displayName: nameof(BehaviourId.Citadel.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     highGroundAreas: new List<Area>
@@ -297,8 +297,8 @@ namespace low_age_data.Collections
                     }),
 
                 new Buff(
-                    name: BehaviourName.Obelisk.CelestiumDischargeBuffLong,
-                    displayName: nameof(BehaviourName.Obelisk.CelestiumDischargeBuffLong).CamelCaseToWords(),
+                    id: BehaviourId.Obelisk.CelestiumDischargeBuffLong,
+                    displayName: nameof(BehaviourId.Obelisk.CelestiumDischargeBuffLong).CamelCaseToWords(),
                     description: "",
                     initialModifications: new List<Modification>
                     {
@@ -313,8 +313,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Buff(
-                    name: BehaviourName.Obelisk.CelestiumDischargeBuffShort,
-                    displayName: nameof(BehaviourName.Obelisk.CelestiumDischargeBuffShort).CamelCaseToWords(),
+                    id: BehaviourId.Obelisk.CelestiumDischargeBuffShort,
+                    displayName: nameof(BehaviourId.Obelisk.CelestiumDischargeBuffShort).CamelCaseToWords(),
                     description: "",
                     initialModifications: new List<Modification>
                     {
@@ -323,9 +323,9 @@ namespace low_age_data.Collections
                             amount: 15,
                             stat: Stats.Health)
                     },
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Obelisk.CelestiumDischargeApplyBehaviourNegative
+                        EffectId.Obelisk.CelestiumDischargeApplyBehaviourNegative
                     },
                     endsAt: EndsAt.Instant,
                     canStack: false,
@@ -333,8 +333,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Buff(
-                    name: BehaviourName.Obelisk.CelestiumDischargeBuffNegative,
-                    displayName: nameof(BehaviourName.Obelisk.CelestiumDischargeBuffNegative).CamelCaseToWords(),
+                    id: BehaviourId.Obelisk.CelestiumDischargeBuffNegative,
+                    displayName: nameof(BehaviourId.Obelisk.CelestiumDischargeBuffNegative).CamelCaseToWords(),
                     description: "This unit has its vision, Melee and Range Armour all reduced by 3 for 3 actions.",
                     initialModifications: new List<Modification>
                     {
@@ -358,84 +358,84 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Income(
-                    name: BehaviourName.Shack.AccommodationIncome,
-                    displayName: nameof(BehaviourName.Shack.AccommodationIncome).CamelCaseToWords(),
+                    id: BehaviourId.Shack.AccommodationIncome,
+                    displayName: nameof(BehaviourId.Shack.AccommodationIncome).CamelCaseToWords(),
                     description: "Provides 2 Population.",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 2,
-                            resource: ResourceName.Population)
+                            resource: ResourceId.Population)
                     }),
 
                 new Income(
-                    name: BehaviourName.Smith.MeleeWeaponProductionIncome,
-                    displayName: nameof(BehaviourName.Smith.MeleeWeaponProductionIncome).CamelCaseToWords(),
+                    id: BehaviourId.Smith.MeleeWeaponProductionIncome,
+                    displayName: nameof(BehaviourId.Smith.MeleeWeaponProductionIncome).CamelCaseToWords(),
                     description: "Every 20 Celestium generates a Melee Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 1,
-                            resource: ResourceName.MeleeWeapon)
+                            resource: ResourceId.MeleeWeapon)
                     },
                     cost: new List<Payment>
                     {
-                        new Payment(resource: ResourceName.Celestium,
+                        new Payment(resource: ResourceId.Celestium,
                             amount: 20)
                     },
                     waitForAvailableStorage: true),
 
                 new Income(
-                    name: BehaviourName.Fletcher.RangedWeaponProductionIncome,
-                    displayName: nameof(BehaviourName.Fletcher.RangedWeaponProductionIncome).CamelCaseToWords(),
+                    id: BehaviourId.Fletcher.RangedWeaponProductionIncome,
+                    displayName: nameof(BehaviourId.Fletcher.RangedWeaponProductionIncome).CamelCaseToWords(),
                     description: "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 1,
-                            resource: ResourceName.RangedWeapon)
+                            resource: ResourceId.RangedWeapon)
                     },
                     cost: new List<Payment>
                     {
-                        new Payment(resource: ResourceName.Celestium,
+                        new Payment(resource: ResourceId.Celestium,
                             amount: 25)
                     },
                     waitForAvailableStorage: true),
 
                 new Income(
-                    name: BehaviourName.Alchemy.SpecialWeaponProductionIncome,
-                    displayName: nameof(BehaviourName.Alchemy.SpecialWeaponProductionIncome).CamelCaseToWords(),
+                    id: BehaviourId.Alchemy.SpecialWeaponProductionIncome,
+                    displayName: nameof(BehaviourId.Alchemy.SpecialWeaponProductionIncome).CamelCaseToWords(),
                     description: "Every 30 Celestium generates a Special Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 1,
-                            resource: ResourceName.SpecialWeapon)
+                            resource: ResourceId.SpecialWeapon)
                     },
                     cost: new List<Payment>
                     {
-                        new Payment(resource: ResourceName.Celestium,
+                        new Payment(resource: ResourceId.Celestium,
                             amount: 30)
                     },
                     waitForAvailableStorage: true),
 
                 new Income(
-                    name: BehaviourName.Depot.WeaponStorageIncome,
-                    displayName: nameof(BehaviourName.Depot.WeaponStorageIncome).CamelCaseToWords(),
+                    id: BehaviourId.Depot.WeaponStorageIncome,
+                    displayName: nameof(BehaviourId.Depot.WeaponStorageIncome).CamelCaseToWords(),
                     description: "Provides 4 spaces of storage for Weapons.",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 4,
-                            resource: ResourceName.WeaponStorage)
+                            resource: ResourceId.WeaponStorage)
                     }),
                 
                 new Ascendable(
-                    name: BehaviourName.Outpost.AscendableAscendable,
-                    displayName: nameof(BehaviourName.Outpost.AscendableAscendable).CamelCaseToWords(),
+                    id: BehaviourId.Outpost.AscendableAscendable,
+                    displayName: nameof(BehaviourId.Outpost.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     path: new List<Area>
                     {
@@ -444,8 +444,8 @@ namespace low_age_data.Collections
                     }),
 
                 new HighGround(
-                    name: BehaviourName.Outpost.HighGroundHighGround,
-                    displayName: nameof(BehaviourName.Outpost.HighGroundHighGround).CamelCaseToWords(),
+                    id: BehaviourId.Outpost.HighGroundHighGround,
+                    displayName: nameof(BehaviourId.Outpost.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     highGroundAreas: new List<Area>
@@ -455,8 +455,8 @@ namespace low_age_data.Collections
                     }),
                 
                 new Buff(
-                    name: BehaviourName.Barricade.ProtectiveShieldBuff,
-                    displayName: nameof(BehaviourName.Barricade.ProtectiveShieldBuff).CamelCaseToWords(),
+                    id: BehaviourId.Barricade.ProtectiveShieldBuff,
+                    displayName: nameof(BehaviourId.Barricade.ProtectiveShieldBuff).CamelCaseToWords(),
                     description: "Range Armour for this unit is increased by 2 because of a nearby Barricade's shield.",
                     initialModifications: new List<Modification>
                     {
@@ -473,14 +473,14 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
                 
                 new Buff(
-                    name: BehaviourName.Barricade.DecomposeBuff,
-                    displayName: nameof(BehaviourName.Barricade.DecomposeBuff).CamelCaseToWords(),
+                    id: BehaviourId.Barricade.DecomposeBuff,
+                    displayName: nameof(BehaviourId.Barricade.DecomposeBuff).CamelCaseToWords(),
                     description: "This Barricade is decomposing and will receive 15 Pure Damage at the start of " +
                                  "each action phase.",
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Barricade.DecomposeDamage,
-                        EffectName.Barricade.DecomposeApplyBehaviour
+                        EffectId.Barricade.DecomposeDamage,
+                        EffectId.Barricade.DecomposeApplyBehaviour
                     },
                     endsAt: EndsAt.StartOf.Next.ActionPhase,
                     canStack: false,
@@ -488,15 +488,15 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative),
 
                 new MaskProvider(
-                    name: BehaviourName.BatteryCore.PowerGridMaskProvider,
-                    displayName: nameof(BehaviourName.BatteryCore.PowerGridMaskProvider).CamelCaseToWords(),
+                    id: BehaviourId.BatteryCore.PowerGridMaskProvider,
+                    displayName: nameof(BehaviourId.BatteryCore.PowerGridMaskProvider).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
-                    maskCreated: MaskName.Power, 
+                    maskCreated: MaskId.Power, 
                     maskShape: new Circle(radius: 4, ignoreRadius: 0)),
                 
                 new Buildable(
-                    name: BehaviourName.Collector.BuildingBuildable,
-                    displayName: nameof(BehaviourName.Collector.BuildingBuildable).CamelCaseToWords(),
+                    id: BehaviourId.Collector.BuildingBuildable,
+                    displayName: nameof(BehaviourId.Collector.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground Scraps tiles.",
                     placementValidators: new List<Validator>
                     {
@@ -508,14 +508,14 @@ namespace low_age_data.Collections
                         {
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
-                                conditionedEntity: TileName.Scraps,
+                                conditionedEntity: TileId.Scraps,
                                 amountOfEntitiesRequired: 2)
                         })
                     }),
 
                 new Buildable(
-                    name: BehaviourName.Extractor.BuildingBuildable,
-                    displayName: nameof(BehaviourName.Extractor.BuildingBuildable).CamelCaseToWords(),
+                    id: BehaviourId.Extractor.BuildingBuildable,
+                    displayName: nameof(BehaviourId.Extractor.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground Celestium tiles.",
                     placementValidators: new List<Validator>
                     {
@@ -527,14 +527,14 @@ namespace low_age_data.Collections
                         {
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
-                                conditionedEntity: TileName.Celestium,
+                                conditionedEntity: TileId.Celestium,
                                 amountOfEntitiesRequired: 2)
                         })
                     }),
 
                 new Buildable(
-                    name: BehaviourName.Wall.BuildingBuildable,
-                    displayName: nameof(BehaviourName.Wall.BuildingBuildable).CamelCaseToWords(),
+                    id: BehaviourId.Wall.BuildingBuildable,
+                    displayName: nameof(BehaviourId.Wall.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground tiles with Power.",
                     placementValidators: new List<Validator>
                     {
@@ -546,58 +546,58 @@ namespace low_age_data.Collections
                         {
                             new MaskCondition(
                                 conditionFlag: ConditionFlag.Exists, 
-                                conditionedMask: MaskName.Power)
+                                conditionedMask: MaskId.Power)
                         }),
                     },
                     canBeDragged: true),
                 
                 new Buff(
-                    name: BehaviourName.BatteryCore.FusionCoreUpgradeBuff,
-                    displayName: nameof(BehaviourName.BatteryCore.FusionCoreUpgradeBuff).CamelCaseToWords(),
+                    id: BehaviourId.BatteryCore.FusionCoreUpgradeBuff,
+                    displayName: nameof(BehaviourId.BatteryCore.FusionCoreUpgradeBuff).CamelCaseToWords(),
                     description: "",
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.BatteryCore.FusionCoreUpgradeCreateEntity,
-                        EffectName.BatteryCore.FusionCoreUpgradeModifyResearch
+                        EffectId.BatteryCore.FusionCoreUpgradeCreateEntity,
+                        EffectId.BatteryCore.FusionCoreUpgradeModifyResearch
                     },
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.BatteryCore.FusionCoreUpgradeDestroy
+                        EffectId.BatteryCore.FusionCoreUpgradeDestroy
                     },
                     endsAt: EndsAt.Instant),
                 
                 new MaskProvider(
-                    name: BehaviourName.FusionCore.PowerGridMaskProvider,
-                    displayName: nameof(BehaviourName.FusionCore.PowerGridMaskProvider).CamelCaseToWords(),
+                    id: BehaviourId.FusionCore.PowerGridMaskProvider,
+                    displayName: nameof(BehaviourId.FusionCore.PowerGridMaskProvider).CamelCaseToWords(),
                     description: "Provides Power in 6 Distance.",
-                    maskCreated: MaskName.Power, 
+                    maskCreated: MaskId.Power, 
                     maskShape: new Circle(radius: 6, ignoreRadius: 0)),
                 
                 new Buff(
-                    name: BehaviourName.FusionCore.CelestiumCoreUpgradeBuff,
-                    displayName: nameof(BehaviourName.FusionCore.CelestiumCoreUpgradeBuff).CamelCaseToWords(),
+                    id: BehaviourId.FusionCore.CelestiumCoreUpgradeBuff,
+                    displayName: nameof(BehaviourId.FusionCore.CelestiumCoreUpgradeBuff).CamelCaseToWords(),
                     description: "",
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.FusionCore.CelestiumCoreUpgradeCreateEntity,
-                        EffectName.FusionCore.CelestiumCoreUpgradeModifyResearch
+                        EffectId.FusionCore.CelestiumCoreUpgradeCreateEntity,
+                        EffectId.FusionCore.CelestiumCoreUpgradeModifyResearch
                     },
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.FusionCore.CelestiumCoreUpgradeDestroy
+                        EffectId.FusionCore.CelestiumCoreUpgradeDestroy
                     },
                     endsAt: EndsAt.Instant),
                 
                 new MaskProvider(
-                    name: BehaviourName.CelestiumCore.PowerGridMaskProvider,
-                    displayName: nameof(BehaviourName.CelestiumCore.PowerGridMaskProvider).CamelCaseToWords(),
+                    id: BehaviourId.CelestiumCore.PowerGridMaskProvider,
+                    displayName: nameof(BehaviourId.CelestiumCore.PowerGridMaskProvider).CamelCaseToWords(),
                     description: "Provides Power in 8 Distance.",
-                    maskCreated: MaskName.Power, 
+                    maskCreated: MaskId.Power, 
                     maskShape: new Circle(radius: 8, ignoreRadius: 0)),
                 
                 new Buff(
-                    name: BehaviourName.Collector.DirectTransitSystemInactiveBuff,
-                    displayName: nameof(BehaviourName.Collector.DirectTransitSystemInactiveBuff).CamelCaseToWords(),
+                    id: BehaviourId.Collector.DirectTransitSystemInactiveBuff,
+                    displayName: nameof(BehaviourId.Collector.DirectTransitSystemInactiveBuff).CamelCaseToWords(),
                     description: "Will provide +2 Scraps at the start of each planning phase when connected to Power.",
                     endsAt: EndsAt.Death,
                     canStack: false,
@@ -614,27 +614,27 @@ namespace low_age_data.Collections
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.Exists, 
-                                    conditionedMask: MaskName.Power)
+                                    conditionedMask: MaskId.Power)
                             })
                         }), 
                     },
                     removeOnConditionsMet: true,
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Collector.DirectTransitSystemApplyBehaviourActive
+                        EffectId.Collector.DirectTransitSystemApplyBehaviourActive
                     },
                     restoreChangesOnEnd: false),
                 
                 new Income(
-                    name: BehaviourName.Collector.DirectTransitSystemActiveIncome,
-                    displayName: nameof(BehaviourName.Collector.DirectTransitSystemActiveIncome).CamelCaseToWords(),
+                    id: BehaviourId.Collector.DirectTransitSystemActiveIncome,
+                    displayName: nameof(BehaviourId.Collector.DirectTransitSystemActiveIncome).CamelCaseToWords(),
                     description: "Provides +2 Scraps at the start of each planning phase because it's connected to " +
                                  "Power.",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
                             amount: 2,
-                            resource: ResourceName.Scraps),
+                            resource: ResourceId.Scraps),
                     },
                     triggers: new List<Trigger>
                     {
@@ -647,19 +647,19 @@ namespace low_age_data.Collections
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.DoesNotExist, 
-                                    conditionedMask: MaskName.Power)
+                                    conditionedMask: MaskId.Power)
                             })
                         }), 
                     },
                     removeOnConditionsMet: true,
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Collector.DirectTransitSystemApplyBehaviourInactive
+                        EffectId.Collector.DirectTransitSystemApplyBehaviourInactive
                     }),
                 
                 new Buff(
-                    name: BehaviourName.Extractor.ReinforcedInfrastructureInactiveBuff,
-                    displayName: nameof(BehaviourName.Extractor.ReinforcedInfrastructureInactiveBuff).CamelCaseToWords(),
+                    id: BehaviourId.Extractor.ReinforcedInfrastructureInactiveBuff,
+                    displayName: nameof(BehaviourId.Extractor.ReinforcedInfrastructureInactiveBuff).CamelCaseToWords(),
                     description: "Will gain additional 3 Melee Armour if connected to Power.",
                     endsAt: EndsAt.Death,
                     canStack: false,
@@ -676,20 +676,20 @@ namespace low_age_data.Collections
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.Exists, 
-                                    conditionedMask: MaskName.Power)
+                                    conditionedMask: MaskId.Power)
                             })
                         }), 
                     },
                     removeOnConditionsMet: true,
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourActive
+                        EffectId.Extractor.ReinforcedInfrastructureApplyBehaviourActive
                     },
                     restoreChangesOnEnd: false),
                 
                 new Buff(
-                    name: BehaviourName.Extractor.ReinforcedInfrastructureActiveBuff,
-                    displayName: nameof(BehaviourName.Extractor.ReinforcedInfrastructureActiveBuff).CamelCaseToWords(),
+                    id: BehaviourId.Extractor.ReinforcedInfrastructureActiveBuff,
+                    displayName: nameof(BehaviourId.Extractor.ReinforcedInfrastructureActiveBuff).CamelCaseToWords(),
                     description: "Gains additional 3 Melee Armour because it's connected to Power.",
                     initialModifications: new List<Modification>
                     {
@@ -713,27 +713,27 @@ namespace low_age_data.Collections
                             {
                                 new MaskCondition(
                                     conditionFlag: ConditionFlag.DoesNotExist, 
-                                    conditionedMask: MaskName.Power)
+                                    conditionedMask: MaskId.Power)
                             })
                         }), 
                     },
                     removeOnConditionsMet: true,
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Extractor.ReinforcedInfrastructureApplyBehaviourInactive
+                        EffectId.Extractor.ReinforcedInfrastructureApplyBehaviourInactive
                     },
                     restoreChangesOnEnd: true),
                 
                 new MaskProvider(
-                    name: BehaviourName.PowerPole.PowerGridMaskProvider,
-                    displayName: nameof(BehaviourName.PowerPole.PowerGridMaskProvider).CamelCaseToWords(),
+                    id: BehaviourId.PowerPole.PowerGridMaskProvider,
+                    displayName: nameof(BehaviourId.PowerPole.PowerGridMaskProvider).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
-                    maskCreated: MaskName.Power, 
+                    maskCreated: MaskId.Power, 
                     maskShape: new Circle(radius: 4, ignoreRadius: 0)),
                 
                 new Buff(
-                    name: BehaviourName.PowerPole.ExcessDistributionBuff,
-                    displayName: nameof(BehaviourName.PowerPole.ExcessDistributionBuff).CamelCaseToWords(),
+                    id: BehaviourId.PowerPole.ExcessDistributionBuff,
+                    displayName: nameof(BehaviourId.PowerPole.ExcessDistributionBuff).CamelCaseToWords(),
                     description: "",
                     initialModifications: new List<Modification>
                     {
@@ -748,15 +748,15 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: false),
                 
                 new MaskProvider(
-                    name: BehaviourName.PowerPole.PowerGridImprovedMaskProvider,
-                    displayName: nameof(BehaviourName.PowerPole.PowerGridImprovedMaskProvider).CamelCaseToWords(),
+                    id: BehaviourId.PowerPole.PowerGridImprovedMaskProvider,
+                    displayName: nameof(BehaviourId.PowerPole.PowerGridImprovedMaskProvider).CamelCaseToWords(),
                     description: "Provides Power in 6 Distance.",
-                    maskCreated: MaskName.Power, 
+                    maskCreated: MaskId.Power, 
                     maskShape: new Circle(radius: 6, ignoreRadius: 0)),
                 
                 new Buff(
-                    name: BehaviourName.Temple.KeepingTheFaithBuff,
-                    displayName: nameof(BehaviourName.Temple.KeepingTheFaithBuff).CamelCaseToWords(),
+                    id: BehaviourId.Temple.KeepingTheFaithBuff,
+                    displayName: nameof(BehaviourId.Temple.KeepingTheFaithBuff).CamelCaseToWords(),
                     description: "This unit has +2 Movement because of a nearby Temple.",
                     initialModifications: new List<Modification>
                     {
@@ -769,18 +769,18 @@ namespace low_age_data.Collections
                     removeOnConditionsMet: true),
                 
                 new Income(
-                    name: BehaviourName.Temple.KeepingTheFaithIncome,
-                    displayName: nameof(BehaviourName.Temple.KeepingTheFaithIncome).CamelCaseToWords(),
+                    id: BehaviourId.Temple.KeepingTheFaithIncome,
+                    displayName: nameof(BehaviourId.Temple.KeepingTheFaithIncome).CamelCaseToWords(),
                     description: "Provides 1 Faith. Each point of Faith increases the Initiative of all of this " +
                                  "player units.",
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent, amount: 1, resource: ResourceName.Faith)
+                        new ResourceModification(change: Change.AddCurrent, amount: 1, resource: ResourceId.Faith)
                     }),
                 
                 new HighGround(
-                    name: BehaviourName.Wall.HighGroundHighGround,
-                    displayName: nameof(BehaviourName.Wall.HighGroundHighGround).CamelCaseToWords(),
+                    id: BehaviourId.Wall.HighGroundHighGround,
+                    displayName: nameof(BehaviourId.Wall.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     highGroundAreas: new List<Area>
@@ -790,8 +790,8 @@ namespace low_age_data.Collections
                     }),
                 
                 new Ascendable(
-                    name: BehaviourName.Stairs.AscendableAscendable,
-                    displayName: nameof(BehaviourName.Stairs.AscendableAscendable).CamelCaseToWords(),
+                    id: BehaviourId.Stairs.AscendableAscendable,
+                    displayName: nameof(BehaviourId.Stairs.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     path: new List<Area>
                     {
@@ -802,8 +802,8 @@ namespace low_age_data.Collections
                     }),
                 
                 new HighGround(
-                    name: BehaviourName.Gate.HighGroundHighGround,
-                    displayName: nameof(BehaviourName.Gate.HighGroundHighGround).CamelCaseToWords(),
+                    id: BehaviourId.Gate.HighGroundHighGround,
+                    displayName: nameof(BehaviourId.Gate.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     highGroundAreas: new List<Area>
@@ -813,8 +813,8 @@ namespace low_age_data.Collections
                     }),
                 
                 new Ascendable(
-                    name: BehaviourName.Gate.AscendableAscendable,
-                    displayName: nameof(BehaviourName.Gate.AscendableAscendable).CamelCaseToWords(),
+                    id: BehaviourId.Gate.AscendableAscendable,
+                    displayName: nameof(BehaviourId.Gate.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     path: new List<Area>
                     {
@@ -823,8 +823,8 @@ namespace low_age_data.Collections
                     }),
                 
                 new MovementBlock(
-                    name: BehaviourName.Gate.EntranceMovementBlock,
-                    displayName: nameof(BehaviourName.Gate.EntranceMovementBlock).CamelCaseToWords(),
+                    id: BehaviourId.Gate.EntranceMovementBlock,
+                    displayName: nameof(BehaviourId.Gate.EntranceMovementBlock).CamelCaseToWords(),
                     description: "Allows movement through for friendly units and blocks it for enemy units.",
                     blockedAreas: new List<Area>
                     {
@@ -838,8 +838,8 @@ namespace low_age_data.Collections
                     }),
                 
                 new Buff(
-                    name: BehaviourName.Watchtower.VantagePointBuff,
-                    displayName: nameof(BehaviourName.Watchtower.VantagePointBuff).CamelCaseToWords(),
+                    id: BehaviourId.Watchtower.VantagePointBuff,
+                    displayName: nameof(BehaviourId.Watchtower.VantagePointBuff).CamelCaseToWords(),
                     description: "Unit is on a Watchtower and has +1 vision range and +1 Range Damage for ranged " +
                                  "attacks.",
                     initialModifications: new List<Modification>
@@ -860,8 +860,8 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
                 
                 new Buff(
-                    name: BehaviourName.Bastion.BattlementBuff,
-                    displayName: nameof(BehaviourName.Bastion.BattlementBuff).CamelCaseToWords(),
+                    id: BehaviourId.Bastion.BattlementBuff,
+                    displayName: nameof(BehaviourId.Bastion.BattlementBuff).CamelCaseToWords(),
                     description: "Unit is on a Bastion and has +1 Range Armour.",
                     initialModifications: new List<Modification>
                     {
@@ -880,17 +880,17 @@ namespace low_age_data.Collections
                 #region Units
 
                 new Buff(
-                    name: BehaviourName.Leader.AllForOneBuff,
-                    displayName: nameof(BehaviourName.Leader.AllForOneBuff).CamelCaseToWords(),
+                    id: BehaviourId.Leader.AllForOneBuff,
+                    displayName: nameof(BehaviourId.Leader.AllForOneBuff).CamelCaseToWords(),
                     description: "Revelators faction loses when this unit dies.",
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Leader.AllForOneModifyPlayer
+                        EffectId.Leader.AllForOneModifyPlayer
                     }),
 
                 new Buff(
-                    name: BehaviourName.Leader.MenacingPresenceBuff,
-                    displayName: nameof(BehaviourName.Leader.MenacingPresenceBuff).CamelCaseToWords(),
+                    id: BehaviourId.Leader.MenacingPresenceBuff,
+                    displayName: nameof(BehaviourId.Leader.MenacingPresenceBuff).CamelCaseToWords(),
                     description: "Melee and Range Damage for this unit is reduced by 2.",
                     initialModifications: new List<Modification>
                     {
@@ -913,14 +913,14 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Buff(
-                    name: BehaviourName.Leader.OneForAllObeliskBuff,
-                    displayName: nameof(BehaviourName.Leader.OneForAllObeliskBuff).CamelCaseToWords(),
+                    id: BehaviourId.Leader.OneForAllObeliskBuff,
+                    displayName: nameof(BehaviourId.Leader.OneForAllObeliskBuff).CamelCaseToWords(),
                     description: "This unit has recently been sapped for health.",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Leader.OneForAllSearch
+                        EffectId.Leader.OneForAllSearch
                     },
                     finalModifications: null,
                     finalEffects: null,
@@ -930,8 +930,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative),
 
                 new Buff(
-                    name: BehaviourName.Leader.OneForAllHealBuff,
-                    displayName: nameof(BehaviourName.Leader.OneForAllHealBuff).CamelCaseToWords(),
+                    id: BehaviourId.Leader.OneForAllHealBuff,
+                    displayName: nameof(BehaviourId.Leader.OneForAllHealBuff).CamelCaseToWords(),
                     description: "Heals for 2 Health.",
                     modificationFlags: null,
                     initialModifications: new List<Modification>
@@ -950,8 +950,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Buildable(
-                    name: BehaviourName.Hut.BuildingBuildable,
-                    displayName: nameof(BehaviourName.Hut.BuildingBuildable).CamelCaseToWords(),
+                    id: BehaviourId.Hut.BuildingBuildable,
+                    displayName: nameof(BehaviourId.Hut.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground Scraps tiles, and can be built " +
                                  "by multiple Slaves simultaneously.",
                     placementValidators: new List<Validator>
@@ -964,14 +964,14 @@ namespace low_age_data.Collections
                         {
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
-                                conditionedEntity: TileName.Scraps,
+                                conditionedEntity: TileId.Scraps,
                                 amountOfEntitiesRequired: 2)
                         })
                     }),
 
                 new Buildable(
-                    name: BehaviourName.Obelisk.BuildingBuildable,
-                    displayName: nameof(BehaviourName.Obelisk.BuildingBuildable).CamelCaseToWords(),
+                    id: BehaviourId.Obelisk.BuildingBuildable,
+                    displayName: nameof(BehaviourId.Obelisk.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground Celestium tiles, and can be " +
                                  "built by multiple Slaves simultaneously.",
                     placementValidators: new List<Validator>
@@ -984,20 +984,20 @@ namespace low_age_data.Collections
                         {
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
-                                conditionedEntity: TileName.Celestium,
+                                conditionedEntity: TileId.Celestium,
                                 amountOfEntitiesRequired: 2)
                         })
                     }),
 
                 new Buff(
-                    name: BehaviourName.Slave.RepairStructureBuff,
-                    displayName: nameof(BehaviourName.Slave.RepairStructureBuff).CamelCaseToWords(),
+                    id: BehaviourId.Slave.RepairStructureBuff,
+                    displayName: nameof(BehaviourId.Slave.RepairStructureBuff).CamelCaseToWords(),
                     description: "This structure will be repaired by +1 Health at the start of the planning phase.",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Slave.RepairApplyBehaviourSelf
+                        EffectId.Slave.RepairApplyBehaviourSelf
                     },
                     finalModifications: new List<Modification>
                     {
@@ -1021,26 +1021,26 @@ namespace low_age_data.Collections
                     removeOnConditionsMet: true),
 
                 new Wait(
-                    name: BehaviourName.Slave.RepairWait,
-                    displayName: nameof(BehaviourName.Slave.RepairWait).CamelCaseToWords(),
+                    id: BehaviourId.Slave.RepairWait,
+                    displayName: nameof(BehaviourId.Slave.RepairWait).CamelCaseToWords(),
                     description: "Currently repairing a structure.",
                     endsAt: EndsAt.StartOf.Next.Planning),
 
                 new Buff(
-                    name: BehaviourName.Slave.ManualLabourBuff,
-                    displayName: nameof(BehaviourName.Slave.ManualLabourBuff).CamelCaseToWords(),
+                    id: BehaviourId.Slave.ManualLabourBuff,
+                    displayName: nameof(BehaviourId.Slave.ManualLabourBuff).CamelCaseToWords(),
                     description:
                     "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Slave.ManualLabourApplyBehaviourSelf
+                        EffectId.Slave.ManualLabourApplyBehaviourSelf
                     },
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Slave.ManualLabourModifyPlayer
+                        EffectId.Slave.ManualLabourModifyPlayer
                     },
                     endsAt: EndsAt.StartOf.Next.Planning,
                     canStack: false,
@@ -1056,14 +1056,14 @@ namespace low_age_data.Collections
                     removeOnConditionsMet: true),
 
                 new Wait(
-                    name: BehaviourName.Slave.ManualLabourWait,
-                    displayName: nameof(BehaviourName.Slave.ManualLabourWait).CamelCaseToWords(),
+                    id: BehaviourId.Slave.ManualLabourWait,
+                    displayName: nameof(BehaviourId.Slave.ManualLabourWait).CamelCaseToWords(),
                     description: "Currently working on a nearby Hut.",
                     endsAt: EndsAt.StartOf.Next.Planning),
 
                 new ExtraAttack(
-                    name: BehaviourName.Quickdraw.DoubleshotExtraAttack,
-                    displayName: nameof(BehaviourName.Quickdraw.DoubleshotExtraAttack).CamelCaseToWords(),
+                    id: BehaviourId.Quickdraw.DoubleshotExtraAttack,
+                    displayName: nameof(BehaviourId.Quickdraw.DoubleshotExtraAttack).CamelCaseToWords(),
                     description: "Ranged attacks twice.",
                     attackTypes: new List<Attacks>
                     {
@@ -1071,8 +1071,8 @@ namespace low_age_data.Collections
                     }),
 
                 new Buff(
-                    name: BehaviourName.Quickdraw.CrippleBuff,
-                    displayName: nameof(BehaviourName.Quickdraw.CrippleBuff).CamelCaseToWords(),
+                    id: BehaviourId.Quickdraw.CrippleBuff,
+                    displayName: nameof(BehaviourId.Quickdraw.CrippleBuff).CamelCaseToWords(),
                     description:
                     "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing " +
                     "from any sources until the end of its action.",
@@ -1100,8 +1100,8 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Buff(
-                    name: BehaviourName.Gorger.FanaticSuicideBuff,
-                    displayName: nameof(BehaviourName.Gorger.FanaticSuicideBuff).CamelCaseToWords(),
+                    id: BehaviourId.Gorger.FanaticSuicideBuff,
+                    displayName: nameof(BehaviourId.Gorger.FanaticSuicideBuff).CamelCaseToWords(),
                     description:
                     "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage " +
                     "to all friendly and enemy units in 1 Distance.",
@@ -1109,14 +1109,14 @@ namespace low_age_data.Collections
                     initialModifications: null,
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Gorger.FanaticSuicideSearch
+                        EffectId.Gorger.FanaticSuicideSearch
                     }),
 
                 new Buff(
-                    name: BehaviourName.Camou.SilentAssassinBuff,
-                    displayName: nameof(BehaviourName.Camou.SilentAssassinBuff).CamelCaseToWords(),
+                    id: BehaviourId.Camou.SilentAssassinBuff,
+                    displayName: nameof(BehaviourId.Camou.SilentAssassinBuff).CamelCaseToWords(),
                     description: "This unit is silenced (use of any abilities is disabled).",
                     modificationFlags: new List<ModificationFlag>
                     {
@@ -1136,15 +1136,15 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Wait(
-                    name: BehaviourName.Camou.ClimbWait,
-                    displayName: nameof(BehaviourName.Camou.ClimbWait).CamelCaseToWords(),
+                    id: BehaviourId.Camou.ClimbWait,
+                    displayName: nameof(BehaviourId.Camou.ClimbWait).CamelCaseToWords(),
                     description:
                     "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
                     endsAt: EndsAt.EndOf.This.ActionPhase),
 
                 new Buff(
-                    name: BehaviourName.Camou.ClimbBuff,
-                    displayName: nameof(BehaviourName.Camou.ClimbBuff).CamelCaseToWords(),
+                    id: BehaviourId.Camou.ClimbBuff,
+                    displayName: nameof(BehaviourId.Camou.ClimbBuff).CamelCaseToWords(),
                     description: "Camou can move down from high ground at the additional cost of 1 Movement.",
                     modificationFlags: new List<ModificationFlag>
                     {
@@ -1160,15 +1160,15 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Wait(
-                    name: BehaviourName.Shaman.WondrousGooFeatureWait,
-                    displayName: nameof(BehaviourName.Shaman.WondrousGooFeatureWait).CamelCaseToWords(),
+                    id: BehaviourId.Shaman.WondrousGooFeatureWait,
+                    displayName: nameof(BehaviourId.Shaman.WondrousGooFeatureWait).CamelCaseToWords(),
                     description: "Effect area will expand at the end of this action phase.",
                     endsAt: EndsAt.EndOf.This.ActionPhase,
-                    nextBehaviour: BehaviourName.Shaman.WondrousGooFeatureBuff),
+                    nextBehaviour: BehaviourId.Shaman.WondrousGooFeatureBuff),
 
                 new Buff(
-                    name: BehaviourName.Shaman.WondrousGooFeatureBuff,
-                    displayName: nameof(BehaviourName.Shaman.WondrousGooFeatureBuff).CamelCaseToWords(),
+                    id: BehaviourId.Shaman.WondrousGooFeatureBuff,
+                    displayName: nameof(BehaviourId.Shaman.WondrousGooFeatureBuff).CamelCaseToWords(),
                     description: "Effect area will disappear at the end of this action phase.",
                     modificationFlags: null,
                     initialModifications: new List<Modification>
@@ -1179,15 +1179,15 @@ namespace low_age_data.Collections
                     },
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Shaman.WondrousGooDestroy
+                        EffectId.Shaman.WondrousGooDestroy
                     },
                     endsAt: EndsAt.EndOf.This.ActionPhase),
 
                 new Buff(
-                    name: BehaviourName.Shaman.WondrousGooBuff,
-                    displayName: nameof(BehaviourName.Shaman.WondrousGooBuff).CamelCaseToWords(),
+                    id: BehaviourId.Shaman.WondrousGooBuff,
+                    displayName: nameof(BehaviourId.Shaman.WondrousGooBuff).CamelCaseToWords(),
                     description: "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) " +
                                  "and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
                     modificationFlags: null,
@@ -1206,9 +1206,9 @@ namespace low_age_data.Collections
                     },
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Shaman.WondrousGooDamage
+                        EffectId.Shaman.WondrousGooDamage
                     },
                     endsAt: EndsAt.StartOf.Next.Action,
                     canStack: false,
@@ -1220,8 +1220,8 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Tether(
-                    name: BehaviourName.Pyre.CargoTether,
-                    displayName: nameof(BehaviourName.Pyre.CargoTether).CamelCaseToWords(),
+                    id: BehaviourId.Pyre.CargoTether,
+                    displayName: nameof(BehaviourId.Pyre.CargoTether).CamelCaseToWords(),
                     description: "The cargo follows Pyre.",
                     source: Location.Origin,
                     extendsSelection: true,
@@ -1230,8 +1230,8 @@ namespace low_age_data.Collections
                     calculatedForSourcePathfinding: true),
 
                 new Buff(
-                    name: BehaviourName.Pyre.CargoWallOfFlamesBuff,
-                    displayName: nameof(BehaviourName.Pyre.CargoWallOfFlamesBuff).CamelCaseToWords(),
+                    id: BehaviourId.Pyre.CargoWallOfFlamesBuff,
+                    displayName: nameof(BehaviourId.Pyre.CargoWallOfFlamesBuff).CamelCaseToWords(),
                     description:
                     "The cargo leaves a path of flames when moved, which stay until the start of the next " +
                     "Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives " +
@@ -1253,22 +1253,22 @@ namespace low_age_data.Collections
                         })
                     },
                     removeOnConditionsMet: false,
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Pyre.WallOfFlamesCreateEntity
+                        EffectId.Pyre.WallOfFlamesCreateEntity
                     }),
 
                 new Buff(
-                    name: BehaviourName.Pyre.WallOfFlamesBuff,
-                    displayName: nameof(BehaviourName.Pyre.WallOfFlamesBuff).CamelCaseToWords(),
+                    id: BehaviourId.Pyre.WallOfFlamesBuff,
+                    displayName: nameof(BehaviourId.Pyre.WallOfFlamesBuff).CamelCaseToWords(),
                     description: "",
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Pyre.WallOfFlamesDestroy
+                        EffectId.Pyre.WallOfFlamesDestroy
                     },
                     endsAt: EndsAt.StartOf.Next.Action,
                     canStack: false,
@@ -1282,14 +1282,14 @@ namespace low_age_data.Collections
                         })
                     },
                     removeOnConditionsMet: true,
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Pyre.WallOfFlamesDestroy
+                        EffectId.Pyre.WallOfFlamesDestroy
                     }),
 
                 new Buff(
-                    name: BehaviourName.Pyre.PhantomMenaceBuff,
-                    displayName: nameof(BehaviourName.Pyre.PhantomMenaceBuff).CamelCaseToWords(),
+                    id: BehaviourId.Pyre.PhantomMenaceBuff,
+                    displayName: nameof(BehaviourId.Pyre.PhantomMenaceBuff).CamelCaseToWords(),
                     description: "Pyre can move through enemy units (but not buildings).",
                     modificationFlags: new List<ModificationFlag>
                     {
@@ -1297,17 +1297,17 @@ namespace low_age_data.Collections
                     }),
 
                 new Buff(
-                    name: BehaviourName.Roach.DegradingCarapaceBuff,
-                    displayName: nameof(BehaviourName.Roach.DegradingCarapaceBuff).CamelCaseToWords(),
+                    id: BehaviourId.Roach.DegradingCarapaceBuff,
+                    displayName: nameof(BehaviourId.Roach.DegradingCarapaceBuff).CamelCaseToWords(),
                     description: "Increases periodic damage by 1 at the start of each action.",
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Roach.DegradingCarapacePeriodicApplyBehaviour,
-                        EffectName.Roach.DegradingCarapaceApplyBehaviour
+                        EffectId.Roach.DegradingCarapacePeriodicApplyBehaviour,
+                        EffectId.Roach.DegradingCarapaceApplyBehaviour
                     },
                     endsAt: EndsAt.StartOf.Next.Action,
                     canStack: true,
@@ -1315,19 +1315,19 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative),
 
                 new Buff(
-                    name: BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff,
-                    displayName: nameof(BehaviourName.Roach.DegradingCarapacePeriodicDamageBuff).CamelCaseToWords(),
+                    id: BehaviourId.Roach.DegradingCarapacePeriodicDamageBuff,
+                    displayName: nameof(BehaviourId.Roach.DegradingCarapacePeriodicDamageBuff).CamelCaseToWords(),
                     description: "This unit will continue to receive 1 damage at every start of its action.",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Roach.DegradingCarapaceSelfDamage
+                        EffectId.Roach.DegradingCarapaceSelfDamage
                     },
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Roach.DegradingCarapacePeriodicApplyBehaviour
+                        EffectId.Roach.DegradingCarapacePeriodicApplyBehaviour
                     },
                     endsAt: EndsAt.StartOf.Next.Action,
                     canStack: true,
@@ -1335,8 +1335,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative),
 
                 new Tether(
-                    name: BehaviourName.Parasite.ParalysingGraspTether,
-                    displayName: nameof(BehaviourName.Parasite.ParalysingGraspTether).CamelCaseToWords(),
+                    id: BehaviourId.Parasite.ParalysingGraspTether,
+                    displayName: nameof(BehaviourId.Parasite.ParalysingGraspTether).CamelCaseToWords(),
                     description:
                     "This unit is possessed by Parasite. On Parasite turn, it moves both units using the movement " +
                     "speed that the possessed unit has. Any damage received is shared between both.",
@@ -1347,8 +1347,8 @@ namespace low_age_data.Collections
                     calculatedForSourcePathfinding: true),
 
                 new Buff(
-                    name: BehaviourName.Parasite.ParalysingGraspBuff,
-                    displayName: nameof(BehaviourName.Parasite.ParalysingGraspBuff).CamelCaseToWords(),
+                    id: BehaviourId.Parasite.ParalysingGraspBuff,
+                    displayName: nameof(BehaviourId.Parasite.ParalysingGraspBuff).CamelCaseToWords(),
                     description:
                     "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it " +
                     "must do unless there are no legal targets.",
@@ -1359,9 +1359,9 @@ namespace low_age_data.Collections
                         ModificationFlag.MustExecuteAttack
                     },
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Parasite.ParalysingGraspApplySelfBehaviour
+                        EffectId.Parasite.ParalysingGraspApplySelfBehaviour
                     },
                     finalModifications: null,
                     finalEffects: null,
@@ -1381,8 +1381,8 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Buff(
-                    name: BehaviourName.Parasite.ParalysingGraspSelfBuff,
-                    displayName: nameof(BehaviourName.Parasite.ParalysingGraspSelfBuff).CamelCaseToWords(),
+                    id: BehaviourId.Parasite.ParalysingGraspSelfBuff,
+                    displayName: nameof(BehaviourId.Parasite.ParalysingGraspSelfBuff).CamelCaseToWords(),
                     description:
                     "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both " +
                     "units on Parasite's turn.",
@@ -1418,8 +1418,8 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Buff(
-                    name: BehaviourName.Horrior.ExpertFormationBuff,
-                    displayName: nameof(BehaviourName.Horrior.ExpertFormationBuff).CamelCaseToWords(),
+                    id: BehaviourId.Horrior.ExpertFormationBuff,
+                    displayName: nameof(BehaviourId.Horrior.ExpertFormationBuff).CamelCaseToWords(),
                     description:
                     "Range Armour for this unit is increased by 2 because it is in formation with an adjacent Horrior.",
                     modificationFlags: null,
@@ -1443,32 +1443,32 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Wait(
-                    name: BehaviourName.Horrior.MountWait,
-                    displayName: nameof(BehaviourName.Horrior.MountWait).CamelCaseToWords(),
+                    id: BehaviourId.Horrior.MountWait,
+                    displayName: nameof(BehaviourId.Horrior.MountWait).CamelCaseToWords(),
                     description: "This unit is mounting up to transform into Surfer.",
                     endsAt: EndsAt.StartOf.Fourth.Planning,
-                    nextBehaviour: BehaviourName.Horrior.MountBuff),
+                    nextBehaviour: BehaviourId.Horrior.MountBuff),
 
                 new Buff(
-                    name: BehaviourName.Horrior.MountBuff,
-                    displayName: nameof(BehaviourName.Horrior.MountBuff).CamelCaseToWords(),
+                    id: BehaviourId.Horrior.MountBuff,
+                    displayName: nameof(BehaviourId.Horrior.MountBuff).CamelCaseToWords(),
                     description: "",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Horrior.MountCreateEntity
+                        EffectId.Horrior.MountCreateEntity
                     },
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Horrior.MountDestroy
+                        EffectId.Horrior.MountDestroy
                     },
                     endsAt: EndsAt.Instant),
 
                 new Buff(
-                    name: BehaviourName.Marksman.CriticalMarkBuff,
-                    displayName: nameof(BehaviourName.Marksman.CriticalMarkBuff).CamelCaseToWords(),
+                    id: BehaviourId.Marksman.CriticalMarkBuff,
+                    displayName: nameof(BehaviourId.Marksman.CriticalMarkBuff).CamelCaseToWords(),
                     description: "Marksman has marked this target until the end of the next action phase. The mark " +
                                  "is consumed dealing 5 Melee Damage, when an ally of Marksman attacks this unit.",
                     modificationFlags: null,
@@ -1500,23 +1500,23 @@ namespace low_age_data.Collections
                         })
                     },
                     removeOnConditionsMet: true,
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Marksman.CriticalMarkDamage
+                        EffectId.Marksman.CriticalMarkDamage
                     },
                     restoreChangesOnEnd: false),
 
                 new Buff(
-                    name: BehaviourName.Surfer.DismountBuff,
-                    displayName: nameof(BehaviourName.Surfer.DismountBuff).CamelCaseToWords(),
+                    id: BehaviourId.Surfer.DismountBuff,
+                    displayName: nameof(BehaviourId.Surfer.DismountBuff).CamelCaseToWords(),
                     description: "Upon death, reemerges as Horrior.",
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Surfer.DismountCreateEntity
+                        EffectId.Surfer.DismountCreateEntity
                     },
                     endsAt: EndsAt.Death,
                     canStack: false,
@@ -1524,8 +1524,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Ammunition(
-                    name: BehaviourName.Mortar.DeadlyAmmunitionAmmunition,
-                    displayName: nameof(BehaviourName.Mortar.DeadlyAmmunitionAmmunition).CamelCaseToWords(),
+                    id: BehaviourId.Mortar.DeadlyAmmunitionAmmunition,
+                    displayName: nameof(BehaviourId.Mortar.DeadlyAmmunitionAmmunition).CamelCaseToWords(),
                     description: "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out " +
                                  "of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
                     maxAmmunitionAmount: 2,
@@ -1534,37 +1534,37 @@ namespace low_age_data.Collections
                         Attacks.Ranged
                     },
                     ammunitionAmountLostOnHit: 1,
-                    onHitEffects: new List<EffectName>
+                    onHitEffects: new List<EffectId>
                     {
-                        EffectName.Mortar.DeadlyAmmunitionSearch
+                        EffectId.Mortar.DeadlyAmmunitionSearch
                     },
                     ammunitionRecoveredOnReload: 2,
                     applyOriginalAttackToTarget: false),
 
                 new Wait(
-                    name: BehaviourName.Mortar.ReloadWait,
-                    displayName: nameof(BehaviourName.Mortar.ReloadWait).CamelCaseToWords(),
+                    id: BehaviourId.Mortar.ReloadWait,
+                    displayName: nameof(BehaviourId.Mortar.ReloadWait).CamelCaseToWords(),
                     description: "Mortar will reload its ammunition at the end of this action.",
                     endsAt: EndsAt.EndOf.This.Action,
-                    nextBehaviour: BehaviourName.Mortar.ReloadBuff),
+                    nextBehaviour: BehaviourId.Mortar.ReloadBuff),
 
                 new Buff(
-                    name: BehaviourName.Mortar.ReloadBuff,
-                    displayName: nameof(BehaviourName.Mortar.ReloadBuff).CamelCaseToWords(),
+                    id: BehaviourId.Mortar.ReloadBuff,
+                    displayName: nameof(BehaviourId.Mortar.ReloadBuff).CamelCaseToWords(),
                     description: "",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Mortar.ReloadReload
+                        EffectId.Mortar.ReloadReload
                     },
                     finalModifications: null,
                     finalEffects: null,
                     endsAt: EndsAt.Instant),
 
                 new Buff(
-                    name: BehaviourName.Mortar.PiercingBlastBuff,
-                    displayName: nameof(BehaviourName.Mortar.PiercingBlastBuff).CamelCaseToWords(),
+                    id: BehaviourId.Mortar.PiercingBlastBuff,
+                    displayName: nameof(BehaviourId.Mortar.PiercingBlastBuff).CamelCaseToWords(),
                     description: "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
                     modificationFlags: null,
                     initialModifications: new List<Modification>
@@ -1585,8 +1585,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Buff(
-                    name: BehaviourName.Hawk.TacticalGogglesBuff,
-                    displayName: nameof(BehaviourName.Hawk.TacticalGogglesBuff).CamelCaseToWords(),
+                    id: BehaviourId.Hawk.TacticalGogglesBuff,
+                    displayName: nameof(BehaviourId.Hawk.TacticalGogglesBuff).CamelCaseToWords(),
                     description: "Gains +3 Vision range.",
                     modificationFlags: null,
                     initialModifications: new List<Modification>
@@ -1602,8 +1602,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Buff(
-                    name: BehaviourName.Hawk.LeadershipBuff,
-                    displayName: nameof(BehaviourName.Hawk.LeadershipBuff).CamelCaseToWords(),
+                    id: BehaviourId.Hawk.LeadershipBuff,
+                    displayName: nameof(BehaviourId.Hawk.LeadershipBuff).CamelCaseToWords(),
                     description: "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of " +
                                  "the next action or if Hawk is not adjacent anymore.",
                     modificationFlags: null,
@@ -1634,18 +1634,18 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Buff(
-                    name: BehaviourName.Hawk.HealthKitBuff,
-                    displayName: nameof(BehaviourName.Hawk.HealthKitBuff).CamelCaseToWords(),
+                    id: BehaviourId.Hawk.HealthKitBuff,
+                    displayName: nameof(BehaviourId.Hawk.HealthKitBuff).CamelCaseToWords(),
                     description:
                     "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Hawk.HealthKitSearch,
-                        EffectName.Hawk.HealthKitApplyBehaviour // Reapply the same buff to achieve periodic effect
+                        EffectId.Hawk.HealthKitSearch,
+                        EffectId.Hawk.HealthKitApplyBehaviour // Reapply the same buff to achieve periodic effect
                     },
                     endsAt: EndsAt.StartOf.Next.Planning,
                     canStack: true, // Only needed because final effects happen right before this behaviour is destroyed
@@ -1653,8 +1653,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Buff(
-                    name: BehaviourName.Hawk.HealthKitHealBuff,
-                    displayName: nameof(BehaviourName.Hawk.HealthKitHealBuff).CamelCaseToWords(),
+                    id: BehaviourId.Hawk.HealthKitHealBuff,
+                    displayName: nameof(BehaviourId.Hawk.HealthKitHealBuff).CamelCaseToWords(),
                     description: "Heals for 1 Health.",
                     modificationFlags: null,
                     initialModifications: new List<Modification>
@@ -1673,8 +1673,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Buildable(
-                    name: BehaviourName.Cannon.AssemblingBuildable,
-                    displayName: nameof(BehaviourName.Cannon.AssemblingBuildable).CamelCaseToWords(),
+                    id: BehaviourId.Cannon.AssemblingBuildable,
+                    displayName: nameof(BehaviourId.Cannon.AssemblingBuildable).CamelCaseToWords(),
                     description:
                     "This machine can only be placed on the low ground and can be assembled by a maximum of " +
                     "3 Engineers at once.",
@@ -1688,8 +1688,8 @@ namespace low_age_data.Collections
                     maximumHelpers: 3),
 
                 new Buildable(
-                    name: BehaviourName.Ballista.AssemblingBuildable,
-                    displayName: nameof(BehaviourName.Ballista.AssemblingBuildable).CamelCaseToWords(),
+                    id: BehaviourId.Ballista.AssemblingBuildable,
+                    displayName: nameof(BehaviourId.Ballista.AssemblingBuildable).CamelCaseToWords(),
                     description:
                     "This machine can only be placed on a Watchtower or Bastion and can be assembled by a maximum " +
                     "of 1 Engineer at once.",
@@ -1699,18 +1699,18 @@ namespace low_age_data.Collections
                         {
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
-                                conditionedEntity: StructureName.Watchtower), 
+                                conditionedEntity: StructureId.Watchtower), 
                             // OR
                             new EntityCondition(
                                 conditionFlag: ConditionFlag.Exists,
-                                conditionedEntity: StructureName.Bastion)
+                                conditionedEntity: StructureId.Bastion)
                         })
                     },
                     maximumHelpers: 1),
 
                 new Buildable(
-                    name: BehaviourName.Radar.AssemblingBuildable,
-                    displayName: nameof(BehaviourName.Radar.AssemblingBuildable).CamelCaseToWords(),
+                    id: BehaviourId.Radar.AssemblingBuildable,
+                    displayName: nameof(BehaviourId.Radar.AssemblingBuildable).CamelCaseToWords(),
                     description:
                     "This machine can only be placed on the low ground and can be assembled by a maximum of " +
                     "1 Engineer at once.",
@@ -1724,32 +1724,32 @@ namespace low_age_data.Collections
                     maximumHelpers: 1),
 
                 new Buff(
-                    name: BehaviourName.Engineer.OperateBuff,
-                    displayName: nameof(BehaviourName.Engineer.OperateBuff).CamelCaseToWords(),
+                    id: BehaviourId.Engineer.OperateBuff,
+                    displayName: nameof(BehaviourId.Engineer.OperateBuff).CamelCaseToWords(),
                     description: "",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Engineer.OperateModifyCounter
+                        EffectId.Engineer.OperateModifyCounter
                     },
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Engineer.OperateDestroy
+                        EffectId.Engineer.OperateDestroy
                     },
                     endsAt: EndsAt.Instant),
 
                 new Buff(
-                    name: BehaviourName.Engineer.RepairStructureOrMachineBuff,
-                    displayName: nameof(BehaviourName.Engineer.RepairStructureOrMachineBuff).CamelCaseToWords(),
+                    id: BehaviourId.Engineer.RepairStructureOrMachineBuff,
+                    displayName: nameof(BehaviourId.Engineer.RepairStructureOrMachineBuff).CamelCaseToWords(),
                     description:
                     "This structure or machine will be repaired by +2 Health at the start of the planning phase.",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Engineer.RepairApplyBehaviourSelf
+                        EffectId.Engineer.RepairApplyBehaviourSelf
                     },
                     finalModifications: new List<Modification>
                     {
@@ -1773,23 +1773,23 @@ namespace low_age_data.Collections
                     removeOnConditionsMet: true),
 
                 new Buff(
-                    name: BehaviourName.Engineer.RepairHorriorBuff,
-                    displayName: nameof(BehaviourName.Engineer.RepairHorriorBuff).CamelCaseToWords(),
+                    id: BehaviourId.Engineer.RepairHorriorBuff,
+                    displayName: nameof(BehaviourId.Engineer.RepairHorriorBuff).CamelCaseToWords(),
                     description:
                     "This Horrior will have their Mount duration reduced by one turn at the start of the " +
                     "planning phase.",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Engineer.RepairApplyBehaviourSelf
+                        EffectId.Engineer.RepairApplyBehaviourSelf
                     },
                     finalModifications: new List<Modification>
                     {
                         new DurationModification(
                             change: Change.SubtractCurrent,
                             amount: 1f,
-                            behaviourToModify: BehaviourName.Horrior.MountWait)
+                            behaviourToModify: BehaviourId.Horrior.MountWait)
                     },
                     finalEffects: null,
                     endsAt: EndsAt.StartOf.Next.Planning,
@@ -1806,25 +1806,25 @@ namespace low_age_data.Collections
                     removeOnConditionsMet: true),
 
                 new Wait(
-                    name: BehaviourName.Engineer.RepairWait,
-                    displayName: nameof(BehaviourName.Engineer.RepairWait).CamelCaseToWords(),
+                    id: BehaviourId.Engineer.RepairWait,
+                    displayName: nameof(BehaviourId.Engineer.RepairWait).CamelCaseToWords(),
                     description: "Currently repairing.",
                     endsAt: EndsAt.StartOf.Next.Planning),
 
                 new Counter(
-                    name: BehaviourName.Cannon.MachineCounter,
-                    displayName: nameof(BehaviourName.Cannon.MachineCounter).CamelCaseToWords(),
+                    id: BehaviourId.Cannon.MachineCounter,
+                    displayName: nameof(BehaviourId.Cannon.MachineCounter).CamelCaseToWords(),
                     description: "Needs 3 Engineers to operate this machine.",
                     maxAmount: 3,
                     triggerAmount: 3,
-                    triggeredEffects: new List<EffectName>
+                    triggeredEffects: new List<EffectId>
                     {
-                        EffectName.Cannon.MachineRemoveBehaviour
+                        EffectId.Cannon.MachineRemoveBehaviour
                     }),
 
                 new Buff(
-                    name: BehaviourName.Cannon.MachineBuff,
-                    displayName: nameof(BehaviourName.Cannon.MachineBuff).CamelCaseToWords(),
+                    id: BehaviourId.Cannon.MachineBuff,
+                    displayName: nameof(BehaviourId.Cannon.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
                     modificationFlags: new List<ModificationFlag>
@@ -1845,8 +1845,8 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Buff(
-                    name: BehaviourName.Cannon.HeatUpDangerZoneBuff,
-                    displayName: nameof(BehaviourName.Cannon.HeatUpDangerZoneBuff).CamelCaseToWords(),
+                    id: BehaviourId.Cannon.HeatUpDangerZoneBuff,
+                    displayName: nameof(BehaviourId.Cannon.HeatUpDangerZoneBuff).CamelCaseToWords(),
                     description:
                     "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's " +
                     "owner has vision of this tile.",
@@ -1858,15 +1858,15 @@ namespace low_age_data.Collections
                     {
                         new StatModification(change: Change.SetCurrent, amount: 1, stat: Stats.Vision)
                     },
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Cannon.HeatUpApplyWaitBehaviour
+                        EffectId.Cannon.HeatUpApplyWaitBehaviour
                     },
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Cannon.HeatUpSearch,
-                        EffectName.Cannon.HeatUpDestroy
+                        EffectId.Cannon.HeatUpSearch,
+                        EffectId.Cannon.HeatUpDestroy
                     },
                     endsAt: EndsAt.EndOf.Next.Action,
                     canStack: false,
@@ -1884,33 +1884,33 @@ namespace low_age_data.Collections
                         })
                     },
                     removeOnConditionsMet: true,
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Cannon.MachineRemoveBehaviour,
-                        EffectName.Cannon.HeatUpDestroy
+                        EffectId.Cannon.MachineRemoveBehaviour,
+                        EffectId.Cannon.HeatUpDestroy
                     },
                     restoreChangesOnEnd: true),
 
                 new Wait(
-                    name: BehaviourName.Cannon.HeatUpWait,
-                    displayName: nameof(BehaviourName.Cannon.HeatUpWait).CamelCaseToWords(),
+                    id: BehaviourId.Cannon.HeatUpWait,
+                    displayName: nameof(BehaviourId.Cannon.HeatUpWait).CamelCaseToWords(),
                     description: "This Cannon is heating up for a blast at the danger zone.",
                     endsAt: EndsAt.EndOf.Next.Action),
 
                 new Counter(
-                    name: BehaviourName.Ballista.MachineCounter,
-                    displayName: nameof(BehaviourName.Ballista.MachineCounter).CamelCaseToWords(),
+                    id: BehaviourId.Ballista.MachineCounter,
+                    displayName: nameof(BehaviourId.Ballista.MachineCounter).CamelCaseToWords(),
                     description: "Needs 1 Engineer to operate this machine.",
                     maxAmount: 3,
                     triggerAmount: 3,
-                    triggeredEffects: new List<EffectName>
+                    triggeredEffects: new List<EffectId>
                     {
-                        EffectName.Ballista.MachineRemoveBehaviour
+                        EffectId.Ballista.MachineRemoveBehaviour
                     }),
 
                 new Buff(
-                    name: BehaviourName.Ballista.MachineBuff,
-                    displayName: nameof(BehaviourName.Ballista.MachineBuff).CamelCaseToWords(),
+                    id: BehaviourId.Ballista.MachineBuff,
+                    displayName: nameof(BehaviourId.Ballista.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
                     modificationFlags: new List<ModificationFlag>
@@ -1931,8 +1931,8 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Buff(
-                    name: BehaviourName.Ballista.AimBuff,
-                    displayName: nameof(BehaviourName.Ballista.AimBuff).CamelCaseToWords(),
+                    id: BehaviourId.Ballista.AimBuff,
+                    displayName: nameof(BehaviourId.Ballista.AimBuff).CamelCaseToWords(),
                     description:
                     "This unit is aimed by a Ballista, which allows it to shoot every turn as long as this " +
                     "unit remains in range.",
@@ -1953,7 +1953,7 @@ namespace low_age_data.Collections
                         }, validators: new List<Validator>
                         {
                             new ResultValidator(
-                                searchEffect: EffectName.Ballista.AimSearch,
+                                searchEffect: EffectId.Ballista.AimSearch,
                                 conditions: new List<Condition>
                                 {
                                     new Condition(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
@@ -1971,19 +1971,19 @@ namespace low_age_data.Collections
                     hasSameInstanceForAllOwners: false),
 
                 new Counter(
-                    name: BehaviourName.Radar.MachineCounter,
-                    displayName: nameof(BehaviourName.Radar.MachineCounter).CamelCaseToWords(),
+                    id: BehaviourId.Radar.MachineCounter,
+                    displayName: nameof(BehaviourId.Radar.MachineCounter).CamelCaseToWords(),
                     description: "Needs 1 Engineer to operate this machine.",
                     maxAmount: 3,
                     triggerAmount: 3,
-                    triggeredEffects: new List<EffectName>
+                    triggeredEffects: new List<EffectId>
                     {
-                        EffectName.Radar.MachineRemoveBehaviour
+                        EffectId.Radar.MachineRemoveBehaviour
                     }),
 
                 new Buff(
-                    name: BehaviourName.Radar.MachineBuff,
-                    displayName: nameof(BehaviourName.Radar.MachineBuff).CamelCaseToWords(),
+                    id: BehaviourId.Radar.MachineBuff,
+                    displayName: nameof(BehaviourId.Radar.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
                     modificationFlags: new List<ModificationFlag>
@@ -2004,8 +2004,8 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Buff(
-                    name: BehaviourName.Radar.ResonatingSweepBuff,
-                    displayName: nameof(BehaviourName.Radar.ResonatingSweepBuff).CamelCaseToWords(),
+                    id: BehaviourId.Radar.ResonatingSweepBuff,
+                    displayName: nameof(BehaviourId.Radar.ResonatingSweepBuff).CamelCaseToWords(),
                     description: "Provides vision to the Radar's owner.",
                     modificationFlags: new List<ModificationFlag>
                     {
@@ -2017,9 +2017,9 @@ namespace low_age_data.Collections
                     },
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Radar.ResonatingSweepDestroy
+                        EffectId.Radar.ResonatingSweepDestroy
                     },
                     endsAt: EndsAt.StartOf.Next.Planning,
                     canStack: false,
@@ -2027,27 +2027,27 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Buff(
-                    name: BehaviourName.Radar.RadioLocationBuff,
-                    displayName: nameof(BehaviourName.Radar.RadioLocationBuff).CamelCaseToWords(),
+                    id: BehaviourId.Radar.RadioLocationBuff,
+                    displayName: nameof(BehaviourId.Radar.RadioLocationBuff).CamelCaseToWords(),
                     description: "",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Radar.RadioLocationSearchDestroy
+                        EffectId.Radar.RadioLocationSearchDestroy
                     },
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Radar.RadioLocationSearchCreate
+                        EffectId.Radar.RadioLocationSearchCreate
                     },
                     endsAt: EndsAt.Instant,
                     canStack: false,
                     canResetDuration: false),
 
                 new Buff(
-                    name: BehaviourName.Radar.RadioLocationFeatureBuff,
-                    displayName: nameof(BehaviourName.Radar.RadioLocationFeatureBuff).CamelCaseToWords(),
+                    id: BehaviourId.Radar.RadioLocationFeatureBuff,
+                    displayName: nameof(BehaviourId.Radar.RadioLocationFeatureBuff).CamelCaseToWords(),
                     description: "This red dot is able to detect enemy units in the fog of war.",
                     modificationFlags: new List<ModificationFlag>
                     {
@@ -2057,26 +2057,26 @@ namespace low_age_data.Collections
                     initialModifications: null,
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Radar.RadioLocationDestroy
+                        EffectId.Radar.RadioLocationDestroy
                     },
                     endsAt: EndsAt.EndOf.This.Planning),
 
                 new Counter(
-                    name: BehaviourName.Vessel.MachineCounter,
-                    displayName: nameof(BehaviourName.Vessel.MachineCounter).CamelCaseToWords(),
+                    id: BehaviourId.Vessel.MachineCounter,
+                    displayName: nameof(BehaviourId.Vessel.MachineCounter).CamelCaseToWords(),
                     description: "Needs 3 Engineers to operate this machine.",
                     maxAmount: 3,
                     triggerAmount: 3,
-                    triggeredEffects: new List<EffectName>
+                    triggeredEffects: new List<EffectId>
                     {
-                        EffectName.Vessel.MachineRemoveBehaviour
+                        EffectId.Vessel.MachineRemoveBehaviour
                     }),
 
                 new Buff(
-                    name: BehaviourName.Vessel.MachineBuff,
-                    displayName: nameof(BehaviourName.Vessel.MachineBuff).CamelCaseToWords(),
+                    id: BehaviourId.Vessel.MachineBuff,
+                    displayName: nameof(BehaviourId.Vessel.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
                     modificationFlags: new List<ModificationFlag>
@@ -2097,8 +2097,8 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new InterceptDamage(
-                    name: BehaviourName.Vessel.AbsorbentFieldInterceptDamage,
-                    displayName: nameof(BehaviourName.Vessel.AbsorbentFieldInterceptDamage).CamelCaseToWords(),
+                    id: BehaviourId.Vessel.AbsorbentFieldInterceptDamage,
+                    displayName: nameof(BehaviourId.Vessel.AbsorbentFieldInterceptDamage).CamelCaseToWords(),
                     description:
                     "The melee and ranged damage this unit receives is reduced by 50%, but this amount is " +
                     "also dealt to a nearby Vessel.",
@@ -2119,17 +2119,17 @@ namespace low_age_data.Collections
                     hasSameInstanceForAllOwners: false),
 
                 new Buff(
-                    name: BehaviourName.Vessel.FortifyDestroyBuff,
-                    displayName: nameof(BehaviourName.Vessel.FortifyDestroyBuff).CamelCaseToWords(),
+                    id: BehaviourId.Vessel.FortifyDestroyBuff,
+                    displayName: nameof(BehaviourId.Vessel.FortifyDestroyBuff).CamelCaseToWords(),
                     description: "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start " +
                                  "of Vessel's action.",
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Vessel.FortifyDestroy
+                        EffectId.Vessel.FortifyDestroy
                     },
                     endsAt: EndsAt.StartOf.Next.Action,
                     canStack: false,
@@ -2137,8 +2137,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Buff(
-                    name: BehaviourName.Vessel.FortifyBuff,
-                    displayName: nameof(BehaviourName.Vessel.FortifyBuff).CamelCaseToWords(),
+                    id: BehaviourId.Vessel.FortifyBuff,
+                    displayName: nameof(BehaviourId.Vessel.FortifyBuff).CamelCaseToWords(),
                     description: "Has +3 Melee Armour and +3 Range Armour due to a nearby fortified Vessel",
                     modificationFlags: null,
                     initialModifications: new List<Modification>
@@ -2162,14 +2162,14 @@ namespace low_age_data.Collections
                     restoreChangesOnEnd: true),
 
                 new Buff(
-                    name: BehaviourName.Omen.RenditionPlacementBuff,
-                    displayName: nameof(BehaviourName.Omen.RenditionPlacementBuff).CamelCaseToWords(),
+                    id: BehaviourId.Omen.RenditionPlacementBuff,
+                    displayName: nameof(BehaviourId.Omen.RenditionPlacementBuff).CamelCaseToWords(),
                     description: "This unit is about to have its rendition placed in a 3 Attack Distance.",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectName>
+                    initialEffects: new List<EffectId>
                     {
-                        EffectName.Omen.RenditionPlacementExecuteAbility
+                        EffectId.Omen.RenditionPlacementExecuteAbility
                     },
                     finalModifications: null,
                     finalEffects: null,
@@ -2179,8 +2179,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Negative),
 
                 new InterceptDamage(
-                    name: BehaviourName.Omen.RenditionInterceptDamage,
-                    displayName: nameof(BehaviourName.Omen.RenditionPlacementBuff).CamelCaseToWords(),
+                    id: BehaviourId.Omen.RenditionInterceptDamage,
+                    displayName: nameof(BehaviourId.Omen.RenditionPlacementBuff).CamelCaseToWords(),
                     description:
                     "50% of any damage dealt will be dealt as Pure Damage to the unit that was the target of " +
                     "this rendition.",
@@ -2196,16 +2196,16 @@ namespace low_age_data.Collections
                     damageTypeShared: DamageType.Pure),
 
                 new Buff(
-                    name: BehaviourName.Omen.RenditionBuffTimer,
-                    displayName: nameof(BehaviourName.Omen.RenditionBuffTimer).CamelCaseToWords(),
+                    id: BehaviourId.Omen.RenditionBuffTimer,
+                    displayName: nameof(BehaviourId.Omen.RenditionBuffTimer).CamelCaseToWords(),
                     description: "The rendition stays for 2 action phases and disappears afterwards.",
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Omen.RenditionDestroy
+                        EffectId.Omen.RenditionDestroy
                     },
                     endsAt: EndsAt.EndOf.Next.ActionPhase,
                     canStack: false,
@@ -2219,14 +2219,14 @@ namespace low_age_data.Collections
                         })
                     },
                     removeOnConditionsMet: true,
-                    conditionalEffects: new List<EffectName>
+                    conditionalEffects: new List<EffectId>
                     {
-                        EffectName.Omen.RenditionDestroy
+                        EffectId.Omen.RenditionDestroy
                     }),
 
                 new Buff(
-                    name: BehaviourName.Omen.RenditionBuffDeath,
-                    displayName: nameof(BehaviourName.Omen.RenditionBuffDeath).CamelCaseToWords(),
+                    id: BehaviourId.Omen.RenditionBuffDeath,
+                    displayName: nameof(BehaviourId.Omen.RenditionBuffDeath).CamelCaseToWords(),
                     description: "The unit that was the target of this rendition will emit a blast if this rendition " +
                                  "is destroyed. This blast would deal 10 Melee Damage and slow all adjacent enemy units by 50% " +
                                  "until the end of their next action.",
@@ -2234,9 +2234,9 @@ namespace low_age_data.Collections
                     initialModifications: null,
                     initialEffects: null,
                     finalModifications: null,
-                    finalEffects: new List<EffectName>
+                    finalEffects: new List<EffectId>
                     {
-                        EffectName.Omen.RenditionSearch
+                        EffectId.Omen.RenditionSearch
                     },
                     endsAt: EndsAt.Death,
                     canStack: false,
@@ -2244,8 +2244,8 @@ namespace low_age_data.Collections
                     alignment: Alignment.Positive),
 
                 new Buff(
-                    name: BehaviourName.Omen.RenditionBuffDeath,
-                    displayName: nameof(BehaviourName.Omen.RenditionBuffDeath).CamelCaseToWords(),
+                    id: BehaviourId.Omen.RenditionBuffDeath,
+                    displayName: nameof(BehaviourId.Omen.RenditionBuffDeath).CamelCaseToWords(),
                     description: "This unit is slowed by 50% until the end of its next action.",
                     modificationFlags: null,
                     initialModifications: new List<Modification>

@@ -9,15 +9,15 @@ namespace low_age_data.Domain.Effects
     public class RemoveBehaviour : Effect
     {
         public RemoveBehaviour(
-            EffectName name,
-            IList<BehaviourName> behavioursToRemove,
+            EffectId id,
+            IList<BehaviourId> behavioursToRemove,
             Location? location = null,
             IList<IFilterItem>? filters = null,
             bool? treatAsDeath = null,
             Location? behaviourOwner = null,
             IList<Validator>? validators = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Effect)}.{nameof(RemoveBehaviour)}", 
                 validators ?? new List<Validator>())
         {
@@ -28,7 +28,7 @@ namespace low_age_data.Domain.Effects
             BehaviourOwner = behaviourOwner;
         }
 
-        public IList<BehaviourName> BehavioursToRemove { get; }
+        public IList<BehaviourId> BehavioursToRemove { get; }
         public Location Location { get; }
         public IList<IFilterItem> Filters { get; }
         

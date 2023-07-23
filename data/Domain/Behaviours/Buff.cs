@@ -12,26 +12,26 @@ namespace low_age_data.Domain.Behaviours
     public class Buff : Behaviour
     {
         public Buff(
-            BehaviourName name,
+            BehaviourId id,
             string displayName, 
             string description,
             IList<ModificationFlag>? modificationFlags = null,
             IList<Modification>? initialModifications = null,
-            IList<EffectName>? initialEffects = null,
+            IList<EffectId>? initialEffects = null,
             IList<Modification>? finalModifications = null,
-            IList<EffectName>? finalEffects = null,
+            IList<EffectId>? finalEffects = null,
             EndsAt? endsAt = null,
             bool? canStack = null,
             bool? canResetDuration = null,
             Alignment? alignment = null,
             IList<Trigger>? triggers = null,
             bool? removeOnConditionsMet = null,
-            IList<EffectName>? conditionalEffects = null,
+            IList<EffectId>? conditionalEffects = null,
             bool? restoreChangesOnEnd = null,
             bool? ownerAllowed = null,
             bool? hasSameInstanceForAllOwners = null) 
             : base(
-                name, 
+                id, 
                 $"{nameof(Behaviour)}.{nameof(Buff)}", 
                 displayName, 
                 description, 
@@ -47,9 +47,9 @@ namespace low_age_data.Domain.Behaviours
         {
             ModificationFlags = modificationFlags ?? new List<ModificationFlag>();
             InitialModifications = initialModifications ?? new List<Modification>();
-            InitialEffects = initialEffects ?? new List<EffectName>();
+            InitialEffects = initialEffects ?? new List<EffectId>();
             FinalModifications = finalModifications ?? new List<Modification>();
-            FinalEffects = finalEffects ?? new List<EffectName>();
+            FinalEffects = finalEffects ?? new List<EffectId>();
             RestoreChangesOnEnd = restoreChangesOnEnd ?? false;
         }
 
@@ -63,7 +63,7 @@ namespace low_age_data.Domain.Behaviours
         /// <summary>
         /// Executed when behaviour is added.
         /// </summary>
-        public IList<EffectName> InitialEffects { get; }
+        public IList<EffectId> InitialEffects { get; }
         
         /// <summary>
         /// Added right before the <see cref="EndsAt"/> or before <see cref="Entity"/> is destroyed.
@@ -73,7 +73,7 @@ namespace low_age_data.Domain.Behaviours
         /// <summary>
         /// Executed right before the <see cref="EndsAt"/> or before <see cref="Entity"/> is destroyed.
         /// </summary>
-        public IList<EffectName> FinalEffects { get; }
+        public IList<EffectId> FinalEffects { get; }
 
         /// <summary>
         /// If true, counter-acts the <see cref="InitialModifications"/> and <see cref="ModificationFlags"/> before

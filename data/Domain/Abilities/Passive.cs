@@ -9,22 +9,22 @@ namespace low_age_data.Domain.Abilities
     public class Passive : Ability
     {
         public Passive(
-            AbilityName name,
+            AbilityId id,
             string displayName,
             string description,
             bool hasButton = false,
-            EffectName? periodicEffect = null,
-            IList<ResearchName>? researchNeeded = null,
-            IList<EffectName>? onHitEffects = null,
+            EffectId? periodicEffect = null,
+            IList<ResearchId>? researchNeeded = null,
+            IList<EffectId>? onHitEffects = null,
             IList<Attacks>? onHitAttackTypes = null,
-            IList<EffectName>? onBirthEffects = null,
-            BehaviourName? onBuildBehaviour = null,
+            IList<EffectId>? onBirthEffects = null,
+            BehaviourId? onBuildBehaviour = null,
             IList<Payment>? cost = null)
             : base(
-                name,
+                id,
                 $"{nameof(Ability)}.{nameof(Passive)}",
                 TurnPhase.Passive,
-                researchNeeded ?? new List<ResearchName>(),
+                researchNeeded ?? new List<ResearchId>(),
                 hasButton,
                 displayName,
                 description,
@@ -32,21 +32,21 @@ namespace low_age_data.Domain.Abilities
                 cost)
         {
             PeriodicEffect = periodicEffect;
-            OnHitEffects = onHitEffects ?? new List<EffectName>();
+            OnHitEffects = onHitEffects ?? new List<EffectId>();
             OnHitAttackTypes = onHitAttackTypes ?? new List<Attacks>();
-            OnBirthEffects = onBirthEffects ?? new List<EffectName>();
+            OnBirthEffects = onBirthEffects ?? new List<EffectId>();
             OnBuildBehaviour = onBuildBehaviour;
         }
 
         /// <summary>
         /// Executes effect as often as possible
         /// </summary>
-        public EffectName? PeriodicEffect { get; }
+        public EffectId? PeriodicEffect { get; }
 
         /// <summary>
         /// Executes effects on each attack
         /// </summary>
-        public IList<EffectName> OnHitEffects { get; }
+        public IList<EffectId> OnHitEffects { get; }
 
         /// <summary>
         /// Determines which attack types trigger the on-hit effect
@@ -56,11 +56,11 @@ namespace low_age_data.Domain.Abilities
         /// <summary>
         /// Executes effect upon birth or upon research completion on an entity with this ability.
         /// </summary>
-        public IList<EffectName> OnBirthEffects { get; }
+        public IList<EffectId> OnBirthEffects { get; }
 
         /// <summary>
         /// <see cref="Buildable"/> behaviour checked before and applied after <see cref="Build"/> start.
         /// </summary>
-        public BehaviourName? OnBuildBehaviour { get; }
+        public BehaviourId? OnBuildBehaviour { get; }
     }
 }

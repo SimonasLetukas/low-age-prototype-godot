@@ -1,4 +1,6 @@
 ﻿using Godot;
+using low_age_data.Common;
+using low_age_data.Domain.Factions;
 
 public class Client : Network
 {
@@ -8,7 +10,7 @@ public class Client : Network
     [Signal] public delegate void GameStarted();
     
     public string LocalPlayerName { get; private set; }
-    public int LocalPlayerFaction { get; private set; }
+    public FactionId LocalPlayerFaction { get; private set; }
 
     public override void _Ready()
     {
@@ -20,7 +22,7 @@ public class Client : Network
         }
     }
     
-    public bool JoinGame(string playerName, int playerFaction)
+    public bool JoinGame(string playerName, FactionId playerFaction)
     {
         LocalPlayerName = playerName;
         LocalPlayerFaction = playerFaction;
@@ -42,18 +44,20 @@ public class Client : Network
     private void OnConnectedToServer()
     {
         GD.Print("Connected to server.");
+        
+        Data.Instance.ReadBlueprint();
     }
 
-    public void RegisterPlayer(int recipientId, int playerId, string playerName, int playerFaction)
+    public void RegisterPlayer(int recipientId, int playerId, string playerName, FactionId playerFaction)
     {
         RpcId(recipientId, nameof(OnRegisterPlayer), playerId, playerName, playerFaction);
     }
 
     [Remote]
-    public void OnRegisterPlayer(int playerId, string playerName, int playerFaction)
+    public void OnRegisterPlayer(int playerId, string playerName, string playerFactionId)
     {
-        GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerFaction}");
-        Data.Instance.AddPlayer(playerId, playerName, (Constants.Game.Faction) playerFaction);
+        GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerFactionId}");
+        Data.Instance.AddPlayer(playerId, playerName, new FactionId(playerFactionId));
         
         EmitSignal(nameof(PlayerAdded), playerId);
         GD.Print($"Total players: {Data.Instance.Players.Count}");
