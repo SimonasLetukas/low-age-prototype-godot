@@ -1,7 +1,10 @@
-﻿using low_age_data.Common;
+﻿using System;
+using low_age_data.Common;
+using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Effects
 {
+    [JsonConverter(typeof(EffectIdJsonConverter))]
     public class EffectId : Id
     {
         private EffectId(string value) : base($"effect-{value}")
@@ -399,6 +402,26 @@ namespace low_age_data.Domain.Effects
             public static EffectId RenditionSearch => new EffectId($"{nameof(Omen)}{nameof(RenditionSearch)}".ToKebabCase());
             public static EffectId RenditionDamage => new EffectId($"{nameof(Omen)}{nameof(RenditionDamage)}".ToKebabCase());
             public static EffectId RenditionApplyBehaviourSlow => new EffectId($"{nameof(Omen)}{nameof(RenditionApplyBehaviourSlow)}".ToKebabCase());
+        }
+        
+        private class EffectIdJsonConverter : JsonConverter
+        {
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(EffectId);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (EffectId)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                var value = serializer.Deserialize<string>(reader);
+                return new EffectId(value ?? throw new InvalidOperationException());
+            }
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿using low_age_data.Common;
+﻿using System;
+using low_age_data.Common;
+using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Behaviours
 {
+    [JsonConverter(typeof(BehaviourIdJsonConverter))]
     public class BehaviourId : Id
     {
         private BehaviourId(string value) : base($"behaviour-{value}")
@@ -311,6 +314,26 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourId RenditionBuffTimer => new BehaviourId($"{nameof(Omen)}{nameof(RenditionBuffTimer)}".ToKebabCase());
             public static BehaviourId RenditionBuffDeath => new BehaviourId($"{nameof(Omen)}{nameof(RenditionBuffDeath)}".ToKebabCase());
             public static BehaviourId RenditionBuffSlow => new BehaviourId($"{nameof(Omen)}{nameof(RenditionBuffSlow)}".ToKebabCase());
+        }
+        
+        private class BehaviourIdJsonConverter : JsonConverter
+        {
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(BehaviourId);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (BehaviourId)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                var value = serializer.Deserialize<string>(reader);
+                return new BehaviourId(value ?? throw new InvalidOperationException());
+            }
         }
     }
 }

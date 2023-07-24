@@ -1,7 +1,10 @@
-﻿using low_age_data.Common;
+﻿using System;
+using low_age_data.Common;
+using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Shared
 {
+    [JsonConverter(typeof(ResearchIdJsonConverter))]
     public class ResearchId : Id
     {
         private ResearchId(string value) : base($"research-{value}")
@@ -27,6 +30,26 @@ namespace low_age_data.Domain.Shared
             public static ResearchId MdPractice => new ResearchId($"{nameof(Uee)}{nameof(MdPractice)}".ToKebabCase());
             public static ResearchId CelestiumCoatedMaterials => new ResearchId($"{nameof(Uee)}{nameof(CelestiumCoatedMaterials)}".ToKebabCase());
             public static ResearchId HardenedMatrix => new ResearchId($"{nameof(Uee)}{nameof(HardenedMatrix)}".ToKebabCase());
+        }
+        
+        private class ResearchIdJsonConverter : JsonConverter
+        {
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(ResearchId);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (ResearchId)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                var value = serializer.Deserialize<string>(reader);
+                return new ResearchId(value ?? throw new InvalidOperationException());
+            }
         }
     }
 }

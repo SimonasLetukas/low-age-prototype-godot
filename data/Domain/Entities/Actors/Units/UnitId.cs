@@ -1,7 +1,10 @@
-﻿using low_age_data.Common;
+﻿using System;
+using low_age_data.Common;
+using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Entities.Actors.Units
 {
+    [JsonConverter(typeof(UnitIdJsonConverter))]
     public class UnitId : EntityId
     {
         private UnitId(string value) : base($"unit-{value}")
@@ -31,5 +34,25 @@ namespace low_age_data.Domain.Entities.Actors.Units
         public static UnitId Radar => new UnitId(nameof(Radar).ToKebabCase());
         public static UnitId Vessel => new UnitId(nameof(Vessel).ToKebabCase());
         public static UnitId Omen => new UnitId(nameof(Omen).ToKebabCase());
+        
+        private class UnitIdJsonConverter : JsonConverter
+        {
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(UnitId);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (UnitId)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                var value = serializer.Deserialize<string>(reader);
+                return new UnitId(value ?? throw new InvalidOperationException());
+            }
+        }
     }
 }
