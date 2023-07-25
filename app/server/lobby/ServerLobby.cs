@@ -20,6 +20,15 @@ public class ServerLobby : Lobby
 
         Client.Instance.Connect(nameof(Client.GameStarted), this, nameof(OnGameStarted));
     }
+    
+    [Remote]
+    public void UpdateSelectedPlayerFaction(int playerId, string factionId)
+    {
+        GD.Print($"{nameof(ServerLobby)}.{nameof(UpdateSelectedPlayerFaction)}: called with " +
+                 $"player '{playerId}', {nameof(factionId)} '{factionId}'.");
+        
+        Rpc(nameof(ChangeSelectedFactionForPlayer), playerId, factionId);
+    }
 
     private void OnGameStarted()
     {

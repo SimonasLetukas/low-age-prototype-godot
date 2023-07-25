@@ -6,16 +6,18 @@ public class MainMenu : VBoxContainer
     public const string ScenePath = @"res://app/client/menu/MainMenu.tscn";
 
     private LineEdit _nameInput;
-    private OptionButton _factionInput;
+    private FactionSelection _factionSelection;
     private Button _connectButton;
     private Button _playLocallyButton;
     private Label _errorMessage;
     private Tween _tween;
 
+    private FactionId _currentlySelectedFaction;
+
     public override void _Ready()
     {
         _nameInput = GetNode<LineEdit>("Name/Input");
-        _factionInput = GetNode<OptionButton>("Faction/Input");
+        _factionSelection = GetNode<FactionSelection>("Faction/Faction");
         _connectButton = FindNode("Connect") as Button;
         _playLocallyButton = FindNode("PlayLocally") as Button;
         _errorMessage = GetNode<Label>("Connect/ErrorMessage"); // TODO consolidate all error messages in scene under one 
@@ -32,9 +34,13 @@ public class MainMenu : VBoxContainer
             _nameInput.Text = desktopPath[desktopPath.Length - 2];
         }
         
+        _currentlySelectedFaction = _factionSelection.GetSelectedFaction();
+
         GetTree().Connect(Constants.ENet.ConnectedToServerEvent, this, nameof(OnConnectedToServer));
         _connectButton?.Connect(nameof(_connectButton.Pressed).ToLower(), this, nameof(OnConnectPressed));
         _playLocallyButton?.Connect(nameof(_playLocallyButton.Pressed).ToLower(), this, nameof(OnPlayLocallyPressed));
+        if (_factionSelection is null is false) 
+            _factionSelection.FactionSelected += OnFactionSelectionSelected;
     }
 
     private void ConnectToServer()
@@ -42,7 +48,7 @@ public class MainMenu : VBoxContainer
         PutConnectionMessage("Connecting to server");
         _connectButton.Disabled = true;
         
-        if (Client.Instance.JoinGame(_nameInput.Text, FactionId.Revelators) is false) // TODO remove hardcoded faction
+        if (Client.Instance.JoinGame(_nameInput.Text, _currentlySelectedFaction) is false)
         {
             PutConnectionMessage("Failed to connect");
         }
@@ -73,5 +79,10 @@ public class MainMenu : VBoxContainer
     {
         Constants.SetLocalServer();
         ConnectToServer();
+    }
+
+    private void OnFactionSelectionSelected(FactionId factionId)
+    {
+        _currentlySelectedFaction = factionId;
     }
 }

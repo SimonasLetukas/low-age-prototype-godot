@@ -20,7 +20,7 @@ public class Server : Network
     /// </summary>
     public void RegisterSelf(int playerId, string playerName, FactionId playerFaction)
     {
-        RpcId(Constants.ServerId, nameof(OnRegisterSelf), playerId, playerName, playerFaction);
+        RpcId(Constants.ServerId, nameof(OnRegisterSelf), playerId, playerName, playerFaction.ToString());
     }
 
     [Remote]

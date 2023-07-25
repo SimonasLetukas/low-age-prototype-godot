@@ -50,7 +50,7 @@ public class Client : Network
 
     public void RegisterPlayer(int recipientId, int playerId, string playerName, FactionId playerFaction)
     {
-        RpcId(recipientId, nameof(OnRegisterPlayer), playerId, playerName, playerFaction);
+        RpcId(recipientId, nameof(OnRegisterPlayer), playerId, playerName, playerFaction.ToString());
     }
 
     [Remote]

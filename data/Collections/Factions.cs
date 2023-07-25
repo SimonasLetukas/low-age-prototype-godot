@@ -38,7 +38,7 @@ namespace low_age_data.Collections
                     }),
 
                 new Faction(id: FactionId.Uee,
-                    displayName: nameof(FactionId.Uee).CamelCaseToWords(),
+                    displayName: nameof(FactionId.Uee).CamelCaseToWords().ToUpper(),
                     description: "",
                     availableResources: new List<ResourceId>
                     {

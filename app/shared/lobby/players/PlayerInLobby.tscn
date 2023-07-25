@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/fonts/Karla-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://app/shared/lobby/players/PlayerInLobby.cs" type="Script" id=2]
+[ext_resource path="res://app/shared/lobby/players/faction/FactionSelection.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 26
@@ -31,19 +32,4 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="Faction" type="Button" parent="."]
-margin_left = 587.0
-margin_right = 887.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 300, 40 )
-focus_mode = 0
-mouse_filter = 2
-mouse_default_cursor_shape = 1
-size_flags_vertical = 4
-button_mask = 0
-enabled_focus_mode = 0
-text = "Revelators"
-align = 0
-__meta__ = {
-"_editor_description_": ""
-}
+[node name="Faction" parent="." instance=ExtResource( 3 )]
