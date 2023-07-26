@@ -19,7 +19,7 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>(),
@@ -44,10 +44,10 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 50, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 50, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
@@ -68,10 +68,10 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 60, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 3, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 60, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 3, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
@@ -93,10 +93,10 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 35, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 35, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
@@ -117,10 +117,10 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 75, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 75, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
@@ -141,10 +141,10 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 80, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 80, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
@@ -165,10 +165,10 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 90, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 90, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
@@ -189,10 +189,10 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 65, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 65, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
@@ -213,10 +213,10 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 55, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 55, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
@@ -237,10 +237,10 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 90, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 90, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
@@ -262,10 +262,10 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 65, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 65, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
                     combatAttributes: new List<CombatAttribute>
@@ -288,11 +288,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 100, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 0, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 100, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -316,11 +316,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 100, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 25, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 100, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 25, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -345,11 +345,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 100, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 50, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 100, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 50, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 15, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -374,11 +374,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 40, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 30, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 40, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 30, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -400,11 +400,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 70, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 15, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 70, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 15, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -426,11 +426,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 6, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 60, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 6, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 60, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -454,11 +454,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 35, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 35, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -480,11 +480,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 80, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 15, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 80, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 15, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -509,11 +509,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 95, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 20, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 95, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 20, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -538,11 +538,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 110, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 30, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 110, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 30, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -567,11 +567,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 65, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 25, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 65, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 25, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -593,11 +593,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 100, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 100, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -619,11 +619,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 60, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 60, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -645,11 +645,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 300, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 300, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -673,11 +673,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 95, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 0, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 95, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 2, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>
@@ -699,11 +699,11 @@ namespace low_age_data.Collections
                     description: "",
                     statistics: new List<Stat>
                     {
-                        new CombatStat(maxAmount: 550, hasCurrent: true, combatType: Stats.Health),
-                        new CombatStat(maxAmount: 0, hasCurrent: true, combatType: Stats.Shields),
-                        new CombatStat(maxAmount: 3, hasCurrent: false, combatType: Stats.MeleeArmour),
-                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: Stats.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: Stats.Vision)
+                        new CombatStat(maxAmount: 550, hasCurrent: true, combatType: StatType.Health),
+                        new CombatStat(maxAmount: 0, hasCurrent: true, combatType: StatType.Shields),
+                        new CombatStat(maxAmount: 3, hasCurrent: false, combatType: StatType.MeleeArmour),
+                        new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.RangedArmour),
+                        new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
                     combatAttributes: new List<CombatAttribute>

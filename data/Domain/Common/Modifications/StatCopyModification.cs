@@ -6,13 +6,13 @@
             Change change,
             Location copyFrom,
             float additionalAmount,
-            Stats stat) : base($"{nameof(Modification)}.{nameof(StatModification)}", change, additionalAmount)
+            StatType statType) : base($"{nameof(Modification)}.{nameof(StatModification)}", change, additionalAmount)
         {
             CopyFrom = copyFrom;
-            Stat = stat;
+            StatType = statType;
         }
 
         public Location CopyFrom { get; }
-        public Stats Stat { get; }
+        public StatType StatType { get; }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using low_age_data.Domain.Shared;
 using Newtonsoft.Json;
 using Object = Godot.Object;
 
@@ -11,11 +12,11 @@ public class Pathfinding : Node
     public Godot.Collections.Dictionary<Vector2, int> PointIdsByPositions { get; private set; }
     public Godot.Collections.Dictionary<int, Vector2> PositionsByPointIds { get; private set; }
 
-    private static readonly Godot.Collections.Dictionary<Constants.Game.Terrain, float> TerrainWeights = new Godot.Collections.Dictionary<Constants.Game.Terrain, float>
+    private static readonly Godot.Collections.Dictionary<int, float> TerrainWeights = new Godot.Collections.Dictionary<int, float>
     {
-        { Constants.Game.Terrain.Grass, 1.0f },
-        { Constants.Game.Terrain.Mountains, float.PositiveInfinity },
-        { Constants.Game.Terrain.Marsh, 2.0f }
+        { Terrain.Grass.ToIndex(),     1.0f },
+        { Terrain.Mountains.ToIndex(), float.PositiveInfinity },
+        { Terrain.Marsh.ToIndex(),     2.0f }
     };
     
     // Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/DOCUMENTATION.md
@@ -34,7 +35,7 @@ public class Pathfinding : Node
 	    
 	    PointIdsByPositions = _pathfinding.AddSquareGrid(
 		    new Rect2(0, 0, MapSize.x, MapSize.y),
-		    (int) Constants.Game.Terrain.Grass,
+		    Terrain.Grass.ToIndex(),
 		    1.0f,
 		    Mathf.Sqrt(2));
 
@@ -46,13 +47,13 @@ public class Pathfinding : Node
 	    }
     }
 
-    public void SetTerrainForPoint(Vector2 at, Constants.Game.Terrain terrain)
+    public void SetTerrainForPoint(Vector2 at, Terrain terrain)
     {
 	    if (at.IsInBoundsOf(MapSize))
 	    {
 		    _pathfinding.SetTerrainForPoint(
 			    PointIdsByPositions[at],
-			    (int) terrain);
+			    terrain.ToIndex());
 	    }
     }
 

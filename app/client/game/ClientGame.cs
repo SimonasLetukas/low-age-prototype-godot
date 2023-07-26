@@ -34,6 +34,12 @@ public class ClientGame : Game
         //GetTree().Paused = false;
     }
 
+    public override void _ExitTree()
+    {
+        DisconnectSignals();
+        base._ExitTree();
+    }
+
     private void ConnectSignals()
     {
         GD.Print($"{nameof(ClientGame)}.{nameof(ConnectSignals)}: connecting signals.");
@@ -47,11 +53,16 @@ public class ClientGame : Game
         _interface.Connect(nameof(Interface.MouseEntered), _mouse, nameof(Mouse.OnInterfaceMouseEntered));
         _interface.Connect(nameof(Interface.MouseExited), _mouse, nameof(Mouse.OnInterfaceMouseExited));
 
-        _map.Connect(nameof(ClientMap.NewTileHovered), _interface, nameof(Interface.OnMapNewTileHovered));
+        _map.NewTileHovered += _interface.OnMapNewTileHovered;
 
         _map.Connect(nameof(ClientMap.UnitMovementIssued), this, nameof(SendNewUnitPosition));
         _map.Connect(nameof(Map.StartingPositionsDeclared), this, nameof(OnMapStartingPositionsDeclared));
         _data.Connect(nameof(Data.Synchronised), this, nameof(OnDataSynchronized));
+    }
+
+    private void DisconnectSignals()
+    {
+        _map.NewTileHovered -= _interface.OnMapNewTileHovered;
     }
 
     private void InitializeFakeMap()

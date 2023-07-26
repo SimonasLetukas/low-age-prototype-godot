@@ -1,5 +1,6 @@
 using Godot;
 using System.Linq;
+using low_age_data.Domain.Shared;
 using Array = Godot.Collections.Array;
 
 public class Interface : CanvasLayer
@@ -43,7 +44,7 @@ public class Interface : CanvasLayer
         EmitSignal(nameof(MouseExited));
     }
 
-    internal void OnMapNewTileHovered(Vector2 tileHovered, Constants.Game.Terrain terrain)
+    internal void OnMapNewTileHovered(Vector2 tileHovered, Terrain terrain)
     {
         string coordinatesText;
         string terrainText;
@@ -56,7 +57,7 @@ public class Interface : CanvasLayer
         else
         {
             coordinatesText = $"{tileHovered.x}, {tileHovered.y}";
-            terrainText = terrain.ToString().Capitalize();
+            terrainText = terrain.ToDisplayValue().Capitalize();
         }
 
         GetNode<Label>("Theme/DebugPanel/Coordinates").Text = coordinatesText;

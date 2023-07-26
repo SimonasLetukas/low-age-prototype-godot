@@ -14,15 +14,6 @@
 
     public static class Game
     {
-        public enum Terrain
-        {
-            Grass,
-            Mountains,
-            Marsh,
-            Scraps,
-            Celestium
-        }
-
         public enum EntityType
         {
             Light,

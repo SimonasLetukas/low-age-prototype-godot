@@ -47,7 +47,7 @@ namespace low_age_data.Domain.Entities.Features
         public int Size { get; }
         
         /// <summary>
-        /// If true, this <see cref="Feature"/> can be attacked. <see cref="Stats.Health"/> can be set indirectly
+        /// If true, this <see cref="Feature"/> can be attacked. <see cref="StatType.Health"/> can be set indirectly
         /// through <see cref="Buff"/>s, or by using <see cref="StatsCopiedFromSource"/>, or <see cref="Tether"/>ing to
         /// another unit and having <see cref="Tether.SharedDamage"/> set to true (this list might change as data
         /// evolves).
@@ -62,10 +62,10 @@ namespace low_age_data.Domain.Entities.Features
         public bool OccupiesSpace { get; }
         
         /// <summary>
-        /// If true, this <see cref="Feature"/> receives a shadow copy of the <see cref="Stats"/> that the
+        /// If true, this <see cref="Feature"/> receives a shadow copy of the <see cref="StatType"/> that the
         /// <see cref="Location.Source"/> had at the point of <see cref="CreateEntity"/>. This is useful when
         /// further <see cref="Effect"/>s that this <see cref="Feature"/> executes should be based on
-        /// <see cref="Location.Source"/>'s <see cref="Stats"/>. This also includes the <see cref="Unit.Size"/>.
+        /// <see cref="Location.Source"/>'s <see cref="StatType"/>. This also includes the <see cref="Unit.Size"/>.
         /// </summary>
         public bool StatsCopiedFromSource { get; }
         

@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Entities.Tiles
             TileId id, 
             string displayName, 
             string description, 
-            Terrains terrain, 
+            Terrain terrain, 
             float movementCost, 
             bool allowsBuilding) : base(id, displayName, description)
         {
@@ -17,7 +17,7 @@ namespace low_age_data.Domain.Entities.Tiles
             AllowsBuilding = allowsBuilding;
         }
 
-        public Terrains Terrain { get; }
+        public Terrain Terrain { get; }
         public float MovementCost { get; }
         public bool AllowsBuilding { get; }
     }

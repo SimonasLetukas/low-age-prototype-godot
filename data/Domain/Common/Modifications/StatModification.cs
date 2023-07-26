@@ -5,11 +5,11 @@
         public StatModification(
             Change change, 
             float amount,
-            Stats stat) : base($"{nameof(Modification)}.{nameof(StatModification)}", change, amount)
+            StatType statType) : base($"{nameof(Modification)}.{nameof(StatModification)}", change, amount)
         {
-            Stat = stat;
+            StatType = statType;
         }
 
-        public Stats Stat { get; }
+        public StatType StatType { get; }
     }
 }

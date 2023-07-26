@@ -1,10 +1,11 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using low_age_data.Domain.Shared;
 
 public class ClientMap : Map
 {
-    [Signal] public delegate void NewTileHovered(Vector2 tileHovered, Constants.Game.Terrain terrain);
+    public event Action<Vector2, Terrain> NewTileHovered = delegate { };
     [Signal] public delegate void UnitMovementIssued(Vector2 entityPosition, Vector2[] globalPath, Vector2[] path);
 
     private readonly ICollection<Vector2> _startingPositions = new List<Vector2>();
@@ -128,7 +129,7 @@ public class ClientMap : Map
     private bool HoverTile()
     {
         var hoveredTerrain = _data.GetTerrain(_tileHovered);
-        EmitSignal(nameof(NewTileHovered), _tileHovered, hoveredTerrain);
+        NewTileHovered(_tileHovered, hoveredTerrain);
         _tileMap.MoveFocusedTileTo(_tileHovered);
         var entityHovered = _entities.TryHoveringEntity(_tileHovered);
         return entityHovered;
@@ -147,8 +148,8 @@ public class ClientMap : Map
                 var coordinates = new Vector2(x, y);
                 var terrain = _data.GetTerrain(coordinates);
                 _tileMap.SetCell(coordinates, terrain);
-                if (terrain is Constants.Game.Terrain.Marsh 
-                    || terrain is Constants.Game.Terrain.Mountains)
+                if (terrain.Equals(Terrain.Marsh)
+                    || terrain.Equals(Terrain.Mountains))
                 {
                     Pathfinding.SetTerrainForPoint(coordinates, terrain);
                 }

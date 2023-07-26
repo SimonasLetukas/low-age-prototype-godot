@@ -2,6 +2,7 @@
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Factions;
+using low_age_data.Domain.Shared;
 using Newtonsoft.Json;
 
 /// <summary>
@@ -13,13 +14,12 @@ public class Data : Node
 
     [Signal] public delegate void Synchronised();
 
-    public IList<Faction> Factions { get; private set; } = new List<Faction>();
-
-    public IList<Player> Players { get; private set; } = new List<Player>();
     public Vector2 MapSize { get; private set; } = Vector2.Zero;
-    public IList<Unit> Units { get; private set; } = new List<Unit>();
+    public IList<Faction> Factions { get; private set; } = new List<Faction>();
     public IList<Tile> Tiles { get; private set; } = new List<Tile>();
 
+    public IList<Player> Players { get; private set; } = new List<Player>();
+    public IList<Unit> Units { get; private set; } = new List<Unit>();
     private string DataBlueprintLocation { get; set; } = "res://data/data.json";
 
     public override void _Ready()
@@ -59,7 +59,7 @@ public class Data : Node
                 Tiles.Add(new Tile
                 {
                     Position = new Vector2(x, y),
-                    Terrain = Constants.Game.Terrain.Grass,
+                    Terrain = Terrain.Grass,
                     Unit = null
                 });
             }
@@ -90,11 +90,11 @@ public class Data : Node
 
     public Tile GetTile(Vector2 at) => Tiles.SingleOrDefault(x => x.Position.Equals(at));
 
-    public Constants.Game.Terrain GetTerrain(Vector2 at) => at.IsInBoundsOf(MapSize) 
+    public Terrain GetTerrain(Vector2 at) => at.IsInBoundsOf(MapSize) 
         ? GetTile(at).Terrain 
-        : Constants.Game.Terrain.Mountains;
+        : Terrain.Mountains;
 
-    public void SetTerrain(Vector2 at, Constants.Game.Terrain terrain)
+    public void SetTerrain(Vector2 at, Terrain terrain)
     {
         if (at.IsInBoundsOf(MapSize))
         {
@@ -173,6 +173,6 @@ public class Unit
 public class Tile
 {
     public Vector2 Position { get; set; }
-    public Constants.Game.Terrain Terrain { get; set; }
+    public Terrain Terrain { get; set; }
     public Unit Unit { get; set; }
 }

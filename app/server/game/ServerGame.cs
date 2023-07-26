@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using low_age_data.Domain.Shared;
 
 public class ServerGame : Game
 {
@@ -93,27 +94,27 @@ public class ServerGame : Game
 
     private void OnCreatorCelestiumFound(Vector2 coordinates)
     {
-        Data.Instance.SetTerrain(coordinates, Constants.Game.Terrain.Celestium);
+        Data.Instance.SetTerrain(coordinates, Terrain.Celestium);
     }
     
     private void OnCreatorScrapsFound(Vector2 coordinates)
     {
-        Data.Instance.SetTerrain(coordinates, Constants.Game.Terrain.Scraps);
+        Data.Instance.SetTerrain(coordinates, Terrain.Scraps);
     }
     
     private void OnCreatorGrassFound(Vector2 coordinates)
     {
-        Data.Instance.SetTerrain(coordinates, Constants.Game.Terrain.Grass);
+        Data.Instance.SetTerrain(coordinates, Terrain.Grass);
     }
     
     private void OnCreatorMarshFound(Vector2 coordinates)
     {
-        Data.Instance.SetTerrain(coordinates, Constants.Game.Terrain.Marsh);
+        Data.Instance.SetTerrain(coordinates, Terrain.Marsh);
     }
     
     private void OnCreatorMountainsFound(Vector2 coordinates)
     {
-        Data.Instance.SetTerrain(coordinates, Constants.Game.Terrain.Mountains);
+        Data.Instance.SetTerrain(coordinates, Terrain.Mountains);
     }
     
     private void OnCreatorStartingPositionFound(Vector2 coordinates)

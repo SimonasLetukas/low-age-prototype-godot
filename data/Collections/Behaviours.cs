@@ -39,7 +39,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddMax,
                             amount: 1,
-                            stat: Stats.Vision)
+                            statType: StatType.Vision)
                     },
                     canStack: false,
                     canResetDuration: false,
@@ -249,7 +249,7 @@ namespace low_age_data.Collections
                     description: "This unit has increased Initiative because of the positive Faith.",
                     initialModifications: new List<Modification>
                     {
-                        new StatModification(change: Change.AddMax, amount: 1, stat: Stats.Initiative),
+                        new StatModification(change: Change.AddMax, amount: 1, statType: StatType.Initiative),
                     },
                     endsAt: EndsAt.StartOf.Next.Planning,
                     canStack: true,
@@ -305,7 +305,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddCurrent,
                             amount: 5,
-                            stat: Stats.Health)
+                            statType: StatType.Health)
                     },
                     endsAt: EndsAt.Instant,
                     canStack: false,
@@ -321,7 +321,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddCurrent,
                             amount: 15,
-                            stat: Stats.Health)
+                            statType: StatType.Health)
                     },
                     initialEffects: new List<EffectId>
                     {
@@ -341,15 +341,15 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.SubtractCurrent,
                             amount: 3,
-                            stat: Stats.Vision),
+                            statType: StatType.Vision),
                         new StatModification(
                             change: Change.SubtractCurrent,
                             amount: 3,
-                            stat: Stats.MeleeArmour),
+                            statType: StatType.MeleeArmour),
                         new StatModification(
                             change: Change.SubtractCurrent,
                             amount: 3,
-                            stat: Stats.RangedArmour)
+                            statType: StatType.RangedArmour)
                     },
                     endsAt: EndsAt.EndOf.Third.Action,
                     canStack: false,
@@ -463,7 +463,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddMax,
                             amount: 2,
-                            stat: Stats.RangedArmour)
+                            statType: StatType.RangedArmour)
                     },
                     endsAt: EndsAt.EndOf.This.Planning,
                     canStack: false,
@@ -696,7 +696,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddMax,
                             amount: 3,
-                            stat: Stats.MeleeArmour)
+                            statType: StatType.MeleeArmour)
                     },
                     endsAt: EndsAt.Death,
                     canStack: false,
@@ -740,7 +740,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddCurrent, 
                             amount: 1, 
-                            stat: Stats.Shields)
+                            statType: StatType.Shields)
                     },
                     endsAt: EndsAt.Instant,
                     canStack: false,
@@ -760,7 +760,7 @@ namespace low_age_data.Collections
                     description: "This unit has +2 Movement because of a nearby Temple.",
                     initialModifications: new List<Modification>
                     {
-                        new StatModification(change: Change.AddMax, amount: 2, stat: Stats.Movement)
+                        new StatModification(change: Change.AddMax, amount: 2, statType: StatType.Movement)
                     },
                     endsAt: EndsAt.EndOf.This.ActionPhase,
                     canStack: false,
@@ -852,7 +852,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddMax,
                             amount: 1,
-                            stat: Stats.Vision)
+                            statType: StatType.Vision)
                     },
                     canStack: false,
                     canResetDuration: false,
@@ -868,7 +868,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddMax,
                             amount: 1,
-                            stat: Stats.RangedArmour)
+                            statType: StatType.RangedArmour)
                     },
                     canStack: false,
                     canResetDuration: false,
@@ -939,7 +939,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddCurrent,
                             amount: 2,
-                            stat: Stats.Health)
+                            statType: StatType.Health)
                     },
                     initialEffects: null,
                     finalModifications: null,
@@ -1004,7 +1004,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddCurrent,
                             amount: 1,
-                            stat: Stats.Health)
+                            statType: StatType.Health)
                     },
                     finalEffects: null,
                     endsAt: EndsAt.StartOf.Next.Planning,
@@ -1085,7 +1085,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.MultiplyMax,
                             amount: 0.6f,
-                            stat: Stats.Movement)
+                            statType: StatType.Movement)
                     },
                     initialEffects: null,
                     finalModifications: null,
@@ -1397,7 +1397,7 @@ namespace low_age_data.Collections
                             change: Change.SetMax,
                             copyFrom: Location.Source,
                             additionalAmount: 0,
-                            stat: Stats.Movement)
+                            statType: StatType.Movement)
                     },
                     initialEffects: null,
                     finalModifications: null,
@@ -1428,7 +1428,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddMax,
                             amount: 2,
-                            stat: Stats.RangedArmour)
+                            statType: StatType.RangedArmour)
                     },
                     initialEffects: null,
                     finalModifications: null,
@@ -1591,7 +1591,7 @@ namespace low_age_data.Collections
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
-                        new StatModification(change: Change.AddMax, amount: 3, stat: Stats.Vision)
+                        new StatModification(change: Change.AddMax, amount: 3, statType: StatType.Vision)
                     },
                     initialEffects: null,
                     finalModifications: null,
@@ -1662,7 +1662,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddCurrent,
                             amount: 1,
-                            stat: Stats.Health)
+                            statType: StatType.Health)
                     },
                     initialEffects: null,
                     finalModifications: null,
@@ -1756,7 +1756,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddCurrent,
                             amount: 1,
-                            stat: Stats.Health)
+                            statType: StatType.Health)
                     },
                     finalEffects: null,
                     endsAt: EndsAt.StartOf.Next.Planning,
@@ -1856,7 +1856,7 @@ namespace low_age_data.Collections
                     },
                     initialModifications: new List<Modification>
                     {
-                        new StatModification(change: Change.SetCurrent, amount: 1, stat: Stats.Vision)
+                        new StatModification(change: Change.SetCurrent, amount: 1, statType: StatType.Vision)
                     },
                     initialEffects: new List<EffectId>
                     {
@@ -2013,7 +2013,7 @@ namespace low_age_data.Collections
                     },
                     initialModifications: new List<Modification>
                     {
-                        new StatModification(change: Change.SetCurrent, amount: 1, stat: Stats.Vision)
+                        new StatModification(change: Change.SetCurrent, amount: 1, statType: StatType.Vision)
                     },
                     initialEffects: null,
                     finalModifications: null,
@@ -2146,11 +2146,11 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.AddCurrent,
                             amount: 3,
-                            stat: Stats.MeleeArmour),
+                            statType: StatType.MeleeArmour),
                         new StatModification(
                             change: Change.AddCurrent,
                             amount: 3,
-                            stat: Stats.RangedArmour)
+                            statType: StatType.RangedArmour)
                     },
                     initialEffects: null,
                     finalModifications: null,
@@ -2253,7 +2253,7 @@ namespace low_age_data.Collections
                         new StatModification(
                             change: Change.MultiplyMax,
                             amount: 0.5f,
-                            stat: Stats.Movement)
+                            statType: StatType.Movement)
                     },
                     initialEffects: null,
                     finalModifications: null,

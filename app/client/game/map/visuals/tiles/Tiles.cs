@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using low_age_data.Domain.Shared;
 
 /// <summary>
 /// Responsible for handling all tile-map related visuals
@@ -27,6 +28,15 @@ public class Tiles : Node2D
     private const int TileMapMountainsIndex = 4;
     private const int TileMapAvailableTileIndex = 8;
     private const int TileMapPathTileIndex = 9;
+    
+    private readonly Dictionary<Terrain, int> _tileMapIndexesByTerrain = new Dictionary<Terrain, int>
+    {
+        { Terrain.Grass,     TileMapGrassIndex },
+        { Terrain.Mountains, TileMapMountainsIndex },
+        { Terrain.Marsh,     TileMapMarshIndex },
+        { Terrain.Scraps,    TileMapScrapsIndex },
+        { Terrain.Celestium, TileMapCelestiumIndex }
+    };
 
     public override void _Ready()
     {
@@ -67,42 +77,29 @@ public class Tiles : Node2D
     public Vector2[] GetGlobalPositionsFromMapPositions(IEnumerable<Vector2> mapPositions) 
         => mapPositions.Select(GetGlobalPositionFromMapPosition).ToArray();
 
-    public int GetTilemapIndexFromTerrainIndex(Constants.Game.Terrain terrain)
-    {
-        switch (terrain)
-        {
-            case Constants.Game.Terrain.Grass:
-                return TileMapGrassIndex;
-            case Constants.Game.Terrain.Mountains:
-                return TileMapMountainsIndex;
-            case Constants.Game.Terrain.Marsh:
-                return TileMapMarshIndex;
-            case Constants.Game.Terrain.Scraps:
-                return TileMapScrapsIndex;
-            case Constants.Game.Terrain.Celestium:
-                return TileMapCelestiumIndex;
-            default:
-                return TileMapGrassIndex;
-        }
-    }
+    private int GetTilemapIndexFrom(Terrain terrain) => _tileMapIndexesByTerrain.ContainsKey(terrain) 
+        ? _tileMapIndexesByTerrain[terrain] 
+        : TileMapGrassIndex;
 
-    public void SetCell(Vector2 at, Constants.Game.Terrain terrain)
+    public void SetCell(Vector2 at, Terrain terrain)
     {
-        switch (terrain)
+        var tilemapIndex = GetTilemapIndexFrom(terrain);
+        
+        switch (tilemapIndex)
         {
-            case Constants.Game.Terrain.Mountains:
+            case TileMapMountainsIndex:
                 _mountains.SetCellv(at, TileMapMountainsIndex);
                 break;
-            case Constants.Game.Terrain.Marsh:
+            case TileMapMarshIndex:
                 _marsh.SetCellv(at, TileMapMarshIndex);
                 break;
-            case Constants.Game.Terrain.Scraps:
+            case TileMapScrapsIndex:
                 _scraps.SetCellv(at, TileMapScrapsIndex);
                 break;
-            case Constants.Game.Terrain.Celestium:
+            case TileMapCelestiumIndex:
                 _grass.SetCellv(at, TileMapCelestiumIndex);
                 break;
-            case Constants.Game.Terrain.Grass:
+            case TileMapGrassIndex:
             default:
                 _grass.SetCellv(at, TileMapGrassIndex);
                 break;
