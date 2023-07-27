@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using low_age_data.Domain.Shared;
 
 public class EntityPanel : Control
 {
@@ -55,11 +56,11 @@ public class EntityPanel : Control
         if (_isAbilitySelected)
         {
             var id = clickedAbility.Id;
-            var type = Constants.Game.AbilityType.Planning;
+            var type = TurnPhase.Planning;
             var text = _abilityDescriptionsById[id];
             var research = id;
             var cooldown = 1;
-            var cooldownType = Constants.Game.AbilityType.Action;
+            var cooldownType = TurnPhase.Action;
             _display.SetAbilityStats(id, type, text, research, cooldown, cooldownType);
             _display.ShowView(View.Ability);
         }

@@ -12,29 +12,6 @@
         public const string Username = "USERNAME";
     }
 
-    public static class Game
-    {
-        public enum EntityType
-        {
-            Light,
-            Armoured,
-            Giant,
-            Biological,
-            Mechanical,
-            Celestial,
-            Structure,
-            Ranged
-        }
-
-        public enum AbilityType
-        {
-            Passive,
-            Planning,
-            Action,
-            Movement
-        }
-    }
-
     public const int TileWidth = 16;
     public const int TileHeight = 8;
 

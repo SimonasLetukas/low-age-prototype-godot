@@ -11,7 +11,7 @@ namespace low_age_data.Domain.Effects
             EffectId id,
             DamageType damageType,
             Amount? amount = null,
-            CombatAttribute? bonusTo = null,
+            ActorAttribute? bonusTo = null,
             Amount? bonusAmount = null,
             Location? location = null,
             bool? ignoresArmor = null,
@@ -31,7 +31,7 @@ namespace low_age_data.Domain.Effects
         
         public DamageType DamageType { get; }
         public Amount Amount { get; }
-        public CombatAttribute? BonusTo { get; }
+        public ActorAttribute? BonusTo { get; }
         public Amount BonusAmount { get; }
         public Location Location { get; }
         public bool IgnoresArmor { get; }

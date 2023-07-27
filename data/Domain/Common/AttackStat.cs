@@ -7,7 +7,7 @@
             Attacks attackType, 
             int minimumDistance, 
             int maximumDistance, 
-            CombatAttribute? bonusTo = null, 
+            ActorAttribute? bonusTo = null, 
             int bonusAmount = 0) : base(maxAmount, false)
         {
             AttackType = attackType;
@@ -20,7 +20,7 @@
         public Attacks AttackType { get; }
         public int MinimumDistance { get; }
         public int MaximumDistance { get; }
-        public CombatAttribute? BonusTo { get; }
+        public ActorAttribute? BonusTo { get; }
         public int BonusAmount { get; }
     }
 }

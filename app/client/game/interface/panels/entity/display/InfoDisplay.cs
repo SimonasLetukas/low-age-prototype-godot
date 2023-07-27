@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using low_age_data.Domain.Shared;
 
 public class InfoDisplay : MarginContainer
 {
@@ -18,9 +19,9 @@ public class InfoDisplay : MarginContainer
     private int _valueInitiative = 99;
     private int _valueMeleeArmour = 99;
     private int _valueRangedArmour = 99;
-    private Constants.Game.EntityType[] _valueEntityTypes =
+    private ActorAttribute[] _valueEntityTypes =
     {
-        Constants.Game.EntityType.Biological, Constants.Game.EntityType.Armoured, Constants.Game.EntityType.Ranged
+        ActorAttribute.Biological, ActorAttribute.Armoured, ActorAttribute.Ranged
     };
     
     private bool _hasMeleeAttack = true;
@@ -28,20 +29,20 @@ public class InfoDisplay : MarginContainer
     private int _valueMeleeDistance = 1;
     private int _valueMeleeDamage = 999;
     private int _valueMeleeBonusDamage = 999;
-    private Constants.Game.EntityType _valueMeleeBonusType = Constants.Game.EntityType.Biological;
+    private ActorAttribute _valueMeleeBonusType = ActorAttribute.Biological;
     
     private bool _hasRangedAttack = true;
     private string _valueRangedName = "Monev Fangs";
     private int _valueRangedDistance = 999;
     private int _valueRangedDamage = 999;
     private int _valueRangedBonusDamage = 999;
-    private Constants.Game.EntityType _valueRangedBonusType = Constants.Game.EntityType.Armoured;
+    private ActorAttribute _valueRangedBonusType = ActorAttribute.Armoured;
     
     private string _valueAbilityName = "Build";
-    private Constants.Game.AbilityType _valueAbilityType = Constants.Game.AbilityType.Planning;
+    private TurnPhase _valueAbilityType = TurnPhase.Planning;
     private string _valueAbilityText = "Place a ghostly rendition of a selected enemy unit in [b]7[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] to an unoccupied space in a [b]3[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] from the selected target. The rendition has the same amount of [img=15x11]Client/UI/Icons/icon_health_big.png[/img], [img=15x11]Client/UI/Icons/icon_melee_armour_big.png[/img] and [img=15x11]Client/UI/Icons/icon_ranged_armour_big.png[/img] as the selected target, cannot act, can be attacked and stays for [b]2[/b] action phases. [b]50%[/b] of all [img=15x11]Client/UI/Icons/icon_damage_big.png[/img] done to the rendition is done as pure [img=15x11]Client/UI/Icons/icon_damage_big.png[/img]to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals [b]10[/b][img=15x11]Client/UI/Icons/icon_melee_attack.png[/img] and slows all adjacent enemies by [b]50%[/b] until the end of their next action.";
     private int _valueAbilityCooldown = 3;
-    private Constants.Game.AbilityType _valueAbilityCooldownType = Constants.Game.AbilityType.Action;
+    private TurnPhase _valueAbilityCooldownType = TurnPhase.Action;
     private string _valueResearchText = "Hardened Matrix";
 
     private Control _abilityTitle;
@@ -63,7 +64,7 @@ public class InfoDisplay : MarginContainer
     private AttackTypeBox _rightSideMeleeAttack;
     private AttackTypeBox _rightSideRangedAttack;
     private Control _abilityDescription;
-    private EntityTypes _entityTypes;
+    private ActorAttributes _actorAttributes;
 
     public override void _Ready()
     {
@@ -86,7 +87,7 @@ public class InfoDisplay : MarginContainer
         _rightSideMeleeAttack = GetNode<AttackTypeBox>($"{nameof(VBoxContainer)}/TopPart/RightSide/Attacks/Melee");
         _rightSideRangedAttack = GetNode<AttackTypeBox>($"{nameof(VBoxContainer)}/TopPart/RightSide/Attacks/Ranged");
         _abilityDescription = GetNode<Control>($"{nameof(VBoxContainer)}/AbilityDescription");
-        _entityTypes = GetNode<EntityTypes>($"{nameof(VBoxContainer)}/{nameof(EntityTypes)}");
+        _actorAttributes = GetNode<ActorAttributes>($"{nameof(VBoxContainer)}/{nameof(ActorAttributes)}");
 
         _rightSideMeleeAttack.Connect(nameof(AttackTypeBox.Clicked), this, nameof(OnMeleeClicked));
         _rightSideRangedAttack.Connect(nameof(AttackTypeBox.Clicked), this, nameof(OnRangedClicked));
@@ -136,7 +137,7 @@ public class InfoDisplay : MarginContainer
         int initiative,
         int meleeArmour,
         int rangedArmour,
-        Constants.Game.EntityType[] entityTypes,
+        ActorAttribute[] entityTypes,
         int currentShields = 0,
         int maxShields = 0)
     {
@@ -158,7 +159,7 @@ public class InfoDisplay : MarginContainer
         int distance = 0,
         int damage = 0,
         int bonusDamage = 0,
-        Constants.Game.EntityType bonusType = Constants.Game.EntityType.Armoured)
+        ActorAttribute bonusType = null)
     {
         _hasMeleeAttack = hasAttack;
         _valueMeleeName = attackName;
@@ -174,7 +175,7 @@ public class InfoDisplay : MarginContainer
         int distance = 0,
         int damage = 0,
         int bonusDamage = 0,
-        Constants.Game.EntityType bonusType = Constants.Game.EntityType.Armoured)
+        ActorAttribute bonusType = null)
     {
         _hasRangedAttack = hasAttack;
         _valueRangedName = attackName;
@@ -186,11 +187,11 @@ public class InfoDisplay : MarginContainer
 
     public void SetAbilityStats(
         string abilityName,
-        Constants.Game.AbilityType type,
+        TurnPhase type,
         string text,
         string research = "",
         int cooldown = 0,
-        Constants.Game.AbilityType cooldownType = Constants.Game.AbilityType.Action)
+        TurnPhase cooldownType = null)
     {
         _valueAbilityName = abilityName;
         _valueAbilityType = type;
@@ -221,7 +222,7 @@ public class InfoDisplay : MarginContainer
         _rightSideMeleeAttack.Visible = false;
         _rightSideRangedAttack.Visible = false;
         _abilityDescription.Visible = false;
-        _entityTypes.Visible = false;
+        _actorAttributes.Visible = false;
     }
 
     private void ShowUnitStats()
@@ -232,7 +233,7 @@ public class InfoDisplay : MarginContainer
         _leftSideMiddleInitiative.SetValue(_valueInitiative);
         _leftSideBottomMeleeArmour.SetValue(_valueMeleeArmour);
         _leftSideBottomRangedArmour.SetValue(_valueRangedArmour);
-        _entityTypes.SetTypes(_valueEntityTypes);
+        _actorAttributes.SetTypes(_valueEntityTypes);
 
         _leftSide.Visible = true;
         _leftSideTop.Visible = true;
@@ -245,7 +246,7 @@ public class InfoDisplay : MarginContainer
         _rightSide.Visible = true;
         _rightSideMeleeAttack.Visible = _hasMeleeAttack;
         _rightSideRangedAttack.Visible = _hasRangedAttack;
-        _entityTypes.Visible = true;
+        _actorAttributes.Visible = true;
     }
 
     private void ShowStructureStats()
@@ -254,7 +255,7 @@ public class InfoDisplay : MarginContainer
         _leftSideTopShields.SetValue(_valueMaxShields, (_valueCurrentShields == _valueMaxShields) is false, _valueCurrentShields);
         _leftSideBottomMeleeArmour.SetValue(_valueMeleeArmour);
         _leftSideBottomRangedArmour.SetValue(_valueRangedArmour);
-        _entityTypes.SetTypes(_valueEntityTypes);
+        _actorAttributes.SetTypes(_valueEntityTypes);
 
         _leftSide.Visible = true;
         _leftSideTop.Visible = true;
@@ -262,7 +263,7 @@ public class InfoDisplay : MarginContainer
         _leftSideTopShields.Visible = _valueCurrentShields > 0 || _valueMaxShields > 0;
         _leftSideBottomMeleeArmour.Visible = true;
         _leftSideBottomRangedArmour.Visible = true;
-        _entityTypes.Visible = true;
+        _actorAttributes.Visible = true;
     }
 
     private void ShowMeleeAttack()
@@ -271,40 +272,48 @@ public class InfoDisplay : MarginContainer
         _leftSideTopText.SetMelee();
         _leftSideMiddleDamage.SetValue(_valueMeleeDamage);
         _leftSideMiddleDistance.SetValue(_valueMeleeDistance);
-        _leftSideBottomStatBlockText.SetValue(_valueMeleeBonusDamage);
-        _leftSideBottomStatBlockText.SetText(_valueMeleeBonusType.ToString());
-        _entityTypes.SetTypes(_valueEntityTypes);
+        _actorAttributes.SetTypes(_valueEntityTypes);
 
         _leftSide.Visible = true;
         _leftSideTopText.Visible = true;
         _leftSideMiddleDamage.Visible = true;
         _leftSideMiddleDistance.Visible = true;
-        _leftSideBottomStatBlockText.Visible = true;
         _rightSide.Visible = true;
         _rightSideMeleeAttack.Visible = _hasMeleeAttack;
         _rightSideRangedAttack.Visible = _hasRangedAttack;
-        _entityTypes.Visible = true;
+        _actorAttributes.Visible = true;
+
+        if (_valueMeleeBonusType is null) 
+            return;
+        
+        _leftSideBottomStatBlockText.SetValue(_valueMeleeBonusDamage);
+        _leftSideBottomStatBlockText.SetText(_valueMeleeBonusType.ToDisplayValue());
+        _leftSideBottomStatBlockText.Visible = true;
     }
 
     private void ShowRangedAttack()
     {
         _leftSideTopText.SetNameText(_valueRangedName);
-        _leftSideTopText.SetMelee();
+        _leftSideTopText.SetRanged();
         _leftSideMiddleDamage.SetValue(_valueRangedDamage);
         _leftSideMiddleDistance.SetValue(_valueRangedDistance);
-        _leftSideBottomStatBlockText.SetValue(_valueRangedBonusDamage);
-        _leftSideBottomStatBlockText.SetText(_valueRangedBonusType.ToString());
-        _entityTypes.SetTypes(_valueEntityTypes);
+        _actorAttributes.SetTypes(_valueEntityTypes);
 
         _leftSide.Visible = true;
         _leftSideTopText.Visible = true;
         _leftSideMiddleDamage.Visible = true;
         _leftSideMiddleDistance.Visible = true;
-        _leftSideBottomStatBlockText.Visible = true;
         _rightSide.Visible = true;
         _rightSideMeleeAttack.Visible = _hasMeleeAttack;
         _rightSideRangedAttack.Visible = _hasRangedAttack;
-        _entityTypes.Visible = true;
+        _actorAttributes.Visible = true;
+        
+        if (_valueRangedBonusType is null) 
+            return;
+        
+        _leftSideBottomStatBlockText.SetValue(_valueRangedBonusDamage);
+        _leftSideBottomStatBlockText.SetText(_valueRangedBonusType.ToDisplayValue());
+        _leftSideBottomStatBlockText.Visible = true;
     }
 
     private void ShowAbility()
@@ -312,7 +321,8 @@ public class InfoDisplay : MarginContainer
         GetNode<Label>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Label").Text = _valueAbilityName;
         GetNode<Label>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Label/Shadow").Text = _valueAbilityName;
         _researchText.SetResearch(_valueResearchText);
-        GetNode<Type>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(Type)}").SetType(_valueAbilityType, _valueAbilityCooldown, _valueAbilityCooldownType);
+        GetNode<AbilitySubtitle>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(AbilitySubtitle)}")
+            .SetAbilitySubtitle(_valueAbilityType, _valueAbilityCooldown, _valueAbilityCooldownType);
         _abilityDescription.GetNode<RichTextLabel>("Text").BbcodeText = _valueAbilityText;
         _abilityDescription.GetNode<RichTextLabel>("Text/Shadow").BbcodeText = _valueAbilityText;
 

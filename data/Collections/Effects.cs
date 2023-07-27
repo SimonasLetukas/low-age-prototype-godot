@@ -1346,7 +1346,7 @@ namespace low_age_data.Collections
                     id: EffectId.Roach.CorrosiveSpitDamage,
                     damageType: DamageType.Ranged,
                     amount: new Amount(flat: 6),
-                    bonusTo: CombatAttribute.Mechanical,
+                    bonusTo: ActorAttribute.Mechanical,
                     bonusAmount: new Amount(flat: 8),
                     location: Location.Actor,
                     filters: new List<IFilterItem>
@@ -1600,7 +1600,7 @@ namespace low_age_data.Collections
                                 new SpecificFlag(value: FilterFlag.Ally),
                             }),
                         new SpecificFlag(value: FilterFlag.Unit),
-                        new SpecificCombatAttribute(CombatAttribute.Ranged)
+                        new SpecificCombatAttribute(ActorAttribute.Ranged)
                     }),
 
                 new ApplyBehaviour(

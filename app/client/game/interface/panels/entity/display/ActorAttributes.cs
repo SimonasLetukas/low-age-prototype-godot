@@ -1,32 +1,33 @@
 using Godot;
 using System;
+using low_age_data.Domain.Shared;
 
-public class EntityTypes : MarginContainer
+public class ActorAttributes : MarginContainer
 {
-    [Export] public Constants.Game.EntityType[] Types { get; set; } =
+    [Export] public ActorAttribute[] Attributes { get; set; } =
     {
-        Constants.Game.EntityType.Light, 
-        Constants.Game.EntityType.Biological
+        ActorAttribute.Light, 
+        ActorAttribute.Biological
     };
 
     private const string Separator = " - ";
 
     public override void _Ready()
     {
-        SetTypes(Types);
+        SetTypes(Attributes);
     }
 
-    public void SetTypes(Constants.Game.EntityType[] types)
+    public void SetTypes(ActorAttribute[] types)
     {
         var count = 0;
-        var label = GetNode<Label>("Types");
+        var label = GetNode<Label>("Label");
         label.Text = "";
-        var shadow = GetNode<Label>("Types/Shadow");
+        var shadow = GetNode<Label>("Label/Shadow");
         shadow.Text = "";
 
         foreach (var type in types)
         {
-            var typeText = type.ToString().Capitalize();
+            var typeText = type.ToDisplayValue().Capitalize();
             
             if (count == 0)
             {

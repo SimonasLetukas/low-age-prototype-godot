@@ -5,8 +5,7 @@ public class TopText : VBoxContainer
 {
     private Label _name;
     private Label _nameShadow;
-    private Label _type;
-    private Label _typeShadow;
+    private AbilitySubtitle _subtitle;
 
     private const string RangedAttack = "Ranged attack";
     private const string MeleeAttack = "Melee attack";
@@ -15,8 +14,7 @@ public class TopText : VBoxContainer
     {
         _name = GetNode<Label>("Name/Label");
         _nameShadow = GetNode<Label>("Name/Label/Shadow");
-        _type = GetNode<Label>("Type/Label");
-        _typeShadow = GetNode<Label>("Type/Label/Shadow");
+        _subtitle = GetNode<AbilitySubtitle>($"{nameof(AbilitySubtitle)}");
     }
 
     public void SetNameText(string name)
@@ -27,13 +25,11 @@ public class TopText : VBoxContainer
 
     public void SetRanged()
     {
-        _type.Text = RangedAttack;
-        _typeShadow.Text = RangedAttack;
+        _subtitle.SetSubtitle(RangedAttack);
     }
 
     public void SetMelee()
     {
-        _type.Text = MeleeAttack;
-        _typeShadow.Text = MeleeAttack;
+        _subtitle.SetSubtitle(MeleeAttack);
     }
 }
