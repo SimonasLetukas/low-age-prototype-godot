@@ -17,6 +17,7 @@ namespace low_age_data.Domain.Abilities
             TurnPhase turnPhase,
             string displayName,
             string activationDescription,
+            string sprite,
             IList<EffectId> onActivatedEffects,
             IList<EffectId> onDeactivatedEffects,
             EndsAt? cooldown = null,
@@ -31,6 +32,7 @@ namespace low_age_data.Domain.Abilities
                 true,
                 displayName,
                 activationDescription,
+                sprite,
                 cooldown,
                 cost)
         {

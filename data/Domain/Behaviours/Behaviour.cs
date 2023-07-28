@@ -8,15 +8,16 @@ using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Behaviours
 {
-    public class Behaviour
+    public class Behaviour : IDisplayable
     {
         protected Behaviour(
             BehaviourId id, 
             string type, 
             string displayName, 
-            string description, 
+            string description,
+            string sprite,
             EndsAt endsAt, 
-            Alignment alignment,
+            Alignment alignment, 
             bool? canStack = null,
             bool? canResetDuration = null,
             IList<Trigger>? triggers = null,
@@ -29,6 +30,7 @@ namespace low_age_data.Domain.Behaviours
             Type = type;
             DisplayName = displayName;
             Description = description;
+            Sprite = sprite;
             EndsAt = endsAt;
             Alignment = alignment;
             CanStack = canStack ?? false;
@@ -101,5 +103,7 @@ namespace low_age_data.Domain.Behaviours
         /// This means that only one instance of behaviour can co-exist among any number of owners. 
         /// </summary>
         public bool HasSameInstanceForAllOwners { get; }
+
+        public string? Sprite { get; }
     }
 }

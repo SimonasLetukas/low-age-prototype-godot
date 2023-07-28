@@ -6,16 +6,16 @@ using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Resources
 {
-    public class Resource
+    public class Resource : IDisplayable
     {
         public Resource(
             ResourceId id, 
             string displayName, 
             string description, 
+            string sprite,
             bool hasLimit, 
             bool isConsumable, 
-            bool hasBank,
-            ResourceId? storedAs = null,
+            bool hasBank, ResourceId? storedAs = null,
             bool? attachesToNewActors = null,
             IList<EffectId>? positiveIncomeEffects = null,
             IList<EffectId>? negativeIncomeEffects = null,
@@ -25,6 +25,7 @@ namespace low_age_data.Domain.Resources
             Id = id;
             DisplayName = displayName;
             Description = description;
+            Sprite = sprite;
             HasLimit = hasLimit;
             IsConsumable = isConsumable;
             HasBank = hasBank;
@@ -98,5 +99,7 @@ namespace low_age_data.Domain.Resources
         /// or negative, zero excluded). False by default.
         /// </summary>
         public bool EffectAmountMultipliedByResourceAmount { get; }
+
+        public string? Sprite { get; }
     }
 }

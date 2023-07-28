@@ -14,6 +14,7 @@ namespace low_age_data.Domain.Behaviours
             BehaviourId id,
             string displayName,
             string description,
+            string sprite,
             Location? source = null,
             bool? extendsSelection = null,
             bool? sharedDamage = null,
@@ -25,6 +26,7 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(Tether)}", 
                 displayName, 
                 description, 
+                sprite,
                 endsAt ?? EndsAt.Death,
                 Alignment.Neutral)
         {

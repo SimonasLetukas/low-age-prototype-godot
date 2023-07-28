@@ -14,6 +14,7 @@ namespace low_age_data.Domain.Behaviours
             BehaviourId id,
             string displayName, 
             string description,
+            string sprite,
             int maxAmount,
             int triggerAmount,
             IList<EffectId> triggeredEffects, 
@@ -27,6 +28,7 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(Counter)}", 
                 displayName, 
                 description, 
+                sprite,
                 endsAt ?? EndsAt.Death,
                 Alignment.Neutral,
                 canResetDuration: canResetDuration)

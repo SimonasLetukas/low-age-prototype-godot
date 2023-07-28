@@ -26,6 +26,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Shared.PassiveIncome).CamelCaseToWords(),
                     description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Shared.PassiveIncomeApplyBehaviour
@@ -36,6 +37,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Shared.ScrapsIncome).CamelCaseToWords(),
                     description: "At the start of each planning phase provides 5 Scraps.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Shared.ScrapsIncomeApplyBehaviour
@@ -47,6 +49,7 @@ namespace low_age_data.Collections
                     description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
                                  "constructed Obelisk, total minimum of 1).",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Shared.CelestiumIncomeApplyBehaviour
@@ -57,6 +60,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Shared.Revelators.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onBuildBehaviour: BehaviourId.Shared.Revelators.BuildingBuildable),
                 
                 new Passive(
@@ -64,6 +68,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Shared.Uee.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onBuildBehaviour: BehaviourId.Shared.Uee.BuildingBuildable),
                 
                 new Passive(
@@ -71,6 +76,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Shared.Uee.PowerGenerator).CamelCaseToWords(),
                     description: "UEE faction loses if Battery Core is destroyed.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Shared.Uee.PowerGeneratorApplyBehaviour
@@ -81,6 +87,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Shared.Uee.Build).CamelCaseToWords(),
                     description: "Start building a UEE's structure in vision on a tile with Power. Collector and " +
                                  "Extractor can be built on tiles without Power.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementArea: new Map(),
                     selection: new List<Selection<EntityId>>
                     {
@@ -170,6 +177,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Collector.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onBuildBehaviour: BehaviourId.Collector.BuildingBuildable),
                 
                 new Passive(
@@ -177,6 +185,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Extractor.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onBuildBehaviour: BehaviourId.Extractor.BuildingBuildable),
 
                 new Passive(
@@ -184,6 +193,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Wall.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onBuildBehaviour: BehaviourId.Wall.BuildingBuildable),
                 
                 new Passive(
@@ -192,6 +202,7 @@ namespace low_age_data.Collections
                     description: "All abilities get disabled and loses 5 Health at the start of its action or action " +
                                  "phase if not connected to Power.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Shared.Uee.PowerDependencyApplyBehaviour
@@ -206,6 +217,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Citadel.ExecutiveStash).CamelCaseToWords(),
                     description: "Provides 4 Population and 4 spaces of storage for Weapons.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Citadel.ExecutiveStashApplyBehaviour
@@ -216,6 +228,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Citadel.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Citadel.AscendableApplyBehaviour
@@ -227,6 +240,7 @@ namespace low_age_data.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Citadel.HighGroundApplyBehaviour
@@ -236,6 +250,7 @@ namespace low_age_data.Collections
                     id: AbilityId.Citadel.PromoteGoons,
                     displayName: nameof(AbilityId.Citadel.PromoteGoons).CamelCaseToWords(),
                     description: "Promote a new Revelators goon from the remaining Population.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: UnitId.Slave, cost: new List<Payment>
@@ -308,6 +323,7 @@ namespace low_age_data.Collections
                     description: "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed " +
                                  "by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by " +
                                  "3 for 3 actions.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     effects: new List<EffectId>
                     {
                         EffectId.Obelisk.CelestiumDischargeSearchLong,
@@ -320,6 +336,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Shack.Accommodation).CamelCaseToWords(),
                     description: "Provides 2 Population",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Shack.AccommodationApplyBehaviour
@@ -331,6 +348,7 @@ namespace low_age_data.Collections
                     description: "Every 20 Celestium generates a Melee Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Smith.MeleeWeaponProductionApplyBehaviour
@@ -342,6 +360,7 @@ namespace low_age_data.Collections
                     description: "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Fletcher.RangedWeaponProductionApplyBehaviour
@@ -353,6 +372,7 @@ namespace low_age_data.Collections
                     description: "Every 30 Celestium generates a Special Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Alchemy.SpecialWeaponProductionApplyBehaviour
@@ -363,6 +383,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Depot.WeaponStorage).CamelCaseToWords(),
                     description: "Provides 4 spaces of storage for Weapons which are used for new unit production.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Depot.WeaponStorageApplyBehaviour
@@ -372,6 +393,7 @@ namespace low_age_data.Collections
                     id: AbilityId.Workshop.Research,
                     displayName: nameof(AbilityId.Workshop.Research).CamelCaseToWords(),
                     description: "Open a selection of research available for Revelators to unlock.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     selectionOfResearchToBeUnlocked: new List<Selection<ResearchId>>
                     {
                         new Selection<ResearchId>(name: ResearchId.Revelators.PoisonedSlits,
@@ -436,6 +458,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Outpost.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Outpost.AscendableApplyBehaviour
@@ -447,6 +470,7 @@ namespace low_age_data.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Outpost.HighGroundApplyBehaviour
@@ -457,6 +481,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Barricade.ProtectiveShield).CamelCaseToWords(),
                     description: "Every unit adjacent to the shield of this Barricade receives +2 Range Armour.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.Barricade.ProtectiveShieldSearch),
                     
                 new Passive(
@@ -465,11 +490,13 @@ namespace low_age_data.Collections
                     description: "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the " +
                                  "start of each action phase.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.Barricade.CaltropsSearch),
                 
                 new Toggle(
                     id: AbilityId.Barricade.Decompose,
                     displayName: nameof(AbilityId.Barricade.Decompose).CamelCaseToWords(),
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     turnPhase: TurnPhase.Planning, 
                     activationDescription: "Toggle to start inflicting 15 Pure Damage to itself at the start of " +
                                            "each action phase.",
@@ -489,6 +516,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.BatteryCore.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.BatteryCore.PowerGridApplyBehaviour
@@ -499,6 +527,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.BatteryCore.FusionCoreUpgrade).CamelCaseToWords(),
                     turnPhase: TurnPhase.Planning,
                     description: "Upgrade this Battery Core to Fusion Core.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     effects: new List<EffectId>
                     {
                         EffectId.BatteryCore.FusionCoreUpgradeApplyBehaviour
@@ -514,6 +543,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.FusionCore.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 6 Distance.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.FusionCore.PowerGridApplyBehaviour
@@ -525,6 +555,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.FusionCore.DefenceProtocol).CamelCaseToWords(),
                     description: "Select an enemy unit in 6 Distance. At the start of the action phase the target " +
                                  "receives 3 ranged attacks, each dealing 3 Range Damage.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 6, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -538,6 +569,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.FusionCore.CelestiumCoreUpgrade).CamelCaseToWords(),
                     turnPhase: TurnPhase.Planning,
                     description: "Upgrade this Fusion Core to Celestium Core.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     effects: new List<EffectId>
                     {
                         EffectId.FusionCore.CelestiumCoreUpgradeApplyBehaviour
@@ -553,6 +585,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.CelestiumCore.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 8 Distance.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.CelestiumCore.PowerGridApplyBehaviour
@@ -564,6 +597,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.CelestiumCore.DefenceProtocol).CamelCaseToWords(),
                     description: "Select an enemy unit in 8 Distance. At the start of the action phase the target " +
                                  "receives 4 ranged attacks, each dealing 4 Range Damage.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 8, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -578,6 +612,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.CelestiumCore.HeightenedConductivity).CamelCaseToWords(),
                     turnPhase: TurnPhase.Planning,
                     description: "Unlocks Improved Power Grid ability for all Power Poles.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     effects: new List<EffectId>
                     {
                         EffectId.CelestiumCore.HeightenedConductivityModifyResearch
@@ -593,6 +628,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Collector.DirectTransitSystem).CamelCaseToWords(),
                     description: "Provides +2 Scraps at the start of each planning phase if connected to Power.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Collector.DirectTransitSystemApplyBehaviourInactive
@@ -603,6 +639,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Extractor.ReinforcedInfrastructure).CamelCaseToWords(),
                     description: "Gains additional 3 Melee Armour if connected to Power.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Extractor.ReinforcedInfrastructureApplyBehaviourInactive
@@ -613,6 +650,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.PowerPole.PowerGrid).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.PowerPole.PowerGridApplyBehaviour
@@ -624,6 +662,7 @@ namespace low_age_data.Collections
                     description: "Regenerates +1 Shields to units and structures in 4 Distance at the start of each " +
                                  "planning phase.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.PowerPole.ExcessDistributionSearch
                     ),
                 
@@ -632,6 +671,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.PowerPole.ImprovedPowerGrid).CamelCaseToWords(),
                     description: "Distance of provided Power and shield regeneration is increased to 6.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     researchNeeded: new List<ResearchId>
                     {
                         ResearchId.Uee.HeightenedConductivity
@@ -647,6 +687,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.PowerPole.PowerGridImproved).CamelCaseToWords(),
                     description: "Provides Power in 6 Distance.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.PowerPole.PowerGridImprovedApplyBehaviour
@@ -658,6 +699,7 @@ namespace low_age_data.Collections
                     description: "Regenerates +1 Shields to units and structures in 6 Distance at the start of each " +
                                  "planning phase.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.PowerPole.ExcessDistributionImprovedSearch),
                 
                 new Passive(
@@ -667,6 +709,7 @@ namespace low_age_data.Collections
                                  "phase. Additionally provides +1 Faith. Each point of Faith increases the " +
                                  "Initiative of all owned units by 1.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.Temple.KeepingTheFaithSearch,
                     onBirthEffects: new List<EffectId>
                     {
@@ -678,6 +721,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.MilitaryBase.Train).CamelCaseToWords(),
                     description: "Select a unit to be created at the specified location using Celestium for " +
                                  "production.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: UnitId.Horrior, cost: new List<Payment>
@@ -724,6 +768,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Factory.Train).CamelCaseToWords(),
                     description: "Select a unit to be created at the specified location using Celestium for " +
                                  "production.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: UnitId.Engineer, cost: new List<Payment>
@@ -752,6 +797,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Laboratory.Train).CamelCaseToWords(),
                     description: "Select a unit to be created at the specified location using Celestium for " +
                                  "production.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: UnitId.Omen, cost: new List<Payment>
@@ -771,6 +817,7 @@ namespace low_age_data.Collections
                     id: AbilityId.Armoury.Research,
                     displayName: nameof(AbilityId.Armoury.Research).CamelCaseToWords(),
                     description: "Open a selection of research available for UEE to unlock.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     selectionOfResearchToBeUnlocked: new List<Selection<ResearchId>>
                     {
                         new Selection<ResearchId>(name: ResearchId.Uee.HoverboardReignition,
@@ -856,6 +903,7 @@ namespace low_age_data.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Wall.HighGroundApplyBehaviour
@@ -866,6 +914,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Stairs.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Stairs.AscendableApplyBehaviour
@@ -877,6 +926,7 @@ namespace low_age_data.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Gate.HighGroundApplyBehaviour
@@ -887,6 +937,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Gate.Ascendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Gate.AscendableApplyBehaviour
@@ -897,6 +948,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Gate.Entrance).CamelCaseToWords(),
                     description: "Allows movement through for friendly units and blocks it for enemy units.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Gate.EntranceApplyBehaviour
@@ -907,6 +959,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Watchtower.VantagePoint).CamelCaseToWords(),
                     description: "Provides additional +1 vision range and +1 Range Damage to ranged units.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.Watchtower.VantagePointSearch),
                 
                 new Passive(
@@ -914,6 +967,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Bastion.Battlement).CamelCaseToWords(),
                     description: "Provides additional +1 Range Armour to all units on top.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.Bastion.BattlementSearch),
 
                 #endregion
@@ -925,6 +979,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Leader.AllForOne).CamelCaseToWords(),
                     description: "Revelators faction loses if Leader dies.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Leader.AllForOneApplyBehaviour
@@ -936,6 +991,7 @@ namespace low_age_data.Collections
                     description: "All friendly and enemy units that enter 6 Attack Distance around Leader " +
                                  "have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1).",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.Leader.MenacingPresenceSearch),
 
                 new Target(
@@ -944,6 +1000,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Leader.OneForAll).CamelCaseToWords(),
                     description: "Select an adjacent Obelisk and sap its energy to give all friendly units " +
                                  "+2 Health. This Obelisk cannot be sapped again for 10 turns.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -956,6 +1013,7 @@ namespace low_age_data.Collections
                     description: "Start building a Revelators' structure on an adjacent tile. Multiple Slaves " +
                                  "can build the structure, each additional one after the first provides half of the " +
                                  "Celestium production to the construction than the previous Slave.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementArea: new Circle(radius: 1, ignoreRadius: 0),
                     selection: new List<Selection<EntityId>>
                     {
@@ -1019,6 +1077,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Hut.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onBuildBehaviour: BehaviourId.Hut.BuildingBuildable),
 
                 new Passive(
@@ -1026,6 +1085,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Obelisk.Building).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onBuildBehaviour: BehaviourId.Obelisk.BuildingBuildable),
 
                 new Target(
@@ -1035,6 +1095,7 @@ namespace low_age_data.Collections
                     description: "Select an adjacent structure. At the start of the next planning phase the " +
                                  "selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be " +
                                  "interrupted.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1047,6 +1108,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Slave.ManualLabour).CamelCaseToWords(),
                     description: "Select an adjacent Hut. At the start of the next planning phase receive +2 " +
                                  "Scraps. Maximum of one Slave per Hut.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1058,6 +1120,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Quickdraw.Doubleshot).CamelCaseToWords(),
                     description: "Ranged attacks twice.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Quickdraw.DoubleshotApplyBehaviour
@@ -1070,6 +1133,7 @@ namespace low_age_data.Collections
                                  "this time target has 60% of their maximum Movement (rounded up) and cannot receive healing " +
                                  "from any sources. Multiple attacks on a crippled target have no additional effects.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     researchNeeded: new List<ResearchId>
                     {
                         ResearchId.Revelators.PoisonedSlits
@@ -1088,6 +1152,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Gorger.FanaticSuicidePassive).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onHitEffects: new List<EffectId>
                     {
                         EffectId.Gorger.FanaticSuicideDestroy
@@ -1108,6 +1173,7 @@ namespace low_age_data.Collections
                     description: "Either as an action, or instead of attacking, or upon getting killed Gorger " +
                                  "detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, " +
                                  "killing itself in the process.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     effects: new List<EffectId>
                     {
                         EffectId.Gorger.FanaticSuicideSearch,
@@ -1122,6 +1188,7 @@ namespace low_age_data.Collections
                                  "in the same radius, Camou silences the target for 2 of its actions, disabling the use of any " +
                                  "abilities or passives.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onHitEffects: new List<EffectId>
                     {
                         EffectId.Camou.SilentAssassinOnHitDamage,
@@ -1139,6 +1206,7 @@ namespace low_age_data.Collections
                     description: "Select an adjacent unoccupied space on a high ground. This space is considered " +
                                  "occupied until the end of the action phase at which point Camou moves to it. Passively, " +
                                  "Camou can move down from high ground at the additional cost of 1 Movement.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1154,6 +1222,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Camou.ClimbPassive).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     periodicEffect: null,
                     researchNeeded: new List<ResearchId>
                     {
@@ -1172,6 +1241,7 @@ namespace low_age_data.Collections
                                  "contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and " +
                                  "receives 1 Pure Damage at the start of its turn. At the end of this action phase, the " +
                                  "contamination area expands to adjacent tiles and stays until the end of the next action phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 4),
                     effects: new List<EffectId>
                     {
@@ -1186,6 +1256,7 @@ namespace low_age_data.Collections
                                  "next Pyre's action or until death. Any unit which starts its turn or moves onto the flames " +
                                  "receives 5 Melee Damage.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Pyre.CargoCreateEntity
@@ -1196,6 +1267,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Pyre.PhantomMenace).CamelCaseToWords(),
                     description: "Can move through enemy units (but not buildings).",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     researchNeeded: new List<ResearchId>
                     {
                         ResearchId.Revelators.QuestionableCargo
@@ -1212,6 +1284,7 @@ namespace low_age_data.Collections
                     description: "Select a direction (1 out of 4) originating from Big Bad Bull. Any two adjacent " +
                                  "units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. " +
                                  "If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Custom(areas: new List<Area>
                     {
                         //  oo
@@ -1234,6 +1307,7 @@ namespace low_age_data.Collections
                     turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityId.Mummy.SpawnRoach).CamelCaseToWords(),
                     description: "Select an adjacent tile in which Roach is created.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1247,6 +1321,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Mummy.LeapOfHunger).CamelCaseToWords(),
                     description: "Roach creation range is increased to 4 Distance.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     researchNeeded: new List<ResearchId>
                     {
                         ResearchId.Revelators.HumanfleshRations
@@ -1261,6 +1336,7 @@ namespace low_age_data.Collections
                     turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityId.Mummy.SpawnRoach).CamelCaseToWords(),
                     description: "Select a tile in 4 Distance in which Roach is created.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 4, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1274,6 +1350,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Roach.DegradingCarapace).CamelCaseToWords(),
                     description: "At the start of each action loses 1 Health more than the previous action.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
@@ -1288,6 +1365,7 @@ namespace low_age_data.Collections
                     turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityId.Roach.CorrosiveSpit).CamelCaseToWords(),
                     description: "Perform a ranged attack in 4 Distance dealing 6 (+8 to mechanical) Range Damage.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 4, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1309,6 +1387,7 @@ namespace low_age_data.Collections
                     "Movement. On target's turn, it must execute attack action to any friendly or enemy unit in range, " +
                     "otherwise skip turn.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: new List<EffectId>
@@ -1327,6 +1406,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Horrior.ExpertFormation).CamelCaseToWords(),
                     description: "Gains +2 Range Armour if at least one other Horrior is adjacent.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.Horrior.ExpertFormationSearch),
 
                 new Instant(
@@ -1336,6 +1416,7 @@ namespace low_age_data.Collections
                     description:
                     "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase " +
                     "transform into Surfer.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     effects: new List<EffectId>
                     {
                         EffectId.Horrior.MountApplyBehaviour
@@ -1353,6 +1434,7 @@ namespace low_age_data.Collections
                     "target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end " +
                     "of the next action phase.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: new List<EffectId>
@@ -1369,6 +1451,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Surfer.Dismount).CamelCaseToWords(),
                     description: "Upon death, reemerges as Horrior.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
@@ -1385,6 +1468,7 @@ namespace low_age_data.Collections
                     "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. " +
                     "Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
@@ -1399,6 +1483,7 @@ namespace low_age_data.Collections
                     turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityId.Mortar.Reload).CamelCaseToWords(),
                     description: "Spend this action phase reloading to full ammo.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     effects: new List<EffectId>
                     {
                         EffectId.Mortar.ReloadApplyBehaviour
@@ -1409,6 +1494,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Mortar.PiercingBlast).CamelCaseToWords(),
                     description: "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: new List<ResearchId>
                     {
@@ -1426,6 +1512,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Hawk.TacticalGoggles).CamelCaseToWords(),
                     description: "Gains +3 Vision range.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
@@ -1441,6 +1528,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Hawk.Leadership).CamelCaseToWords(),
                     description: "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is " +
                                  "lost at the end of the target's next action, or if the targeted unit is no longer adjacent.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1453,6 +1541,7 @@ namespace low_age_data.Collections
                     description:
                     "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: new List<ResearchId>
                     {
@@ -1472,6 +1561,7 @@ namespace low_age_data.Collections
                     "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, " +
                     "up to a number needed to operate the Machine. Each Engineer provides current Celestium " +
                     "production to the construction.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementArea: new Circle(radius: 1, ignoreRadius: 0),
                     selection: new List<Selection<EntityId>>
                     {
@@ -1500,6 +1590,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Cannon.Assembling).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onBuildBehaviour: BehaviourId.Cannon.AssemblingBuildable),
 
                 new Passive(
@@ -1507,6 +1598,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Ballista.Assembling).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onBuildBehaviour: BehaviourId.Ballista.AssemblingBuildable),
 
                 new Passive(
@@ -1514,6 +1606,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Radar.Assembling).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
+                    sprite: null,
                     onBuildBehaviour: BehaviourId.Radar.AssemblingBuildable),
 
                 new Target(
@@ -1523,6 +1616,7 @@ namespace low_age_data.Collections
                     description:
                     "Select an adjacent Machine and start operating it if the Machine is built and does not " +
                     "have the maximum number of operating Engineers already.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1538,6 +1632,7 @@ namespace low_age_data.Collections
                     "phase the selected structure or Machine receives +2 Health and selected Horrior's mounting " +
                     "time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be " +
                     "interrupted.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1552,6 +1647,7 @@ namespace low_age_data.Collections
                     description: "Can be built and operated by Engineers only. The Machine is functional and can act " +
                                  "only if maximum number of 3 Engineers are operating it.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
@@ -1569,6 +1665,7 @@ namespace low_age_data.Collections
                     "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is " +
                     "revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's " +
                     "action, the attack is triggered which deals massive Range Damage.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 10, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1588,6 +1685,7 @@ namespace low_age_data.Collections
                     description: "Can be built and operated by Engineers only. The Machine is functional and can act " +
                                  "only if maximum number of 1 Engineer is operating it.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
@@ -1601,7 +1699,9 @@ namespace low_age_data.Collections
                     id: AbilityId.Ballista.AddOn,
                     displayName: nameof(AbilityId.Ballista.AddOn).CamelCaseToWords(),
                     description: "Can only be built on a Watchtower or Bastion.",
-                    hasButton: true),
+                    hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png" // TODO
+                    ),
 
                 new Target(
                     id: AbilityId.Ballista.Aim,
@@ -1610,6 +1710,7 @@ namespace low_age_data.Collections
                     description: "Spends 1 action aiming, when attacking a new target. A dotted line to the target " +
                                  "indicates aiming. The target can stop this process if it moves out of Ballista's Attack " +
                                  "Distance. Once aimed, same target can be attacked each action.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 9, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1630,6 +1731,7 @@ namespace low_age_data.Collections
                     description: "Can be built and operated by Engineers only. The Machine is functional and can act " +
                                  "only if maximum number of 1 Engineer is operating it.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Radar.MachineApplyBehaviour
@@ -1642,6 +1744,7 @@ namespace low_age_data.Collections
                     description:
                     "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start " +
                     "of the next planning phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 15),
                     effects: new List<EffectId>
                     {
@@ -1653,6 +1756,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Radar.RadioLocation).CamelCaseToWords(),
                     description: "Enemy units in 15 Attack Distance are shown as red dots in the fog of war.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.Radar.RadioLocationApplyBehaviour,
                     researchNeeded: new List<ResearchId>
                     {
@@ -1665,6 +1769,7 @@ namespace low_age_data.Collections
                     description: "Can be operated by Engineers only (after it is built from Factory). The Machine is " +
                                  "functional and can act only if maximum number of 3 Engineers are operating it.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: null,
                     researchNeeded: null,
                     onHitEffects: null,
@@ -1681,6 +1786,7 @@ namespace low_age_data.Collections
                     "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, " +
                     "which is instead dealt to Vessel.",
                     hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     periodicEffect: EffectId.Vessel.AbsorbentFieldSearch),
 
                 new Instant(
@@ -1689,6 +1795,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Vessel.Fortify).CamelCaseToWords(),
                     description: "Provide +3 Melee Armour and +3 Range Armour to all friendly units in 3 Attack " +
                                  "Distance until the start of the next Vessel's action.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     effects: new List<EffectId>
                     {
                         EffectId.Vessel.FortifyCreateEntity,
@@ -1710,6 +1817,7 @@ namespace low_age_data.Collections
                                  "the rendition is done as Pure Damage to the selected target. If the rendition is destroyed " +
                                  "before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows " +
                                  "all adjacent enemies by 50% until the end of their next action.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 7, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1723,6 +1831,7 @@ namespace low_age_data.Collections
                     displayName: nameof(AbilityId.Omen.RenditionPlacement).CamelCaseToWords(),
                     description: "Select an unoccupied space in a 3 Attack Distance to place the rendition of the " +
                                  "selected target.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     targetArea: new Circle(radius: 3),
                     effects: new List<EffectId>
                     {

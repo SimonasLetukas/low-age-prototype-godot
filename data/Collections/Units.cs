@@ -17,6 +17,7 @@ namespace low_age_data.Collections
                     id: UnitId.Slave,
                     displayName: nameof(UnitId.Slave),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/slave indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 6, hasCurrent: true, combatType: StatType.Health),
@@ -48,6 +49,7 @@ namespace low_age_data.Collections
                     id: UnitId.Leader,
                     displayName: nameof(UnitId.Leader),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/leader indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 50, hasCurrent: true, combatType: StatType.Health),
@@ -81,6 +83,7 @@ namespace low_age_data.Collections
                     id: UnitId.Quickdraw,
                     displayName: nameof(UnitId.Quickdraw),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/quickdraw indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 13, hasCurrent: true, combatType: StatType.Health),
@@ -119,6 +122,7 @@ namespace low_age_data.Collections
                     id: UnitId.Gorger,
                     displayName: nameof(UnitId.Gorger),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/gorger indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 7, hasCurrent: true, combatType: StatType.Health),
@@ -151,6 +155,7 @@ namespace low_age_data.Collections
                     id: UnitId.Camou,
                     displayName: nameof(UnitId.Camou),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/camou indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 19, hasCurrent: true, combatType: StatType.Health),
@@ -183,6 +188,7 @@ namespace low_age_data.Collections
                     id: UnitId.Shaman, 
                     displayName: nameof(UnitId.Shaman),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/shaman indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 18, hasCurrent: true, combatType: StatType.Health),
@@ -220,6 +226,7 @@ namespace low_age_data.Collections
                     id: UnitId.Pyre,
                     displayName: nameof(UnitId.Pyre),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/pyre hauler_part indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 22, hasCurrent: true, combatType: StatType.Health),
@@ -258,6 +265,7 @@ namespace low_age_data.Collections
                     id: UnitId.BigBadBull,
                     displayName: nameof(UnitId.BigBadBull).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/big bad bull indexed 2x2.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 40, hasCurrent: true, combatType: StatType.Health),
@@ -290,6 +298,7 @@ namespace low_age_data.Collections
                     id: UnitId.Mummy,
                     displayName: nameof(UnitId.Mummy),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/mummy indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 39, hasCurrent: true, combatType: StatType.Health),
@@ -320,6 +329,7 @@ namespace low_age_data.Collections
                     id: UnitId.Roach,
                     displayName: nameof(UnitId.Roach),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/roach indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Health),
@@ -352,6 +362,7 @@ namespace low_age_data.Collections
                     id: UnitId.Parasite,
                     displayName: nameof(UnitId.Parasite),
                     description: "",
+                    sprite: "res://assets/sprites/units/revs/parasite indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 36, hasCurrent: true, combatType: StatType.Health),
@@ -381,6 +392,7 @@ namespace low_age_data.Collections
                     id: UnitId.Horrior, 
                     displayName: nameof(UnitId.Horrior),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/horrior indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 25, hasCurrent: true, combatType: StatType.Health),
@@ -414,6 +426,7 @@ namespace low_age_data.Collections
                     id: UnitId.Marksman,
                     displayName: nameof(UnitId.Marksman),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/marksman indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 7, hasCurrent: true, combatType: StatType.Health),
@@ -452,6 +465,7 @@ namespace low_age_data.Collections
                     id: UnitId.Surfer,
                     displayName: nameof(UnitId.Surfer),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/surfer indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 2, hasCurrent: true, combatType: StatType.Health),
@@ -484,6 +498,7 @@ namespace low_age_data.Collections
                     id: UnitId.Mortar, 
                     displayName: nameof(UnitId.Mortar),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/mortar 0 indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Health),
@@ -524,6 +539,7 @@ namespace low_age_data.Collections
                     id: UnitId.Hawk,
                     displayName: nameof(UnitId.Hawk),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/hawk indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 9, hasCurrent: true, combatType: StatType.Health),
@@ -558,6 +574,7 @@ namespace low_age_data.Collections
                     id: UnitId.Engineer,
                     displayName: nameof(UnitId.Engineer),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/engineer indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 8, hasCurrent: true, combatType: StatType.Health),
@@ -592,6 +609,7 @@ namespace low_age_data.Collections
                     id: UnitId.Cannon,
                     displayName: nameof(UnitId.Cannon),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/cannon indexed 2x2.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 30, hasCurrent: true, combatType: StatType.Health),
@@ -621,12 +639,14 @@ namespace low_age_data.Collections
                         AbilityId.Cannon.Assembling,
                         AbilityId.Cannon.Machine,
                         AbilityId.Cannon.HeatUp
-                    }),                
+                    },
+                    size: 2),                
                 
                 new Unit(
                     id: UnitId.Ballista,
                     displayName: nameof(UnitId.Ballista),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/ballista indexed 2x2.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 14, hasCurrent: true, combatType: StatType.Health),
@@ -663,6 +683,7 @@ namespace low_age_data.Collections
                     id: UnitId.Radar,
                     displayName: nameof(UnitId.Radar),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/radar indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 20, hasCurrent: true, combatType: StatType.Health),
@@ -692,6 +713,7 @@ namespace low_age_data.Collections
                     id: UnitId.Vessel,
                     displayName: nameof(UnitId.Vessel),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/vessel indexed 2x2.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 50, hasCurrent: true, combatType: StatType.Health),
@@ -727,6 +749,7 @@ namespace low_age_data.Collections
                     id: UnitId.Omen,
                     displayName: nameof(UnitId.Omen),
                     description: "",
+                    sprite: "res://assets/sprites/units/uee/omen indexed 1x1.png",
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Health),

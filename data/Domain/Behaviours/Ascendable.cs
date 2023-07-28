@@ -16,12 +16,14 @@ namespace low_age_data.Domain.Behaviours
             BehaviourId id,
             string displayName, 
             string description,
+            string sprite,
             IList<Area> path) 
             : base(
                 id, 
                 $"{nameof(Behaviour)}.{nameof(Ascendable)}", 
                 displayName, 
                 description, 
+                sprite,
                 EndsAt.Death,
                 Alignment.Neutral)
         {

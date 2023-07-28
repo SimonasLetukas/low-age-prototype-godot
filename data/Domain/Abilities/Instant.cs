@@ -12,6 +12,7 @@ namespace low_age_data.Domain.Abilities
             TurnPhase turnPhase,
             string displayName,
             string description,
+            string sprite,
             IList<EffectId> effects,
             EndsAt? cooldown = null,
             IList<ResearchId>? researchNeeded = null,
@@ -24,6 +25,7 @@ namespace low_age_data.Domain.Abilities
                 true,
                 displayName,
                 description,
+                sprite,
                 cooldown,
                 cost)
         {

@@ -29,6 +29,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Shared.HighGroundBuff).CamelCaseToWords(),
                     description: "Unit is on high ground and has +1 vision range and +1 Attack Distance for " +
                                  "ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new AttackModification(
@@ -50,6 +51,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Shared.PassiveIncomeIncome,
                     displayName: nameof(BehaviourId.Shared.PassiveIncomeIncome).CamelCaseToWords(),
                     description: "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
@@ -64,6 +66,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Shared.ScrapsIncomeIncome,
                     displayName: nameof(BehaviourId.Shared.ScrapsIncomeIncome).CamelCaseToWords(),
                     description: "At the start of each planning phase provides 5 Scraps.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
@@ -76,6 +79,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Shared.CelestiumIncomeIncome).CamelCaseToWords(),
                     description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
                                  "constructed Obelisk, total minimum of 1).",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
@@ -89,6 +93,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Shared.Revelators.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground and can be built by multiple " +
                                  "Slaves simultaneously.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -102,6 +107,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Shared.Revelators.NoPopulationSpaceInterceptDamage).CamelCaseToWords(),
                     description: "This unit receives double damage from all sources, because there's not enough " +
                                  "population space.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.EndOf.This.Planning,
                     amountDealtInstead: new Amount(
                         flat: 0,
@@ -111,6 +117,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Shared.Uee.BuildingBuildable,
                     displayName: nameof(BehaviourId.Shared.Uee.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground tiles with Power.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -129,6 +136,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Shared.Uee.PowerGeneratorBuff,
                     displayName: nameof(BehaviourId.Shared.Uee.PowerGeneratorBuff).CamelCaseToWords(),
                     description: "UEE faction loses when this structure is destroyed.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     finalEffects: new List<EffectId>
                     {
                         EffectId.Shared.Uee.PowerGeneratorModifyPlayer
@@ -139,6 +147,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Shared.Uee.PowerDependencyBuff).CamelCaseToWords(),
                     description: "If this unit is not connected to Power, all abilities get disabled and it loses 5 " +
                                  "Health at the start of its action or action phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.Death,
                     canStack: false,
                     canResetDuration: false,
@@ -183,6 +192,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Shared.Uee.PowerDependencyBuffDisable,
                     displayName: nameof(BehaviourId.Shared.Uee.PowerDependencyBuffDisable).CamelCaseToWords(),
                     description: "All abilities are disabled because Power is not supplied.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.AbilitiesDisabled
@@ -214,6 +224,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Shared.Uee.PowerDependencyBuffInactive).CamelCaseToWords(),
                     description: "If this unit is not connected to Power, all abilities get disabled and it loses 5 " +
                                  "Health at the start of its action or action phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     finalEffects: new List<EffectId>
                     {
                         EffectId.Shared.Uee.PowerDependencyApplyBehaviour
@@ -247,6 +258,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Shared.Uee.PositiveFaithBuff,
                     displayName: nameof(BehaviourId.Shared.Uee.PositiveFaithBuff).CamelCaseToWords(),
                     description: "This unit has increased Initiative because of the positive Faith.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new StatModification(change: Change.AddMax, amount: 1, statType: StatType.Initiative),
@@ -265,6 +277,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Citadel.ExecutiveStashIncome,
                     displayName: nameof(BehaviourId.Citadel.ExecutiveStashIncome).CamelCaseToWords(),
                     description: "Provides 4 Population and 4 spaces of storage for Weapons.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
@@ -279,6 +292,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Citadel.AscendableAscendable,
                     displayName: nameof(BehaviourId.Citadel.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     path: new List<Area>
                     {
                         new Area(start: new Vector2<int>(x: 1, y: 1),
@@ -290,6 +304,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Citadel.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     highGroundAreas: new List<Area>
                     {
                         new Area(start: new Vector2<int>(x: 0, y: 0),
@@ -300,6 +315,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Obelisk.CelestiumDischargeBuffLong,
                     displayName: nameof(BehaviourId.Obelisk.CelestiumDischargeBuffLong).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new StatModification(
@@ -316,6 +332,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Obelisk.CelestiumDischargeBuffShort,
                     displayName: nameof(BehaviourId.Obelisk.CelestiumDischargeBuffShort).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new StatModification(
@@ -336,6 +353,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Obelisk.CelestiumDischargeBuffNegative,
                     displayName: nameof(BehaviourId.Obelisk.CelestiumDischargeBuffNegative).CamelCaseToWords(),
                     description: "This unit has its vision, Melee and Range Armour all reduced by 3 for 3 actions.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new StatModification(
@@ -361,6 +379,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Shack.AccommodationIncome,
                     displayName: nameof(BehaviourId.Shack.AccommodationIncome).CamelCaseToWords(),
                     description: "Provides 2 Population.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
@@ -373,6 +392,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Smith.MeleeWeaponProductionIncome).CamelCaseToWords(),
                     description: "Every 20 Celestium generates a Melee Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
@@ -391,6 +411,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Fletcher.RangedWeaponProductionIncome).CamelCaseToWords(),
                     description: "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
@@ -409,6 +430,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Alchemy.SpecialWeaponProductionIncome).CamelCaseToWords(),
                     description: "Every 30 Celestium generates a Special Weapon and either stores it to an empty " +
                                  "Weapon space or waits until there is a free space available. ",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
@@ -426,6 +448,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Depot.WeaponStorageIncome,
                     displayName: nameof(BehaviourId.Depot.WeaponStorageIncome).CamelCaseToWords(),
                     description: "Provides 4 spaces of storage for Weapons.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
@@ -437,6 +460,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Outpost.AscendableAscendable,
                     displayName: nameof(BehaviourId.Outpost.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     path: new List<Area>
                     {
                         new Area(start: new Vector2<int>(x: 0, y: 0),
@@ -448,6 +472,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Outpost.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     highGroundAreas: new List<Area>
                     {
                         new Area(start: new Vector2<int>(x: 0, y: 0),
@@ -458,6 +483,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Barricade.ProtectiveShieldBuff,
                     displayName: nameof(BehaviourId.Barricade.ProtectiveShieldBuff).CamelCaseToWords(),
                     description: "Range Armour for this unit is increased by 2 because of a nearby Barricade's shield.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new StatModification(
@@ -477,6 +503,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Barricade.DecomposeBuff).CamelCaseToWords(),
                     description: "This Barricade is decomposing and will receive 15 Pure Damage at the start of " +
                                  "each action phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     finalEffects: new List<EffectId>
                     {
                         EffectId.Barricade.DecomposeDamage,
@@ -491,13 +518,15 @@ namespace low_age_data.Collections
                     id: BehaviourId.BatteryCore.PowerGridMaskProvider,
                     displayName: nameof(BehaviourId.BatteryCore.PowerGridMaskProvider).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maskCreated: MaskId.Power, 
                     maskShape: new Circle(radius: 4, ignoreRadius: 0)),
                 
                 new Buildable(
                     id: BehaviourId.Collector.BuildingBuildable,
                     displayName: nameof(BehaviourId.Collector.BuildingBuildable).CamelCaseToWords(),
-                    description: "This building can only be placed on the low ground Scraps tiles.",
+                    description: "This building can only be placed on the low ground Scraps tiles.", 
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -517,6 +546,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Extractor.BuildingBuildable,
                     displayName: nameof(BehaviourId.Extractor.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground Celestium tiles.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -536,6 +566,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Wall.BuildingBuildable,
                     displayName: nameof(BehaviourId.Wall.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground tiles with Power.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -555,6 +586,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.BatteryCore.FusionCoreUpgradeBuff,
                     displayName: nameof(BehaviourId.BatteryCore.FusionCoreUpgradeBuff).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialEffects: new List<EffectId>
                     {
                         EffectId.BatteryCore.FusionCoreUpgradeCreateEntity,
@@ -570,6 +602,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.FusionCore.PowerGridMaskProvider,
                     displayName: nameof(BehaviourId.FusionCore.PowerGridMaskProvider).CamelCaseToWords(),
                     description: "Provides Power in 6 Distance.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maskCreated: MaskId.Power, 
                     maskShape: new Circle(radius: 6, ignoreRadius: 0)),
                 
@@ -577,6 +610,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.FusionCore.CelestiumCoreUpgradeBuff,
                     displayName: nameof(BehaviourId.FusionCore.CelestiumCoreUpgradeBuff).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialEffects: new List<EffectId>
                     {
                         EffectId.FusionCore.CelestiumCoreUpgradeCreateEntity,
@@ -592,6 +626,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.CelestiumCore.PowerGridMaskProvider,
                     displayName: nameof(BehaviourId.CelestiumCore.PowerGridMaskProvider).CamelCaseToWords(),
                     description: "Provides Power in 8 Distance.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maskCreated: MaskId.Power, 
                     maskShape: new Circle(radius: 8, ignoreRadius: 0)),
                 
@@ -599,6 +634,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Collector.DirectTransitSystemInactiveBuff,
                     displayName: nameof(BehaviourId.Collector.DirectTransitSystemInactiveBuff).CamelCaseToWords(),
                     description: "Will provide +2 Scraps at the start of each planning phase when connected to Power.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.Death,
                     canStack: false,
                     canResetDuration: false,
@@ -630,6 +666,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Collector.DirectTransitSystemActiveIncome).CamelCaseToWords(),
                     description: "Provides +2 Scraps at the start of each planning phase because it's connected to " +
                                  "Power.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent,
@@ -661,6 +698,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Extractor.ReinforcedInfrastructureInactiveBuff,
                     displayName: nameof(BehaviourId.Extractor.ReinforcedInfrastructureInactiveBuff).CamelCaseToWords(),
                     description: "Will gain additional 3 Melee Armour if connected to Power.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.Death,
                     canStack: false,
                     canResetDuration: false,
@@ -691,6 +729,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Extractor.ReinforcedInfrastructureActiveBuff,
                     displayName: nameof(BehaviourId.Extractor.ReinforcedInfrastructureActiveBuff).CamelCaseToWords(),
                     description: "Gains additional 3 Melee Armour because it's connected to Power.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new StatModification(
@@ -728,6 +767,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.PowerPole.PowerGridMaskProvider,
                     displayName: nameof(BehaviourId.PowerPole.PowerGridMaskProvider).CamelCaseToWords(),
                     description: "Provides Power in 4 Distance.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maskCreated: MaskId.Power, 
                     maskShape: new Circle(radius: 4, ignoreRadius: 0)),
                 
@@ -735,6 +775,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.PowerPole.ExcessDistributionBuff,
                     displayName: nameof(BehaviourId.PowerPole.ExcessDistributionBuff).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new StatModification(
@@ -751,6 +792,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.PowerPole.PowerGridImprovedMaskProvider,
                     displayName: nameof(BehaviourId.PowerPole.PowerGridImprovedMaskProvider).CamelCaseToWords(),
                     description: "Provides Power in 6 Distance.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maskCreated: MaskId.Power, 
                     maskShape: new Circle(radius: 6, ignoreRadius: 0)),
                 
@@ -758,6 +800,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Temple.KeepingTheFaithBuff,
                     displayName: nameof(BehaviourId.Temple.KeepingTheFaithBuff).CamelCaseToWords(),
                     description: "This unit has +2 Movement because of a nearby Temple.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new StatModification(change: Change.AddMax, amount: 2, statType: StatType.Movement)
@@ -773,6 +816,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Temple.KeepingTheFaithIncome).CamelCaseToWords(),
                     description: "Provides 1 Faith. Each point of Faith increases the Initiative of all of this " +
                                  "player units.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(change: Change.AddCurrent, amount: 1, resource: ResourceId.Faith)
@@ -783,6 +827,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Wall.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     highGroundAreas: new List<Area>
                     {
                         new Area(start: new Vector2<int>(x: 0, y: 0),
@@ -793,6 +838,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Stairs.AscendableAscendable,
                     displayName: nameof(BehaviourId.Stairs.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     path: new List<Area>
                     {
                         new Area(start: new Vector2<int>(x: 0, y: 0),
@@ -806,6 +852,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Gate.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     highGroundAreas: new List<Area>
                     {
                         new Area(start: new Vector2<int>(x: 0, y: 0),
@@ -816,6 +863,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Gate.AscendableAscendable,
                     displayName: nameof(BehaviourId.Gate.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     path: new List<Area>
                     {
                         new Area(start: new Vector2<int>(x: 0, y: 1),
@@ -826,6 +874,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Gate.EntranceMovementBlock,
                     displayName: nameof(BehaviourId.Gate.EntranceMovementBlock).CamelCaseToWords(),
                     description: "Allows movement through for friendly units and blocks it for enemy units.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     blockedAreas: new List<Area>
                     {
                         new Area(start: new Vector2<int>(x: 0, y: 1),
@@ -842,6 +891,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Watchtower.VantagePointBuff).CamelCaseToWords(),
                     description: "Unit is on a Watchtower and has +1 vision range and +1 Range Damage for ranged " +
                                  "attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new AttackModification(
@@ -863,6 +913,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Bastion.BattlementBuff,
                     displayName: nameof(BehaviourId.Bastion.BattlementBuff).CamelCaseToWords(),
                     description: "Unit is on a Bastion and has +1 Range Armour.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new StatModification(
@@ -883,6 +934,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Leader.AllForOneBuff,
                     displayName: nameof(BehaviourId.Leader.AllForOneBuff).CamelCaseToWords(),
                     description: "Revelators faction loses when this unit dies.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     finalEffects: new List<EffectId>
                     {
                         EffectId.Leader.AllForOneModifyPlayer
@@ -892,6 +944,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Leader.MenacingPresenceBuff,
                     displayName: nameof(BehaviourId.Leader.MenacingPresenceBuff).CamelCaseToWords(),
                     description: "Melee and Range Damage for this unit is reduced by 2.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
                         new AttackModification(
@@ -916,6 +969,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Leader.OneForAllObeliskBuff,
                     displayName: nameof(BehaviourId.Leader.OneForAllObeliskBuff).CamelCaseToWords(),
                     description: "This unit has recently been sapped for health.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -933,6 +987,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Leader.OneForAllHealBuff,
                     displayName: nameof(BehaviourId.Leader.OneForAllHealBuff).CamelCaseToWords(),
                     description: "Heals for 2 Health.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -954,6 +1009,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Hut.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground Scraps tiles, and can be built " +
                                  "by multiple Slaves simultaneously.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -974,6 +1030,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Obelisk.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground Celestium tiles, and can be " +
                                  "built by multiple Slaves simultaneously.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -993,6 +1050,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Slave.RepairStructureBuff,
                     displayName: nameof(BehaviourId.Slave.RepairStructureBuff).CamelCaseToWords(),
                     description: "This structure will be repaired by +1 Health at the start of the planning phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1024,6 +1082,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Slave.RepairWait,
                     displayName: nameof(BehaviourId.Slave.RepairWait).CamelCaseToWords(),
                     description: "Currently repairing a structure.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.StartOf.Next.Planning),
 
                 new Buff(
@@ -1031,6 +1090,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Slave.ManualLabourBuff).CamelCaseToWords(),
                     description:
                     "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1059,12 +1119,14 @@ namespace low_age_data.Collections
                     id: BehaviourId.Slave.ManualLabourWait,
                     displayName: nameof(BehaviourId.Slave.ManualLabourWait).CamelCaseToWords(),
                     description: "Currently working on a nearby Hut.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.StartOf.Next.Planning),
 
                 new ExtraAttack(
                     id: BehaviourId.Quickdraw.DoubleshotExtraAttack,
                     displayName: nameof(BehaviourId.Quickdraw.DoubleshotExtraAttack).CamelCaseToWords(),
                     description: "Ranged attacks twice.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     attackTypes: new List<Attacks>
                     {
                         Attacks.Ranged
@@ -1076,6 +1138,7 @@ namespace low_age_data.Collections
                     description:
                     "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing " +
                     "from any sources until the end of its action.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.CannotBeHealed
@@ -1105,6 +1168,7 @@ namespace low_age_data.Collections
                     description:
                     "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage " +
                     "to all friendly and enemy units in 1 Distance.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -1118,6 +1182,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Camou.SilentAssassinBuff,
                     displayName: nameof(BehaviourId.Camou.SilentAssassinBuff).CamelCaseToWords(),
                     description: "This unit is silenced (use of any abilities is disabled).",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.AbilitiesDisabled
@@ -1140,12 +1205,14 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Camou.ClimbWait).CamelCaseToWords(),
                     description:
                     "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.EndOf.This.ActionPhase),
 
                 new Buff(
                     id: BehaviourId.Camou.ClimbBuff,
                     displayName: nameof(BehaviourId.Camou.ClimbBuff).CamelCaseToWords(),
                     description: "Camou can move down from high ground at the additional cost of 1 Movement.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.ClimbsDown
@@ -1163,6 +1230,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Shaman.WondrousGooFeatureWait,
                     displayName: nameof(BehaviourId.Shaman.WondrousGooFeatureWait).CamelCaseToWords(),
                     description: "Effect area will expand at the end of this action phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.EndOf.This.ActionPhase,
                     nextBehaviour: BehaviourId.Shaman.WondrousGooFeatureBuff),
 
@@ -1170,6 +1238,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Shaman.WondrousGooFeatureBuff,
                     displayName: nameof(BehaviourId.Shaman.WondrousGooFeatureBuff).CamelCaseToWords(),
                     description: "Effect area will disappear at the end of this action phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -1190,6 +1259,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Shaman.WondrousGooBuff).CamelCaseToWords(),
                     description: "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) " +
                                  "and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -1223,6 +1293,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Pyre.CargoTether,
                     displayName: nameof(BehaviourId.Pyre.CargoTether).CamelCaseToWords(),
                     description: "The cargo follows Pyre.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     source: Location.Origin,
                     extendsSelection: true,
                     sharedDamage: true,
@@ -1236,6 +1307,7 @@ namespace low_age_data.Collections
                     "The cargo leaves a path of flames when moved, which stay until the start of the next " +
                     "Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives " +
                     "5 Melee Damage.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -1262,6 +1334,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Pyre.WallOfFlamesBuff,
                     displayName: nameof(BehaviourId.Pyre.WallOfFlamesBuff).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -1291,6 +1364,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Pyre.PhantomMenaceBuff,
                     displayName: nameof(BehaviourId.Pyre.PhantomMenaceBuff).CamelCaseToWords(),
                     description: "Pyre can move through enemy units (but not buildings).",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.MovesThroughEnemyUnits
@@ -1300,6 +1374,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Roach.DegradingCarapaceBuff,
                     displayName: nameof(BehaviourId.Roach.DegradingCarapaceBuff).CamelCaseToWords(),
                     description: "Increases periodic damage by 1 at the start of each action.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -1318,6 +1393,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Roach.DegradingCarapacePeriodicDamageBuff,
                     displayName: nameof(BehaviourId.Roach.DegradingCarapacePeriodicDamageBuff).CamelCaseToWords(),
                     description: "This unit will continue to receive 1 damage at every start of its action.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1340,6 +1416,7 @@ namespace low_age_data.Collections
                     description:
                     "This unit is possessed by Parasite. On Parasite turn, it moves both units using the movement " +
                     "speed that the possessed unit has. Any damage received is shared between both.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     source: Location.Inherited,
                     extendsSelection: false,
                     sharedDamage: true,
@@ -1352,6 +1429,7 @@ namespace low_age_data.Collections
                     description:
                     "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it " +
                     "must do unless there are no legal targets.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.CanAttackAnyTeam,
@@ -1386,6 +1464,7 @@ namespace low_age_data.Collections
                     description:
                     "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both " +
                     "units on Parasite's turn.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.AbilitiesDisabled,
@@ -1422,6 +1501,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Horrior.ExpertFormationBuff).CamelCaseToWords(),
                     description:
                     "Range Armour for this unit is increased by 2 because it is in formation with an adjacent Horrior.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -1446,6 +1526,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Horrior.MountWait,
                     displayName: nameof(BehaviourId.Horrior.MountWait).CamelCaseToWords(),
                     description: "This unit is mounting up to transform into Surfer.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.StartOf.Fourth.Planning,
                     nextBehaviour: BehaviourId.Horrior.MountBuff),
 
@@ -1453,6 +1534,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Horrior.MountBuff,
                     displayName: nameof(BehaviourId.Horrior.MountBuff).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1471,6 +1553,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Marksman.CriticalMarkBuff).CamelCaseToWords(),
                     description: "Marksman has marked this target until the end of the next action phase. The mark " +
                                  "is consumed dealing 5 Melee Damage, when an ally of Marksman attacks this unit.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -1510,6 +1593,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Surfer.DismountBuff,
                     displayName: nameof(BehaviourId.Surfer.DismountBuff).CamelCaseToWords(),
                     description: "Upon death, reemerges as Horrior.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -1528,6 +1612,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Mortar.DeadlyAmmunitionAmmunition).CamelCaseToWords(),
                     description: "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out " +
                                  "of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maxAmmunitionAmount: 2,
                     ammunitionAttackTypes: new List<Attacks>
                     {
@@ -1545,6 +1630,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Mortar.ReloadWait,
                     displayName: nameof(BehaviourId.Mortar.ReloadWait).CamelCaseToWords(),
                     description: "Mortar will reload its ammunition at the end of this action.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.EndOf.This.Action,
                     nextBehaviour: BehaviourId.Mortar.ReloadBuff),
 
@@ -1552,6 +1638,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Mortar.ReloadBuff,
                     displayName: nameof(BehaviourId.Mortar.ReloadBuff).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1566,6 +1653,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Mortar.PiercingBlastBuff,
                     displayName: nameof(BehaviourId.Mortar.PiercingBlastBuff).CamelCaseToWords(),
                     description: "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -1588,6 +1676,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Hawk.TacticalGogglesBuff,
                     displayName: nameof(BehaviourId.Hawk.TacticalGogglesBuff).CamelCaseToWords(),
                     description: "Gains +3 Vision range.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -1606,6 +1695,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Hawk.LeadershipBuff).CamelCaseToWords(),
                     description: "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of " +
                                  "the next action or if Hawk is not adjacent anymore.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -1638,6 +1728,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Hawk.HealthKitBuff).CamelCaseToWords(),
                     description:
                     "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -1656,6 +1747,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Hawk.HealthKitHealBuff,
                     displayName: nameof(BehaviourId.Hawk.HealthKitHealBuff).CamelCaseToWords(),
                     description: "Heals for 1 Health.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -1678,6 +1770,7 @@ namespace low_age_data.Collections
                     description:
                     "This machine can only be placed on the low ground and can be assembled by a maximum of " +
                     "3 Engineers at once.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -1693,6 +1786,7 @@ namespace low_age_data.Collections
                     description:
                     "This machine can only be placed on a Watchtower or Bastion and can be assembled by a maximum " +
                     "of 1 Engineer at once.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -1714,6 +1808,7 @@ namespace low_age_data.Collections
                     description:
                     "This machine can only be placed on the low ground and can be assembled by a maximum of " +
                     "1 Engineer at once.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -1727,6 +1822,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Engineer.OperateBuff,
                     displayName: nameof(BehaviourId.Engineer.OperateBuff).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1745,6 +1841,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Engineer.RepairStructureOrMachineBuff).CamelCaseToWords(),
                     description:
                     "This structure or machine will be repaired by +2 Health at the start of the planning phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1778,6 +1875,7 @@ namespace low_age_data.Collections
                     description:
                     "This Horrior will have their Mount duration reduced by one turn at the start of the " +
                     "planning phase.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1809,12 +1907,14 @@ namespace low_age_data.Collections
                     id: BehaviourId.Engineer.RepairWait,
                     displayName: nameof(BehaviourId.Engineer.RepairWait).CamelCaseToWords(),
                     description: "Currently repairing.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.StartOf.Next.Planning),
 
                 new Counter(
                     id: BehaviourId.Cannon.MachineCounter,
                     displayName: nameof(BehaviourId.Cannon.MachineCounter).CamelCaseToWords(),
                     description: "Needs 3 Engineers to operate this machine.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maxAmount: 3,
                     triggerAmount: 3,
                     triggeredEffects: new List<EffectId>
@@ -1827,6 +1927,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Cannon.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.FullyDisabled
@@ -1850,6 +1951,7 @@ namespace low_age_data.Collections
                     description:
                     "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's " +
                     "owner has vision of this tile.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.ProvidesVision
@@ -1895,12 +1997,14 @@ namespace low_age_data.Collections
                     id: BehaviourId.Cannon.HeatUpWait,
                     displayName: nameof(BehaviourId.Cannon.HeatUpWait).CamelCaseToWords(),
                     description: "This Cannon is heating up for a blast at the danger zone.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.EndOf.Next.Action),
 
                 new Counter(
                     id: BehaviourId.Ballista.MachineCounter,
                     displayName: nameof(BehaviourId.Ballista.MachineCounter).CamelCaseToWords(),
                     description: "Needs 1 Engineer to operate this machine.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maxAmount: 3,
                     triggerAmount: 3,
                     triggeredEffects: new List<EffectId>
@@ -1913,6 +2017,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Ballista.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.FullyDisabled
@@ -1936,6 +2041,7 @@ namespace low_age_data.Collections
                     description:
                     "This unit is aimed by a Ballista, which allows it to shoot every turn as long as this " +
                     "unit remains in range.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -1974,6 +2080,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Radar.MachineCounter,
                     displayName: nameof(BehaviourId.Radar.MachineCounter).CamelCaseToWords(),
                     description: "Needs 1 Engineer to operate this machine.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maxAmount: 3,
                     triggerAmount: 3,
                     triggeredEffects: new List<EffectId>
@@ -1985,7 +2092,8 @@ namespace low_age_data.Collections
                     id: BehaviourId.Radar.MachineBuff,
                     displayName: nameof(BehaviourId.Radar.MachineBuff).CamelCaseToWords(),
                     description:
-                    "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    "This machine is disabled until it is fully operated by the required number of Engineers.", 
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.FullyDisabled
@@ -2007,6 +2115,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Radar.ResonatingSweepBuff,
                     displayName: nameof(BehaviourId.Radar.ResonatingSweepBuff).CamelCaseToWords(),
                     description: "Provides vision to the Radar's owner.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.ProvidesVision
@@ -2030,6 +2139,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Radar.RadioLocationBuff,
                     displayName: nameof(BehaviourId.Radar.RadioLocationBuff).CamelCaseToWords(),
                     description: "",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -2049,6 +2159,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Radar.RadioLocationFeatureBuff,
                     displayName: nameof(BehaviourId.Radar.RadioLocationFeatureBuff).CamelCaseToWords(),
                     description: "This red dot is able to detect enemy units in the fog of war.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.OnlyVisibleToAllies,
@@ -2067,6 +2178,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Vessel.MachineCounter,
                     displayName: nameof(BehaviourId.Vessel.MachineCounter).CamelCaseToWords(),
                     description: "Needs 3 Engineers to operate this machine.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maxAmount: 3,
                     triggerAmount: 3,
                     triggeredEffects: new List<EffectId>
@@ -2079,6 +2191,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Vessel.MachineBuff).CamelCaseToWords(),
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.FullyDisabled
@@ -2102,6 +2215,7 @@ namespace low_age_data.Collections
                     description:
                     "The melee and ranged damage this unit receives is reduced by 50%, but this amount is " +
                     "also dealt to a nearby Vessel.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.Death,
                     numberOfInterceptions: 0,
                     damageTypes: new List<DamageType>
@@ -2123,6 +2237,7 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Vessel.FortifyDestroyBuff).CamelCaseToWords(),
                     description: "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start " +
                                  "of Vessel's action.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -2140,6 +2255,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Vessel.FortifyBuff,
                     displayName: nameof(BehaviourId.Vessel.FortifyBuff).CamelCaseToWords(),
                     description: "Has +3 Melee Armour and +3 Range Armour due to a nearby fortified Vessel",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -2165,6 +2281,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Omen.RenditionPlacementBuff,
                     displayName: nameof(BehaviourId.Omen.RenditionPlacementBuff).CamelCaseToWords(),
                     description: "This unit is about to have its rendition placed in a 3 Attack Distance.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -2184,6 +2301,7 @@ namespace low_age_data.Collections
                     description:
                     "50% of any damage dealt will be dealt as Pure Damage to the unit that was the target of " +
                     "this rendition.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.Death,
                     numberOfInterceptions: 0,
                     damageTypes: null,
@@ -2199,6 +2317,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Omen.RenditionBuffTimer,
                     displayName: nameof(BehaviourId.Omen.RenditionBuffTimer).CamelCaseToWords(),
                     description: "The rendition stays for 2 action phases and disappears afterwards.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -2230,6 +2349,7 @@ namespace low_age_data.Collections
                     description: "The unit that was the target of this rendition will emit a blast if this rendition " +
                                  "is destroyed. This blast would deal 10 Melee Damage and slow all adjacent enemy units by 50% " +
                                  "until the end of their next action.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,
@@ -2247,6 +2367,7 @@ namespace low_age_data.Collections
                     id: BehaviourId.Omen.RenditionBuffDeath,
                     displayName: nameof(BehaviourId.Omen.RenditionBuffDeath).CamelCaseToWords(),
                     description: "This unit is slowed by 50% until the end of its next action.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {

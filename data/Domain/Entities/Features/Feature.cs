@@ -9,12 +9,13 @@ using low_age_data.Domain.Shared.Filters;
 
 namespace low_age_data.Domain.Entities.Features
 {
-    public class Feature : Entity
+    public class Feature : Entity, IDisplayable
     { 
         public Feature(
             FeatureId id,
             string displayName, 
-            string description,
+            string description, 
+            string sprite, 
             EffectId? onCollisionEffect = null,
             IList<IFilterItem>? collisionFilters = null,
             EffectId? periodicEffect = null,
@@ -25,6 +26,7 @@ namespace low_age_data.Domain.Entities.Features
             bool? alliesCanStack = null,
             bool? onlyOneCanExist = null) : base(id, displayName, description)
         {
+            Sprite = sprite;
             OnCollisionEffect = onCollisionEffect;
             CollisionFilters = collisionFilters ?? new List<IFilterItem>();
             PeriodicEffect = periodicEffect;
@@ -81,5 +83,7 @@ namespace low_age_data.Domain.Entities.Features
         /// teams and <see cref="AlliesCanStack"/> input is overriden. 
         /// </summary>
         public bool OnlyOneCanExist { get; }
+
+        public string? Sprite { get; }
     }
 }

@@ -15,6 +15,7 @@ namespace low_age_data.Domain.Behaviours
             BehaviourId id, 
             string displayName, 
             string description,
+            string sprite,
             int maxAmmunitionAmount,
             IList<Attacks> ammunitionAttackTypes,
             int? ammunitionAmountLostOnHit = null,
@@ -26,6 +27,7 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(Ammunition)}", 
                 displayName, 
                 description, 
+                sprite,
                 EndsAt.Death,
                 Alignment.Neutral)
         {

@@ -19,6 +19,7 @@ namespace low_age_data.Domain.Behaviours
             BehaviourId id,
             string displayName, 
             string description,
+            string sprite,
             IList<Area> highGroundAreas,
             IList<EffectId>? onCollisionEffects = null) 
             : base(
@@ -26,6 +27,7 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(HighGround)}", 
                 displayName, 
                 description, 
+                sprite,
                 EndsAt.Death,
                 Alignment.Neutral)
         {

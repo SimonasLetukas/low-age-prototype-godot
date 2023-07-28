@@ -17,6 +17,7 @@ namespace low_age_data.Domain.Behaviours
             BehaviourId id,
             string displayName, 
             string description,
+            string sprite,
             IList<Area> blockedAreas,
             IList<IFilterItem> filters) 
             : base(
@@ -24,6 +25,7 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(MovementBlock)}", 
                 displayName, 
                 description, 
+                sprite,
                 EndsAt.Death,
                 Alignment.Neutral)
         {

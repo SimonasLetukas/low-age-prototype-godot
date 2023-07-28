@@ -9,6 +9,7 @@
 [ext_resource path="res://app/client/game/map/ClientMap.cs" type="Script" id=7]
 
 [node name="Game" instance=ExtResource( 1 )]
+position = Vector2( 1, 0 )
 script = ExtResource( 2 )
 
 [node name="Map" parent="." index="0"]

@@ -12,7 +12,8 @@
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
-      "effectAmountMultipliedByResourceAmount": false
+      "effectAmountMultipliedByResourceAmount": false,
+      "sprite": "res://assets/sprites/resources/scraps indexed.png"
     },
     {
       "id": "resource-celestium",
@@ -26,7 +27,8 @@
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
-      "effectAmountMultipliedByResourceAmount": false
+      "effectAmountMultipliedByResourceAmount": false,
+      "sprite": "res://assets/sprites/resources/celestium indexed.png"
     },
     {
       "id": "resource-population",
@@ -42,7 +44,8 @@
         "effect-shared-revelators-no-population-space-search"
       ],
       "negativeIncomeDescription": "Caution, there are more units than the supported population.",
-      "effectAmountMultipliedByResourceAmount": false
+      "effectAmountMultipliedByResourceAmount": false,
+      "sprite": "res://assets/sprites/resources/population indexed.png"
     },
     {
       "id": "resource-weapon-storage",
@@ -56,7 +59,8 @@
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
-      "effectAmountMultipliedByResourceAmount": false
+      "effectAmountMultipliedByResourceAmount": false,
+      "sprite": "res://assets/sprites/resources/weapon all indexed.png"
     },
     {
       "id": "resource-melee-weapon",
@@ -70,7 +74,8 @@
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
-      "effectAmountMultipliedByResourceAmount": false
+      "effectAmountMultipliedByResourceAmount": false,
+      "sprite": "res://assets/sprites/resources/weapon melee indexed.png"
     },
     {
       "id": "resource-ranged-weapon",
@@ -84,7 +89,8 @@
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
-      "effectAmountMultipliedByResourceAmount": false
+      "effectAmountMultipliedByResourceAmount": false,
+      "sprite": "res://assets/sprites/resources/weapon ranged indexed.png"
     },
     {
       "id": "resource-special-weapon",
@@ -98,7 +104,8 @@
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
-      "effectAmountMultipliedByResourceAmount": false
+      "effectAmountMultipliedByResourceAmount": false,
+      "sprite": "res://assets/sprites/resources/weapon special indexed.png"
     },
     {
       "id": "resource-faith",
@@ -114,7 +121,8 @@
       ],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
-      "effectAmountMultipliedByResourceAmount": true
+      "effectAmountMultipliedByResourceAmount": true,
+      "sprite": "res://assets/sprites/resources/faith indexed.png"
     }
   ],
   "factions": [
@@ -254,6 +262,7 @@
           "ability-slave-repair",
           "ability-slave-manual-labour"
         ],
+        "sprite": "res://assets/sprites/units/revs/slave indexed 1x1.png",
         "displayName": "Slave",
         "description": ""
       },
@@ -311,6 +320,7 @@
           "ability-leader-menacing-presence",
           "ability-leader-one-for-all"
         ],
+        "sprite": "res://assets/sprites/units/revs/leader indexed 1x1.png",
         "displayName": "Leader",
         "description": ""
       },
@@ -377,6 +387,7 @@
           "ability-quickdraw-doubleshot",
           "ability-quickdraw-cripple"
         ],
+        "sprite": "res://assets/sprites/units/revs/quickdraw indexed 1x1.png",
         "displayName": "Quickdraw",
         "description": ""
       },
@@ -433,6 +444,7 @@
           "ability-gorger-fanatic-suicide",
           "ability-gorger-fanatic-suicide-passive"
         ],
+        "sprite": "res://assets/sprites/units/revs/gorger indexed 1x1.png",
         "displayName": "Gorger",
         "description": ""
       },
@@ -489,6 +501,7 @@
           "ability-camou-silent-assassin",
           "ability-camou-climb"
         ],
+        "sprite": "res://assets/sprites/units/revs/camou indexed 1x1.png",
         "displayName": "Camou",
         "description": ""
       },
@@ -554,6 +567,7 @@
         "abilities": [
           "ability-shaman-wondrous-goo"
         ],
+        "sprite": "res://assets/sprites/units/revs/shaman indexed 1x1.png",
         "displayName": "Shaman",
         "description": ""
       },
@@ -620,6 +634,7 @@
           "ability-pyre-wall-of-flames",
           "ability-pyre-phantom-menace"
         ],
+        "sprite": "res://assets/sprites/units/revs/pyre hauler_part indexed 1x1.png",
         "displayName": "Pyre",
         "description": ""
       },
@@ -675,6 +690,7 @@
         "abilities": [
           "ability-big-bad-bull-unleash-the-rage"
         ],
+        "sprite": "res://assets/sprites/units/revs/big bad bull indexed 2x2.png",
         "displayName": "Big Bad Bull",
         "description": ""
       },
@@ -731,6 +747,7 @@
           "ability-mummy-spawn-roach",
           "ability-mummy-leap-of-hunger"
         ],
+        "sprite": "res://assets/sprites/units/revs/mummy indexed 1x1.png",
         "displayName": "Mummy",
         "description": ""
       },
@@ -787,6 +804,7 @@
           "ability-roach-degrading-carapace",
           "ability-roach-corrosive-spit"
         ],
+        "sprite": "res://assets/sprites/units/revs/roach indexed 1x1.png",
         "displayName": "Roach",
         "description": ""
       },
@@ -842,6 +860,7 @@
         "abilities": [
           "ability-parasite-paralysing-grasp"
         ],
+        "sprite": "res://assets/sprites/units/revs/parasite indexed 1x1.png",
         "displayName": "Parasite",
         "description": ""
       },
@@ -903,6 +922,7 @@
           "ability-horrior-expert-formation",
           "ability-horrior-mount"
         ],
+        "sprite": "res://assets/sprites/units/uee/horrior indexed 1x1.png",
         "displayName": "Horrior",
         "description": ""
       },
@@ -973,6 +993,7 @@
         "abilities": [
           "ability-marksman-critical-mark"
         ],
+        "sprite": "res://assets/sprites/units/uee/marksman indexed 1x1.png",
         "displayName": "Marksman",
         "description": ""
       },
@@ -1033,6 +1054,7 @@
         "abilities": [
           "ability-surfer-dismount"
         ],
+        "sprite": "res://assets/sprites/units/uee/surfer indexed 1x1.png",
         "displayName": "Surfer",
         "description": ""
       },
@@ -1105,6 +1127,7 @@
           "ability-mortar-reload",
           "ability-mortar-piercing-blast"
         ],
+        "sprite": "res://assets/sprites/units/uee/mortar 0 indexed 1x1.png",
         "displayName": "Mortar",
         "description": ""
       },
@@ -1167,6 +1190,7 @@
           "ability-hawk-leadership",
           "ability-hawk-health-kit"
         ],
+        "sprite": "res://assets/sprites/units/uee/hawk indexed 1x1.png",
         "displayName": "Hawk",
         "description": ""
       },
@@ -1229,12 +1253,13 @@
           "ability-engineer-operate",
           "ability-engineer-repair"
         ],
+        "sprite": "res://assets/sprites/units/uee/engineer indexed 1x1.png",
         "displayName": "Engineer",
         "description": ""
       },
       {
         "id": "unit-cannon",
-        "size": 1,
+        "size": 2,
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -1292,6 +1317,7 @@
           "ability-cannon-machine",
           "ability-cannon-heat-up"
         ],
+        "sprite": "res://assets/sprites/units/uee/cannon indexed 2x2.png",
         "displayName": "Cannon",
         "description": ""
       },
@@ -1356,6 +1382,7 @@
           "ability-ballista-add-on",
           "ability-ballista-aim"
         ],
+        "sprite": "res://assets/sprites/units/uee/ballista indexed 2x2.png",
         "displayName": "Ballista",
         "description": ""
       },
@@ -1411,6 +1438,7 @@
           "ability-radar-resonating-sweep",
           "ability-radar-radio-location"
         ],
+        "sprite": "res://assets/sprites/units/uee/radar indexed 1x1.png",
         "displayName": "Radar",
         "description": ""
       },
@@ -1473,6 +1501,7 @@
           "ability-vessel-absorbent-field",
           "ability-vessel-fortify"
         ],
+        "sprite": "res://assets/sprites/units/uee/vessel indexed 2x2.png",
         "displayName": "Vessel",
         "description": ""
       },
@@ -1542,6 +1571,7 @@
         "abilities": [
           "ability-omen-rendition"
         ],
+        "sprite": "res://assets/sprites/units/uee/omen indexed 1x1.png",
         "displayName": "Omen",
         "description": ""
       }
@@ -1584,6 +1614,7 @@
           "ability-citadel-high-ground",
           "ability-citadel-promote-goons"
         ],
+        "sprite": "res://assets/sprites/structures/revs/boss post front indexed 2x3.png",
         "displayName": "Citadel",
         "description": ""
       },
@@ -1639,6 +1670,7 @@
           "ability-hut-building",
           "ability-shared-scraps-income"
         ],
+        "sprite": "res://assets/sprites/structures/revs/collectors hut indexed 2x2.png",
         "displayName": "Hut",
         "description": ""
       },
@@ -1695,6 +1727,7 @@
           "ability-shared-celestium-income",
           "ability-obelisk-celestium-discharge"
         ],
+        "sprite": "res://assets/sprites/structures/revs/obelisk indexed 2x2 or 1x1.png",
         "displayName": "Obelisk",
         "description": ""
       },
@@ -1750,6 +1783,7 @@
           "ability-shared-revelators-building",
           "ability-shack-accommodation"
         ],
+        "sprite": "res://assets/sprites/structures/revs/shack indexed 1x1.png",
         "displayName": "Shack",
         "description": ""
       },
@@ -1805,6 +1839,7 @@
           "ability-shared-revelators-building",
           "ability-smith-melee-weapon-production"
         ],
+        "sprite": "res://assets/sprites/structures/revs/smith indexed 1x2.png",
         "displayName": "Smith",
         "description": ""
       },
@@ -1860,6 +1895,7 @@
           "ability-shared-revelators-building",
           "ability-fletcher-ranged-weapon-production"
         ],
+        "sprite": "res://assets/sprites/structures/revs/fletchery indexed 2x2.png",
         "displayName": "Fletcher",
         "description": ""
       },
@@ -1915,6 +1951,7 @@
           "ability-shared-revelators-building",
           "ability-alchemy-special-weapon-production"
         ],
+        "sprite": "res://assets/sprites/structures/revs/alchemy indexed 2x3.png",
         "displayName": "Alchemy",
         "description": ""
       },
@@ -1970,6 +2007,7 @@
           "ability-shared-revelators-building",
           "ability-depot-weapon-storage"
         ],
+        "sprite": "res://assets/sprites/structures/revs/depot indexed 2x2.png",
         "displayName": "Depot",
         "description": ""
       },
@@ -2025,6 +2063,7 @@
           "ability-shared-revelators-building",
           "ability-workshop-research"
         ],
+        "sprite": "res://assets/sprites/structures/revs/workshop indexed 2x2.png",
         "displayName": "Workshop",
         "description": ""
       },
@@ -2081,6 +2120,7 @@
           "ability-outpost-ascendable",
           "ability-outpost-high-ground"
         ],
+        "sprite": "res://assets/sprites/structures/revs/outpost indexed 1x1.png",
         "displayName": "Outpost",
         "description": ""
       },
@@ -2138,6 +2178,7 @@
           "ability-barricade-caltrops",
           "ability-barricade-decompose"
         ],
+        "sprite": "res://assets/sprites/structures/revs/barricade front indexed 1x1.png",
         "displayName": "Barricade",
         "description": ""
       },
@@ -2201,6 +2242,7 @@
           "ability-shared-uee-build",
           "ability-battery-core-fusion-core-upgrade"
         ],
+        "sprite": "res://assets/sprites/structures/uee/core low 3 indexed 3x3.png",
         "displayName": "Battery Core",
         "description": ""
       },
@@ -2265,6 +2307,7 @@
           "ability-fusion-core-defence-protocol",
           "ability-fusion-core-celestium-core-upgrade"
         ],
+        "sprite": "res://assets/sprites/structures/uee/core mid 3 indexed 3x3.png",
         "displayName": "Fusion Core",
         "description": ""
       },
@@ -2329,6 +2372,7 @@
           "ability-celestium-core-defence-protocol",
           "ability-celestium-core-heightened-conductivity"
         ],
+        "sprite": "res://assets/sprites/structures/uee/core top 3 indexed 3x3.png",
         "displayName": "Celestium Core",
         "description": ""
       },
@@ -2390,6 +2434,7 @@
           "ability-shared-scraps-income",
           "ability-collector-direct-transit-system"
         ],
+        "sprite": "res://assets/sprites/structures/uee/collector1 indexed 2x2.png",
         "displayName": "Collector",
         "description": ""
       },
@@ -2451,6 +2496,7 @@
           "ability-shared-celestium-income",
           "ability-extractor-reinforced-infrastructure"
         ],
+        "sprite": "res://assets/sprites/structures/uee/extractor3 indexed 2x2.png",
         "displayName": "Extractor",
         "description": ""
       },
@@ -2514,6 +2560,7 @@
           "ability-power-pole-excess-distribution",
           "ability-power-pole-improved-power-grid"
         ],
+        "sprite": "res://assets/sprites/structures/uee/pole3 indexed 1x1.png",
         "displayName": "Power Pole",
         "description": ""
       },
@@ -2575,6 +2622,7 @@
           "ability-shared-uee-power-dependency",
           "ability-temple-keeping-the-faith"
         ],
+        "sprite": "res://assets/sprites/structures/uee/faith indexed 2x2 or 1x2.png",
         "displayName": "Temple",
         "description": ""
       },
@@ -2636,6 +2684,7 @@
           "ability-shared-uee-power-dependency",
           "ability-military-base-train"
         ],
+        "sprite": "res://assets/sprites/structures/uee/military base indexed 1x2.png",
         "displayName": "Military Base",
         "description": ""
       },
@@ -2697,6 +2746,7 @@
           "ability-shared-uee-power-dependency",
           "ability-factory-train"
         ],
+        "sprite": "res://assets/sprites/structures/uee/factory 2 indexed 2x3.png",
         "displayName": "Factory",
         "description": ""
       },
@@ -2758,6 +2808,7 @@
           "ability-shared-uee-power-dependency",
           "ability-laboratory-train"
         ],
+        "sprite": "res://assets/sprites/structures/uee/lab4 indexed 3x3.png",
         "displayName": "Laboratory",
         "description": ""
       },
@@ -2819,6 +2870,7 @@
           "ability-shared-uee-power-dependency",
           "ability-armoury-research"
         ],
+        "sprite": "res://assets/sprites/structures/uee/armoury1 indexed 1x2.png",
         "displayName": "Armoury",
         "description": ""
       },
@@ -2880,6 +2932,7 @@
           "ability-shared-uee-power-dependency",
           "ability-wall-high-ground"
         ],
+        "sprite": "res://assets/sprites/structures/uee/wall indexed 1x1.png",
         "displayName": "Wall",
         "description": ""
       },
@@ -2941,6 +2994,7 @@
           "ability-shared-uee-power-dependency",
           "ability-stairs-ascendable"
         ],
+        "sprite": "res://assets/sprites/structures/uee/stairs front indexed 1x2.png",
         "displayName": "Stairs",
         "description": ""
       },
@@ -3004,6 +3058,7 @@
           "ability-gate-ascendable",
           "ability-gate-entrance"
         ],
+        "sprite": "res://assets/sprites/structures/uee/gate 0 indexed 1x4.png",
         "displayName": "Gate",
         "description": ""
       },
@@ -3065,6 +3120,7 @@
           "ability-shared-uee-power-dependency",
           "ability-watchtower-vantage-point"
         ],
+        "sprite": "res://assets/sprites/structures/uee/watchtower indexed 1x1.png",
         "displayName": "Watchtower",
         "description": ""
       },
@@ -3126,6 +3182,7 @@
           "ability-shared-uee-power-dependency",
           "ability-bastion-battlement"
         ],
+        "sprite": "res://assets/sprites/structures/uee/tower indexed 2x2.png",
         "displayName": "Bastion",
         "description": ""
       }
@@ -3147,6 +3204,7 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": true,
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Shaman Wondrous Goo",
         "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn."
       },
@@ -3161,6 +3219,7 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": true,
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Pyre Cargo",
         "description": "The cargo which is attached to Pyre leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death."
       },
@@ -3180,6 +3239,7 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": true,
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Pyre Flames",
         "description": "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
       },
@@ -3194,6 +3254,7 @@
         "statsCopiedFromSource": true,
         "alliesCanStack": true,
         "onlyOneCanExist": false,
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Cannon Heat Up Danger Zone",
         "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile."
       },
@@ -3208,6 +3269,7 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": true,
         "onlyOneCanExist": false,
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Radar Resonating Sweep",
         "description": "These tiles are revealed for Radar's owner until the start of the next planning phase."
       },
@@ -3222,6 +3284,7 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": false,
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Radar Red Dot",
         "description": "This red dot shows where enemy unit is currently located inside the fog of war."
       },
@@ -3236,6 +3299,7 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": true,
         "onlyOneCanExist": false,
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Vessel Fortification",
         "description": "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of Vessel's action."
       },
@@ -3250,6 +3314,7 @@
         "statsCopiedFromSource": true,
         "alliesCanStack": false,
         "onlyOneCanExist": false,
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Omen Rendition",
         "description": "50% of all damage done to this rendition will be done as Pure Damage to the original target."
       }
@@ -3272,7 +3337,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Passive Income",
-      "description": "Provides 3 Scraps and 7 Celestium at the start of each planning phase."
+      "description": "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-shared-scraps-income",
@@ -3290,7 +3356,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Scraps Income",
-      "description": "At the start of each planning phase provides 5 Scraps."
+      "description": "At the start of each planning phase provides 5 Scraps.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-shared-celestium-income",
@@ -3308,7 +3375,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Celestium Income",
-      "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1)."
+      "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1).",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-shared-revelators-building",
@@ -3324,7 +3392,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Building",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-shared-uee-building",
@@ -3340,7 +3409,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Building",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-shared-uee-power-generator",
@@ -3358,7 +3428,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Power Generator",
-      "description": "UEE faction loses if Battery Core is destroyed."
+      "description": "UEE faction loses if Battery Core is destroyed.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-shared-uee-build",
@@ -3593,7 +3664,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Build",
-      "description": "Start building a UEE's structure in vision on a tile with Power. Collector and Extractor can be built on tiles without Power."
+      "description": "Start building a UEE's structure in vision on a tile with Power. Collector and Extractor can be built on tiles without Power.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-collector-building",
@@ -3609,7 +3681,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Building",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-extractor-building",
@@ -3625,7 +3698,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Building",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-wall-building",
@@ -3641,7 +3715,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Building",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-shared-uee-power-dependency",
@@ -3659,7 +3734,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Power Dependency",
-      "description": "All abilities get disabled and loses 5 Health at the start of its action or action phase if not connected to Power."
+      "description": "All abilities get disabled and loses 5 Health at the start of its action or action phase if not connected to Power.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-citadel-executive-stash",
@@ -3677,7 +3753,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Executive Stash",
-      "description": "Provides 4 Population and 4 spaces of storage for Weapons."
+      "description": "Provides 4 Population and 4 spaces of storage for Weapons.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-citadel-ascendable",
@@ -3695,7 +3772,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Ascendable",
-      "description": "Can be navigated through to go up to high ground."
+      "description": "Can be navigated through to go up to high ground.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-citadel-high-ground",
@@ -3713,7 +3791,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks."
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-citadel-promote-goons",
@@ -3925,7 +4004,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Promote Goons",
-      "description": "Promote a new Revelators goon from the remaining Population."
+      "description": "Promote a new Revelators goon from the remaining Population.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-obelisk-celestium-discharge",
@@ -3940,7 +4020,8 @@
       "cooldown": "EndsAt.EndOfFourthActionPhase",
       "cost": [],
       "displayName": "Celestium Discharge",
-      "description": "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 actions."
+      "description": "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 actions.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-shack-accommodation",
@@ -3958,7 +4039,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Accommodation",
-      "description": "Provides 2 Population"
+      "description": "Provides 2 Population",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-smith-melee-weapon-production",
@@ -3976,7 +4058,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Melee Weapon Production",
-      "description": "Every 20 Celestium generates a Melee Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
+      "description": "Every 20 Celestium generates a Melee Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-fletcher-ranged-weapon-production",
@@ -3994,7 +4077,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Ranged Weapon Production",
-      "description": "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
+      "description": "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-alchemy-special-weapon-production",
@@ -4012,7 +4096,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Special Weapon Production",
-      "description": "Every 30 Celestium generates a Special Weapon and either stores it to an empty Weapon space or waits until there is a free space available. "
+      "description": "Every 30 Celestium generates a Special Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-depot-weapon-storage",
@@ -4030,7 +4115,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Weapon Storage",
-      "description": "Provides 4 spaces of storage for Weapons which are used for new unit production."
+      "description": "Provides 4 spaces of storage for Weapons which are used for new unit production.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-workshop-research",
@@ -4123,7 +4209,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Research",
-      "description": "Open a selection of research available for Revelators to unlock."
+      "description": "Open a selection of research available for Revelators to unlock.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-outpost-ascendable",
@@ -4141,7 +4228,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Ascendable",
-      "description": "Can be navigated through to go up to high ground."
+      "description": "Can be navigated through to go up to high ground.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-outpost-high-ground",
@@ -4159,7 +4247,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks."
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-barricade-protective-shield",
@@ -4175,7 +4264,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Protective Shield",
-      "description": "Every unit adjacent to the shield of this Barricade receives +2 Range Armour."
+      "description": "Every unit adjacent to the shield of this Barricade receives +2 Range Armour.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-barricade-caltrops",
@@ -4191,7 +4281,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Caltrops",
-      "description": "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the start of each action phase."
+      "description": "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the start of each action phase.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-barricade-decompose",
@@ -4209,7 +4300,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Decompose",
-      "description": "Toggle to start inflicting 15 Pure Damage to itself at the start of each action phase."
+      "description": "Toggle to start inflicting 15 Pure Damage to itself at the start of each action phase.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-battery-core-power-grid",
@@ -4227,7 +4319,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Power Grid",
-      "description": "Provides Power in 4 Distance."
+      "description": "Provides Power in 4 Distance.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-battery-core-fusion-core-upgrade",
@@ -4250,7 +4343,8 @@
         }
       ],
       "displayName": "Fusion Core Upgrade",
-      "description": "Upgrade this Battery Core to Fusion Core."
+      "description": "Upgrade this Battery Core to Fusion Core.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-fusion-core-power-grid",
@@ -4268,7 +4362,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Power Grid",
-      "description": "Provides Power in 6 Distance."
+      "description": "Provides Power in 6 Distance.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-fusion-core-defence-protocol",
@@ -4294,7 +4389,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Defence Protocol",
-      "description": "Select an enemy unit in 6 Distance. At the start of the action phase the target receives 3 ranged attacks, each dealing 3 Range Damage."
+      "description": "Select an enemy unit in 6 Distance. At the start of the action phase the target receives 3 ranged attacks, each dealing 3 Range Damage.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-fusion-core-celestium-core-upgrade",
@@ -4317,7 +4413,8 @@
         }
       ],
       "displayName": "Celestium Core Upgrade",
-      "description": "Upgrade this Fusion Core to Celestium Core."
+      "description": "Upgrade this Fusion Core to Celestium Core.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-celestium-core-power-grid",
@@ -4335,7 +4432,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Power Grid",
-      "description": "Provides Power in 8 Distance."
+      "description": "Provides Power in 8 Distance.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-celestium-core-defence-protocol",
@@ -4362,7 +4460,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Defence Protocol",
-      "description": "Select an enemy unit in 8 Distance. At the start of the action phase the target receives 4 ranged attacks, each dealing 4 Range Damage."
+      "description": "Select an enemy unit in 8 Distance. At the start of the action phase the target receives 4 ranged attacks, each dealing 4 Range Damage.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-celestium-core-heightened-conductivity",
@@ -4385,7 +4484,8 @@
         }
       ],
       "displayName": "Heightened Conductivity",
-      "description": "Unlocks Improved Power Grid ability for all Power Poles."
+      "description": "Unlocks Improved Power Grid ability for all Power Poles.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-collector-direct-transit-system",
@@ -4403,7 +4503,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Direct Transit System",
-      "description": "Provides +2 Scraps at the start of each planning phase if connected to Power."
+      "description": "Provides +2 Scraps at the start of each planning phase if connected to Power.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-extractor-reinforced-infrastructure",
@@ -4421,7 +4522,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Reinforced Infrastructure",
-      "description": "Gains additional 3 Melee Armour if connected to Power."
+      "description": "Gains additional 3 Melee Armour if connected to Power.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-power-pole-power-grid",
@@ -4439,7 +4541,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Power Grid",
-      "description": "Provides Power in 4 Distance."
+      "description": "Provides Power in 4 Distance.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-power-pole-excess-distribution",
@@ -4455,7 +4558,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Excess Distribution",
-      "description": "Regenerates +1 Shields to units and structures in 4 Distance at the start of each planning phase."
+      "description": "Regenerates +1 Shields to units and structures in 4 Distance at the start of each planning phase.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-power-pole-improved-power-grid",
@@ -4476,7 +4580,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Improved Power Grid",
-      "description": "Distance of provided Power and shield regeneration is increased to 6."
+      "description": "Distance of provided Power and shield regeneration is increased to 6.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-power-pole-power-grid-improved",
@@ -4494,7 +4599,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Power Grid Improved",
-      "description": "Provides Power in 6 Distance."
+      "description": "Provides Power in 6 Distance.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-power-pole-excess-distribution-improved",
@@ -4510,7 +4616,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Excess Distribution Improved",
-      "description": "Regenerates +1 Shields to units and structures in 6 Distance at the start of each planning phase."
+      "description": "Regenerates +1 Shields to units and structures in 6 Distance at the start of each planning phase.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-temple-keeping-the-faith",
@@ -4528,7 +4635,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Keeping The Faith",
-      "description": "Provides +2 Movement to friendly units in 6 Distance at the start of each action phase. Additionally provides +1 Faith. Each point of Faith increases the Initiative of all owned units by 1."
+      "description": "Provides +2 Movement to friendly units in 6 Distance at the start of each action phase. Additionally provides +1 Faith. Each point of Faith increases the Initiative of all owned units by 1.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-military-base-train",
@@ -4630,7 +4738,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Train",
-      "description": "Select a unit to be created at the specified location using Celestium for production."
+      "description": "Select a unit to be created at the specified location using Celestium for production.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-factory-train",
@@ -4682,7 +4791,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Train",
-      "description": "Select a unit to be created at the specified location using Celestium for production."
+      "description": "Select a unit to be created at the specified location using Celestium for production.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-laboratory-train",
@@ -4716,7 +4826,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Train",
-      "description": "Select a unit to be created at the specified location using Celestium for production."
+      "description": "Select a unit to be created at the specified location using Celestium for production.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-armoury-research",
@@ -4819,7 +4930,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Research",
-      "description": "Open a selection of research available for UEE to unlock."
+      "description": "Open a selection of research available for UEE to unlock.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-wall-high-ground",
@@ -4837,7 +4949,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks."
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-stairs-ascendable",
@@ -4855,7 +4968,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Ascendable",
-      "description": "Can be navigated through to go up to high ground."
+      "description": "Can be navigated through to go up to high ground.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-gate-high-ground",
@@ -4873,7 +4987,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks."
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-gate-ascendable",
@@ -4891,7 +5006,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Ascendable",
-      "description": "Can be navigated through to go up to high ground."
+      "description": "Can be navigated through to go up to high ground.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-gate-entrance",
@@ -4909,7 +5025,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Entrance",
-      "description": "Allows movement through for friendly units and blocks it for enemy units."
+      "description": "Allows movement through for friendly units and blocks it for enemy units.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-watchtower-vantage-point",
@@ -4925,7 +5042,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Vantage Point",
-      "description": "Provides additional +1 vision range and +1 Range Damage to ranged units."
+      "description": "Provides additional +1 vision range and +1 Range Damage to ranged units.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-bastion-battlement",
@@ -4941,7 +5059,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Battlement",
-      "description": "Provides additional +1 Range Armour to all units on top."
+      "description": "Provides additional +1 Range Armour to all units on top.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-leader-all-for-one",
@@ -4959,7 +5078,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "All For One",
-      "description": "Revelators faction loses if Leader dies."
+      "description": "Revelators faction loses if Leader dies.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-leader-menacing-presence",
@@ -4975,7 +5095,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Menacing Presence",
-      "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1)."
+      "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1).",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-leader-one-for-all",
@@ -4999,7 +5120,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "One For All",
-      "description": "Select an adjacent Obelisk and sap its energy to give all friendly units +2 Health. This Obelisk cannot be sapped again for 10 turns."
+      "description": "Select an adjacent Obelisk and sap its energy to give all friendly units +2 Health. This Obelisk cannot be sapped again for 10 turns.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-slave-build",
@@ -5180,7 +5302,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Build",
-      "description": "Start building a Revelators' structure on an adjacent tile. Multiple Slaves can build the structure, each additional one after the first provides half of the Celestium production to the construction than the previous Slave."
+      "description": "Start building a Revelators' structure on an adjacent tile. Multiple Slaves can build the structure, each additional one after the first provides half of the Celestium production to the construction than the previous Slave.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-hut-building",
@@ -5196,7 +5319,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Building",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-obelisk-building",
@@ -5212,7 +5336,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Building",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-slave-repair",
@@ -5236,7 +5361,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Repair",
-      "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be interrupted."
+      "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be interrupted.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-slave-manual-labour",
@@ -5260,7 +5386,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Manual Labour",
-      "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut."
+      "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-quickdraw-doubleshot",
@@ -5278,7 +5405,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Doubleshot",
-      "description": "Ranged attacks twice."
+      "description": "Ranged attacks twice.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-quickdraw-cripple",
@@ -5300,7 +5428,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Cripple",
-      "description": "Each ranged attack cripples the target until the end of their action. During this time target has 60% of their maximum Movement (rounded up) and cannot receive healing from any sources. Multiple attacks on a crippled target have no additional effects."
+      "description": "Each ranged attack cripples the target until the end of their action. During this time target has 60% of their maximum Movement (rounded up) and cannot receive healing from any sources. Multiple attacks on a crippled target have no additional effects.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-gorger-fanatic-suicide-passive",
@@ -5322,7 +5451,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Fanatic Suicide Passive",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-gorger-fanatic-suicide",
@@ -5337,7 +5467,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Fanatic Suicide",
-      "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, killing itself in the process."
+      "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, killing itself in the process.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-camou-silent-assassin",
@@ -5358,7 +5489,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Silent Assassin",
-      "description": "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly units around Camou in 4 Attack Distance. Additionally, if the target has none of its allies in the same radius, Camou silences the target for 2 of its actions, disabling the use of any abilities or passives."
+      "description": "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly units around Camou in 4 Attack Distance. Additionally, if the target has none of its allies in the same radius, Camou silences the target for 2 of its actions, disabling the use of any abilities or passives.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-camou-climb",
@@ -5384,7 +5516,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Climb",
-      "description": "Select an adjacent unoccupied space on a high ground. This space is considered occupied until the end of the action phase at which point Camou moves to it. Passively, Camou can move down from high ground at the additional cost of 1 Movement."
+      "description": "Select an adjacent unoccupied space on a high ground. This space is considered occupied until the end of the action phase at which point Camou moves to it. Passively, Camou can move down from high ground at the additional cost of 1 Movement.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-camou-climb-passive",
@@ -5404,7 +5537,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Climb Passive",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-shaman-wondrous-goo",
@@ -5428,7 +5562,8 @@
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "cost": [],
       "displayName": "Wondrous Goo",
-      "description": "Select a tile in 4 Attack Distance, which gets contaminated. Any unit in the contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase."
+      "description": "Select a tile in 4 Attack Distance, which gets contaminated. Any unit in the contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-pyre-wall-of-flames",
@@ -5446,7 +5581,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Wall Of Flames",
-      "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
+      "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-pyre-phantom-menace",
@@ -5466,7 +5602,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Phantom Menace",
-      "description": "Can move through enemy units (but not buildings)."
+      "description": "Can move through enemy units (but not buildings).",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-big-bad-bull-unleash-the-rage",
@@ -5530,7 +5667,8 @@
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "cost": [],
       "displayName": "Unleash The Rage",
-      "description": "Select a direction (1 out of 4) originating from Big Bad Bull. Any two adjacent units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage."
+      "description": "Select a direction (1 out of 4) originating from Big Bad Bull. Any two adjacent units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-mummy-spawn-roach",
@@ -5554,7 +5692,8 @@
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "cost": [],
       "displayName": "Spawn Roach",
-      "description": "Select an adjacent tile in which Roach is created."
+      "description": "Select an adjacent tile in which Roach is created.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-mummy-leap-of-hunger",
@@ -5574,7 +5713,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Leap Of Hunger",
-      "description": "Roach creation range is increased to 4 Distance."
+      "description": "Roach creation range is increased to 4 Distance.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-mummy-spawn-roach-modified",
@@ -5598,7 +5738,8 @@
       "cooldown": "EndsAt.EndOfNextActionPhase",
       "cost": [],
       "displayName": "Spawn Roach",
-      "description": "Select a tile in 4 Distance in which Roach is created."
+      "description": "Select a tile in 4 Distance in which Roach is created.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-roach-degrading-carapace",
@@ -5616,7 +5757,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Degrading Carapace",
-      "description": "At the start of each action loses 1 Health more than the previous action."
+      "description": "At the start of each action loses 1 Health more than the previous action.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-roach-corrosive-spit",
@@ -5642,7 +5784,8 @@
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "cost": [],
       "displayName": "Corrosive Spit",
-      "description": "Perform a ranged attack in 4 Distance dealing 6 (+8 to mechanical) Range Damage."
+      "description": "Perform a ranged attack in 4 Distance dealing 6 (+8 to mechanical) Range Damage.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-parasite-paralysing-grasp",
@@ -5664,7 +5807,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Paralysing Grasp",
-      "description": "Instead of attacking, Parasite attaches to the target. Both units occupy the same space and are considered enemy to all players. Parasite can only detach when the target is killed. All units who attack this combined unit do damage to both. On its turn, Parasite can move the target, using target's Movement. On target's turn, it must execute attack action to any friendly or enemy unit in range, otherwise skip turn."
+      "description": "Instead of attacking, Parasite attaches to the target. Both units occupy the same space and are considered enemy to all players. Parasite can only detach when the target is killed. All units who attack this combined unit do damage to both. On its turn, Parasite can move the target, using target's Movement. On target's turn, it must execute attack action to any friendly or enemy unit in range, otherwise skip turn.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-horrior-expert-formation",
@@ -5680,7 +5824,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Expert Formation",
-      "description": "Gains +2 Range Armour if at least one other Horrior is adjacent."
+      "description": "Gains +2 Range Armour if at least one other Horrior is adjacent.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-horrior-mount",
@@ -5696,7 +5841,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Mount",
-      "description": "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase transform into Surfer."
+      "description": "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase transform into Surfer.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-marksman-critical-mark",
@@ -5716,7 +5862,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Critical Mark",
-      "description": "Each ranged attack marks the target unit. If a friendly non-Marksman unit attacks the marked target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end of the next action phase."
+      "description": "Each ranged attack marks the target unit. If a friendly non-Marksman unit attacks the marked target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end of the next action phase.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-surfer-dismount",
@@ -5734,7 +5881,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Dismount",
-      "description": "Upon death, reemerges as Horrior."
+      "description": "Upon death, reemerges as Horrior.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-mortar-deadly-ammunition",
@@ -5752,7 +5900,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Deadly Ammunition",
-      "description": "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target."
+      "description": "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-mortar-reload",
@@ -5766,7 +5915,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Reload",
-      "description": "Spend this action phase reloading to full ammo."
+      "description": "Spend this action phase reloading to full ammo.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-mortar-piercing-blast",
@@ -5786,7 +5936,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Piercing Blast",
-      "description": "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition."
+      "description": "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-hawk-tactical-goggles",
@@ -5804,7 +5955,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Tactical Goggles",
-      "description": "Gains +3 Vision range."
+      "description": "Gains +3 Vision range.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-hawk-leadership",
@@ -5828,7 +5980,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Leadership",
-      "description": "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is lost at the end of the target's next action, or if the targeted unit is no longer adjacent."
+      "description": "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is lost at the end of the target's next action, or if the targeted unit is no longer adjacent.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-hawk-health-kit",
@@ -5848,7 +6001,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Health Kit",
-      "description": "Restores 1 Health to all adjacent friendly units at the start of each planning phase."
+      "description": "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-engineer-assemble-machine",
@@ -5917,7 +6071,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Assemble Machine",
-      "description": "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, up to a number needed to operate the Machine. Each Engineer provides current Celestium production to the construction."
+      "description": "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, up to a number needed to operate the Machine. Each Engineer provides current Celestium production to the construction.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-cannon-assembling",
@@ -5933,7 +6088,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Assembling",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-ballista-assembling",
@@ -5949,7 +6105,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Assembling",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-radar-assembling",
@@ -5965,7 +6122,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Assembling",
-      "description": ""
+      "description": "",
+      "sprite": null
     },
     {
       "id": "ability-engineer-operate",
@@ -5989,7 +6147,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Operate",
-      "description": "Select an adjacent Machine and start operating it if the Machine is built and does not have the maximum number of operating Engineers already."
+      "description": "Select an adjacent Machine and start operating it if the Machine is built and does not have the maximum number of operating Engineers already.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-engineer-repair",
@@ -6015,7 +6174,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Repair",
-      "description": "Select an adjacent structure, Machine or Horrior. At the start of the next planning phase the selected structure or Machine receives +2 Health and selected Horrior's mounting time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be interrupted."
+      "description": "Select an adjacent structure, Machine or Horrior. At the start of the next planning phase the selected structure or Machine receives +2 Health and selected Horrior's mounting time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be interrupted.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-cannon-machine",
@@ -6033,7 +6193,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Machine",
-      "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 3 Engineers are operating it."
+      "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 3 Engineers are operating it.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-cannon-heat-up",
@@ -6059,7 +6220,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Heat Up",
-      "description": "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's action, the attack is triggered which deals massive Range Damage."
+      "description": "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's action, the attack is triggered which deals massive Range Damage.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-ballista-machine",
@@ -6077,7 +6239,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Machine",
-      "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it."
+      "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-ballista-add-on",
@@ -6093,7 +6256,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Add On",
-      "description": "Can only be built on a Watchtower or Bastion."
+      "description": "Can only be built on a Watchtower or Bastion.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-ballista-aim",
@@ -6120,7 +6284,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Aim",
-      "description": "Spends 1 action aiming, when attacking a new target. A dotted line to the target indicates aiming. The target can stop this process if it moves out of Ballista's Attack Distance. Once aimed, same target can be attacked each action."
+      "description": "Spends 1 action aiming, when attacking a new target. A dotted line to the target indicates aiming. The target can stop this process if it moves out of Ballista's Attack Distance. Once aimed, same target can be attacked each action.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-radar-machine",
@@ -6138,7 +6303,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Machine",
-      "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it."
+      "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-radar-resonating-sweep",
@@ -6162,7 +6328,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Resonating Sweep",
-      "description": "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start of the next planning phase."
+      "description": "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start of the next planning phase.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-radar-radio-location",
@@ -6180,7 +6347,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Radio Location",
-      "description": "Enemy units in 15 Attack Distance are shown as red dots in the fog of war."
+      "description": "Enemy units in 15 Attack Distance are shown as red dots in the fog of war.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-vessel-machine",
@@ -6198,7 +6366,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Machine",
-      "description": "Can be operated by Engineers only (after it is built from Factory). The Machine is functional and can act only if maximum number of 3 Engineers are operating it."
+      "description": "Can be operated by Engineers only (after it is built from Factory). The Machine is functional and can act only if maximum number of 3 Engineers are operating it.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-vessel-absorbent-field",
@@ -6214,7 +6383,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Absorbent Field",
-      "description": "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, which is instead dealt to Vessel."
+      "description": "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, which is instead dealt to Vessel.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-vessel-fortify",
@@ -6230,7 +6400,8 @@
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "cost": [],
       "displayName": "Fortify",
-      "description": "Provide +3 Melee Armour and +3 Range Armour to all friendly units in 3 Attack Distance until the start of the next Vessel's action."
+      "description": "Provide +3 Melee Armour and +3 Range Armour to all friendly units in 3 Attack Distance until the start of the next Vessel's action.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-omen-rendition",
@@ -6254,7 +6425,8 @@
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "cost": [],
       "displayName": "Rendition",
-      "description": "Place a ghostly rendition of a selected enemy unit in 7 Attack Distance to an unoccupied space in a 3 Attack Distance from the selected target. The rendition has the same amount of Health, Melee and Range Armour as the selected target, cannot act, can be attacked and stays for 2 action phases or until the selected target is dead. 50% of all damage done to the rendition is done as Pure Damage to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows all adjacent enemies by 50% until the end of their next action."
+      "description": "Place a ghostly rendition of a selected enemy unit in 7 Attack Distance to an unoccupied space in a 3 Attack Distance from the selected target. The rendition has the same amount of Health, Melee and Range Armour as the selected target, cannot act, can be attacked and stays for 2 action phases or until the selected target is dead. 50% of all damage done to the rendition is done as Pure Damage to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows all adjacent enemies by 50% until the end of their next action.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "ability-omen-rendition-placement",
@@ -6278,7 +6450,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Rendition Placement",
-      "description": "Select an unoccupied space in a 3 Attack Distance to place the rendition of the selected target."
+      "description": "Select an unoccupied space in a 3 Attack Distance to place the rendition of the selected target.",
+      "sprite": "res://assets/icons/icon_ability_build.png"
     }
   ],
   "effects": [
@@ -10070,7 +10243,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-passive-income-income",
@@ -10102,7 +10276,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-scraps-income-income",
@@ -10128,7 +10303,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-celestium-income-income",
@@ -10154,7 +10330,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-revelators-building-buildable",
@@ -10183,7 +10360,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-revelators-no-population-space-intercept-damage",
@@ -10211,7 +10389,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-uee-building-buildable",
@@ -10251,7 +10430,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-uee-power-generator-buff",
@@ -10274,7 +10454,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-uee-power-dependency-buff",
@@ -10336,7 +10517,8 @@
         "effect-shared-uee-power-dependency-apply-behaviour-inactive"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-uee-power-dependency-buff-disable",
@@ -10378,7 +10560,8 @@
       "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-uee-power-dependency-buff-inactive",
@@ -10422,7 +10605,8 @@
         "effect-shared-uee-power-dependency-apply-behaviour"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shared-uee-positive-faith-buff",
@@ -10450,7 +10634,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-citadel-executive-stash-income",
@@ -10482,7 +10667,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-citadel-ascendable-ascendable",
@@ -10509,7 +10695,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-citadel-high-ground-high-ground",
@@ -10539,7 +10726,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-obelisk-celestium-discharge-buff-long",
@@ -10567,7 +10755,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-obelisk-celestium-discharge-buff-short",
@@ -10597,7 +10786,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-obelisk-celestium-discharge-buff-negative",
@@ -10637,7 +10827,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shack-accommodation-income",
@@ -10663,7 +10854,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-smith-melee-weapon-production-income",
@@ -10694,7 +10886,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-fletcher-ranged-weapon-production-income",
@@ -10725,7 +10918,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-alchemy-special-weapon-production-income",
@@ -10756,7 +10950,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-depot-weapon-storage-income",
@@ -10782,7 +10977,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-outpost-ascendable-ascendable",
@@ -10809,7 +11005,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-outpost-high-ground-high-ground",
@@ -10839,7 +11036,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-barricade-protective-shield-buff",
@@ -10867,7 +11065,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-barricade-decompose-buff",
@@ -10891,7 +11090,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-battery-core-power-grid-mask-provider",
@@ -10912,7 +11112,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-collector-building-buildable",
@@ -10953,7 +11154,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-extractor-building-buildable",
@@ -10994,7 +11196,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-wall-building-buildable",
@@ -11034,7 +11237,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-battery-core-fusion-core-upgrade-buff",
@@ -11060,7 +11264,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-fusion-core-power-grid-mask-provider",
@@ -11081,7 +11286,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-fusion-core-celestium-core-upgrade-buff",
@@ -11107,7 +11313,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-celestium-core-power-grid-mask-provider",
@@ -11128,7 +11335,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-collector-direct-transit-system-inactive-buff",
@@ -11170,7 +11378,8 @@
         "effect-collector-direct-transit-system-apply-behaviour-active"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-collector-direct-transit-system-active-income",
@@ -11217,7 +11426,8 @@
         "effect-collector-direct-transit-system-apply-behaviour-inactive"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-extractor-reinforced-infrastructure-inactive-buff",
@@ -11259,7 +11469,8 @@
         "effect-extractor-reinforced-infrastructure-apply-behaviour-active"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-extractor-reinforced-infrastructure-active-buff",
@@ -11308,7 +11519,8 @@
         "effect-extractor-reinforced-infrastructure-apply-behaviour-inactive"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-power-pole-power-grid-mask-provider",
@@ -11329,7 +11541,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-power-pole-excess-distribution-buff",
@@ -11357,7 +11570,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-power-pole-power-grid-improved-mask-provider",
@@ -11378,7 +11592,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-temple-keeping-the-faith-buff",
@@ -11406,7 +11621,8 @@
       "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-temple-keeping-the-faith-income",
@@ -11432,7 +11648,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-wall-high-ground-high-ground",
@@ -11462,7 +11679,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-stairs-ascendable-ascendable",
@@ -11499,7 +11717,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-gate-high-ground-high-ground",
@@ -11529,7 +11748,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-gate-ascendable-ascendable",
@@ -11556,7 +11776,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-gate-entrance-movement-block",
@@ -11593,7 +11814,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-watchtower-vantage-point-buff",
@@ -11629,7 +11851,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-bastion-battlement-buff",
@@ -11657,7 +11880,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-leader-all-for-one-buff",
@@ -11680,7 +11904,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-leader-menacing-presence-buff",
@@ -11718,7 +11943,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-leader-one-for-all-obelisk-buff",
@@ -11741,7 +11967,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-leader-one-for-all-heal-buff",
@@ -11769,7 +11996,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-hut-building-buildable",
@@ -11810,7 +12038,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-obelisk-building-buildable",
@@ -11851,7 +12080,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-slave-repair-structure-buff",
@@ -11888,7 +12118,8 @@
       "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-slave-repair-wait",
@@ -11904,7 +12135,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-slave-manual-labour-buff",
@@ -11936,7 +12168,8 @@
       "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-slave-manual-labour-wait",
@@ -11952,7 +12185,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-quickdraw-doubleshot-extra-attack",
@@ -11970,7 +12204,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-quickdraw-cripple-buff",
@@ -12000,7 +12235,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-gorger-fanatic-suicide-buff",
@@ -12023,7 +12259,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-camou-silent-assassin-buff",
@@ -12046,7 +12283,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-camou-climb-wait",
@@ -12062,7 +12300,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-camou-climb-buff",
@@ -12085,7 +12324,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shaman-wondrous-goo-feature-wait",
@@ -12101,7 +12341,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shaman-wondrous-goo-feature-buff",
@@ -12131,7 +12372,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-shaman-wondrous-goo-buff",
@@ -12171,7 +12413,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-pyre-cargo-tether",
@@ -12191,7 +12434,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-pyre-cargo-wall-of-flames-buff",
@@ -12221,7 +12465,8 @@
         "effect-pyre-wall-of-flames-create-entity"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-pyre-wall-of-flames-buff",
@@ -12253,7 +12498,8 @@
         "effect-pyre-wall-of-flames-destroy"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-pyre-phantom-menace-buff",
@@ -12276,7 +12522,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-roach-degrading-carapace-buff",
@@ -12300,7 +12547,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-roach-degrading-carapace-periodic-damage-buff",
@@ -12325,7 +12573,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-parasite-paralysing-grasp-tether",
@@ -12345,7 +12594,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-parasite-paralysing-grasp-buff",
@@ -12379,7 +12629,8 @@
       "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-parasite-paralysing-grasp-self-buff",
@@ -12418,7 +12669,8 @@
       "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-horrior-expert-formation-buff",
@@ -12446,7 +12698,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-horrior-mount-wait",
@@ -12462,7 +12715,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-horrior-mount-buff",
@@ -12487,7 +12741,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-marksman-critical-mark-buff",
@@ -12537,7 +12792,8 @@
         "effect-marksman-critical-mark-damage"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-surfer-dismount-buff",
@@ -12560,7 +12816,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-mortar-deadly-ammunition-ammunition",
@@ -12585,7 +12842,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-mortar-reload-wait",
@@ -12601,7 +12859,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-mortar-reload-buff",
@@ -12624,7 +12883,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-mortar-piercing-blast-buff",
@@ -12656,7 +12916,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-hawk-tactical-goggles-buff",
@@ -12684,7 +12945,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-hawk-leadership-buff",
@@ -12721,7 +12983,8 @@
       "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-hawk-health-kit-buff",
@@ -12745,7 +13008,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-hawk-health-kit-heal-buff",
@@ -12773,7 +13037,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-cannon-assembling-buildable",
@@ -12802,7 +13067,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-ballista-assembling-buildable",
@@ -12839,7 +13105,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-radar-assembling-buildable",
@@ -12868,7 +13135,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-engineer-operate-buff",
@@ -12893,7 +13161,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-engineer-repair-structure-or-machine-buff",
@@ -12930,7 +13199,8 @@
       "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-engineer-repair-horrior-buff",
@@ -12967,7 +13237,8 @@
       "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-engineer-repair-wait",
@@ -12983,7 +13254,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-cannon-machine-counter",
@@ -13006,7 +13278,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-cannon-machine-buff",
@@ -13029,7 +13302,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-cannon-heat-up-danger-zone-buff",
@@ -13080,7 +13354,8 @@
         "effect-cannon-heat-up-destroy"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-cannon-heat-up-wait",
@@ -13096,7 +13371,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-ballista-machine-counter",
@@ -13119,7 +13395,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-ballista-machine-buff",
@@ -13142,7 +13419,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-ballista-aim-buff",
@@ -13188,7 +13466,8 @@
       "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": true,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-radar-machine-counter",
@@ -13211,7 +13490,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-radar-machine-buff",
@@ -13234,7 +13514,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-radar-resonating-sweep-buff",
@@ -13266,7 +13547,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-radar-radio-location-buff",
@@ -13291,7 +13573,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-radar-radio-location-feature-buff",
@@ -13317,7 +13600,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-vessel-machine-counter",
@@ -13340,7 +13624,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-vessel-machine-buff",
@@ -13363,7 +13648,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-vessel-absorbent-field-intercept-damage",
@@ -13394,7 +13680,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": true,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-vessel-fortify-destroy-buff",
@@ -13417,7 +13704,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-vessel-fortify-buff",
@@ -13451,7 +13739,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-omen-rendition-placement-buff",
@@ -13474,7 +13763,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-omen-rendition-intercept-damage",
@@ -13502,7 +13792,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-omen-rendition-buff-timer",
@@ -13534,7 +13825,8 @@
         "effect-omen-rendition-destroy"
       ],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-omen-rendition-buff-death",
@@ -13557,7 +13849,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     },
     {
       "id": "behaviour-omen-rendition-buff-death",
@@ -13585,7 +13878,8 @@
       "removeOnConditionsMet": false,
       "conditionalEffects": [],
       "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png"
     }
   ],
   "masks": [

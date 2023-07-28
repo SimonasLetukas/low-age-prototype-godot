@@ -5,12 +5,13 @@ using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Entities.Actors
 {
-    public abstract class Actor : Entity
+    public abstract class Actor : Entity, IDisplayable
     {
         protected Actor(
             EntityId id, 
             string displayName, 
             string description,
+            string sprite,
             IList<Stat> statistics,
             FactionId originalFaction,
             IList<ActorAttribute> combatAttributes,
@@ -20,11 +21,13 @@ namespace low_age_data.Domain.Entities.Actors
             OriginalFaction = originalFaction;
             CombatAttributes = combatAttributes;
             Abilities = abilities;
+            Sprite = sprite;
         }
 
         public IList<Stat> Statistics { get; }
         public FactionId OriginalFaction { get; }
         public IList<ActorAttribute> CombatAttributes { get; }
         public IList<AbilityId> Abilities { get; }
+        public string? Sprite { get; }
     }
 }

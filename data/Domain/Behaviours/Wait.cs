@@ -9,6 +9,7 @@ namespace low_age_data.Domain.Behaviours
             BehaviourId id,
             string displayName, 
             string description,
+            string sprite,
             EndsAt endsAt,
             BehaviourId? nextBehaviour = null) 
             : base(
@@ -16,6 +17,7 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(Wait)}", 
                 displayName, 
                 description, 
+                sprite,
                 endsAt,
                 Alignment.Neutral)
         {

@@ -14,6 +14,7 @@ namespace low_age_data.Collections
                 new Resource(id: ResourceId.Scraps,
                     displayName: nameof(ResourceId.Scraps).CamelCaseToWords(),
                     description: "Used for buying units, structures, research, and anything else.",
+                    sprite: "res://assets/sprites/resources/scraps indexed.png",
                     hasLimit: false,
                     isConsumable: true,
                     hasBank: true),
@@ -22,6 +23,7 @@ namespace low_age_data.Collections
                     displayName: nameof(ResourceId.Celestium).CamelCaseToWords(),
                     description: "Used for production. Higher amounts of Celestium allow for quicker production of " +
                                  "units, structures, research, and anything else.",
+                    sprite: "res://assets/sprites/resources/celestium indexed.png",
                     hasLimit: false,
                     isConsumable: false,
                     hasBank: false),
@@ -31,6 +33,7 @@ namespace low_age_data.Collections
                     description: "Each unit requires a population space, new units can be promoted from the " +
                                  "remaining population space. If there are more units than the amount of supported " +
                                  "population space, all units will start receiving double damage from all sources.",
+                    sprite: "res://assets/sprites/resources/population indexed.png",
                     hasLimit: false,
                     isConsumable: true,
                     hasBank: false,
@@ -45,6 +48,7 @@ namespace low_age_data.Collections
                     displayName: nameof(ResourceId.WeaponStorage).CamelCaseToWords(),
                     description: "Maximum amount of storage for all melee, ranged and special weapons. The most " +
                                  "valuable weapons are lost if the maximum storage is decreased for any reason.",
+                    sprite: "res://assets/sprites/resources/weapon all indexed.png",
                     hasLimit: false,
                     isConsumable: false,
                     hasBank: false),
@@ -52,6 +56,7 @@ namespace low_age_data.Collections
                 new Resource(id: ResourceId.MeleeWeapon,
                     displayName: nameof(ResourceId.MeleeWeapon).CamelCaseToWords(),
                     description: "Weapon used for promotion of units with melee qualities.",
+                    sprite: "res://assets/sprites/resources/weapon melee indexed.png",
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
@@ -60,6 +65,7 @@ namespace low_age_data.Collections
                 new Resource(id: ResourceId.RangedWeapon,
                     displayName: nameof(ResourceId.MeleeWeapon).CamelCaseToWords(),
                     description: "Weapon used for promotion of units with ranged qualities.",
+                    sprite: "res://assets/sprites/resources/weapon ranged indexed.png",
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
@@ -68,6 +74,7 @@ namespace low_age_data.Collections
                 new Resource(id: ResourceId.SpecialWeapon,
                     displayName: nameof(ResourceId.MeleeWeapon).CamelCaseToWords(),
                     description: "Weapon used for promotion of units with special qualities.",
+                    sprite: "res://assets/sprites/resources/weapon special indexed.png",
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
@@ -77,6 +84,7 @@ namespace low_age_data.Collections
                     displayName: nameof(ResourceId.Faith).CamelCaseToWords(),
                     description: "Each point of Faith provides +1 Initiative to all owned units. Faith is generated " +
                                  "by Temples.",
+                    sprite: "res://assets/sprites/resources/faith indexed.png",
                     hasLimit: false,
                     isConsumable: false,
                     hasBank: false,

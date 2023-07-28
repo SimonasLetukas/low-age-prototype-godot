@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Abilities
 {
-    public class Ability
+    public class Ability : IDisplayable
     {
         protected Ability(
             AbilityId id,
@@ -15,7 +15,8 @@ namespace low_age_data.Domain.Abilities
             IList<ResearchId> researchNeeded,
             bool hasButton,
             string displayName,
-            string description,
+            string description, 
+            string? sprite, 
             EndsAt? cooldown = null,
             IList<Payment>? cost = null)
         {
@@ -28,6 +29,7 @@ namespace low_age_data.Domain.Abilities
             Cost = cost ?? new List<Payment>();
             DisplayName = displayName;
             Description = description;
+            Sprite = sprite;
         }
 
         [JsonProperty(Order = -5)] public AbilityId Id { get; }
@@ -66,5 +68,6 @@ namespace low_age_data.Domain.Abilities
         
         public string DisplayName { get; }
         public string Description { get; }
+        public string? Sprite { get; }
     }
 }

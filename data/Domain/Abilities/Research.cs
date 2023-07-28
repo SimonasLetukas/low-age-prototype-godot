@@ -12,6 +12,7 @@ namespace low_age_data.Domain.Abilities
             AbilityId id,
             string displayName,
             string description,
+            string sprite,
             IList<Selection<ResearchId>> selectionOfResearchToBeUnlocked,
             IList<ResearchId>? researchNeeded = null)
             : base(
@@ -21,7 +22,8 @@ namespace low_age_data.Domain.Abilities
                 researchNeeded ?? new List<ResearchId>(),
                 true,
                 displayName,
-                description)
+                description,
+                sprite)
         {
             SelectionOfResearchToBeUnlocked = selectionOfResearchToBeUnlocked;
         }

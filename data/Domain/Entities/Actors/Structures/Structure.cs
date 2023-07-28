@@ -11,6 +11,7 @@ namespace low_age_data.Domain.Entities.Actors.Structures
             StructureId id, 
             string displayName, 
             string description, 
+            string sprite,
             IList<Stat> statistics, 
             FactionId originalFaction, 
             IList<ActorAttribute> combatAttributes, 
@@ -18,7 +19,7 @@ namespace low_age_data.Domain.Entities.Actors.Structures
             Vector2<int>? size = null,
             Vector2<int>? centerPoint = null,
             bool? destructible = null,
-            Area? walkableArea = null) : base(id, displayName, description, statistics, originalFaction, combatAttributes, abilities)
+            Area? walkableArea = null) : base(id, displayName, description, sprite, statistics, originalFaction, combatAttributes, abilities)
         {
             Size = size ?? new Vector2<int>(1, 1);
             CenterPoint = centerPoint ?? (Size.Equals(new Vector2<int>(1, 1))

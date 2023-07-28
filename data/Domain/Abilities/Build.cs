@@ -15,6 +15,7 @@ namespace low_age_data.Domain.Abilities
             AbilityId id,
             string displayName,
             string description,
+            string sprite,
             Shape placementArea,
             IList<Selection<EntityId>> selection,
             bool casterConsumesAction = false,
@@ -27,7 +28,8 @@ namespace low_age_data.Domain.Abilities
                 new List<ResearchId>(),
                 true,
                 displayName,
-                description)
+                description,
+                sprite)
         {
             PlacementArea = placementArea;
             Selection = selection;

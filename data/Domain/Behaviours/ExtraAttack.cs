@@ -10,6 +10,7 @@ namespace low_age_data.Domain.Behaviours
             BehaviourId id,
             string displayName, 
             string description,
+            string sprite,
             IList<Attacks> attackTypes,
             EndsAt? endsAt = null,
             bool canStack = false) 
@@ -18,6 +19,7 @@ namespace low_age_data.Domain.Behaviours
                 $"{nameof(Behaviour)}.{nameof(ExtraAttack)}", 
                 displayName, 
                 description, 
+                sprite,
                 endsAt ?? EndsAt.Death,
                 Alignment.Positive,
                 canStack)

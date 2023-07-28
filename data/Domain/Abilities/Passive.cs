@@ -12,6 +12,7 @@ namespace low_age_data.Domain.Abilities
             AbilityId id,
             string displayName,
             string description,
+            string? sprite,
             bool hasButton = false,
             EffectId? periodicEffect = null,
             IList<ResearchId>? researchNeeded = null,
@@ -28,6 +29,7 @@ namespace low_age_data.Domain.Abilities
                 hasButton,
                 displayName,
                 description,
+                sprite,
                 EndsAt.Instant,
                 cost)
         {
