@@ -150,10 +150,13 @@ public class Data : Node
     [Remote]
     public void OnSynchroniseRequested(string mapSize, string tiles)
     {
-        GD.Print($"{nameof(Data)}.{nameof(OnSynchroniseRequested)}: synchronisation request received with " +
-                 $"{nameof(mapSize)} '{mapSize}', {nameof(tiles)} '{tiles}'.");
+        GD.Print($"{nameof(Data)}.{nameof(OnSynchroniseRequested)}: synchronisation request received.");
+        
         MapSize = JsonConvert.DeserializeObject<Vector2>(mapSize);
         Tiles = JsonConvert.DeserializeObject<List<Tile>>(tiles);
+        
+        GD.Print($"{nameof(Data)}.{nameof(OnSynchroniseRequested)}: synchronisation request fulfilled with " +
+                 $"{nameof(mapSize)} '{mapSize}', {nameof(tiles)} '{Tiles.Count}'.");
         EmitSignal(nameof(Synchronised));
     }
 }

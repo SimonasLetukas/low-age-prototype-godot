@@ -9,6 +9,8 @@ public class PlayerInLobby : HBoxContainer
 
     public event Action<PlayerInLobby, FactionId> PlayerSelectedFaction = delegate { };
 
+    public static PlayerInLobby Instance() => (PlayerInLobby) GD.Load<PackedScene>(ScenePath).Instance();
+
     public FactionSelection FactionSelection { get; private set; }
     public Player Player { get; private set; }
 

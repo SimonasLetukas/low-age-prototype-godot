@@ -17,8 +17,8 @@ public class Lobby : VBoxContainer
     private void OnPlayerAdded(int playerId)
     {
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerAdded)}: adding player {playerId} to lobby.");
-        
-        var playerInfo = (PlayerInLobby) GD.Load<PackedScene>(PlayerInLobby.ScenePath).Instance();
+
+        var playerInfo = PlayerInLobby.Instance();
         _playersList.AddChild(playerInfo);
         
         var player = playerInfo.SetupPlayer(playerId);
