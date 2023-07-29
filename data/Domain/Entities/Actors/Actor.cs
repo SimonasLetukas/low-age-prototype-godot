@@ -14,19 +14,19 @@ namespace low_age_data.Domain.Entities.Actors
             string sprite,
             IList<Stat> statistics,
             FactionId originalFaction,
-            IList<ActorAttribute> combatAttributes,
+            IList<ActorAttribute> actorAttributes,
             IList<AbilityId> abilities) : base(id, displayName, description)
         {
             Statistics = statistics;
             OriginalFaction = originalFaction;
-            CombatAttributes = combatAttributes;
+            ActorAttributes = actorAttributes;
             Abilities = abilities;
             Sprite = sprite;
         }
 
         public IList<Stat> Statistics { get; }
         public FactionId OriginalFaction { get; }
-        public IList<ActorAttribute> CombatAttributes { get; }
+        public IList<ActorAttribute> ActorAttributes { get; }
         public IList<AbilityId> Abilities { get; }
         public string? Sprite { get; }
     }

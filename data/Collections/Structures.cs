@@ -23,7 +23,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>(),
+                    actorAttributes: new List<ActorAttribute>(),
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.PassiveIncome,
@@ -52,7 +52,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Light,
                         ActorAttribute.Structure
@@ -77,7 +77,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -103,7 +103,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Light,
                         ActorAttribute.Structure
@@ -128,7 +128,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -153,7 +153,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -178,7 +178,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -203,7 +203,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -228,7 +228,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -253,7 +253,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -279,7 +279,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Revelators,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Light,
                         ActorAttribute.Structure
@@ -307,7 +307,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -336,7 +336,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -366,7 +366,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -396,7 +396,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Light,
                         ActorAttribute.Structure
@@ -423,7 +423,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -450,7 +450,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Light,
                         ActorAttribute.Structure
@@ -479,7 +479,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -506,7 +506,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -536,7 +536,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -566,7 +566,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -596,7 +596,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -623,7 +623,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -650,7 +650,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -677,7 +677,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -706,7 +706,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
@@ -733,7 +733,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: false, combatType: StatType.Vision)
                     },
                     originalFaction: FactionId.Uee,
-                    combatAttributes: new List<ActorAttribute>
+                    actorAttributes: new List<ActorAttribute>
                     {
                         ActorAttribute.Armoured,
                         ActorAttribute.Structure
