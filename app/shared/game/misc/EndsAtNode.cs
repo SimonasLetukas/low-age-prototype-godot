@@ -3,11 +3,21 @@ using System;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
-public class EndsAtNode : Node2D
+public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
 {
     public const string ScenePath = @"res://app/shared/game/misc/EndsAtNode.tscn";
+    public static EndsAtNode Instance() => (EndsAtNode) GD.Load<PackedScene>(ScenePath).Instance();
+    public static EndsAtNode InstantiateAsChild(EndsAt blueprint, Node parentNode)
+    {
+        var endsAt = Instance();
+        parentNode.AddChild(endsAt);
+        endsAt.SetBlueprint(blueprint);
+        return endsAt;
+    }
     
     public event Action Completed = delegate { };
+
+    public Guid Id { get; } = Guid.NewGuid();
 
     private bool IsInstant { get; set; }
     private bool EndsOnDeath { get; set; }
@@ -15,7 +25,7 @@ public class EndsAtNode : Node2D
     private int Counter { get; set; }
     private TriggersOnEnum TriggersOn { get; set; }
     private TurnPhase Phase { get; set; }
-
+    
     public void SetBlueprint(EndsAt endsAt)
     {
         if (endsAt.Equals(EndsAt.Death))
@@ -306,6 +316,12 @@ public class EndsAtNode : Node2D
         Completed();
         return true;
     }
+
+    /// <summary>
+    /// Return true if <see cref="EndsAt"/> has completed.
+    /// </summary>
+    /// <returns></returns>
+    public bool HasCompleted() => IsInstant || Counter <= 0;
 
     private enum TriggersOnEnum
     {

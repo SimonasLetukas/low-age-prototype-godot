@@ -13,7 +13,6 @@
     <ProjectReference Include="data\low-age-data.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\shared\game\abilities" />
     <Folder Include="app\shared\game\actors" />
     <Folder Include="app\shared\game\behaviours" />
     <Folder Include="app\shared\game\effects" />
