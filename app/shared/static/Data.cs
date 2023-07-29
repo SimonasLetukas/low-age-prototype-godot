@@ -19,7 +19,7 @@ public class Data : Node
     public IList<Tile> Tiles { get; private set; } = new List<Tile>();
 
     public IList<Player> Players { get; private set; } = new List<Player>();
-    public IList<Unit> Units { get; private set; } = new List<Unit>();
+    public IList<UnitLegacy> Units { get; private set; } = new List<UnitLegacy>();
     private string DataBlueprintLocation { get; set; } = "res://data/data.json";
 
     public override void _Ready()
@@ -102,11 +102,11 @@ public class Data : Node
         }
     }
 
-    public Unit GetUnit(Vector2 at) => Units.SingleOrDefault(x => x.Position.Equals(at));
+    public UnitLegacy GetUnit(Vector2 at) => Units.SingleOrDefault(x => x.Position.Equals(at));
 
-    public Unit NewUnit(Vector2 at)
+    public UnitLegacy NewUnit(Vector2 at)
     {
-        var unit = new Unit
+        var unit = new UnitLegacy
         {
             Position = at
         };
@@ -135,7 +135,7 @@ public class Data : Node
     {
         Players = new List<Player>();
         MapSize = Vector2.Zero;
-        Units = new List<Unit>();
+        Units = new List<UnitLegacy>();
         Tiles = new List<Tile>();
     }
 
@@ -168,7 +168,7 @@ public class Player
     public FactionId Faction { get; set; }
 }
 
-public class Unit
+public class UnitLegacy
 {
     public Vector2 Position { get; set; }
 }
@@ -177,5 +177,5 @@ public class Tile
 {
     public Vector2 Position { get; set; }
     public Terrain Terrain { get; set; }
-    public Unit Unit { get; set; }
+    public UnitLegacy Unit { get; set; }
 }

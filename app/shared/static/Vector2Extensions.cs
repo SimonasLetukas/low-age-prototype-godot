@@ -7,4 +7,7 @@ public static class Vector2Extensions
            && !(point.y < 0) 
            && !(point.x >= bounds.x) 
            && !(point.y >= bounds.y);
+
+    public static Vector2 ToGodotVector2<T>(this low_age_data.Domain.Shared.Vector2<T> domainVector2) where T : struct 
+        => new Vector2((float)(object)domainVector2.X, (float)(object)domainVector2.Y);
 }
