@@ -16,7 +16,7 @@ public class StructureNode : ActorNode<Structure>
         StructureSize = blueprint.Size.ToGodotVector2();
         StructureRotation = ActorRotation.BottomRight;
         ActualCenterPoint = blueprint.CenterPoint.ToGodotVector2();
-        ActualWalkableArea = blueprint.WalkableArea.ToGodotRect2();
+        ActualWalkableArea = blueprint.WalkableArea.ToGodotRect2().TrimTo(StructureSize);
     }
 
     public void Rotate()
@@ -26,7 +26,7 @@ public class StructureNode : ActorNode<Structure>
         {
             case ActorRotation.BottomRight:
                 StructureRotation = ActorRotation.BottomLeft;
-                ActualWalkableArea = ActualWalkableArea
+                ActualWalkableArea = ActualWalkableArea;
                 break;
             case ActorRotation.BottomLeft:
                 StructureRotation = ActorRotation.TopLeft;
