@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-prototype-godot", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-data", "data\low-age-data.csproj", "{294BFFF7-DC43-4523-A97E-57C255D8C71F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-tests", "tests\low-age-tests.csproj", "{682A1EF3-202C-4540-89BE-B57ED24898D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 	Debug|Any CPU = Debug|Any CPU
@@ -23,5 +25,11 @@ Global
 		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
 		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
 		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

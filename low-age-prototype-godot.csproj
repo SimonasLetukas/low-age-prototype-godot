@@ -2,12 +2,17 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>lowageprototypegodot</RootNamespace>
+    <GodotUseNETFrameworkRefAssemblies>true</GodotUseNETFrameworkRefAssemblies>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="data\**" />
+    <Compile Remove="tests\**" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="data\**" />
+    <EmbeddedResource Remove="tests\**" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="data\low-age-data.csproj" />
