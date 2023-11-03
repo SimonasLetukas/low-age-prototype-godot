@@ -1,5 +1,5 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Godot.NET.Sdk/3.2.3">
+    
     <PropertyGroup>
         <AssemblyName>low_age_tests</AssemblyName>
         <TargetFramework>net472</TargetFramework>
@@ -37,5 +37,17 @@
       <Reference Include="GodotSharp">
         <HintPath>..\.mono\assemblies\Debug\GodotSharp.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="obj\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="obj\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="obj\**" />
     </ItemGroup>
 </Project>
