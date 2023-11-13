@@ -9,7 +9,7 @@ public static class Rect2Extensions
     public static Rect2 TrimTo(this Rect2 rectToTrim, Vector2 boundarySize) 
         => new Rect2(
             Mathf.Max(0, rectToTrim.Position.x), 
-            Math.Max(0, rectToTrim.Position.y), 
+            Mathf.Max(0, rectToTrim.Position.y), 
             Mathf.Min(boundarySize.x, rectToTrim.Size.x), 
             Mathf.Min(boundarySize.y, rectToTrim.Size.y));
 }
