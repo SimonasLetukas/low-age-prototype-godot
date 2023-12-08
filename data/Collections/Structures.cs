@@ -35,10 +35,13 @@ namespace low_age_data.Collections
                     size: new Vector2<int>(x: 3, y: 4),
                     centerPoint: new Vector2<int>(x: 1, y: 1),
                     destructible: false,
-                    walkableArea: new Area(
-                        start: new Vector2<int>(x: 0, y: 2),
-                        size: new Vector2<int>(x: 3, y: 2))),
-
+                    walkableAreas: new List<Area>
+                    {
+                        new Area(
+                            start: new Vector2<int>(x: 0, y: 2),
+                            size: new Vector2<int>(x: 3, y: 2))
+                    }),
+                
                 new Structure(
                     id: StructureId.Hut,
                     displayName: nameof(StructureId.Hut).CamelCaseToWords(),
@@ -63,7 +66,7 @@ namespace low_age_data.Collections
                         AbilityId.Shared.ScrapsIncome
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
-
+                
                 new Structure(
                     id: StructureId.Obelisk,
                     displayName: nameof(StructureId.Obelisk).CamelCaseToWords(),
@@ -89,7 +92,7 @@ namespace low_age_data.Collections
                         AbilityId.Obelisk.CelestiumDischarge
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
-
+                
                 new Structure(
                     id: StructureId.Shack,
                     displayName: nameof(StructureId.Shack).CamelCaseToWords(),
@@ -114,7 +117,7 @@ namespace low_age_data.Collections
                         AbilityId.Shack.Accommodation
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
-
+                
                 new Structure(
                     id: StructureId.Smith,
                     displayName: nameof(StructureId.Smith).CamelCaseToWords(),
@@ -139,7 +142,7 @@ namespace low_age_data.Collections
                         AbilityId.Smith.MeleeWeaponProduction,
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
-
+                
                 new Structure(
                     id: StructureId.Fletcher,
                     displayName: nameof(StructureId.Fletcher).CamelCaseToWords(),
@@ -164,7 +167,7 @@ namespace low_age_data.Collections
                         AbilityId.Fletcher.RangedWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
-
+                
                 new Structure(
                     id: StructureId.Alchemy,
                     displayName: nameof(StructureId.Alchemy).CamelCaseToWords(),
@@ -189,7 +192,7 @@ namespace low_age_data.Collections
                         AbilityId.Alchemy.SpecialWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 3)),
-
+                
                 new Structure(
                     id: StructureId.Depot,
                     displayName: nameof(StructureId.Depot).CamelCaseToWords(),
@@ -214,7 +217,7 @@ namespace low_age_data.Collections
                         AbilityId.Depot.WeaponStorage,
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
-
+                
                 new Structure(
                     id: StructureId.Workshop,
                     displayName: nameof(StructureId.Workshop).CamelCaseToWords(),
@@ -321,7 +324,7 @@ namespace low_age_data.Collections
                         AbilityId.BatteryCore.FusionCoreUpgrade
                     },
                     size: new Vector2<int>(x: 3, y: 3)),
-                    
+                
                 new Structure(
                     id: StructureId.FusionCore,
                     displayName: nameof(StructureId.FusionCore).CamelCaseToWords(),
@@ -464,7 +467,7 @@ namespace low_age_data.Collections
                         AbilityId.PowerPole.ImprovedPowerGrid
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
-                    
+                
                 new Structure(
                     id: StructureId.Temple,
                     displayName: nameof(StructureId.Temple).CamelCaseToWords(),
@@ -518,9 +521,12 @@ namespace low_age_data.Collections
                         AbilityId.MilitaryBase.Train
                     },
                     size: new Vector2<int>(x: 1, y: 3),
-                    walkableArea: new Area(
-                        start: new Vector2<int>(x: 0, y: 2), 
-                        size: new Vector2<int>(x: 1, y: 1))),
+                    walkableAreas: new List<Area>
+                    {
+                        new Area(
+                            start: new Vector2<int>(x: 0, y: 2),
+                            size: new Vector2<int>(x: 1, y: 1))
+                    }),
                 
                 new Structure(
                     id: StructureId.Factory,
@@ -548,9 +554,12 @@ namespace low_age_data.Collections
                         AbilityId.Factory.Train
                     },
                     size: new Vector2<int>(x: 2, y: 5),
-                    walkableArea: new Area(
-                        start: new Vector2<int>(x: 0, y: 2), 
-                        size: new Vector2<int>(x: 2, y: 2))),
+                    walkableAreas: new List<Area>
+                    {
+                        new Area(
+                            start: new Vector2<int>(x: 0, y: 2),
+                            size: new Vector2<int>(x: 2, y: 2))
+                    }),
                 
                 new Structure(
                     id: StructureId.Laboratory,
@@ -578,9 +587,12 @@ namespace low_age_data.Collections
                         AbilityId.Laboratory.Train
                     },
                     size: new Vector2<int>(x: 3, y: 3),
-                    walkableArea: new Area(
-                        start: new Vector2<int>(x: 0, y: 1), 
-                        size: new Vector2<int>(x: 1, y: 1))),
+                    walkableAreas: new List<Area>
+                    {
+                        new Area(
+                            start: new Vector2<int>(x: 0, y: 1),
+                            size: new Vector2<int>(x: 1, y: 1))
+                    }),
                 
                 new Structure(
                     id: StructureId.Armoury,
@@ -744,7 +756,7 @@ namespace low_age_data.Collections
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.Bastion.Battlement
                     },
-                    size: new Vector2<int>(x: 2, y: 2)),
+                    size: new Vector2<int>(x: 2, y: 2)), 
             };
         }
     }

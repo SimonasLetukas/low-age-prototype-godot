@@ -1588,16 +1588,18 @@
           "y": 1
         },
         "destructible": false,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 2
-          },
-          "size": {
-            "x": 3,
-            "y": 2
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 2
+            },
+            "size": {
+              "x": 3,
+              "y": 2
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Vision",
@@ -1629,16 +1631,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -1685,16 +1689,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -1742,16 +1748,18 @@
           "y": 0
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -1798,16 +1806,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -1854,16 +1864,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -1910,16 +1922,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -1966,16 +1980,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2022,16 +2038,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2078,16 +2096,18 @@
           "y": 0
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2135,16 +2155,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2193,16 +2215,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2257,16 +2281,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2322,16 +2348,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2387,16 +2415,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2449,16 +2479,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2511,16 +2543,18 @@
           "y": 0
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2575,16 +2609,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2637,16 +2673,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 2
-          },
-          "size": {
-            "x": 1,
-            "y": 1
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 2
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2699,16 +2737,18 @@
           "y": 2
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 2
-          },
-          "size": {
-            "x": 2,
-            "y": 2
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 2
+            },
+            "size": {
+              "x": 2,
+              "y": 2
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2761,16 +2801,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 1
-          },
-          "size": {
-            "x": 1,
-            "y": 1
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 1
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2823,16 +2865,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2885,16 +2929,18 @@
           "y": 0
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -2947,16 +2993,18 @@
           "y": 0
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -3009,16 +3057,18 @@
           "y": 2
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -3073,16 +3123,18 @@
           "y": 0
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",
@@ -3135,16 +3187,18 @@
           "y": 1
         },
         "destructible": true,
-        "walkableArea": {
-          "start": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "x": 0,
-            "y": 0
+        "walkableAreas": [
+          {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 0,
+              "y": 0
+            }
           }
-        },
+        ],
         "statistics": [
           {
             "combatType": "StatType.Health",

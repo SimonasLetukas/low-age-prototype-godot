@@ -8,12 +8,14 @@ public abstract class ActorNode<TBlueprint> : Node2D, INodeFromBlueprint<TBluepr
 {
     public Guid Id { get; } = Guid.NewGuid();
     public List<StatNode> CurrentStats { get; protected set; }
+    public ActorRotation ActorRotation { get; protected set; }
     
     public abstract TBlueprint Blueprint { get; protected set; }
     
     public virtual void SetBlueprint(TBlueprint blueprint)
     {
         Blueprint = blueprint;
+        ActorRotation = ActorRotation.BottomRight;
         CurrentStats = Blueprint.Statistics.Select(stat => StatNode.InstantiateAsChild(stat, this)).ToList();
     }
 }

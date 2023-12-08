@@ -3,6 +3,7 @@ using System;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
+// TODO unit tests
 public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
 {
     public const string ScenePath = @"res://app/shared/game/misc/EndsAtNode.tscn";
@@ -234,7 +235,8 @@ public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     }
     
     /// <summary>
-    /// Advances counter and returns true if <see cref="EndsAt"/> duration has completed.
+    /// Advances counter when <see cref="TurnPhase"/> started. Returns true and sends a <see cref="Completed"/> event
+    /// if <see cref="EndsAt"/> duration has completed.
     /// </summary>
     /// <param name="turnPhase"><see cref="TurnPhase"/> that has started</param>
     public bool OnStarted(TurnPhase turnPhase)
@@ -256,7 +258,8 @@ public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     }
         
     /// <summary>
-    /// Advances counter and returns true if <see cref="EndsAt"/> duration has completed.
+    /// Advances counter when <see cref="TurnPhase"/> ended. Returns true and sends a <see cref="Completed"/> event
+    /// if <see cref="EndsAt"/> duration has completed.
     /// </summary>
     /// <param name="turnPhase"><see cref="TurnPhase"/> that has ended</param>
     public bool OnEnded(TurnPhase turnPhase)
@@ -278,7 +281,8 @@ public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     }
 
     /// <summary>
-    /// Advances counter and returns true if <see cref="EndsAt"/> duration has completed.
+    /// Advances counter when action started. Returns true and sends a <see cref="Completed"/> event if
+    /// <see cref="EndsAt"/> duration has completed.
     /// </summary>
     public bool OnActionStarted()
     {
@@ -298,7 +302,8 @@ public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     }
     
     /// <summary>
-    /// Advances counter and returns true if <see cref="EndsAt"/> duration has completed.
+    /// Advances counter when action started. Returns true and sends a <see cref="Completed"/> event if
+    /// <see cref="EndsAt"/> duration has completed.
     /// </summary>
     public bool OnActionEnded()
     {
@@ -318,7 +323,7 @@ public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     }
 
     /// <summary>
-    /// Return true if <see cref="EndsAt"/> has completed.
+    /// Returns true if <see cref="EndsAt"/> has completed.
     /// </summary>
     /// <returns></returns>
     public bool HasCompleted() => IsInstant || Counter <= 0;

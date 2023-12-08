@@ -1,41 +1,51 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using low_age_data.Domain.Entities.Actors.Structures;
 
 public class StructureNode : ActorNode<Structure>
 {
+    public const string ScenePath = @"res://app/shared/game/actors/StructureNode.tscn";
+    public static StructureNode Instance() => (StructureNode) GD.Load<PackedScene>(ScenePath).Instance();
+    public static StructureNode InstantiateAsChild(Structure blueprint, Node parentNode)
+    {
+        var structure = Instance();
+        parentNode.AddChild(structure);
+        structure.SetBlueprint(blueprint);
+        return structure;
+    }
+    
     public override Structure Blueprint { get; protected set; }
     public Vector2 StructureSize { get; protected set; }
-    public ActorRotation StructureRotation { get; protected set; }
-    public Vector2 ActualCenterPoint { get; protected set; }
-    public Rect2 ActualWalkableArea { get; protected set; }
+    public Vector2 CenterPoint { get; protected set; }
+    public List<Rect2> WalkableAreas { get; protected set; }
 
     public override void SetBlueprint(Structure blueprint)
     {
         base.SetBlueprint(blueprint);
         StructureSize = blueprint.Size.ToGodotVector2();
-        StructureRotation = ActorRotation.BottomRight;
-        ActualCenterPoint = blueprint.CenterPoint.ToGodotVector2();
-        ActualWalkableArea = blueprint.WalkableArea.ToGodotRect2().TrimTo(StructureSize);
+        CenterPoint = blueprint.CenterPoint.ToGodotVector2();
+        WalkableAreas = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(StructureSize)).ToList();
     }
 
     public void Rotate()
     {
-        StructureSize = new Vector2(StructureSize.y, StructureSize.x);
-        switch (StructureRotation)
+        StructureSize = new Vector2(StructureSize.y, StructureSize.x); // TODO
+        switch (ActorRotation)
         {
             case ActorRotation.BottomRight:
-                StructureRotation = ActorRotation.BottomLeft;
-                ActualWalkableArea = ActualWalkableArea;
+                ActorRotation = ActorRotation.BottomLeft;
+                WalkableAreas = WalkableAreas; // TODO
                 break;
             case ActorRotation.BottomLeft:
-                StructureRotation = ActorRotation.TopLeft;
+                ActorRotation = ActorRotation.TopLeft;
                 break;
             case ActorRotation.TopLeft:
-                StructureRotation = ActorRotation.TopRight;
+                ActorRotation = ActorRotation.TopRight;
                 break;
             case ActorRotation.TopRight:
-                StructureRotation = ActorRotation.BottomRight;
+                ActorRotation = ActorRotation.BottomRight;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
