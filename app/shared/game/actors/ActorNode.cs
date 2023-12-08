@@ -4,18 +4,18 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Entities.Actors;
 
-public abstract class ActorNode<TBlueprint> : Node2D, INodeFromBlueprint<TBlueprint> where TBlueprint : Actor
+public class ActorNode : Node2D, INodeFromBlueprint<Actor>
 {
     public Guid Id { get; } = Guid.NewGuid();
     public List<StatNode> CurrentStats { get; protected set; }
     public ActorRotation ActorRotation { get; protected set; }
     
-    public abstract TBlueprint Blueprint { get; protected set; }
+    private Actor Blueprint { get; set; }
     
-    public virtual void SetBlueprint(TBlueprint blueprint)
+    public virtual void SetBlueprint(Actor blueprint)
     {
         Blueprint = blueprint;
         ActorRotation = ActorRotation.BottomRight;
-        CurrentStats = Blueprint.Statistics.Select(stat => StatNode.InstantiateAsChild(stat, this)).ToList();
+        CurrentStats = blueprint.Statistics.Select(stat => StatNode.InstantiateAsChild(stat, this)).ToList();
     }
 }

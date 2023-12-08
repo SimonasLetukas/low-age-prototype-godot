@@ -4,7 +4,7 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Entities.Actors.Structures;
 
-public class StructureNode : ActorNode<Structure>
+public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {
     public const string ScenePath = @"res://app/shared/game/actors/StructureNode.tscn";
     public static StructureNode Instance() => (StructureNode) GD.Load<PackedScene>(ScenePath).Instance();
@@ -16,12 +16,13 @@ public class StructureNode : ActorNode<Structure>
         return structure;
     }
     
-    public override Structure Blueprint { get; protected set; }
     public Vector2 StructureSize { get; protected set; }
     public Vector2 CenterPoint { get; protected set; }
     public List<Rect2> WalkableAreas { get; protected set; }
+    
+    private Structure Blueprint { get; set; }
 
-    public override void SetBlueprint(Structure blueprint)
+    public void SetBlueprint(Structure blueprint)
     {
         base.SetBlueprint(blueprint);
         StructureSize = blueprint.Size.ToGodotVector2();

@@ -1,6 +1,6 @@
 using low_age_data.Domain.Entities.Actors.Units;
 
-public class UnitNode : ActorNode<Unit>
+public class UnitNode : ActorNode
 {
-    public override Unit Blueprint { get; protected set; }
+    private Unit Blueprint { get; set; }
 }
