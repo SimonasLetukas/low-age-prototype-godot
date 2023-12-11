@@ -7,7 +7,7 @@ namespace low_age_data.Domain.Abilities
     [JsonConverter(typeof(AbilityIdJsonConverter))]
     public class AbilityId : Id
     {
-        private AbilityId(string value) : base($"ability-{value}")
+        public AbilityId(string value) : base($"ability-{value}")
         {
         }
 

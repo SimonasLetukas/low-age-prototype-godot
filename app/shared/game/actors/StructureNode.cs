@@ -32,12 +32,39 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 
     public void Rotate()
     {
-        StructureSize = new Vector2(StructureSize.y, StructureSize.x); // TODO
+        var centerPointAssigned = false;
+        var newWalkableAreas = new List<Rect2>();
+        
+        for (var x = 0; x < StructureSize.x; x++)
+        {
+            for (var y = 0; y < StructureSize.y; y++)
+            {
+                var currentPoint = new Vector2(x, y);
+                var newX = StructureSize.y - 1 - y;
+                var newY = x;
+                
+                if (CenterPoint.IsEqualApprox(currentPoint) 
+                    && centerPointAssigned is false)
+                {
+                    CenterPoint = new Vector2(newX, newY);
+                    centerPointAssigned = true;
+                }
+
+                newWalkableAreas.AddRange(WalkableAreas
+                    .Where(walkableArea => walkableArea.Position.IsEqualApprox(currentPoint))
+                    .Select(walkableArea => new Rect2(
+                        new Vector2((newX - walkableArea.Size.y) + 1, newY),
+                        new Vector2(walkableArea.Size.y, walkableArea.Size.x))));
+            }
+        }
+
+        WalkableAreas = newWalkableAreas;
+        StructureSize = new Vector2(StructureSize.y, StructureSize.x);
+        
         switch (ActorRotation)
         {
             case ActorRotation.BottomRight:
                 ActorRotation = ActorRotation.BottomLeft;
-                WalkableAreas = WalkableAreas; // TODO
                 break;
             case ActorRotation.BottomLeft:
                 ActorRotation = ActorRotation.TopLeft;

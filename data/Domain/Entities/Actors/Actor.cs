@@ -28,6 +28,6 @@ namespace low_age_data.Domain.Entities.Actors
         public FactionId OriginalFaction { get; }
         public IList<ActorAttribute> ActorAttributes { get; }
         public IList<AbilityId> Abilities { get; }
-        public string? Sprite { get; }
+        public string? Sprite { get; } 
     }
 }
