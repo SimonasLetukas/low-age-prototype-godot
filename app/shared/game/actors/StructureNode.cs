@@ -25,6 +25,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
     public void SetBlueprint(Structure blueprint)
     {
         base.SetBlueprint(blueprint);
+        Blueprint = blueprint;
         StructureSize = blueprint.Size.ToGodotVector2();
         CenterPoint = blueprint.CenterPoint.ToGodotVector2();
         WalkableAreas = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(StructureSize)).ToList();
