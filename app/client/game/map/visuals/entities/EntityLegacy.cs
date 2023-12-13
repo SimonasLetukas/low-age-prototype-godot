@@ -1,13 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-public class Entity : Node2D
+public class EntityLegacy : Node2D
 {
     [Export] public string Id { get; set; } = "slave";
     [Export(PropertyHint.Enum, "Fast,Medium,Slow")] public string AnimationSpeed { get; set; } = "Medium";
 
-    [Signal] public delegate void FinishedMoving(Entity entity);
+    public event Action<EntityLegacy> FinishedMoving = delegate { };
     
     private List<Vector2> _movePath;
     private bool _selected;
@@ -104,7 +105,7 @@ public class Entity : Node2D
     {
         if (_movePath.IsEmpty())
         {
-            EmitSignal(nameof(FinishedMoving), this);
+            FinishedMoving(this);
             return;
         }
 

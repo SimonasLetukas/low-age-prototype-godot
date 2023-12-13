@@ -3241,9 +3241,9 @@
         "description": ""
       }
     ],
-    "features": [
+    "doodads": [
       {
-        "id": "feature-shaman-wondrous-goo",
+        "id": "doodad-shaman-wondrous-goo",
         "onCollisionEffect": "effect-shaman-wondrous-goo-search",
         "collisionFilters": [
           {
@@ -3263,7 +3263,7 @@
         "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn."
       },
       {
-        "id": "feature-pyre-cargo",
+        "id": "doodad-pyre-cargo",
         "onCollisionEffect": null,
         "collisionFilters": [],
         "periodicEffect": null,
@@ -3278,7 +3278,7 @@
         "description": "The cargo which is attached to Pyre leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death."
       },
       {
-        "id": "feature-pyre-flames",
+        "id": "doodad-pyre-flames",
         "onCollisionEffect": "effect-pyre-wall-of-flames-damage",
         "collisionFilters": [
           {
@@ -3298,7 +3298,7 @@
         "description": "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
       },
       {
-        "id": "feature-cannon-heat-up-danger-zone",
+        "id": "doodad-cannon-heat-up-danger-zone",
         "onCollisionEffect": null,
         "collisionFilters": [],
         "periodicEffect": null,
@@ -3313,7 +3313,7 @@
         "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile."
       },
       {
-        "id": "feature-radar-resonating-sweep",
+        "id": "doodad-radar-resonating-sweep",
         "onCollisionEffect": null,
         "collisionFilters": [],
         "periodicEffect": null,
@@ -3328,7 +3328,7 @@
         "description": "These tiles are revealed for Radar's owner until the start of the next planning phase."
       },
       {
-        "id": "feature-radar-red-dot",
+        "id": "doodad-radar-red-dot",
         "onCollisionEffect": null,
         "collisionFilters": [],
         "periodicEffect": null,
@@ -3343,7 +3343,7 @@
         "description": "This red dot shows where enemy unit is currently located inside the fog of war."
       },
       {
-        "id": "feature-vessel-fortification",
+        "id": "doodad-vessel-fortification",
         "onCollisionEffect": null,
         "collisionFilters": [],
         "periodicEffect": "effect-vessel-fortify-search",
@@ -3358,7 +3358,7 @@
         "description": "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of Vessel's action."
       },
       {
-        "id": "feature-omen-rendition",
+        "id": "doodad-omen-rendition",
         "onCollisionEffect": null,
         "collisionFilters": [],
         "periodicEffect": null,
@@ -8440,7 +8440,7 @@
     {
       "id": "effect-shaman-wondrous-goo-create-entity",
       "type": "Effect.CreateEntity",
-      "entityToCreate": "feature-shaman-wondrous-goo",
+      "entityToCreate": "doodad-shaman-wondrous-goo",
       "initialEntityBehaviours": [
         "behaviour-shaman-wondrous-goo-feature-wait"
       ],
@@ -8536,7 +8536,7 @@
     {
       "id": "effect-pyre-cargo-create-entity",
       "type": "Effect.CreateEntity",
-      "entityToCreate": "feature-pyre-cargo",
+      "entityToCreate": "doodad-pyre-cargo",
       "initialEntityBehaviours": [
         "behaviour-pyre-cargo-tether",
         "behaviour-pyre-cargo-wall-of-flames-buff"
@@ -8547,7 +8547,7 @@
     {
       "id": "effect-pyre-wall-of-flames-create-entity",
       "type": "Effect.CreateEntity",
-      "entityToCreate": "feature-pyre-flames",
+      "entityToCreate": "doodad-pyre-flames",
       "initialEntityBehaviours": [],
       "behaviourOwner": null,
       "validators": []
@@ -9557,7 +9557,7 @@
     {
       "id": "effect-cannon-heat-up-create-entity",
       "type": "Effect.CreateEntity",
-      "entityToCreate": "feature-cannon-heat-up-danger-zone",
+      "entityToCreate": "doodad-cannon-heat-up-danger-zone",
       "initialEntityBehaviours": [
         "behaviour-cannon-heat-up-danger-zone-buff"
       ],
@@ -9864,7 +9864,7 @@
     {
       "id": "effect-radar-resonating-sweep-create-entity",
       "type": "Effect.CreateEntity",
-      "entityToCreate": "feature-radar-resonating-sweep",
+      "entityToCreate": "doodad-radar-resonating-sweep",
       "initialEntityBehaviours": [
         "behaviour-radar-resonating-sweep-buff"
       ],
@@ -9900,7 +9900,7 @@
       "filters": [
         {
           "type": "SpecificEntity",
-          "value": "feature-radar-red-dot"
+          "value": "doodad-radar-red-dot"
         }
       ],
       "effects": [
@@ -9959,7 +9959,7 @@
     {
       "id": "effect-radar-radio-location-create-entity",
       "type": "Effect.CreateEntity",
-      "entityToCreate": "feature-radar-red-dot",
+      "entityToCreate": "doodad-radar-red-dot",
       "initialEntityBehaviours": [
         "behaviour-radar-radio-location-feature-buff"
       ],
@@ -10066,7 +10066,7 @@
     {
       "id": "effect-vessel-fortify-create-entity",
       "type": "Effect.CreateEntity",
-      "entityToCreate": "feature-vessel-fortification",
+      "entityToCreate": "doodad-vessel-fortification",
       "initialEntityBehaviours": [
         "behaviour-vessel-fortify-destroy-buff"
       ],
@@ -10184,7 +10184,7 @@
     {
       "id": "effect-omen-rendition-placement-create-entity",
       "type": "Effect.CreateEntity",
-      "entityToCreate": "feature-omen-rendition",
+      "entityToCreate": "doodad-omen-rendition",
       "initialEntityBehaviours": [
         "behaviour-omen-rendition-intercept-damage",
         "behaviour-omen-rendition-buff-death",

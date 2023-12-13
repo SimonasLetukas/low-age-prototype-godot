@@ -2,12 +2,13 @@ using Godot;
 using System;
 using low_age_data.Domain.Effects;
 
-public abstract class EffectNode : Node2D, INodeFromBlueprint<Effect>
+public class EffectNode : Node2D, INodeFromBlueprint<Effect>
 {
     public Guid Id { get; } = Guid.NewGuid();
-    public abstract Effect Blueprint { get; protected set; }
+    
+    private Effect Blueprint { get; set; }
 
-    public virtual void SetBlueprint(Effect blueprint)
+    public void SetBlueprint(Effect blueprint)
     {
         Blueprint = blueprint;
     }

@@ -22,7 +22,7 @@ public class ClientMap : Map
         _entities = GetNode<Entities>($"Visual/{nameof(Entities)}");
         _data = Data.Instance;
 
-        _entities.Connect(nameof(Entities.NewEntityFound), this, nameof(OnEntitiesNewEntityFound));
+        _entities.NewEntityFound += OnEntitiesNewEntityFound;
         _data.Connect(nameof(Data.Synchronised), this, nameof(OnDataSynchronized));
     }
 
@@ -43,8 +43,14 @@ public class ClientMap : Map
             _tileMap.ClearPath();
         }
     }
+    
+    public override void _ExitTree()
+    {
+        _entities.NewEntityFound -= OnEntitiesNewEntityFound;
+        base._ExitTree();
+    }
 
-    public Entity GetHoveredEntity(Vector2 mousePosition, Vector2 mapPosition)
+    public EntityLegacy GetHoveredEntity(Vector2 mousePosition, Vector2 mapPosition)
     {
         var entity = _entities.GetTopEntity(mousePosition);
 
@@ -93,7 +99,7 @@ public class ClientMap : Map
         HandleDeselecting();
     }
 
-    public void HandleSelecting(Entity hoveredEntity)
+    public void HandleSelecting(EntityLegacy hoveredEntity)
     {
         if (_tileHovered.IsInBoundsOf(_mapSize) is false)
             return;
@@ -180,7 +186,7 @@ public class ClientMap : Map
         _startingPositions.Add(coordinates);
     }
 
-    private void OnEntitiesNewEntityFound(Entity entity)
+    private void OnEntitiesNewEntityFound(EntityLegacy entity)
     {
         var entityPosition = entity.GetGlobalTransform().origin;
         var mapPosition = _tileMap.GetMapPositionFromGlobalPosition(entityPosition);

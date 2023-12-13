@@ -18,7 +18,7 @@ namespace low_age_data
             var tiles = Tiles.Get();
             var units = Units.Get();
             var structures = Structures.Get();
-            var features = Features.Get();
+            var doodads = Doodads.Get();
             var abilities = Abilities.Get();
             var effects = Effects.Get();
             var behaviours = Behaviours.Get();
@@ -33,7 +33,7 @@ namespace low_age_data
                     Tiles = tiles,
                     Units = units,
                     Structures = structures,
-                    Features = features
+                    Doodads = doodads
                 },
                 Abilities = abilities,
                 Effects = effects,
@@ -55,8 +55,7 @@ namespace low_age_data
             var outputJson = JsonConvert.SerializeObject(outputObject, jsonSettings);
 
             var path = Path.Combine(
-                Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory 
-                                                 ?? Directory.GetCurrentDirectory())
+                Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory ?? Directory.GetCurrentDirectory())
                     .Parent.Parent.Parent.FullName, 
                 FileName);
 

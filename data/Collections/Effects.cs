@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
-using low_age_data.Domain.Entities.Features;
+using low_age_data.Domain.Entities.Doodads;
 using low_age_data.Domain.Factions;
 using low_age_data.Domain.Resources;
 using low_age_data.Domain.Shared.Filters;
@@ -1193,7 +1193,7 @@ namespace low_age_data.Collections
 
                 new CreateEntity(
                     id: EffectId.Shaman.WondrousGooCreateEntity,
-                    entityToCreate: FeatureId.ShamanWondrousGoo,
+                    entityToCreate: DoodadId.ShamanWondrousGoo,
                     initialEntityBehaviours: new List<BehaviourId>
                     {
                         BehaviourId.Shaman.WondrousGooFeatureWait
@@ -1243,7 +1243,7 @@ namespace low_age_data.Collections
 
                 new CreateEntity(
                     id: EffectId.Pyre.CargoCreateEntity,
-                    entityToCreate: FeatureId.PyreCargo,
+                    entityToCreate: DoodadId.PyreCargo,
                     initialEntityBehaviours: new List<BehaviourId>
                     {
                         BehaviourId.Pyre.CargoTether,
@@ -1252,7 +1252,7 @@ namespace low_age_data.Collections
 
                 new CreateEntity(
                     id: EffectId.Pyre.WallOfFlamesCreateEntity,
-                    entityToCreate: FeatureId.PyreFlames),
+                    entityToCreate: DoodadId.PyreFlames),
 
                 new Destroy(
                     id: EffectId.Pyre.WallOfFlamesDestroy),
@@ -1824,7 +1824,7 @@ namespace low_age_data.Collections
 
                 new CreateEntity(
                     id: EffectId.Cannon.HeatUpCreateEntity,
-                    entityToCreate: FeatureId.CannonHeatUpDangerZone,
+                    entityToCreate: DoodadId.CannonHeatUpDangerZone,
                     initialEntityBehaviours: new List<BehaviourId>
                     {
                         BehaviourId.Cannon.HeatUpDangerZoneBuff
@@ -2000,7 +2000,7 @@ namespace low_age_data.Collections
 
                 new CreateEntity(
                     id: EffectId.Radar.ResonatingSweepCreateEntity,
-                    entityToCreate: FeatureId.RadarResonatingSweep,
+                    entityToCreate: DoodadId.RadarResonatingSweep,
                     initialEntityBehaviours: new List<BehaviourId>
                     {
                         BehaviourId.Radar.ResonatingSweepBuff
@@ -2024,7 +2024,7 @@ namespace low_age_data.Collections
                     searchFlags: new List<SearchFlag>(),
                     filters: new List<IFilterItem>
                     {
-                        new SpecificEntity(FeatureId.RadarRedDot)
+                        new SpecificEntity(DoodadId.RadarRedDot)
                     },
                     effects: new List<EffectId>
                     {
@@ -2063,7 +2063,7 @@ namespace low_age_data.Collections
 
                 new CreateEntity(
                     id: EffectId.Radar.RadioLocationCreateEntity,
-                    entityToCreate: FeatureId.RadarRedDot,
+                    entityToCreate: DoodadId.RadarRedDot,
                     initialEntityBehaviours: new List<BehaviourId>
                     {
                         BehaviourId.Radar.RadioLocationFeatureBuff
@@ -2136,7 +2136,7 @@ namespace low_age_data.Collections
 
                 new CreateEntity(
                     id: EffectId.Vessel.FortifyCreateEntity,
-                    entityToCreate: FeatureId.VesselFortification,
+                    entityToCreate: DoodadId.VesselFortification,
                     initialEntityBehaviours: new List<BehaviourId>
                     {
                         BehaviourId.Vessel.FortifyDestroyBuff
@@ -2214,7 +2214,7 @@ namespace low_age_data.Collections
 
                 new CreateEntity(
                     id: EffectId.Omen.RenditionPlacementCreateEntity,
-                    entityToCreate: FeatureId.OmenRendition,
+                    entityToCreate: DoodadId.OmenRendition,
                     initialEntityBehaviours: new List<BehaviourId>
                     {
                         BehaviourId.Omen.RenditionInterceptDamage,

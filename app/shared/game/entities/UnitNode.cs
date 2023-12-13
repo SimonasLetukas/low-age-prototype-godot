@@ -3,7 +3,7 @@ using low_age_data.Domain.Entities.Actors.Units;
 
 public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 {
-    public const string ScenePath = @"res://app/shared/game/actors/UnitNode.tscn";
+    public const string ScenePath = @"res://app/shared/game/entities/UnitNode.tscn";
     public static UnitNode Instance() => (UnitNode) GD.Load<PackedScene>(ScenePath).Instance();
     public static UnitNode InstantiateAsChild(Unit blueprint, Node parentNode)
     {

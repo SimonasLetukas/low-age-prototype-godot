@@ -6,7 +6,7 @@ using low_age_data.Domain.Entities.Actors.Structures;
 
 public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {
-    public const string ScenePath = @"res://app/shared/game/actors/StructureNode.tscn";
+    public const string ScenePath = @"res://app/shared/game/entities/StructureNode.tscn";
     public static StructureNode Instance() => (StructureNode) GD.Load<PackedScene>(ScenePath).Instance();
     public static StructureNode InstantiateAsChild(Structure blueprint, Node parentNode)
     {

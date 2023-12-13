@@ -6,19 +6,20 @@ using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Shared;
 using low_age_data.Domain.Shared.Durations;
 
-public abstract class AbilityNode : Node2D, INodeFromBlueprint<Ability>
+public class AbilityNode : Node2D, INodeFromBlueprint<Ability>
 {
     public event Action<AbilityNode> Activated = delegate { };
     public event Action<AbilityNode> CooldownEnded = delegate { };
 
     public Guid Id { get; } = Guid.NewGuid();
-    public abstract Ability Blueprint { get; protected set; }
-    public abstract EndsAtNode RemainingCooldown { get; protected set; }
-    public abstract List<Payment> PaymentPaid { get; protected set; }
-    public abstract bool IsResearched { get; protected set; }
-    public abstract bool IsActive { get; protected set; }
+    public EndsAtNode RemainingCooldown { get; protected set; }
+    public List<Payment> PaymentPaid { get; protected set; }
+    public bool IsResearched { get; protected set; }
+    public bool IsActive { get; protected set; }
     
-    public virtual void SetBlueprint(Ability blueprint)
+    private Ability Blueprint { get; set; }
+    
+    public void SetBlueprint(Ability blueprint)
     {
         Blueprint = blueprint;
         RemainingCooldown = EndsAtNode.InstantiateAsChild(EndsAt.Instant, this);
@@ -27,7 +28,7 @@ public abstract class AbilityNode : Node2D, INodeFromBlueprint<Ability>
         IsResearched = true; // TODO fetch from player
         IsActive = IsPaid() && IsResearched;
     }
-
+    
     public virtual bool TryActivate()
     {
         if (IsActive is false)

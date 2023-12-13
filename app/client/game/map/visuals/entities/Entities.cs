@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot.Collections;
+using low_age_data.Collections;
 using Array = Godot.Collections.Array;
 
 /// <summary>
@@ -12,14 +13,14 @@ public class Entities : YSort
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     
-    [Signal] public delegate void NewEntityFound(Entity entity);
+    public event Action<EntityLegacy> NewEntityFound = delegate { };
 
     public bool EntityMoving { get; private set; } = false;
-    public Entity SelectedEntity { get; private set; } = null;
+    public EntityLegacy SelectedEntity { get; private set; } = null;
 
     private Vector2 _hoveredEntityPosition = Vector2.Inf;
-    private Godot.Collections.Dictionary<Vector2, Entity> _entitiesByMapPositions = new Godot.Collections.Dictionary<Vector2, Entity>();
-    private Godot.Collections.Dictionary<Entity, Vector2> _mapPositionsByEntities = new Godot.Collections.Dictionary<Entity, Vector2>();
+    private Godot.Collections.Dictionary<Vector2, EntityLegacy> _entitiesByMapPositions = new Godot.Collections.Dictionary<Vector2, EntityLegacy>();
+    private Godot.Collections.Dictionary<EntityLegacy, Vector2> _mapPositionsByEntities = new Godot.Collections.Dictionary<EntityLegacy, Vector2>();
 
     public void Initialize()
     {
@@ -28,22 +29,29 @@ public class Entities : YSort
         {
             if (DebugEnabled) GD.Print($"{nameof(Entities)}: initializing {unit.Name}.");
 
-            var entityBase = unit.GetNode<Entity>("UnitBase/EntityBase");
+            var entityBase = unit.GetNode<EntityLegacy>("UnitBase/EntityBase");
             if (entityBase is null) 
                 continue;
 
-            entityBase.Connect(nameof(Entity.FinishedMoving), this, nameof(OnEntityFinishedMoving));
-            EmitSignal(nameof(NewEntityFound), entityBase);
+            entityBase.FinishedMoving += OnEntityFinishedMoving;
+            NewEntityFound(entityBase);
         }
     }
+    
+    public override void _ExitTree()
+    {
+        // TODO foreach
+        //entityBase.FinishedMoving -= OnEntityFinishedMoving;
+        base._ExitTree();
+    }
 
-    public void RegisterEntity(Vector2 at, Entity entity)
+    public void RegisterEntity(Vector2 at, EntityLegacy entity)
     {
         _entitiesByMapPositions[at] = entity;
         _mapPositionsByEntities[entity] = at;
     }
 
-    public void SelectEntity(Entity entity)
+    public void SelectEntity(EntityLegacy entity)
     {
         if (EntityMoving) 
             return;
@@ -92,7 +100,7 @@ public class Entities : YSort
         return false;
     }
 
-    public Entity GetHoveredEntity()
+    public EntityLegacy GetHoveredEntity()
     {
         if (EntityMoving)
             return null;
@@ -102,15 +110,15 @@ public class Entities : YSort
             : null;
     }
 
-    public Vector2 GetMapPositionOfEntity(Entity entity) => _mapPositionsByEntities.ContainsKey(entity) 
+    public Vector2 GetMapPositionOfEntity(EntityLegacy entity) => _mapPositionsByEntities.ContainsKey(entity) 
         ? _mapPositionsByEntities[entity] 
         : Vector2.Inf;
 
-    public Entity GetEntityFromMapPosition(Vector2 mapPosition) => _entitiesByMapPositions.ContainsKey(mapPosition)
+    public EntityLegacy GetEntityFromMapPosition(Vector2 mapPosition) => _entitiesByMapPositions.ContainsKey(mapPosition)
         ? _entitiesByMapPositions[mapPosition]
         : null;
 
-    public void MoveEntity(Entity entity, Vector2[] globalPath, Vector2[] path)
+    public void MoveEntity(EntityLegacy entity, Vector2[] globalPath, Vector2[] path)
     {
         var targetPosition = path.Last();
         var startPosition = path.First();
@@ -122,10 +130,10 @@ public class Entities : YSort
     }
     
     // TODO: seems like each entity has z_index of 0 and so this method doesn't work
-    public Entity GetTopEntity(Vector2 globalPosition)
+    public EntityLegacy GetTopEntity(Vector2 globalPosition)
     {
         var topZ = float.NegativeInfinity;
-        Entity topEntity = null;
+        EntityLegacy topEntity = null;
         
         var intersections = GetWorld2d().DirectSpaceState.IntersectPoint(globalPosition, 32, 
             new Array(), 0x7FFFFFFF, true, true);
@@ -133,7 +141,7 @@ public class Entities : YSort
         foreach (var node in intersections.OfType<KinematicCollision2D>())
         {
             if ((node.Collider is Area2D area) is false 
-                || (area.GetParent() is Entity entity) is false)
+                || (area.GetParent() is EntityLegacy entity) is false)
                 continue;
 
             if (entity.ZIndex <= topZ) 
@@ -162,7 +170,7 @@ public class Entities : YSort
         return zIndex;
     }
 
-    private void OnEntityFinishedMoving(Entity entity)
+    private void OnEntityFinishedMoving(EntityLegacy entity)
     {
         EntityMoving = false;
     }

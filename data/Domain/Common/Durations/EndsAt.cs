@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using low_age_data.Common;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Entities.Features;
+using low_age_data.Domain.Entities.Doodads;
 
 namespace low_age_data.Domain.Shared.Durations
 {
     /// <summary>
     /// Used to calculate duration. Calculation is done on the last <see cref="Actor"/> in the chain (e.g. when
-    /// an <see cref="Actor"/> creates a <see cref="Feature"/> and there is a <see cref="Buff"/> with
+    /// an <see cref="Actor"/> creates a <see cref="Doodad"/> and there is a <see cref="Buff"/> with
     /// EndsAt.EndOf.Next.Action, this then refers to the <see cref="Actor"/>'s action), unless stated otherwise.
     /// </summary>
     public class EndsAt : ValueObject<EndsAt>
