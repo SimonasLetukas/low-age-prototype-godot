@@ -4,12 +4,15 @@ using System.Linq;
 using low_age_data.Domain.Shared;
 
 /// <summary>
-/// Responsible for handling all tile-map related visuals
-/// and conversions between global and map positions.
+/// Responsible for: <para />
+/// - Keeping track of all tiles data <para />
+/// - Handling all tile-map related visuals <para />
+/// - Conversions between global and map positions
 /// </summary>
 public class Tiles : Node2D
 {
     private Vector2 _mapSize;
+    private ICollection<(Vector2, Terrain)> _tiles;
     private Vector2 _tilemapOffset;
     private Vector2 _tileOffset;
     private int _mountainsFillOffset;
@@ -51,20 +54,19 @@ public class Tiles : Node2D
         _focusedTile.Disable();
     }
 
-    public void Initialize(Vector2 mapSize)
+    public void Initialize(Vector2 mapSize, ICollection<(Vector2, Terrain)> tiles)
     {
         _mapSize = mapSize;
+        _tiles = tiles;
         _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
         _mountainsFillOffset = (int)Mathf.Max(mapSize.x, mapSize.y);
         _tileOffset = new Vector2(0, (float)Constants.TileHeight / 2);
         ClearTilemaps();
         
-        for (var y = 0; y < mapSize.y; y++)
+        foreach (var (coordinates, terrain) in tiles)
         {
-            for (var x = 0; x < mapSize.x; x++)
-            {
-                _grass.SetCellv(new Vector2(x, y), TileMapGrassIndex);
-            }
+            _grass.SetCellv(coordinates, TileMapGrassIndex); // needed to fill up gaps
+            SetCell(coordinates, terrain);
         }
     }
 
@@ -77,39 +79,9 @@ public class Tiles : Node2D
     public Vector2[] GetGlobalPositionsFromMapPositions(IEnumerable<Vector2> mapPositions) 
         => mapPositions.Select(GetGlobalPositionFromMapPosition).ToArray();
 
-    private int GetTilemapIndexFrom(Terrain terrain) => _tileMapIndexesByTerrain.ContainsKey(terrain) 
-        ? _tileMapIndexesByTerrain[terrain] 
-        : TileMapGrassIndex;
-
-    public void SetCell(Vector2 at, Terrain terrain)
-    {
-        var tilemapIndex = GetTilemapIndexFrom(terrain);
-        
-        switch (tilemapIndex)
-        {
-            case TileMapMountainsIndex:
-                _mountains.SetCellv(at, TileMapMountainsIndex);
-                break;
-            case TileMapMarshIndex:
-                _marsh.SetCellv(at, TileMapMarshIndex);
-                break;
-            case TileMapScrapsIndex:
-                _scraps.SetCellv(at, TileMapScrapsIndex);
-                break;
-            case TileMapCelestiumIndex:
-                _grass.SetCellv(at, TileMapCelestiumIndex);
-                break;
-            case TileMapGrassIndex:
-            default:
-                _grass.SetCellv(at, TileMapGrassIndex);
-                break;
-        }
-    }
-
-    public void SetCelestium(Vector2 at)
-    {
-        _grass.SetCellv(at, TileMapCelestiumIndex);
-    }
+    public Terrain GetTerrain(Vector2 at) => at.IsInBoundsOf(_mapSize)
+        ? _tiles.SingleOrDefault(x => x.Item1.Equals(at)).Item2
+        : Terrain.Mountains;
 
     public void MoveFocusedTileTo(Vector2 position)
     {
@@ -163,6 +135,35 @@ public class Tiles : Node2D
     
     public void ClearAvailableTiles() => _availableTiles.Clear();
 
+    private void SetCell(Vector2 at, Terrain terrain)
+    {
+        var tilemapIndex = GetTilemapIndexFrom(terrain);
+        
+        switch (tilemapIndex)
+        {
+            case TileMapMountainsIndex:
+                _mountains.SetCellv(at, TileMapMountainsIndex);
+                break;
+            case TileMapMarshIndex:
+                _marsh.SetCellv(at, TileMapMarshIndex);
+                break;
+            case TileMapScrapsIndex:
+                _scraps.SetCellv(at, TileMapScrapsIndex);
+                break;
+            case TileMapCelestiumIndex:
+                _grass.SetCellv(at, TileMapCelestiumIndex);
+                break;
+            case TileMapGrassIndex:
+            default:
+                _grass.SetCellv(at, TileMapGrassIndex);
+                break;
+        }
+    }
+    
+    private int GetTilemapIndexFrom(Terrain terrain) => _tileMapIndexesByTerrain.ContainsKey(terrain) 
+        ? _tileMapIndexesByTerrain[terrain] 
+        : TileMapGrassIndex;
+    
     private void ClearTilemaps()
     {
         ClearPath();

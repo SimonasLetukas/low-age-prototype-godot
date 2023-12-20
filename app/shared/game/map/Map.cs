@@ -10,10 +10,6 @@ public class Map : Node2D
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     
-    public event Action<ICollection<Vector2>> StartingPositionsDeclared = delegate { };
-    protected void RaiseStartingPositionsDeclared(ICollection<Vector2> startingPositions) =>
-        StartingPositionsDeclared(startingPositions);
-    
     protected Pathfinding Pathfinding;
 
     public override void _Ready()

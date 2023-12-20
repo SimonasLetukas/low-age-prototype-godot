@@ -38,13 +38,12 @@ public class Game : Node2D
     protected void RegisterNewGameEvent(IGameEvent gameEvent)
     {
         GD.Print($"{nameof(Game)}.{nameof(RegisterNewGameEvent)}: called with {gameEvent.GetType()} " +
-                 $"and properties '{JsonConvert.SerializeObject(gameEvent)}'.");
+                 $"and properties '{JsonConvert.SerializeObject(gameEvent).TrimForLogs()}'.");
 
         if (GetTree().IsNetworkServer())
             return;
         
-        RpcId(Constants.ServerId, nameof(ServerGame.OnRegisterNewGameEvent), GetTree().GetNetworkUniqueId(), 
-            EventToString(gameEvent));
+        RpcId(Constants.ServerId, nameof(ServerGame.OnRegisterNewGameEvent), EventToString(gameEvent));
     }
 
     #endregion

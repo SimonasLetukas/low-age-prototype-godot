@@ -22,8 +22,6 @@ public class Network : Node
 	    {
 		    peer.CloseConnection();
 	    }
-
-	    Data.Instance.Reset();
     }
 
     /// <summary>

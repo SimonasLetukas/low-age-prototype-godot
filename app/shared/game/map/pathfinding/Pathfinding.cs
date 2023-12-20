@@ -25,7 +25,7 @@ public class Pathfinding : Node
     private Vector2 _previousPosition = Vector2.Inf;
     private float _previousRange = -1.0f;
 
-    public void Initialize(Vector2 mapSize)
+    public void Initialize(Vector2 mapSize, ICollection<(Vector2, Terrain)> tiles)
     {
 	    GD.Print($"{nameof(Pathfinding)}.{nameof(Initialize)}: started.");
 	    
@@ -45,15 +45,14 @@ public class Pathfinding : Node
 		    var id = PointIdsByPositions[position];
 		    PositionsByPointIds[id] = position;
 	    }
-    }
-
-    public void SetTerrainForPoint(Vector2 at, Terrain terrain)
-    {
-	    if (at.IsInBoundsOf(MapSize))
+	    
+	    foreach (var (coordinates, terrain) in tiles)
 	    {
-		    _pathfinding.SetTerrainForPoint(
-			    PointIdsByPositions[at],
-			    terrain.ToIndex());
+		    if (terrain.Equals(Terrain.Marsh)
+		        || terrain.Equals(Terrain.Mountains))
+		    {
+			    SetTerrainForPoint(coordinates, terrain);
+		    }
 	    }
     }
 
@@ -90,6 +89,16 @@ public class Pathfinding : Node
 	    path.Reverse();
 
 	    return path.ToArray();
+    }
+    
+    private void SetTerrainForPoint(Vector2 at, Terrain terrain)
+    {
+	    if (at.IsInBoundsOf(MapSize))
+	    {
+		    _pathfinding.SetTerrainForPoint(
+			    PointIdsByPositions[at],
+			    terrain.ToIndex());
+	    }
     }
 
     private bool IsCached(Vector2 position, float range) 

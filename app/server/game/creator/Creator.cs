@@ -1,14 +1,16 @@
+using System;
+using System.Collections.Generic;
 using Godot;
+using low_age_data.Domain.Shared;
 
 /// <summary>
-/// Map creator encapsulates work done with .png files and any
-/// other map generation.
-/// 
-/// Map creator accepts a .png containing a map, list of map
-/// properties and a map with all tilesets to be modified.
-/// The output of this generation should be various signals:
-/// Map size declared, starting positions, copies of tilesets
-/// with tiles generated.
+/// <para>
+/// Map creator encapsulates work done with .png files and any other map generation.
+/// </para>
+/// <para>
+/// Map creator accepts a .png containing a map, list of map properties and a map with all tilesets to be modified.
+/// The output of this map generation is an event once it is created.
+/// </para>
 /// </summary>
 public class Creator : Node2D
 {
@@ -21,17 +23,8 @@ public class Creator : Node2D
     [Export(PropertyHint.ColorNoAlpha)] public Color ColorCelestium { get; set; } = new Color(Colors.Green);
     [Export(PropertyHint.ColorNoAlpha)] public Color ColorStart { get; set; } = new Color(Colors.Blue);
     
-    [Signal] public delegate void MapSizeDeclared(Vector2 mapSize);
-    [Signal] public delegate void GrassFound(Vector2 coordinates);
-    [Signal] public delegate void MountainsFound(Vector2 coordinates);
-    [Signal] public delegate void MarshFound(Vector2 coordinates);
-    [Signal] public delegate void ScrapsFound(Vector2 coordinates);
-    [Signal] public delegate void CelestiumFound(Vector2 coordinates);
-    [Signal] public delegate void StartingPositionFound(Vector2 coordinates);
-    [Signal] public delegate void GenerationEnded();
-
-    private Vector2 _mapSize;
-
+    public event Action<MapCreatedEvent> MapCreated = delegate { };
+    
     public override void _Ready()
     {
         if (DebugEnabled)
@@ -55,32 +48,33 @@ public class Creator : Node2D
             return;
         }
 
-        _mapSize = new Vector2(image.GetWidth(), image.GetHeight());
-        EmitSignal(nameof(MapSizeDeclared), _mapSize);
-        if (DebugEnabled) GD.Print($"{nameof(Creator)}.{nameof(Generate)}: signal " +
-                                   $"{nameof(MapSizeDeclared)} emitted with {_mapSize}");
+        var mapSize = new Vector2(image.GetWidth(), image.GetHeight());
+        var startingPositions = new List<Vector2>();
+        var tiles = new List<(Vector2, Terrain)>();
         
         image.Lock();
 
-        for (var y = 0; y < _mapSize.y; y++)
+        for (var y = 0; y < mapSize.y; y++)
         {
-            for (var x = 0; x < _mapSize.x; x++)
+            for (var x = 0; x < mapSize.x; x++)
             {
                 var pixel = image.GetPixel(x, y);
                 
-                // By default all tiles are grass
-                EmitSignal(nameof(GrassFound), new Vector2(x, y));
+                // By default all (unknown & starting) tiles are grass
+                var terrain = Terrain.Grass;
                 
-                if (pixel == ColorGrass) EmitSignal(nameof(GrassFound), new Vector2(x, y));
-                if (pixel == ColorMountains) EmitSignal(nameof(MountainsFound), new Vector2(x, y));
-                if (pixel == ColorMarsh) EmitSignal(nameof(MarshFound), new Vector2(x, y));
-                if (pixel == ColorScraps) EmitSignal(nameof(ScrapsFound), new Vector2(x, y));
-                if (pixel == ColorCelestium) EmitSignal(nameof(CelestiumFound), new Vector2(x, y));
-                if (pixel == ColorStart) EmitSignal(nameof(StartingPositionFound), new Vector2(x, y));
+                if (pixel == ColorGrass) terrain = Terrain.Grass;
+                if (pixel == ColorMountains) terrain = Terrain.Mountains;
+                if (pixel == ColorMarsh) terrain = Terrain.Marsh;
+                if (pixel == ColorScraps) terrain = Terrain.Scraps;
+                if (pixel == ColorCelestium) terrain = Terrain.Celestium;
+                if (pixel == ColorStart) startingPositions.Add(new Vector2(x, y));
+                
+                tiles.Add((new Vector2(x, y), terrain));
             }
         }
         
         image.Unlock();
-        EmitSignal(nameof(GenerationEnded));
+        MapCreated(new MapCreatedEvent(mapSize, startingPositions, tiles));
     }
 }

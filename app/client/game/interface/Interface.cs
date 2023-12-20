@@ -23,7 +23,7 @@ public class Interface : CanvasLayer
         }
     }
 
-    public void OnMapCreatorMapSizeDeclared(Vector2 mapSize)
+    public void SetMapSize(Vector2 mapSize)
     {
         _mapSize = mapSize;
     }

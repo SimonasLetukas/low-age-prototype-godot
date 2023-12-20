@@ -63,7 +63,7 @@ public class Camera : Camera2D
         GlobalTranslate(moveVector.Normalized() * delta * Zoom.x * MapScrollSpeed);
     }
 
-    public void OnCreatorMapSizeDeclared(Vector2 mapSize)
+    public void SetMapSize(Vector2 mapSize)
     {
         _mapWidthPixels = Mathf.Max((int)mapSize.x, (int)mapSize.y) * Constants.TileWidth;
         _mapHeightPixels = Mathf.Max((int)mapSize.x, (int)mapSize.y) * Constants.TileHeight;

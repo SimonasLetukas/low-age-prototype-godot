@@ -127,6 +127,11 @@ mouse_right={
 
 project/assembly_name="low-age-prototype-godot"
 
+[network]
+
+limits/debugger_stdout/max_chars_per_second=999999
+limits/debugger_stdout/max_messages_per_frame=100
+
 [physics]
 
 common/enable_pause_aware_picking=true

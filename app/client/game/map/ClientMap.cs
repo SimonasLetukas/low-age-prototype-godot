@@ -1,15 +1,15 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using low_age_data.Domain.Shared;
 
 public class ClientMap : Map
 {
+    public event Action FinishedInitializing = delegate { };
     public event Action<Vector2, Terrain> NewTileHovered = delegate { };
     public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
 
-    private readonly ICollection<Vector2> _startingPositions = new List<Vector2>();
+    private ICollection<Vector2> _startingPositions = new List<Vector2>();
     private Vector2 _mapSize = Vector2.Inf;
     private Vector2 _tileHovered = Vector2.Zero;
     private Tiles _tileMap;
@@ -24,7 +24,6 @@ public class ClientMap : Map
         _data = Data.Instance;
 
         _entities.NewEntityFound += OnEntitiesNewEntityFound;
-        _data.Connect(nameof(Data.Synchronised), this, nameof(OnDataSynchronized));
     }
 
     public override void _Process(float delta)
@@ -49,6 +48,24 @@ public class ClientMap : Map
     {
         _entities.NewEntityFound -= OnEntitiesNewEntityFound;
         base._ExitTree();
+    }
+
+    public void Initialize(MapCreatedEvent @event)
+    {
+        if (DebugEnabled) GD.Print($"{nameof(ClientMap)}.{nameof(Initialize)}");
+        
+        _mapSize = @event.MapSize;
+        _startingPositions = @event.StartingPositions;
+        
+        Position = new Vector2((Mathf.Max(_mapSize.x, _mapSize.y) * Constants.TileWidth) / 2, Position.y);
+        _tileMap.Initialize(_mapSize, @event.Tiles);
+        Pathfinding.Initialize(_mapSize, @event.Tiles);
+        _entities.Initialize();
+        
+        _tileMap.FillMapOutsideWithMountains();
+        _tileMap.UpdateALlBitmaps();
+        
+        FinishedInitializing();
     }
 
     public EntityLegacy GetHoveredEntity(Vector2 mousePosition, Vector2 mapPosition)
@@ -135,56 +152,11 @@ public class ClientMap : Map
     
     private bool HoverTile()
     {
-        var hoveredTerrain = _data.GetTerrain(_tileHovered);
+        var hoveredTerrain = _tileMap.GetTerrain(_tileHovered);
         NewTileHovered(_tileHovered, hoveredTerrain);
         _tileMap.MoveFocusedTileTo(_tileHovered);
         var entityHovered = _entities.TryHoveringEntity(_tileHovered);
         return entityHovered;
-    }
-
-    private void OnDataSynchronized()
-    {
-        if (DebugEnabled) GD.Print($"{nameof(ClientMap)}.{nameof(OnDataSynchronized)}: event received.");
-
-        OnMapCreatorMapSizeDeclared(_data.MapSize);
-        
-        for (var y = 0; y < _mapSize.y; y++)
-        {
-            for (var x = 0; x < _mapSize.x; x++)
-            {
-                var coordinates = new Vector2(x, y);
-                var terrain = _data.GetTerrain(coordinates);
-                _tileMap.SetCell(coordinates, terrain);
-                if (terrain.Equals(Terrain.Marsh)
-                    || terrain.Equals(Terrain.Mountains))
-                {
-                    Pathfinding.SetTerrainForPoint(coordinates, terrain);
-                }
-            }
-        }
-        
-        OnMapCreatorGenerationEnded();
-    }
-    
-    public void OnMapCreatorMapSizeDeclared(Vector2 mapSize)
-    {
-        _mapSize = mapSize;
-        Position = new Vector2((Mathf.Max(_mapSize.x, mapSize.y) * Constants.TileWidth) / 2, Position.y);
-        _tileMap.Initialize(_mapSize);
-        Pathfinding.Initialize(_mapSize);
-        _entities.Initialize();
-    }
-
-    private void OnMapCreatorGenerationEnded()
-    {
-        _tileMap.FillMapOutsideWithMountains();
-        _tileMap.UpdateALlBitmaps();
-        RaiseStartingPositionsDeclared(_startingPositions);
-    }
-
-    private void OnMapCreatorStartingPositionFound(Vector2 coordinates)
-    {
-        _startingPositions.Add(coordinates);
     }
 
     private void OnEntitiesNewEntityFound(EntityLegacy entity)

@@ -1,7 +1,5 @@
 using Godot;
 using System.Collections.Generic;
-using low_age_data.Domain.Shared;
-using Newtonsoft.Json;
 
 public class ServerGame : Game
 {
@@ -15,15 +13,8 @@ public class ServerGame : Game
         GD.Print($"{nameof(ServerGame)}: entering");
         
         _creator = GetNode<Creator>($"{nameof(Creator)}");
-
-        _creator.Connect(nameof(Creator.MapSizeDeclared), this, nameof(OnCreatorMapSizeDeclared));
-        _creator.Connect(nameof(Creator.GrassFound), this, nameof(OnCreatorGrassFound));
-        _creator.Connect(nameof(Creator.MountainsFound), this, nameof(OnCreatorMountainsFound));
-        _creator.Connect(nameof(Creator.MarshFound), this, nameof(OnCreatorMarshFound));
-        _creator.Connect(nameof(Creator.ScrapsFound), this, nameof(OnCreatorScrapsFound));
-        _creator.Connect(nameof(Creator.CelestiumFound), this, nameof(OnCreatorCelestiumFound));
-        _creator.Connect(nameof(Creator.StartingPositionFound), this, nameof(OnCreatorStartingPositionFound));
-        _creator.Connect(nameof(Creator.GenerationEnded), this, nameof(OnCreatorGenerationEnded));
+        
+        _creator.MapCreated += OnRegisterServerEvent;
         
         Server.Instance.Connect(nameof(Network.PlayerRemoved), this, nameof(OnPlayerRemoved));
 
@@ -35,6 +26,11 @@ public class ServerGame : Game
         {
             _notLoadedPlayers.Add(player.Id);
         }
+    }
+
+    public override void _ExitTree()
+    {
+        _creator.MapCreated -= OnRegisterServerEvent;
     }
 
     [Remote]
@@ -56,10 +52,10 @@ public class ServerGame : Game
     }
     
     [Remote]
-    public void OnRegisterNewGameEvent(int playerId, string eventBody)
+    public void OnRegisterNewGameEvent(string eventBody)
     {
-        GD.Print($"{nameof(ServerGame)}.{nameof(OnRegisterNewGameEvent)}: player {playerId} " +
-                 $"'{Data.Instance.GetPlayerName(playerId)}' executed event '{eventBody}'");
+        GD.Print($"{nameof(ServerGame)}.{nameof(OnRegisterNewGameEvent)}: registering new game event " +
+                 $"'{eventBody.TrimForLogs()}'");
 
         var gameEvent = StringToEvent(eventBody);
         Events.Add(gameEvent);
@@ -67,6 +63,12 @@ public class ServerGame : Game
         Rpc(nameof(OnNewGameEventRegistered), eventBody);
     }
 
+    private void OnRegisterServerEvent(IGameEvent gameEvent)
+    {
+        GD.Print($"{nameof(ServerGame)}.{nameof(OnRegisterServerEvent)}: called with {gameEvent.GetType()}");
+        OnRegisterNewGameEvent(EventToString(gameEvent));
+    }
+    
     private void OnPlayerRemoved(int playerId)
     {
         if (Data.Instance.Players.Count < 2)
@@ -80,49 +82,5 @@ public class ServerGame : Game
         }
         
         GD.Print($"{nameof(ServerGame)}.{nameof(OnPlayerRemoved)}: '{Data.Instance.Players.Count}' players remaining");
-    }
-
-    private void OnCreatorMapSizeDeclared(Vector2 mapSize)
-    {
-        GD.Print($"{nameof(ServerGame)}.{nameof(OnCreatorMapSizeDeclared)}: initializing map with size '{mapSize}'");
-        Data.Instance.Initialize(mapSize);
-    }
-
-    private void OnCreatorGenerationEnded()
-    {
-        GD.Print($"{nameof(ServerGame)}.{nameof(OnCreatorGenerationEnded)}: generation ended, requesting " +
-                 $"synchronisation with clients");
-
-        Data.Instance.Synchronise();
-    }
-
-    private void OnCreatorCelestiumFound(Vector2 coordinates)
-    {
-        Data.Instance.SetTerrain(coordinates, Terrain.Celestium);
-    }
-    
-    private void OnCreatorScrapsFound(Vector2 coordinates)
-    {
-        Data.Instance.SetTerrain(coordinates, Terrain.Scraps);
-    }
-    
-    private void OnCreatorGrassFound(Vector2 coordinates)
-    {
-        Data.Instance.SetTerrain(coordinates, Terrain.Grass);
-    }
-    
-    private void OnCreatorMarshFound(Vector2 coordinates)
-    {
-        Data.Instance.SetTerrain(coordinates, Terrain.Marsh);
-    }
-    
-    private void OnCreatorMountainsFound(Vector2 coordinates)
-    {
-        Data.Instance.SetTerrain(coordinates, Terrain.Mountains);
-    }
-    
-    private void OnCreatorStartingPositionFound(Vector2 coordinates)
-    {
-        return; // TODO left for later implementation
     }
 }
