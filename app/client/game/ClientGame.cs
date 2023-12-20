@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 public class ClientGame : Game
@@ -55,14 +55,16 @@ public class ClientGame : Game
 
         _map.NewTileHovered += _interface.OnMapNewTileHovered;
 
-        _map.Connect(nameof(ClientMap.UnitMovementIssued), this, nameof(SendNewUnitPosition));
-        _map.Connect(nameof(Map.StartingPositionsDeclared), this, nameof(OnMapStartingPositionsDeclared));
+        _map.UnitMovementIssued += SendNewUnitPosition;
+        _map.StartingPositionsDeclared += OnMapStartingPositionsDeclared;
         _data.Connect(nameof(Data.Synchronised), this, nameof(OnDataSynchronized));
     }
 
     private void DisconnectSignals()
     {
         _map.NewTileHovered -= _interface.OnMapNewTileHovered;
+        _map.UnitMovementIssued -= SendNewUnitPosition;
+        _map.StartingPositionsDeclared -= OnMapStartingPositionsDeclared;
     }
 
     private void InitializeFakeMap()
@@ -96,7 +98,7 @@ public class ClientGame : Game
         // TODO these could listen to data events themselves
     }
 
-    private void OnMapStartingPositionsDeclared(Vector2[] startingPositions)
+    private void OnMapStartingPositionsDeclared(ICollection<Vector2> startingPositions)
     {
         GD.Print($"{nameof(ClientGame)}.{nameof(OnMapStartingPositionsDeclared)}: event received with " +
                  $"{nameof(startingPositions)} '{JsonConvert.SerializeObject(startingPositions)}'.");

@@ -1,13 +1,18 @@
+using System;
+using System.Collections.Generic;
 using Godot;
 
 /// <summary>
-/// Master node for all map-related communications: data, visuals, pathfinding.
+/// Master node for all map-related object management: instances, visuals and pathfinding of entities, tiles and
+/// fx (e.g. particles, name pending).
 /// </summary>
 public class Map : Node2D
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     
-    [Signal] public delegate void StartingPositionsDeclared(Vector2[] startingPositions);
+    public event Action<ICollection<Vector2>> StartingPositionsDeclared = delegate { };
+    protected void RaiseStartingPositionsDeclared(ICollection<Vector2> startingPositions) =>
+        StartingPositionsDeclared(startingPositions);
     
     protected Pathfinding Pathfinding;
 

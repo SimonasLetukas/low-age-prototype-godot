@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://app/client/game/map/visuals/entities/units/revs/slave/Slave.tscn" type="PackedScene" id=2]
+[ext_resource path="res://app/client/game/map/entities/units/revs/slave/Slave.tscn" type="PackedScene" id=2]
+
 
 [node name="Units" type="YSort"]
 

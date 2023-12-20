@@ -6,7 +6,7 @@ using low_age_data.Domain.Shared;
 public class ClientMap : Map
 {
     public event Action<Vector2, Terrain> NewTileHovered = delegate { };
-    [Signal] public delegate void UnitMovementIssued(Vector2 entityPosition, Vector2[] globalPath, Vector2[] path);
+    public event Action<Vector2, Vector2[], Vector2[]> UnitMovementIssued = delegate { };
 
     private readonly ICollection<Vector2> _startingPositions = new List<Vector2>();
     private Vector2 _mapSize = Vector2.Inf;
@@ -18,8 +18,8 @@ public class ClientMap : Map
     public override void _Ready()
     {
         base._Ready();
-        _tileMap = GetNode<Tiles>($"Visual/{nameof(Tiles)}");
-        _entities = GetNode<Entities>($"Visual/{nameof(Entities)}");
+        _tileMap = GetNode<Tiles>($"{nameof(Tiles)}");
+        _entities = GetNode<Entities>($"{nameof(Entities)}");
         _data = Data.Instance;
 
         _entities.NewEntityFound += OnEntitiesNewEntityFound;
@@ -95,7 +95,7 @@ public class ClientMap : Map
         var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
         var selectedEntity = _entities.SelectedEntity;
         var entityPosition = _entities.GetMapPositionOfEntity(selectedEntity);
-        EmitSignal(nameof(UnitMovementIssued), entityPosition, globalPath, path);
+        UnitMovementIssued(entityPosition, globalPath, path);
         HandleDeselecting();
     }
 
@@ -178,7 +178,7 @@ public class ClientMap : Map
     {
         _tileMap.FillMapOutsideWithMountains();
         _tileMap.UpdateALlBitmaps();
-        EmitSignal(nameof(StartingPositionsDeclared), _startingPositions);
+        RaiseStartingPositionsDeclared(_startingPositions);
     }
 
     private void OnMapCreatorStartingPositionFound(Vector2 coordinates)

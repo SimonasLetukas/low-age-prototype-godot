@@ -1,8 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://app/client/game/map/visuals/entities/units/Unit.tscn" type="PackedScene" id=1]
-[ext_resource path="res://app/client/game/map/visuals/entities/units/revs/slave/Slave.cs" type="Script" id=2]
+[ext_resource path="res://app/client/game/map/entities/units/Unit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://app/client/game/map/entities/units/revs/slave/Slave.cs" type="Script" id=2]
 [ext_resource path="res://assets/sprites/units/revs/slave indexed 1x1.png" type="Texture" id=3]
+
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
