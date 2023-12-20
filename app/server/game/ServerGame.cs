@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using low_age_data.Domain.Shared;
+using Newtonsoft.Json;
 
 public class ServerGame : Game
 {
@@ -53,14 +54,17 @@ public class ServerGame : Game
         GD.Print($"{nameof(ServerGame)}.{nameof(OnClientLoaded)}: still waiting for " +
                  $"{_notLoadedPlayers.Count} players to load");
     }
-
+    
     [Remote]
-    public void OnNewUnitPosition(int playerId, Vector2 entityPosition, Vector2[] globalPath, Vector2[] path)
+    public void OnRegisterNewGameEvent(int playerId, string eventBody)
     {
-        GD.Print($"{nameof(ServerGame)}.{nameof(OnClientLoaded)}: player {playerId} " +
-                 $"'{Data.Instance.GetPlayerName(playerId)}' moved unit from {path[0]} to {path[path.Length - 1]}");
+        GD.Print($"{nameof(ServerGame)}.{nameof(OnRegisterNewGameEvent)}: player {playerId} " +
+                 $"'{Data.Instance.GetPlayerName(playerId)}' executed event '{eventBody}'");
 
-        Rpc(nameof(OnUnitPositionUpdated), entityPosition, globalPath, path);
+        var gameEvent = StringToEvent(eventBody);
+        Events.Add(gameEvent);
+
+        Rpc(nameof(OnNewGameEventRegistered), eventBody);
     }
 
     private void OnPlayerRemoved(int playerId)

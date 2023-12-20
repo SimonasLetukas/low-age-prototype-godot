@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Array = Godot.Collections.Array;
 
@@ -115,7 +116,7 @@ public class Entities : YSort
         ? _entitiesByMapPositions[mapPosition]
         : null;
 
-    public void MoveEntity(EntityLegacy entity, Vector2[] globalPath, Vector2[] path)
+    public void MoveEntity(EntityLegacy entity, ICollection<Vector2> globalPath, ICollection<Vector2> path)
     {
         var targetPosition = path.Last();
         var startPosition = path.First();

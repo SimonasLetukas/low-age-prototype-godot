@@ -1,12 +1,13 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using low_age_data.Domain.Shared;
 
 public class ClientMap : Map
 {
     public event Action<Vector2, Terrain> NewTileHovered = delegate { };
-    public event Action<Vector2, Vector2[], Vector2[]> UnitMovementIssued = delegate { };
+    public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
 
     private readonly ICollection<Vector2> _startingPositions = new List<Vector2>();
     private Vector2 _mapSize = Vector2.Inf;
@@ -95,7 +96,7 @@ public class ClientMap : Map
         var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
         var selectedEntity = _entities.SelectedEntity;
         var entityPosition = _entities.GetMapPositionOfEntity(selectedEntity);
-        UnitMovementIssued(entityPosition, globalPath, path);
+        UnitMovementIssued(new UnitMovedAlongPathEvent(entityPosition, globalPath, path));
         HandleDeselecting();
     }
 
@@ -126,10 +127,10 @@ public class ClientMap : Map
         _entities.DeselectEntity();
     }
 
-    public void MoveUnit(Vector2 entityPosition, Vector2[] globalPath, Vector2[] path)
+    public void MoveUnit(UnitMovedAlongPathEvent @event)
     {
-        var selectedEntity = _entities.GetEntityFromMapPosition(entityPosition);
-        _entities.MoveEntity(selectedEntity, globalPath, path);
+        var selectedEntity = _entities.GetEntityFromMapPosition(@event.CurrentEntityPosition);
+        _entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path);
     }
     
     private bool HoverTile()

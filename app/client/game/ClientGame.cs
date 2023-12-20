@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 public class ClientGame : Game
@@ -55,7 +56,7 @@ public class ClientGame : Game
 
         _map.NewTileHovered += _interface.OnMapNewTileHovered;
 
-        _map.UnitMovementIssued += SendNewUnitPosition;
+        _map.UnitMovementIssued += RegisterNewGameEvent;
         _map.StartingPositionsDeclared += OnMapStartingPositionsDeclared;
         _data.Connect(nameof(Data.Synchronised), this, nameof(OnDataSynchronized));
     }
@@ -63,7 +64,7 @@ public class ClientGame : Game
     private void DisconnectSignals()
     {
         _map.NewTileHovered -= _interface.OnMapNewTileHovered;
-        _map.UnitMovementIssued -= SendNewUnitPosition;
+        _map.UnitMovementIssued -= RegisterNewGameEvent;
         _map.StartingPositionsDeclared -= OnMapStartingPositionsDeclared;
     }
 
@@ -82,11 +83,38 @@ public class ClientGame : Game
         Client.Instance.ResetNetwork();
         GetTree().ChangeScene(MainMenu.ScenePath);
     }
-
+    
     [RemoteSync]
-    protected override void OnUnitPositionUpdated(Vector2 entityPosition, Vector2[] globalPath, Vector2[] path)
+    protected override void OnNewGameEventRegistered(string eventBody)
     {
-        _map.MoveUnit(entityPosition, globalPath, path);
+        var playerId = GetTree().GetNetworkUniqueId();
+        GD.Print($"{nameof(ClientGame)}.{nameof(OnNewGameEventRegistered)}: event '{eventBody}' received " +
+                 $"for player {playerId} '{Data.Instance.GetPlayerName(playerId)}'");
+
+        var gameEvent = StringToEvent(eventBody);
+        if (Events.Any(x => x.Id.Equals(gameEvent.Id)))
+        {
+            GD.Print($"{nameof(ClientGame)}.{nameof(OnNewGameEventRegistered)}: event '{gameEvent.Id}' " +
+                     $"already exists for player {playerId} '{Data.Instance.GetPlayerName(playerId)}'");
+            return;
+        }
+
+        Events.Add(gameEvent);
+        ExecuteGameEvent(gameEvent);
+    }
+
+    private void ExecuteGameEvent(IGameEvent gameEvent)
+    {
+        switch (gameEvent)
+        {
+            case UnitMovedAlongPathEvent unitMovedAlongPathEvent:
+                _map.MoveUnit(unitMovedAlongPathEvent);
+                break;
+            default:
+                GD.PrintErr($"{nameof(ClientGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
+                            $"'{EventToString(gameEvent)}'. Type not implemented.");
+                break;
+        }
     }
 
     private void OnDataSynchronized()

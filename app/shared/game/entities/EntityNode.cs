@@ -7,7 +7,7 @@ using Godot;
 /// </summary>
 public class EntityNode : Node2D, INodeFromBlueprint<low_age_data.Domain.Entities.Entity>
 {
-    public Guid Id { get; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     
     private low_age_data.Domain.Entities.Entity Blueprint { get; set; }
     

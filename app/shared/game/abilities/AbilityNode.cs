@@ -11,7 +11,7 @@ public class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     public event Action<AbilityNode> Activated = delegate { };
     public event Action<AbilityNode> CooldownEnded = delegate { };
 
-    public Guid Id { get; } = Guid.NewGuid();
+    public Guid Id { get; set; } = Guid.NewGuid();
     public EndsAtNode RemainingCooldown { get; protected set; }
     public List<Payment> PaymentPaid { get; protected set; }
     public bool IsResearched { get; protected set; }

@@ -4,7 +4,7 @@ using low_age_data.Domain.Effects;
 
 public class EffectNode : Node2D, INodeFromBlueprint<Effect>
 {
-    public Guid Id { get; } = Guid.NewGuid();
+    public Guid Id { get; set; } = Guid.NewGuid();
     
     private Effect Blueprint { get; set; }
 

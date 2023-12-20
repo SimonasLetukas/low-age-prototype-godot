@@ -14,7 +14,7 @@ public class StatNode : Node2D, INodeFromBlueprint<Stat>
         return stat;
     }
 
-    public Guid Id { get; } = Guid.NewGuid();
+    public Guid Id { get; set; } = Guid.NewGuid();
     public Stat Blueprint { get; private set; }
     public float CurrentValue { get; set; }
 
