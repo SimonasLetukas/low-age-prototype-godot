@@ -22,7 +22,7 @@ namespace low_age_data.Collections
                     displayName: nameof(TileId.Mountains),
                     description: "",
                     terrain: Terrain.Mountains,
-                    movementCost: 0.0f,
+                    movementCost: float.PositiveInfinity,
                     allowsBuilding: false),
                 new Tile(
                     id: TileId.Marsh,

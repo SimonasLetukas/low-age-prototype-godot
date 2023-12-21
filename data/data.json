@@ -3637,7 +3637,7 @@
       "displayName": "Mountains",
       "description": "",
       "terrain": "Terrain.Mountains",
-      "movementCost": 0.0,
+      "movementCost": "Infinity",
       "allowsBuilding": false
     },
     {

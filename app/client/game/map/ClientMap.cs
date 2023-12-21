@@ -14,14 +14,12 @@ public class ClientMap : Map
     private Vector2 _tileHovered = Vector2.Zero;
     private Tiles _tileMap;
     private Entities _entities;
-    private Data _data;
 
     public override void _Ready()
     {
         base._Ready();
         _tileMap = GetNode<Tiles>($"{nameof(Tiles)}");
         _entities = GetNode<Entities>($"{nameof(Entities)}");
-        _data = Data.Instance;
 
         _entities.NewEntityFound += OnEntitiesNewEntityFound;
     }

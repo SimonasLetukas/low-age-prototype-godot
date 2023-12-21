@@ -2,6 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using System.Linq;
 using low_age_data.Domain.Common;
+using low_age_data.Domain.Tiles;
 
 /// <summary>
 /// Responsible for: <para />
@@ -11,8 +12,9 @@ using low_age_data.Domain.Common;
 /// </summary>
 public class Tiles : Node2D
 {
+    private ICollection<(Vector2, TileId)> _tiles;
+    private IList<Tile> _tilesBlueprint;
     private Vector2 _mapSize;
-    private ICollection<(Vector2, Terrain)> _tiles;
     private Vector2 _tilemapOffset;
     private Vector2 _tileOffset;
     private int _mountainsFillOffset;
@@ -54,19 +56,20 @@ public class Tiles : Node2D
         _focusedTile.Disable();
     }
 
-    public void Initialize(Vector2 mapSize, ICollection<(Vector2, Terrain)> tiles)
+    public void Initialize(Vector2 mapSize, ICollection<(Vector2, TileId)> tiles)
     {
-        _mapSize = mapSize;
         _tiles = tiles;
+        _tilesBlueprint = Data.Instance.Blueprint.Tiles;
+        _mapSize = mapSize;
         _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
         _mountainsFillOffset = (int)Mathf.Max(mapSize.x, mapSize.y);
         _tileOffset = new Vector2(0, (float)Constants.TileHeight / 2);
         ClearTilemaps();
         
-        foreach (var (coordinates, terrain) in tiles)
+        foreach (var (coordinates, _) in tiles)
         {
             _grass.SetCellv(coordinates, TileMapGrassIndex); // needed to fill up gaps
-            SetCell(coordinates, terrain);
+            SetCell(coordinates, GetTerrain(coordinates));
         }
     }
 
@@ -80,8 +83,12 @@ public class Tiles : Node2D
         => mapPositions.Select(GetGlobalPositionFromMapPosition).ToArray();
 
     public Terrain GetTerrain(Vector2 at) => at.IsInBoundsOf(_mapSize)
-        ? _tiles.SingleOrDefault(x => x.Item1.Equals(at)).Item2
+        ? GetBlueprint(GetTile(at)).Terrain
         : Terrain.Mountains;
+
+    public TileId GetTile(Vector2 at) => _tiles.SingleOrDefault(x => x.Item1.Equals(at)).Item2;
+
+    public Tile GetBlueprint(TileId of) => _tilesBlueprint.SingleOrDefault(x => x.Id.Equals(of));
 
     public void MoveFocusedTileTo(Vector2 position)
     {

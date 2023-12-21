@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using low_age_data.Domain.Common;
+using low_age_data.Domain.Tiles;
 
 /// <summary>
 /// <para>
@@ -50,7 +51,7 @@ public class Creator : Node2D
 
         var mapSize = new Vector2(image.GetWidth(), image.GetHeight());
         var startingPositions = new List<Vector2>();
-        var tiles = new List<(Vector2, Terrain)>();
+        var tiles = new List<(Vector2, TileId)>();
         
         image.Lock();
 
@@ -61,16 +62,16 @@ public class Creator : Node2D
                 var pixel = image.GetPixel(x, y);
                 
                 // By default all (unknown & starting) tiles are grass
-                var terrain = Terrain.Grass;
+                var tile = TileId.Grass;
                 
-                if (pixel == ColorGrass) terrain = Terrain.Grass;
-                if (pixel == ColorMountains) terrain = Terrain.Mountains;
-                if (pixel == ColorMarsh) terrain = Terrain.Marsh;
-                if (pixel == ColorScraps) terrain = Terrain.Scraps;
-                if (pixel == ColorCelestium) terrain = Terrain.Celestium;
+                if (pixel == ColorGrass) tile = TileId.Grass;
+                if (pixel == ColorMountains) tile = TileId.Mountains;
+                if (pixel == ColorMarsh) tile = TileId.Marsh;
+                if (pixel == ColorScraps) tile = TileId.Scraps;
+                if (pixel == ColorCelestium) tile = TileId.Celestium;
                 if (pixel == ColorStart) startingPositions.Add(new Vector2(x, y));
                 
-                tiles.Add((new Vector2(x, y), terrain));
+                tiles.Add((new Vector2(x, y), tile));
             }
         }
         

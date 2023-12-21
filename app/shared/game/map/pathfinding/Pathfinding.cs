@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
+using low_age_data.Domain.Tiles;
 using Newtonsoft.Json;
 using Object = Godot.Object;
 
@@ -12,7 +13,7 @@ public class Pathfinding : Node
     public Godot.Collections.Dictionary<Vector2, int> PointIdsByPositions { get; private set; }
     public Godot.Collections.Dictionary<int, Vector2> PositionsByPointIds { get; private set; }
 
-    private static readonly Godot.Collections.Dictionary<int, float> TerrainWeights = new Godot.Collections.Dictionary<int, float>
+    private static Godot.Collections.Dictionary<int, float> TerrainWeights = new Godot.Collections.Dictionary<int, float>
     {
         { Terrain.Grass.ToIndex(),     1.0f },
         { Terrain.Mountains.ToIndex(), float.PositiveInfinity },
@@ -25,7 +26,7 @@ public class Pathfinding : Node
     private Vector2 _previousPosition = Vector2.Inf;
     private float _previousRange = -1.0f;
 
-    public void Initialize(Vector2 mapSize, ICollection<(Vector2, Terrain)> tiles)
+    public void Initialize(Vector2 mapSize, ICollection<(Vector2, TileId)> tiles)
     {
 	    GD.Print($"{nameof(Pathfinding)}.{nameof(Initialize)}: started.");
 	    
@@ -45,14 +46,18 @@ public class Pathfinding : Node
 		    var id = PointIdsByPositions[position];
 		    PositionsByPointIds[id] = position;
 	    }
-	    
-	    foreach (var (coordinates, terrain) in tiles)
+
+	    var blueprint = Data.Instance.Blueprint;
+
+	    TerrainWeights = new Godot.Collections.Dictionary<int, float>();
+	    foreach (var tile in blueprint.Tiles)
 	    {
-		    if (terrain.Equals(Terrain.Marsh)
-		        || terrain.Equals(Terrain.Mountains))
-		    {
-			    SetTerrainForPoint(coordinates, terrain);
-		    }
+		    TerrainWeights.Add(tile.Terrain.ToIndex(), tile.MovementCost);
+	    }
+	    
+	    foreach (var (coordinates, tile) in tiles)
+	    {
+		    SetTerrainForPoint(coordinates, blueprint.Tiles.Single(x => x.Id.Equals(tile)).Terrain);
 	    }
     }
 
