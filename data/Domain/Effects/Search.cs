@@ -1,10 +1,10 @@
 ﻿using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Flags;
 using System.Collections.Generic;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Filters;
+using low_age_data.Domain.Common.Flags;
+using low_age_data.Domain.Common.Shape;
 using low_age_data.Domain.Entities;
-using low_age_data.Domain.Shared.Filters;
-using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Domain.Effects
 {
@@ -12,13 +12,13 @@ namespace low_age_data.Domain.Effects
     {
         public Search(
             EffectId id,
-            Shape shape,
+            IShape shape,
             IList<SearchFlag> searchFlags,
             IList<IFilterItem> filters,
             IList<EffectId>? effects = null,
             Location? location = null,
             IList<Validator>? validators = null,
-            bool? usedForValidator = null) : base(id, $"{nameof(Effect)}.{nameof(Search)}", validators ?? new List<Validator>())
+            bool? usedForValidator = null) : base(id, validators ?? new List<Validator>())
         {
             Shape = shape;
             SearchFlags = searchFlags;
@@ -31,7 +31,7 @@ namespace low_age_data.Domain.Effects
         /// <summary>
         /// Type of the <see cref="Shape"/> and its area which should be <see cref="Search"/>ed.
         /// </summary>
-        public Shape Shape { get; }
+        public IShape Shape { get; }
         
         /// <summary>
         /// For <see cref="SearchFlag"/> flags.
@@ -39,7 +39,7 @@ namespace low_age_data.Domain.Effects
         public IList<SearchFlag> SearchFlags { get; }
         
         /// <summary>
-        /// For <see cref="Shared.Filters"/>.
+        /// For <see cref="Common.Filters"/>.
         /// </summary>
         public IList<IFilterItem> Filters { get; }
         

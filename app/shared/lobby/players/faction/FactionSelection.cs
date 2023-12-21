@@ -27,13 +27,13 @@ public class FactionSelection : OptionButton
     
     private void PopulateFactions()
     {
-        if (Data.Instance.Factions.IsEmpty()) 
+        if (Data.Instance.Blueprint is null) 
             Data.Instance.ReadBlueprint();
-
+        
         Clear();
         
         var optionButtonIndex = 0;
-        foreach (var faction in Data.Instance.Factions)
+        foreach (var faction in Data.Instance.Blueprint?.Factions ?? new List<Faction>())
         {
             AddItem(faction.DisplayName, optionButtonIndex);
             _factionIdsByOptionButtonIndex[optionButtonIndex] = faction.Id;

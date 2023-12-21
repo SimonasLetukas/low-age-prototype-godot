@@ -1,8 +1,9 @@
-﻿using low_age_data.Domain.Shared;
+﻿using low_age_data.Domain.Common;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Entities.Tiles
+namespace low_age_data.Domain.Tiles
 {
-    public class Tile : Entity
+    public class Tile
     {
         public Tile(
             TileId id, 
@@ -10,13 +11,20 @@ namespace low_age_data.Domain.Entities.Tiles
             string description, 
             Terrain terrain, 
             float movementCost, 
-            bool allowsBuilding) : base(id, displayName, description)
+            bool allowsBuilding)
         {
+            Id = id;
+            DisplayName = displayName;
+            Description = description;
             Terrain = terrain;
             MovementCost = movementCost;
             AllowsBuilding = allowsBuilding;
         }
 
+        [JsonProperty(Order = -3)]
+        public TileId Id { get; }
+        public string DisplayName { get; }
+        public string Description { get; }
         public Terrain Terrain { get; }
         public float MovementCost { get; }
         public bool AllowsBuilding { get; }

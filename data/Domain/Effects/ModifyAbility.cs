@@ -10,7 +10,7 @@ namespace low_age_data.Domain.Effects
             EffectId id,
             AbilityId abilityToModify,
             AbilityId modifiedAbility,
-            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(ModifyAbility)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
         {
             AbilityToModify = abilityToModify;
             ModifiedAbility = modifiedAbility;

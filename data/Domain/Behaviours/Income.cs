@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
+using low_age_data.Domain.Common.Modifications;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
-using low_age_data.Domain.Shared.Modifications;
 
 namespace low_age_data.Domain.Behaviours
 {
@@ -28,7 +28,6 @@ namespace low_age_data.Domain.Behaviours
             IList<EffectId>? conditionalEffects = null) 
             : base(
                 id, 
-                $"{nameof(Behaviour)}.{nameof(Income)}", 
                 displayName, 
                 description, 
                 sprite,

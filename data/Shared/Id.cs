@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Abilities;
 
-namespace low_age_data.Common
+namespace low_age_data.Shared
 {
     public class Id : ValueObject<Id>
     {

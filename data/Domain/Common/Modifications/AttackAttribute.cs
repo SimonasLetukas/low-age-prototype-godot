@@ -1,26 +1,20 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared.Modifications
+namespace low_age_data.Domain.Common.Modifications
 {
-    public class AttackAttribute : ValueObject<AttackAttribute>
+    [JsonConverter(typeof(AttackAttributeJsonConverter))]
+    public class AttackAttribute : EnumValueObject<AttackAttribute, AttackAttribute.AttackAttributes>
     {
-        public override string ToString()
-        {
-            return $"{nameof(AttackAttribute)}.{Value}";
-        }
-
         public static AttackAttribute MaxAmount => new AttackAttribute(AttackAttributes.MaxAmount);
         public static AttackAttribute MaxDistance => new AttackAttribute(AttackAttributes.MaxDistance);
 
-        private AttackAttribute(AttackAttributes @enum)
-        {
-            Value = @enum;
-        }
+        private AttackAttribute(AttackAttributes @enum) : base(@enum) { }
 
-        private AttackAttributes Value { get; }
-
-        private enum AttackAttributes
+        private AttackAttribute(string? from) : base(from) { }
+        
+        public enum AttackAttributes
         {
             MaxAmount,
             MinDistance,
@@ -28,9 +22,27 @@ namespace low_age_data.Domain.Shared.Modifications
             BonusAmount,
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        private class AttackAttributeJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(AttackAttribute);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (AttackAttribute)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new AttackAttribute(value);
+            }
         }
     }
 }

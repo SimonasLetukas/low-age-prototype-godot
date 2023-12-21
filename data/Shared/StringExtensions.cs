@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 
-namespace low_age_data.Common
+namespace low_age_data.Shared
 {
     public static class StringExtensions
     {

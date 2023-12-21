@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Effects
 {
@@ -18,7 +18,6 @@ namespace low_age_data.Domain.Effects
             IList<Validator>? validators = null)
             : base(
                 id, 
-                $"{nameof(Effect)}.{nameof(ModifyResearch)}", 
                 validators ?? new List<Validator>())
         {
             ResearchToAdd = researchToAdd ?? new List<ResearchId>();

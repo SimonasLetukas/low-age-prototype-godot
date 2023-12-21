@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
 using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
 using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Abilities
@@ -10,7 +10,6 @@ namespace low_age_data.Domain.Abilities
     {
         protected Ability(
             AbilityId id,
-            string type,
             TurnPhase turnPhase,
             IList<ResearchId> researchNeeded,
             bool hasButton,
@@ -21,7 +20,6 @@ namespace low_age_data.Domain.Abilities
             IList<Payment>? cost = null)
         {
             Id = id;
-            Type = type;
             TurnPhase = turnPhase;
             ResearchNeeded = researchNeeded;
             HasButton = hasButton;
@@ -32,8 +30,7 @@ namespace low_age_data.Domain.Abilities
             Sprite = sprite;
         }
 
-        [JsonProperty(Order = -5)] public AbilityId Id { get; }
-        [JsonProperty(Order = -4)] public string Type { get; }
+        [JsonProperty(Order = -4)] public AbilityId Id { get; }
         
         /// <summary>
         /// At which part of the round the button for this ability can be pressed.
@@ -59,9 +56,9 @@ namespace low_age_data.Domain.Abilities
         /// <summary>
         /// Has to be paid in full for the <see cref="Ability"/> to start. Triggers once the button is pressed. The
         /// ability is considered inactive while the <see cref="Cost"/> is not fully paid. The timing of the payments
-        /// depends on <see cref="TurnPhase"/>: <see cref="Domain.Shared.TurnPhase.Passive"/> - always paid at the
-        /// start of the action phase; <see cref="Domain.Shared.TurnPhase.Planning"/> - always paid at the start of the
-        /// action phase; <see cref="Domain.Shared.TurnPhase.Action"/> - first paid when activated during the
+        /// depends on <see cref="TurnPhase"/>: <see cref="Common.TurnPhase.Passive"/> - always paid at the
+        /// start of the action phase; <see cref="Common.TurnPhase.Planning"/> - always paid at the start of the
+        /// action phase; <see cref="Common.TurnPhase.Action"/> - first paid when activated during the
         /// <see cref="Actor"/>'s action, then at the start of the action phase.
         /// </summary>
         public IList<Payment> Cost { get; }

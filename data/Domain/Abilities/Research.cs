@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Shared;
+using low_age_data.Domain.Common;
 
 namespace low_age_data.Domain.Abilities
 {
@@ -17,7 +17,6 @@ namespace low_age_data.Domain.Abilities
             IList<ResearchId>? researchNeeded = null)
             : base(
                 id,
-                $"{nameof(Ability)}.{nameof(Research)}",
                 TurnPhase.Planning,
                 researchNeeded ?? new List<ResearchId>(),
                 true,

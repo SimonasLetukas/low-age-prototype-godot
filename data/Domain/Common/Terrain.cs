@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using low_age_data.Common;
+using low_age_data.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared
+namespace low_age_data.Domain.Common
 {
     [JsonConverter(typeof(TerrainJsonConverter))]
-    public class Terrain : ValueObject<Terrain>
+    public class Terrain : EnumValueObject<Terrain, Terrain.TerrainsEnum>
     {
-        public override string ToString()
-        {
-            return $"{nameof(Terrain)}.{Value}";
-        }
-
         public static Terrain Grass => new Terrain(TerrainsEnum.Grass);
         public static Terrain Mountains => new Terrain(TerrainsEnum.Mountains);
         public static Terrain Marsh => new Terrain(TerrainsEnum.Marsh);
@@ -23,39 +17,17 @@ namespace low_age_data.Domain.Shared
         public int ToIndex() => (int)Value;
         public string ToDisplayValue() => Value.ToString();
 
-        private Terrain(TerrainsEnum @enum)
-        {
-            Value = @enum;
-        }
+        private Terrain(TerrainsEnum @enum) : base(@enum) { }
 
-        private Terrain(string? from)
-        {
-            if (from is null)
-            {
-                Value = TerrainsEnum.Grass;
-                return;
-            }
-            
-            from = from.Substring($"{nameof(Terrain)}.".Length);
-            Value = Enum.TryParse(from, out TerrainsEnum terrainsEnum) 
-                ? terrainsEnum 
-                : TerrainsEnum.Grass;
-        }
+        private Terrain(string? from) : base(from) { }
 
-        private TerrainsEnum Value { get; }
-
-        private enum TerrainsEnum
+        public enum TerrainsEnum
         {
             Grass = 0,
             Mountains = 1,
             Marsh = 2,
             Scraps = 3,
             Celestium = 4,
-        }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
         }
         
         private class TerrainJsonConverter : JsonConverter
@@ -71,8 +43,11 @@ namespace low_age_data.Domain.Shared
                 serializer.Serialize(writer, id.ToString());
             }
 
-            public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
             {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
                 var value = serializer.Deserialize<string>(reader);
                 return new Terrain(value);
             }

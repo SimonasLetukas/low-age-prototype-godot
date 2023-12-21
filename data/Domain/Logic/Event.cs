@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Masks;
-using low_age_data.Domain.Shared;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Logic
 {
@@ -11,13 +12,9 @@ namespace low_age_data.Domain.Logic
     /// names reference <see cref="Location"/> in the effect chain, in which <see cref="Entity"/> refers to
     /// <see cref="Location.Self"/>.
     /// </summary>
-    public class Event : ValueObject<Event>
+    [JsonConverter(typeof(EventJsonConverter))]
+    public class Event : EnumValueObject<Event, Event.Events>
     {
-        public override string ToString()
-        {
-            return $"{nameof(Event)}.{Value}";
-        }
-
         /// <summary>
         /// Interruption is considered anything that disables the use of abilities (NOT attacks): stuns, silences, etc.
         /// </summary>
@@ -38,14 +35,11 @@ namespace low_age_data.Domain.Logic
         /// </summary>
         public static Event EntityMaskChanged => new Event(Events.EntityMaskChanged);
 
-        private Event(Events @enum)
-        {
-            Value = @enum;
-        }
+        private Event(Events @enum) : base(@enum) { }
 
-        private Events Value { get; }
+        private Event(string? from) : base(from) { }
 
-        private enum Events
+        public enum Events
         {
             OriginIsInterrupted,
             OriginIsDestroyed,
@@ -61,9 +55,27 @@ namespace low_age_data.Domain.Logic
             EntityMaskChanged
         }
         
-        protected override IEnumerable<object> GetEqualityComponents()
+        private class EventJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(Event);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (Event)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new Event(value);
+            }
         }
     }
 }

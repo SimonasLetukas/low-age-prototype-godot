@@ -1,6 +1,6 @@
 ﻿using low_age_data.Domain.Entities;
 
-namespace low_age_data.Domain.Shared.Filters
+namespace low_age_data.Domain.Common.Filters
 {
     /// <summary>
     /// Should be a specific <see cref="Entity"/>.
@@ -9,11 +9,9 @@ namespace low_age_data.Domain.Shared.Filters
     {
         public SpecificEntity(EntityId value)
         {
-            Type = $"{nameof(SpecificEntity)}";
             Value = value;
         }
         
-        public string Type { get; }
         public EntityId Value { get; }
     }
 }

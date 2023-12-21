@@ -1,5 +1,4 @@
-﻿using low_age_data.Domain.Shared.Flags;
-using Newtonsoft.Json;
+﻿using low_age_data.Domain.Common.Flags;
 
 namespace low_age_data.Domain.Logic
 {
@@ -8,24 +7,11 @@ namespace low_age_data.Domain.Logic
     /// </summary>
     public class Condition
     {
-        internal Condition(
-            string type,
-            ConditionFlag conditionFlag)
+        public Condition(ConditionFlag conditionFlag)
         {
-            Type = type;
             ConditionFlag = conditionFlag;
         }
 
-        public Condition(
-            ConditionFlag conditionFlag)
-        {
-            Type = $"{nameof(Condition)}";
-            ConditionFlag = conditionFlag;
-        }
-        
-        [JsonProperty(Order = -3)]
-        public string Type { get; }
-        
         /// <summary>
         /// Used to specify how the target is conditioned.
         /// </summary>

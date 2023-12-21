@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Filters;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Filters;
 
 namespace low_age_data.Domain.Effects
 {
@@ -17,7 +17,7 @@ namespace low_age_data.Domain.Effects
             bool? ignoresArmor = null,
             bool? ignoresShield = null,
             IList<IFilterItem>? filters = null,
-            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(Damage)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
         {
             DamageType = damageType;
             Amount = amount ?? new Amount(0);

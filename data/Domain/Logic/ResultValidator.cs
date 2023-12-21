@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Logic
     /// </summary>
     public class ResultValidator : Validator
     {
-        public ResultValidator(EffectId searchEffect, IList<Condition> conditions) : base(conditions, $"{nameof(Validator)}.{nameof(ResultValidator)}")
+        public ResultValidator(EffectId searchEffect, IList<Condition> conditions) : base(conditions)
         {
             SearchEffect = searchEffect;
         }

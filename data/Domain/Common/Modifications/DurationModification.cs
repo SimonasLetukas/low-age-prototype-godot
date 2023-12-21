@@ -1,13 +1,13 @@
 ﻿using low_age_data.Domain.Behaviours;
 
-namespace low_age_data.Domain.Shared.Modifications
+namespace low_age_data.Domain.Common.Modifications
 {
     public class DurationModification : Modification
     {
         public DurationModification(
             Change change, 
             float amount,
-            BehaviourId behaviourToModify) : base($"{nameof(Modification)}.{nameof(DurationModification)}", change, amount)
+            BehaviourId behaviourToModify) : base(change, amount)
         {
             BehaviourToModify = behaviourToModify;
         }

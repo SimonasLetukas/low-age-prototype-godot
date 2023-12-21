@@ -1,32 +1,44 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared.Flags
+namespace low_age_data.Domain.Common.Flags
 {
-    public class AmountFlag : ValueObject<AmountFlag>
+    [JsonConverter(typeof(AmountFlagJsonConverter))]
+    public class AmountFlag : EnumValueObject<AmountFlag, AmountFlag.AmountFlags>
     {
-        public override string ToString()
-        {
-            return $"{nameof(AmountFlag)}.{Value}";
-        }
-        
         public static AmountFlag FromMissingHealth => new AmountFlag(AmountFlags.FromMissingHealth);
 
-        private AmountFlag(AmountFlags @enum)
-        {
-            Value = @enum;
-        }
+        private AmountFlag(AmountFlags @enum) : base(@enum) { }
 
-        private AmountFlags Value { get; }
-
-        private enum AmountFlags
+        private AmountFlag(string? from) : base(from) { }
+        
+        public enum AmountFlags
         {
             FromMissingHealth
         }
-
-        protected override IEnumerable<object> GetEqualityComponents()
+        
+        private class AmountFlagJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(AmountFlag);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (AmountFlag)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new AmountFlag(value);
+            }
         }
     }
 }

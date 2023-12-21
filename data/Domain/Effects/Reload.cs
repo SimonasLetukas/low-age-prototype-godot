@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Effects
 {
@@ -11,7 +11,7 @@ namespace low_age_data.Domain.Effects
             EffectId id, 
             BehaviourId ammunitionToTarget,
             Location? location = null,
-            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(Reload)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
         {
             AmmunitionToTarget = ammunitionToTarget;
             Location = location ?? Location.Inherited;

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace low_age_data.Common
+namespace low_age_data.Shared
 {
     public class ToStringJsonConverter : JsonConverter
     {
@@ -17,7 +17,7 @@ namespace low_age_data.Common
 
         public override bool CanRead => false;
         
-        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }

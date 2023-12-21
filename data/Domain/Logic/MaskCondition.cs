@@ -1,5 +1,5 @@
-﻿using low_age_data.Domain.Masks;
-using low_age_data.Domain.Shared.Flags;
+﻿using low_age_data.Domain.Common.Flags;
+using low_age_data.Domain.Masks;
 
 namespace low_age_data.Domain.Logic
 {
@@ -10,7 +10,7 @@ namespace low_age_data.Domain.Logic
     {
         public MaskCondition(
             ConditionFlag conditionFlag,
-            MaskId conditionedMask) : base($"{nameof(Condition)}.{nameof(MaskCondition)}", conditionFlag)
+            MaskId conditionedMask) : base(conditionFlag)
         {
             ConditionedMask = conditionedMask;
         }

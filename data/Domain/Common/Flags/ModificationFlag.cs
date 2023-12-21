@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared.Flags
+namespace low_age_data.Domain.Common.Flags
 {
-    public class ModificationFlag : ValueObject<ModificationFlag>
+    [JsonConverter(typeof(ModificationFlagJsonConverter))]
+    public class ModificationFlag : EnumValueObject<ModificationFlag, ModificationFlag.ModificationFlags>
     {
-        public override string ToString()
-        {
-            return $"{nameof(ModificationFlag)}.{Value}";
-        }
-        
         public static ModificationFlag CannotBeHealed => new ModificationFlag(ModificationFlags.CannotBeHealed);
         public static ModificationFlag AbilitiesDisabled => new ModificationFlag(ModificationFlags.AbilitiesDisabled);
         public static ModificationFlag ClimbsDown => new ModificationFlag(ModificationFlags.ClimbsDown);
@@ -29,14 +26,11 @@ namespace low_age_data.Domain.Shared.Flags
         /// </summary>
         public static ModificationFlag FullyDisabled => new ModificationFlag(ModificationFlags.FullyDisabled);
 
-        private ModificationFlag(ModificationFlags @enum)
-        {
-            Value = @enum;
-        }
-
-        private ModificationFlags Value { get; }
-
-        private enum ModificationFlags
+        private ModificationFlag(ModificationFlags @enum) : base(@enum) { }
+        
+        private ModificationFlag(string? from) : base(from) { }
+        
+        public enum ModificationFlags
         {
             CannotBeHealed,
             AbilitiesDisabled,
@@ -53,9 +47,27 @@ namespace low_age_data.Domain.Shared.Flags
             FullyDisabled
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        private class ModificationFlagJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(ModificationFlag);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (ModificationFlag)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new ModificationFlag(value);
+            }
         }
     }
 }

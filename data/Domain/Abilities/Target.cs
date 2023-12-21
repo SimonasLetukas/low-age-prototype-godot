@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
+using low_age_data.Domain.Common.Shape;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
-using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Domain.Abilities
 {
@@ -16,17 +16,16 @@ namespace low_age_data.Domain.Abilities
             string displayName,
             string description,
             string sprite,
-            Shape targetArea,
+            IShape targetArea,
             IList<EffectId> effects,
             IList<ResearchId>? researchNeeded = null,
             EndsAt? cooldown = null,
             IList<Attacks>? overridesAttacks = null,
             bool? fallbackToAttack = false,
             IList<Payment>? cost = null,
-            Shape? leashArea = null)
+            IShape? leashArea = null)
             : base(
                 id,
-                $"{nameof(Ability)}.{nameof(Target)}",
                 turnPhase,
                 researchNeeded ?? new List<ResearchId>(),
                 true,
@@ -43,7 +42,7 @@ namespace low_age_data.Domain.Abilities
             LeashArea = leashArea ?? new Map();
         }
 
-        public Shape TargetArea { get; }
+        public IShape TargetArea { get; }
         public IList<EffectId> Effects { get; }
 
         /// <summary>
@@ -71,6 +70,6 @@ namespace low_age_data.Domain.Abilities
         ///
         /// By default, the <see cref="LeashArea"/> has the size of the map. 
         /// </summary>
-        public Shape LeashArea { get; }
+        public IShape LeashArea { get; }
     }
 }

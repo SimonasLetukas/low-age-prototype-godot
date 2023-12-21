@@ -1,7 +1,6 @@
-﻿namespace low_age_data.Domain.Shared.Filters
+﻿namespace low_age_data.Domain.Common.Filters
 {
     public interface IFilterItem
     {
-        public string Type { get; }
     }
 }

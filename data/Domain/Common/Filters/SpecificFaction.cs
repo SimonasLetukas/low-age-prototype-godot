@@ -1,7 +1,7 @@
 ﻿using low_age_data.Domain.Entities;
 using low_age_data.Domain.Factions;
 
-namespace low_age_data.Domain.Shared.Filters
+namespace low_age_data.Domain.Common.Filters
 {
     /// <summary>
     /// <see cref="Entity"/> should be from a specific <see cref="Faction"/>.
@@ -10,11 +10,9 @@ namespace low_age_data.Domain.Shared.Filters
     {
         public SpecificFaction(FactionId value)
         {
-            Type = $"{nameof(SpecificFaction)}";
             Value = value;
         }
         
-        public string Type { get; }
         public FactionId Value { get; }
     }
 }

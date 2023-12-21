@@ -1,8 +1,9 @@
 ﻿using Godot;
+using Area = low_age_data.Domain.Common.Area;
 
 public static class Rect2Extensions
 {
-    public static Rect2 ToGodotRect2(this low_age_data.Domain.Shared.Area area) 
+    public static Rect2 ToGodotRect2(this Area area) 
         => new Rect2(area.Start.ToGodotVector2(), area.Size.ToGodotVector2());
 
     public static Rect2 TrimTo(this Rect2 rectToTrim, Vector2 boundarySize) 

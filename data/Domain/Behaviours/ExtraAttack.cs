@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
 
 namespace low_age_data.Domain.Behaviours
 {
@@ -16,7 +16,6 @@ namespace low_age_data.Domain.Behaviours
             bool canStack = false) 
             : base(
                 id, 
-                $"{nameof(Behaviour)}.{nameof(ExtraAttack)}", 
                 displayName, 
                 description, 
                 sprite,

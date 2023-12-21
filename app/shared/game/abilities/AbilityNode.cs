@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
 
 public class AbilityNode : Node2D, INodeFromBlueprint<Ability>
 {

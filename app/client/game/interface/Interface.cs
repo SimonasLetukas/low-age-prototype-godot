@@ -1,6 +1,6 @@
 using Godot;
 using System.Linq;
-using low_age_data.Domain.Shared;
+using low_age_data.Domain.Common;
 using Array = Godot.Collections.Array;
 
 public class Interface : CanvasLayer

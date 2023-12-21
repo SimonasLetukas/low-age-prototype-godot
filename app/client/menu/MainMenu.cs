@@ -16,6 +16,9 @@ public class MainMenu : VBoxContainer
 
     public override void _Ready()
     {
+        Data.Instance.ReadBlueprint();  // TODO perhaps fetch from server instead
+                                        // TODO this should happen before (and instead of) the read in FactionSelection.cs
+        
         _nameInput = GetNode<LineEdit>("Name/Input");
         _factionSelection = GetNode<FactionSelection>("Faction/Faction");
         _connectButton = FindNode("Connect") as Button;

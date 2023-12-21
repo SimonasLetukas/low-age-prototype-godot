@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
+using low_age_data.Domain.Common.Filters;
 using low_age_data.Domain.Entities;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
-using low_age_data.Domain.Shared.Filters;
 
 namespace low_age_data.Domain.Behaviours
 {
@@ -22,7 +22,6 @@ namespace low_age_data.Domain.Behaviours
             IList<IFilterItem> filters) 
             : base(
                 id, 
-                $"{nameof(Behaviour)}.{nameof(MovementBlock)}", 
                 displayName, 
                 description, 
                 sprite,

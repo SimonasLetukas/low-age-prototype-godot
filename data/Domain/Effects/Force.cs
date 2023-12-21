@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Effects
 {
@@ -14,7 +14,7 @@ namespace low_age_data.Domain.Effects
             Location from,
             int amount,
             IList<EffectId>? onCollisionEffects = null,
-            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(Force)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
         {
             From = from;
             Amount = amount;

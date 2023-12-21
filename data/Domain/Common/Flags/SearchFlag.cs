@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Entities;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared.Flags
+namespace low_age_data.Domain.Common.Flags
 {
     /// <summary>
     /// Used to control events when the effects should be applied or removed when <see cref="SearchFlag"/> is
@@ -11,13 +12,9 @@ namespace low_age_data.Domain.Shared.Flags
     /// <see cref="Behaviours.Buff"/>s down the line are allowed to execute their
     /// <see cref="Behaviours.Buff.ConditionalEffects"/> before removal.
     /// </summary>
-    public class SearchFlag : ValueObject<SearchFlag>
+    [JsonConverter(typeof(SearchFlagJsonConverter))]
+    public class SearchFlag : EnumValueObject<SearchFlag, SearchFlag.SearchFlags>
     {
-        public override string ToString()
-        {
-            return $"{nameof(SearchFlag)}.{Value}";
-        }
-        
         /// <summary>
         /// Applies <see cref="Effects.Search"/> whenever a new actor enters the
         /// <see cref="Effects.Search.Shape"/>).
@@ -76,14 +73,11 @@ namespace low_age_data.Domain.Shared.Flags
         /// </summary>
         public static SearchFlag RemovedOnPlanningPhaseEnd => new SearchFlag(SearchFlags.RemovedOnPlanningPhaseEnd);
 
-        private SearchFlag(SearchFlags @enum)
-        {
-            Value = @enum;
-        }
-
-        private SearchFlags Value { get; }
-
-        private enum SearchFlags
+        private SearchFlag(SearchFlags @enum) : base(@enum) { }
+        
+        private SearchFlag(string? from) : base(from) { }
+        
+        public enum SearchFlags
         {
             AppliedOnEnter,
             AppliedOnSourceAction,
@@ -96,10 +90,28 @@ namespace low_age_data.Domain.Shared.Flags
             RemovedOnPlanningPhaseStart,
             RemovedOnPlanningPhaseEnd
         }
-
-        protected override IEnumerable<object> GetEqualityComponents()
+        
+        private class SearchFlagJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(SearchFlag);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (SearchFlag)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new SearchFlag(value);
+            }
         }
     }
 }

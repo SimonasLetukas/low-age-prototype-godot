@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using low_age_data.Domain.Shared;
+using low_age_data.Domain.Common;
 
 public class InfoDisplay : MarginContainer
 {

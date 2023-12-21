@@ -1,6 +1,6 @@
-﻿using low_age_data.Domain.Entities;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
+﻿using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
+using low_age_data.Domain.Entities;
 
 namespace low_age_data.Domain.Behaviours
 {
@@ -23,7 +23,6 @@ namespace low_age_data.Domain.Behaviours
             EndsAt? endsAt = null) 
             : base(
                 id, 
-                $"{nameof(Behaviour)}.{nameof(Tether)}", 
                 displayName, 
                 description, 
                 sprite,

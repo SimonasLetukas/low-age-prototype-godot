@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Shared.Filters;
-using low_age_data.Domain.Shared.Flags;
+using low_age_data.Domain.Common.Filters;
+using low_age_data.Domain.Common.Flags;
 
-namespace low_age_data.Domain.Shared
+namespace low_age_data.Domain.Common
 {
     public class Amount
     {

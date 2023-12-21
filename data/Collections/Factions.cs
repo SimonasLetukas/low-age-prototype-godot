@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Common;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Factions;
 using low_age_data.Domain.Resources;
-using low_age_data.Domain.Shared;
+using low_age_data.Shared;
 
 namespace low_age_data.Collections
 {

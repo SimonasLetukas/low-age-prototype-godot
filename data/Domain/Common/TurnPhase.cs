@@ -1,55 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using low_age_data.Common;
+using low_age_data.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared
+namespace low_age_data.Domain.Common
 {
     [JsonConverter(typeof(TurnPhaseJsonConverter))]
-    public class TurnPhase : ValueObject<TurnPhase>
+    public class TurnPhase : EnumValueObject<TurnPhase, TurnPhase.TurnPhases>
     {
-        public override string ToString()
-        {
-            return $"{nameof(TurnPhase)}.{Value}";
-        }
-
         public static TurnPhase Passive => new TurnPhase(TurnPhases.Passive);
         public static TurnPhase Planning => new TurnPhase(TurnPhases.Planning);
         public static TurnPhase Action => new TurnPhase(TurnPhases.Action);
         
         public string ToDisplayValue() => Value.ToString();
 
-        private TurnPhase(TurnPhases @enum)
-        {
-            Value = @enum;
-        }
+        private TurnPhase(TurnPhases @enum) : base(@enum) { }
         
-        private TurnPhase(string? from)
-        {
-            if (from is null)
-            {
-                Value = TurnPhases.Passive;
-                return;
-            }
-            
-            from = from.Substring($"{nameof(TurnPhase)}.".Length);
-            Value = Enum.TryParse(from, out TurnPhases terrainsEnum) 
-                ? terrainsEnum 
-                : TurnPhases.Passive;
-        }
-
-        private TurnPhases Value { get; }
-
-        private enum TurnPhases
+        private TurnPhase(string? from) : base(from) { }
+        
+        public enum TurnPhases
         {
             Passive,
             Planning,
             Action
-        }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
         }
         
         private class TurnPhaseJsonConverter : JsonConverter
@@ -65,8 +37,11 @@ namespace low_age_data.Domain.Shared
                 serializer.Serialize(writer, id.ToString());
             }
 
-            public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
             {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
                 var value = serializer.Deserialize<string>(reader);
                 return new TurnPhase(value);
             }

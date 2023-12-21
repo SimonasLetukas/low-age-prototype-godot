@@ -1,7 +1,7 @@
 ﻿using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Flags;
 using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Flags;
 
 namespace low_age_data.Domain.Logic
 {
@@ -13,7 +13,7 @@ namespace low_age_data.Domain.Logic
         public BehaviourCondition(
             ConditionFlag conditionFlag,
             BehaviourId conditionedBehaviour,
-            Location? behaviourOwner = null) : base($"{nameof(Condition)}.{nameof(BehaviourCondition)}", conditionFlag)
+            Location? behaviourOwner = null) : base(conditionFlag)
         {
             ConditionedBehaviour = conditionedBehaviour;
             BehaviourOwner = behaviourOwner;

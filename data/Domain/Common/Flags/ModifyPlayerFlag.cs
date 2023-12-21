@@ -1,32 +1,44 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared.Flags
+namespace low_age_data.Domain.Common.Flags
 {
-    public class ModifyPlayerFlag : ValueObject<ModifyPlayerFlag>
+    [JsonConverter(typeof(ModifyPlayerFlagJsonConverter))]
+    public class ModifyPlayerFlag : EnumValueObject<ModifyPlayerFlag, ModifyPlayerFlag.ModifyPlayerFlags>
     {
-        public override string ToString()
-        {
-            return $"{nameof(ModifyPlayerFlag)}.{Value}";
-        }
-        
         public static ModifyPlayerFlag GameLost => new ModifyPlayerFlag(ModifyPlayerFlags.GameLost);
 
-        private ModifyPlayerFlag(ModifyPlayerFlags @enum)
-        {
-            Value = @enum;
-        }
-
-        private ModifyPlayerFlags Value { get; }
-
-        private enum ModifyPlayerFlags
+        private ModifyPlayerFlag(ModifyPlayerFlags @enum) : base(@enum) { }
+        
+        private ModifyPlayerFlag(string? from) : base(from) { }
+        
+        public enum ModifyPlayerFlags
         {
             GameLost
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        private class ModifyPlayerFlagJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(ModifyPlayerFlag);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (ModifyPlayerFlag)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new ModifyPlayerFlag(value);
+            }
         }
     }
 }

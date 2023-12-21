@@ -1,21 +1,19 @@
 ﻿using System.Collections.Generic;
 
-namespace low_age_data.Domain.Shared.Shape
+namespace low_age_data.Domain.Common.Shape
 {
     /// <summary>
-    /// <see cref="Shape"/> composed of a collection of custom <see cref="Area"/>s.
+    /// <see cref="IShape"/> composed of a collection of custom <see cref="Area"/>s.
     /// </summary>
-    public class Custom : Shape
+    public class Custom : IShape
     {
-        public Custom(
-            IList<Area> areas)
-            : base($"{nameof(Shape)}.{nameof(Custom)}")
+        public Custom(IList<Area> areas)
         {
             Areas = areas;
         }
         
         /// <summary>
-        /// List of <see cref="Area"/>s, all intersecting to compose a custom <see cref="Shape"/>.
+        /// List of <see cref="Area"/>s, all intersecting to compose a custom <see cref="IShape"/>.
         /// </summary>
         public IList<Area> Areas { get; }
     }

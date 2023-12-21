@@ -1,5 +1,5 @@
-﻿using low_age_data.Domain.Entities;
-using low_age_data.Domain.Shared.Flags;
+﻿using low_age_data.Domain.Common.Flags;
+using low_age_data.Domain.Entities;
 
 namespace low_age_data.Domain.Logic
 {
@@ -11,7 +11,7 @@ namespace low_age_data.Domain.Logic
         public EntityCondition(
             ConditionFlag conditionFlag,
             EntityId conditionedEntity,
-            int? amountOfEntitiesRequired = null) : base($"{nameof(Condition)}.{nameof(EntityCondition)}", conditionFlag)
+            int? amountOfEntitiesRequired = null) : base(conditionFlag)
         {
             ConditionedEntity = conditionedEntity;
             AmountOfEntitiesRequired = amountOfEntitiesRequired ?? 1;

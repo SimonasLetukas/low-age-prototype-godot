@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Shared.Filters;
+using low_age_data.Domain.Common.Filters;
 
 namespace low_age_data.Domain.Logic
 {
@@ -11,20 +11,8 @@ namespace low_age_data.Domain.Logic
         public Validator(IList<Condition> conditions, IList<IFilterItem>? filters = null)
         {
             Conditions = conditions;
-            Type = $"{nameof(Validator)}";
             Filters = filters ?? new List<IFilterItem>();
         }
-
-        protected Validator(
-            IList<Condition> conditions,
-            string type)
-        {
-            Type = type;
-            Conditions = conditions;
-            Filters = new List<IFilterItem>();
-        }
-
-        public string Type { get; }
         
         /// <summary>
         /// <see cref="Validator"/> succeeds if <b>any</b> of the <see cref="Conditions"/> are true.

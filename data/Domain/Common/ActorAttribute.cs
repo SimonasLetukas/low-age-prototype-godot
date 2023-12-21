@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using low_age_data.Common;
+using low_age_data.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared
+namespace low_age_data.Domain.Common
 {
     [JsonConverter(typeof(ActorAttributeJsonConverter))]
-    public class ActorAttribute : ValueObject<ActorAttribute>
+    public class ActorAttribute : EnumValueObject<ActorAttribute, ActorAttribute.Attributes>
     {
-        public override string ToString()
-        {
-            return $"{nameof(ActorAttribute)}.{Value}";
-        }
-
         public static ActorAttribute Light => new ActorAttribute(Attributes.Light);
         public static ActorAttribute Armoured => new ActorAttribute(Attributes.Armoured);
         public static ActorAttribute Giant => new ActorAttribute(Attributes.Giant);
@@ -24,28 +18,11 @@ namespace low_age_data.Domain.Shared
         
         public string ToDisplayValue() => Value.ToString();
 
-        private ActorAttribute(Attributes @enum)
-        {
-            Value = @enum;
-        }
+        private ActorAttribute(Attributes @enum) : base(@enum) { }
         
-        private ActorAttribute(string? from)
-        {
-            if (from is null)
-            {
-                Value = Attributes.Light;
-                return;
-            }
-            
-            from = from.Substring($"{nameof(ActorAttribute)}.".Length);
-            Value = Enum.TryParse(from, out Attributes terrainsEnum) 
-                ? terrainsEnum 
-                : Attributes.Light;
-        }
-
-        private Attributes Value { get; }
-
-        private enum Attributes
+        private ActorAttribute(string? from) : base(from) { }
+        
+        public enum Attributes
         {
             Light,
             Armoured,
@@ -55,11 +32,6 @@ namespace low_age_data.Domain.Shared
             Celestial,
             Structure,
             Ranged
-        }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
         }
         
         private class ActorAttributeJsonConverter : JsonConverter
@@ -75,8 +47,11 @@ namespace low_age_data.Domain.Shared
                 serializer.Serialize(writer, id.ToString());
             }
 
-            public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
             {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
                 var value = serializer.Deserialize<string>(reader);
                 return new ActorAttribute(value);
             }

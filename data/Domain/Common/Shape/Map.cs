@@ -1,11 +1,11 @@
-﻿namespace low_age_data.Domain.Shared.Shape
+﻿namespace low_age_data.Domain.Common.Shape
 {
     /// <summary>
-    /// <see cref="Shape"/> of the whole map.
+    /// <see cref="IShape"/> of the whole map.
     /// </summary>
-    public class Map : Shape
+    public class Map : IShape
     {
-        public Map() : base($"{nameof(Shape)}.{nameof(Map)}")
+        public Map()
         {
         }
     }

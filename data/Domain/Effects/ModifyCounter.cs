@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Filters;
+using low_age_data.Domain.Common.Modifications;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Filters;
-using low_age_data.Domain.Shared.Modifications;
 
 namespace low_age_data.Domain.Effects
 {
@@ -16,7 +16,7 @@ namespace low_age_data.Domain.Effects
             int amount,
             Location? location = null,
             IList<IFilterItem>? filters = null,
-            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(ModifyCounter)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
         {
             CountersToModify = countersToModify;
             Change = change;

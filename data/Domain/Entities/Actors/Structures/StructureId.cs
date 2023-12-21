@@ -1,5 +1,5 @@
 ﻿using System;
-using low_age_data.Common;
+using low_age_data.Shared;
 using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Entities.Actors.Structures
@@ -53,8 +53,11 @@ namespace low_age_data.Domain.Entities.Actors.Structures
                 serializer.Serialize(writer, id.ToString());
             }
 
-            public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
             {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
                 var value = serializer.Deserialize<string>(reader);
                 return new StructureId(value ?? throw new InvalidOperationException());
             }

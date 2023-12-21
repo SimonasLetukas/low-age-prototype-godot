@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace low_age_data.Domain.Shared.Filters
+namespace low_age_data.Domain.Common.Filters
 {
     /// <summary>
     /// Can be used to logically group the <see cref="IFilterItem"/>s. By default, a list of <see cref="IFilterItem"/>s
@@ -14,13 +14,11 @@ namespace low_age_data.Domain.Shared.Filters
             Quantifier quantifier, 
             IList<IFilterItem> items)
         {
-            Type = $"{nameof(FilterGroup)}";
             Policy = policy;
             Quantifier = quantifier;
             Items = items;
         }
         
-        public string Type { get; }
         public Policy Policy { get; }
         public Quantifier Quantifier { get; }
         public IList<IFilterItem> Items { get; }

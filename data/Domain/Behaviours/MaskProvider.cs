@@ -1,12 +1,12 @@
-﻿using low_age_data.Domain.Masks;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
-using low_age_data.Domain.Shared.Shape;
+﻿using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
+using low_age_data.Domain.Common.Shape;
+using low_age_data.Domain.Masks;
 
 namespace low_age_data.Domain.Behaviours
 {
     /// <summary>
-    /// <see cref="Behaviour"/> that creates a <see cref="Mask"/> in a certain <see cref="Shape"/>.
+    /// <see cref="Behaviour"/> that creates a <see cref="Mask"/> in a certain <see cref="IShape"/>.
     /// </summary>
     public class MaskProvider : Behaviour
     {
@@ -16,13 +16,12 @@ namespace low_age_data.Domain.Behaviours
             string description,
             string sprite,
             MaskId maskCreated,
-            Shape maskShape,
+            IShape maskShape,
             EndsAt? endsAt = null,
             bool? ownerAllowed = null,
             bool? hasSameInstanceForAllOwners = null) 
             : base(
                 id, 
-                $"{nameof(Behaviour)}.{nameof(MaskProvider)}", 
                 displayName,
                 description, 
                 sprite,
@@ -41,8 +40,8 @@ namespace low_age_data.Domain.Behaviours
         public MaskId MaskCreated { get; }
         
         /// <summary>
-        /// The <see cref="Shape"/> and size of the <see cref="Mask"/> created.
+        /// The <see cref="IShape"/> and size of the <see cref="Mask"/> created.
         /// </summary>
-        public Shape MaskShape { get; }
+        public IShape MaskShape { get; }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
+using low_age_data.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Entities.Tiles
+namespace low_age_data.Domain.Tiles
 {
     [JsonConverter(typeof(TileIdJsonConverter))]
-    public class TileId : EntityId
+    public class TileId : Id
     {
         private TileId(string value) : base($"tile-{value}")
         {
@@ -29,8 +30,11 @@ namespace low_age_data.Domain.Entities.Tiles
                 serializer.Serialize(writer, id.ToString());
             }
 
-            public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
             {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
                 var value = serializer.Deserialize<string>(reader);
                 return new TileId(value ?? throw new InvalidOperationException());
             }

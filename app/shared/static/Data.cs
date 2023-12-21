@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using low_age_data;
 using low_age_data.Domain.Factions;
-using low_age_data.Domain.Shared;
+using low_age_data.Shared;
 using Newtonsoft.Json;
 
 /// <summary>
@@ -12,10 +13,10 @@ public class Data : Node
 {
     public static Data Instance = null;
     
-    public IList<Faction> Factions { get; private set; } = new List<Faction>();
-
+    public Blueprint Blueprint { get; private set; }
     public IList<Player> Players { get; private set; } = new List<Player>();
-    private string DataBlueprintLocation { get; set; } = "res://data/data.json";
+    
+    private const string DataBlueprintLocation = "res://data/data.json";
 
     public override void _Ready()
     {
@@ -26,8 +27,7 @@ public class Data : Node
             Instance = this;
         }
     }
-
-    // TODO move to Game.cs, then delete Data.cs and its node (if any)
+    
     public void ReadBlueprint() 
         // TODO to save resources currently both server and client read from their local files,
         // it should be transferred by server instead to have one source of truth.
@@ -37,12 +37,11 @@ public class Data : Node
         var dataJson = dataFile.GetAsText(); 
         dataFile.Close();
 
-        var data = JsonConvert.DeserializeAnonymousType(dataJson, new
+        Blueprint = JsonConvert.DeserializeObject<Blueprint>(dataJson, new JsonSerializerSettings
         {
-            Factions = new Faction[] { }
+            SerializationBinder = new KnownTypesBinder(),
+            TypeNameHandling = TypeNameHandling.Auto
         });
-
-        Factions = data.Factions;
     }
 
     public void AddPlayer(int playerId, string playerName, FactionId faction)

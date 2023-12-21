@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Shared.Flags;
+using low_age_data.Domain.Common.Flags;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared.Modifications
+namespace low_age_data.Domain.Common.Modifications
 {
     public class AttackModification : Modification
     {
+        [JsonConstructor]
         public AttackModification(
             Change change, 
             float amount,
             Attacks attackType,
             AttackAttribute attribute,
-            IList<ModificationFlag>? modificationFlags = null) : base($"{nameof(Modification)}.{nameof(AttackModification)}", change, amount)
+            IList<ModificationFlag>? modificationFlags = null) : base(change, amount)
         {
             AttackType = attackType;
             Attribute = attribute;
@@ -19,7 +21,7 @@ namespace low_age_data.Domain.Shared.Modifications
         
         public AttackModification(
             Attacks attackType,
-            IList<ModificationFlag> modificationFlags) : base($"{nameof(Modification)}.{nameof(AttackModification)}", Change.AddCurrent, 0)
+            IList<ModificationFlag> modificationFlags) : base(Change.AddCurrent, 0)
         {
             AttackType = attackType;
             Attribute = AttackAttribute.MaxAmount;

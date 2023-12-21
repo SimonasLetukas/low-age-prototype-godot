@@ -1,4 +1,4 @@
-﻿namespace low_age_data.Domain.Shared.Modifications
+﻿namespace low_age_data.Domain.Common.Modifications
 {
     public class StatCopyModification : Modification
     {
@@ -6,7 +6,7 @@
             Change change,
             Location copyFrom,
             float additionalAmount,
-            StatType statType) : base($"{nameof(Modification)}.{nameof(StatModification)}", change, additionalAmount)
+            StatType statType) : base(change, additionalAmount)
         {
             CopyFrom = copyFrom;
             StatType = statType;

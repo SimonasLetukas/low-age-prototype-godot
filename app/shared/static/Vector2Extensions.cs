@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+using low_age_data.Domain.Common;
 
 public static class Vector2Extensions
 {
@@ -9,6 +10,6 @@ public static class Vector2Extensions
            && !(point.x >= bounds.x) 
            && !(point.y >= bounds.y);
 
-    public static Vector2 ToGodotVector2<T>(this low_age_data.Domain.Shared.Vector2<T> domainVector2) where T : struct, IEquatable<T> 
+    public static Vector2 ToGodotVector2<T>(this Vector2<T> domainVector2) where T : struct, IEquatable<T> 
         => new Vector2(Convert.ToSingle(domainVector2.X), Convert.ToSingle(domainVector2.Y));
 }

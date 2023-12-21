@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using low_age_data.Domain.Shared;
+using low_age_data.Domain.Common;
 
 public class EntityPanel : Control
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
 using low_age_data.Domain.Effects;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
 
 namespace low_age_data.Domain.Behaviours
 {
@@ -25,7 +25,6 @@ namespace low_age_data.Domain.Behaviours
             bool? canResetDuration = null) 
             : base(
                 id, 
-                $"{nameof(Behaviour)}.{nameof(Counter)}", 
                 displayName, 
                 description, 
                 sprite,

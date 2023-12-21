@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared
+namespace low_age_data.Domain.Common
 {
-    public class StatType : ValueObject<StatType>
+    [JsonConverter(typeof(StatTypeJsonConverter))]
+    public class StatType : EnumValueObject<StatType, StatType.StatTypeEnum>
     {
-        public override string ToString()
-        {
-            return $"{nameof(StatType)}.{Value}";
-        }
-
         public static StatType Health => new StatType(StatTypeEnum.Health);
         public static StatType Shields => new StatType(StatTypeEnum.Shields);
         public static StatType MeleeArmour => new StatType(StatTypeEnum.MeleeArmour);
@@ -18,14 +15,11 @@ namespace low_age_data.Domain.Shared
         public static StatType Initiative => new StatType(StatTypeEnum.Initiative);
         public static StatType Vision => new StatType(StatTypeEnum.Vision);
 
-        private StatType(StatTypeEnum @enum)
-        {
-            Value = @enum;
-        }
+        private StatType(StatTypeEnum @enum) : base(@enum) { }
+        
+        private StatType(string? from) : base(from) { }
 
-        private StatTypeEnum Value { get; }
-
-        private enum StatTypeEnum
+        public enum StatTypeEnum
         {
             Health,
             Shields,
@@ -35,10 +29,28 @@ namespace low_age_data.Domain.Shared
             Initiative,
             Vision
         }
-
-        protected override IEnumerable<object> GetEqualityComponents()
+        
+        private class StatTypeJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(StatType);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (StatType)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new StatType(value);
+            }
         }
     }
 }

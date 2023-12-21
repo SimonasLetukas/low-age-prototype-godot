@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared
+namespace low_age_data.Domain.Common
 {
-    public class Location : ValueObject<Location>
+    [JsonConverter(typeof(LocationJsonConverter))]
+    public class Location : EnumValueObject<Location, Location.Locations>
     {
-        public override string ToString()
-        {
-            return $"{nameof(Location)}.{Value}";
-        }
-
         /// <summary>
         /// Applies the same location that was set before in the chain
         /// </summary>
@@ -40,14 +37,11 @@ namespace low_age_data.Domain.Shared
         /// </summary>
         public static Location Origin => new Location(Locations.Origin);
 
-        private Location(Locations @enum)
-        {
-            Value = @enum;
-        }
-
-        private Locations Value { get; }
-
-        private enum Locations
+        private Location(Locations @enum) : base(@enum) { }
+        
+        private Location(string? from) : base(from) { }
+        
+        public enum Locations
         {
             Inherited,
             Self,
@@ -57,9 +51,27 @@ namespace low_age_data.Domain.Shared
             Origin
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        private class LocationJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(Location);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (Location)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new Location(value);
+            }
         }
     }
 }

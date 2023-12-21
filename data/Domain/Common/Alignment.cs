@@ -1,36 +1,48 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared
+namespace low_age_data.Domain.Common
 {
-    public class Alignment : ValueObject<Alignment>
+    [JsonConverter(typeof(AlignmentJsonConverter))]
+    public class Alignment : EnumValueObject<Alignment, Alignment.Alignments>
     {
-        public override string ToString()
-        {
-            return $"{nameof(Alignment)}.{Value}";
-        }
-
         public static Alignment Positive => new Alignment(Alignments.Positive);
         public static Alignment Neutral => new Alignment(Alignments.Neutral);
         public static Alignment Negative => new Alignment(Alignments.Negative);
 
-        private Alignment(Alignments @enum)
-        {
-            Value = @enum;
-        }
-
-        private Alignments Value { get; }
-
-        private enum Alignments
+        private Alignment(Alignments @enum) : base(@enum) { }
+        
+        private Alignment(string? from) : base(from) { }
+        
+        public enum Alignments
         {
             Positive,
             Neutral,
             Negative
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        private class AlignmentJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(Alignment);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (Alignment)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new Alignment(value);
+            }
         }
     }
 }

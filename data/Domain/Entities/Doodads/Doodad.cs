@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Filters;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Entities.Actors.Units;
-using low_age_data.Domain.Entities.Tiles;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Filters;
+using low_age_data.Domain.Tiles;
 
 namespace low_age_data.Domain.Entities.Doodads
 {

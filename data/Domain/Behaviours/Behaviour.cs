@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
 using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Behaviours
@@ -12,7 +12,6 @@ namespace low_age_data.Domain.Behaviours
     {
         protected Behaviour(
             BehaviourId id, 
-            string type, 
             string displayName, 
             string description,
             string sprite,
@@ -27,7 +26,6 @@ namespace low_age_data.Domain.Behaviours
             bool? hasSameInstanceForAllOwners = null)
         {
             Id = id;
-            Type = type;
             DisplayName = displayName;
             Description = description;
             Sprite = sprite;
@@ -42,10 +40,8 @@ namespace low_age_data.Domain.Behaviours
             HasSameInstanceForAllOwners = hasSameInstanceForAllOwners ?? false;
         }
 
-        [JsonProperty(Order = -3)]
-        public BehaviourId Id { get; }
         [JsonProperty(Order = -2)]
-        public string Type { get; }
+        public BehaviourId Id { get; }
         public string DisplayName { get; }
         public string Description { get; }
         

@@ -1,11 +1,11 @@
-﻿namespace low_age_data.Domain.Shared.Modifications
+﻿namespace low_age_data.Domain.Common.Modifications
 {
     public class SizeModification : Modification
     {
         public SizeModification(
             Change change, 
             float amount,
-            bool keepCentered = true) : base($"{nameof(Modification)}.{nameof(SizeModification)}", change, amount)
+            bool keepCentered = true) : base(change, amount)
         {
             KeepCentered = keepCentered;
         }

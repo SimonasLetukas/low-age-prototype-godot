@@ -1,7 +1,7 @@
-﻿using low_age_data.Domain.Entities;
-using low_age_data.Domain.Shared.Flags;
+﻿using low_age_data.Domain.Common.Flags;
+using low_age_data.Domain.Entities;
 
-namespace low_age_data.Domain.Shared.Filters
+namespace low_age_data.Domain.Common.Filters
 {
     /// <summary>
     /// <see cref="Entity"/> should adhere to a specific <see cref="FilterFlag"/>.
@@ -10,11 +10,9 @@ namespace low_age_data.Domain.Shared.Filters
     {
         public SpecificFlag(FilterFlag value)
         {
-            Type = $"{nameof(SpecificFlag)}";
             Value = value;
         }
         
-        public string Type { get; }
         public FilterFlag Value { get; }
     }
 }

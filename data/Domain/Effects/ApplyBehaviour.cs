@@ -1,9 +1,9 @@
 ﻿using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Shared;
 using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Filters;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared.Filters;
 
 namespace low_age_data.Domain.Effects
 {
@@ -19,7 +19,6 @@ namespace low_age_data.Domain.Effects
             IList<Validator>? validators = null)
             : base(
                 id, 
-                $"{nameof(Effect)}.{nameof(ApplyBehaviour)}", 
                 validators ?? new List<Validator>())
         {
             BehavioursToApply = behavioursToApply;

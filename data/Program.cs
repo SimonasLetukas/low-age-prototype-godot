@@ -4,6 +4,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.IO;
+using low_age_data.Shared;
 
 namespace low_age_data
 {
@@ -24,17 +25,17 @@ namespace low_age_data
             var behaviours = Behaviours.Get();
             var masks = Masks.Get();
 
-            var outputObject = new
+            var outputObject = new Blueprint
             {
                 Resources = resources,
                 Factions = factions,
-                Entities = new
+                Entities = new EntityBlueprint
                 {
-                    Tiles = tiles,
                     Units = units,
                     Structures = structures,
                     Doodads = doodads
                 },
+                Tiles = tiles,
                 Abilities = abilities,
                 Effects = effects,
                 Behaviours = behaviours,
@@ -49,7 +50,9 @@ namespace low_age_data
                     //NamingStrategy = new SnakeCaseNamingStrategy()
                 },
                 Formatting = Formatting.Indented,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                SerializationBinder = new KnownTypesBinder(),
+                TypeNameHandling = TypeNameHandling.Auto
             };
             jsonSettings.Converters.Add(new StringEnumConverter());
             var outputJson = JsonConvert.SerializeObject(outputObject, jsonSettings);

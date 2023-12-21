@@ -1,5 +1,4 @@
 ﻿using Godot;
-using low_age_data.Common;
 using low_age_data.Domain.Factions;
 
 public class Client : Network

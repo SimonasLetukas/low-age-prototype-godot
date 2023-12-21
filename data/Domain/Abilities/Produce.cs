@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Abilities
 {
@@ -21,7 +21,6 @@ namespace low_age_data.Domain.Abilities
             bool? producedInstantly = null)
             : base(
                 id,
-                $"{nameof(Ability)}.{nameof(Produce)}",
                 TurnPhase.Planning,
                 new List<ResearchId>(),
                 true,

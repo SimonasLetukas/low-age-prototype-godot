@@ -1,16 +1,13 @@
 ﻿using low_age_data.Domain.Entities;
 
-namespace low_age_data.Domain.Shared.Shape
+namespace low_age_data.Domain.Common.Shape
 {
     /// <summary>
-    /// <see cref="Shape"/> of a circle.
+    /// <see cref="IShape"/> of a circle.
     /// </summary>
-    public class Circle : Shape
+    public class Circle : IShape
     {
-        public Circle(
-            int radius, 
-            int? ignoreRadius = null)
-            : base($"{nameof(Shape)}.{nameof(Circle)}")
+        public Circle(int radius, int? ignoreRadius = null)
         {
             Radius = radius;
             IgnoreRadius = ignoreRadius ?? -1;

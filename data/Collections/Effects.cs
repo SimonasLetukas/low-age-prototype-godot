@@ -1,18 +1,18 @@
 ﻿using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Flags;
-using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
 using low_age_data.Domain.Abilities;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Filters;
+using low_age_data.Domain.Common.Flags;
+using low_age_data.Domain.Common.Modifications;
+using low_age_data.Domain.Common.Shape;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Entities.Doodads;
 using low_age_data.Domain.Factions;
 using low_age_data.Domain.Resources;
-using low_age_data.Domain.Shared.Filters;
-using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Collections
 {

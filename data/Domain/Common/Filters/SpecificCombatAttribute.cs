@@ -1,6 +1,6 @@
 ﻿using low_age_data.Domain.Entities;
 
-namespace low_age_data.Domain.Shared.Filters
+namespace low_age_data.Domain.Common.Filters
 {
     /// <summary>
     /// <see cref="Entity"/> should have a specific <see cref="ActorAttribute"/>.
@@ -9,11 +9,9 @@ namespace low_age_data.Domain.Shared.Filters
     {
         public SpecificCombatAttribute(ActorAttribute value)
         {
-            Type = $"{nameof(SpecificCombatAttribute)}";
             Value = value;
         }
         
-        public string Type { get; }
         public ActorAttribute Value { get; }
     }
 }

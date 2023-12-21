@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Shape;
 using low_age_data.Domain.Entities;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Shape;
 
 namespace low_age_data.Domain.Abilities
 {
@@ -16,14 +16,13 @@ namespace low_age_data.Domain.Abilities
             string displayName,
             string description,
             string sprite,
-            Shape placementArea,
+            IShape placementArea,
             IList<Selection<EntityId>> selection,
             bool casterConsumesAction = false,
             bool canHelp = false,
             float? helpEfficiency = null)
             : base(
                 id,
-                $"{nameof(Ability)}.{nameof(Build)}",
                 TurnPhase.Planning,
                 new List<ResearchId>(),
                 true,
@@ -38,7 +37,7 @@ namespace low_age_data.Domain.Abilities
             HelpEfficiency = helpEfficiency ?? 1;
         }
 
-        public Shape PlacementArea { get; }
+        public IShape PlacementArea { get; }
         public IList<Selection<EntityId>> Selection { get; }
         public bool CasterConsumesAction { get; }
         public bool CanHelp { get; }

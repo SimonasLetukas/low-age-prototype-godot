@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
 using low_age_data.Domain.Logic;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared.Flags
+namespace low_age_data.Domain.Common.Flags
 {
-    public class ConditionFlag : ValueObject<ConditionFlag>
+    [JsonConverter(typeof(ConditionFlagJsonConverter))]
+    public class ConditionFlag : EnumValueObject<ConditionFlag, ConditionFlag.ConditionFlags>
     {
-        public override string ToString()
-        {
-            return $"{nameof(ConditionFlag)}.{Value}";
-        }
-        
         /// <summary>
         /// Used in <see cref="MaskCondition"/>, <see cref="EntityCondition"/> or <see cref="BehaviourCondition"/>.
         /// </summary>
@@ -28,14 +25,11 @@ namespace low_age_data.Domain.Shared.Flags
         public static ConditionFlag TargetIsUnoccupied => new ConditionFlag(ConditionFlags.TargetIsUnoccupied);
         public static ConditionFlag TargetIsDifferentTypeThanOrigin => new ConditionFlag(ConditionFlags.TargetIsDifferentTypeThanOrigin);
 
-        private ConditionFlag(ConditionFlags @enum)
-        {
-            Value = @enum;
-        }
-
-        private ConditionFlags Value { get; }
-
-        private enum ConditionFlags
+        private ConditionFlag(ConditionFlags @enum) : base(@enum) { }
+        
+        private ConditionFlag(string? from) : base(from) { }
+        
+        public enum ConditionFlags
         {
             Exists,
             DoesNotExist,
@@ -47,9 +41,27 @@ namespace low_age_data.Domain.Shared.Flags
             TargetIsDifferentTypeThanOrigin
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        private class ConditionFlagJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(ConditionFlag);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (ConditionFlag)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new ConditionFlag(value);
+            }
         }
     }
 }

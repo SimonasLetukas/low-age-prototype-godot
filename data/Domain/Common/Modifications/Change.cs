@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared.Modifications
+namespace low_age_data.Domain.Common.Modifications
 {
-    public class Change : ValueObject<Change>
+    [JsonConverter(typeof(ChangeJsonConverter))]
+    public class Change : EnumValueObject<Change, Change.Changes>
     {
-        public override string ToString()
-        {
-            return $"{nameof(Change)}.{Value}";
-        }
-
         public static Change AddMax => new Change(Changes.AddMax);
         public static Change AddCurrent => new Change(Changes.AddCurrent);
         public static Change SubtractMax => new Change(Changes.SubtractMax);
@@ -23,14 +20,11 @@ namespace low_age_data.Domain.Shared.Modifications
         public static Change MultiplyMax => new Change(Changes.MultiplyMax);
         public static Change MultiplyCurrent => new Change(Changes.MultiplyCurrent);
 
-        private Change(Changes @enum)
-        {
-            Value = @enum;
-        }
-
-        private Changes Value { get; }
-
-        private enum Changes
+        private Change(Changes @enum) : base(@enum) { }
+        
+        private Change(string? from) : base(from) { }
+        
+        public enum Changes
         {
             AddMax,
             AddCurrent,
@@ -42,9 +36,27 @@ namespace low_age_data.Domain.Shared.Modifications
             MultiplyCurrent
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        private class ChangeJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(Change);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (Change)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new Change(value);
+            }
         }
     }
 }

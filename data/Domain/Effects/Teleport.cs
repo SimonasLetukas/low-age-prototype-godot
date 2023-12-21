@@ -10,7 +10,7 @@ namespace low_age_data.Domain.Effects
         public Teleport(
             EffectId id,
             BehaviourId? waitBefore = null, 
-            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(Teleport)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
         {
             WaitBefore = waitBefore;
         }

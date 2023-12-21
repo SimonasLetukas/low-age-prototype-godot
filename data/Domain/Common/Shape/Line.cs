@@ -1,16 +1,13 @@
 ﻿using low_age_data.Domain.Entities;
 
-namespace low_age_data.Domain.Shared.Shape
+namespace low_age_data.Domain.Common.Shape
 {
     /// <summary>
-    /// <see cref="Shape"/> of a line, width of the source <see cref="Entity"/>.
+    /// <see cref="IShape"/> of a line, width of the source <see cref="Entity"/>.
     /// </summary>
-    public class Line : Shape
+    public class Line : IShape
     {
-        public Line(
-            int length,
-            int? ignoreLength = null) 
-            : base($"{nameof(Shape)}.{nameof(Line)}")
+        public Line(int length, int? ignoreLength = null) 
         {
             Length = length;
             IgnoreLength = ignoreLength ?? -1;

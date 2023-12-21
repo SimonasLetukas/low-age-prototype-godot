@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using low_age_data.Common;
+﻿using System;
 using low_age_data.Domain.Entities.Actors;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared
+namespace low_age_data.Domain.Common
 {
-    public class DamageType : ValueObject<DamageType>
+    [JsonConverter(typeof(DamageTypeJsonConverter))]
+    public class DamageType : EnumValueObject<DamageType, DamageType.DamageTypes>
     {
-        public override string ToString()
-        {
-            return $"{nameof(DamageType)}.{Value}";
-        }
-
         /// <summary>
         /// Deals damage subtracted by melee armour of the target.
         /// </summary>
@@ -58,14 +55,11 @@ namespace low_age_data.Domain.Shared
         /// </summary>
         public static DamageType TargetRanged => new DamageType(DamageTypes.TargetRanged);
 
-        private DamageType(DamageTypes @enum)
-        {
-            Value = @enum;
-        }
-
-        private DamageTypes Value { get; }
-
-        private enum DamageTypes
+        private DamageType(DamageTypes @enum) : base(@enum) { }
+        
+        private DamageType(string? from) : base(from) { }
+        
+        public enum DamageTypes
         {
             Melee,
             Ranged,
@@ -78,9 +72,27 @@ namespace low_age_data.Domain.Shared
             TargetRanged 
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        private class DamageTypeJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(DamageType);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (DamageType)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) 
+                    return null;
+                
+                var value = serializer.Deserialize<string>(reader);
+                return new DamageType(value);
+            }
         }
     }
 }

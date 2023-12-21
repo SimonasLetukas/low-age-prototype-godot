@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Effects
 {
@@ -13,7 +13,7 @@ namespace low_age_data.Domain.Effects
             EntityId entityToCreate,
             IList<BehaviourId>? initialEntityBehaviours = null,
             Location? behaviourOwner = null,
-            IList<Validator>? validators = null) : base(id, $"{nameof(Effect)}.{nameof(CreateEntity)}", validators ?? new List<Validator>())
+            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
         {
             EntityToCreate = entityToCreate;
             InitialEntityBehaviours = initialEntityBehaviours ?? new List<BehaviourId>();

@@ -4,10 +4,10 @@ using AutoFixture;
 using AutoFixture.AutoMoq;
 using FluentAssertions;
 using Godot;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Shared;
 using Xunit;
-using Area = low_age_data.Domain.Shared.Area;
+using Area = low_age_data.Domain.Common.Area;
 using Array = System.Array;
 
 namespace TestProject1

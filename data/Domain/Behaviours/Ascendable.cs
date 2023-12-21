@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
 using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Entities.Tiles;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
+using low_age_data.Domain.Tiles;
 
 namespace low_age_data.Domain.Behaviours
 {
@@ -20,7 +20,6 @@ namespace low_age_data.Domain.Behaviours
             IList<Area> path) 
             : base(
                 id, 
-                $"{nameof(Behaviour)}.{nameof(Ascendable)}", 
                 displayName, 
                 description, 
                 sprite,

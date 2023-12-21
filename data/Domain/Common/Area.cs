@@ -1,4 +1,4 @@
-﻿namespace low_age_data.Domain.Shared
+﻿namespace low_age_data.Domain.Common
 {
     public struct Area
     {

@@ -1,8 +1,8 @@
 ﻿using low_age_data.Domain.Logic;
 using System.Collections.Generic;
 using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
-using low_age_data.Domain.Shared;
 
 namespace low_age_data.Domain.Effects
 {
@@ -12,7 +12,7 @@ namespace low_age_data.Domain.Effects
             EffectId id, 
             Location? target = null,
             IList<Validator>? validators = null,
-            bool blocksBehaviours = false) : base(id, $"{nameof(Effect)}.{nameof(Destroy)}", validators ?? new List<Validator>())
+            bool blocksBehaviours = false) : base(id, validators ?? new List<Validator>())
         {
             Target = target ?? Location.Self;
             BlocksBehaviours = blocksBehaviours;

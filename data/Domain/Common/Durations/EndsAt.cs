@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using low_age_data.Common;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Entities.Doodads;
+using low_age_data.Shared;
+using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Shared.Durations
+namespace low_age_data.Domain.Common.Durations
 {
     /// <summary>
     /// Used to calculate duration. Calculation is done on the last <see cref="Actor"/> in the chain (e.g. when
     /// an <see cref="Actor"/> creates a <see cref="Doodad"/> and there is a <see cref="Buff"/> with
     /// EndsAt.EndOf.Next.Action, this then refers to the <see cref="Actor"/>'s action), unless stated otherwise.
     /// </summary>
-    public class EndsAt : ValueObject<EndsAt>
+    [JsonConverter(typeof(EndsAtJsonConverter))]
+    public class EndsAt : EnumValueObject<EndsAt, EndsAt.Durations>
     {
-        public override string ToString()
-        {
-            return $"{nameof(EndsAt)}.{Value}";
-        }
-
         public static EndsAt Death => new EndsAt(Durations.Death);
         public static EndsAt Instant => new EndsAt(Durations.Instant);
 
@@ -96,14 +92,11 @@ namespace low_age_data.Domain.Shared.Durations
             }
         }
 
-        private EndsAt(Durations @enum)
-        {
-            Value = @enum;
-        }
+        private EndsAt(Durations @enum) : base(@enum) { }
 
-        private Durations Value { get; }
-
-        private enum Durations
+        private EndsAt(string? from) : base(from) { }
+        
+        public enum Durations
         {
             Death,
             Instant,
@@ -137,9 +130,24 @@ namespace low_age_data.Domain.Shared.Durations
             EndOfFourthAction
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        private class EndsAtJsonConverter : JsonConverter
         {
-            yield return Value;
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(EndsAt);
+            }
+            
+            public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            {
+                var id = (EndsAt)value!;
+                serializer.Serialize(writer, id.ToString());
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+            {
+                var value = serializer.Deserialize<string>(reader);
+                return new EndsAt(value);
+            }
         }
     }
 }

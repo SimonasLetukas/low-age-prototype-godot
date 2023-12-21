@@ -1,9 +1,9 @@
-﻿using low_age_data.Common;
-using low_age_data.Domain.Effects;
+﻿using low_age_data.Domain.Effects;
 using low_age_data.Domain.Entities.Doodads;
-using low_age_data.Domain.Shared.Flags;
 using System.Collections.Generic;
-using low_age_data.Domain.Shared.Filters;
+using low_age_data.Domain.Common.Filters;
+using low_age_data.Domain.Common.Flags;
+using low_age_data.Shared;
 
 namespace low_age_data.Collections
 {

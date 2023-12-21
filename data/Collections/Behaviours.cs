@@ -1,18 +1,18 @@
-﻿using low_age_data.Common;
-using low_age_data.Domain.Behaviours;
+﻿using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Effects;
 using low_age_data.Domain.Logic;
-using low_age_data.Domain.Shared;
-using low_age_data.Domain.Shared.Durations;
-using low_age_data.Domain.Shared.Flags;
-using low_age_data.Domain.Shared.Modifications;
 using System.Collections.Generic;
+using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
+using low_age_data.Domain.Common.Filters;
+using low_age_data.Domain.Common.Flags;
+using low_age_data.Domain.Common.Modifications;
+using low_age_data.Domain.Common.Shape;
 using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Entities.Tiles;
 using low_age_data.Domain.Masks;
 using low_age_data.Domain.Resources;
-using low_age_data.Domain.Shared.Filters;
-using low_age_data.Domain.Shared.Shape;
+using low_age_data.Domain.Tiles;
+using low_age_data.Shared;
 
 namespace low_age_data.Collections
 {
@@ -535,10 +535,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new EntityCondition(
+                            new TileCondition(
                                 conditionFlag: ConditionFlag.Exists,
-                                conditionedEntity: TileId.Scraps,
-                                amountOfEntitiesRequired: 2)
+                                conditionedTile: TileId.Scraps,
+                                amountOfTilesRequired: 2)
                         })
                     }),
 
@@ -555,10 +555,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new EntityCondition(
+                            new TileCondition(
                                 conditionFlag: ConditionFlag.Exists,
-                                conditionedEntity: TileId.Celestium,
-                                amountOfEntitiesRequired: 2)
+                                conditionedTile: TileId.Celestium,
+                                amountOfTilesRequired: 2)
                         })
                     }),
 
@@ -1018,10 +1018,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new EntityCondition(
+                            new TileCondition(
                                 conditionFlag: ConditionFlag.Exists,
-                                conditionedEntity: TileId.Scraps,
-                                amountOfEntitiesRequired: 2)
+                                conditionedTile: TileId.Scraps,
+                                amountOfTilesRequired: 2)
                         })
                     }),
 
@@ -1039,10 +1039,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new EntityCondition(
+                            new TileCondition(
                                 conditionFlag: ConditionFlag.Exists,
-                                conditionedEntity: TileId.Celestium,
-                                amountOfEntitiesRequired: 2)
+                                conditionedTile: TileId.Celestium,
+                                amountOfTilesRequired: 2)
                         })
                     }),
 
