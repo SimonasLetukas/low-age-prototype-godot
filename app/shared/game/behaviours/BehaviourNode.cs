@@ -6,7 +6,7 @@ public class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
 {
     public event Action<BehaviourNode> Ended = delegate { };
     
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid InstanceId { get; set; } = Guid.NewGuid();
     public Guid? OwnerActorId { get; protected set; }
     public EndsAtNode CurrentDuration { get; protected set; }
     

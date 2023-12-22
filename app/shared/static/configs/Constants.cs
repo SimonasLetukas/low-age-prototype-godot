@@ -27,6 +27,6 @@
 
     public static void SetRemoteServer()
     {
-        ServerIp = "35.228.22.84"; // TODO move to secrets
+        ServerIp = "35.228.22.84"; // TODO move to secrets or configs
     }
 }

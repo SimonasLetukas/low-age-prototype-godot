@@ -7,10 +7,10 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     public static UnitNode Instance() => (UnitNode) GD.Load<PackedScene>(ScenePath).Instance();
     public static UnitNode InstantiateAsChild(Unit blueprint, Node parentNode)
     {
-        var structure = Instance();
-        parentNode.AddChild(structure);
-        structure.SetBlueprint(blueprint);
-        return structure;
+        var unit = Instance();
+        parentNode.AddChild(unit);
+        unit.SetBlueprint(blueprint);
+        return unit;
     }
     
     private Unit Blueprint { get; set; }

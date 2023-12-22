@@ -2,6 +2,6 @@
 
 public interface INodeFromBlueprint<in TBlueprint>
 {
-    Guid Id { get; set; }
+    Guid InstanceId { get; set; }
     void SetBlueprint(TBlueprint blueprint);
 }

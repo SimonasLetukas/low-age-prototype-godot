@@ -5,7 +5,7 @@ using low_age_data.Domain.Factions;
 
 namespace low_age_data.Domain.Entities.Actors
 {
-    public abstract class Actor : Entity, IDisplayable
+    public abstract class Actor : Entity
     {
         protected Actor(
             EntityId id, 
@@ -15,19 +15,17 @@ namespace low_age_data.Domain.Entities.Actors
             IList<Stat> statistics,
             FactionId originalFaction,
             IList<ActorAttribute> actorAttributes,
-            IList<AbilityId> abilities) : base(id, displayName, description)
+            IList<AbilityId> abilities) : base(id, displayName, description, sprite)
         {
             Statistics = statistics;
             OriginalFaction = originalFaction;
             ActorAttributes = actorAttributes;
             Abilities = abilities;
-            Sprite = sprite;
         }
 
         public IList<Stat> Statistics { get; }
         public FactionId OriginalFaction { get; }
         public IList<ActorAttribute> ActorAttributes { get; }
         public IList<AbilityId> Abilities { get; }
-        public string? Sprite { get; } 
     }
 }

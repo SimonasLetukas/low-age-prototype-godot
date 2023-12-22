@@ -79,3 +79,4 @@ tile_data = PoolIntArray( 262180, 0, 0, 786447, 9, 0, 851983, 9, 0, 851984, 9, 0
 
 [node name="FocusedTile" parent="." instance=ExtResource( 4 )]
 frames = SubResource( 5 )
+frame = 3

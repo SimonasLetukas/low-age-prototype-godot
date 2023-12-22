@@ -7,18 +7,19 @@ namespace low_age_data.Domain.Resources
     [JsonConverter(typeof(ResourceIdJsonConverter))]
     public class ResourceId : Id
     {
-        private ResourceId(string value) : base($"resource-{value}")
+        [JsonConstructor]
+        public ResourceId(string value, bool usePrefix = false) : base(usePrefix ? $"resource-{value}" : value)
         {
         }
 
-        public static ResourceId Scraps => new ResourceId($"{nameof(Scraps)}".ToKebabCase());
-        public static ResourceId Celestium => new ResourceId($"{nameof(Celestium)}".ToKebabCase());
-        public static ResourceId WeaponStorage => new ResourceId($"{nameof(WeaponStorage)}".ToKebabCase());
-        public static ResourceId MeleeWeapon => new ResourceId($"{nameof(MeleeWeapon)}".ToKebabCase());
-        public static ResourceId RangedWeapon => new ResourceId($"{nameof(RangedWeapon)}".ToKebabCase());
-        public static ResourceId SpecialWeapon => new ResourceId($"{nameof(SpecialWeapon)}".ToKebabCase());
-        public static ResourceId Population => new ResourceId($"{nameof(Population)}".ToKebabCase());
-        public static ResourceId Faith => new ResourceId($"{nameof(Faith)}".ToKebabCase());
+        public static ResourceId Scraps => new ResourceId($"{nameof(Scraps)}".ToKebabCase(), true);
+        public static ResourceId Celestium => new ResourceId($"{nameof(Celestium)}".ToKebabCase(), true);
+        public static ResourceId WeaponStorage => new ResourceId($"{nameof(WeaponStorage)}".ToKebabCase(), true);
+        public static ResourceId MeleeWeapon => new ResourceId($"{nameof(MeleeWeapon)}".ToKebabCase(), true);
+        public static ResourceId RangedWeapon => new ResourceId($"{nameof(RangedWeapon)}".ToKebabCase(), true);
+        public static ResourceId SpecialWeapon => new ResourceId($"{nameof(SpecialWeapon)}".ToKebabCase(), true);
+        public static ResourceId Population => new ResourceId($"{nameof(Population)}".ToKebabCase(), true);
+        public static ResourceId Faith => new ResourceId($"{nameof(Faith)}".ToKebabCase(), true);
         
         private class ResourceIdJsonConverter : JsonConverter
         {

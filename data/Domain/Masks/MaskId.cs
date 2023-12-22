@@ -7,11 +7,12 @@ namespace low_age_data.Domain.Masks
     [JsonConverter(typeof(MaskIdJsonConverter))]
     public class MaskId : Id
     {
-        private MaskId(string value) : base($"mask-{value}")
+        [JsonConstructor]
+        public MaskId(string value, bool usePrefix = false) : base(usePrefix ? $"mask-{value}" : value)
         {
         }
 
-        public static MaskId Power => new MaskId($"{nameof(Power)}".ToKebabCase());
+        public static MaskId Power => new MaskId($"{nameof(Power)}".ToKebabCase(), true);
         
         private class MaskIdJsonConverter : JsonConverter
         {

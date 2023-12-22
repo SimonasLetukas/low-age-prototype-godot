@@ -7,15 +7,16 @@ namespace low_age_data.Domain.Tiles
     [JsonConverter(typeof(TileIdJsonConverter))]
     public class TileId : Id
     {
-        private TileId(string value) : base($"tile-{value}")
+        [JsonConstructor]
+        public TileId(string value, bool usePrefix = false) : base(usePrefix ? $"tile-{value}" : value)
         {
         }
 
-        public static TileId Grass => new TileId(nameof(Grass).ToLower());
-        public static TileId Mountains => new TileId(nameof(Mountains).ToLower());
-        public static TileId Marsh => new TileId(nameof(Marsh).ToLower());
-        public static TileId Scraps => new TileId(nameof(Scraps).ToLower());
-        public static TileId Celestium => new TileId(nameof(Celestium).ToLower());
+        public static TileId Grass => new TileId(nameof(Grass).ToLower(), true);
+        public static TileId Mountains => new TileId(nameof(Mountains).ToLower(), true);
+        public static TileId Marsh => new TileId(nameof(Marsh).ToLower(), true);
+        public static TileId Scraps => new TileId(nameof(Scraps).ToLower(), true);
+        public static TileId Celestium => new TileId(nameof(Celestium).ToLower(), true);
         
         private class TileIdJsonConverter : JsonConverter
         {

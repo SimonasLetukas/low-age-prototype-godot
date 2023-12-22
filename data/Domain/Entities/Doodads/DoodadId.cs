@@ -7,18 +7,19 @@ namespace low_age_data.Domain.Entities.Doodads
     [JsonConverter(typeof(DoodadIdJsonConverter))]
     public class DoodadId : EntityId
     {
-        private DoodadId(string value) : base($"doodad-{value}")
+        [JsonConstructor]
+        public DoodadId(string value, bool usePrefix = false) : base(usePrefix ? $"doodad-{value}" : value)
         {
         }
 
-        public static DoodadId ShamanWondrousGoo => new DoodadId(nameof(ShamanWondrousGoo).ToKebabCase());
-        public static DoodadId PyreCargo => new DoodadId(nameof(PyreCargo).ToKebabCase());
-        public static DoodadId PyreFlames => new DoodadId(nameof(PyreFlames).ToKebabCase());
-        public static DoodadId CannonHeatUpDangerZone => new DoodadId(nameof(CannonHeatUpDangerZone).ToKebabCase());
-        public static DoodadId RadarResonatingSweep => new DoodadId(nameof(RadarResonatingSweep).ToKebabCase());
-        public static DoodadId RadarRedDot => new DoodadId(nameof(RadarRedDot).ToKebabCase());
-        public static DoodadId VesselFortification => new DoodadId(nameof(VesselFortification).ToKebabCase());
-        public static DoodadId OmenRendition => new DoodadId(nameof(OmenRendition).ToKebabCase());
+        public static DoodadId ShamanWondrousGoo => new DoodadId(nameof(ShamanWondrousGoo).ToKebabCase(), true);
+        public static DoodadId PyreCargo => new DoodadId(nameof(PyreCargo).ToKebabCase(), true);
+        public static DoodadId PyreFlames => new DoodadId(nameof(PyreFlames).ToKebabCase(), true);
+        public static DoodadId CannonHeatUpDangerZone => new DoodadId(nameof(CannonHeatUpDangerZone).ToKebabCase(), true);
+        public static DoodadId RadarResonatingSweep => new DoodadId(nameof(RadarResonatingSweep).ToKebabCase(), true);
+        public static DoodadId RadarRedDot => new DoodadId(nameof(RadarRedDot).ToKebabCase(), true);
+        public static DoodadId VesselFortification => new DoodadId(nameof(VesselFortification).ToKebabCase(), true);
+        public static DoodadId OmenRendition => new DoodadId(nameof(OmenRendition).ToKebabCase(), true);
         
         private class DoodadIdJsonConverter : JsonConverter
         {

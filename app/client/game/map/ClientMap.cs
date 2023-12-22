@@ -66,7 +66,7 @@ public class ClientMap : Map
         FinishedInitializing();
     }
 
-    public EntityLegacy GetHoveredEntity(Vector2 mousePosition, Vector2 mapPosition)
+    public EntityNode GetHoveredEntity(Vector2 mousePosition, Vector2 mapPosition)
     {
         var entity = _entities.GetTopEntity(mousePosition);
 
@@ -115,7 +115,7 @@ public class ClientMap : Map
         HandleDeselecting();
     }
 
-    public void HandleSelecting(EntityLegacy hoveredEntity)
+    public void HandleSelecting(EntityNode hoveredEntity)
     {
         if (_tileHovered.IsInBoundsOf(_mapSize) is false)
             return;
@@ -157,11 +157,10 @@ public class ClientMap : Map
         return entityHovered;
     }
 
-    private void OnEntitiesNewEntityFound(EntityLegacy entity)
+    private void OnEntitiesNewEntityFound(EntityNode entity)
     {
-        var entityPosition = entity.GetGlobalTransform().origin;
-        var mapPosition = _tileMap.GetMapPositionFromGlobalPosition(entityPosition);
-        _entities.RegisterEntity(mapPosition, entity);
+        var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPosition);
+        _entities.AdjustGlobalPosition(entity, globalPosition);
     }
 
     internal void OnMouseLeftReleasedWithoutDrag()

@@ -1,9 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://app/client/game/map/entities/Entities.cs" type="Script" id=1]
-[ext_resource path="res://app/client/game/map/entities/units/Units.tscn" type="PackedScene" id=2]
-[ext_resource path="res://app/client/game/map/entities/structures/Structures.tscn" type="PackedScene" id=3]
-
+[ext_resource path="res://app/client/game/map/entities/Units.tscn" type="PackedScene" id=2]
+[ext_resource path="res://app/client/game/map/entities/Structures.tscn" type="PackedScene" id=3]
 
 [node name="Entities" type="YSort"]
 script = ExtResource( 1 )

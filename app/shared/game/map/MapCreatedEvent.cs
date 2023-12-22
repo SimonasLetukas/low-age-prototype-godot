@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Godot;
-using low_age_data.Domain.Common;
 using low_age_data.Domain.Tiles;
 
 public class MapCreatedEvent : IGameEvent

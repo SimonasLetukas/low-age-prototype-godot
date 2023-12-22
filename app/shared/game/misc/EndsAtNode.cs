@@ -18,7 +18,7 @@ public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     
     public event Action Completed = delegate { };
 
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid InstanceId { get; set; } = Guid.NewGuid();
 
     private bool IsInstant { get; set; }
     private bool EndsOnDeath { get; set; }

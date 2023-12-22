@@ -1,7 +1,106 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://app/shared/game/entities/EntityNode.tscn" type="PackedScene" id=1]
 [ext_resource path="res://app/shared/game/entities/ActorNode.cs" type="Script" id=2]
+[ext_resource path="res://assets/sprites/interface/healthbar.png" type="Texture" id=3]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform vec4 outline_color : hint_color;
+uniform bool enabled;
+
+const int intensity = 50;
+const float precision = 0.0065;
+
+varying vec2 o;
+varying vec2 f;
+
+void vertex()
+{
+	o = VERTEX;
+	vec2 uv = (UV - 0.5);
+	VERTEX += uv * float(intensity);
+	f = VERTEX;
+}
+
+void fragment()
+{	
+	vec4 outline_color_changing = outline_color + ((sin(TIME * 3.5) + 1.0) / 2.0) - 0.08;
+	outline_color_changing.a = 1.0;
+	
+	ivec2 t = textureSize(TEXTURE, 0);
+	vec2 regular_uv;
+	regular_uv.x = UV.x + (f.x - o.x)/float(t.x);
+	regular_uv.y = UV.y + (f.y - o.y)/float(t.y);
+	
+	vec4 regular_color = texture(TEXTURE, regular_uv);
+	if((regular_uv.x < 0.0 || regular_uv.x > 1.0) || (regular_uv.y < 0.0 || regular_uv.y > 1.0) || regular_color.a <=0.01){
+		regular_color = vec4(0.0); 
+	}
+	
+	vec2 ps = TEXTURE_PIXEL_SIZE * float(intensity) * precision;
+	
+	vec4 final_color = regular_color;
+	if (regular_color.a <= 1.0 && enabled)
+	{
+		for(int x = -1; x <= 1; x += 1){
+			for(int y = -1; y <= 1; y += 1){
+				//Get the X and Y offset from this
+				if (x==0 && y==0)
+					continue;
+					
+				vec2 outline_uv = regular_uv + vec2(float(x) * ps.x, float(y) * ps.y); 
+				
+				//Sample here, if we are out of bounds then fail
+				vec4 outline_sample = texture(TEXTURE, outline_uv);
+				if((outline_uv.x < 0.0 || outline_uv.x > 1.0) || (outline_uv.y < 0.0 || outline_uv.y > 1.0)){
+					//We aren't a real color
+					outline_sample = vec4(0);
+				}
+				
+				//Is our sample empty? Is there something nearby?
+				if(outline_sample.a > final_color.a && outline_sample.a > 0.9){
+					final_color = outline_color_changing;
+				}
+			}
+		}
+	}
+	COLOR = final_color; 
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/outline_color = Color( 0, 0, 0, 1 )
+shader_param/enabled = false
 
 [node name="ActorNode" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[node name="Health" type="TextureProgress" parent="." index="0"]
+margin_left = -4.0
+margin_right = 4.0
+margin_bottom = 1.0
+value = 100.0
+texture_under = ExtResource( 3 )
+texture_over = ExtResource( 3 )
+texture_progress = ExtResource( 3 )
+tint_under = Color( 0, 0, 0, 1 )
+tint_over = Color( 1, 1, 1, 0 )
+tint_progress = Color( 0.384314, 0.815686, 0.384314, 1 )
+
+[node name="Shields" type="TextureProgress" parent="." index="1"]
+margin_left = -4.0
+margin_top = -1.0
+margin_right = 4.0
+value = 100.0
+texture_under = ExtResource( 3 )
+texture_over = ExtResource( 3 )
+texture_progress = ExtResource( 3 )
+tint_under = Color( 0, 0, 0, 1 )
+tint_over = Color( 1, 1, 1, 0 )
+
+[node name="Sprite" parent="." index="2"]
+material = SubResource( 2 )

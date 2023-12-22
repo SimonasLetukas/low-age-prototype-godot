@@ -7,6 +7,7 @@ namespace low_age_data.Domain.Factions
     [JsonConverter(typeof(FactionIdJsonConverter))]
     public class FactionId : Id
     {
+        [JsonConstructor]
         public FactionId(string value, bool usePrefix = false) : base(usePrefix ? $"faction-{value}" : value)
         {
         }

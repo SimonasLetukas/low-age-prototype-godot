@@ -9,7 +9,7 @@ using low_age_data.Domain.Tiles;
 
 namespace low_age_data.Domain.Entities.Doodads
 {
-    public class Doodad : Entity, IDisplayable
+    public class Doodad : Entity
     { 
         public Doodad(
             DoodadId id,
@@ -24,9 +24,8 @@ namespace low_age_data.Domain.Entities.Doodads
             bool? occupiesSpace = null,
             bool? statsCopiedFromSource = null,
             bool? alliesCanStack = null,
-            bool? onlyOneCanExist = null) : base(id, displayName, description)
+            bool? onlyOneCanExist = null) : base(id, displayName, description, sprite)
         {
-            Sprite = sprite;
             OnCollisionEffect = onCollisionEffect;
             CollisionFilters = collisionFilters ?? new List<IFilterItem>();
             PeriodicEffect = periodicEffect;
@@ -83,7 +82,5 @@ namespace low_age_data.Domain.Entities.Doodads
         /// teams and <see cref="AlliesCanStack"/> input is overriden. 
         /// </summary>
         public bool OnlyOneCanExist { get; }
-
-        public string? Sprite { get; }
     }
 }

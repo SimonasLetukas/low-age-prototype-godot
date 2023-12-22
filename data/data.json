@@ -227,9 +227,9 @@
           "ability-slave-repair",
           "ability-slave-manual-labour"
         ],
-        "sprite": "res://assets/sprites/units/revs/slave indexed 1x1.png",
         "displayName": "Slave",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/slave indexed 1x1.png"
       },
       {
         "id": "unit-leader",
@@ -292,9 +292,9 @@
           "ability-leader-menacing-presence",
           "ability-leader-one-for-all"
         ],
-        "sprite": "res://assets/sprites/units/revs/leader indexed 1x1.png",
         "displayName": "Leader",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/leader indexed 1x1.png"
       },
       {
         "id": "unit-quickdraw",
@@ -367,9 +367,9 @@
           "ability-quickdraw-doubleshot",
           "ability-quickdraw-cripple"
         ],
-        "sprite": "res://assets/sprites/units/revs/quickdraw indexed 1x1.png",
         "displayName": "Quickdraw",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/quickdraw indexed 1x1.png"
       },
       {
         "id": "unit-gorger",
@@ -431,9 +431,9 @@
           "ability-gorger-fanatic-suicide",
           "ability-gorger-fanatic-suicide-passive"
         ],
-        "sprite": "res://assets/sprites/units/revs/gorger indexed 1x1.png",
         "displayName": "Gorger",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/gorger indexed 1x1.png"
       },
       {
         "id": "unit-camou",
@@ -495,9 +495,9 @@
           "ability-camou-silent-assassin",
           "ability-camou-climb"
         ],
-        "sprite": "res://assets/sprites/units/revs/camou indexed 1x1.png",
         "displayName": "Camou",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/camou indexed 1x1.png"
       },
       {
         "id": "unit-shaman",
@@ -569,9 +569,9 @@
         "abilities": [
           "ability-shaman-wondrous-goo"
         ],
-        "sprite": "res://assets/sprites/units/revs/shaman indexed 1x1.png",
         "displayName": "Shaman",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/shaman indexed 1x1.png"
       },
       {
         "id": "unit-pyre",
@@ -644,9 +644,9 @@
           "ability-pyre-wall-of-flames",
           "ability-pyre-phantom-menace"
         ],
-        "sprite": "res://assets/sprites/units/revs/pyre hauler_part indexed 1x1.png",
         "displayName": "Pyre",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/pyre hauler_part indexed 1x1.png"
       },
       {
         "id": "unit-big-bad-bull",
@@ -707,9 +707,9 @@
         "abilities": [
           "ability-big-bad-bull-unleash-the-rage"
         ],
-        "sprite": "res://assets/sprites/units/revs/big bad bull indexed 2x2.png",
         "displayName": "Big Bad Bull",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/big bad bull indexed 2x2.png"
       },
       {
         "id": "unit-mummy",
@@ -771,9 +771,9 @@
           "ability-mummy-spawn-roach",
           "ability-mummy-leap-of-hunger"
         ],
-        "sprite": "res://assets/sprites/units/revs/mummy indexed 1x1.png",
         "displayName": "Mummy",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/mummy indexed 1x1.png"
       },
       {
         "id": "unit-roach",
@@ -835,9 +835,9 @@
           "ability-roach-degrading-carapace",
           "ability-roach-corrosive-spit"
         ],
-        "sprite": "res://assets/sprites/units/revs/roach indexed 1x1.png",
         "displayName": "Roach",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/roach indexed 1x1.png"
       },
       {
         "id": "unit-parasite",
@@ -898,9 +898,9 @@
         "abilities": [
           "ability-parasite-paralysing-grasp"
         ],
-        "sprite": "res://assets/sprites/units/revs/parasite indexed 1x1.png",
         "displayName": "Parasite",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/revs/parasite indexed 1x1.png"
       },
       {
         "id": "unit-horrior",
@@ -968,9 +968,9 @@
           "ability-horrior-expert-formation",
           "ability-horrior-mount"
         ],
-        "sprite": "res://assets/sprites/units/uee/horrior indexed 1x1.png",
         "displayName": "Horrior",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/horrior indexed 1x1.png"
       },
       {
         "id": "unit-marksman",
@@ -1048,9 +1048,9 @@
         "abilities": [
           "ability-marksman-critical-mark"
         ],
-        "sprite": "res://assets/sprites/units/uee/marksman indexed 1x1.png",
         "displayName": "Marksman",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/marksman indexed 1x1.png"
       },
       {
         "id": "unit-surfer",
@@ -1117,9 +1117,9 @@
         "abilities": [
           "ability-surfer-dismount"
         ],
-        "sprite": "res://assets/sprites/units/uee/surfer indexed 1x1.png",
         "displayName": "Surfer",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/surfer indexed 1x1.png"
       },
       {
         "id": "unit-mortar",
@@ -1199,9 +1199,9 @@
           "ability-mortar-reload",
           "ability-mortar-piercing-blast"
         ],
-        "sprite": "res://assets/sprites/units/uee/mortar 0 indexed 1x1.png",
         "displayName": "Mortar",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/mortar 0 indexed 1x1.png"
       },
       {
         "id": "unit-hawk",
@@ -1270,9 +1270,9 @@
           "ability-hawk-leadership",
           "ability-hawk-health-kit"
         ],
-        "sprite": "res://assets/sprites/units/uee/hawk indexed 1x1.png",
         "displayName": "Hawk",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/hawk indexed 1x1.png"
       },
       {
         "id": "unit-engineer",
@@ -1341,9 +1341,9 @@
           "ability-engineer-operate",
           "ability-engineer-repair"
         ],
-        "sprite": "res://assets/sprites/units/uee/engineer indexed 1x1.png",
         "displayName": "Engineer",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/engineer indexed 1x1.png"
       },
       {
         "id": "unit-cannon",
@@ -1413,9 +1413,9 @@
           "ability-cannon-machine",
           "ability-cannon-heat-up"
         ],
-        "sprite": "res://assets/sprites/units/uee/cannon indexed 2x2.png",
         "displayName": "Cannon",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/cannon indexed 2x2.png"
       },
       {
         "id": "unit-ballista",
@@ -1486,9 +1486,9 @@
           "ability-ballista-add-on",
           "ability-ballista-aim"
         ],
-        "sprite": "res://assets/sprites/units/uee/ballista indexed 2x2.png",
         "displayName": "Ballista",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/ballista indexed 2x2.png"
       },
       {
         "id": "unit-radar",
@@ -1549,9 +1549,9 @@
           "ability-radar-resonating-sweep",
           "ability-radar-radio-location"
         ],
-        "sprite": "res://assets/sprites/units/uee/radar indexed 1x1.png",
         "displayName": "Radar",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/radar indexed 1x1.png"
       },
       {
         "id": "unit-vessel",
@@ -1620,9 +1620,9 @@
           "ability-vessel-absorbent-field",
           "ability-vessel-fortify"
         ],
-        "sprite": "res://assets/sprites/units/uee/vessel indexed 2x2.png",
         "displayName": "Vessel",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/vessel indexed 2x2.png"
       },
       {
         "id": "unit-omen",
@@ -1699,9 +1699,9 @@
         "abilities": [
           "ability-omen-rendition"
         ],
-        "sprite": "res://assets/sprites/units/uee/omen indexed 1x1.png",
         "displayName": "Omen",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/units/uee/omen indexed 1x1.png"
       }
     ],
     "structures": [
@@ -1745,9 +1745,9 @@
           "ability-citadel-high-ground",
           "ability-citadel-promote-goons"
         ],
-        "sprite": "res://assets/sprites/structures/revs/boss post front indexed 2x3.png",
         "displayName": "Citadel",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/boss post front indexed 2x3.png"
       },
       {
         "id": "structure-hut",
@@ -1807,9 +1807,9 @@
           "ability-hut-building",
           "ability-shared-scraps-income"
         ],
-        "sprite": "res://assets/sprites/structures/revs/collectors hut indexed 2x2.png",
         "displayName": "Hut",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/collectors hut indexed 2x2.png"
       },
       {
         "id": "structure-obelisk",
@@ -1870,9 +1870,9 @@
           "ability-shared-celestium-income",
           "ability-obelisk-celestium-discharge"
         ],
-        "sprite": "res://assets/sprites/structures/revs/obelisk indexed 2x2 or 1x1.png",
         "displayName": "Obelisk",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/obelisk indexed 2x2 or 1x1.png"
       },
       {
         "id": "structure-shack",
@@ -1932,9 +1932,9 @@
           "ability-shared-revelators-building",
           "ability-shack-accommodation"
         ],
-        "sprite": "res://assets/sprites/structures/revs/shack indexed 1x1.png",
         "displayName": "Shack",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/shack indexed 1x1.png"
       },
       {
         "id": "structure-smith",
@@ -1994,9 +1994,9 @@
           "ability-shared-revelators-building",
           "ability-smith-melee-weapon-production"
         ],
-        "sprite": "res://assets/sprites/structures/revs/smith indexed 1x2.png",
         "displayName": "Smith",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/smith indexed 1x2.png"
       },
       {
         "id": "structure-fletcher",
@@ -2056,9 +2056,9 @@
           "ability-shared-revelators-building",
           "ability-fletcher-ranged-weapon-production"
         ],
-        "sprite": "res://assets/sprites/structures/revs/fletchery indexed 2x2.png",
         "displayName": "Fletcher",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/fletchery indexed 2x2.png"
       },
       {
         "id": "structure-alchemy",
@@ -2118,9 +2118,9 @@
           "ability-shared-revelators-building",
           "ability-alchemy-special-weapon-production"
         ],
-        "sprite": "res://assets/sprites/structures/revs/alchemy indexed 2x3.png",
         "displayName": "Alchemy",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/alchemy indexed 2x3.png"
       },
       {
         "id": "structure-depot",
@@ -2180,9 +2180,9 @@
           "ability-shared-revelators-building",
           "ability-depot-weapon-storage"
         ],
-        "sprite": "res://assets/sprites/structures/revs/depot indexed 2x2.png",
         "displayName": "Depot",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/depot indexed 2x2.png"
       },
       {
         "id": "structure-workshop",
@@ -2242,9 +2242,9 @@
           "ability-shared-revelators-building",
           "ability-workshop-research"
         ],
-        "sprite": "res://assets/sprites/structures/revs/workshop indexed 2x2.png",
         "displayName": "Workshop",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/workshop indexed 2x2.png"
       },
       {
         "id": "structure-outpost",
@@ -2305,9 +2305,9 @@
           "ability-outpost-ascendable",
           "ability-outpost-high-ground"
         ],
-        "sprite": "res://assets/sprites/structures/revs/outpost indexed 1x1.png",
         "displayName": "Outpost",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/outpost indexed 1x1.png"
       },
       {
         "id": "structure-barricade",
@@ -2369,9 +2369,9 @@
           "ability-barricade-caltrops",
           "ability-barricade-decompose"
         ],
-        "sprite": "res://assets/sprites/structures/revs/barricade front indexed 1x1.png",
         "displayName": "Barricade",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/revs/barricade front indexed 1x1.png"
       },
       {
         "id": "structure-battery-core",
@@ -2440,9 +2440,9 @@
           "ability-shared-uee-build",
           "ability-battery-core-fusion-core-upgrade"
         ],
-        "sprite": "res://assets/sprites/structures/uee/core low 3 indexed 3x3.png",
         "displayName": "Battery Core",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/core low 3 indexed 3x3.png"
       },
       {
         "id": "structure-fusion-core",
@@ -2512,9 +2512,9 @@
           "ability-fusion-core-defence-protocol",
           "ability-fusion-core-celestium-core-upgrade"
         ],
-        "sprite": "res://assets/sprites/structures/uee/core mid 3 indexed 3x3.png",
         "displayName": "Fusion Core",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/core mid 3 indexed 3x3.png"
       },
       {
         "id": "structure-celestium-core",
@@ -2584,9 +2584,9 @@
           "ability-celestium-core-defence-protocol",
           "ability-celestium-core-heightened-conductivity"
         ],
-        "sprite": "res://assets/sprites/structures/uee/core top 3 indexed 3x3.png",
         "displayName": "Celestium Core",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/core top 3 indexed 3x3.png"
       },
       {
         "id": "structure-collector",
@@ -2653,9 +2653,9 @@
           "ability-shared-scraps-income",
           "ability-collector-direct-transit-system"
         ],
-        "sprite": "res://assets/sprites/structures/uee/collector1 indexed 2x2.png",
         "displayName": "Collector",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/collector1 indexed 2x2.png"
       },
       {
         "id": "structure-extractor",
@@ -2722,9 +2722,9 @@
           "ability-shared-celestium-income",
           "ability-extractor-reinforced-infrastructure"
         ],
-        "sprite": "res://assets/sprites/structures/uee/extractor3 indexed 2x2.png",
         "displayName": "Extractor",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/extractor3 indexed 2x2.png"
       },
       {
         "id": "structure-power-pole",
@@ -2793,9 +2793,9 @@
           "ability-power-pole-excess-distribution",
           "ability-power-pole-improved-power-grid"
         ],
-        "sprite": "res://assets/sprites/structures/uee/pole3 indexed 1x1.png",
         "displayName": "Power Pole",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/pole3 indexed 1x1.png"
       },
       {
         "id": "structure-temple",
@@ -2862,9 +2862,9 @@
           "ability-shared-uee-power-dependency",
           "ability-temple-keeping-the-faith"
         ],
-        "sprite": "res://assets/sprites/structures/uee/faith indexed 2x2 or 1x2.png",
         "displayName": "Temple",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/faith indexed 2x2 or 1x2.png"
       },
       {
         "id": "structure-military-base",
@@ -2931,9 +2931,9 @@
           "ability-shared-uee-power-dependency",
           "ability-military-base-train"
         ],
-        "sprite": "res://assets/sprites/structures/uee/military base indexed 1x2.png",
         "displayName": "Military Base",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/military base indexed 1x2.png"
       },
       {
         "id": "structure-factory",
@@ -3000,9 +3000,9 @@
           "ability-shared-uee-power-dependency",
           "ability-factory-train"
         ],
-        "sprite": "res://assets/sprites/structures/uee/factory 2 indexed 2x3.png",
         "displayName": "Factory",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/factory 2 indexed 2x3.png"
       },
       {
         "id": "structure-laboratory",
@@ -3069,9 +3069,9 @@
           "ability-shared-uee-power-dependency",
           "ability-laboratory-train"
         ],
-        "sprite": "res://assets/sprites/structures/uee/lab4 indexed 3x3.png",
         "displayName": "Laboratory",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/lab4 indexed 3x3.png"
       },
       {
         "id": "structure-armoury",
@@ -3138,9 +3138,9 @@
           "ability-shared-uee-power-dependency",
           "ability-armoury-research"
         ],
-        "sprite": "res://assets/sprites/structures/uee/armoury1 indexed 1x2.png",
         "displayName": "Armoury",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/armoury1 indexed 1x2.png"
       },
       {
         "id": "structure-wall",
@@ -3207,9 +3207,9 @@
           "ability-shared-uee-power-dependency",
           "ability-wall-high-ground"
         ],
-        "sprite": "res://assets/sprites/structures/uee/wall indexed 1x1.png",
         "displayName": "Wall",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/wall indexed 1x1.png"
       },
       {
         "id": "structure-stairs",
@@ -3276,9 +3276,9 @@
           "ability-shared-uee-power-dependency",
           "ability-stairs-ascendable"
         ],
-        "sprite": "res://assets/sprites/structures/uee/stairs front indexed 1x2.png",
         "displayName": "Stairs",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/stairs front indexed 1x2.png"
       },
       {
         "id": "structure-gate",
@@ -3347,9 +3347,9 @@
           "ability-gate-ascendable",
           "ability-gate-entrance"
         ],
-        "sprite": "res://assets/sprites/structures/uee/gate 0 indexed 1x4.png",
         "displayName": "Gate",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/gate 0 indexed 1x4.png"
       },
       {
         "id": "structure-watchtower",
@@ -3416,9 +3416,9 @@
           "ability-shared-uee-power-dependency",
           "ability-watchtower-vantage-point"
         ],
-        "sprite": "res://assets/sprites/structures/uee/watchtower indexed 1x1.png",
         "displayName": "Watchtower",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/watchtower indexed 1x1.png"
       },
       {
         "id": "structure-bastion",
@@ -3485,9 +3485,9 @@
           "ability-shared-uee-power-dependency",
           "ability-bastion-battlement"
         ],
-        "sprite": "res://assets/sprites/structures/uee/tower indexed 2x2.png",
         "displayName": "Bastion",
-        "description": ""
+        "description": "",
+        "sprite": "res://assets/sprites/structures/uee/tower indexed 2x2.png"
       }
     ],
     "doodads": [
@@ -3507,9 +3507,9 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": true,
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Shaman Wondrous Goo",
-        "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn."
+        "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn.",
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
       },
       {
         "id": "doodad-pyre-cargo",
@@ -3522,9 +3522,9 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": true,
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Pyre Cargo",
-        "description": "The cargo which is attached to Pyre leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death."
+        "description": "The cargo which is attached to Pyre leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death.",
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
       },
       {
         "id": "doodad-pyre-flames",
@@ -3542,9 +3542,9 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": true,
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Pyre Flames",
-        "description": "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage."
+        "description": "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
       },
       {
         "id": "doodad-cannon-heat-up-danger-zone",
@@ -3557,9 +3557,9 @@
         "statsCopiedFromSource": true,
         "alliesCanStack": true,
         "onlyOneCanExist": false,
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Cannon Heat Up Danger Zone",
-        "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile."
+        "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile.",
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
       },
       {
         "id": "doodad-radar-resonating-sweep",
@@ -3572,9 +3572,9 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": true,
         "onlyOneCanExist": false,
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Radar Resonating Sweep",
-        "description": "These tiles are revealed for Radar's owner until the start of the next planning phase."
+        "description": "These tiles are revealed for Radar's owner until the start of the next planning phase.",
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
       },
       {
         "id": "doodad-radar-red-dot",
@@ -3587,9 +3587,9 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": false,
         "onlyOneCanExist": false,
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Radar Red Dot",
-        "description": "This red dot shows where enemy unit is currently located inside the fog of war."
+        "description": "This red dot shows where enemy unit is currently located inside the fog of war.",
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
       },
       {
         "id": "doodad-vessel-fortification",
@@ -3602,9 +3602,9 @@
         "statsCopiedFromSource": false,
         "alliesCanStack": true,
         "onlyOneCanExist": false,
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Vessel Fortification",
-        "description": "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of Vessel's action."
+        "description": "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of Vessel's action.",
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
       },
       {
         "id": "doodad-omen-rendition",
@@ -3617,9 +3617,9 @@
         "statsCopiedFromSource": true,
         "alliesCanStack": false,
         "onlyOneCanExist": false,
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "displayName": "Omen Rendition",
-        "description": "50% of all damage done to this rendition will be done as Pure Damage to the original target."
+        "description": "50% of all damage done to this rendition will be done as Pure Damage to the original target.",
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
       }
     ]
   },
