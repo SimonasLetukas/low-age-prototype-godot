@@ -146,6 +146,7 @@ margin_right = 6.10352e-05
 margin_bottom = -257.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 size_flags_vertical = 0
 custom_constants/vseparation = 4
 custom_constants/hseparation = 4
@@ -175,9 +176,6 @@ margin_bottom = -219.0
 custom_constants/margin_right = 18
 custom_constants/margin_top = 9
 custom_constants/margin_bottom = 7
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="NameLabel" type="Label" parent="EntityName"]
 margin_top = 9.0
@@ -203,9 +201,6 @@ custom_fonts/font = SubResource( 1 )
 text = "Big Bad Bull"
 align = 2
 valign = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Panel" type="VBoxContainer" parent="."]
 anchor_left = 1.0
@@ -220,9 +215,6 @@ grow_horizontal = 0
 size_flags_horizontal = 3
 size_flags_vertical = 2
 custom_constants/separation = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Abilities" type="HBoxContainer" parent="Panel"]
 margin_right = 256.0

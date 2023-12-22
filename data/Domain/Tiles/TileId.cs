@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Tiles
     public class TileId : Id
     {
         [JsonConstructor]
-        public TileId(string value, bool usePrefix = false) : base(usePrefix ? $"tile-{value}" : value)
+        public TileId(string value, bool addPrefix = false) : base(addPrefix ? $"tile-{value}" : value)
         {
         }
 

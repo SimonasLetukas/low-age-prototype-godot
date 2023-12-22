@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Effects
     public class EffectId : Id
     {
         [JsonConstructor]
-        public EffectId(string value, bool usePrefix = false) : base(usePrefix ? $"effect-{value}" : value)
+        public EffectId(string value, bool addPrefix = false) : base(addPrefix ? $"effect-{value}" : value)
         {
         }
 

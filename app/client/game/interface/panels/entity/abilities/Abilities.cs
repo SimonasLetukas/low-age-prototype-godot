@@ -1,32 +1,37 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using low_age_data.Domain.Abilities;
 
 public class Abilities : HBoxContainer
 {
-    [Export] public Dictionary<string, string> AbilityIconPaths { get; set; }
+    [Export] public Dictionary<string, string> AbilityIconPaths { get; set; } // TODO have paths to icons on blueprint level instead
     
     [Signal] public delegate void AbilitiesPopulated();
 
-    private readonly Dictionary<string, Texture> _abilityIcons = new Dictionary<string, Texture>();
+    private readonly Dictionary<AbilityId, Texture> _abilityIcons = new Dictionary<AbilityId, Texture>();
 
     public override void _Ready()
     {
         Reset();
         foreach (var iconId in AbilityIconPaths.Keys)
         {
-            _abilityIcons[iconId] = GD.Load<Texture>(AbilityIconPaths[iconId]);
+            _abilityIcons[new AbilityId(iconId)] = GD.Load<Texture>(AbilityIconPaths[iconId]);
         }
     }
 
-    public void Populate(IEnumerable<string> ids)
+    public void Populate(IEnumerable<AbilityId> ids)
     {
+        Reset();
+        
         foreach (var id in ids)
         {
             var abilityButtonScene = GD.Load<PackedScene>(AbilityButton.ScenePath);
             var abilityButton = abilityButtonScene.Instance<AbilityButton>();
-            var icon = _abilityIcons[id];
+            if (_abilityIcons.TryGetValue(id, out var icon) is false)
+            {
+                icon = _abilityIcons.Values.First();
+            }
             abilityButton.SetIcon(icon);
             abilityButton.SetId(id);
             AddChild(abilityButton);
@@ -46,7 +51,7 @@ public class Abilities : HBoxContainer
     public bool IsAnySelected() => GetChildren().OfType<AbilityButton>()
         .Any(abilityButton => abilityButton.IsSelected);
 
-    private void Reset()
+    public void Reset()
     {
         foreach (var child in GetChildren().OfType<Node>())
         {

@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Abilities
     public class AbilityId : Id
     {
         [JsonConstructor]
-        public AbilityId(string value, bool usePrefix = false) : base(usePrefix ? $"ability-{value}" : value)
+        public AbilityId(string value, bool addPrefix = false) : base(addPrefix ? $"ability-{value}" : value)
         {
         }
 

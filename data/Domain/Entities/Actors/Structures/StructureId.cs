@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Entities.Actors.Structures
     public class StructureId : EntityId
     {
         [JsonConstructor]
-        public StructureId(string value, bool usePrefix = false) : base(usePrefix ? $"structure-{value}" : value)
+        public StructureId(string value, bool addPrefix = false) : base(addPrefix ? $"structure-{value}" : value)
         {
         }
 

@@ -1,5 +1,6 @@
-using Godot;
+using System;
 using System.Linq;
+using Godot;
 using low_age_data.Domain.Common;
 using Array = Godot.Collections.Array;
 
@@ -7,19 +8,25 @@ public class Interface : CanvasLayer
 {
     [Export] public bool DebugEnabled { get; set; } = false;
     
-    [Signal] public delegate void MouseEntered();
-    [Signal] public delegate void MouseExited();
+    public event Action MouseEntered = delegate { };
+    
+    public event Action MouseExited = delegate { };
     
     private Vector2 _mapSize = Vector2.Zero;
+    private EntityPanel _entityPanel;
     
     public override void _Ready()
     {
-        foreach (var control in GetChildren().OfType<Control>())
+        _entityPanel = GetNode<EntityPanel>($"{nameof(EntityPanel)}");
+
+        foreach (var firstLevel in GetChildren().OfType<Control>())
         {
-            GD.Print(control.Name);
-            // TODO there are mouse filters disabled on the control nodes for these signals to activate
-            control.Connect("mouse_entered", this, nameof(OnControlMouseEntered), new Array { control });
-            control.Connect("mouse_exited", this, nameof(OnControlMouseExited), new Array { control });
+            foreach (var control in firstLevel.GetChildren().OfType<Control>())
+            {
+                GD.Print(control.Name);
+                control.Connect("mouse_entered", this, nameof(OnControlMouseEntered), new Array { control });
+                control.Connect("mouse_exited", this, nameof(OnControlMouseExited), new Array { control });
+            }
         }
     }
 
@@ -33,15 +40,25 @@ public class Interface : CanvasLayer
         if (DebugEnabled)
             GD.Print($"{nameof(Interface)}: Control '{which.Name}' was entered by mouse.");
         
-        EmitSignal(nameof(MouseEntered));
+        MouseEntered();
     }
 
     private void OnControlMouseExited(Control which)
-    {
+    { 
         if (DebugEnabled)
             GD.Print($"{nameof(Interface)}: Control '{which.Name}' was exited by mouse.");
         
-        EmitSignal(nameof(MouseExited));
+        MouseExited();
+    }
+
+    internal void OnEntitySelected(EntityNode entity)
+    {
+        _entityPanel.OnEntitySelected(entity);
+    }
+
+    internal void OnEntityDeselected()
+    {
+        _entityPanel.OnEntityDeselected();
     }
 
     internal void OnMapNewTileHovered(Vector2 tileHovered, Terrain terrain)

@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Behaviours
     public class BehaviourId : Id
     {
         [JsonConstructor]
-        public BehaviourId(string value, bool usePrefix = false) : base(usePrefix ? $"behaviour-{value}" : value)
+        public BehaviourId(string value, bool addPrefix = false) : base(addPrefix ? $"behaviour-{value}" : value)
         {
         }
 

@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Masks
     public class MaskId : Id
     {
         [JsonConstructor]
-        public MaskId(string value, bool usePrefix = false) : base(usePrefix ? $"mask-{value}" : value)
+        public MaskId(string value, bool addPrefix = false) : base(addPrefix ? $"mask-{value}" : value)
         {
         }
 

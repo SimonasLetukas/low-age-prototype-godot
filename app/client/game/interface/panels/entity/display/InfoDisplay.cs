@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using low_age_data.Domain.Common;
 
 public class InfoDisplay : MarginContainer
@@ -19,7 +21,7 @@ public class InfoDisplay : MarginContainer
     private int _valueInitiative = 99;
     private int _valueMeleeArmour = 99;
     private int _valueRangedArmour = 99;
-    private ActorAttribute[] _valueEntityTypes =
+    private IEnumerable<ActorAttribute> _valueActorAttributes = new[]
     {
         ActorAttribute.Biological, ActorAttribute.Armoured, ActorAttribute.Ranged
     };
@@ -39,7 +41,7 @@ public class InfoDisplay : MarginContainer
     private ActorAttribute _valueRangedBonusType = ActorAttribute.Armoured;
     
     private string _valueAbilityName = "Build";
-    private TurnPhase _valueAbilityType = TurnPhase.Planning;
+    private TurnPhase _valueAbilityTurnPhase = TurnPhase.Planning;
     private string _valueAbilityText = "Place a ghostly rendition of a selected enemy unit in [b]7[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] to an unoccupied space in a [b]3[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] from the selected target. The rendition has the same amount of [img=15x11]Client/UI/Icons/icon_health_big.png[/img], [img=15x11]Client/UI/Icons/icon_melee_armour_big.png[/img] and [img=15x11]Client/UI/Icons/icon_ranged_armour_big.png[/img] as the selected target, cannot act, can be attacked and stays for [b]2[/b] action phases. [b]50%[/b] of all [img=15x11]Client/UI/Icons/icon_damage_big.png[/img] done to the rendition is done as pure [img=15x11]Client/UI/Icons/icon_damage_big.png[/img]to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals [b]10[/b][img=15x11]Client/UI/Icons/icon_melee_attack.png[/img] and slows all adjacent enemies by [b]50%[/b] until the end of their next action.";
     private int _valueAbilityCooldown = 3;
     private TurnPhase _valueAbilityCooldownType = TurnPhase.Action;
@@ -137,7 +139,7 @@ public class InfoDisplay : MarginContainer
         int initiative,
         int meleeArmour,
         int rangedArmour,
-        ActorAttribute[] entityTypes,
+        IEnumerable<ActorAttribute> actorAttributes,
         int currentShields = 0,
         int maxShields = 0)
     {
@@ -148,11 +150,11 @@ public class InfoDisplay : MarginContainer
         _valueInitiative = initiative;
         _valueMeleeArmour = meleeArmour;
         _valueRangedArmour = rangedArmour;
-        _valueEntityTypes = entityTypes;
+        _valueActorAttributes = actorAttributes;
         _valueCurrentShields = currentShields;
         _valueMaxShields = maxShields;
     }
-
+    
     public void SetMeleeAttackStats(
         bool hasAttack,
         string attackName,
@@ -187,18 +189,26 @@ public class InfoDisplay : MarginContainer
 
     public void SetAbilityStats(
         string abilityName,
-        TurnPhase type,
+        TurnPhase turnPhase,
         string text,
-        string research = "",
+        IList<ResearchId> research = null,
         int cooldown = 0,
         TurnPhase cooldownType = null)
     {
         _valueAbilityName = abilityName;
-        _valueAbilityType = type;
+        _valueAbilityTurnPhase = turnPhase;
         _valueAbilityText = text;
-        _valueResearchText = research;
+        _valueResearchText = research is null
+            ? string.Empty
+            : string.Join(", ", research.Select(x => x.ToString().ToList())); // TODO add nice display names to research
         _valueAbilityCooldown = cooldown;
         _valueAbilityCooldownType = cooldownType;
+    }
+    
+    public void ResetAttacks()
+    {
+        _hasMeleeAttack = false;
+        _hasRangedAttack = false;
     }
 
     private void Reset()
@@ -223,6 +233,7 @@ public class InfoDisplay : MarginContainer
         _rightSideRangedAttack.Visible = false;
         _abilityDescription.Visible = false;
         _actorAttributes.Visible = false;
+        ResetAttacks();
     }
 
     private void ShowUnitStats()
@@ -233,7 +244,7 @@ public class InfoDisplay : MarginContainer
         _leftSideMiddleInitiative.SetValue(_valueInitiative);
         _leftSideBottomMeleeArmour.SetValue(_valueMeleeArmour);
         _leftSideBottomRangedArmour.SetValue(_valueRangedArmour);
-        _actorAttributes.SetTypes(_valueEntityTypes);
+        _actorAttributes.SetTypes(_valueActorAttributes);
 
         _leftSide.Visible = true;
         _leftSideTop.Visible = true;
@@ -255,7 +266,7 @@ public class InfoDisplay : MarginContainer
         _leftSideTopShields.SetValue(_valueMaxShields, (_valueCurrentShields == _valueMaxShields) is false, _valueCurrentShields);
         _leftSideBottomMeleeArmour.SetValue(_valueMeleeArmour);
         _leftSideBottomRangedArmour.SetValue(_valueRangedArmour);
-        _actorAttributes.SetTypes(_valueEntityTypes);
+        _actorAttributes.SetTypes(_valueActorAttributes);
 
         _leftSide.Visible = true;
         _leftSideTop.Visible = true;
@@ -272,7 +283,7 @@ public class InfoDisplay : MarginContainer
         _leftSideTopText.SetMelee();
         _leftSideMiddleDamage.SetValue(_valueMeleeDamage);
         _leftSideMiddleDistance.SetValue(_valueMeleeDistance);
-        _actorAttributes.SetTypes(_valueEntityTypes);
+        _actorAttributes.SetTypes(_valueActorAttributes);
 
         _leftSide.Visible = true;
         _leftSideTopText.Visible = true;
@@ -297,7 +308,7 @@ public class InfoDisplay : MarginContainer
         _leftSideTopText.SetRanged();
         _leftSideMiddleDamage.SetValue(_valueRangedDamage);
         _leftSideMiddleDistance.SetValue(_valueRangedDistance);
-        _actorAttributes.SetTypes(_valueEntityTypes);
+        _actorAttributes.SetTypes(_valueActorAttributes);
 
         _leftSide.Visible = true;
         _leftSideTopText.Visible = true;
@@ -322,7 +333,7 @@ public class InfoDisplay : MarginContainer
         GetNode<Label>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Label/Shadow").Text = _valueAbilityName;
         _researchText.SetResearch(_valueResearchText);
         GetNode<AbilitySubtitle>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(AbilitySubtitle)}")
-            .SetAbilitySubtitle(_valueAbilityType, _valueAbilityCooldown, _valueAbilityCooldownType);
+            .SetAbilitySubtitle(_valueAbilityTurnPhase, _valueAbilityCooldown, _valueAbilityCooldownType);
         _abilityDescription.GetNode<RichTextLabel>("Text").BbcodeText = _valueAbilityText;
         _abilityDescription.GetNode<RichTextLabel>("Text/Shadow").BbcodeText = _valueAbilityText;
 

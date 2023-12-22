@@ -45,20 +45,28 @@ public class ClientGame : Game
 
         _mouse.Connect(nameof(Mouse.MouseDragged), _camera, nameof(Camera.OnMouseDragged));
         _mouse.Connect(nameof(Mouse.TakingControl), _camera, nameof(Camera.OnMouseTakingControl));
-
-        _interface.Connect(nameof(Interface.MouseEntered), _mouse, nameof(Mouse.OnInterfaceMouseEntered));
-        _interface.Connect(nameof(Interface.MouseExited), _mouse, nameof(Mouse.OnInterfaceMouseExited));
+        
+        _interface.MouseEntered += _mouse.OnInterfaceMouseEntered;
+        _interface.MouseExited += _mouse.OnInterfaceMouseExited;
 
         _map.FinishedInitializing += OnMapFinishedInitializing;
         _map.NewTileHovered += _interface.OnMapNewTileHovered;
+        _map.Entities.EntitySelected += _interface.OnEntitySelected;
+        _map.Entities.EntityDeselected += _interface.OnEntityDeselected;
         
         _map.UnitMovementIssued += RegisterNewGameEvent;
     }
 
     private void DisconnectSignals()
     {
+        _interface.MouseEntered -= _mouse.OnInterfaceMouseEntered;
+        _interface.MouseExited -= _mouse.OnInterfaceMouseExited;
+        
         _map.FinishedInitializing -= OnMapFinishedInitializing;
         _map.NewTileHovered -= _interface.OnMapNewTileHovered;
+        _map.Entities.EntitySelected -= _interface.OnEntitySelected;
+        _map.Entities.EntityDeselected -= _interface.OnEntityDeselected;
+        
         _map.UnitMovementIssued -= RegisterNewGameEvent;
     }
 

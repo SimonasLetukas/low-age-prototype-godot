@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Common
     public class ResearchId : Id
     {
         [JsonConstructor]
-        public ResearchId(string value, bool usePrefix = false) : base(usePrefix ? $"research-{value}" : value)
+        public ResearchId(string value, bool addPrefix = false) : base(addPrefix ? $"research-{value}" : value)
         {
         }
 

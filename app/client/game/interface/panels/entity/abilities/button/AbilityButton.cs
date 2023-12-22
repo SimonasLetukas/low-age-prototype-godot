@@ -1,4 +1,5 @@
 using Godot;
+using low_age_data.Domain.Abilities;
 
 public class AbilityButton : NinePatchRect
 {
@@ -12,7 +13,7 @@ public class AbilityButton : NinePatchRect
     [Signal] public delegate void Clicked(AbilityButton abilityButton);
 
     public bool IsSelected { get; private set; } = false;
-    public string Id { get; private set; } = string.Empty;
+    public AbilityId Id { get; private set; }
 
     public override void _Ready()
     {
@@ -23,7 +24,7 @@ public class AbilityButton : NinePatchRect
         Connect("gui_input", this, nameof(OnAbilityButtonGuiInput));
     }
 
-    public void SetId(string id) => Id = id;
+    public void SetId(AbilityId id) => Id = id;
 
     public void SetSelected(bool to)
     {

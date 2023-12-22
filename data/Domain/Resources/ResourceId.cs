@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Resources
     public class ResourceId : Id
     {
         [JsonConstructor]
-        public ResourceId(string value, bool usePrefix = false) : base(usePrefix ? $"resource-{value}" : value)
+        public ResourceId(string value, bool addPrefix = false) : base(addPrefix ? $"resource-{value}" : value)
         {
         }
 

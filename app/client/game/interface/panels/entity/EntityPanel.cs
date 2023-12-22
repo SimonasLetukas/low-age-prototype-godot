@@ -1,7 +1,8 @@
-using Godot;
 using System;
+using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Common;
 
 public class EntityPanel : Control
@@ -12,11 +13,14 @@ public class EntityPanel : Control
     private Tween _tween;
     private bool _isAbilitySelected;
     private bool _isSwitchingBetweenAbilities;
+    private EntityNode _selectedEntity;
     private int _biggestPreviousAbilityTextSize = 0;
-    private int _ySizeForAbility = 834;
-    private int _ySizeForUnit = 786;
-    private int _ySizeForStructure = 816;
-    private readonly Dictionary<string, string> _abilityDescriptionsById = new Dictionary<string, string>();
+    private const int YSizeForAbility = 834;
+    private const int YSizeForUnit = 786;
+    private const int YSizeForStructure = 816;
+    private const int YSizeForHiding = 1500;
+    private const float PanelMoveDuration = 0.1f;
+    private readonly IList<Ability> _abilitiesBlueprint = Data.Instance.Blueprint.Abilities;
 
     public override void _Ready()
     {
@@ -29,46 +33,112 @@ public class EntityPanel : Control
         _display.Connect(nameof(InfoDisplay.AbilitiesClosed), this, nameof(OnInfoDisplayAbilitiesClosed));
         _display.Connect(nameof(InfoDisplay.AbilityTextResized), this, nameof(OnInfoDisplayTextResized));
         
-        // TODO
-        
-        var mockedId1 = "slave_build";
-        var mockedDescription1 = "Place a ghostly rendition of a selected enemy unit in [b]7[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] to an unoccupied space in a [b]3[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] from the selected target. The rendition has the same amount of [img=15x11]Client/UI/Icons/icon_health_big.png[/img], [img=15x11]Client/UI/Icons/icon_melee_armour_big.png[/img] and [img=15x11]Client/UI/Icons/icon_ranged_armour_big.png[/img] as the selected target, cannot act, can be attacked and stays for [b]2[/b] action phases. [b]50%[/b] of all [img=15x11]Client/UI/Icons/icon_damage_big.png[/img] done to the rendition is done as pure [img=15x11]Client/UI/Icons/icon_damage_big.png[/img]to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals [b]10[/b][img=15x11]Client/UI/Icons/icon_melee_attack.png[/img] and slows all adjacent enemies by [b]50%[/b] until the end of their next action";
-        var mockedId2 = "slave_manual_labour";
-        var mockedDescription2 = "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut.";
-
-        _abilityDescriptionsById[mockedId1] = mockedDescription1;
-        _abilityDescriptionsById[mockedId2] = mockedDescription2;
-        
-        _abilityButtons.Populate(_abilityDescriptionsById.Keys);
+        HidePanel();
     }
 
-    private void ConnectAbilityButtons()
+    public void OnEntitySelected(EntityNode selectedEntity)
     {
-        foreach (var abilityButton in _abilityButtons.GetChildren().OfType<AbilityButton>())
+        _isAbilitySelected = false;
+        _isSwitchingBetweenAbilities = false;
+        _selectedEntity = selectedEntity;
+        
+        _abilityButtons.Reset();
+        if (selectedEntity is ActorNode selectedActor)
         {
-            var id = abilityButton.Id; // TODO this ID should be used later
-            abilityButton.Connect(nameof(AbilityButton.Clicked), this, nameof(OnAbilityButtonClicked));
+            // TODO start using AbilityNode instead to get the current info
+            _abilityButtons.Populate(selectedActor.Abilities); 
         }
+        
+        ChangeDisplay();
+        MovePanel();
     }
 
-    private void ChangeDisplay(AbilityButton clickedAbility)
+    public void OnEntityDeselected()
     {
-        if (_isAbilitySelected)
+        _selectedEntity = null;
+        HidePanel();
+    }
+
+    private void ChangeDisplay(AbilityButton clickedAbility = null)
+    {
+        if (_selectedEntity is null)
         {
-            var id = clickedAbility.Id;
-            var type = TurnPhase.Planning;
-            var text = _abilityDescriptionsById[id];
-            var research = id;
-            var cooldown = 1;
-            var cooldownType = TurnPhase.Action;
-            _display.SetAbilityStats(id, type, text, research, cooldown, cooldownType);
+            HidePanel();
+            return;
+        }
+        
+        if (_isAbilitySelected && (clickedAbility is null) is false)
+        {
+            var ability = _abilitiesBlueprint.First(x => x.Id.Equals(clickedAbility.Id));
+            var name = ability.DisplayName;
+            var turnPhase = ability.TurnPhase;
+            var text = ability.Description;
+            var research = ability.ResearchNeeded;
+            var cooldown = 1; // TODO take from the selected actor
+            var cooldownType = TurnPhase.Action; // TODO take from the selected actor
+            _display.SetAbilityStats(name, turnPhase, text, research, cooldown, cooldownType);
             _display.ShowView(View.Ability);
+            return;
         }
-        else
+        
+        _biggestPreviousAbilityTextSize = 0;
+        
+        // if (_selectedEntity is DoodadNode selectedDoodad) TODO
+
+        var selectedActor = (ActorNode)_selectedEntity;
+        
+        var currentStats = selectedActor.CurrentStats;
+        var health = currentStats.First(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.Health));
+        var shields = currentStats.FirstOrDefault(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.Shields));
+        var movement = currentStats.First(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.Movement));
+        var initiative = currentStats.First(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.Initiative));
+        var meleeArmour = currentStats.First(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.MeleeArmour));
+        var rangedArmour = currentStats.First(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.RangedArmour));
+        var actorAttributes = selectedActor.Attributes;
+        
+        // TODO this should show current values and update whenever values change dynamically while the display is open
+        _display.SetEntityStats((int)health.CurrentValue, health.Blueprint.MaxAmount, 
+            movement.CurrentValue, movement.Blueprint.MaxAmount, (int)initiative.CurrentValue, 
+            (int)meleeArmour.CurrentValue, (int)rangedArmour.CurrentValue, actorAttributes, 
+            shields is null ? 0 : (int)shields.CurrentValue, 
+            shields is null ? 0 : shields.Blueprint.MaxAmount);
+
+        if (selectedActor is UnitNode selectedUnit)
         {
-            // TODO set parameters here
+            _display.ResetAttacks();
+            foreach (var blueprint in selectedUnit.CurrentStats
+                         .Where(x => x.Blueprint is AttackStat)
+                         .Select(attack => (AttackStat)attack.Blueprint))
+            {
+                if (blueprint.AttackType.Equals(Attacks.Melee)) 
+                    _display.SetMeleeAttackStats(true, selectedActor.Name, blueprint.MaximumDistance, 
+                        blueprint.MaxAmount, blueprint.BonusAmount, blueprint.BonusTo);
+                
+                if (blueprint.AttackType.Equals(Attacks.Ranged)) 
+                    _display.SetRangedAttackStats(true, selectedActor.Name, blueprint.MaximumDistance, 
+                        blueprint.MaxAmount, blueprint.BonusAmount, blueprint.BonusTo);
+            }
+            
             _display.ShowView(View.UnitStats);
-            _biggestPreviousAbilityTextSize = 0;
+            return;
+        }
+
+        if (selectedActor is StructureNode selectedStructure)
+        {
+            // TODO
+            return;
         }
     }
 
@@ -79,18 +149,26 @@ public class EntityPanel : Control
         {
             var abilityTextBoxSizeY = CalculateBiggestPreviousSize((int)_abilityTextBox.RectSize.y);
             
-            var newY = _ySizeForAbility - abilityTextBoxSizeY;
-            if (newY > _ySizeForUnit) // TODO check here if structure is selected
-                newY = _ySizeForUnit;
+            var newY = YSizeForAbility - abilityTextBoxSizeY;
+            if (newY > YSizeForUnit) // TODO change check here if structure is selected
+                newY = YSizeForUnit;
 
             newSize = new Vector2(RectSize.x, newY);
         }
-        else
+        else // TODO change for structures and other selectables
         {
-            newSize = new Vector2(RectSize.x, _ySizeForUnit);
+            newSize = new Vector2(RectSize.x, YSizeForUnit);
         }
 
-        _tween.InterpolateProperty(this, "rect_size", RectSize, newSize, 0.1f, Tween.TransitionType.Quad);
+        _tween.InterpolateProperty(this, "rect_size", RectSize, newSize, 
+            PanelMoveDuration, Tween.TransitionType.Quad);
+        _tween.Start();
+    }
+    
+    private void HidePanel()
+    {
+        _tween.InterpolateProperty(this, "rect_size", RectSize, 
+            new Vector2(RectSize.x, YSizeForHiding), PanelMoveDuration, Tween.TransitionType.Quad);
         _tween.Start();
     }
 
@@ -108,6 +186,15 @@ public class EntityPanel : Control
         _biggestPreviousAbilityTextSize = currentSizeY;
         return currentSizeY;
     }
+    
+    private void ConnectAbilityButtons()
+    {
+        foreach (var abilityButton in _abilityButtons.GetChildren().OfType<AbilityButton>())
+        {
+            var id = abilityButton.Id; // TODO this ID should be used later
+            abilityButton.Connect(nameof(AbilityButton.Clicked), this, nameof(OnAbilityButtonClicked));
+        }
+    }
 
     private void OnAbilityButtonClicked(AbilityButton abilityButton)
     {
@@ -117,7 +204,7 @@ public class EntityPanel : Control
         {
             abilityButton.SetSelected(false);
             _isAbilitySelected = false;
-            ChangeDisplay(null);
+            ChangeDisplay();
             MovePanel();
             return;
         }

@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Entities.Doodads
     public class DoodadId : EntityId
     {
         [JsonConstructor]
-        public DoodadId(string value, bool usePrefix = false) : base(usePrefix ? $"doodad-{value}" : value)
+        public DoodadId(string value, bool addPrefix = false) : base(addPrefix ? $"doodad-{value}" : value)
         {
         }
 

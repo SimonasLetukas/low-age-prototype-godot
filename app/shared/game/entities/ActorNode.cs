@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities.Actors;
 
@@ -9,8 +10,10 @@ using low_age_data.Domain.Entities.Actors;
 /// </summary>
 public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 {
-    public List<StatNode> CurrentStats { get; protected set; }
+    public IList<StatNode> CurrentStats { get; protected set; }
+    public IList<ActorAttribute> Attributes { get; protected set; }
     public ActorRotation ActorRotation { get; protected set; }
+    public IList<AbilityId> Abilities { get; protected set; } // TODO should be of types AbilityNode instead
     
     private Actor Blueprint { get; set; }
     private TextureProgress _health;
@@ -28,8 +31,10 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
-        ActorRotation = ActorRotation.BottomRight;
         CurrentStats = blueprint.Statistics.Select(stat => StatNode.InstantiateAsChild(stat, this)).ToList();
+        Attributes = blueprint.ActorAttributes;
+        ActorRotation = ActorRotation.BottomRight;
+        Abilities = blueprint.Abilities;
         
         var spriteSize = _sprite.Texture.GetSize();
         _health.RectPosition = new Vector2(_health.RectPosition.x, (spriteSize.y * -1) - 2);

@@ -71,7 +71,7 @@ public class Mouse : Node2D
 	        SetCursorToArrow();
 	        EmitSignal(nameof(TakingControl), false);
 	        var travelVector = mousePos - _startPosition;
-	        if (travelVector.Length() <= MinimumMouseDistanceToStartDrag)
+	        if (travelVector.Length() <= MinimumMouseDistanceToStartDrag && _mouseIsOnUi is false)
 	        {
 		        EmitSignal(nameof(LeftReleasedWithoutDrag));
 	        }

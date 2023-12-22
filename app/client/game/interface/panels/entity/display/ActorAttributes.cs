@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using low_age_data.Domain.Common;
 
 public class ActorAttributes : MarginContainer
@@ -17,7 +18,7 @@ public class ActorAttributes : MarginContainer
         SetTypes(Attributes);
     }
 
-    public void SetTypes(ActorAttribute[] types)
+    public void SetTypes(IEnumerable<ActorAttribute> types)
     {
         var count = 0;
         var label = GetNode<Label>("Label");

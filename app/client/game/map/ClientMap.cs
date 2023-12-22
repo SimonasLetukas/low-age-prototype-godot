@@ -9,19 +9,20 @@ public class ClientMap : Map
     public event Action<Vector2, Terrain> NewTileHovered = delegate { };
     public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
 
+    public Entities Entities { get; private set; }
+    
     private ICollection<Vector2> _startingPositions = new List<Vector2>();
     private Vector2 _mapSize = Vector2.Inf;
     private Vector2 _tileHovered = Vector2.Zero;
     private Tiles _tileMap;
-    private Entities _entities;
 
     public override void _Ready()
     {
         base._Ready();
         _tileMap = GetNode<Tiles>($"{nameof(Tiles)}");
-        _entities = GetNode<Entities>($"{nameof(Entities)}");
+        Entities = GetNode<Entities>($"{nameof(Entities)}");
 
-        _entities.NewEntityFound += OnEntitiesNewEntityFound;
+        Entities.NewEntityFound += OnEntitiesNewEntityFound;
     }
 
     public override void _Process(float delta)
@@ -30,7 +31,7 @@ public class ClientMap : Map
         var mousePosition = GetGlobalMousePosition();
         var mapPosition = _tileMap.GetMapPositionFromGlobalPosition(mousePosition);
         GetHoveredEntity(mousePosition, mapPosition);
-        if (_entities.IsEntitySelected())
+        if (Entities.IsEntitySelected())
         {
             // TODO optimization: only if hovered tile changed from above, display path
             var path = Pathfinding.FindPath(_tileHovered);
@@ -44,7 +45,7 @@ public class ClientMap : Map
     
     public override void _ExitTree()
     {
-        _entities.NewEntityFound -= OnEntitiesNewEntityFound;
+        Entities.NewEntityFound -= OnEntitiesNewEntityFound;
         base._ExitTree();
     }
 
@@ -58,7 +59,7 @@ public class ClientMap : Map
         Position = new Vector2((Mathf.Max(_mapSize.x, _mapSize.y) * Constants.TileWidth) / 2, Position.y);
         _tileMap.Initialize(_mapSize, @event.Tiles);
         Pathfinding.Initialize(_mapSize, @event.Tiles);
-        _entities.Initialize();
+        Entities.Initialize();
         
         _tileMap.FillMapOutsideWithMountains();
         _tileMap.UpdateALlBitmaps();
@@ -68,11 +69,11 @@ public class ClientMap : Map
 
     public EntityNode GetHoveredEntity(Vector2 mousePosition, Vector2 mapPosition)
     {
-        var entity = _entities.GetTopEntity(mousePosition);
+        var entity = Entities.GetTopEntity(mousePosition);
 
         if (entity != null)
         {
-            var entityMapPosition = _entities.GetMapPositionOfEntity(entity);
+            var entityMapPosition = Entities.GetMapPositionOfEntity(entity);
             if (_tileHovered == entityMapPosition) 
                 return entity;
             
@@ -85,12 +86,12 @@ public class ClientMap : Map
             var entityHovered = HoverTile();
             if (entityHovered)
             {
-                entity = _entities.GetHoveredEntity();
+                entity = Entities.GetHoveredEntity();
             }
         }
         else
         {
-            entity = _entities.GetHoveredEntity();
+            entity = Entities.GetHoveredEntity();
         }
 
         return entity;
@@ -98,10 +99,10 @@ public class ClientMap : Map
 
     public void HandleExecute(Vector2 mapPosition)
     {
-        if (_entities.EntityMoving)
+        if (Entities.EntityMoving)
             return;
 
-        if (_entities.IsEntitySelected() is false) 
+        if (Entities.IsEntitySelected() is false) 
             return;
 
         if (_tileMap.IsCurrentlyAvailable(_tileHovered) is false)
@@ -109,8 +110,8 @@ public class ClientMap : Map
         
         var path = Pathfinding.FindPath(_tileHovered);
         var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
-        var selectedEntity = _entities.SelectedEntity;
-        var entityPosition = _entities.GetMapPositionOfEntity(selectedEntity);
+        var selectedEntity = Entities.SelectedEntity;
+        var entityPosition = Entities.GetMapPositionOfEntity(selectedEntity);
         UnitMovementIssued(new UnitMovedAlongPathEvent(entityPosition, globalPath, path));
         HandleDeselecting();
     }
@@ -126,29 +127,29 @@ public class ClientMap : Map
             return;
         }
 
-        if (_entities.EntityMoving)
+        if (Entities.EntityMoving)
             return;
         
         if (hoveredEntity is UnitNode hoveredUnit)
         {
-            var entityPosition = _entities.GetMapPositionOfEntity(hoveredEntity);
+            var entityPosition = Entities.GetMapPositionOfEntity(hoveredEntity);
             var availableTiles = Pathfinding.GetAvailablePositions(entityPosition, hoveredUnit.Movement);
             _tileMap.SetAvailableTiles(availableTiles);
         }
         
-        _entities.SelectEntity(hoveredEntity);
+        Entities.SelectEntity(hoveredEntity);
     }
 
     public void HandleDeselecting()
     {
         _tileMap.ClearAvailableTiles();
-        _entities.DeselectEntity();
+        Entities.DeselectEntity();
     }
 
     public void MoveUnit(UnitMovedAlongPathEvent @event)
     {
-        var selectedEntity = _entities.GetEntityFromMapPosition(@event.CurrentEntityPosition);
-        _entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path);
+        var selectedEntity = Entities.GetEntityFromMapPosition(@event.CurrentEntityPosition);
+        Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path);
     }
     
     private bool HoverTile()
@@ -156,14 +157,14 @@ public class ClientMap : Map
         var hoveredTerrain = _tileMap.GetTerrain(_tileHovered);
         NewTileHovered(_tileHovered, hoveredTerrain);
         _tileMap.MoveFocusedTileTo(_tileHovered);
-        var entityHovered = _entities.TryHoveringEntity(_tileHovered);
+        var entityHovered = Entities.TryHoveringEntity(_tileHovered);
         return entityHovered;
     }
 
     private void OnEntitiesNewEntityFound(EntityNode entity)
     {
         var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPosition);
-        _entities.AdjustGlobalPosition(entity, globalPosition);
+        Entities.AdjustGlobalPosition(entity, globalPosition);
     }
 
     internal void OnMouseLeftReleasedWithoutDrag()

@@ -8,7 +8,7 @@ namespace low_age_data.Domain.Entities.Actors.Units
     public class UnitId : EntityId
     {
         [JsonConstructor]
-        public UnitId(string value, bool usePrefix = false) : base(usePrefix ? $"unit-{value}" : value)
+        public UnitId(string value, bool addPrefix = false) : base(addPrefix ? $"unit-{value}" : value)
         {
         }
 

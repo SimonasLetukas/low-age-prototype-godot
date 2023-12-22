@@ -13,6 +13,8 @@ public class Entities : YSort
     [Export] public bool DebugEnabled { get; set; } = true;
     
     public event Action<EntityNode> NewEntityFound = delegate { };
+    public event Action<EntityNode> EntitySelected = delegate { };
+    public event Action EntityDeselected = delegate { };
 
     public bool EntityMoving { get; private set; } = false;
     public EntityNode SelectedEntity { get; private set; } = null;
@@ -84,6 +86,7 @@ public class Entities : YSort
 
         SelectedEntity = entity;
         SelectedEntity.SetSelected(true);
+        EntitySelected(entity);
     }
 
     public void DeselectEntity()
@@ -93,6 +96,7 @@ public class Entities : YSort
         
         SelectedEntity.SetSelected(false);
         SelectedEntity = null;
+        EntityDeselected();
     }
 
     public bool IsEntitySelected() => SelectedEntity != null;
