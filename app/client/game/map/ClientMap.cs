@@ -128,11 +128,14 @@ public class ClientMap : Map
 
         if (_entities.EntityMoving)
             return;
-
-        const float tempRange = 12.5f; // TODO
-        var entityPosition = _entities.GetMapPositionOfEntity(hoveredEntity);
-        var availableTiles = Pathfinding.GetAvailablePositions(entityPosition, tempRange);
-        _tileMap.SetAvailableTiles(availableTiles);
+        
+        if (hoveredEntity is UnitNode hoveredUnit)
+        {
+            var entityPosition = _entities.GetMapPositionOfEntity(hoveredEntity);
+            var availableTiles = Pathfinding.GetAvailablePositions(entityPosition, hoveredUnit.Movement);
+            _tileMap.SetAvailableTiles(availableTiles);
+        }
+        
         _entities.SelectEntity(hoveredEntity);
     }
 

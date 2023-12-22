@@ -1,4 +1,6 @@
+using System.Linq;
 using Godot;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities.Actors.Units;
 
 public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
@@ -13,11 +15,17 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         return unit;
     }
     
+    public float Movement { get; protected set; }
+    
     private Unit Blueprint { get; set; }
     
     public void SetBlueprint(Unit blueprint)
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+        Movement = CurrentStats.First(x => 
+                x.Blueprint is CombatStat combatStat
+                && combatStat.CombatType.Equals(StatType.Movement))
+            .CurrentValue;
     }
 }
