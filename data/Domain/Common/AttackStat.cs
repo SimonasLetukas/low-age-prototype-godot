@@ -1,7 +1,10 @@
-﻿namespace low_age_data.Domain.Common
+﻿using Newtonsoft.Json;
+
+namespace low_age_data.Domain.Common
 {
     public class AttackStat : Stat
     {
+        [JsonConstructor]
         public AttackStat(
             int maxAmount,
             Attacks attackType, 

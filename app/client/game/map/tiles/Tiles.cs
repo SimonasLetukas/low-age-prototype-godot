@@ -63,7 +63,7 @@ public class Tiles : Node2D
         _mapSize = mapSize;
         _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
         _mountainsFillOffset = (int)Mathf.Max(mapSize.x, mapSize.y);
-        _tileOffset = new Vector2(0, (float)Constants.TileHeight / 2);
+        _tileOffset = new Vector2(1, (float)Constants.TileHeight / 2);
         ClearTilemaps();
         
         foreach (var (coordinates, _) in tiles)

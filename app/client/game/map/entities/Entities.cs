@@ -42,6 +42,9 @@ public class Entities : YSort
         
         var horriorBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Horrior));
         InitializeUnit(horriorBlueprint, new Vector2(39, 39));
+        
+        var marksmanBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Marksman));
+        InitializeUnit(marksmanBlueprint, new Vector2(38, 42));
     }
 
     private void InitializeUnit(Unit unitBlueprint, Vector2 mapPosition)
@@ -50,7 +53,7 @@ public class Entities : YSort
         
         var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units);
         unit.EntityPosition = mapPosition;
-        unit.SetSpriteOffset(new Vector2(1, -6)); // TODO should be taken from data -- new IDisplayable property
+        unit.SetSpriteOffset(new Vector2(0, -6)); // TODO should be taken from data -- new IDisplayable property
                                                          // TODO should also be taken from top-left origin instead of
                                                          // center so it's easier to work with image editors
             
@@ -60,8 +63,7 @@ public class Entities : YSort
         unit.FinishedMoving += OnEntityFinishedMoving;
         NewEntityFound(unit);
     }
-
-
+    
     public override void _ExitTree()
     {
         foreach (var unit in _units.GetChildren().OfType<UnitNode>())

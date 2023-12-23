@@ -39,7 +39,7 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         var spriteSize = _sprite.Texture.GetSize();
         _health.RectPosition = new Vector2(_health.RectPosition.x, (spriteSize.y * -1) - 2);
         _health.Visible = false;
-        _shields.RectPosition = new Vector2(_shields.RectPosition.x, (spriteSize.y * -1) - 1);
+        _shields.RectPosition = new Vector2(_shields.RectPosition.x, (spriteSize.y * -1) - 3);
         _shields.Visible = false;
     }
 

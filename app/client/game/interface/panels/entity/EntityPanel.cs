@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +6,7 @@ using low_age_data.Domain.Common;
 
 public class EntityPanel : Control
 {
+    private EntityName _entityName;
     private Abilities _abilityButtons;
     private InfoDisplay _display;
     private RichTextLabel _abilityTextBox;
@@ -16,7 +16,7 @@ public class EntityPanel : Control
     private EntityNode _selectedEntity;
     private int _biggestPreviousAbilityTextSize = 0;
     private const int YSizeForAbility = 834;
-    private const int YSizeForUnit = 786;
+    private const int YSizeForUnit = 758;
     private const int YSizeForStructure = 816;
     private const int YSizeForHiding = 1500;
     private const float PanelMoveDuration = 0.1f;
@@ -24,6 +24,7 @@ public class EntityPanel : Control
 
     public override void _Ready()
     {
+        _entityName = GetNode<EntityName>($"{nameof(EntityName)}");
         _abilityButtons = GetNode<Abilities>($"{nameof(Panel)}/{nameof(Abilities)}");
         _display = GetNode<InfoDisplay>($"{nameof(Panel)}/{nameof(InfoDisplay)}");
         _abilityTextBox = GetNode<RichTextLabel>($"{nameof(Panel)}/{nameof(InfoDisplay)}/{nameof(VBoxContainer)}/AbilityDescription/Text");
@@ -49,6 +50,7 @@ public class EntityPanel : Control
             _abilityButtons.Populate(selectedActor.Abilities); 
         }
         
+        _entityName.SetValue(selectedEntity.DisplayName);
         ChangeDisplay();
         MovePanel();
     }

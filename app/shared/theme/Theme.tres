@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=8 format=2]
+[gd_resource type="Theme" load_steps=9 format=2]
 
 [ext_resource path="res://assets/fonts/Karla-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/sprites/interface/small-panel-smaller-inverted-x4.png" type="Texture" id=2]
 
 [sub_resource type="DynamicFont" id=1]
 size = 26
@@ -23,11 +24,12 @@ size = 14
 font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 40, 40 )
 margin_left = 20.0
 margin_right = 20.0
-margin_top = 20.0
-margin_bottom = 20.0
+margin_top = 10.0
+margin_bottom = 10.0
 
 [resource]
 default_font = SubResource( 6 )

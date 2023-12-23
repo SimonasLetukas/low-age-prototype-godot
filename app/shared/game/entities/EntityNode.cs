@@ -15,6 +15,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     public Vector2 EntityPosition { get; set; }
+    public string DisplayName { get; set; }
     
     private Entity Blueprint { get; set; }
     private IList<Vector2> _movePath;
@@ -37,6 +38,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public void SetBlueprint(Entity blueprint)
     {
         Blueprint = blueprint;
+        DisplayName = blueprint.DisplayName;
 
         _sprite.Texture = GD.Load<Texture>(blueprint.Sprite);
         var spriteSize = _sprite.Texture.GetSize();

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using low_age_data.Domain.Common;
@@ -200,7 +199,7 @@ public class InfoDisplay : MarginContainer
         _valueAbilityText = text;
         _valueResearchText = research is null
             ? string.Empty
-            : string.Join(", ", research.Select(x => x.ToString().ToList())); // TODO add nice display names to research
+            : string.Join(", ", research.Select(x => x.ToString()).ToList()); // TODO add nice display names to research
         _valueAbilityCooldown = cooldown;
         _valueAbilityCooldownType = cooldownType;
     }
@@ -233,7 +232,6 @@ public class InfoDisplay : MarginContainer
         _rightSideRangedAttack.Visible = false;
         _abilityDescription.Visible = false;
         _actorAttributes.Visible = false;
-        ResetAttacks();
     }
 
     private void ShowUnitStats()
