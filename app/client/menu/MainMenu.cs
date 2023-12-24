@@ -46,7 +46,7 @@ public class MainMenu : VBoxContainer
             _factionSelection.FactionSelected += OnFactionSelectionSelected;
     }
 
-    private void ConnectToServer()
+    protected void ConnectToServer()
     {
         PutConnectionMessage("Connecting to server");
         _connectButton.Disabled = true;
@@ -78,8 +78,9 @@ public class MainMenu : VBoxContainer
         ConnectToServer();
     }
 
-    private void OnPlayLocallyPressed()
+    protected void OnPlayLocallyPressed()
     {
+        Server.Instance.RunLocalServerInstance();
         Constants.SetLocalServer();
         ConnectToServer();
     }

@@ -45,6 +45,18 @@ public class Server : Network
         }
     }
 
+    public void RunLocalServerInstance()
+    {
+        // TODO seems that the export is not working from game itself, should probably find another way to do this,
+        // see useful links in: https://trello.com/c/VKRGNOYZ/69-make-it-easier-to-test-the-changes-locally
+        // OS.Execute("godot", new []{ "--export", "\"Windows Desktop - Server\"", "server.exe" });
+        OS.Execute("cmd", new []
+        {
+            "/c", "tasklist /fi \"imagename eq server.exe\" | findstr /B /I /C:\"server.exe \" >NUL " +
+                  "& IF ERRORLEVEL 1 start /min \"server\" server.exe"
+        }, false);
+    }
+
     public bool IsHosting()
     {
         var networkPeer = GetTree().NetworkPeer;

@@ -20,10 +20,10 @@ namespace TestProject1
             int i = 0;
             _testOutputHelper.WriteLine("Testsss");
             GD.Print("XUnitTest");
-            var main = (LocalStartup)ResourceLoader.Load<PackedScene>(LocalStartup.ScenePath).Instance();
+            var main = (ClientStartup)ResourceLoader.Load<PackedScene>(ClientStartup.ScenePath).Instance();
             GD.Print(System.Threading.Thread.CurrentThread.IsBackground);
             //System.Environment.CurrentManagedThreadId
-            Assert.Equal("LocalStartup", main.Name);
+            Assert.Equal("ClientStartup", main.Name);
             //Assert.Equal("LocalStartup1", main.Name);
         }
     }

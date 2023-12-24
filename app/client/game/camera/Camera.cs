@@ -141,7 +141,6 @@ public class Camera : Camera2D
     private bool MovedLeft(Vector2 mousePos)
     {
         if (GetCurrentLeftBoundary() >= _limitLeft) return false;
-        if (Input.IsActionPressed("ui_left")) return true;
         if (mousePos.x < MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
         return false;
     }
@@ -149,7 +148,6 @@ public class Camera : Camera2D
     private bool MovedRight(Vector2 mousePos)
     {
         if (GetCurrentRightBoundary() >= _limitRight) return false;
-        if (Input.IsActionPressed("ui_right")) return true;
         if (mousePos.x > _viewportSize.x - MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
         return false;
     }
@@ -157,7 +155,6 @@ public class Camera : Camera2D
     private bool MovedUp(Vector2 mousePos)
     {
         if (GetCurrentTopBoundary() >= _limitTop) return false;
-        if (Input.IsActionPressed("ui_up")) return true;
         if (mousePos.y < MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
         return false;
     }
@@ -165,7 +162,6 @@ public class Camera : Camera2D
     private bool MovedDown(Vector2 mousePos)
     {
         if (GetCurrentBottomBoundary() >= _limitBottom) return false;
-        if (Input.IsActionPressed("ui_down")) return true;
         if (mousePos.y > _viewportSize.y - MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
         return false;
     }

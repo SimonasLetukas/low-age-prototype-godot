@@ -16,15 +16,17 @@ public class Startup : Node
         {
             GD.Print($"Starting as {Client}.");
             GetTree().ChangeScene(ClientStartup.ScenePath);
+            return;
         }
 
         if (OS.HasFeature(Server))
         {
             GD.Print($"Starting as {Server}.");
             GetTree().ChangeScene(ServerStartup.ScenePath);
+            return;
         }
         
-        GD.Print($"Unidentified startup, starting as local {Client}.");
-        var result = GetTree().ChangeScene(LocalStartup.ScenePath);
+        GD.Print($"Unidentified startup, starting as {nameof(DebugQuickStart)}.");
+        var result = GetTree().ChangeScene(DebugQuickStart.ScenePath);
     }
 }
