@@ -60,7 +60,8 @@ public class Server : Network
 
     public bool HostGame() 
     {
-        Client.Instance.ResetNetwork();
+        ResetNetwork();
+        Data.Instance.Reset();
 
         var peer = new NetworkedMultiplayerENet();
         var result = peer.CreateServer(Constants.ServerPort, Constants.MaxPlayers);

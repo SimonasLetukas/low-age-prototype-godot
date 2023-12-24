@@ -28,6 +28,12 @@ public class Data : Node
         }
     }
     
+    public void Reset()
+    {
+        Blueprint = null;
+        Players = new List<Player>();
+    }
+    
     public void ReadBlueprint() 
         // TODO to save resources currently both server and client read from their local files,
         // it should be transferred by server instead to have one source of truth.

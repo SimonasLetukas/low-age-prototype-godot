@@ -9,9 +9,6 @@ public class ServerLobby : Lobby
     {
         base._Ready();
         
-        if (Server.Instance.IsHosting()) 
-            return;
-        
         if (Server.Instance.HostGame() is false)
         {
             GD.Print("Failed to start server, shutting down.");
