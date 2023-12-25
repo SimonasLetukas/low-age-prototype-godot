@@ -9,7 +9,8 @@ public class DebugQuickStart : MainMenu
     {
         base._Ready();
         
+        QuickStartCheckBox.Pressed = true;
+        
         OnPlayLocallyPressed();
-        ConnectToServer();
     }
 }

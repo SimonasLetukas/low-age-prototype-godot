@@ -8,7 +8,7 @@ public class Network : Node
     public override void _Ready()
     {
 	    ResetNetwork();
-
+	    
         GetTree().Connect(Constants.ENet.NetworkPeerDisconnectedEvent, this, nameof(OnPlayerDisconnected));
     }
 

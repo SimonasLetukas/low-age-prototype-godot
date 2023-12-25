@@ -13,6 +13,7 @@ margin_right = 680.0
 margin_bottom = 159.0
 rect_min_size = Vector2( 80, 40 )
 size_flags_horizontal = 4
+disabled = true
 text = "Start"
 
 [connection signal="pressed" from="StartGame" to="." method="_on_StartGame_pressed"]

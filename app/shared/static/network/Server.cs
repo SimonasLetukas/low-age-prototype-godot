@@ -18,21 +18,23 @@ public class Server : Network
     /// <summary>
     /// Called by clients when they connect
     /// </summary>
-    public void RegisterSelf(int playerId, string playerName, FactionId playerFaction)
+    public void RegisterSelf(int playerId, string playerName, bool playerReady, FactionId playerFaction)
     {
-        RpcId(Constants.ServerId, nameof(OnRegisterSelf), playerId, playerName, playerFaction.ToString());
+        RpcId(Constants.ServerId, nameof(OnRegisterSelf), playerId, playerName, playerReady, 
+            playerFaction.ToString());
     }
 
     [Remote]
-    public void OnRegisterSelf(int playerId, string playerName, string playerFactionId)
+    public void OnRegisterSelf(int playerId, string playerName, bool playerReady, string playerFactionId)
     {
         // Register this client with the server
-        Client.Instance.OnRegisterPlayer(playerId, playerName, playerFactionId);
+        Client.Instance.OnRegisterPlayer(playerId, playerName, playerReady, playerFactionId);
 
         // Register the new player with all existing clients
         foreach (var currentPlayer in Data.Instance.Players)
         {
-            Client.Instance.RegisterPlayer(currentPlayer.Id, playerId, playerName, new FactionId(playerFactionId));
+            Client.Instance.RegisterPlayer(currentPlayer.Id, playerId, playerName, playerReady, 
+                new FactionId(playerFactionId));
         }
 
         // Catch the new player up with who is already here
@@ -40,7 +42,8 @@ public class Server : Network
         {
             if (currentPlayer.Id != playerId)
             {
-                Client.Instance.RegisterPlayer(playerId, currentPlayer.Id, currentPlayer.Name, currentPlayer.Faction);
+                Client.Instance.RegisterPlayer(playerId, currentPlayer.Id, currentPlayer.Name, 
+                    currentPlayer.Ready, currentPlayer.Faction);
             }
         }
     }

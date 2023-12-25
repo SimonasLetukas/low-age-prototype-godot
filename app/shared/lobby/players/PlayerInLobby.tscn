@@ -19,9 +19,9 @@ __meta__ = {
 }
 
 [node name="Name" type="Label" parent="."]
-margin_left = 393.0
+margin_left = 358.0
 margin_top = 4.0
-margin_right = 583.0
+margin_right = 548.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 190, 0 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -33,3 +33,11 @@ __meta__ = {
 }
 
 [node name="Faction" parent="." instance=ExtResource( 3 )]
+margin_left = 552.0
+margin_right = 852.0
+
+[node name="Ready" type="CheckBox" parent="."]
+margin_left = 856.0
+margin_right = 922.0
+margin_bottom = 40.0
+text = "Ready"

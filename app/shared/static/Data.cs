@@ -15,6 +15,7 @@ public class Data : Node
     
     public Blueprint Blueprint { get; private set; }
     public IList<Player> Players { get; private set; } = new List<Player>();
+    public bool AllPlayersReady => Players.All(x => x.Ready);
     
     private const string DataBlueprintLocation = "res://data/data.json";
 
@@ -50,12 +51,13 @@ public class Data : Node
         });
     }
 
-    public void AddPlayer(int playerId, string playerName, FactionId faction)
+    public void AddPlayer(int playerId, string playerName, bool ready, FactionId faction)
     {
         Players.Add(new Player
         {
             Id = playerId,
             Name = playerName,
+            Ready = ready,
             Faction = faction
         });
     }
@@ -77,5 +79,6 @@ public class Player
 {
     public int Id { get; set; }
     public string Name { get; set; }
+    public bool Ready { get; set; }
     public FactionId Faction { get; set; }
 }

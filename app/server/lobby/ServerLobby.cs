@@ -22,9 +22,18 @@ public class ServerLobby : Lobby
     public void UpdateSelectedPlayerFaction(int playerId, string factionId)
     {
         GD.Print($"{nameof(ServerLobby)}.{nameof(UpdateSelectedPlayerFaction)}: called with " +
-                 $"player '{playerId}', {nameof(factionId)} '{factionId}'.");
+                 $"{nameof(playerId)} '{playerId}', {nameof(factionId)} '{factionId}'.");
         
         Rpc(nameof(ChangeSelectedFactionForPlayer), playerId, factionId);
+    }
+    
+    [Remote]
+    public void UpdatePlayerReadyStatus(int playerId, bool newReadyStatus)
+    {
+        GD.Print($"{nameof(ServerLobby)}.{nameof(UpdatePlayerReadyStatus)}: called with " +
+                 $"{nameof(playerId)} '{playerId}', {nameof(newReadyStatus)} '{newReadyStatus}'.");
+        
+        Rpc(nameof(ChangeReadyStatusForPlayer), playerId, newReadyStatus);
     }
 
     private void OnGameStarted()

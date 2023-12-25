@@ -8,43 +8,71 @@ public class PlayerInLobby : HBoxContainer
     public const string ScenePath = @"res://app/shared/lobby/players/PlayerInLobby.tscn";
 
     public event Action<PlayerInLobby, FactionId> PlayerSelectedFaction = delegate { };
+    public event Action<PlayerInLobby, bool> PlayerChangedReadyStatus = delegate { };
 
     public static PlayerInLobby Instance() => (PlayerInLobby) GD.Load<PackedScene>(ScenePath).Instance();
-
-    public FactionSelection FactionSelection { get; private set; }
+    
     public Player Player { get; private set; }
-
+    
+    private FactionSelection _factionSelection;
+    private CheckBox _readyStatus;
     private Label _nameLabel;
     
     public override void _Ready()
     {
-        FactionSelection = GetNode<FactionSelection>("Faction");
-        FactionSelection.FactionSelected += OnFactionSelectionSelected;
+        _factionSelection = GetNode<FactionSelection>("Faction");
+        _factionSelection.FactionSelected += OnFactionSelectionSelected;
 
         _nameLabel = GetNode<Label>("Name");
+
+        _readyStatus = GetNode<CheckBox>("Ready");
+        _readyStatus.Connect("toggled", this, nameof(OnReadyStatusToggled));
     }
 
     public override void _ExitTree()
     {
-        FactionSelection.FactionSelected -= OnFactionSelectionSelected;
+        _factionSelection.FactionSelected -= OnFactionSelectionSelected;
         base._ExitTree();
     }
 
     public Player SetupPlayer(int playerId)
     {
         SetNetworkMaster(playerId);
+        if (GetTree().GetNetworkUniqueId() != playerId)
+        {
+            _factionSelection.Disabled = true;
+            _readyStatus.Disabled = true;
+        }
         Name = $"{playerId}";
 
         Player = Data.Instance.Players.Single(x => x.Id.Equals(playerId));
         _nameLabel.Text = Player.Name;
         
-        FactionSelection.SetSelectedFaction(Player.Faction);
+        _factionSelection.SetSelectedFaction(Player.Faction);
+        SetReadyStatus(Player.Ready);
         
         return Player;
+    }
+
+    public void SetSelectedFaction(FactionId to)
+    {
+        _factionSelection.SetSelectedFaction(to);
+        Player.Faction = to;
+    }
+
+    public void SetReadyStatus(bool to)
+    {
+        _readyStatus.Pressed = to;
+        Player.Ready = to;
     }
 
     private void OnFactionSelectionSelected(FactionId factionId)
     {
         PlayerSelectedFaction(this, factionId);
+    }
+
+    private void OnReadyStatusToggled(bool to)
+    {
+        PlayerChangedReadyStatus(this, to);
     }
 }

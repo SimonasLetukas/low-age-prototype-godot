@@ -5,6 +5,8 @@ public class MainMenu : VBoxContainer
 {
     public const string ScenePath = @"res://app/client/menu/MainMenu.tscn";
 
+    protected CheckBox QuickStartCheckBox { get; set; }
+    
     private LineEdit _nameInput;
     private FactionSelection _factionSelection;
     private Button _connectButton;
@@ -23,6 +25,7 @@ public class MainMenu : VBoxContainer
         _factionSelection = GetNode<FactionSelection>("Faction/Faction");
         _connectButton = FindNode("Connect") as Button;
         _playLocallyButton = FindNode("PlayLocally") as Button;
+        QuickStartCheckBox = FindNode("QuickStart") as CheckBox;
         _errorMessage = GetNode<Label>("Connect/ErrorMessage"); // TODO consolidate all error messages in scene under one 
         _tween = GetNode<Tween>("Tween");
 
@@ -81,6 +84,7 @@ public class MainMenu : VBoxContainer
     protected void OnPlayLocallyPressed()
     {
         Server.Instance.RunLocalServerInstance();
+        Client.Instance.QuickStartEnabled = QuickStartCheckBox.Pressed;
         Constants.SetLocalServer();
         ConnectToServer();
     }

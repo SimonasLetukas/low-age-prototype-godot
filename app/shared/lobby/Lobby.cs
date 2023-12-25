@@ -14,7 +14,7 @@ public class Lobby : VBoxContainer
         Client.Instance.Connect(nameof(Network.PlayerRemoved), this, nameof(OnPlayerRemoved));
     }
 
-    private void OnPlayerAdded(int playerId)
+    protected virtual void OnPlayerAdded(int playerId)
     {
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerAdded)}: adding player {playerId} to lobby.");
 
@@ -23,6 +23,7 @@ public class Lobby : VBoxContainer
         
         var player = playerInfo.SetupPlayer(playerId);
         playerInfo.PlayerSelectedFaction += OnPlayerChangedSelectedFaction;
+        playerInfo.PlayerChangedReadyStatus += OnPlayerChangedReadyStatus;
         
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerAdded)}: player {player.Name} ({player.Id}) " +
                  "successfully added to lobby.");
@@ -52,15 +53,16 @@ public class Lobby : VBoxContainer
     /// <param name="newFactionId"></param>
     private void OnPlayerChangedSelectedFaction(PlayerInLobby playerInLobby, FactionId newFactionId)
     {
+        var playerId = playerInLobby.Player.Id;
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedFaction)} called with " +
-                 $"{nameof(PlayerInLobby)} '{playerInLobby}', {nameof(newFactionId)} '{newFactionId}'.");
+                 $"{nameof(playerId)} '{playerId}', {nameof(newFactionId)} '{newFactionId}'.");
 
         if (GetTree().IsNetworkServer()) 
             return;
         
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedFaction)}: calling " +
                  $"{nameof(ServerLobby.UpdateSelectedPlayerFaction)}.");
-        RpcId(Constants.ServerId, nameof(ServerLobby.UpdateSelectedPlayerFaction), playerInLobby.Player.Id, 
+        RpcId(Constants.ServerId, nameof(ServerLobby.UpdateSelectedPlayerFaction), playerId, 
             newFactionId.ToString());
     }
     
@@ -79,10 +81,52 @@ public class Lobby : VBoxContainer
         {
             if (player.Player.Id != playerId) continue;
             
-            player.FactionSelection.SetSelectedFaction(new FactionId(factionId));
+            player.SetSelectedFaction(new FactionId(factionId));
             
             GD.Print($"{nameof(Lobby)}.{nameof(ChangeSelectedFactionForPlayer)}: player '{playerId}' changed " +
                      $"faction to '{factionId}'");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// Calls the server that the player ready status has changed
+    /// </summary>
+    /// <param name="playerInLobby"></param>
+    /// <param name="newReadyStatus"></param>
+    private void OnPlayerChangedReadyStatus(PlayerInLobby playerInLobby, bool newReadyStatus)
+    {
+        var playerId = playerInLobby.Player.Id;
+        GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedReadyStatus)} called with " +
+                 $"{nameof(playerId)} '{playerId}', {nameof(newReadyStatus)} '{newReadyStatus}'.");
+
+        if (GetTree().IsNetworkServer()) 
+            return;
+        
+        GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedReadyStatus)}: calling " +
+                 $"{nameof(ServerLobby.UpdatePlayerReadyStatus)}.");
+        RpcId(Constants.ServerId, nameof(ServerLobby.UpdatePlayerReadyStatus), playerId, newReadyStatus);
+    }
+    
+    /// <summary>
+    /// Callback from the server for each client to update their player ready status
+    /// </summary>
+    /// <param name="playerId"></param>
+    /// <param name="newReadyStatus"></param>
+    [RemoteSync]
+    protected virtual void ChangeReadyStatusForPlayer(int playerId, bool newReadyStatus)
+    {
+        GD.Print($"{nameof(Lobby)}.{nameof(ChangeReadyStatusForPlayer)}: trying to change player " +
+                 $"'{playerId}' ready status to '{newReadyStatus}'");
+        
+        foreach (var player in _playersList.GetChildren().OfType<PlayerInLobby>())
+        {
+            if (player.Player.Id != playerId) continue;
+            
+            player.SetReadyStatus(newReadyStatus);
+            
+            GD.Print($"{nameof(Lobby)}.{nameof(ChangeReadyStatusForPlayer)}: player '{playerId}' changed " +
+                     $"ready status to '{newReadyStatus}'");
             return;
         }
     }

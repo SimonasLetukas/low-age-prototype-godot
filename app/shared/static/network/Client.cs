@@ -10,6 +10,8 @@ public class Client : Network
     
     public string LocalPlayerName { get; private set; }
     public FactionId LocalPlayerFaction { get; private set; }
+    public bool LocalPlayerReady { get; private set; } = false;
+    public bool QuickStartEnabled { get; set; } = false;
 
     public override void _Ready()
     {
@@ -25,6 +27,7 @@ public class Client : Network
     {
         LocalPlayerName = playerName;
         LocalPlayerFaction = playerFaction;
+        LocalPlayerReady = false;
         
         GetTree().Connect(Constants.ENet.ConnectedToServerEvent, this, nameof(OnConnectedToServer));
         var peer = new NetworkedMultiplayerENet();
@@ -47,16 +50,17 @@ public class Client : Network
         Data.Instance.ReadBlueprint();
     }
 
-    public void RegisterPlayer(int recipientId, int playerId, string playerName, FactionId playerFaction)
+    public void RegisterPlayer(int recipientId, int playerId, string playerName, bool playerReady, FactionId playerFaction)
     {
-        RpcId(recipientId, nameof(OnRegisterPlayer), playerId, playerName, playerFaction.ToString());
+        RpcId(recipientId, nameof(OnRegisterPlayer), playerId, playerName, playerReady, 
+            playerFaction.ToString());
     }
 
     [Remote]
-    public void OnRegisterPlayer(int playerId, string playerName, string playerFactionId)
+    public void OnRegisterPlayer(int playerId, string playerName, bool playerReady, string playerFactionId)
     {
-        GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerFactionId}");
-        Data.Instance.AddPlayer(playerId, playerName, new FactionId(playerFactionId));
+        GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerReady}, {playerFactionId}");
+        Data.Instance.AddPlayer(playerId, playerName, playerReady, new FactionId(playerFactionId));
         
         EmitSignal(nameof(PlayerAdded), playerId);
         GD.Print($"Total players: {Data.Instance.Players.Count}");
