@@ -13,7 +13,11 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
-      "sprite": "res://assets/sprites/resources/scraps indexed.png"
+      "sprite": "res://assets/sprites/resources/scraps indexed.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "resource-celestium",
@@ -28,7 +32,11 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
-      "sprite": "res://assets/sprites/resources/celestium indexed.png"
+      "sprite": "res://assets/sprites/resources/celestium indexed.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "resource-population",
@@ -45,7 +53,11 @@
       ],
       "negativeIncomeDescription": "Caution, there are more units than the supported population.",
       "effectAmountMultipliedByResourceAmount": false,
-      "sprite": "res://assets/sprites/resources/population indexed.png"
+      "sprite": "res://assets/sprites/resources/population indexed.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "resource-weapon-storage",
@@ -60,7 +72,11 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
-      "sprite": "res://assets/sprites/resources/weapon all indexed.png"
+      "sprite": "res://assets/sprites/resources/weapon all indexed.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "resource-melee-weapon",
@@ -75,7 +91,11 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
-      "sprite": "res://assets/sprites/resources/weapon melee indexed.png"
+      "sprite": "res://assets/sprites/resources/weapon melee indexed.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "resource-ranged-weapon",
@@ -90,7 +110,11 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
-      "sprite": "res://assets/sprites/resources/weapon ranged indexed.png"
+      "sprite": "res://assets/sprites/resources/weapon ranged indexed.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "resource-special-weapon",
@@ -105,7 +129,11 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
-      "sprite": "res://assets/sprites/resources/weapon special indexed.png"
+      "sprite": "res://assets/sprites/resources/weapon special indexed.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "resource-faith",
@@ -122,7 +150,11 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": true,
-      "sprite": "res://assets/sprites/resources/faith indexed.png"
+      "sprite": "res://assets/sprites/resources/faith indexed.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     }
   ],
   "factions": [
@@ -229,7 +261,11 @@
         ],
         "displayName": "Slave",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/slave indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/revs/slave indexed 1x1.png",
+        "centerOffset": {
+          "x": 3,
+          "y": 14
+        }
       },
       {
         "id": "unit-leader",
@@ -294,7 +330,11 @@
         ],
         "displayName": "Leader",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/leader indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/revs/leader indexed 1x1.png",
+        "centerOffset": {
+          "x": 10,
+          "y": 19
+        }
       },
       {
         "id": "unit-quickdraw",
@@ -369,7 +409,11 @@
         ],
         "displayName": "Quickdraw",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/quickdraw indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/revs/quickdraw indexed 1x1.png",
+        "centerOffset": {
+          "x": 4,
+          "y": 17
+        }
       },
       {
         "id": "unit-gorger",
@@ -433,7 +477,11 @@
         ],
         "displayName": "Gorger",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/gorger indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/revs/gorger indexed 1x1.png",
+        "centerOffset": {
+          "x": 8,
+          "y": 15
+        }
       },
       {
         "id": "unit-camou",
@@ -497,7 +545,11 @@
         ],
         "displayName": "Camou",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/camou indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/revs/camou indexed 1x1.png",
+        "centerOffset": {
+          "x": 3,
+          "y": 17
+        }
       },
       {
         "id": "unit-shaman",
@@ -571,7 +623,11 @@
         ],
         "displayName": "Shaman",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/shaman indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/revs/shaman indexed 1x1.png",
+        "centerOffset": {
+          "x": 5,
+          "y": 17
+        }
       },
       {
         "id": "unit-pyre",
@@ -646,7 +702,11 @@
         ],
         "displayName": "Pyre",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/pyre hauler_part indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/revs/pyre hauler_part indexed 1x1.png",
+        "centerOffset": {
+          "x": 10,
+          "y": 14
+        }
       },
       {
         "id": "unit-big-bad-bull",
@@ -709,7 +769,11 @@
         ],
         "displayName": "Big Bad Bull",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/big bad bull indexed 2x2.png"
+        "sprite": "res://assets/sprites/units/revs/big bad bull indexed 2x2.png",
+        "centerOffset": {
+          "x": 13,
+          "y": 23
+        }
       },
       {
         "id": "unit-mummy",
@@ -773,7 +837,11 @@
         ],
         "displayName": "Mummy",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/mummy indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/revs/mummy indexed 1x1.png",
+        "centerOffset": {
+          "x": 6,
+          "y": 17
+        }
       },
       {
         "id": "unit-roach",
@@ -837,7 +905,11 @@
         ],
         "displayName": "Roach",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/roach indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/revs/roach indexed 1x1.png",
+        "centerOffset": {
+          "x": 9,
+          "y": 8
+        }
       },
       {
         "id": "unit-parasite",
@@ -900,7 +972,11 @@
         ],
         "displayName": "Parasite",
         "description": "",
-        "sprite": "res://assets/sprites/units/revs/parasite indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/revs/parasite indexed 1x1.png",
+        "centerOffset": {
+          "x": 5,
+          "y": 18
+        }
       },
       {
         "id": "unit-horrior",
@@ -970,7 +1046,11 @@
         ],
         "displayName": "Horrior",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/horrior indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/uee/horrior indexed 1x1.png",
+        "centerOffset": {
+          "x": 4,
+          "y": 16
+        }
       },
       {
         "id": "unit-marksman",
@@ -1050,7 +1130,11 @@
         ],
         "displayName": "Marksman",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/marksman indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/uee/marksman indexed 1x1.png",
+        "centerOffset": {
+          "x": 4,
+          "y": 15
+        }
       },
       {
         "id": "unit-surfer",
@@ -1119,7 +1203,11 @@
         ],
         "displayName": "Surfer",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/surfer indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/uee/surfer indexed 1x1.png",
+        "centerOffset": {
+          "x": 5,
+          "y": 12
+        }
       },
       {
         "id": "unit-mortar",
@@ -1201,7 +1289,11 @@
         ],
         "displayName": "Mortar",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/mortar 0 indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/uee/mortar 0 indexed 1x1.png",
+        "centerOffset": {
+          "x": 4,
+          "y": 21
+        }
       },
       {
         "id": "unit-hawk",
@@ -1272,7 +1364,11 @@
         ],
         "displayName": "Hawk",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/hawk indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/uee/hawk indexed 1x1.png",
+        "centerOffset": {
+          "x": 3,
+          "y": 17
+        }
       },
       {
         "id": "unit-engineer",
@@ -1343,7 +1439,11 @@
         ],
         "displayName": "Engineer",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/engineer indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/uee/engineer indexed 1x1.png",
+        "centerOffset": {
+          "x": 3,
+          "y": 15
+        }
       },
       {
         "id": "unit-cannon",
@@ -1415,7 +1515,11 @@
         ],
         "displayName": "Cannon",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/cannon indexed 2x2.png"
+        "sprite": "res://assets/sprites/units/uee/cannon indexed 2x2.png",
+        "centerOffset": {
+          "x": 14,
+          "y": 26
+        }
       },
       {
         "id": "unit-ballista",
@@ -1488,7 +1592,11 @@
         ],
         "displayName": "Ballista",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/ballista indexed 2x2.png"
+        "sprite": "res://assets/sprites/units/uee/ballista indexed 2x2.png",
+        "centerOffset": {
+          "x": 12,
+          "y": 8
+        }
       },
       {
         "id": "unit-radar",
@@ -1551,7 +1659,11 @@
         ],
         "displayName": "Radar",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/radar indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/uee/radar indexed 1x1.png",
+        "centerOffset": {
+          "x": 6,
+          "y": 18
+        }
       },
       {
         "id": "unit-vessel",
@@ -1622,7 +1734,11 @@
         ],
         "displayName": "Vessel",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/vessel indexed 2x2.png"
+        "sprite": "res://assets/sprites/units/uee/vessel indexed 2x2.png",
+        "centerOffset": {
+          "x": 12,
+          "y": 20
+        }
       },
       {
         "id": "unit-omen",
@@ -1701,15 +1817,19 @@
         ],
         "displayName": "Omen",
         "description": "",
-        "sprite": "res://assets/sprites/units/uee/omen indexed 1x1.png"
+        "sprite": "res://assets/sprites/units/uee/omen indexed 1x1.png",
+        "centerOffset": {
+          "x": 8,
+          "y": 22
+        }
       }
     ],
     "structures": [
       {
         "id": "structure-citadel",
         "size": {
-          "x": 3,
-          "y": 4
+          "x": 4,
+          "y": 3
         },
         "centerPoint": {
           "x": 1,
@@ -1719,12 +1839,12 @@
         "walkableAreas": [
           {
             "start": {
-              "x": 0,
-              "y": 2
+              "x": 2,
+              "y": 0
             },
             "size": {
-              "x": 3,
-              "y": 2
+              "x": 2,
+              "y": 3
             }
           }
         ],
@@ -1747,7 +1867,11 @@
         ],
         "displayName": "Citadel",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/boss post front indexed 2x3.png"
+        "sprite": "res://assets/sprites/structures/revs/boss post front indexed 2x3.png",
+        "centerOffset": {
+          "x": 30,
+          "y": 22
+        }
       },
       {
         "id": "structure-hut",
@@ -1809,7 +1933,11 @@
         ],
         "displayName": "Hut",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/collectors hut indexed 2x2.png"
+        "sprite": "res://assets/sprites/structures/revs/collectors hut indexed 2x2.png",
+        "centerOffset": {
+          "x": 15,
+          "y": 14
+        }
       },
       {
         "id": "structure-obelisk",
@@ -1872,7 +2000,11 @@
         ],
         "displayName": "Obelisk",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/obelisk indexed 2x2 or 1x1.png"
+        "sprite": "res://assets/sprites/structures/revs/obelisk indexed 2x2 or 1x1.png",
+        "centerOffset": {
+          "x": 8,
+          "y": 29
+        }
       },
       {
         "id": "structure-shack",
@@ -1934,7 +2066,11 @@
         ],
         "displayName": "Shack",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/shack indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/revs/shack indexed 1x1.png",
+        "centerOffset": {
+          "x": 7,
+          "y": 11
+        }
       },
       {
         "id": "structure-smith",
@@ -1996,7 +2132,11 @@
         ],
         "displayName": "Smith",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/smith indexed 1x2.png"
+        "sprite": "res://assets/sprites/structures/revs/smith indexed 1x2.png",
+        "centerOffset": {
+          "x": 12,
+          "y": 10
+        }
       },
       {
         "id": "structure-fletcher",
@@ -2058,7 +2198,11 @@
         ],
         "displayName": "Fletcher",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/fletchery indexed 2x2.png"
+        "sprite": "res://assets/sprites/structures/revs/fletchery indexed 2x2.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-alchemy",
@@ -2120,7 +2264,11 @@
         ],
         "displayName": "Alchemy",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/alchemy indexed 2x3.png"
+        "sprite": "res://assets/sprites/structures/revs/alchemy indexed 2x3.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-depot",
@@ -2182,7 +2330,11 @@
         ],
         "displayName": "Depot",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/depot indexed 2x2.png"
+        "sprite": "res://assets/sprites/structures/revs/depot indexed 2x2.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-workshop",
@@ -2244,7 +2396,11 @@
         ],
         "displayName": "Workshop",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/workshop indexed 2x2.png"
+        "sprite": "res://assets/sprites/structures/revs/workshop indexed 2x2.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-outpost",
@@ -2307,7 +2463,11 @@
         ],
         "displayName": "Outpost",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/outpost indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/revs/outpost indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-barricade",
@@ -2371,7 +2531,11 @@
         ],
         "displayName": "Barricade",
         "description": "",
-        "sprite": "res://assets/sprites/structures/revs/barricade front indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/revs/barricade front indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-battery-core",
@@ -2442,7 +2606,11 @@
         ],
         "displayName": "Battery Core",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/core low 3 indexed 3x3.png"
+        "sprite": "res://assets/sprites/structures/uee/core low 3 indexed 3x3.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-fusion-core",
@@ -2514,7 +2682,11 @@
         ],
         "displayName": "Fusion Core",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/core mid 3 indexed 3x3.png"
+        "sprite": "res://assets/sprites/structures/uee/core mid 3 indexed 3x3.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-celestium-core",
@@ -2586,7 +2758,11 @@
         ],
         "displayName": "Celestium Core",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/core top 3 indexed 3x3.png"
+        "sprite": "res://assets/sprites/structures/uee/core top 3 indexed 3x3.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-collector",
@@ -2655,7 +2831,11 @@
         ],
         "displayName": "Collector",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/collector1 indexed 2x2.png"
+        "sprite": "res://assets/sprites/structures/uee/collector1 indexed 2x2.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-extractor",
@@ -2724,7 +2904,11 @@
         ],
         "displayName": "Extractor",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/extractor3 indexed 2x2.png"
+        "sprite": "res://assets/sprites/structures/uee/extractor3 indexed 2x2.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-power-pole",
@@ -2795,7 +2979,11 @@
         ],
         "displayName": "Power Pole",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/pole3 indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/pole3 indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-temple",
@@ -2864,7 +3052,11 @@
         ],
         "displayName": "Temple",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/faith indexed 2x2 or 1x2.png"
+        "sprite": "res://assets/sprites/structures/uee/faith indexed 2x2 or 1x2.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-military-base",
@@ -2933,7 +3125,11 @@
         ],
         "displayName": "Military Base",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/military base indexed 1x2.png"
+        "sprite": "res://assets/sprites/structures/uee/military base indexed 1x2.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-factory",
@@ -3002,7 +3198,11 @@
         ],
         "displayName": "Factory",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/factory 2 indexed 2x3.png"
+        "sprite": "res://assets/sprites/structures/uee/factory 2 indexed 2x3.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-laboratory",
@@ -3071,7 +3271,11 @@
         ],
         "displayName": "Laboratory",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/lab4 indexed 3x3.png"
+        "sprite": "res://assets/sprites/structures/uee/lab4 indexed 3x3.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-armoury",
@@ -3140,7 +3344,11 @@
         ],
         "displayName": "Armoury",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/armoury1 indexed 1x2.png"
+        "sprite": "res://assets/sprites/structures/uee/armoury1 indexed 1x2.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-wall",
@@ -3209,7 +3417,11 @@
         ],
         "displayName": "Wall",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/wall indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/wall indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-stairs",
@@ -3278,7 +3490,11 @@
         ],
         "displayName": "Stairs",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/stairs front indexed 1x2.png"
+        "sprite": "res://assets/sprites/structures/uee/stairs front indexed 1x2.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-gate",
@@ -3349,7 +3565,11 @@
         ],
         "displayName": "Gate",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/gate 0 indexed 1x4.png"
+        "sprite": "res://assets/sprites/structures/uee/gate 0 indexed 1x4.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-watchtower",
@@ -3418,7 +3638,11 @@
         ],
         "displayName": "Watchtower",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/watchtower indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/watchtower indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "structure-bastion",
@@ -3487,7 +3711,11 @@
         ],
         "displayName": "Bastion",
         "description": "",
-        "sprite": "res://assets/sprites/structures/uee/tower indexed 2x2.png"
+        "sprite": "res://assets/sprites/structures/uee/tower indexed 2x2.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       }
     ],
     "doodads": [
@@ -3509,7 +3737,11 @@
         "onlyOneCanExist": true,
         "displayName": "Shaman Wondrous Goo",
         "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn.",
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "doodad-pyre-cargo",
@@ -3524,7 +3756,11 @@
         "onlyOneCanExist": true,
         "displayName": "Pyre Cargo",
         "description": "The cargo which is attached to Pyre leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death.",
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "doodad-pyre-flames",
@@ -3544,7 +3780,11 @@
         "onlyOneCanExist": true,
         "displayName": "Pyre Flames",
         "description": "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "doodad-cannon-heat-up-danger-zone",
@@ -3559,7 +3799,11 @@
         "onlyOneCanExist": false,
         "displayName": "Cannon Heat Up Danger Zone",
         "description": "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's owner has vision of this tile.",
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "doodad-radar-resonating-sweep",
@@ -3574,7 +3818,11 @@
         "onlyOneCanExist": false,
         "displayName": "Radar Resonating Sweep",
         "description": "These tiles are revealed for Radar's owner until the start of the next planning phase.",
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "doodad-radar-red-dot",
@@ -3589,7 +3837,11 @@
         "onlyOneCanExist": false,
         "displayName": "Radar Red Dot",
         "description": "This red dot shows where enemy unit is currently located inside the fog of war.",
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "doodad-vessel-fortification",
@@ -3604,7 +3856,11 @@
         "onlyOneCanExist": false,
         "displayName": "Vessel Fortification",
         "description": "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of Vessel's action.",
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       },
       {
         "id": "doodad-omen-rendition",
@@ -3619,7 +3875,11 @@
         "onlyOneCanExist": false,
         "displayName": "Omen Rendition",
         "description": "50% of all damage done to this rendition will be done as Pure Damage to the original target.",
-        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png"
+        "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+        "centerOffset": {
+          "x": 0,
+          "y": 0
+        }
       }
     ]
   },
@@ -3683,7 +3943,11 @@
       "cost": [],
       "displayName": "Passive Income",
       "description": "Provides 3 Scraps and 7 Celestium at the start of each planning phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -3702,7 +3966,11 @@
       "cost": [],
       "displayName": "Scraps Income",
       "description": "At the start of each planning phase provides 5 Scraps.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -3721,7 +3989,11 @@
       "cost": [],
       "displayName": "Celestium Income",
       "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1).",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -3738,7 +4010,11 @@
       "cost": [],
       "displayName": "Building",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -3755,7 +4031,11 @@
       "cost": [],
       "displayName": "Building",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -3774,7 +4054,11 @@
       "cost": [],
       "displayName": "Power Generator",
       "description": "UEE faction loses if Battery Core is destroyed.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Build",
@@ -4010,7 +4294,11 @@
       "cost": [],
       "displayName": "Build",
       "description": "Start building a UEE's structure in vision on a tile with Power. Collector and Extractor can be built on tiles without Power.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4027,7 +4315,11 @@
       "cost": [],
       "displayName": "Building",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4044,7 +4336,11 @@
       "cost": [],
       "displayName": "Building",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4061,7 +4357,11 @@
       "cost": [],
       "displayName": "Building",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4080,7 +4380,11 @@
       "cost": [],
       "displayName": "Power Dependency",
       "description": "All abilities get disabled and loses 5 Health at the start of its action or action phase if not connected to Power.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4099,7 +4403,11 @@
       "cost": [],
       "displayName": "Executive Stash",
       "description": "Provides 4 Population and 4 spaces of storage for Weapons.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4118,7 +4426,11 @@
       "cost": [],
       "displayName": "Ascendable",
       "description": "Can be navigated through to go up to high ground.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4137,7 +4449,11 @@
       "cost": [],
       "displayName": "High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Produce",
@@ -4350,7 +4666,11 @@
       "cost": [],
       "displayName": "Promote Goons",
       "description": "Promote a new Revelators goon from the remaining Population.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Instant",
@@ -4366,7 +4686,11 @@
       "cost": [],
       "displayName": "Celestium Discharge",
       "description": "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 actions.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4385,7 +4709,11 @@
       "cost": [],
       "displayName": "Accommodation",
       "description": "Provides 2 Population",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4404,7 +4732,11 @@
       "cost": [],
       "displayName": "Melee Weapon Production",
       "description": "Every 20 Celestium generates a Melee Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4423,7 +4755,11 @@
       "cost": [],
       "displayName": "Ranged Weapon Production",
       "description": "Every 25 Celestium generates a Ranged Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4442,7 +4778,11 @@
       "cost": [],
       "displayName": "Special Weapon Production",
       "description": "Every 30 Celestium generates a Special Weapon and either stores it to an empty Weapon space or waits until there is a free space available. ",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4461,7 +4801,11 @@
       "cost": [],
       "displayName": "Weapon Storage",
       "description": "Provides 4 spaces of storage for Weapons which are used for new unit production.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Research",
@@ -4555,7 +4899,11 @@
       "cost": [],
       "displayName": "Research",
       "description": "Open a selection of research available for Revelators to unlock.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4574,7 +4922,11 @@
       "cost": [],
       "displayName": "Ascendable",
       "description": "Can be navigated through to go up to high ground.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4593,7 +4945,11 @@
       "cost": [],
       "displayName": "High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4610,7 +4966,11 @@
       "cost": [],
       "displayName": "Protective Shield",
       "description": "Every unit adjacent to the shield of this Barricade receives +2 Range Armour.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4627,7 +4987,11 @@
       "cost": [],
       "displayName": "Caltrops",
       "description": "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the start of each action phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Toggle",
@@ -4646,7 +5010,11 @@
       "cost": [],
       "displayName": "Decompose",
       "description": "Toggle to start inflicting 15 Pure Damage to itself at the start of each action phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4665,7 +5033,11 @@
       "cost": [],
       "displayName": "Power Grid",
       "description": "Provides Power in 4 Distance.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Instant",
@@ -4689,7 +5061,11 @@
       ],
       "displayName": "Fusion Core Upgrade",
       "description": "Upgrade this Battery Core to Fusion Core.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4708,7 +5084,11 @@
       "cost": [],
       "displayName": "Power Grid",
       "description": "Provides Power in 6 Distance.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -4735,7 +5115,11 @@
       "cost": [],
       "displayName": "Defence Protocol",
       "description": "Select an enemy unit in 6 Distance. At the start of the action phase the target receives 3 ranged attacks, each dealing 3 Range Damage.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Instant",
@@ -4759,7 +5143,11 @@
       ],
       "displayName": "Celestium Core Upgrade",
       "description": "Upgrade this Fusion Core to Celestium Core.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4778,7 +5166,11 @@
       "cost": [],
       "displayName": "Power Grid",
       "description": "Provides Power in 8 Distance.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -4806,7 +5198,11 @@
       "cost": [],
       "displayName": "Defence Protocol",
       "description": "Select an enemy unit in 8 Distance. At the start of the action phase the target receives 4 ranged attacks, each dealing 4 Range Damage.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Instant",
@@ -4830,7 +5226,11 @@
       ],
       "displayName": "Heightened Conductivity",
       "description": "Unlocks Improved Power Grid ability for all Power Poles.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4849,7 +5249,11 @@
       "cost": [],
       "displayName": "Direct Transit System",
       "description": "Provides +2 Scraps at the start of each planning phase if connected to Power.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4868,7 +5272,11 @@
       "cost": [],
       "displayName": "Reinforced Infrastructure",
       "description": "Gains additional 3 Melee Armour if connected to Power.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4887,7 +5295,11 @@
       "cost": [],
       "displayName": "Power Grid",
       "description": "Provides Power in 4 Distance.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4904,7 +5316,11 @@
       "cost": [],
       "displayName": "Excess Distribution",
       "description": "Regenerates +1 Shields to units and structures in 4 Distance at the start of each planning phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4926,7 +5342,11 @@
       "cost": [],
       "displayName": "Improved Power Grid",
       "description": "Distance of provided Power and shield regeneration is increased to 6.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4945,7 +5365,11 @@
       "cost": [],
       "displayName": "Power Grid Improved",
       "description": "Provides Power in 6 Distance.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4962,7 +5386,11 @@
       "cost": [],
       "displayName": "Excess Distribution Improved",
       "description": "Regenerates +1 Shields to units and structures in 6 Distance at the start of each planning phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -4981,7 +5409,11 @@
       "cost": [],
       "displayName": "Keeping The Faith",
       "description": "Provides +2 Movement to friendly units in 6 Distance at the start of each action phase. Additionally provides +1 Faith. Each point of Faith increases the Initiative of all owned units by 1.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Produce",
@@ -5084,7 +5516,11 @@
       "cost": [],
       "displayName": "Train",
       "description": "Select a unit to be created at the specified location using Celestium for production.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Produce",
@@ -5137,7 +5573,11 @@
       "cost": [],
       "displayName": "Train",
       "description": "Select a unit to be created at the specified location using Celestium for production.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Produce",
@@ -5172,7 +5612,11 @@
       "cost": [],
       "displayName": "Train",
       "description": "Select a unit to be created at the specified location using Celestium for production.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Research",
@@ -5276,7 +5720,11 @@
       "cost": [],
       "displayName": "Research",
       "description": "Open a selection of research available for UEE to unlock.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5295,7 +5743,11 @@
       "cost": [],
       "displayName": "High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5314,7 +5766,11 @@
       "cost": [],
       "displayName": "Ascendable",
       "description": "Can be navigated through to go up to high ground.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5333,7 +5789,11 @@
       "cost": [],
       "displayName": "High Ground",
       "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5352,7 +5812,11 @@
       "cost": [],
       "displayName": "Ascendable",
       "description": "Can be navigated through to go up to high ground.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5371,7 +5835,11 @@
       "cost": [],
       "displayName": "Entrance",
       "description": "Allows movement through for friendly units and blocks it for enemy units.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5388,7 +5856,11 @@
       "cost": [],
       "displayName": "Vantage Point",
       "description": "Provides additional +1 vision range and +1 Range Damage to ranged units.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5405,7 +5877,11 @@
       "cost": [],
       "displayName": "Battlement",
       "description": "Provides additional +1 Range Armour to all units on top.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5424,7 +5900,11 @@
       "cost": [],
       "displayName": "All For One",
       "description": "Revelators faction loses if Leader dies.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5441,7 +5921,11 @@
       "cost": [],
       "displayName": "Menacing Presence",
       "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1).",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -5466,7 +5950,11 @@
       "cost": [],
       "displayName": "One For All",
       "description": "Select an adjacent Obelisk and sap its energy to give all friendly units +2 Health. This Obelisk cannot be sapped again for 10 turns.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Build",
@@ -5650,7 +6138,11 @@
       "cost": [],
       "displayName": "Build",
       "description": "Start building a Revelators' structure on an adjacent tile. Multiple Slaves can build the structure, each additional one after the first provides half of the Celestium production to the construction than the previous Slave.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5667,7 +6159,11 @@
       "cost": [],
       "displayName": "Building",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5684,7 +6180,11 @@
       "cost": [],
       "displayName": "Building",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -5709,7 +6209,11 @@
       "cost": [],
       "displayName": "Repair",
       "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be interrupted.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -5734,7 +6238,11 @@
       "cost": [],
       "displayName": "Manual Labour",
       "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5753,7 +6261,11 @@
       "cost": [],
       "displayName": "Doubleshot",
       "description": "Ranged attacks twice.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5776,7 +6288,11 @@
       "cost": [],
       "displayName": "Cripple",
       "description": "Each ranged attack cripples the target until the end of their action. During this time target has 60% of their maximum Movement (rounded up) and cannot receive healing from any sources. Multiple attacks on a crippled target have no additional effects.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5799,7 +6315,11 @@
       "cost": [],
       "displayName": "Fanatic Suicide Passive",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Instant",
@@ -5815,7 +6335,11 @@
       "cost": [],
       "displayName": "Fanatic Suicide",
       "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, killing itself in the process.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5837,7 +6361,11 @@
       "cost": [],
       "displayName": "Silent Assassin",
       "description": "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly units around Camou in 4 Attack Distance. Additionally, if the target has none of its allies in the same radius, Camou silences the target for 2 of its actions, disabling the use of any abilities or passives.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -5864,7 +6392,11 @@
       "cost": [],
       "displayName": "Climb",
       "description": "Select an adjacent unoccupied space on a high ground. This space is considered occupied until the end of the action phase at which point Camou moves to it. Passively, Camou can move down from high ground at the additional cost of 1 Movement.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5885,7 +6417,11 @@
       "cost": [],
       "displayName": "Climb Passive",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -5910,7 +6446,11 @@
       "cost": [],
       "displayName": "Wondrous Goo",
       "description": "Select a tile in 4 Attack Distance, which gets contaminated. Any unit in the contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5929,7 +6469,11 @@
       "cost": [],
       "displayName": "Wall Of Flames",
       "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -5950,7 +6494,11 @@
       "cost": [],
       "displayName": "Phantom Menace",
       "description": "Can move through enemy units (but not buildings).",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6015,7 +6563,11 @@
       "cost": [],
       "displayName": "Unleash The Rage",
       "description": "Select a direction (1 out of 4) originating from Big Bad Bull. Any two adjacent units towards the selected direction suffer Bull's Melee Damage and are pushed one tile farther. If the destination tile is occupied or impassable, the target receives additional 5 Melee Damage.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6040,7 +6592,11 @@
       "cost": [],
       "displayName": "Spawn Roach",
       "description": "Select an adjacent tile in which Roach is created.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6061,7 +6617,11 @@
       "cost": [],
       "displayName": "Leap Of Hunger",
       "description": "Roach creation range is increased to 4 Distance.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6086,7 +6646,11 @@
       "cost": [],
       "displayName": "Spawn Roach",
       "description": "Select a tile in 4 Distance in which Roach is created.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6105,7 +6669,11 @@
       "cost": [],
       "displayName": "Degrading Carapace",
       "description": "At the start of each action loses 1 Health more than the previous action.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6132,7 +6700,11 @@
       "cost": [],
       "displayName": "Corrosive Spit",
       "description": "Perform a ranged attack in 4 Distance dealing 6 (+8 to mechanical) Range Damage.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6155,7 +6727,11 @@
       "cost": [],
       "displayName": "Paralysing Grasp",
       "description": "Instead of attacking, Parasite attaches to the target. Both units occupy the same space and are considered enemy to all players. Parasite can only detach when the target is killed. All units who attack this combined unit do damage to both. On its turn, Parasite can move the target, using target's Movement. On target's turn, it must execute attack action to any friendly or enemy unit in range, otherwise skip turn.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6172,7 +6748,11 @@
       "cost": [],
       "displayName": "Expert Formation",
       "description": "Gains +2 Range Armour if at least one other Horrior is adjacent.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Instant",
@@ -6189,7 +6769,11 @@
       "cost": [],
       "displayName": "Mount",
       "description": "Spend 3 turns mounting (unable to act) and at the start of the fourth planning phase transform into Surfer.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6210,7 +6794,11 @@
       "cost": [],
       "displayName": "Critical Mark",
       "description": "Each ranged attack marks the target unit. If a friendly non-Marksman unit attacks the marked target, the mark is consumed and the target receives 5 Melee Damage. The mark lasts until the end of the next action phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6229,7 +6817,11 @@
       "cost": [],
       "displayName": "Dismount",
       "description": "Upon death, reemerges as Horrior.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6248,7 +6840,11 @@
       "cost": [],
       "displayName": "Deadly Ammunition",
       "description": "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Instant",
@@ -6263,7 +6859,11 @@
       "cost": [],
       "displayName": "Reload",
       "description": "Spend this action phase reloading to full ammo.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6284,7 +6884,11 @@
       "cost": [],
       "displayName": "Piercing Blast",
       "description": "Ranged Armour from the main target is ignored when attacking with Deadly Ammunition.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6303,7 +6907,11 @@
       "cost": [],
       "displayName": "Tactical Goggles",
       "description": "Gains +3 Vision range.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6328,7 +6936,11 @@
       "cost": [],
       "displayName": "Leadership",
       "description": "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is lost at the end of the target's next action, or if the targeted unit is no longer adjacent.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6349,7 +6961,11 @@
       "cost": [],
       "displayName": "Health Kit",
       "description": "Restores 1 Health to all adjacent friendly units at the start of each planning phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Build",
@@ -6419,7 +7035,11 @@
       "cost": [],
       "displayName": "Assemble Machine",
       "description": "Start building a Machine on an adjacent tile. Multiple Engineers can build the Machine, up to a number needed to operate the Machine. Each Engineer provides current Celestium production to the construction.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6436,7 +7056,11 @@
       "cost": [],
       "displayName": "Assembling",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6453,7 +7077,11 @@
       "cost": [],
       "displayName": "Assembling",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6470,7 +7098,11 @@
       "cost": [],
       "displayName": "Assembling",
       "description": "",
-      "sprite": null
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6495,7 +7127,11 @@
       "cost": [],
       "displayName": "Operate",
       "description": "Select an adjacent Machine and start operating it if the Machine is built and does not have the maximum number of operating Engineers already.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6522,7 +7158,11 @@
       "cost": [],
       "displayName": "Repair",
       "description": "Select an adjacent structure, Machine or Horrior. At the start of the next planning phase the selected structure or Machine receives +2 Health and selected Horrior's mounting time is decreased by 1 turn. Multiple Engineers can stack their repairs. Repair can be interrupted.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6541,7 +7181,11 @@
       "cost": [],
       "displayName": "Machine",
       "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 3 Engineers are operating it.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6568,7 +7212,11 @@
       "cost": [],
       "displayName": "Heat Up",
       "description": "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's action, the attack is triggered which deals massive Range Damage.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6587,7 +7235,11 @@
       "cost": [],
       "displayName": "Machine",
       "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6604,7 +7256,11 @@
       "cost": [],
       "displayName": "Add On",
       "description": "Can only be built on a Watchtower or Bastion.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6632,7 +7288,11 @@
       "cost": [],
       "displayName": "Aim",
       "description": "Spends 1 action aiming, when attacking a new target. A dotted line to the target indicates aiming. The target can stop this process if it moves out of Ballista's Attack Distance. Once aimed, same target can be attacked each action.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6651,7 +7311,11 @@
       "cost": [],
       "displayName": "Machine",
       "description": "Can be built and operated by Engineers only. The Machine is functional and can act only if maximum number of 1 Engineer is operating it.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6676,7 +7340,11 @@
       "cost": [],
       "displayName": "Resonating Sweep",
       "description": "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start of the next planning phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6695,7 +7363,11 @@
       "cost": [],
       "displayName": "Radio Location",
       "description": "Enemy units in 15 Attack Distance are shown as red dots in the fog of war.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6714,7 +7386,11 @@
       "cost": [],
       "displayName": "Machine",
       "description": "Can be operated by Engineers only (after it is built from Factory). The Machine is functional and can act only if maximum number of 3 Engineers are operating it.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Passive",
@@ -6731,7 +7407,11 @@
       "cost": [],
       "displayName": "Absorbent Field",
       "description": "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, which is instead dealt to Vessel.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Instant",
@@ -6748,7 +7428,11 @@
       "cost": [],
       "displayName": "Fortify",
       "description": "Provide +3 Melee Armour and +3 Range Armour to all friendly units in 3 Attack Distance until the start of the next Vessel's action.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6773,7 +7457,11 @@
       "cost": [],
       "displayName": "Rendition",
       "description": "Place a ghostly rendition of a selected enemy unit in 7 Attack Distance to an unoccupied space in a 3 Attack Distance from the selected target. The rendition has the same amount of Health, Melee and Range Armour as the selected target, cannot act, can be attacked and stays for 2 action phases or until the selected target is dead. 50% of all damage done to the rendition is done as Pure Damage to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows all adjacent enemies by 50% until the end of their next action.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Target",
@@ -6798,7 +7486,11 @@
       "cost": [],
       "displayName": "Rendition Placement",
       "description": "Select an unoccupied space in a 3 Attack Distance to place the rendition of the selected target.",
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     }
   ],
   "effects": [
@@ -10566,7 +11258,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -10597,7 +11293,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -10623,7 +11323,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -10649,7 +11353,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buildable",
@@ -10688,7 +11396,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "InterceptDamage",
@@ -10717,7 +11429,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buildable",
@@ -10766,7 +11482,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -10790,7 +11510,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -10851,7 +11575,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -10893,7 +11621,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -10937,7 +11669,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -10966,7 +11702,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -10997,7 +11737,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Ascendable",
@@ -11025,7 +11769,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "HighGround",
@@ -11056,7 +11804,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11085,7 +11837,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11116,7 +11872,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11157,7 +11917,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -11183,7 +11947,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -11214,7 +11982,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -11245,7 +12017,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -11276,7 +12052,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -11302,7 +12082,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Ascendable",
@@ -11330,7 +12114,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "HighGround",
@@ -11361,7 +12149,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11390,7 +12182,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11415,7 +12211,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "MaskProvider",
@@ -11437,7 +12237,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buildable",
@@ -11487,7 +12291,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buildable",
@@ -11537,7 +12345,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buildable",
@@ -11586,7 +12398,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11613,7 +12429,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "MaskProvider",
@@ -11635,7 +12455,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11662,7 +12486,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "MaskProvider",
@@ -11684,7 +12512,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11726,7 +12558,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -11772,7 +12608,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11814,7 +12654,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11863,7 +12707,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "MaskProvider",
@@ -11885,7 +12733,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11914,7 +12766,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "MaskProvider",
@@ -11936,7 +12792,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -11965,7 +12825,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Income",
@@ -11991,7 +12855,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "HighGround",
@@ -12022,7 +12890,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Ascendable",
@@ -12060,7 +12932,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "HighGround",
@@ -12091,7 +12967,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Ascendable",
@@ -12119,7 +12999,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "MovementBlock",
@@ -12157,7 +13041,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12194,7 +13082,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12223,7 +13115,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12247,7 +13143,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12286,7 +13186,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12310,7 +13214,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12339,7 +13247,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buildable",
@@ -12389,7 +13301,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buildable",
@@ -12439,7 +13355,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12477,7 +13397,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Wait",
@@ -12494,7 +13418,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12527,7 +13455,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Wait",
@@ -12544,7 +13476,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "ExtraAttack",
@@ -12563,7 +13499,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12594,7 +13534,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12618,7 +13562,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12642,7 +13590,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Wait",
@@ -12659,7 +13611,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12683,7 +13639,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Wait",
@@ -12700,7 +13660,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12731,7 +13695,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12772,7 +13740,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Tether",
@@ -12793,7 +13765,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12824,7 +13800,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12857,7 +13837,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12881,7 +13865,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12906,7 +13894,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12932,7 +13924,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Tether",
@@ -12953,7 +13949,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -12988,7 +13988,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13028,7 +14032,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13057,7 +14065,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Wait",
@@ -13074,7 +14086,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13100,7 +14116,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13149,7 +14169,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13173,7 +14197,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Ammunition",
@@ -13199,7 +14227,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Wait",
@@ -13216,7 +14248,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13240,7 +14276,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13273,7 +14313,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13302,7 +14346,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13340,7 +14388,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13365,7 +14417,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13394,7 +14450,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buildable",
@@ -13433,7 +14493,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buildable",
@@ -13470,7 +14534,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buildable",
@@ -13509,7 +14577,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13535,7 +14607,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13573,7 +14649,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13611,7 +14691,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Wait",
@@ -13628,7 +14712,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Counter",
@@ -13652,7 +14740,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13676,7 +14768,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13728,7 +14824,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Wait",
@@ -13745,7 +14845,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Counter",
@@ -13769,7 +14873,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13793,7 +14901,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13839,7 +14951,11 @@
       "conditionalEffects": [],
       "ownerAllowed": true,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Counter",
@@ -13863,7 +14979,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13887,7 +15007,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13920,7 +15044,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13946,7 +15074,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -13973,7 +15105,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Counter",
@@ -13997,7 +15133,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -14021,7 +15161,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "InterceptDamage",
@@ -14053,7 +15197,11 @@
       "conditionalEffects": [],
       "ownerAllowed": true,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -14077,7 +15225,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -14112,7 +15264,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -14136,7 +15292,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "InterceptDamage",
@@ -14165,7 +15325,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -14198,7 +15362,11 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -14222,7 +15390,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "$type": "Buff",
@@ -14251,7 +15423,11 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png"
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     }
   ],
   "masks": [

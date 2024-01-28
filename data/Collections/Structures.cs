@@ -18,6 +18,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Citadel).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/boss post front indexed 2x3.png",
+                    centerOffset: new Vector2<int>(30, 22),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision)
@@ -32,14 +33,14 @@ namespace low_age_data.Collections
                         AbilityId.Citadel.HighGround,
                         AbilityId.Citadel.PromoteGoons
                     },
-                    size: new Vector2<int>(x: 3, y: 4),
+                    size: new Vector2<int>(x: 4, y: 3),
                     centerPoint: new Vector2<int>(x: 1, y: 1),
                     destructible: false,
                     walkableAreas: new List<Area>
                     {
                         new Area(
-                            start: new Vector2<int>(x: 0, y: 2),
-                            size: new Vector2<int>(x: 3, y: 2))
+                            start: new Vector2<int>(x: 2, y: 0),
+                            size: new Vector2<int>(x: 2, y: 3))
                     }),
                 
                 new Structure(
@@ -47,6 +48,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Hut).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/collectors hut indexed 2x2.png",
+                    centerOffset: new Vector2<int>(15, 14),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 50, hasCurrent: true, combatType: StatType.Health),
@@ -72,6 +74,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Obelisk).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/obelisk indexed 2x2 or 1x1.png",
+                    centerOffset: new Vector2<int>(8, 29),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 60, hasCurrent: true, combatType: StatType.Health),
@@ -98,6 +101,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Shack).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/shack indexed 1x1.png",
+                    centerOffset: new Vector2<int>(7, 11),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 35, hasCurrent: true, combatType: StatType.Health),
@@ -123,6 +127,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Smith).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/smith indexed 1x2.png",
+                    centerOffset: new Vector2<int>(12, 10),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 75, hasCurrent: true, combatType: StatType.Health),
@@ -148,6 +153,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Fletcher).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/fletchery indexed 2x2.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 80, hasCurrent: true, combatType: StatType.Health),
@@ -173,6 +179,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Alchemy).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/alchemy indexed 2x3.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 90, hasCurrent: true, combatType: StatType.Health),
@@ -198,6 +205,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Depot).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/depot indexed 2x2.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 65, hasCurrent: true, combatType: StatType.Health),
@@ -223,6 +231,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Workshop).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/workshop indexed 2x2.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 55, hasCurrent: true, combatType: StatType.Health),
@@ -248,6 +257,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Outpost).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/outpost indexed 1x1.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 90, hasCurrent: true, combatType: StatType.Health),
@@ -274,6 +284,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Barricade).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/barricade front indexed 1x1.png", // TODO
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 65, hasCurrent: true, combatType: StatType.Health),
@@ -301,6 +312,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.BatteryCore).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/core low 3 indexed 3x3.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 100, hasCurrent: true, combatType: StatType.Health),
@@ -330,6 +342,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.FusionCore).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/core mid 3 indexed 3x3.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 100, hasCurrent: true, combatType: StatType.Health),
@@ -360,6 +373,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.CelestiumCore).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/core top 3 indexed 3x3.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 100, hasCurrent: true, combatType: StatType.Health),
@@ -390,6 +404,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Collector).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/collector1 indexed 2x2.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 40, hasCurrent: true, combatType: StatType.Health),
@@ -417,6 +432,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Extractor).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/extractor3 indexed 2x2.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 70, hasCurrent: true, combatType: StatType.Health),
@@ -444,6 +460,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.PowerPole).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/pole3 indexed 1x1.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 6, hasCurrent: true, combatType: StatType.Health),
@@ -473,6 +490,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Temple).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/faith indexed 2x2 or 1x2.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 35, hasCurrent: true, combatType: StatType.Health),
@@ -500,6 +518,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.MilitaryBase).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/military base indexed 1x2.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 80, hasCurrent: true, combatType: StatType.Health),
@@ -533,6 +552,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Factory).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/factory 2 indexed 2x3.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 95, hasCurrent: true, combatType: StatType.Health),
@@ -566,6 +586,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Laboratory).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/lab4 indexed 3x3.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 110, hasCurrent: true, combatType: StatType.Health),
@@ -599,6 +620,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Armoury).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/armoury1 indexed 1x2.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 65, hasCurrent: true, combatType: StatType.Health),
@@ -626,6 +648,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Wall).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/wall indexed 1x1.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 100, hasCurrent: true, combatType: StatType.Health),
@@ -653,6 +676,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Stairs).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/stairs front indexed 1x2.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 60, hasCurrent: true, combatType: StatType.Health),
@@ -680,6 +704,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Gate).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/gate 0 indexed 1x4.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 300, hasCurrent: true, combatType: StatType.Health),
@@ -709,6 +734,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Watchtower).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/watchtower indexed 1x1.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 95, hasCurrent: true, combatType: StatType.Health),
@@ -736,6 +762,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Bastion).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/tower indexed 2x2.png",
+                    centerOffset: new Vector2<int>(0, 0),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 550, hasCurrent: true, combatType: StatType.Health),

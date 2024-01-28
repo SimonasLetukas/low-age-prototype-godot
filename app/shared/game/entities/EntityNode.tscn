@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://app/shared/game/entities/EntityNode.cs" type="Script" id=1]
 [ext_resource path="res://app/shared/shaders/EntitiesMaterial.tres" type="Material" id=2]
+[ext_resource path="res://assets/sprites/units/revs/slave indexed 1x1.png" type="Texture" id=3]
 
 [node name="EntityNode" type="Node2D"]
 script = ExtResource( 1 )
@@ -10,6 +11,8 @@ PlacementColorInvalid = Color( 1, 0.482353, 0.482353, 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = ExtResource( 2 )
+texture = ExtResource( 3 )
+centered = false
 
 [node name="Area2D" type="Area2D" parent="."]
 

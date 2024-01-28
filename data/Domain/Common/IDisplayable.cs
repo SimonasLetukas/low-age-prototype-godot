@@ -7,5 +7,10 @@
         /// A value of null means that nothing will be displayed.
         /// </summary>
         public string? Sprite { get; }
+        
+        /// <summary>
+        /// Counting from top-left, how many pixels to move to center the sprite.
+        /// </summary>
+        public Vector2<int> CenterOffset { get; }
     }
 }

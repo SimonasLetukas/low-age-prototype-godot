@@ -44,7 +44,10 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Blueprint = blueprint;
         DisplayName = blueprint.DisplayName;
 
-        Sprite.Texture = GD.Load<Texture>(blueprint.Sprite);
+        if (blueprint.Sprite != null)
+            Sprite.Texture = GD.Load<Texture>(blueprint.Sprite);
+        Sprite.Offset = blueprint.CenterOffset.ToGodotVector2() * -1; // TODO handle structure rotation
+        
         var spriteSize = Sprite.Texture.GetSize();
         var area = GetNode<Area2D>(nameof(Area2D));
         
@@ -57,8 +60,6 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         area.AddChild(collision);
         area.Position = new Vector2(Position.x, Position.y - spriteSize.y / 2);
     }
-
-    public void SetSpriteOffset(Vector2 to) => Sprite.Offset = to;
     
     public void SetTileHovered(bool to)
     {

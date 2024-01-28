@@ -273,7 +273,6 @@ public class ClientMap : Map
         
         _selectionOverlay = SelectionOverlay.Placement;
         
-        // TODO create structure for tiles to know the list of entities that occupies it, and implement adding and removing entities from it 
         // TODO create new entity, set it for placement, make sure placement color is determined in process (feed tiles to the actor so it decides availability)
         // TODO upon creation the new entity has to go through all of its passives and add on birth behaviours
         // TODO during placement the method inside entity makes sure that all build behaviours are correct, otherwise returns false and shows red placement

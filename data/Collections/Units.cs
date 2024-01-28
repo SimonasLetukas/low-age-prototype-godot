@@ -18,6 +18,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Slave),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/slave indexed 1x1.png",
+                    centerOffset: new Vector2<int>(3, 14),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 6, hasCurrent: true, combatType: StatType.Health),
@@ -50,6 +51,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Leader),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/leader indexed 1x1.png",
+                    centerOffset: new Vector2<int>(10, 19),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 50, hasCurrent: true, combatType: StatType.Health),
@@ -84,6 +86,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Quickdraw),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/quickdraw indexed 1x1.png",
+                    centerOffset: new Vector2<int>(4, 17),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 13, hasCurrent: true, combatType: StatType.Health),
@@ -123,6 +126,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Gorger),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/gorger indexed 1x1.png",
+                    centerOffset: new Vector2<int>(8, 15),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 7, hasCurrent: true, combatType: StatType.Health),
@@ -156,6 +160,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Camou),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/camou indexed 1x1.png",
+                    centerOffset: new Vector2<int>(3, 17),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 19, hasCurrent: true, combatType: StatType.Health),
@@ -189,6 +194,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Shaman),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/shaman indexed 1x1.png",
+                    centerOffset: new Vector2<int>(5, 17),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 18, hasCurrent: true, combatType: StatType.Health),
@@ -227,6 +233,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Pyre),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/pyre hauler_part indexed 1x1.png",
+                    centerOffset: new Vector2<int>(10, 14),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 22, hasCurrent: true, combatType: StatType.Health),
@@ -266,6 +273,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.BigBadBull).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/big bad bull indexed 2x2.png",
+                    centerOffset: new Vector2<int>(13, 23),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 40, hasCurrent: true, combatType: StatType.Health),
@@ -299,6 +307,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Mummy),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/mummy indexed 1x1.png",
+                    centerOffset: new Vector2<int>(6, 17),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 39, hasCurrent: true, combatType: StatType.Health),
@@ -330,6 +339,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Roach),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/roach indexed 1x1.png",
+                    centerOffset: new Vector2<int>(9, 8),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Health),
@@ -363,6 +373,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Parasite),
                     description: "",
                     sprite: "res://assets/sprites/units/revs/parasite indexed 1x1.png",
+                    centerOffset: new Vector2<int>(5, 18),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 36, hasCurrent: true, combatType: StatType.Health),
@@ -393,6 +404,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Horrior),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/horrior indexed 1x1.png",
+                    centerOffset: new Vector2<int>(4, 16),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 25, hasCurrent: true, combatType: StatType.Health),
@@ -427,6 +439,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Marksman),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/marksman indexed 1x1.png",
+                    centerOffset: new Vector2<int>(4, 15),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 7, hasCurrent: true, combatType: StatType.Health),
@@ -466,6 +479,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Surfer),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/surfer indexed 1x1.png",
+                    centerOffset: new Vector2<int>(5, 12),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 2, hasCurrent: true, combatType: StatType.Health),
@@ -499,6 +513,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Mortar),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/mortar 0 indexed 1x1.png",
+                    centerOffset: new Vector2<int>(4, 21),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Health),
@@ -540,6 +555,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Hawk),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/hawk indexed 1x1.png",
+                    centerOffset: new Vector2<int>(3, 17),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 9, hasCurrent: true, combatType: StatType.Health),
@@ -575,6 +591,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Engineer),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/engineer indexed 1x1.png",
+                    centerOffset: new Vector2<int>(3, 15),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 8, hasCurrent: true, combatType: StatType.Health),
@@ -610,6 +627,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Cannon),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/cannon indexed 2x2.png",
+                    centerOffset: new Vector2<int>(14, 26),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 30, hasCurrent: true, combatType: StatType.Health),
@@ -647,6 +665,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Ballista),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/ballista indexed 2x2.png",
+                    centerOffset: new Vector2<int>(12, 8),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 14, hasCurrent: true, combatType: StatType.Health),
@@ -684,6 +703,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Radar),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/radar indexed 1x1.png",
+                    centerOffset: new Vector2<int>(6, 18),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 20, hasCurrent: true, combatType: StatType.Health),
@@ -714,6 +734,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Vessel),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/vessel indexed 2x2.png",
+                    centerOffset: new Vector2<int>(12, 20),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 50, hasCurrent: true, combatType: StatType.Health),
@@ -750,6 +771,7 @@ namespace low_age_data.Collections
                     displayName: nameof(UnitId.Omen),
                     description: "",
                     sprite: "res://assets/sprites/units/uee/omen indexed 1x1.png",
+                    centerOffset: new Vector2<int>(8, 22),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Health),

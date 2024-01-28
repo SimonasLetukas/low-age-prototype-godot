@@ -12,11 +12,21 @@ namespace low_age_data.Domain.Entities.Actors.Units
             string displayName, 
             string description, 
             string sprite,
+            Vector2<int> centerOffset,
             IList<Stat> statistics, 
             FactionId originalFaction, 
             IList<ActorAttribute> actorAttributes, 
             IList<AbilityId> abilities,
-            int? size = null) : base(id, displayName, description, sprite, statistics, originalFaction, actorAttributes, abilities)
+            int? size = null) : base(
+            id, 
+            displayName, 
+            description, 
+            sprite, 
+            centerOffset,
+            statistics, 
+            originalFaction, 
+            actorAttributes, 
+            abilities)
         {
             Size = size ?? 1;
         }

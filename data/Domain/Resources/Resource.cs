@@ -26,6 +26,7 @@ namespace low_age_data.Domain.Resources
             DisplayName = displayName;
             Description = description;
             Sprite = sprite;
+            CenterOffset = new Vector2<int>(0, 0);
             HasLimit = hasLimit;
             IsConsumable = isConsumable;
             HasBank = hasBank;
@@ -101,5 +102,7 @@ namespace low_age_data.Domain.Resources
         public bool EffectAmountMultipliedByResourceAmount { get; }
 
         public string? Sprite { get; }
+        
+        public Vector2<int> CenterOffset { get; }
     }
 }

@@ -54,9 +54,6 @@ public class Entities : YSort
         
         var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units);
         unit.EntityPosition = mapPosition;
-        unit.SetSpriteOffset(new Vector2(0, -6)); // TODO should be taken from data -- new IDisplayable property
-                                                         // TODO should also be taken from top-left origin instead of
-                                                         // center so it's easier to work with image editors
             
         _entitiesByMapPositions[mapPosition] = unit;
         _mapPositionsByEntities[unit] = mapPosition;

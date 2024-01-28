@@ -16,6 +16,7 @@ namespace low_age_data.Domain.Entities.Doodads
             string displayName, 
             string description, 
             string sprite, 
+            Vector2<int> centerOffset,
             EffectId? onCollisionEffect = null,
             IList<IFilterItem>? collisionFilters = null,
             EffectId? periodicEffect = null,
@@ -24,7 +25,7 @@ namespace low_age_data.Domain.Entities.Doodads
             bool? occupiesSpace = null,
             bool? statsCopiedFromSource = null,
             bool? alliesCanStack = null,
-            bool? onlyOneCanExist = null) : base(id, displayName, description, sprite)
+            bool? onlyOneCanExist = null) : base(id, displayName, description, sprite, centerOffset)
         {
             OnCollisionEffect = onCollisionEffect;
             CollisionFilters = collisionFilters ?? new List<IFilterItem>();

@@ -29,6 +29,7 @@ namespace low_age_data.Domain.Behaviours
             DisplayName = displayName;
             Description = description;
             Sprite = sprite;
+            CenterOffset = new Vector2<int>(0, 0);
             EndsAt = endsAt;
             Alignment = alignment;
             CanStack = canStack ?? false;
@@ -101,5 +102,7 @@ namespace low_age_data.Domain.Behaviours
         public bool HasSameInstanceForAllOwners { get; }
 
         public string? Sprite { get; }
+        
+        public Vector2<int> CenterOffset { get; }
     }
 }
