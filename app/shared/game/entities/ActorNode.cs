@@ -13,7 +13,7 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public IList<StatNode> CurrentStats { get; protected set; }
     public IList<ActorAttribute> Attributes { get; protected set; }
     public ActorRotation ActorRotation { get; protected set; }
-    public IList<AbilityId> Abilities { get; protected set; } // TODO should be of types AbilityNode instead
+    public Abilities Abilities { get; protected set; }
     
     private Actor Blueprint { get; set; }
     private TextureProgress _health;
@@ -22,6 +22,8 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public override void _Ready()
     {
         base._Ready();
+        
+        Abilities = GetNode<Abilities>(nameof(Abilities));
 
         _health = GetNode<TextureProgress>("Health");
         _shields = GetNode<TextureProgress>("Shields");
@@ -34,9 +36,9 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         CurrentStats = blueprint.Statistics.Select(stat => StatNode.InstantiateAsChild(stat, this)).ToList();
         Attributes = blueprint.ActorAttributes;
         ActorRotation = ActorRotation.BottomRight;
-        Abilities = blueprint.Abilities;
+        Abilities.PopulateFromBlueprint(Blueprint.Abilities);
         
-        var spriteSize = _sprite.Texture.GetSize();
+        var spriteSize = Sprite.Texture.GetSize();
         _health.RectPosition = new Vector2(_health.RectPosition.x, (spriteSize.y * -1) - 2);
         _health.Visible = false;
         _shields.RectPosition = new Vector2(_shields.RectPosition.x, (spriteSize.y * -1) - 3);

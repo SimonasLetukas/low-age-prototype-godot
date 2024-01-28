@@ -16,7 +16,7 @@ using low_age_data.Domain.Resources;
 
 namespace low_age_data.Collections
 {
-    public static class Effects
+    public static class EffectsCollection
     {
         public static List<Effect> Get()
         {

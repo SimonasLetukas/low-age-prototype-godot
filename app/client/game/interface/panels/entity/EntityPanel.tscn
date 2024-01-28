@@ -2,8 +2,8 @@
 
 [ext_resource path="res://app/client/game/interface/panels/entity/EntityPanel.cs" type="Script" id=1]
 [ext_resource path="res://app/client/game/interface/panels/entity/EntityName.tscn" type="PackedScene" id=2]
-[ext_resource path="res://app/client/game/interface/panels/entity/abilities/Abilities.cs" type="Script" id=3]
-[ext_resource path="res://app/client/game/interface/panels/entity/abilities/button/AbilityButton.tscn" type="PackedScene" id=8]
+[ext_resource path="res://app/client/game/interface/panels/entity/abilities/AbilityButtons.cs" type="Script" id=3]
+[ext_resource path="res://app/client/game/interface/panels/entity/abilities/AbilityButton.tscn" type="PackedScene" id=8]
 [ext_resource path="res://assets/sprites/interface/panel.png" type="Texture" id=9]
 [ext_resource path="res://app/client/game/interface/panels/entity/display/InfoDisplay.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/sprites/interface/stats-panel.png" type="Texture" id=13]
@@ -166,7 +166,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 2
 custom_constants/separation = 4
 
-[node name="Abilities" type="HBoxContainer" parent="Panel"]
+[node name="AbilityButtons" type="HBoxContainer" parent="Panel"]
 margin_right = 256.0
 margin_bottom = 40.0
 grow_horizontal = 0
@@ -180,7 +180,7 @@ AbilityIconPaths = {
 "slave_manual_labour": "res://assets/icons/icon_ability_build.png"
 }
 
-[node name="AbilityButton" parent="Panel/Abilities" instance=ExtResource( 8 )]
+[node name="AbilityButton" parent="Panel/AbilityButtons" instance=ExtResource( 8 )]
 material = SubResource( 3 )
 margin_left = 216.0
 margin_right = 256.0

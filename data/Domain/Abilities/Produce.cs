@@ -38,7 +38,7 @@ namespace low_age_data.Domain.Abilities
 
         /// <summary>
         /// If true, placement for a new <see cref="Entity"/> to <see cref="Produce"/> in is only allowed inside
-        /// <see cref="Structure"/>'s <see cref="Structure.WalkableArea"/>.
+        /// <see cref="Structure"/>'s <see cref="Structure.WalkableAreas"/>.
         /// </summary>
         public bool CanPlaceInWalkableAreaOnly { get; }
 

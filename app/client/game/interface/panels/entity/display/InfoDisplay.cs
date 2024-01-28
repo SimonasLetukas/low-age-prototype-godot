@@ -8,7 +8,7 @@ public class InfoDisplay : MarginContainer
     [Signal] public delegate void AbilitiesClosed();
     [Signal] public delegate void AbilityTextResized();
 
-    private View _currentView = View.UnitStats;
+    public View CurrentView { get; private set; } = View.UnitStats;
     private View _previousView = View.UnitStats;
 
     private int _valueCurrentHealth = 999;
@@ -42,8 +42,7 @@ public class InfoDisplay : MarginContainer
     private string _valueAbilityName = "Build";
     private TurnPhase _valueAbilityTurnPhase = TurnPhase.Planning;
     private string _valueAbilityText = "Place a ghostly rendition of a selected enemy unit in [b]7[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] to an unoccupied space in a [b]3[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] from the selected target. The rendition has the same amount of [img=15x11]Client/UI/Icons/icon_health_big.png[/img], [img=15x11]Client/UI/Icons/icon_melee_armour_big.png[/img] and [img=15x11]Client/UI/Icons/icon_ranged_armour_big.png[/img] as the selected target, cannot act, can be attacked and stays for [b]2[/b] action phases. [b]50%[/b] of all [img=15x11]Client/UI/Icons/icon_damage_big.png[/img] done to the rendition is done as pure [img=15x11]Client/UI/Icons/icon_damage_big.png[/img]to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals [b]10[/b][img=15x11]Client/UI/Icons/icon_melee_attack.png[/img] and slows all adjacent enemies by [b]50%[/b] until the end of their next action.";
-    private int _valueAbilityCooldown = 3;
-    private TurnPhase _valueAbilityCooldownType = TurnPhase.Action;
+    private EndsAtNode _valueAbilityCooldown = null;
     private string _valueResearchText = "Hardened Matrix";
 
     private Control _abilityTitle;
@@ -100,11 +99,17 @@ public class InfoDisplay : MarginContainer
         ShowView(View.UnitStats);
     }
 
+    public void ShowPreviousView()
+    {
+        CurrentView = _previousView;
+        ShowView(CurrentView);
+    }
+
     public void ShowView(View view)
     {
-        _previousView = _currentView;
-        _currentView = view;
-        switch (_currentView)
+        _previousView = CurrentView;
+        CurrentView = view;
+        switch (CurrentView)
         {
             case View.UnitStats:
             default:
@@ -190,9 +195,8 @@ public class InfoDisplay : MarginContainer
         string abilityName,
         TurnPhase turnPhase,
         string text,
-        IList<ResearchId> research = null,
-        int cooldown = 0,
-        TurnPhase cooldownType = null)
+        EndsAtNode cooldown,
+        IList<ResearchId> research = null)
     {
         _valueAbilityName = abilityName;
         _valueAbilityTurnPhase = turnPhase;
@@ -201,7 +205,6 @@ public class InfoDisplay : MarginContainer
             ? string.Empty
             : string.Join(", ", research.Select(x => x.ToString()).ToList()); // TODO add nice display names to research
         _valueAbilityCooldown = cooldown;
-        _valueAbilityCooldownType = cooldownType;
     }
     
     public void ResetAttacks()
@@ -331,7 +334,7 @@ public class InfoDisplay : MarginContainer
         GetNode<Label>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Label/Shadow").Text = _valueAbilityName;
         _researchText.SetResearch(_valueResearchText);
         GetNode<AbilitySubtitle>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(AbilitySubtitle)}")
-            .SetAbilitySubtitle(_valueAbilityTurnPhase, _valueAbilityCooldown, _valueAbilityCooldownType);
+            .SetAbilitySubtitle(_valueAbilityTurnPhase, _valueAbilityCooldown);
         _abilityDescription.GetNode<RichTextLabel>("Text").BbcodeText = _valueAbilityText;
         _abilityDescription.GetNode<RichTextLabel>("Text/Shadow").BbcodeText = _valueAbilityText;
 
@@ -353,7 +356,7 @@ public class InfoDisplay : MarginContainer
         }
         
         _rightSideRangedAttack.SetSelected(false);
-        if (_currentView != View.AttackMelee)
+        if (CurrentView != View.AttackMelee)
         {
             ShowView(View.AttackMelee);
         }
@@ -368,7 +371,7 @@ public class InfoDisplay : MarginContainer
         }
         
         _rightSideMeleeAttack.SetSelected(false);
-        if (_currentView != View.AttackRanged)
+        if (CurrentView != View.AttackRanged)
         {
             ShowView(View.AttackRanged);
         }

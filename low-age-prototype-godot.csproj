@@ -9,10 +9,12 @@
   <ItemGroup>
     <Compile Remove="data\**" />
     <Compile Remove="tests\**" />
+    <Compile Remove="app\client\game\interface\panels\entity\abilities\button\**" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="data\**" />
     <EmbeddedResource Remove="tests\**" />
+    <EmbeddedResource Remove="app\client\game\interface\panels\entity\abilities\button\**" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="data\low-age-data.csproj" />

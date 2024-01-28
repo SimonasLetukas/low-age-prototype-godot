@@ -2,6 +2,7 @@
 using System.Linq;
 using Godot;
 using low_age_data;
+using low_age_data.Domain.Entities;
 using low_age_data.Domain.Factions;
 using low_age_data.Shared;
 using Newtonsoft.Json;
@@ -73,6 +74,13 @@ public class Data : Node
     }
 
     public string GetPlayerName(int id) => Players.Single(x => x.Id.Equals(id)).Name;
+
+    public Entity GetEntityBlueprintById(EntityId id)
+    {
+        return (Blueprint.Entities.Units.FirstOrDefault(x => x.Id.Equals(id)) 
+                ?? (Entity)Blueprint.Entities.Structures.FirstOrDefault(x => x.Id.Equals(id))) 
+               ?? Blueprint.Entities.Doodads.First(x => x.Id.Equals(id));
+    }
 }
 
 public class Player

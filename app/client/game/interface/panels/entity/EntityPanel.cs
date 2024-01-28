@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +7,15 @@ using low_age_data.Domain.Common;
 
 public class EntityPanel : Control
 {
+    public event Action<AbilityButton> AbilityViewOpened = delegate { };
+    public event Action AbilityViewClosed = delegate { };
+    
     private EntityName _entityName;
-    private Abilities _abilityButtons;
+    private AbilityButtons _abilityButtons;
     private InfoDisplay _display;
     private RichTextLabel _abilityTextBox;
     private Tween _tween;
-    private bool _isAbilitySelected;
+    private bool _isShowingAbility;
     private bool _isSwitchingBetweenAbilities;
     private EntityNode _selectedEntity;
     private int _biggestPreviousAbilityTextSize = 0;
@@ -25,12 +29,12 @@ public class EntityPanel : Control
     public override void _Ready()
     {
         _entityName = GetNode<EntityName>($"{nameof(EntityName)}");
-        _abilityButtons = GetNode<Abilities>($"{nameof(Panel)}/{nameof(Abilities)}");
+        _abilityButtons = GetNode<AbilityButtons>($"{nameof(Panel)}/{nameof(AbilityButtons)}");
         _display = GetNode<InfoDisplay>($"{nameof(Panel)}/{nameof(InfoDisplay)}");
         _abilityTextBox = GetNode<RichTextLabel>($"{nameof(Panel)}/{nameof(InfoDisplay)}/{nameof(VBoxContainer)}/AbilityDescription/Text");
         _tween = GetNode<Tween>($"{nameof(Tween)}");
 
-        _abilityButtons.Connect(nameof(Abilities.AbilitiesPopulated), this, nameof(OnAbilityButtonsPopulated));
+        _abilityButtons.Connect(nameof(AbilityButtons.AbilitiesPopulated), this, nameof(OnAbilityButtonsPopulated));
         _display.Connect(nameof(InfoDisplay.AbilitiesClosed), this, nameof(OnInfoDisplayAbilitiesClosed));
         _display.Connect(nameof(InfoDisplay.AbilityTextResized), this, nameof(OnInfoDisplayTextResized));
         
@@ -39,26 +43,28 @@ public class EntityPanel : Control
 
     public void OnEntitySelected(EntityNode selectedEntity)
     {
-        _isAbilitySelected = false;
+        _isShowingAbility = false;
         _isSwitchingBetweenAbilities = false;
         _selectedEntity = selectedEntity;
-        
+
+        DisconnectAbilityButtons();
         _abilityButtons.Reset();
         if (selectedEntity is ActorNode selectedActor)
         {
-            // TODO start using AbilityNode instead to get the current info
             _abilityButtons.Populate(selectedActor.Abilities); 
         }
         
         _entityName.SetValue(selectedEntity.DisplayName);
         ChangeDisplay();
         MovePanel();
+        AbilityViewClosed();
     }
 
     public void OnEntityDeselected()
     {
         _selectedEntity = null;
         HidePanel();
+        AbilityViewClosed();
     }
 
     private void ChangeDisplay(AbilityButton clickedAbility = null)
@@ -69,16 +75,16 @@ public class EntityPanel : Control
             return;
         }
         
-        if (_isAbilitySelected && (clickedAbility is null) is false)
+        if (_isShowingAbility && clickedAbility != null)
         {
-            var ability = _abilitiesBlueprint.First(x => x.Id.Equals(clickedAbility.Id));
-            var name = ability.DisplayName;
-            var turnPhase = ability.TurnPhase;
-            var text = ability.Description;
-            var research = ability.ResearchNeeded;
-            var cooldown = 1; // TODO take from the selected actor
-            var cooldownType = TurnPhase.Action; // TODO take from the selected actor
-            _display.SetAbilityStats(name, turnPhase, text, research, cooldown, cooldownType);
+            var abilityBlueprint = _abilitiesBlueprint.First(x => x.Id.Equals(clickedAbility.Ability.Id));
+            var abilityInstance = clickedAbility.Ability;
+            var name = abilityBlueprint.DisplayName;
+            var turnPhase = abilityBlueprint.TurnPhase;
+            var text = abilityBlueprint.Description;
+            var research = abilityBlueprint.ResearchNeeded;
+            var cooldown = abilityInstance.RemainingCooldown;
+            _display.SetAbilityStats(name, turnPhase, text, cooldown, research);
             _display.ShowView(View.Ability);
             return;
         }
@@ -147,7 +153,7 @@ public class EntityPanel : Control
     private void MovePanel()
     {
         Vector2 newSize;
-        if (_isAbilitySelected)
+        if (_isShowingAbility)
         {
             var abilityTextBoxSizeY = CalculateBiggestPreviousSize((int)_abilityTextBox.RectSize.y);
             
@@ -193,8 +199,17 @@ public class EntityPanel : Control
     {
         foreach (var abilityButton in _abilityButtons.GetChildren().OfType<AbilityButton>())
         {
-            var id = abilityButton.Id; // TODO this ID should be used later
-            abilityButton.Connect(nameof(AbilityButton.Clicked), this, nameof(OnAbilityButtonClicked));
+            abilityButton.Clicked += OnAbilityButtonClicked;
+            //abilityButton.Hovering += OnAbilityButtonHovering; TODO find out the best UX for handling all types of abilities 
+        }
+    }
+
+    private void DisconnectAbilityButtons()
+    {
+        foreach (var abilityButton in _abilityButtons.GetChildren().OfType<AbilityButton>())
+        {
+            abilityButton.Clicked -= OnAbilityButtonClicked;
+            //abilityButton.Hovering -= OnAbilityButtonHovering; TODO find out the best UX for handling all types of abilities 
         }
     }
 
@@ -205,9 +220,10 @@ public class EntityPanel : Control
         if (abilityButton.IsSelected)
         {
             abilityButton.SetSelected(false);
-            _isAbilitySelected = false;
+            _isShowingAbility = false;
             ChangeDisplay();
             MovePanel();
+            AbilityViewClosed();
             return;
         }
 
@@ -216,9 +232,35 @@ public class EntityPanel : Control
         
         _abilityButtons.DeselectAll();
         abilityButton.SetSelected(true);
-        _isAbilitySelected = true;
+        _isShowingAbility = true;
         ChangeDisplay(abilityButton);
         MovePanel();
+        AbilityViewOpened(abilityButton);
+    }
+
+    // TODO find out the best UX for handling all types of abilities 
+    private void OnAbilityButtonHovering(bool started, AbilityButton abilityButton)
+    {
+        if (abilityButton.IsSelected)
+            return;
+        
+        if (started)
+        {
+            _isSwitchingBetweenAbilities = true;
+            _isShowingAbility = true;
+            ChangeDisplay(abilityButton);
+            MovePanel();
+            return;
+        }
+
+        var wasAnyAbilitySelected = _abilityButtons.IsAnySelected();
+        _isSwitchingBetweenAbilities = wasAnyAbilitySelected;
+        _isShowingAbility = wasAnyAbilitySelected;
+
+        if (wasAnyAbilitySelected is false && _display.CurrentView != View.Ability)
+            return;
+        
+        _display.ShowPreviousView();
     }
 
     private void OnAbilityButtonsPopulated()
@@ -231,9 +273,11 @@ public class EntityPanel : Control
         _isSwitchingBetweenAbilities = false;
         
         _abilityButtons.DeselectAll();
-        _isAbilitySelected = false;
+        _isShowingAbility = false;
         ChangeDisplay(null);
         MovePanel();
+
+        AbilityViewClosed();
     }
 
     private void OnInfoDisplayTextResized()

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://app/client/game/interface/panels/entity/EntityPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://app/client/game/interface/Interface.cs" type="Script" id=2]
+[ext_resource path="res://app/client/game/interface/panels/selection/SelectionPanel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=5]
 [ext_resource path="res://assets/sprites/interface/bottom left debug panel.png" type="Texture" id=6]
 
@@ -23,9 +24,6 @@ margin_right = 268.0
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Coordinates" type="Label" parent="Theme/DebugPanel"]
 anchor_top = 1.0
@@ -86,3 +84,7 @@ __meta__ = {
 }
 
 [node name="EntityPanel" parent="." instance=ExtResource( 1 )]
+margin_top = -720.0
+margin_bottom = 38.0
+
+[node name="SelectionPanel" parent="." instance=ExtResource( 3 )]

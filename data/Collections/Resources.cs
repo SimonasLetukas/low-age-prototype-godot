@@ -5,7 +5,7 @@ using low_age_data.Shared;
 
 namespace low_age_data.Collections
 {
-    public static class Resources
+    public static class ResourcesCollection
     {
         public static List<Resource> Get()
         {

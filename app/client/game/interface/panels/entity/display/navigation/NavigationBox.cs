@@ -28,7 +28,7 @@ public class NavigationBox : MarginContainer
     private void Highlight(bool to)
     {
         if (_navigationBoxPanel.Material is ShaderMaterial shaderMaterial) 
-            shaderMaterial.SetShaderParam("enabled", to);
+            shaderMaterial.SetShaderParam("draw_outline", to);
     }
     
     private void OnNavigationBoxPanelMouseEntered()
@@ -52,6 +52,7 @@ public class NavigationBox : MarginContainer
             return;
         
         _navigationBoxPanel.SetClicked(false);
+        Highlight(false);
         EmitSignal(nameof(Clicked));
     }
 }

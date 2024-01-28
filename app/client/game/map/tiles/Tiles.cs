@@ -24,6 +24,7 @@ public class Tiles : Node2D
     private TileMap _mountains;
     private FocusedTile _focusedTile;
     private TileMap _availableTiles;
+    private TileMap _targetTiles;
     private TileMap _path;
     
     private const int TileMapGrassIndex = 6;
@@ -33,6 +34,8 @@ public class Tiles : Node2D
     private const int TileMapMountainsIndex = 4;
     private const int TileMapAvailableTileIndex = 8;
     private const int TileMapPathTileIndex = 9;
+    private const int TileMapNegativeTargetTileIndex = 11;
+    private const int TileMapPositiveTargetTileIndex = 12;
     
     private readonly Dictionary<Terrain, int> _tileMapIndexesByTerrain = new Dictionary<Terrain, int>
     {
@@ -51,6 +54,7 @@ public class Tiles : Node2D
         _mountains = GetNode<TileMap>("Stone");
         _focusedTile = GetNode<FocusedTile>("FocusedTile");
         _availableTiles = GetNode<TileMap>("Alpha/Available");
+        _targetTiles = GetNode<TileMap>("Alpha/Target");
         _path = GetNode<TileMap>("Path");
         
         _focusedTile.Disable();
@@ -110,6 +114,22 @@ public class Tiles : Node2D
     public bool IsCurrentlyAvailable(Vector2 mapPosition) 
         => _availableTiles.GetCellv(mapPosition) == TileMapAvailableTileIndex;
 
+    public void SetTargetTiles(IEnumerable<Vector2> targets, bool isPositive = true)
+    {
+        ClearTargetTiles();
+
+        foreach (var target in targets)
+        {
+            _targetTiles.SetCellv(target, isPositive 
+                ? TileMapPositiveTargetTileIndex 
+                : TileMapNegativeTargetTileIndex);
+        }
+    }
+
+    public bool IsCurrentlyTarget(Vector2 mapPosition) 
+        => _targetTiles.GetCellv(mapPosition) == TileMapNegativeTargetTileIndex 
+           || _targetTiles.GetCellv(mapPosition) == TileMapPositiveTargetTileIndex;
+
     public void SetPathTiles(IEnumerable<Vector2> pathPositions)
     {
         ClearPath();
@@ -141,6 +161,8 @@ public class Tiles : Node2D
     public void ClearPath() => _path.Clear();
     
     public void ClearAvailableTiles() => _availableTiles.Clear();
+
+    public void ClearTargetTiles() => _targetTiles.Clear();
 
     private void SetCell(Vector2 at, Terrain terrain)
     {
@@ -175,6 +197,7 @@ public class Tiles : Node2D
     {
         ClearPath();
         ClearAvailableTiles();
+        ClearTargetTiles();
         _grass.Clear();
         _scraps.Clear();
         _marsh.Clear();

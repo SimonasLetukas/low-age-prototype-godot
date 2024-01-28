@@ -36,22 +36,22 @@ namespace low_age_data.Domain.Entities.Actors.Structures
         /// <summary>
         /// Width and height of the <see cref="Structure"/>. Starts from 1.
         /// </summary>
-        public Vector2<int> Size { get; set; }
+        public Vector2<int> Size { get; }
 
         /// <summary>
         /// Coordinates of the center point, used for rotating and placing purposes. Starts from 0. 
         /// </summary>
-        public Vector2<int> CenterPoint { get; set; }
+        public Vector2<int> CenterPoint { get; }
 
         /// <summary>
         /// If true, this <see cref="Structure"/> can be targeted and attacked, shows health and other statistics. 
         /// </summary>
-        public bool Destructible { get; set; }
+        public bool Destructible { get; }
 
         /// <summary>
         /// Specifies which part of the <see cref="Structure"/>'s <see cref="Area"/> is walkable at ground level. This
         /// is usually used to reserve space in which units can be created but other buildings cannot be placed. 
         /// </summary>
-        public IList<Area> WalkableAreas { get; set; }
+        public IList<Area> WalkableAreas { get; }
     }
 }

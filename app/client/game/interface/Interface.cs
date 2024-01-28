@@ -9,15 +9,19 @@ public class Interface : CanvasLayer
     [Export] public bool DebugEnabled { get; set; } = false;
     
     public event Action MouseEntered = delegate { };
-    
     public event Action MouseExited = delegate { };
+    
+    public SelectionPanel SelectionPanel { get; private set; }
     
     private Vector2 _mapSize = Vector2.Zero;
     private EntityPanel _entityPanel;
     
     public override void _Ready()
     {
+        base._Ready();
+        
         _entityPanel = GetNode<EntityPanel>($"{nameof(EntityPanel)}");
+        SelectionPanel = GetNode<SelectionPanel>(nameof(SelectionPanel));
 
         foreach (var firstLevel in GetChildren().OfType<Control>())
         {
@@ -28,6 +32,16 @@ public class Interface : CanvasLayer
                 control.Connect("mouse_exited", this, nameof(OnControlMouseExited), new Array { control });
             }
         }
+
+        _entityPanel.AbilityViewOpened += SelectionPanel.OnSelectableAbilityPressed;
+        _entityPanel.AbilityViewClosed += SelectionPanel.OnGoBackPressed;
+    }
+
+    public override void _ExitTree()
+    {
+        _entityPanel.AbilityViewOpened -= SelectionPanel.OnSelectableAbilityPressed;
+        _entityPanel.AbilityViewClosed -= SelectionPanel.OnGoBackPressed;
+        base._ExitTree();
     }
 
     public void SetMapSize(Vector2 mapSize)

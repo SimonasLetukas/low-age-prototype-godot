@@ -12,6 +12,7 @@ public class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     public event Action<AbilityNode> CooldownEnded = delegate { };
 
     public Guid InstanceId { get; set; } = Guid.NewGuid();
+    public AbilityId Id { get; protected set; }
     public EndsAtNode RemainingCooldown { get; protected set; }
     public List<Payment> PaymentPaid { get; protected set; }
     public bool IsResearched { get; protected set; }
@@ -22,11 +23,16 @@ public class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     public void SetBlueprint(Ability blueprint)
     {
         Blueprint = blueprint;
-        RemainingCooldown = EndsAtNode.InstantiateAsChild(EndsAt.Instant, this);
+        Id = Blueprint.Id;
+        RemainingCooldown = EndsAtNode.InstantiateAsChild(Blueprint.Cooldown, this);
         RemainingCooldown.Completed += OnCooldownEnded;
         PaymentPaid = blueprint.Cost.Select(paymentRequired => new Payment(paymentRequired.Resource)).ToList();
         IsResearched = true; // TODO fetch from player
         IsActive = IsPaid() && IsResearched;
+    }
+
+    public virtual void Preview()
+    {
     }
     
     public virtual bool TryActivate()

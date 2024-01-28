@@ -1,0 +1,115 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform vec4 outline_color : hint_color;
+uniform bool draw_outline;
+uniform int intensity = 250;
+
+uniform bool disabled = false;
+uniform float disabled_saturation = 0.2;
+
+uniform vec4 tint_color : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float tint_effect_factor : hint_range(0, 1) = 0.0;
+
+const float precision = 0.0065;
+
+varying vec2 o;
+varying vec2 f;
+
+void vertex()
+{
+	if (tint_effect_factor == 0.0)
+	{
+		o = VERTEX;
+		vec2 uv = (UV - 0.5);
+		VERTEX += uv * float(intensity);
+		f = VERTEX;
+	}
+}
+
+mat4 saturationMatrix( float _saturation ){
+    vec3 luminance = vec3( 0.3086, 0.6094, 0.0820 );
+
+    float oneMinusSat = 1.0 - _saturation;
+	
+    vec3 red = vec3( luminance.x * oneMinusSat );
+    red+= vec3(_saturation, 0, 0); //*redVal;
+    vec3 green = vec3( luminance.y * oneMinusSat );
+    green += vec3( 0,_saturation, 0 ); //*greenVal;
+    vec3 blue = vec3( luminance.z * oneMinusSat );
+    blue += vec3( 0, 0,_saturation ); //*blueVal;
+	
+    return mat4(vec4(red, 0),vec4(green,0),vec4(blue,0),vec4(0, 0, 0, 1));
+}
+
+vec4 outlines(sampler2D var_TEXTURE, vec2 var_UV, vec2 var_TEXTURE_PIXEL_SIZE)
+{
+	vec4 outline_color_changing = outline_color + ((sin(TIME * 3.5) + 1.0) / 2.0) - 0.08;
+	outline_color_changing.a = 1.0;
+	
+	ivec2 t = textureSize(var_TEXTURE, 0);
+	vec2 regular_uv;
+	regular_uv.x = var_UV.x + (f.x - o.x)/float(t.x);
+	regular_uv.y = var_UV.y + (f.y - o.y)/float(t.y);
+	
+	vec4 regular_color = texture(var_TEXTURE, regular_uv);
+	if((regular_uv.x < 0.0 || regular_uv.x > 1.0) || (regular_uv.y < 0.0 || regular_uv.y > 1.0) || regular_color.a <=0.01){
+		regular_color = vec4(0.0); 
+	}
+	
+	vec2 ps = var_TEXTURE_PIXEL_SIZE * float(intensity) * precision;
+	
+	vec4 final_color = regular_color;
+	if (regular_color.a <= 1.0 && draw_outline)
+	{
+		for(int x = -1; x <= 1; x += 1){
+			for(int y = -1; y <= 1; y += 1){
+				//Get the X and Y offset from this
+				if (x==0 && y==0)
+					continue;
+					
+				vec2 outline_uv = regular_uv + vec2(float(x) * ps.x, float(y) * ps.y); 
+				
+				//Sample here, if we are out of bounds then fail
+				vec4 outline_sample = texture(var_TEXTURE, outline_uv);
+				if((outline_uv.x < 0.0 || outline_uv.x > 1.0) || (outline_uv.y < 0.0 || outline_uv.y > 1.0)){
+					//We aren't a real color
+					outline_sample = vec4(0);
+				}
+				
+				//Is our sample empty? Is there something nearby?
+				if(outline_sample.a > final_color.a && outline_sample.a > 0.9){
+					final_color = outline_color_changing;
+				}
+			}
+		}
+	}
+	
+	return final_color; 
+}
+
+vec4 tint(sampler2D var_TEXTURE, vec2 var_UV)
+{
+	vec4 c = texture(var_TEXTURE, var_UV);
+	vec4 c2 = c * tint_color;
+	return mix(c, c2, tint_effect_factor);
+}
+
+void fragment()
+{
+	if (disabled)
+	{
+		COLOR = saturationMatrix(disabled_saturation) * outlines(TEXTURE, UV, TEXTURE_PIXEL_SIZE); 
+	}
+	else if (tint_effect_factor > 0.0)
+	{
+		COLOR = tint(TEXTURE, UV);
+	}
+	else
+	{
+		COLOR = outlines(TEXTURE, UV, TEXTURE_PIXEL_SIZE); 
+	}
+}"

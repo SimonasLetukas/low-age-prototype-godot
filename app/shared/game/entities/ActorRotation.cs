@@ -1,7 +1,7 @@
 ﻿public enum ActorRotation
 {
-    BottomRight,
-    BottomLeft,
-    TopLeft,
-    TopRight
+    BottomRight, // x++
+    BottomLeft,  // y++
+    TopLeft,     // x--
+    TopRight     // y--
 }

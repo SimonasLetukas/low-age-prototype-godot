@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
 
 /// <summary>
@@ -11,6 +12,9 @@ using low_age_data.Domain.Entities;
 /// </summary>
 public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 {
+    [Export] public Color PlacementColorSuccess { get; set; } = Colors.Green;
+    [Export] public Color PlacementColorInvalid { get; set; } = Colors.Red;
+    
     public event Action<EntityNode> FinishedMoving = delegate { };
     
     public Guid InstanceId { get; set; } = Guid.NewGuid();
@@ -18,10 +22,10 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public string DisplayName { get; set; }
     
     private Entity Blueprint { get; set; }
+    protected Sprite Sprite { get; private set; }
     private IList<Vector2> _movePath;
     private bool _selected;
     private float _movementDuration;
-    protected Sprite _sprite;
     private Tween _movement;
     
     public override void _Ready()
@@ -29,7 +33,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         _movePath = new List<Vector2>();
         _selected = false;
         _movementDuration = GetDurationFromAnimationSpeed();
-        _sprite = GetNode<Sprite>(nameof(Sprite));
+        Sprite = GetNode<Sprite>(nameof(Godot.Sprite));
         _movement = GetNode<Tween>("Movement");
 
         _movement.Connect("tween_all_completed", this, nameof(OnMovementTweenAllCompleted));
@@ -40,8 +44,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Blueprint = blueprint;
         DisplayName = blueprint.DisplayName;
 
-        _sprite.Texture = GD.Load<Texture>(blueprint.Sprite);
-        var spriteSize = _sprite.Texture.GetSize();
+        Sprite.Texture = GD.Load<Texture>(blueprint.Sprite);
+        var spriteSize = Sprite.Texture.GetSize();
         var area = GetNode<Area2D>(nameof(Area2D));
         
         var shape = new RectangleShape2D();
@@ -54,7 +58,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         area.Position = new Vector2(Position.x, Position.y - spriteSize.y / 2);
     }
 
-    public void SetSpriteOffset(Vector2 to) => _sprite.Offset = to;
+    public void SetSpriteOffset(Vector2 to) => Sprite.Offset = to;
     
     public void SetTileHovered(bool to)
     {
@@ -71,8 +75,33 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public virtual void SetOutline(bool to)
     {
-        if (_sprite.Material is ShaderMaterial shaderMaterial) 
-            shaderMaterial.SetShaderParam("enabled", to);
+        if (Sprite.Material is ShaderMaterial shaderMaterial) 
+            shaderMaterial.SetShaderParam("draw_outline", to);
+    }
+
+    public void SnapTo(Vector2 globalPosition) => GlobalPosition = globalPosition;
+
+    public void SetForPlacement(bool to, bool placementValid = true)
+    {
+        if ((Sprite.Material is ShaderMaterial shaderMaterial) is false) 
+            return;
+        
+        shaderMaterial.SetShaderParam("tint_effect_factor", to ? 1 : 0);
+        shaderMaterial.SetShaderParam("tint_color", placementValid ? PlacementColorSuccess : PlacementColorInvalid);
+    }
+
+    public virtual bool DeterminePlacementValidity(Terrain terrain)
+    {
+        var isValid = terrain.Equals(Terrain.Mountains) is false;
+        
+        SetPlacementValidityColor(isValid);
+        return isValid;
+    }
+
+    public void Place(Vector2 globalPosition, Vector2 mapPosition)
+    {
+        SetForPlacement(false);
+        // TODO
     }
     
     public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Vector2 resultingPosition)
@@ -82,6 +111,12 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         globalPositionPath.Remove(globalPositionPath.First());
         _movePath = globalPositionPath;
         MoveToNextTarget();
+    }
+
+    protected void SetPlacementValidityColor(bool to)
+    {
+        if (Sprite.Material is ShaderMaterial shaderMaterial)
+            shaderMaterial.SetShaderParam("tint_color", to ? PlacementColorSuccess : PlacementColorInvalid);
     }
     
     private void OnMovementTweenAllCompleted()
@@ -100,9 +135,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         var nextMoveTarget = _movePath.First();
         _movePath.Remove(nextMoveTarget);
 
-        _sprite.Scale = GlobalPosition.x > nextMoveTarget.x 
-            ? new Vector2(-1, _sprite.Scale.y) 
-            : new Vector2(1, _sprite.Scale.y);
+        Sprite.Scale = GlobalPosition.x > nextMoveTarget.x 
+            ? new Vector2(-1, Sprite.Scale.y) 
+            : new Vector2(1, Sprite.Scale.y);
 
         _movement.InterpolateProperty(this, "global_position", GlobalPosition, 
             nextMoveTarget, _movementDuration, Tween.TransitionType.Quad, Tween.EaseType.InOut);

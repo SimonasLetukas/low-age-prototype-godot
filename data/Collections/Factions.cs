@@ -9,7 +9,7 @@ using low_age_data.Shared;
 
 namespace low_age_data.Collections
 {
-    public static class Factions
+    public static class FactionsCollection
     {
         public static List<Faction> Get()
         {

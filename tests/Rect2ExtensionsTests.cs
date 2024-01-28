@@ -3,7 +3,7 @@ using FluentAssertions;
 using Godot;
 using Xunit;
 
-namespace TestProject1
+namespace low_age_tests
 {
     public class Rect2ExtensionsTests
     {

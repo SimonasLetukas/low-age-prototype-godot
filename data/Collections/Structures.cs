@@ -7,7 +7,7 @@ using low_age_data.Shared;
 
 namespace low_age_data.Collections
 {
-    public static class Structures
+    public static class StructuresCollection
     {
         public static List<Structure> Get()
         {

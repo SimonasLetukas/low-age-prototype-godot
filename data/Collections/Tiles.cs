@@ -4,7 +4,7 @@ using low_age_data.Domain.Tiles;
 
 namespace low_age_data.Collections
 {
-    public static class Tiles
+    public static class TilesCollection
     {
         public static List<Tile> Get()
         {

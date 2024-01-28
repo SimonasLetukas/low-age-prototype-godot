@@ -16,7 +16,7 @@ using low_age_data.Shared;
 
 namespace low_age_data.Collections
 {
-    public static class Behaviours
+    public static class BehavioursCollection
     {
         public static List<Behaviour> Get()
         {
@@ -99,7 +99,11 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
-                        })
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                        }),
                     }),
 
                 new InterceptDamage(
@@ -123,6 +127,10 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -535,6 +543,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
                             new TileCondition(
                                 conditionFlag: ConditionFlag.Exists,
                                 conditionedTile: TileId.Scraps,
@@ -555,6 +567,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
                             new TileCondition(
                                 conditionFlag: ConditionFlag.Exists,
                                 conditionedTile: TileId.Celestium,
@@ -572,6 +588,10 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -1018,6 +1038,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
                             new TileCondition(
                                 conditionFlag: ConditionFlag.Exists,
                                 conditionedTile: TileId.Scraps,
@@ -1036,6 +1060,10 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -1776,7 +1804,11 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
-                        })
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                        }),
                     },
                     maximumHelpers: 3),
 
@@ -1814,7 +1846,11 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
-                        })
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                        }),
                     },
                     maximumHelpers: 1),
 

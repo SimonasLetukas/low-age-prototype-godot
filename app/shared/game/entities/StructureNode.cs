@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities.Actors.Structures;
 
 public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
@@ -29,6 +30,17 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         StructureSize = blueprint.Size.ToGodotVector2();
         CenterPoint = blueprint.CenterPoint.ToGodotVector2();
         WalkableAreas = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(StructureSize)).ToList();
+    }
+
+    public override bool DeterminePlacementValidity(Terrain terrain)
+    {
+        var isValid = base.DeterminePlacementValidity(terrain);
+
+        if (terrain.Equals(Terrain.Marsh))
+            isValid = false;
+
+        SetPlacementValidityColor(isValid);
+        return isValid;
     }
 
     public void Rotate()

@@ -14,16 +14,16 @@ namespace low_age_data
 
         static void Main(string[] args)
         {
-            var resources = Resources.Get();
-            var factions = Factions.Get();
-            var tiles = Tiles.Get();
-            var units = Units.Get();
-            var structures = Structures.Get();
-            var doodads = Doodads.Get();
-            var abilities = Abilities.Get();
-            var effects = Effects.Get();
-            var behaviours = Behaviours.Get();
-            var masks = Masks.Get();
+            var resources = ResourcesCollection.Get();
+            var factions = FactionsCollection.Get();
+            var tiles = TilesCollection.Get();
+            var units = UnitsCollection.Get();
+            var structures = StructuresCollection.Get();
+            var doodads = DoodadsCollection.Get();
+            var abilities = AbilitiesCollection.Get();
+            var effects = EffectsCollection.Get();
+            var behaviours = BehavioursCollection.Get();
+            var masks = MasksCollection.Get();
 
             var outputObject = new Blueprint
             {

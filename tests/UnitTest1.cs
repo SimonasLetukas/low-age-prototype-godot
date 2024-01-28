@@ -1,9 +1,8 @@
-using System;
 using Godot;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace TestProject1
+namespace low_age_tests
 {
     public class MyTest
     {

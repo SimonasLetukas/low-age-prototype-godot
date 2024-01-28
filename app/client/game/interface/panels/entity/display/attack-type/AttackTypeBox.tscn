@@ -3,7 +3,7 @@
 [ext_resource path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypeBox.cs" type="Script" id=1]
 [ext_resource path="res://assets/icons/icon_melee_attack.png" type="Texture" id=2]
 [ext_resource path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypePanel.cs" type="Script" id=3]
-[ext_resource path="res://app/shared/shaders/Outline.tres" type="Material" id=4]
+[ext_resource path="res://app/shared/shaders/InterfaceMaterial.tres" type="Material" id=4]
 [ext_resource path="res://assets/sprites/interface/panel-40x40.png" type="Texture" id=5]
 [ext_resource path="res://assets/sprites/interface/panel-clicked-40x40.png" type="Texture" id=6]
 

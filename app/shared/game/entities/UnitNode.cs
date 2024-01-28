@@ -26,6 +26,9 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         Movement = CurrentStats.First(x => 
                 x.Blueprint is CombatStat combatStat
                 && combatStat.CombatType.Equals(StatType.Movement))
-            .CurrentValue;
+            .CurrentValue + 0.5f; // TODO 0.5 is added for smoother corners to align with circles from IShape,
+                                  // decide if this is needed. Argument against: not moving straight diagonally is 
+                                  // more cost effective, which is not intuitive for the player. This bonus could be
+                                  // added for units with 1 movement only.
     }
 }

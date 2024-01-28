@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://app/shared/game/abilities/Abilities.cs" type="Script" id=1]
+
+[node name="Abilities" type="Node2D"]
+script = ExtResource( 1 )

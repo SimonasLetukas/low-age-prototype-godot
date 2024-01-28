@@ -24,6 +24,7 @@ public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     private bool EndsOnDeath { get; set; }
     private bool OnActorAction { get; set; }
     private int Counter { get; set; }
+    private int MaxCounter { get; set; }
     private TriggersOnEnum TriggersOn { get; set; }
     private TurnPhase Phase { get; set; }
     
@@ -37,84 +38,84 @@ public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
 
         if (endsAt.Equals(EndsAt.StartOf.Next.Action))
         {
-            Counter = 1;
+            MaxCounter = 1;
             TriggersOn = TriggersOnEnum.Start;
             OnActorAction = true;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Next.Planning))
         {
-            Counter = 1;
+            MaxCounter = 1;
             TriggersOn = TriggersOnEnum.Start;
             Phase = TurnPhase.Planning;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Next.ActionPhase))
         {
-            Counter = 1;
+            MaxCounter = 1;
             TriggersOn = TriggersOnEnum.Start;
             Phase = TurnPhase.Action;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Second.Action))
         {
-            Counter = 2;
+            MaxCounter = 2;
             TriggersOn = TriggersOnEnum.Start;
             OnActorAction = true;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Second.Planning))
         {
-            Counter = 2;
+            MaxCounter = 2;
             TriggersOn = TriggersOnEnum.Start;
             Phase = TurnPhase.Planning;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Second.ActionPhase))
         {
-            Counter = 2;
+            MaxCounter = 2;
             TriggersOn = TriggersOnEnum.Start;
             Phase = TurnPhase.Action;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Third.Action))
         {
-            Counter = 3;
+            MaxCounter = 3;
             TriggersOn = TriggersOnEnum.Start;
             OnActorAction = true;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Third.Planning))
         {
-            Counter = 3;
+            MaxCounter = 3;
             TriggersOn = TriggersOnEnum.Start;
             Phase = TurnPhase.Planning;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Third.ActionPhase))
         {
-            Counter = 3;
+            MaxCounter = 3;
             TriggersOn = TriggersOnEnum.Start;
             Phase = TurnPhase.Action;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Fourth.Action))
         {
-            Counter = 4;
+            MaxCounter = 4;
             TriggersOn = TriggersOnEnum.Start;
             OnActorAction = true;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Fourth.Planning))
         {
-            Counter = 4;
+            MaxCounter = 4;
             TriggersOn = TriggersOnEnum.Start;
             Phase = TurnPhase.Planning;
         }
         
         if (endsAt.Equals(EndsAt.StartOf.Fourth.ActionPhase))
         {
-            Counter = 4;
+            MaxCounter = 4;
             TriggersOn = TriggersOnEnum.Start;
             Phase = TurnPhase.Action;
         }
@@ -123,112 +124,112 @@ public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
 
         if (endsAt.Equals(EndsAt.StartOf.Tenth.Planning))
         {
-            Counter = 10;
+            MaxCounter = 10;
             TriggersOn = TriggersOnEnum.Start;
             Phase = TurnPhase.Planning;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.This.Action))
         {
-            Counter = 1;
+            MaxCounter = 1;
             TriggersOn = TriggersOnEnum.End;
             OnActorAction = true;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.This.Planning))
         {
-            Counter = 1;
+            MaxCounter = 1;
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Planning;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.This.ActionPhase))
         {
-            Counter = 1;
+            MaxCounter = 1;
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Action;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Next.Action))
         {
-            Counter = 2;
+            MaxCounter = 2;
             TriggersOn = TriggersOnEnum.End;
             OnActorAction = true;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Next.Planning))
         {
-            Counter = 2;
+            MaxCounter = 2;
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Planning;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Next.ActionPhase))
         {
-            Counter = 2;
+            MaxCounter = 2;
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Action;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Second.Action))
         {
-            Counter = 3;
+            MaxCounter = 3;
             TriggersOn = TriggersOnEnum.End;
             OnActorAction = true;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Second.Planning))
         {
-            Counter = 3;
+            MaxCounter = 3;
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Planning;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Second.ActionPhase))
         {
-            Counter = 3;
+            MaxCounter = 3;
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Action;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Third.Action))
         {
-            Counter = 4;
+            MaxCounter = 4;
             TriggersOn = TriggersOnEnum.End;
             OnActorAction = true;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Third.Planning))
         {
-            Counter = 4;
+            MaxCounter = 4;
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Planning;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Third.ActionPhase))
         {
-            Counter = 4;
+            MaxCounter = 4;
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Action;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Fourth.Action))
         {
-            Counter = 5;
+            MaxCounter = 5;
             TriggersOn = TriggersOnEnum.End;
             OnActorAction = true;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Fourth.Planning))
         {
-            Counter = 5;
+            MaxCounter = 5;
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Planning;
         }
         
         if (endsAt.Equals(EndsAt.EndOf.Fourth.ActionPhase))
         {
-            Counter = 5;
+            MaxCounter = 5;
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Action;
         }
@@ -323,10 +324,46 @@ public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     }
 
     /// <summary>
+    /// Resets the duration to the full amount if this <see cref="EndsAt"/> <see cref="HasDuration"/>.
+    /// </summary>
+    public void ResetDuration()
+    {
+        if (HasDuration()) Counter = MaxCounter;
+    }
+
+    /// <summary>
     /// Returns true if <see cref="EndsAt"/> has completed.
     /// </summary>
     /// <returns></returns>
     public bool HasCompleted() => IsInstant || Counter <= 0;
+
+    /// <summary>
+    /// Returns true if <see cref="EndsAt"/> has a duration.
+    /// </summary>
+    /// <returns></returns>
+    public bool HasDuration() => IsInstant is false;
+
+    public string GetText(bool current = true, bool capitalizeFirstLetter = false)
+    {
+        var text = string.Empty;
+        
+        if (TriggersOn is TriggersOnEnum.Start) text += "start of ";
+        else text += "end of ";
+
+        if (current) text += Counter;
+        else text += MaxCounter;
+
+        if (OnActorAction) text += " actions";
+        else
+        {
+            if (Phase.Equals(TurnPhase.Action)) text += " action phases";
+            if (Phase.Equals(TurnPhase.Planning)) text += " planning phases";
+        }
+            
+        if (EndsOnDeath) text = "until death";
+        
+        return capitalizeFirstLetter ? text[0].ToString().ToUpper() + text.Substring(1) : text;
+    }
 
     private enum TriggersOnEnum
     {

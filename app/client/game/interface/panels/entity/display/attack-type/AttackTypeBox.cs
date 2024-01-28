@@ -36,7 +36,7 @@ public class AttackTypeBox : MarginContainer
     private void Highlight(bool to)
     {
         if (_attackTypePanel.Material is ShaderMaterial shaderMaterial) 
-            shaderMaterial.SetShaderParam("enabled", to);
+            shaderMaterial.SetShaderParam("draw_outline", to);
     }
     
     private void OnAttackTypePanelMouseEntered()

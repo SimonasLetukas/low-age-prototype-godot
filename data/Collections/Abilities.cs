@@ -13,7 +13,7 @@ using low_age_data.Shared;
 
 namespace low_age_data.Collections
 {
-    public static class Abilities
+    public static class AbilitiesCollection
     {
         public static List<Ability> Get()
         {
@@ -1021,7 +1021,7 @@ namespace low_age_data.Collections
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 5),
                             new Payment(resource: ResourceId.Celestium, amount: 40)
-                        }),
+                        }, researchNeeded: new List<ResearchId> { ResearchId.Revelators.HumanfleshRations }), // TODO remove after testing
                         new Selection<EntityId>(name: StructureId.Obelisk, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 12),

@@ -6,11 +6,12 @@ using FluentAssertions;
 using Godot;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities.Actors.Structures;
+using TestProject1.Helpers;
 using Xunit;
 using Area = low_age_data.Domain.Common.Area;
 using Array = System.Array;
 
-namespace TestProject1
+namespace low_age_tests
 {
     public class StructureNodeTests
     {
@@ -19,6 +20,19 @@ namespace TestProject1
             {
                 ConfigureMembers = true
             });
+
+        private readonly FixtureCustomization<Structure> _blueprint;
+        private readonly StructureNode _structure;
+
+        public StructureNodeTests()
+        {
+            Data.Instance.ReadBlueprint();
+            _blueprint = _fixture
+                .For<Structure>()
+                .With(x => x.Sprite, "res://assets/sprites/structures/revs/boss post front indexed 2x3.png");
+            _structure = StructureNode.Instance();
+            _structure._Ready();
+        }
         
         public static IEnumerable<object[]> GetExpectedRotationResultsByInitialStructureConfiguration()
         { 
@@ -226,61 +240,58 @@ o center:   | 1,1		| 1,1       | 1,1       | 1,1
             (Vector2 Size, Vector2 CenterPoint, Rect2[] WalkableAreas) expectedAfter2Rotations,
             (Vector2 Size, Vector2 CenterPoint, Rect2[] WalkableAreas) expectedAfter3Rotations)
         {
-            var structure = StructureNode.Instance();
-            var blueprint = _fixture.Build<Structure>()
+            var blueprint = _blueprint
                 .With(x => x.Size, initialValues.Size)
                 .With(x => x.CenterPoint, initialValues.CenterPoint)
                 .With(x => x.WalkableAreas, initialValues.WalkableAreas.ToList())
                 .Create();
-            structure.SetBlueprint(blueprint);
+            _structure.SetBlueprint(blueprint);
             (Vector2 Size, Vector2 CenterPoint, List<Rect2> WalkableAreas) expectedAfter4Rotations = 
-                (structure.StructureSize, structure.CenterPoint, structure.WalkableAreas);
+                (_structure.StructureSize, _structure.CenterPoint, _structure.WalkableAreas);
 
-            structure.Rotate();
+            _structure.Rotate();
 
-            structure.StructureSize.Should().Be(expectedAfter1Rotation.Size);
-            structure.CenterPoint.Should().Be(expectedAfter1Rotation.CenterPoint);
-            structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter1Rotation.WalkableAreas);
+            _structure.StructureSize.Should().Be(expectedAfter1Rotation.Size);
+            _structure.CenterPoint.Should().Be(expectedAfter1Rotation.CenterPoint);
+            _structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter1Rotation.WalkableAreas);
             
-            structure.Rotate();
+            _structure.Rotate();
             
-            structure.StructureSize.Should().Be(expectedAfter2Rotations.Size);
-            structure.CenterPoint.Should().Be(expectedAfter2Rotations.CenterPoint);
-            structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter2Rotations.WalkableAreas);
+            _structure.StructureSize.Should().Be(expectedAfter2Rotations.Size);
+            _structure.CenterPoint.Should().Be(expectedAfter2Rotations.CenterPoint);
+            _structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter2Rotations.WalkableAreas);
             
-            structure.Rotate();
+            _structure.Rotate();
             
-            structure.StructureSize.Should().Be(expectedAfter3Rotations.Size);
-            structure.CenterPoint.Should().Be(expectedAfter3Rotations.CenterPoint);
-            structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter3Rotations.WalkableAreas);
+            _structure.StructureSize.Should().Be(expectedAfter3Rotations.Size);
+            _structure.CenterPoint.Should().Be(expectedAfter3Rotations.CenterPoint);
+            _structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter3Rotations.WalkableAreas);
             
-            structure.Rotate();
+            _structure.Rotate();
             
-            structure.StructureSize.Should().Be(expectedAfter4Rotations.Size);
-            structure.CenterPoint.Should().Be(expectedAfter4Rotations.CenterPoint);
-            structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter4Rotations.WalkableAreas);
+            _structure.StructureSize.Should().Be(expectedAfter4Rotations.Size);
+            _structure.CenterPoint.Should().Be(expectedAfter4Rotations.CenterPoint);
+            _structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter4Rotations.WalkableAreas);
         }
 
         [Fact]
         public void Rotate_ShouldHaveExpectedRotationEnum_AfterEachRotation()
         {
-            var structure = StructureNode.Instance();
-            var blueprint = _fixture.Create<Structure>();
-            structure.SetBlueprint(blueprint);
+            _structure.SetBlueprint(_blueprint.Create());
 
-            structure.ActorRotation.Should().Be(ActorRotation.BottomRight);
+            _structure.ActorRotation.Should().Be(ActorRotation.BottomRight);
             
-            structure.Rotate();
-            structure.ActorRotation.Should().Be(ActorRotation.BottomLeft);
+            _structure.Rotate();
+            _structure.ActorRotation.Should().Be(ActorRotation.BottomLeft);
             
-            structure.Rotate();
-            structure.ActorRotation.Should().Be(ActorRotation.TopLeft);
+            _structure.Rotate();
+            _structure.ActorRotation.Should().Be(ActorRotation.TopLeft);
             
-            structure.Rotate();
-            structure.ActorRotation.Should().Be(ActorRotation.TopRight);
+            _structure.Rotate();
+            _structure.ActorRotation.Should().Be(ActorRotation.TopRight);
             
-            structure.Rotate();
-            structure.ActorRotation.Should().Be(ActorRotation.BottomRight);
+            _structure.Rotate();
+            _structure.ActorRotation.Should().Be(ActorRotation.BottomRight);
         }
     }
 }

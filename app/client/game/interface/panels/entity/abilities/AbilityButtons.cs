@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using low_age_data.Domain.Abilities;
 
-public class Abilities : HBoxContainer
+public class AbilityButtons : HBoxContainer
 {
     [Export] public Dictionary<string, string> AbilityIconPaths { get; set; } // TODO have paths to icons on blueprint level instead
     
@@ -20,20 +20,20 @@ public class Abilities : HBoxContainer
         }
     }
 
-    public void Populate(IEnumerable<AbilityId> ids)
+    public void Populate(Abilities abilities)
     {
         Reset();
         
-        foreach (var id in ids)
+        foreach (var ability in abilities.GetChildren().OfType<AbilityNode>())
         {
             var abilityButtonScene = GD.Load<PackedScene>(AbilityButton.ScenePath);
             var abilityButton = abilityButtonScene.Instance<AbilityButton>();
-            if (_abilityIcons.TryGetValue(id, out var icon) is false)
+            if (_abilityIcons.TryGetValue(ability.Id, out var icon) is false)
             {
                 icon = _abilityIcons.Values.First();
             }
             abilityButton.SetIcon(icon);
-            abilityButton.SetId(id);
+            abilityButton.SetAbility(ability);
             AddChild(abilityButton);
         }
         

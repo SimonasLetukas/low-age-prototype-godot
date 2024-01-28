@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using low_age_data.Domain.Common;
+using low_age_data.Domain.Entities;
 
 public class ClientMap : Map
 {
@@ -13,8 +14,16 @@ public class ClientMap : Map
     
     private ICollection<Vector2> _startingPositions = new List<Vector2>();
     private Vector2 _mapSize = Vector2.Inf;
-    private Vector2 _tileHovered = Vector2.Zero;
+    private Vector2 _hoveredTile = Vector2.Zero;
     private Tiles _tileMap;
+    private SelectionOverlay _selectionOverlay = SelectionOverlay.None;
+    private enum SelectionOverlay
+    {
+        None,
+        Movement,
+        Placement,
+        Attack
+    }
 
     public override void _Ready()
     {
@@ -27,19 +36,25 @@ public class ClientMap : Map
 
     public override void _Process(float delta)
     {
+        // TODO when in placement or target mode, should still be able to hover other actors
+        
         base._Process(delta);
         var mousePosition = GetGlobalMousePosition();
         var mapPosition = _tileMap.GetMapPositionFromGlobalPosition(mousePosition);
-        GetHoveredEntity(mousePosition, mapPosition);
-        if (Entities.IsEntitySelected())
+        UpdateHoveredTile(mapPosition);
+
+        if (_selectionOverlay is SelectionOverlay.None)
         {
-            // TODO optimization: only if hovered tile changed from above, display path
-            var path = Pathfinding.FindPath(_tileHovered);
-            _tileMap.SetPathTiles(path);
+            GetHoveredEntity(mousePosition);
         }
-        else
+
+        if (_selectionOverlay is SelectionOverlay.Movement)
         {
-            _tileMap.ClearPath();
+            GetHoveredEntity(mousePosition);
+
+            // TODO optimization: only if hovered tile changed from above, display path
+            var path = Pathfinding.FindPath(_hoveredTile);
+            _tileMap.SetPathTiles(path);
         }
     }
     
@@ -67,29 +82,22 @@ public class ClientMap : Map
         FinishedInitializing();
     }
 
-    public EntityNode GetHoveredEntity(Vector2 mousePosition, Vector2 mapPosition)
+    public EntityNode GetHoveredEntity(Vector2 mousePosition)
     {
         var entity = Entities.GetTopEntity(mousePosition);
 
         if (entity != null)
         {
             var entityMapPosition = Entities.GetMapPositionOfEntity(entity);
-            if (_tileHovered == entityMapPosition) 
+            if (_hoveredTile == entityMapPosition) 
                 return entity;
             
-            _tileHovered = entityMapPosition;
-            HoverTile();
+            UpdateHoveredTile(entityMapPosition);
+            return entity;
         }
-        else if (_tileHovered != mapPosition)
-        {
-            _tileHovered = mapPosition;
-            var entityHovered = HoverTile();
-            if (entityHovered)
-            {
-                entity = Entities.GetHoveredEntity();
-            }
-        }
-        else
+
+        var entityWasHovered = Entities.TryHoveringEntity(_hoveredTile);
+        if (entityWasHovered)
         {
             entity = Entities.GetHoveredEntity();
         }
@@ -97,53 +105,12 @@ public class ClientMap : Map
         return entity;
     }
 
-    public void HandleExecute(Vector2 mapPosition)
-    {
-        if (Entities.EntityMoving)
-            return;
-
-        if (Entities.IsEntitySelected() is false) 
-            return;
-
-        if (_tileMap.IsCurrentlyAvailable(_tileHovered) is false)
-            return;
-        
-        var path = Pathfinding.FindPath(_tileHovered);
-        var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
-        var selectedEntity = Entities.SelectedEntity;
-        var entityPosition = Entities.GetMapPositionOfEntity(selectedEntity);
-        UnitMovementIssued(new UnitMovedAlongPathEvent(entityPosition, globalPath, path));
-        HandleDeselecting();
-    }
-
-    public void HandleSelecting(EntityNode hoveredEntity)
-    {
-        if (_tileHovered.IsInBoundsOf(_mapSize) is false)
-            return;
-
-        if (hoveredEntity is null)
-        {
-            HandleDeselecting();
-            return;
-        }
-
-        if (Entities.EntityMoving)
-            return;
-        
-        if (hoveredEntity is UnitNode hoveredUnit)
-        {
-            var entityPosition = Entities.GetMapPositionOfEntity(hoveredEntity);
-            var availableTiles = Pathfinding.GetAvailablePositions(entityPosition, hoveredUnit.Movement);
-            _tileMap.SetAvailableTiles(availableTiles);
-        }
-        
-        Entities.SelectEntity(hoveredEntity);
-    }
-
     public void HandleDeselecting()
     {
         _tileMap.ClearAvailableTiles();
+        _tileMap.ClearPath();
         Entities.DeselectEntity();
+        _selectionOverlay = SelectionOverlay.None;
     }
 
     public void MoveUnit(UnitMovedAlongPathEvent @event)
@@ -152,33 +119,158 @@ public class ClientMap : Map
         Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path);
     }
     
-    private bool HoverTile()
+    private void HandleLeftClick()
     {
-        var hoveredTerrain = _tileMap.GetTerrain(_tileHovered);
-        NewTileHovered(_tileHovered, hoveredTerrain);
-        _tileMap.MoveFocusedTileTo(_tileHovered);
-        var entityHovered = Entities.TryHoveringEntity(_tileHovered);
-        return entityHovered;
+        if (_hoveredTile.IsInBoundsOf(_mapSize) is false)
+            return;
+        
+        if (Entities.EntityMoving)
+            return;
+        
+        var mapPosition = GetMapPositionFromMousePosition();
+        UpdateHoveredTile(mapPosition);
+
+        if (_selectionOverlay is SelectionOverlay.None
+            || _selectionOverlay is SelectionOverlay.Movement)
+        {
+            ExecuteEntitySelection();
+            return;
+        }
+
+        if (_selectionOverlay is SelectionOverlay.Placement)
+        {
+            ExecutePlacement();
+            return;
+        }
     }
+    
+    private void ExecuteEntitySelection(bool maintainSelection = false)
+    {
+        var mousePosition = GetGlobalMousePosition();
+        var entity = maintainSelection 
+            ? Entities.SelectedEntity 
+            : GetHoveredEntity(mousePosition);
+        
+        if (entity is null)
+        {
+            HandleDeselecting();
+            return;
+        }
+        
+        if (entity is UnitNode unit)
+        {
+            var entityPosition = Entities.GetMapPositionOfEntity(entity);
+            var availableTiles = Pathfinding.GetAvailablePositions(entityPosition, unit.Movement);
+            _tileMap.SetAvailableTiles(availableTiles);
+        }
+        
+        Entities.SelectEntity(entity);
+        _selectionOverlay = SelectionOverlay.Movement;
+    }
+
+    private void ExecutePlacement()
+    {
+        // TODO place entity that was set for placement
+        ExecuteCancellation();
+    }
+    
+    private void HandleRightClick()
+    {
+        if (_hoveredTile.IsInBoundsOf(_mapSize) is false)
+            return;
+        
+        if (Entities.EntityMoving)
+            return;
+
+        if (_selectionOverlay is SelectionOverlay.None)
+            return;
+
+        if (_selectionOverlay is SelectionOverlay.Movement)
+        {
+            var mapPosition = GetMapPositionFromMousePosition();
+            UpdateHoveredTile(mapPosition);
+            
+            ExecuteMovement();
+            return;
+        }
+
+        if (_selectionOverlay is SelectionOverlay.Placement
+            || _selectionOverlay is SelectionOverlay.Attack)
+        {
+            ExecuteCancellation();
+            return;
+        }
+    }
+
+    private void ExecuteMovement()
+    {
+        if (_tileMap.IsCurrentlyAvailable(_hoveredTile) is false)
+            return;
+        
+        // TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
+        
+        var path = Pathfinding.FindPath(_hoveredTile);
+        var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
+        var selectedEntity = Entities.SelectedEntity;
+        var entityPosition = Entities.GetMapPositionOfEntity(selectedEntity);
+        UnitMovementIssued(new UnitMovedAlongPathEvent(entityPosition, globalPath, path));
+        HandleDeselecting();
+    }
+
+    private void ExecuteCancellation()
+    {
+        _tileMap.ClearTargetTiles();
+        // TODO hide any entities that were set for placement
+        ExecuteEntitySelection(true);
+    }
+
+    private void UpdateHoveredTile(Vector2 mapPosition)
+    {
+        if (_hoveredTile == mapPosition)
+            return;
+        
+        // TODO handle hovered tile for entities bigger than 1x1 (2x2, 3x2...)
+        _hoveredTile = mapPosition;
+        var hoveredTerrain = _tileMap.GetTerrain(_hoveredTile);
+        NewTileHovered(_hoveredTile, hoveredTerrain);
+        _tileMap.MoveFocusedTileTo(_hoveredTile);
+    }
+
+    private Vector2 GetMapPositionFromMousePosition() 
+        => _tileMap.GetMapPositionFromGlobalPosition(GetGlobalMousePosition());
 
     private void OnEntitiesNewEntityFound(EntityNode entity)
     {
+        // TODO change naming and intention of this method to fit not only new entities but also those in placement
         var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPosition);
         Entities.AdjustGlobalPosition(entity, globalPosition);
     }
 
     internal void OnMouseLeftReleasedWithoutDrag()
     {
-        var mousePosition = GetGlobalMousePosition();
-        var mapPosition = _tileMap.GetMapPositionFromGlobalPosition(mousePosition);
-        var entity = GetHoveredEntity(mousePosition, mapPosition);
-        HandleSelecting(entity);
+        HandleLeftClick();
     }
 
     internal void OnMouseRightReleasedWithoutExamine()
     {
-        var mousePosition = GetGlobalMousePosition();
-        var mapPosition = _tileMap.GetMapPositionFromGlobalPosition(mousePosition);
-        HandleExecute(mapPosition);
+        HandleRightClick();
+    }
+
+    internal void OnSelectedToBuild(BuildNode buildAbility, EntityId entityId)
+    {
+        _tileMap.ClearAvailableTiles();
+        _tileMap.ClearPath();
+        
+        // TODO add full list of arguments to ToPositions call (get the entity->actor from entityId)
+        _tileMap.SetTargetTiles(buildAbility.PlacementArea.ToPositions(
+            Entities.SelectedEntity.EntityPosition, 
+            _mapSize));
+        
+        _selectionOverlay = SelectionOverlay.Placement;
+        
+        // TODO create structure for tiles to know the list of entities that occupies it, and implement adding and removing entities from it 
+        // TODO create new entity, set it for placement, make sure placement color is determined in process (feed tiles to the actor so it decides availability)
+        // TODO upon creation the new entity has to go through all of its passives and add on birth behaviours
+        // TODO during placement the method inside entity makes sure that all build behaviours are correct, otherwise returns false and shows red placement
     }
 }

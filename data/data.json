@@ -5492,7 +5492,9 @@
               "amount": 40
             }
           ],
-          "researchNeeded": [],
+          "researchNeeded": [
+            "research-revelators-humanflesh-rations"
+          ],
           "grayOutIfAlreadyExists": false
         },
         {
@@ -10660,6 +10662,17 @@
             }
           ],
           "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
         }
       ],
       "maximumHelpers": -1,
@@ -10714,6 +10727,17 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filters": []
@@ -11431,6 +11455,17 @@
           "conditions": [
             {
               "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
               "conditionedTile": "tile-scraps",
               "amountOfEntitiesRequired": 2,
               "conditionFlag": "ConditionFlag.Exists"
@@ -11470,6 +11505,17 @@
           "conditions": [
             {
               "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
               "conditionedTile": "tile-celestium",
               "amountOfEntitiesRequired": 2,
               "conditionFlag": "ConditionFlag.Exists"
@@ -11501,6 +11547,17 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filters": []
@@ -12300,6 +12357,17 @@
           "conditions": [
             {
               "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
               "conditionedTile": "tile-scraps",
               "amountOfEntitiesRequired": 2,
               "conditionFlag": "ConditionFlag.Exists"
@@ -12331,6 +12399,17 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filters": []
@@ -13328,6 +13407,17 @@
             }
           ],
           "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
         }
       ],
       "maximumHelpers": 3,
@@ -13390,6 +13480,17 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfEntitiesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
           "filters": []
