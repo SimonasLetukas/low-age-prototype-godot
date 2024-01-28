@@ -12,7 +12,14 @@ using low_age_data.Domain.Tiles;
 /// </summary>
 public class Tiles : Node2D
 {
-    private ICollection<(Vector2, TileId)> _tiles;
+    public class TileInstance
+    {
+        public Vector2 Position { get; set; }
+        public TileId Blueprint { get; set; }
+        public IList<EntityNode> Occupants { get; set; }
+    }
+    
+    private ICollection<TileInstance> _tiles;
     private IList<Tile> _tilesBlueprint;
     private Vector2 _mapSize;
     private Vector2 _tilemapOffset;
@@ -62,7 +69,17 @@ public class Tiles : Node2D
 
     public void Initialize(Vector2 mapSize, ICollection<(Vector2, TileId)> tiles)
     {
-        _tiles = tiles;
+        var tileInstances = new List<TileInstance>();
+        foreach (var (position, blueprint) in tiles)
+        {
+            tileInstances.Add(new TileInstance
+            {
+                Position = position,
+                Blueprint = blueprint,   
+                Occupants = new List<EntityNode>()
+            });
+        }
+        _tiles = tileInstances;
         _tilesBlueprint = Data.Instance.Blueprint.Tiles;
         _mapSize = mapSize;
         _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
@@ -87,12 +104,39 @@ public class Tiles : Node2D
         => mapPositions.Select(GetGlobalPositionFromMapPosition).ToArray();
 
     public Terrain GetTerrain(Vector2 at) => at.IsInBoundsOf(_mapSize)
-        ? GetBlueprint(GetTile(at)).Terrain
+        ? GetBlueprint(GetTile(at).Blueprint).Terrain
         : Terrain.Mountains;
 
-    public TileId GetTile(Vector2 at) => _tiles.SingleOrDefault(x => x.Item1.Equals(at)).Item2;
+    public TileInstance GetTile(Vector2 at) => _tiles.SingleOrDefault(x => x.Position.Equals(at));
 
     public Tile GetBlueprint(TileId of) => _tilesBlueprint.SingleOrDefault(x => x.Id.Equals(of));
+
+    public bool IsOccupied(Vector2 at, EntityNode by = null) => IsOccupied(GetTile(at), by);
+
+    public bool IsOccupied(TileInstance tile, EntityNode by = null) => by is null 
+        ? tile.Occupants.Any() 
+        : tile.Occupants.Contains(by);
+
+    public void AddOccupation(EntityNode entity)
+    {
+        foreach (var position in entity.GetOccupiedPositions())
+        {
+            var tile = GetTile(position);
+            if (IsOccupied(tile, entity))
+                continue;
+            
+            tile.Occupants.Add(entity);
+        }
+    }
+
+    public void RemoveOccupation(EntityNode entity)
+    {
+        foreach (var position in entity.GetOccupiedPositions())
+        {
+            var tile = GetTile(position);
+            tile.Occupants.Remove(entity);
+        }
+    }
 
     public void MoveFocusedTileTo(Vector2 position)
     {

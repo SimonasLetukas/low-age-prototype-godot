@@ -42,6 +42,20 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         SetPlacementValidityColor(isValid);
         return isValid;
     }
+    
+    public override IList<Vector2> GetOccupiedPositions()
+    {
+        var positions = new List<Vector2>();
+        for (var x = 0; x < StructureSize.x; x++)
+        {
+            for (var y = 0; y < StructureSize.y; y++)
+            {
+                positions.Add(new Vector2(EntityPosition.x + x, EntityPosition.y + y));
+            }
+        }
+
+        return positions;
+    }
 
     public void Rotate()
     {

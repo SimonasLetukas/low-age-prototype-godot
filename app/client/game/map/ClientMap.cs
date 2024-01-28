@@ -7,7 +7,7 @@ using low_age_data.Domain.Entities;
 public class ClientMap : Map
 {
     public event Action FinishedInitializing = delegate { };
-    public event Action<Vector2, Terrain> NewTileHovered = delegate { };
+    public event Action<Vector2, Terrain, IList<EntityNode>> NewTileHovered = delegate { };
     public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
 
     public Entities Entities { get; private set; }
@@ -31,7 +31,7 @@ public class ClientMap : Map
         _tileMap = GetNode<Tiles>($"{nameof(Tiles)}");
         Entities = GetNode<Entities>($"{nameof(Entities)}");
 
-        Entities.NewEntityFound += OnEntitiesNewEntityFound;
+        Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
     }
 
     public override void _Process(float delta)
@@ -60,7 +60,7 @@ public class ClientMap : Map
     
     public override void _ExitTree()
     {
-        Entities.NewEntityFound -= OnEntitiesNewEntityFound;
+        Entities.NewPositionOccupied -= OnEntitiesNewPositionOccupied;
         base._ExitTree();
     }
 
@@ -116,6 +116,7 @@ public class ClientMap : Map
     public void MoveUnit(UnitMovedAlongPathEvent @event)
     {
         var selectedEntity = Entities.GetEntityFromMapPosition(@event.CurrentEntityPosition);
+        _tileMap.RemoveOccupation(selectedEntity);
         Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path);
     }
     
@@ -232,18 +233,22 @@ public class ClientMap : Map
         // TODO handle hovered tile for entities bigger than 1x1 (2x2, 3x2...)
         _hoveredTile = mapPosition;
         var hoveredTerrain = _tileMap.GetTerrain(_hoveredTile);
-        NewTileHovered(_hoveredTile, hoveredTerrain);
+        var tile = _tileMap.GetTile(_hoveredTile);
+        NewTileHovered(_hoveredTile, hoveredTerrain, tile?.Occupants);
         _tileMap.MoveFocusedTileTo(_hoveredTile);
     }
 
     private Vector2 GetMapPositionFromMousePosition() 
         => _tileMap.GetMapPositionFromGlobalPosition(GetGlobalMousePosition());
 
-    private void OnEntitiesNewEntityFound(EntityNode entity)
+    private void OnEntitiesNewPositionOccupied(EntityNode entity)
     {
         // TODO change naming and intention of this method to fit not only new entities but also those in placement
         var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPosition);
         Entities.AdjustGlobalPosition(entity, globalPosition);
+        
+        // TODO check if in placement mode and skip occupation if yes
+        _tileMap.AddOccupation(entity);
     }
 
     internal void OnMouseLeftReleasedWithoutDrag()

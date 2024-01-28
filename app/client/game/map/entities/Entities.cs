@@ -12,12 +12,13 @@ public class Entities : YSort
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     
-    public event Action<EntityNode> NewEntityFound = delegate { };
+    public event Action<EntityNode> NewPositionOccupied = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
     public event Action EntityDeselected = delegate { };
 
     public bool EntityMoving { get; private set; } = false;
     public EntityNode SelectedEntity { get; private set; } = null;
+    public EntityNode EntityInPlacement { get; private set; } = null;
 
     private YSort _units;
     private Vector2 _hoveredEntityPosition = Vector2.Inf;
@@ -61,7 +62,7 @@ public class Entities : YSort
         _mapPositionsByEntities[unit] = mapPosition;
             
         unit.FinishedMoving += OnEntityFinishedMoving;
-        NewEntityFound(unit);
+        NewPositionOccupied(unit);
     }
     
     public override void _ExitTree()
@@ -202,5 +203,6 @@ public class Entities : YSort
     private void OnEntityFinishedMoving(EntityNode entity)
     {
         EntityMoving = false;
+        NewPositionOccupied(entity);
     }
 }

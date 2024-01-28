@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
@@ -75,7 +76,7 @@ public class Interface : CanvasLayer
         _entityPanel.OnEntityDeselected();
     }
 
-    internal void OnMapNewTileHovered(Vector2 tileHovered, Terrain terrain)
+    internal void OnMapNewTileHovered(Vector2 tileHovered, Terrain terrain, IList<EntityNode> occupants)
     {
         string coordinatesText;
         string terrainText;
@@ -87,8 +88,10 @@ public class Interface : CanvasLayer
         }
         else
         {
+            var occupantsText = occupants.Aggregate(string.Empty, (current, occupant) => 
+                current + $", {occupant.DisplayName}");
             coordinatesText = $"{tileHovered.x}, {tileHovered.y}";
-            terrainText = terrain.ToDisplayValue().Capitalize();
+            terrainText = terrain.ToDisplayValue().Capitalize() + occupantsText; // TODO display more nicely
         }
 
         GetNode<Label>("Theme/DebugPanel/Coordinates").Text = coordinatesText;

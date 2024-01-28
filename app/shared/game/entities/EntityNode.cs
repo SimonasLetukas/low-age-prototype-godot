@@ -112,6 +112,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         _movePath = globalPositionPath;
         MoveToNextTarget();
     }
+    
+    public virtual IList<Vector2> GetOccupiedPositions() => new List<Vector2> { EntityPosition };
 
     protected void SetPlacementValidityColor(bool to)
     {
@@ -157,5 +159,18 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
             default:
                 return 0.25f;
         }
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType()) return false;
+        return InstanceId == ((EntityNode)obj).InstanceId;
+    }
+
+    public override int GetHashCode()
+    {
+        // Instance ID might be set after instance is created to sync IDs between multiplayer clients.
+        // ReSharper disable once NonReadonlyMemberInGetHashCode
+        return InstanceId.GetHashCode();
     }
 }
