@@ -13,6 +13,7 @@ PlacementColorInvalid = Color( 1, 0.482353, 0.482353, 1 )
 material = ExtResource( 2 )
 texture = ExtResource( 3 )
 centered = false
+offset = Vector2( -3, -14 )
 
 [node name="Area2D" type="Area2D" parent="."]
 

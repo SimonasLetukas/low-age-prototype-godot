@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
 
@@ -14,7 +15,7 @@ public class ClientMap : Map
     
     private ICollection<Vector2> _startingPositions = new List<Vector2>();
     private Vector2 _mapSize = Vector2.Inf;
-    private Vector2 _hoveredTile = Vector2.Zero;
+    private Tiles.TileInstance _hoveredTile = null;
     private Tiles _tileMap;
     private SelectionOverlay _selectionOverlay = SelectionOverlay.None;
     private enum SelectionOverlay
@@ -45,15 +46,15 @@ public class ClientMap : Map
 
         if (_selectionOverlay is SelectionOverlay.None)
         {
-            GetHoveredEntity(mousePosition);
+            UpdateHoveredEntity(mousePosition);
         }
 
         if (_selectionOverlay is SelectionOverlay.Movement)
         {
-            GetHoveredEntity(mousePosition);
+            UpdateHoveredEntity(mousePosition);
 
             // TODO optimization: only if hovered tile changed from above, display path
-            var path = Pathfinding.FindPath(_hoveredTile);
+            var path = Pathfinding.FindPath(_hoveredTile.Position);
             _tileMap.SetPathTiles(path);
         }
     }
@@ -82,27 +83,30 @@ public class ClientMap : Map
         FinishedInitializing();
     }
 
-    public EntityNode GetHoveredEntity(Vector2 mousePosition)
+    public EntityNode UpdateHoveredEntity(Vector2 mousePosition)
     {
         var entity = Entities.GetTopEntity(mousePosition);
 
-        if (entity != null)
+        if (entity != null) // TODO GetTopEntity doesn't work so this is always skipped
         {
             var entityMapPosition = Entities.GetMapPositionOfEntity(entity);
-            if (_hoveredTile == entityMapPosition) 
+            if (_hoveredTile.Position == entityMapPosition) 
                 return entity;
             
             UpdateHoveredTile(entityMapPosition);
             return entity;
         }
+        
+        if (_hoveredTile is null)
+            return null;
 
-        var entityWasHovered = Entities.TryHoveringEntity(_hoveredTile);
+        var entityWasHovered = Entities.TryHoveringEntityOn(_hoveredTile);
         if (entityWasHovered)
         {
-            entity = Entities.GetHoveredEntity();
+            return Entities.HoveredEntity;
         }
 
-        return entity;
+        return null;
     }
 
     public void HandleDeselecting()
@@ -150,7 +154,7 @@ public class ClientMap : Map
         var mousePosition = GetGlobalMousePosition();
         var entity = maintainSelection 
             ? Entities.SelectedEntity 
-            : GetHoveredEntity(mousePosition);
+            : UpdateHoveredEntity(mousePosition);
         
         if (entity is null)
         {
@@ -210,7 +214,7 @@ public class ClientMap : Map
         
         // TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
         
-        var path = Pathfinding.FindPath(_hoveredTile);
+        var path = Pathfinding.FindPath(_hoveredTile.Position);
         var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
         var selectedEntity = Entities.SelectedEntity;
         var entityPosition = Entities.GetMapPositionOfEntity(selectedEntity);
@@ -227,15 +231,14 @@ public class ClientMap : Map
 
     private void UpdateHoveredTile(Vector2 mapPosition)
     {
-        if (_hoveredTile == mapPosition)
+        if (_hoveredTile?.Position == mapPosition)
             return;
         
         // TODO handle hovered tile for entities bigger than 1x1 (2x2, 3x2...)
-        _hoveredTile = mapPosition;
+        _hoveredTile = _tileMap.GetTile(mapPosition);
         var hoveredTerrain = _tileMap.GetTerrain(_hoveredTile);
-        var tile = _tileMap.GetTile(_hoveredTile);
-        NewTileHovered(_hoveredTile, hoveredTerrain, tile?.Occupants);
-        _tileMap.MoveFocusedTileTo(_hoveredTile);
+        NewTileHovered(mapPosition, hoveredTerrain, _hoveredTile?.Occupants);
+        _tileMap.MoveFocusedTileTo(mapPosition);
     }
 
     private Vector2 GetMapPositionFromMousePosition() 

@@ -30,6 +30,8 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         StructureSize = blueprint.Size.ToGodotVector2();
         CenterPoint = blueprint.CenterPoint.ToGodotVector2();
         WalkableAreas = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(StructureSize)).ToList();
+        
+        AdjustSpriteOffset();
     }
 
     public override bool DeterminePlacementValidity(Terrain terrain)
@@ -105,5 +107,17 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        
+        AdjustSpriteOffset();
+    }
+
+    protected override void AdjustSpriteOffset()
+    {
+        base.AdjustSpriteOffset();
+        var offsetFromX = (int)(StructureSize.x - 1) * 
+                          new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
+        var offsetFromY = (int)(StructureSize.y - 1) *
+                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
+        Sprite.Offset = Sprite.Offset + offsetFromX + offsetFromY;
     }
 }

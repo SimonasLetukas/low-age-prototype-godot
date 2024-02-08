@@ -2,6 +2,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using low_age_data.Domain.Entities;
+using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using Array = Godot.Collections.Array;
 
@@ -19,15 +21,19 @@ public class Entities : YSort
     public bool EntityMoving { get; private set; } = false;
     public EntityNode SelectedEntity { get; private set; } = null;
     public EntityNode EntityInPlacement { get; private set; } = null;
+    public EntityNode HoveredEntity { get; private set; } = null;
 
     private YSort _units;
-    private Vector2 _hoveredEntityPosition = Vector2.Inf;
-    private Godot.Collections.Dictionary<Vector2, EntityNode> _entitiesByMapPositions = new Godot.Collections.Dictionary<Vector2, EntityNode>();
-    private Godot.Collections.Dictionary<EntityNode, Vector2> _mapPositionsByEntities = new Godot.Collections.Dictionary<EntityNode, Vector2>();
+    private YSort _structures;
+    private readonly Godot.Collections.Dictionary<Vector2, EntityNode> _entitiesByMapPositions = 
+        new Godot.Collections.Dictionary<Vector2, EntityNode>();
+    private readonly Godot.Collections.Dictionary<EntityNode, Vector2> _mapPositionsByEntities = 
+        new Godot.Collections.Dictionary<EntityNode, Vector2>();
 
     public override void _Ready()
     {
         _units = GetNode<YSort>("Units");
+        _structures = GetNode<YSort>("Structures");
     }
     
     public void Initialize()
@@ -38,28 +44,23 @@ public class Entities : YSort
             new Vector2(34, 46), new Vector2(35, 35), new Vector2(36, 38) };
         foreach (var mapPosition in mapPositionsToSpawn)
         {
-            InitializeUnit(slaveBlueprint, mapPosition);
+            PlaceEntity(slaveBlueprint, mapPosition);
         }
         
         var horriorBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Horrior));
-        InitializeUnit(horriorBlueprint, new Vector2(39, 39));
+        PlaceEntity(horriorBlueprint, new Vector2(39, 39));
         
         var marksmanBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Marksman));
-        InitializeUnit(marksmanBlueprint, new Vector2(38, 42));
-    }
-
-    private void InitializeUnit(Unit unitBlueprint, Vector2 mapPosition)
-    {
-        if (DebugEnabled) GD.Print($"{nameof(Entities)}: initializing {unitBlueprint.Id} at {mapPosition}.");
+        PlaceEntity(marksmanBlueprint, new Vector2(38, 42));
         
-        var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units);
-        unit.EntityPosition = mapPosition;
-            
-        _entitiesByMapPositions[mapPosition] = unit;
-        _mapPositionsByEntities[unit] = mapPosition;
-            
-        unit.FinishedMoving += OnEntityFinishedMoving;
-        NewPositionOccupied(unit);
+        var bigBadBullBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.BigBadBull));
+        PlaceEntity(bigBadBullBlueprint, new Vector2(38, 46));
+        
+        var obeliskBlueprint = Data.Instance.Blueprint.Entities.Structures.Single(x => x.Id.Equals(StructureId.Obelisk));
+        PlaceEntity(obeliskBlueprint, new Vector2(31, 36));
+        
+        var citadelBlueprint = Data.Instance.Blueprint.Entities.Structures.Single(x => x.Id.Equals(StructureId.Citadel));
+        PlaceEntity(citadelBlueprint, new Vector2(33, 41));
     }
     
     public override void _ExitTree()
@@ -101,40 +102,28 @@ public class Entities : YSort
 
     public bool IsEntitySelected() => SelectedEntity != null;
 
-    public bool TryHoveringEntity(Vector2 at)
+    public bool TryHoveringEntityOn(Tiles.TileInstance tile)
     {
         if (EntityMoving)
             return false;
 
-        if (_hoveredEntityPosition.Equals(at))
+        var occupationExists = tile.Occupants.Any();
+        var occupantEntity = tile.Occupants.FirstOrDefault(); // TODO handle high-ground
+        
+        if (occupationExists && HoveredEntity != null && HoveredEntity.InstanceId.Equals(occupantEntity?.InstanceId))
             return true;
 
-        if (_hoveredEntityPosition != Vector2.Inf)
-        {
-            var entity = _entitiesByMapPositions[_hoveredEntityPosition];
-            entity.SetTileHovered(false);
-        }
+        HoveredEntity?.SetTileHovered(false);
 
-        if (_entitiesByMapPositions.ContainsKey(at))
+        if (occupationExists)
         {
-            var entity = _entitiesByMapPositions[at];
-            entity.SetTileHovered(true);
-            _hoveredEntityPosition = at;
+            occupantEntity?.SetTileHovered(true);
+            HoveredEntity = occupantEntity;
             return true;
         }
         
-        _hoveredEntityPosition = Vector2.Inf;
+        HoveredEntity = null;
         return false;
-    }
-    
-    public EntityNode GetHoveredEntity()
-    {
-        if (EntityMoving)
-            return null;
-
-        return _entitiesByMapPositions.TryGetValue(_hoveredEntityPosition, out var position) 
-            ? position 
-            : null;
     }
 
     public Vector2 GetMapPositionOfEntity(EntityNode entity) => _mapPositionsByEntities.ContainsKey(entity) 
@@ -144,6 +133,16 @@ public class Entities : YSort
     public EntityNode GetEntityFromMapPosition(Vector2 mapPosition) => _entitiesByMapPositions.ContainsKey(mapPosition)
         ? _entitiesByMapPositions[mapPosition]
         : null;
+
+    public EntityNode SetEntityForPlacement(EntityId entityId)
+    {
+        var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
+        var newEntity = InstantiateEntity(newEntityBlueprint);
+        
+        // TODO
+        
+        return newEntity;
+    }
 
     public void MoveEntity(EntityNode entity, ICollection<Vector2> globalPath, ICollection<Vector2> path)
     {
@@ -157,6 +156,9 @@ public class Entities : YSort
     }
     
     // TODO: seems like each entity has z_index of 0 and so this method doesn't work
+    // This method is supposed to return the entity that has its sprite visible where the mouse is hovering at,
+    // could be considered not required and annoying in the future -- need to make it work and test it out UX
+    // with high-ground entities
     public EntityNode GetTopEntity(Vector2 globalPosition)
     {
         var topZ = float.NegativeInfinity;
@@ -195,6 +197,50 @@ public class Entities : YSort
         }
 
         return zIndex;
+    }
+    
+    private EntityNode PlaceEntity(Entity entityBlueprint, Vector2 mapPosition)
+    {
+        if (DebugEnabled) GD.Print($"{nameof(Entities)}: initializing {entityBlueprint.Id} at {mapPosition}.");
+
+        var entity = InstantiateEntity(entityBlueprint);
+        
+        entity.EntityPosition = mapPosition;
+        _entitiesByMapPositions[mapPosition] = entity;
+        _mapPositionsByEntities[entity] = mapPosition;
+        
+        NewPositionOccupied(entity);
+        return entity;
+    }
+
+    private EntityNode InstantiateEntity(Entity entityBlueprint)
+    {
+        switch (entityBlueprint)
+        {
+            case Structure structure:
+                return InstantiateStructure(structure);
+            case Unit unit:
+                return InstantiateUnit(unit);
+            // TODO case Doodad doodad:
+            default:
+                throw new ArgumentOutOfRangeException($"No possible cast for entity '{entityBlueprint.Id}'");
+        }
+    }
+
+    private StructureNode InstantiateStructure(Structure structureBlueprint)
+    {
+        var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures);
+
+        return structure;
+    }
+
+    private UnitNode InstantiateUnit(Unit unitBlueprint)
+    {
+        var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units);
+        
+        unit.FinishedMoving += OnEntityFinishedMoving;
+
+        return unit;
     }
 
     private void OnEntityFinishedMoving(EntityNode entity)

@@ -43,11 +43,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     {
         Blueprint = blueprint;
         DisplayName = blueprint.DisplayName;
-
-        if (blueprint.Sprite != null)
-            Sprite.Texture = GD.Load<Texture>(blueprint.Sprite);
-        Sprite.Offset = blueprint.CenterOffset.ToGodotVector2() * -1; // TODO handle structure rotation
         
+        // TODO not sure why the below is needed... perhaps should be removed? (also from scene)
         var spriteSize = Sprite.Texture.GetSize();
         var area = GetNode<Area2D>(nameof(Area2D));
         
@@ -120,6 +117,13 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     {
         if (Sprite.Material is ShaderMaterial shaderMaterial)
             shaderMaterial.SetShaderParam("tint_color", to ? PlacementColorSuccess : PlacementColorInvalid);
+    }
+
+    protected virtual void AdjustSpriteOffset()
+    {
+        if (Blueprint.Sprite != null)
+            Sprite.Texture = GD.Load<Texture>(Blueprint.Sprite);
+        Sprite.Offset = Blueprint.CenterOffset.ToGodotVector2() * -1;
     }
     
     private void OnMovementTweenAllCompleted()

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/stairs back indexed 1x2.png-69065e90760115aa84eeec50ebc82e6a.stex"
+path="res://.import/factory 2 indexed 3x2.png-e8d93d857e33de3f6e342b1ef78d8e2b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/structures/uee/stairs back indexed 1x2.png"
-dest_files=[ "res://.import/stairs back indexed 1x2.png-69065e90760115aa84eeec50ebc82e6a.stex" ]
+source_file="res://assets/sprites/structures/uee/factory 2 indexed 3x2.png"
+dest_files=[ "res://.import/factory 2 indexed 3x2.png-e8d93d857e33de3f6e342b1ef78d8e2b.stex" ]
 
 [params]
 

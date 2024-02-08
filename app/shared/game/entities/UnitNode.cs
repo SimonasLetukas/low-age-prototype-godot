@@ -33,6 +33,8 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
                                   // decide if this is needed. Argument against: not moving straight diagonally is 
                                   // more cost effective, which is not intuitive for the player. This bonus could be
                                   // added for units with 1 movement only.
+        
+        AdjustSpriteOffset();
     }
 
     public override IList<Vector2> GetOccupiedPositions()
@@ -47,5 +49,12 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         }
 
         return positions;
+    }
+
+    protected override void AdjustSpriteOffset()
+    {
+        base.AdjustSpriteOffset();
+        var additionalYOffset = (UnitSize - 1) * (Constants.TileHeight / 2);
+        Sprite.Offset = new Vector2(Sprite.Offset.x, Sprite.Offset.y + additionalYOffset);
     }
 }

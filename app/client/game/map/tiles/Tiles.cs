@@ -17,6 +17,8 @@ public class Tiles : Node2D
         public Vector2 Position { get; set; }
         public TileId Blueprint { get; set; }
         public IList<EntityNode> Occupants { get; set; }
+
+        public bool IsInBoundsOf(Vector2 bounds) => Position.IsInBoundsOf(bounds);
     }
     
     private ICollection<TileInstance> _tiles;
@@ -103,6 +105,10 @@ public class Tiles : Node2D
     public Vector2[] GetGlobalPositionsFromMapPositions(IEnumerable<Vector2> mapPositions) 
         => mapPositions.Select(GetGlobalPositionFromMapPosition).ToArray();
 
+    public Terrain GetTerrain(TileInstance tile) => tile is null 
+        ? Terrain.Mountains 
+        : GetTerrain(tile.Position);
+    
     public Terrain GetTerrain(Vector2 at) => at.IsInBoundsOf(_mapSize)
         ? GetBlueprint(GetTile(at).Blueprint).Terrain
         : Terrain.Mountains;
@@ -155,6 +161,8 @@ public class Tiles : Node2D
         }
     }
 
+    public bool IsCurrentlyAvailable(TileInstance tile) => IsCurrentlyAvailable(tile.Position);
+    
     public bool IsCurrentlyAvailable(Vector2 mapPosition) 
         => _availableTiles.GetCellv(mapPosition) == TileMapAvailableTileIndex;
 
