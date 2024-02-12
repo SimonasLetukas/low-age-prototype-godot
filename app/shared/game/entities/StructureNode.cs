@@ -34,15 +34,24 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         AdjustSpriteOffset();
     }
 
-    public override bool DeterminePlacementValidity(Terrain terrain)
+    public override bool DeterminePlacementValidity(Func<Rect2, IList<Tiles.TileInstance>> getTiles, bool isValid = false)
     {
-        var isValid = base.DeterminePlacementValidity(terrain);
+        var tiles = getTiles(new Rect2(EntityPosition, StructureSize));
 
-        if (terrain.Equals(Terrain.Marsh))
-            isValid = false;
+        if (tiles.Any(x => x is null))
+            return base.DeterminePlacementValidity(getTiles, false);
 
-        SetPlacementValidityColor(isValid);
-        return isValid;
+        if (tiles.All(x => x.IsTarget is false))
+            return base.DeterminePlacementValidity(getTiles, false);
+
+        if (tiles.Any(x => x.Terrain.Equals(Terrain.Mountains)))
+            return base.DeterminePlacementValidity(getTiles, false);
+        
+        // TODO most of these conditions should come from buildable behaviour (placementValidators)
+        // TODO go through all existing placementValidators and add appropriate checks (some might be impossible for
+        // now - e.g. masks; leave todo for such) 
+        
+        return base.DeterminePlacementValidity(getTiles, true);
     }
     
     public override IList<Vector2> GetOccupiedPositions()

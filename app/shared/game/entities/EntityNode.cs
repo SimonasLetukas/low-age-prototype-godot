@@ -20,6 +20,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     public Vector2 EntityPosition { get; set; }
     public string DisplayName { get; set; }
+    public bool CanBePlaced { get; set; } = true;
     
     private Entity Blueprint { get; set; }
     protected Sprite Sprite { get; private set; }
@@ -79,25 +80,33 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public void SnapTo(Vector2 globalPosition) => GlobalPosition = globalPosition;
 
-    public void SetForPlacement(bool to, bool placementValid = true)
+    public void SetForPlacement(bool to, bool placementValid = false)
     {
         if ((Sprite.Material is ShaderMaterial shaderMaterial) is false) 
             return;
         
         shaderMaterial.SetShaderParam("tint_effect_factor", to ? 1 : 0);
-        shaderMaterial.SetShaderParam("tint_color", placementValid ? PlacementColorSuccess : PlacementColorInvalid);
+        Sprite.Modulate = new Color(Colors.White, to ? 0.5f : 1);
+        
+        CanBePlaced = placementValid;
+        SetPlacementValidityColor(placementValid);
     }
 
-    public virtual bool DeterminePlacementValidity(Terrain terrain)
+    public virtual bool DeterminePlacementValidity(Func<Rect2, IList<Tiles.TileInstance>> getTiles, bool isValid = false)
     {
-        var isValid = terrain.Equals(Terrain.Mountains) is false;
-        
+        CanBePlaced = isValid;
         SetPlacementValidityColor(isValid);
         return isValid;
     }
 
-    public void Place(Vector2 globalPosition, Vector2 mapPosition)
+    public void Place()
     {
+        if (CanBePlaced is false)
+        {
+            QueueFree();
+            return;
+        }
+        
         SetForPlacement(false);
         // TODO
     }

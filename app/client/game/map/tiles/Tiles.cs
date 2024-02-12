@@ -16,6 +16,8 @@ public class Tiles : Node2D
     {
         public Vector2 Position { get; set; }
         public TileId Blueprint { get; set; }
+        public Terrain Terrain { get; set; }
+        public bool IsTarget { get; set; }
         public IList<EntityNode> Occupants { get; set; }
 
         public bool IsInBoundsOf(Vector2 bounds) => Position.IsInBoundsOf(bounds);
@@ -34,6 +36,7 @@ public class Tiles : Node2D
     private FocusedTile _focusedTile;
     private TileMap _availableTiles;
     private TileMap _targetTiles;
+    private ICollection<TileInstance> _targetTileInstances = new List<TileInstance>();
     private TileMap _path;
     
     private const int TileMapGrassIndex = 6;
@@ -71,18 +74,21 @@ public class Tiles : Node2D
 
     public void Initialize(Vector2 mapSize, ICollection<(Vector2, TileId)> tiles)
     {
+        _tilesBlueprint = Data.Instance.Blueprint.Tiles;
+        
         var tileInstances = new List<TileInstance>();
         foreach (var (position, blueprint) in tiles)
         {
             tileInstances.Add(new TileInstance
             {
                 Position = position,
-                Blueprint = blueprint,   
+                Blueprint = blueprint,
+                Terrain = GetBlueprint(blueprint).Terrain,
                 Occupants = new List<EntityNode>()
             });
         }
         _tiles = tileInstances;
-        _tilesBlueprint = Data.Instance.Blueprint.Tiles;
+        
         _mapSize = mapSize;
         _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
         _mountainsFillOffset = (int)Mathf.Max(mapSize.x, mapSize.y);
@@ -110,8 +116,17 @@ public class Tiles : Node2D
         : GetTerrain(tile.Position);
     
     public Terrain GetTerrain(Vector2 at) => at.IsInBoundsOf(_mapSize)
-        ? GetBlueprint(GetTile(at).Blueprint).Terrain
+        ? GetTile(at).Terrain
         : Terrain.Mountains;
+
+    public IList<TileInstance> GetTiles(Rect2 at)
+    {
+        var tiles = new List<TileInstance>();
+        for (var x = (int)at.Position.x; x < (int)(at.Position.x + at.Size.x); x++)
+            for (var y = (int)at.Position.y; y < (int)(at.Position.y + at.Size.y); y++) 
+                tiles.Add(GetTile(new Vector2(x, y)));
+        return tiles;
+    }
 
     public TileInstance GetTile(Vector2 at) => _tiles.SingleOrDefault(x => x.Position.Equals(at));
 
@@ -142,6 +157,11 @@ public class Tiles : Node2D
             var tile = GetTile(position);
             tile.Occupants.Remove(entity);
         }
+    }
+
+    public void DisableFocusedTile()
+    {
+        _focusedTile.Disable();
     }
 
     public void MoveFocusedTileTo(Vector2 position)
@@ -175,6 +195,10 @@ public class Tiles : Node2D
             _targetTiles.SetCellv(target, isPositive 
                 ? TileMapPositiveTargetTileIndex 
                 : TileMapNegativeTargetTileIndex);
+            
+            var tileInstance = GetTile(target);
+            tileInstance.IsTarget = true;
+            _targetTileInstances.Add(tileInstance);
         }
     }
 
@@ -214,7 +238,13 @@ public class Tiles : Node2D
     
     public void ClearAvailableTiles() => _availableTiles.Clear();
 
-    public void ClearTargetTiles() => _targetTiles.Clear();
+    public void ClearTargetTiles()
+    {
+        _targetTiles.Clear();
+        foreach (var tileInstance in _targetTileInstances) 
+            tileInstance.IsTarget = false;
+        _targetTileInstances.Clear();
+    }
 
     private void SetCell(Vector2 at, Terrain terrain)
     {

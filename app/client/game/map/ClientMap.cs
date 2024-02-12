@@ -54,8 +54,17 @@ public class ClientMap : Map
             UpdateHoveredEntity(mousePosition);
 
             // TODO optimization: only if hovered tile changed from above, display path
-            var path = Pathfinding.FindPath(_hoveredTile.Position);
-            _tileMap.SetPathTiles(path);
+            if (_hoveredTile != null)
+            {
+                var path = Pathfinding.FindPath(_hoveredTile.Position);
+                _tileMap.SetPathTiles(path);
+            }
+        }
+
+        if (_selectionOverlay is SelectionOverlay.Placement)
+        {
+            var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(mapPosition);
+            Entities.UpdateEntityInPlacement(mapPosition, globalPosition, _tileMap.GetTiles);
         }
     }
     
@@ -175,13 +184,13 @@ public class ClientMap : Map
 
     private void ExecutePlacement()
     {
-        // TODO place entity that was set for placement
+        Entities.PlaceEntity();
         ExecuteCancellation();
     }
     
     private void HandleRightClick()
     {
-        if (_hoveredTile.IsInBoundsOf(_mapSize) is false)
+        if (_hoveredTile is null || _hoveredTile.IsInBoundsOf(_mapSize) is false)
             return;
         
         if (Entities.EntityMoving)
@@ -225,7 +234,7 @@ public class ClientMap : Map
     private void ExecuteCancellation()
     {
         _tileMap.ClearTargetTiles();
-        // TODO hide any entities that were set for placement
+        Entities.CancelPlacement();
         ExecuteEntitySelection(true);
     }
 
@@ -238,7 +247,9 @@ public class ClientMap : Map
         _hoveredTile = _tileMap.GetTile(mapPosition);
         var hoveredTerrain = _tileMap.GetTerrain(_hoveredTile);
         NewTileHovered(mapPosition, hoveredTerrain, _hoveredTile?.Occupants);
-        _tileMap.MoveFocusedTileTo(mapPosition);
+        
+        if (_selectionOverlay != SelectionOverlay.Placement)
+            _tileMap.MoveFocusedTileTo(mapPosition);
     }
 
     private Vector2 GetMapPositionFromMousePosition() 
@@ -246,11 +257,9 @@ public class ClientMap : Map
 
     private void OnEntitiesNewPositionOccupied(EntityNode entity)
     {
-        // TODO change naming and intention of this method to fit not only new entities but also those in placement
         var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPosition);
         Entities.AdjustGlobalPosition(entity, globalPosition);
         
-        // TODO check if in placement mode and skip occupation if yes
         _tileMap.AddOccupation(entity);
     }
 
@@ -266,8 +275,10 @@ public class ClientMap : Map
 
     internal void OnSelectedToBuild(BuildNode buildAbility, EntityId entityId)
     {
+        Entities.CancelPlacement();
         _tileMap.ClearAvailableTiles();
         _tileMap.ClearPath();
+        _tileMap.DisableFocusedTile();
         
         // TODO add full list of arguments to ToPositions call (get the entity->actor from entityId)
         _tileMap.SetTargetTiles(buildAbility.PlacementArea.ToPositions(
@@ -276,7 +287,8 @@ public class ClientMap : Map
         
         _selectionOverlay = SelectionOverlay.Placement;
         
-        // TODO create new entity, set it for placement, make sure placement color is determined in process (feed tiles to the actor so it decides availability)
+        Entities.SetEntityForPlacement(entityId);
+        
         // TODO upon creation the new entity has to go through all of its passives and add on birth behaviours
         // TODO during placement the method inside entity makes sure that all build behaviours are correct, otherwise returns false and shows red placement
     }

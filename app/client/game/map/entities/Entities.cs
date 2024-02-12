@@ -41,7 +41,7 @@ public class Entities : YSort
         // Force-add units for testing
         var slaveBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Slave));
         var mapPositionsToSpawn = new List<Vector2> { new Vector2(30, 40), new Vector2(32, 48), 
-            new Vector2(34, 46), new Vector2(35, 35), new Vector2(36, 38) };
+            new Vector2(34, 46), new Vector2(35, 35), new Vector2(36, 38), new Vector2(1, 13) };
         foreach (var mapPosition in mapPositionsToSpawn)
         {
             PlaceEntity(slaveBlueprint, mapPosition);
@@ -71,11 +71,16 @@ public class Entities : YSort
         }
         base._ExitTree();
     }
+    
+    public Vector2 GetMapPositionOfEntity(EntityNode entity) => _mapPositionsByEntities.ContainsKey(entity) 
+        ? _mapPositionsByEntities[entity] 
+        : Vector2.Inf;
 
-    public void AdjustGlobalPosition(EntityNode entity, Vector2 globalPosition)
-    {
-        entity.GlobalPosition = globalPosition;
-    }
+    public EntityNode GetEntityFromMapPosition(Vector2 mapPosition) => _entitiesByMapPositions.ContainsKey(mapPosition)
+        ? _entitiesByMapPositions[mapPosition]
+        : null;
+
+    public void AdjustGlobalPosition(EntityNode entity, Vector2 globalPosition) => entity.SnapTo(globalPosition);
 
     public void SelectEntity(EntityNode entity)
     {
@@ -125,35 +130,6 @@ public class Entities : YSort
         HoveredEntity = null;
         return false;
     }
-
-    public Vector2 GetMapPositionOfEntity(EntityNode entity) => _mapPositionsByEntities.ContainsKey(entity) 
-        ? _mapPositionsByEntities[entity] 
-        : Vector2.Inf;
-
-    public EntityNode GetEntityFromMapPosition(Vector2 mapPosition) => _entitiesByMapPositions.ContainsKey(mapPosition)
-        ? _entitiesByMapPositions[mapPosition]
-        : null;
-
-    public EntityNode SetEntityForPlacement(EntityId entityId)
-    {
-        var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
-        var newEntity = InstantiateEntity(newEntityBlueprint);
-        
-        // TODO
-        
-        return newEntity;
-    }
-
-    public void MoveEntity(EntityNode entity, ICollection<Vector2> globalPath, ICollection<Vector2> path)
-    {
-        var targetPosition = path.Last();
-        var startPosition = path.First();
-        _mapPositionsByEntities[entity] = targetPosition;
-        _entitiesByMapPositions.Remove(startPosition);
-        _entitiesByMapPositions[targetPosition] = entity;
-        EntityMoving = true;
-        entity.MoveUntilFinished(globalPath.ToList(), targetPosition);
-    }
     
     // TODO: seems like each entity has z_index of 0 and so this method doesn't work
     // This method is supposed to return the entity that has its sprite visible where the mouse is hovering at,
@@ -199,15 +175,71 @@ public class Entities : YSort
         return zIndex;
     }
     
+    public void MoveEntity(EntityNode entity, ICollection<Vector2> globalPath, ICollection<Vector2> path)
+    {
+        var targetPosition = path.Last();
+        var startPosition = path.First();
+        _mapPositionsByEntities[entity] = targetPosition;
+        _entitiesByMapPositions.Remove(startPosition);
+        _entitiesByMapPositions[targetPosition] = entity;
+        EntityMoving = true;
+        entity.MoveUntilFinished(globalPath.ToList(), targetPosition);
+    }
+    
+    public EntityNode SetEntityForPlacement(EntityId entityId)
+    {
+        var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
+        var newEntity = InstantiateEntity(newEntityBlueprint);
+        
+        newEntity.SetForPlacement(true);
+        EntityInPlacement = newEntity;
+        
+        return newEntity;
+    }
+
+    public void UpdateEntityInPlacement(Vector2 mapPosition, Vector2 globalPosition, 
+        Func<Rect2, IList<Tiles.TileInstance>> getTiles)
+    {
+        EntityInPlacement.EntityPosition = mapPosition;
+        EntityInPlacement.SnapTo(globalPosition);
+        EntityInPlacement.DeterminePlacementValidity(getTiles);
+    }
+
+    public void CancelPlacement()
+    {
+        EntityInPlacement?.QueueFree();
+        EntityInPlacement = null;
+    }
+
+    public EntityNode PlaceEntity()
+    {
+        var entity = EntityInPlacement;
+        EntityInPlacement = null;
+        return PlaceEntity(entity);
+    }
+    
     private EntityNode PlaceEntity(Entity entityBlueprint, Vector2 mapPosition)
     {
-        if (DebugEnabled) GD.Print($"{nameof(Entities)}: initializing {entityBlueprint.Id} at {mapPosition}.");
-
         var entity = InstantiateEntity(entityBlueprint);
-        
+        return PlaceEntity(entity, mapPosition);
+    }
+
+    private EntityNode PlaceEntity(EntityNode entity, Vector2 mapPosition)
+    {
         entity.EntityPosition = mapPosition;
-        _entitiesByMapPositions[mapPosition] = entity;
-        _mapPositionsByEntities[entity] = mapPosition;
+        return PlaceEntity(entity);
+    }
+
+    private EntityNode PlaceEntity(EntityNode entity)
+    {
+        var position = entity.EntityPosition;
+        
+        if (DebugEnabled) GD.Print($"{nameof(Entities)}: placing {entity.DisplayName} at {position}.");
+        
+        entity.Place();
+        
+        _entitiesByMapPositions[position] = entity;
+        _mapPositionsByEntities[entity] = position;
         
         NewPositionOccupied(entity);
         return entity;
