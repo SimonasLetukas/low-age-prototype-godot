@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://app/shared/game/entities/EntityNode.tscn" type="PackedScene" id=1]
 [ext_resource path="res://app/shared/game/entities/ActorNode.cs" type="Script" id=2]
 [ext_resource path="res://assets/sprites/interface/healthbar.png" type="Texture" id=3]
 [ext_resource path="res://app/shared/game/abilities/Abilities.tscn" type="PackedScene" id=4]
+[ext_resource path="res://app/shared/shaders/SelectionShader.tres" type="Shader" id=5]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
+shader_param/outline_color = null
+shader_param/draw_outline = null
+shader_param/intensity = 50
+shader_param/disabled = false
+shader_param/disabled_saturation = 0.2
+shader_param/tint_color = Color( 1, 1, 1, 1 )
+shader_param/tint_effect_factor = 0.0
 
 [node name="ActorNode" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -30,5 +42,8 @@ texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 3 )
 tint_under = Color( 0, 0, 0, 1 )
 tint_over = Color( 1, 1, 1, 0 )
+
+[node name="Sprite" parent="." index="2"]
+material = SubResource( 1 )
 
 [node name="Abilities" parent="." index="5" instance=ExtResource( 4 )]

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities.Actors;
 
@@ -37,6 +36,7 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         Attributes = blueprint.ActorAttributes;
         ActorRotation = ActorRotation.BottomRight;
         Abilities.PopulateFromBlueprint(Blueprint.Abilities);
+        Behaviours.AddOnBuildBehaviours(Abilities.GetPassives());
         
         var spriteSize = Sprite.Texture.GetSize();
         _health.RectPosition = new Vector2(_health.RectPosition.x, (spriteSize.y * -1) - 2);

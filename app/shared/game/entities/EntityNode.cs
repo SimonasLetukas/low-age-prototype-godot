@@ -19,8 +19,10 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     public Vector2 EntityPosition { get; set; }
-    public string DisplayName { get; set; }
-    public bool CanBePlaced { get; set; } = true;
+    public Vector2 EntitySize { get; protected set; } = Vector2.One;
+    public string DisplayName { get; protected set; }
+    public bool CanBePlaced { get; protected set; } = true;
+    public Behaviours Behaviours { get; protected set; }
     
     private Entity Blueprint { get; set; }
     protected Sprite Sprite { get; private set; }
@@ -31,6 +33,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public override void _Ready()
     {
+        Behaviours = GetNode<Behaviours>(nameof(Behaviours));
+        
         _movePath = new List<Vector2>();
         _selected = false;
         _movementDuration = GetDurationFromAnimationSpeed();
@@ -92,11 +96,16 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         SetPlacementValidityColor(placementValid);
     }
 
-    public virtual bool DeterminePlacementValidity(Func<Rect2, IList<Tiles.TileInstance>> getTiles, bool isValid = false)
+    public bool DeterminePlacementValidity(IList<Tiles.TileInstance> tiles)
     {
-        CanBePlaced = isValid;
-        SetPlacementValidityColor(isValid);
-        return isValid;
+        CanBePlaced = IsPlacementGenerallyValid(tiles)
+                      && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles));
+        
+        // TODO check for masks
+        // TODO figure out how the checks should be made different for "produce" ability
+        
+        SetPlacementValidityColor(CanBePlaced);
+        return CanBePlaced;
     }
 
     public void Place()
@@ -108,7 +117,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         }
         
         SetForPlacement(false);
-        // TODO
+        // TODO remove buildableBehaviours
+        // TODO should be left until building is finished (payment is completed)
     }
     
     public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Vector2 resultingPosition)
@@ -120,7 +130,19 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         MoveToNextTarget();
     }
     
-    public virtual IList<Vector2> GetOccupiedPositions() => new List<Vector2> { EntityPosition };
+    public IEnumerable<Vector2> GetOccupiedPositions()
+    {
+        var positions = new List<Vector2>();
+        for (var x = 0; x < EntitySize.x; x++)
+        {
+            for (var y = 0; y < EntitySize.y; y++)
+            {
+                positions.Add(new Vector2(EntityPosition.x + x, EntityPosition.y + y));
+            }
+        }
+
+        return positions;
+    }
 
     protected void SetPlacementValidityColor(bool to)
     {
@@ -128,11 +150,27 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
             shaderMaterial.SetShaderParam("tint_color", to ? PlacementColorSuccess : PlacementColorInvalid);
     }
 
-    protected virtual void AdjustSpriteOffset()
+    protected void AdjustSpriteOffset()
     {
         if (Blueprint.Sprite != null)
             Sprite.Texture = GD.Load<Texture>(Blueprint.Sprite);
-        Sprite.Offset = Blueprint.CenterOffset.ToGodotVector2() * -1;
+        
+        var offsetFromX = (int)(EntitySize.x - 1) * 
+                          new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
+        var offsetFromY = (int)(EntitySize.y - 1) *
+                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
+        Sprite.Offset = (Blueprint.CenterOffset.ToGodotVector2() * -1) + offsetFromX + offsetFromY;
+    }
+    
+    private bool IsPlacementGenerallyValid(IList<Tiles.TileInstance> tiles)
+    {
+        if (tiles.Any(x => x is null))
+            return false;
+
+        if (tiles.All(x => x.IsTarget is false))
+            return false;
+
+        return true;
     }
     
     private void OnMovementTweenAllCompleted()

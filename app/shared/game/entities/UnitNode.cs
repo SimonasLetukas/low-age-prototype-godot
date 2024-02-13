@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
@@ -16,7 +15,6 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         return unit;
     }
     
-    public int UnitSize { get; protected set; }
     public float Movement { get; protected set; }
     
     private Unit Blueprint { get; set; }
@@ -25,7 +23,7 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
-        UnitSize = Blueprint.Size;
+        EntitySize = Vector2.One * Blueprint.Size;
         Movement = CurrentStats.First(x => 
                 x.Blueprint is CombatStat combatStat
                 && combatStat.CombatType.Equals(StatType.Movement))
@@ -35,26 +33,5 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
                                   // added for units with 1 movement only.
         
         AdjustSpriteOffset();
-    }
-
-    public override IList<Vector2> GetOccupiedPositions()
-    {
-        var positions = new List<Vector2>();
-        for (var x = 0; x < UnitSize; x++)
-        {
-            for (var y = 0; y < UnitSize; y++)
-            {
-                positions.Add(new Vector2(EntityPosition.x + x, EntityPosition.y + y));
-            }
-        }
-
-        return positions;
-    }
-
-    protected override void AdjustSpriteOffset()
-    {
-        base.AdjustSpriteOffset();
-        var additionalYOffset = (UnitSize - 1) * (Constants.TileHeight / 2);
-        Sprite.Offset = new Vector2(Sprite.Offset.x, Sprite.Offset.y + additionalYOffset);
     }
 }

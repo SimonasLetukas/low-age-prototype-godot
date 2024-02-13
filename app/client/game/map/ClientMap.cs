@@ -37,8 +37,6 @@ public class ClientMap : Map
 
     public override void _Process(float delta)
     {
-        // TODO when in placement or target mode, should still be able to hover other actors
-        
         base._Process(delta);
         var mousePosition = GetGlobalMousePosition();
         var mapPosition = _tileMap.GetMapPositionFromGlobalPosition(mousePosition);
@@ -280,16 +278,18 @@ public class ClientMap : Map
         _tileMap.ClearPath();
         _tileMap.DisableFocusedTile();
         
-        // TODO add full list of arguments to ToPositions call (get the entity->actor from entityId)
+        Entities.SetEntityForPlacement(entityId);
+        
         _tileMap.SetTargetTiles(buildAbility.PlacementArea.ToPositions(
             Entities.SelectedEntity.EntityPosition, 
-            _mapSize));
+            _mapSize,
+            Entities.SelectedEntity));
         
         _selectionOverlay = SelectionOverlay.Placement;
         
-        Entities.SetEntityForPlacement(entityId);
-        
-        // TODO upon creation the new entity has to go through all of its passives and add on birth behaviours
-        // TODO during placement the method inside entity makes sure that all build behaviours are correct, otherwise returns false and shows red placement
+        // TODO Display entity behaviours in UI dynamically, check that it works,
+        //          then remove the buildableBehaviours after entity is placed 
+        // TODO fix crash when structure is selected in game
+        // TODO make multiplayer work with a new event (also figure out duplication during initialization)
     }
 }

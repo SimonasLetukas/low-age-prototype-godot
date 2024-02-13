@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://app/shared/game/entities/EntityNode.cs" type="Script" id=1]
 [ext_resource path="res://app/shared/shaders/EntitiesMaterial.tres" type="Material" id=2]
 [ext_resource path="res://assets/sprites/units/revs/slave indexed 1x1.png" type="Texture" id=3]
+[ext_resource path="res://app/shared/game/behaviours/Behaviours.tscn" type="PackedScene" id=4]
 
 [node name="EntityNode" type="Node2D"]
 script = ExtResource( 1 )
@@ -18,3 +19,5 @@ offset = Vector2( -3, -14 )
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="Movement" type="Tween" parent="."]
+
+[node name="Behaviours" parent="." instance=ExtResource( 4 )]

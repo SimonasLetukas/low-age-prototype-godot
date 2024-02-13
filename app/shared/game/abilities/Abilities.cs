@@ -5,6 +5,8 @@ using low_age_data.Domain.Abilities;
 
 public class Abilities : Node2D
 {
+    public IList<PassiveNode> GetPassives() => GetChildren().OfType<PassiveNode>().ToList();
+    
     public void PopulateFromBlueprint(IEnumerable<AbilityId> abilities)
     {
         var allAbilities = Data.Instance.Blueprint.Abilities;
@@ -15,6 +17,9 @@ public class Abilities : Node2D
             {
                 case Build buildBlueprint:
                     BuildNode.InstantiateAsChild(buildBlueprint, this);
+                    break;
+                case Passive passiveBlueprint:
+                    PassiveNode.InstantiateAsChild(passiveBlueprint, this);
                     break;
                 default:
                     break;

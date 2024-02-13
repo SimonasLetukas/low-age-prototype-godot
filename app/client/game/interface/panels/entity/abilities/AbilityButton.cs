@@ -1,8 +1,12 @@
 using System;
+using Godot;
 
 public class AbilityButton : BaseButton
 {
     public const string ScenePath = @"res://app/client/game/interface/panels/entity/abilities/AbilityButton.tscn";
+    
+    [Export] public Texture TexturePassiveNormal { get; set; }
+    [Export] public Texture TexturePassiveClicked { get; set; }
 
     public new event Action<bool, AbilityButton> Hovering = delegate { };
     public new event Action<AbilityButton> Clicked = delegate { };
@@ -24,7 +28,15 @@ public class AbilityButton : BaseButton
         base._ExitTree();
     }
 
-    public void SetAbility(AbilityNode ability) => Ability = ability;
+    public void SetAbility(AbilityNode ability)
+    {
+        Ability = ability;
+        if (Ability is PassiveNode)
+        {
+            Texture = TextureNormal = TexturePassiveNormal;
+            TextureClicked = TexturePassiveClicked;
+        }
+    }
 
     private void OnButtonHovering(bool flag) => Hovering(flag, this);
 

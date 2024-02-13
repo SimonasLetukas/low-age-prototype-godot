@@ -202,7 +202,8 @@ public class Entities : YSort
     {
         EntityInPlacement.EntityPosition = mapPosition;
         EntityInPlacement.SnapTo(globalPosition);
-        EntityInPlacement.DeterminePlacementValidity(getTiles);
+        var entityPositions = new Rect2(EntityInPlacement.EntityPosition, EntityInPlacement.EntitySize);
+        EntityInPlacement.DeterminePlacementValidity(getTiles(entityPositions));
     }
 
     public void CancelPlacement()

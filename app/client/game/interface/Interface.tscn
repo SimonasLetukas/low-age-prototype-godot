@@ -8,7 +8,6 @@
 
 [node name="Interface" type="CanvasLayer"]
 script = ExtResource( 2 )
-DebugEnabled = true
 
 [node name="Theme" type="Control" parent="."]
 anchor_right = 1.0

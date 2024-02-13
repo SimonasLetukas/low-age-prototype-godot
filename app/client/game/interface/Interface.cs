@@ -28,7 +28,7 @@ public class Interface : CanvasLayer
         {
             foreach (var control in firstLevel.GetChildren().OfType<Control>())
             {
-                GD.Print(control.Name);
+                if (DebugEnabled) GD.Print(control.Name);
                 control.Connect("mouse_entered", this, nameof(OnControlMouseEntered), new Array { control });
                 control.Connect("mouse_exited", this, nameof(OnControlMouseExited), new Array { control });
             }
