@@ -17,6 +17,7 @@ public class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     public List<Payment> PaymentPaid { get; protected set; }
     public bool IsResearched { get; protected set; }
     public bool IsActive { get; protected set; }
+    public bool HasButton { get; protected set; }
     
     private Ability Blueprint { get; set; }
     
@@ -29,6 +30,7 @@ public class AbilityNode : Node2D, INodeFromBlueprint<Ability>
         PaymentPaid = blueprint.Cost.Select(paymentRequired => new Payment(paymentRequired.Resource)).ToList();
         IsResearched = true; // TODO fetch from player
         IsActive = IsPaid() && IsResearched;
+        HasButton = Blueprint.HasButton;
     }
 
     public virtual void Preview()

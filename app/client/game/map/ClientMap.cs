@@ -287,9 +287,11 @@ public class ClientMap : Map
         
         _selectionOverlay = SelectionOverlay.Placement;
         
-        // TODO Display entity behaviours in UI dynamically, check that it works,
+        // TODO fix UI display not updating when structure is selected in game
+        // TODO fix available tiles not updating when structure is selected
+        // TODO remove path calculation (and showing path tiles) for structures
+        // TODO display entity behaviours in UI dynamically, check that it works,
         //          then remove the buildableBehaviours after entity is placed 
-        // TODO fix crash when structure is selected in game
         // TODO make multiplayer work with a new event (also figure out duplication during initialization)
     }
 }

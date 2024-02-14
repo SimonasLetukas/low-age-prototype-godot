@@ -26,6 +26,9 @@ public class AbilityButtons : HBoxContainer
         
         foreach (var ability in abilities.GetChildren().OfType<AbilityNode>())
         {
+            if (ability.HasButton is false)
+                continue;
+            
             var abilityButtonScene = GD.Load<PackedScene>(AbilityButton.ScenePath);
             var abilityButton = abilityButtonScene.Instance<AbilityButton>();
             if (_abilityIcons.TryGetValue(ability.Id, out var icon) is false)
