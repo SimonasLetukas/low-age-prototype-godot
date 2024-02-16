@@ -9,7 +9,8 @@ public class EntityPanel : Control
 {
     public event Action<AbilityButton> AbilityViewOpened = delegate { };
     public event Action AbilityViewClosed = delegate { };
-    
+
+    private GridContainer _behaviours;
     private EntityName _entityName;
     private AbilityButtons _abilityButtons;
     private InfoDisplay _display;
@@ -28,6 +29,7 @@ public class EntityPanel : Control
 
     public override void _Ready()
     {
+        _behaviours = GetNode<GridContainer>($"Behaviours");
         _entityName = GetNode<EntityName>($"{nameof(EntityName)}");
         _abilityButtons = GetNode<AbilityButtons>($"{nameof(Panel)}/{nameof(AbilityButtons)}");
         _display = GetNode<InfoDisplay>($"{nameof(Panel)}/{nameof(InfoDisplay)}");
@@ -46,6 +48,9 @@ public class EntityPanel : Control
         _isShowingAbility = false;
         _isSwitchingBetweenAbilities = false;
         _selectedEntity = selectedEntity;
+        
+        RemoveAllBehaviours();
+        AddBehaviours(_selectedEntity);
 
         DisconnectAbilityButtons();
         _abilityButtons.Reset();
@@ -151,7 +156,7 @@ public class EntityPanel : Control
 
         if (selectedActor is StructureNode selectedStructure)
         {
-            // TODO
+            _display.ShowView(View.StructureStats);
             return;
         }
     }
@@ -216,6 +221,22 @@ public class EntityPanel : Control
         {
             abilityButton.Clicked -= OnAbilityButtonClicked;
             //abilityButton.Hovering -= OnAbilityButtonHovering; TODO find out the best UX for handling all types of abilities 
+        }
+    }
+
+    private void RemoveAllBehaviours()
+    {
+        foreach (var behaviour in _behaviours.GetChildren().OfType<Node>())
+        {
+            behaviour.QueueFree();
+        }
+    }
+
+    private void AddBehaviours(EntityNode entity)
+    {
+        foreach (var behaviour in entity.Behaviours.GetAll())
+        {
+            BehaviourBox.InstantiateAsChild(behaviour, _behaviours);
         }
     }
 

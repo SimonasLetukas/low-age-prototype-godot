@@ -22,6 +22,5 @@
   <ItemGroup>
     <Folder Include="app\shared\game\behaviours" />
     <Folder Include="app\shared\game\effects" />
-    <Folder Include="app\shared\game\misc" />
   </ItemGroup>
 </Project>

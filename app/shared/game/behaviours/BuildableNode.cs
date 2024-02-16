@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Common;
 
 public class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable>
 {
@@ -24,13 +22,8 @@ public class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable>
         Blueprint = blueprint;
     }
 
-    public bool IsPlacementValid(IList<Tiles.TileInstance> tiles)
-    {
-        if (tiles.Any(x => x.Terrain.Equals(Terrain.Mountains)))
-            return false;
-        
-        // TODO add rules according to data
-        
-        return true;
-    }
+    public bool IsPlacementValid(IList<Tiles.TileInstance> tiles) => ValidationHandler
+        .Validate(Blueprint.PlacementValidators)
+        .With(tiles)
+        .Handle();
 }

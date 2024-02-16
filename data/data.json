@@ -11376,7 +11376,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
-              "amountOfEntitiesRequired": 1,
+              "amountOfTilesRequired": 1,
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
@@ -11452,7 +11452,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
-              "amountOfEntitiesRequired": 1,
+              "amountOfTilesRequired": 1,
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
@@ -12260,7 +12260,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
-              "amountOfEntitiesRequired": 1,
+              "amountOfTilesRequired": 1,
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
@@ -12271,7 +12271,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-scraps",
-              "amountOfEntitiesRequired": 2,
+              "amountOfTilesRequired": 2,
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
@@ -12314,7 +12314,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
-              "amountOfEntitiesRequired": 1,
+              "amountOfTilesRequired": 1,
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
@@ -12325,7 +12325,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-celestium",
-              "amountOfEntitiesRequired": 2,
+              "amountOfTilesRequired": 2,
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
@@ -12368,7 +12368,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
-              "amountOfEntitiesRequired": 1,
+              "amountOfTilesRequired": 1,
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
@@ -13270,7 +13270,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
-              "amountOfEntitiesRequired": 1,
+              "amountOfTilesRequired": 1,
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
@@ -13281,7 +13281,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-scraps",
-              "amountOfEntitiesRequired": 2,
+              "amountOfTilesRequired": 2,
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
@@ -13324,7 +13324,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
-              "amountOfEntitiesRequired": 1,
+              "amountOfTilesRequired": 1,
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
@@ -13335,7 +13335,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-celestium",
-              "amountOfEntitiesRequired": 2,
+              "amountOfTilesRequired": 2,
               "conditionFlag": "ConditionFlag.Exists"
             }
           ],
@@ -14473,7 +14473,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
-              "amountOfEntitiesRequired": 1,
+              "amountOfTilesRequired": 1,
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],
@@ -14557,7 +14557,7 @@
             {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
-              "amountOfEntitiesRequired": 1,
+              "amountOfTilesRequired": 1,
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],

@@ -1,12 +1,15 @@
 using Godot;
 using System;
 using low_age_data.Domain.Behaviours;
+using low_age_data.Domain.Common;
 
 public class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
 {
     public event Action<BehaviourNode> Ended = delegate { };
     
     public Guid InstanceId { get; set; } = Guid.NewGuid();
+    public string Description { get; protected set; }
+    public Alignment Alignment { get; protected set; }
     public Guid? OwnerActorId { get; protected set; }
     public EndsAtNode CurrentDuration { get; protected set; }
     
@@ -15,6 +18,8 @@ public class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
     public void SetBlueprint(Behaviour blueprint)
     {
         Blueprint = blueprint;
+        Description = Blueprint.Description;
+        Alignment = Blueprint.Alignment;
         CurrentDuration = EndsAtNode.InstantiateAsChild(blueprint.EndsAt, this);
         CurrentDuration.Completed += OnDurationEnded;
     }

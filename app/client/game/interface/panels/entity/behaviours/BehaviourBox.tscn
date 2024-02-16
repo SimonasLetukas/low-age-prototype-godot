@@ -1,13 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/sprites/interface/panel-extra-small-x4.png" type="Texture" id=1]
 [ext_resource path="res://assets/icons/icon_health_big.png" type="Texture" id=2]
+[ext_resource path="res://app/client/game/interface/panels/entity/behaviours/BehaviourBox.cs" type="Script" id=3]
 
-[node name="ConditionBox" type="NinePatchRect"]
+[node name="BehaviourBox" type="NinePatchRect"]
 margin_right = 6.0
 margin_bottom = 6.0
 rect_min_size = Vector2( 24, 24 )
-hint_tooltip = "This could be a condition"
+hint_tooltip = "This could be a behaviour text"
 mouse_filter = 1
 size_flags_vertical = 0
 texture = ExtResource( 1 )
@@ -15,6 +16,7 @@ patch_margin_left = 4
 patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
+script = ExtResource( 3 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_left = 4.0

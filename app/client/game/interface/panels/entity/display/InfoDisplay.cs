@@ -253,8 +253,8 @@ public class InfoDisplay : MarginContainer
         _leftSideTopShields.Visible = _valueCurrentShields > 0 || _valueMaxShields > 0;
         _leftSideMiddleMovement.Visible = _valueCurrentMovement > 0 || _valueMaxMovement > 0;
         _leftSideMiddleInitiative.Visible = _valueInitiative > 0;
-        _leftSideBottomMeleeArmour.Visible = true;
-        _leftSideBottomRangedArmour.Visible = true;
+        _leftSideBottomMeleeArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
+        _leftSideBottomRangedArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _rightSide.Visible = true;
         _rightSideMeleeAttack.Visible = _hasMeleeAttack;
         _rightSideRangedAttack.Visible = _hasRangedAttack;
@@ -271,10 +271,10 @@ public class InfoDisplay : MarginContainer
 
         _leftSide.Visible = true;
         _leftSideTop.Visible = true;
-        _leftSideTopHealth.Visible = true;
+        _leftSideTopHealth.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _leftSideTopShields.Visible = _valueCurrentShields > 0 || _valueMaxShields > 0;
-        _leftSideBottomMeleeArmour.Visible = true;
-        _leftSideBottomRangedArmour.Visible = true;
+        _leftSideBottomMeleeArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
+        _leftSideBottomRangedArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _actorAttributes.Visible = true;
     }
 

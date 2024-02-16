@@ -46,9 +46,14 @@ mouse_cursor/custom_image="res://assets/cursors/cursor.png"
 
 scene_naming=1
 
+[global]
+
+tooltip=false
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+timers/tooltip_delay_sec=0.1
 
 [importer_defaults]
 

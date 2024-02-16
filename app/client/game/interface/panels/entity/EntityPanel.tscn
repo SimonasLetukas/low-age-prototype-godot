@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://app/client/game/interface/panels/entity/EntityPanel.cs" type="Script" id=1]
 [ext_resource path="res://app/client/game/interface/panels/entity/EntityName.tscn" type="PackedScene" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://app/client/game/interface/panels/entity/display/InfoDisplay.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/sprites/interface/stats-panel.png" type="Texture" id=13]
 [ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=14]
-[ext_resource path="res://app/client/game/interface/panels/entity/conditions/box/ConditionBox.tscn" type="PackedScene" id=15]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
@@ -125,7 +124,7 @@ patch_margin_top = 18
 patch_margin_right = 32
 patch_margin_bottom = 18
 
-[node name="Conditions" type="GridContainer" parent="."]
+[node name="Behaviours" type="GridContainer" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -140,15 +139,6 @@ size_flags_vertical = 0
 custom_constants/vseparation = 4
 custom_constants/hseparation = 4
 columns = 5
-
-[node name="ConditionBox5" parent="Conditions" instance=ExtResource( 15 )]
-margin_right = 24.0
-margin_bottom = 24.0
-
-[node name="ConditionBox6" parent="Conditions" instance=ExtResource( 15 )]
-margin_left = 28.0
-margin_right = 52.0
-margin_bottom = 24.0
 
 [node name="EntityName" parent="." instance=ExtResource( 2 )]
 

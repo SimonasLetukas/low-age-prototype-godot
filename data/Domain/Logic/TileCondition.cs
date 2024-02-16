@@ -14,7 +14,7 @@ namespace low_age_data.Domain.Logic
             int? amountOfTilesRequired = null) : base(conditionFlag)
         {
             ConditionedTile = conditionedTile;
-            AmountOfEntitiesRequired = amountOfTilesRequired ?? 1;
+            AmountOfTilesRequired = amountOfTilesRequired ?? 1;
         }
         
         /// <summary>
@@ -25,6 +25,6 @@ namespace low_age_data.Domain.Logic
         /// <summary>
         /// How many <see cref="Tile"/>s should be found for this condition to return true. 
         /// </summary>
-        public int AmountOfEntitiesRequired { get; }
+        public int AmountOfTilesRequired { get; }
     }
 }

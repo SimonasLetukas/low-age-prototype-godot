@@ -163,21 +163,20 @@ public class ClientMap : Map
             ? Entities.SelectedEntity 
             : UpdateHoveredEntity(mousePosition);
         
+        HandleDeselecting();
+        
         if (entity is null)
-        {
-            HandleDeselecting();
             return;
-        }
+
+        Entities.SelectEntity(entity);
         
         if (entity is UnitNode unit)
         {
             var entityPosition = Entities.GetMapPositionOfEntity(entity);
             var availableTiles = Pathfinding.GetAvailablePositions(entityPosition, unit.Movement);
             _tileMap.SetAvailableTiles(availableTiles);
+            _selectionOverlay = SelectionOverlay.Movement;
         }
-        
-        Entities.SelectEntity(entity);
-        _selectionOverlay = SelectionOverlay.Movement;
     }
 
     private void ExecutePlacement()
@@ -287,11 +286,7 @@ public class ClientMap : Map
         
         _selectionOverlay = SelectionOverlay.Placement;
         
-        // TODO fix UI display not updating when structure is selected in game
-        // TODO fix available tiles not updating when structure is selected
-        // TODO remove path calculation (and showing path tiles) for structures
-        // TODO display entity behaviours in UI dynamically, check that it works,
-        //          then remove the buildableBehaviours after entity is placed 
         // TODO make multiplayer work with a new event (also figure out duplication during initialization)
+        // TODO show buildable description as tooltip while in placement: https://www.reddit.com/r/godot/comments/jg6dtt/new_custom_tooltip_node_turn_any_control_node/
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
 
 /// <summary>
@@ -117,8 +116,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         }
         
         SetForPlacement(false);
-        // TODO remove buildableBehaviours
-        // TODO should be left until building is finished (payment is completed)
+        Behaviours.RemoveAll<BuildableNode>(); // TODO should be left until building is finished (payment is completed)
     }
     
     public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Vector2 resultingPosition)
