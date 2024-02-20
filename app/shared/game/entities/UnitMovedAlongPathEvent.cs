@@ -4,16 +4,16 @@ using Godot;
 
 public class UnitMovedAlongPathEvent : IGameEvent
 {
-    public UnitMovedAlongPathEvent(Vector2 currentEntityPosition, ICollection<Vector2> globalPath,
+    public UnitMovedAlongPathEvent(Guid entityInstanceId, ICollection<Vector2> globalPath,
         ICollection<Vector2> path)
     {
-        CurrentEntityPosition = currentEntityPosition;
+        EntityInstanceId = entityInstanceId;
         GlobalPath = globalPath;
         Path = path;
     }
     
     public Guid Id { get; set; } = Guid.NewGuid();
-    public Vector2 CurrentEntityPosition { get; set; } // TODO use entity ID instead
+    public Guid EntityInstanceId { get; set; }
     public ICollection<Vector2> GlobalPath { get; set; } // TODO perhaps this can be calculated in each client instead?
     public ICollection<Vector2> Path { get; set; }
 }

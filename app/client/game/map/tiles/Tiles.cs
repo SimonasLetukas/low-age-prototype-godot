@@ -119,14 +119,7 @@ public class Tiles : Node2D
         ? GetTile(at).Terrain
         : Terrain.Mountains;
 
-    public IList<TileInstance> GetTiles(Rect2 at)
-    {
-        var tiles = new List<TileInstance>();
-        for (var x = (int)at.Position.x; x < (int)(at.Position.x + at.Size.x); x++)
-            for (var y = (int)at.Position.y; y < (int)(at.Position.y + at.Size.y); y++) 
-                tiles.Add(GetTile(new Vector2(x, y)));
-        return tiles;
-    }
+    public IList<TileInstance> GetTiles(IList<Vector2> at) => at.Select(GetTile).ToList();
 
     public TileInstance GetTile(Vector2 at) => _tiles.SingleOrDefault(x => x.Position.Equals(at));
 
@@ -140,7 +133,7 @@ public class Tiles : Node2D
 
     public void AddOccupation(EntityNode entity)
     {
-        foreach (var position in entity.GetOccupiedPositions())
+        foreach (var position in entity.EntityOccupyingPositions)
         {
             var tile = GetTile(position);
             if (IsOccupied(tile, entity))
@@ -152,7 +145,7 @@ public class Tiles : Node2D
 
     public void RemoveOccupation(EntityNode entity)
     {
-        foreach (var position in entity.GetOccupiedPositions())
+        foreach (var position in entity.EntityOccupyingPositions)
         {
             var tile = GetTile(position);
             tile.Occupants.Remove(entity);

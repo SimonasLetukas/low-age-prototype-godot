@@ -56,6 +56,7 @@ public class ClientGame : Game
         _map.Entities.EntityDeselected += _interface.OnEntityDeselected;
         
         _map.UnitMovementIssued += RegisterNewGameEvent;
+        _map.Entities.EntityPlaced += RegisterNewGameEvent;
     }
 
     private void DisconnectSignals()
@@ -70,6 +71,7 @@ public class ClientGame : Game
         _map.Entities.EntityDeselected -= _interface.OnEntityDeselected;
         
         _map.UnitMovementIssued -= RegisterNewGameEvent;
+        _map.Entities.EntityPlaced -= RegisterNewGameEvent;
     }
 
     [RemoteSync]
@@ -110,6 +112,9 @@ public class ClientGame : Game
                 break;
             case UnitMovedAlongPathEvent unitMovedAlongPathEvent:
                 _map.MoveUnit(unitMovedAlongPathEvent);
+                break;
+            case EntityPlacedEvent entityPlacedEvent:
+                _map.Entities.PlaceEntity(entityPlacedEvent);
                 break;
             default:
                 GD.PrintErr($"{nameof(ClientGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +

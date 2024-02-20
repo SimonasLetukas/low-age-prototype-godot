@@ -82,7 +82,7 @@ public class ClientMap : Map
         Position = new Vector2((Mathf.Max(_mapSize.x, _mapSize.y) * Constants.TileWidth) / 2, Position.y);
         _tileMap.Initialize(_mapSize, @event.Tiles);
         Pathfinding.Initialize(_mapSize, @event.Tiles);
-        Entities.Initialize();
+        Entities.Initialize(_tileMap.GetTiles);
         
         _tileMap.FillMapOutsideWithMountains();
         _tileMap.UpdateALlBitmaps();
@@ -96,7 +96,7 @@ public class ClientMap : Map
 
         if (entity != null) // TODO GetTopEntity doesn't work so this is always skipped
         {
-            var entityMapPosition = Entities.GetMapPositionOfEntity(entity);
+            var entityMapPosition = entity.EntityPrimaryPosition;
             if (_hoveredTile.Position == entityMapPosition) 
                 return entity;
             
@@ -126,7 +126,7 @@ public class ClientMap : Map
 
     public void MoveUnit(UnitMovedAlongPathEvent @event)
     {
-        var selectedEntity = Entities.GetEntityFromMapPosition(@event.CurrentEntityPosition);
+        var selectedEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
         _tileMap.RemoveOccupation(selectedEntity);
         Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path);
     }
@@ -172,8 +172,7 @@ public class ClientMap : Map
         
         if (entity is UnitNode unit)
         {
-            var entityPosition = Entities.GetMapPositionOfEntity(entity);
-            var availableTiles = Pathfinding.GetAvailablePositions(entityPosition, unit.Movement);
+            var availableTiles = Pathfinding.GetAvailablePositions(entity.EntityPrimaryPosition, unit.Movement);
             _tileMap.SetAvailableTiles(availableTiles);
             _selectionOverlay = SelectionOverlay.Movement;
         }
@@ -223,8 +222,7 @@ public class ClientMap : Map
         var path = Pathfinding.FindPath(_hoveredTile.Position);
         var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
         var selectedEntity = Entities.SelectedEntity;
-        var entityPosition = Entities.GetMapPositionOfEntity(selectedEntity);
-        UnitMovementIssued(new UnitMovedAlongPathEvent(entityPosition, globalPath, path));
+        UnitMovementIssued(new UnitMovedAlongPathEvent(selectedEntity.InstanceId, globalPath, path));
         HandleDeselecting();
     }
 
@@ -254,7 +252,7 @@ public class ClientMap : Map
 
     private void OnEntitiesNewPositionOccupied(EntityNode entity)
     {
-        var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPosition);
+        var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPrimaryPosition);
         Entities.AdjustGlobalPosition(entity, globalPosition);
         
         _tileMap.AddOccupation(entity);
@@ -280,7 +278,7 @@ public class ClientMap : Map
         Entities.SetEntityForPlacement(entityId);
         
         _tileMap.SetTargetTiles(buildAbility.PlacementArea.ToPositions(
-            Entities.SelectedEntity.EntityPosition, 
+            Entities.SelectedEntity.EntityPrimaryPosition, 
             _mapSize,
             Entities.SelectedEntity));
         

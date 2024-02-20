@@ -14,6 +14,7 @@ public class Entities : YSort
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     
+    public event Action<EntityPlacedEvent> EntityPlaced = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
     public event Action EntityDeselected = delegate { };
@@ -25,10 +26,9 @@ public class Entities : YSort
 
     private YSort _units;
     private YSort _structures;
-    private readonly Godot.Collections.Dictionary<Vector2, EntityNode> _entitiesByMapPositions = 
-        new Godot.Collections.Dictionary<Vector2, EntityNode>();
-    private readonly Godot.Collections.Dictionary<EntityNode, Vector2> _mapPositionsByEntities = 
-        new Godot.Collections.Dictionary<EntityNode, Vector2>();
+    private Func<IList<Vector2>, IList<Tiles.TileInstance>> _getTiles;
+
+    private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new Dictionary<Guid, EntityNode>();
 
     public override void _Ready()
     {
@@ -36,8 +36,10 @@ public class Entities : YSort
         _structures = GetNode<YSort>("Structures");
     }
     
-    public void Initialize()
+    public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles)
     {
+        _getTiles = getTiles;
+        
         // Force-add units for testing
         var slaveBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Slave));
         var mapPositionsToSpawn = new List<Vector2> { new Vector2(30, 40), new Vector2(32, 48), 
@@ -72,12 +74,8 @@ public class Entities : YSort
         base._ExitTree();
     }
     
-    public Vector2 GetMapPositionOfEntity(EntityNode entity) => _mapPositionsByEntities.ContainsKey(entity) 
-        ? _mapPositionsByEntities[entity] 
-        : Vector2.Inf;
-
-    public EntityNode GetEntityFromMapPosition(Vector2 mapPosition) => _entitiesByMapPositions.ContainsKey(mapPosition)
-        ? _entitiesByMapPositions[mapPosition]
+    public EntityNode GetEntityByInstanceId(Guid instanceId) => _entitiesByIds.ContainsKey(instanceId)
+        ? _entitiesByIds[instanceId]
         : null;
 
     public void AdjustGlobalPosition(EntityNode entity, Vector2 globalPosition) => entity.SnapTo(globalPosition);
@@ -175,13 +173,10 @@ public class Entities : YSort
         return zIndex;
     }
     
-    public void MoveEntity(EntityNode entity, ICollection<Vector2> globalPath, ICollection<Vector2> path)
+    public void MoveEntity(EntityNode entity, IEnumerable<Vector2> globalPath, ICollection<Vector2> path)
     {
         var targetPosition = path.Last();
         var startPosition = path.First();
-        _mapPositionsByEntities[entity] = targetPosition;
-        _entitiesByMapPositions.Remove(startPosition);
-        _entitiesByMapPositions[targetPosition] = entity;
         EntityMoving = true;
         entity.MoveUntilFinished(globalPath.ToList(), targetPosition);
     }
@@ -191,19 +186,18 @@ public class Entities : YSort
         var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
         var newEntity = InstantiateEntity(newEntityBlueprint);
         
-        newEntity.SetForPlacement(true);
+        newEntity.SetForPlacement();
         EntityInPlacement = newEntity;
         
         return newEntity;
     }
 
     public void UpdateEntityInPlacement(Vector2 mapPosition, Vector2 globalPosition, 
-        Func<Rect2, IList<Tiles.TileInstance>> getTiles)
+        Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles)
     {
-        EntityInPlacement.EntityPosition = mapPosition;
+        EntityInPlacement.EntityPrimaryPosition = mapPosition;
         EntityInPlacement.SnapTo(globalPosition);
-        var entityPositions = new Rect2(EntityInPlacement.EntityPosition, EntityInPlacement.EntitySize);
-        EntityInPlacement.DeterminePlacementValidity(getTiles(entityPositions));
+        EntityInPlacement.DeterminePlacementValidity(true);
     }
 
     public void CancelPlacement()
@@ -216,34 +210,59 @@ public class Entities : YSort
     {
         var entity = EntityInPlacement;
         EntityInPlacement = null;
-        return PlaceEntity(entity);
+        entity.DeterminePlacementValidity(true);
+        return PlaceEntity(entity, true);
+    }
+
+    public EntityNode PlaceEntity(EntityPlacedEvent @event)
+    {
+        var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
+        var entity = GetEntityByInstanceId(@event.InstanceId);
+        if (entity is null)
+        {
+            entity = InstantiateEntity(entityBlueprint);
+            entity.InstanceId = @event.InstanceId;
+            entity.EntityPrimaryPosition = @event.MapPosition;
+            entity.DeterminePlacementValidity(false);
+        }
+
+        return PlaceEntity(entity, false);
     }
     
     private EntityNode PlaceEntity(Entity entityBlueprint, Vector2 mapPosition)
     {
         var entity = InstantiateEntity(entityBlueprint);
-        return PlaceEntity(entity, mapPosition);
+        entity.EntityPrimaryPosition = mapPosition;
+        entity.DeterminePlacementValidity(false);
+        return PlaceEntity(entity, true);
     }
 
-    private EntityNode PlaceEntity(EntityNode entity, Vector2 mapPosition)
+    private EntityNode PlaceEntity(EntityNode entity, bool placeAsCandidate)
     {
-        entity.EntityPosition = mapPosition;
-        return PlaceEntity(entity);
-    }
+        var instanceId = entity.InstanceId;
+        
+        if (DebugEnabled) GD.Print($"{nameof(Entities)}: placing {entity.DisplayName} '{instanceId}' at " +
+                                   $"{entity.EntityPrimaryPosition}.");
 
-    private EntityNode PlaceEntity(EntityNode entity)
-    {
-        var position = entity.EntityPosition;
+        if (TryPlaceEntity(entity, placeAsCandidate) is false)
+            return null;
         
-        if (DebugEnabled) GD.Print($"{nameof(Entities)}: placing {entity.DisplayName} at {position}.");
+        if (placeAsCandidate)
+            EntityPlaced(new EntityPlacedEvent(entity.BlueprintId, entity.EntityPrimaryPosition, instanceId));
         
-        entity.Place();
-        
-        _entitiesByMapPositions[position] = entity;
-        _mapPositionsByEntities[entity] = position;
-        
+        _entitiesByIds[instanceId] = entity;
         NewPositionOccupied(entity);
+        
         return entity;
+    }
+
+    private static bool TryPlaceEntity(EntityNode entity, bool placeAsCandidate)
+    {
+        var placedSuccessfully = placeAsCandidate 
+            ? entity.SetAsCandidate() 
+            : entity.Place();
+        
+        return placedSuccessfully;
     }
 
     private EntityNode InstantiateEntity(Entity entityBlueprint)
@@ -263,6 +282,7 @@ public class Entities : YSort
     private StructureNode InstantiateStructure(Structure structureBlueprint)
     {
         var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures);
+        structure.GetTiles = _getTiles;
 
         return structure;
     }
@@ -270,7 +290,8 @@ public class Entities : YSort
     private UnitNode InstantiateUnit(Unit unitBlueprint)
     {
         var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units);
-        
+
+        unit.GetTiles = _getTiles;
         unit.FinishedMoving += OnEntityFinishedMoving;
 
         return unit;

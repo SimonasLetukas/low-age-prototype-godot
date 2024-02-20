@@ -16,15 +16,26 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public event Action<EntityNode> FinishedMoving = delegate { };
     
+    public EntityId BlueprintId { get; set; }
     public Guid InstanceId { get; set; } = Guid.NewGuid();
-    public Vector2 EntityPosition { get; set; }
+    public Vector2 EntityPrimaryPosition { get; set; }
     public Vector2 EntitySize { get; protected set; } = Vector2.One;
+    public IList<Vector2> EntityOccupyingPositions => new Rect2(EntityPrimaryPosition, EntitySize).ToList();
     public string DisplayName { get; protected set; }
-    public bool CanBePlaced { get; protected set; } = true;
+    public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; }
+    public Func<IList<Vector2>, IList<Tiles.TileInstance>> GetTiles { protected get; set; }
     
     private Entity Blueprint { get; set; }
     protected Sprite Sprite { get; private set; }
+    protected State EntityState { get; private set; }
+    protected enum State
+    { // Flow (one-way): InPlacement -> Candidate -> Placed -> Completed
+        InPlacement, // transient and local to client, available while selecting a valid placement location
+        Candidate, // transient and local to client, to wait for the server until planning phase ends 
+        Placed, // visible for all clients, in process of being paid for so cannot use abilities, but can be attacked
+        Completed // visible for all clients and fully functional
+    }
     private IList<Vector2> _movePath;
     private bool _selected;
     private float _movementDuration;
@@ -46,6 +57,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public void SetBlueprint(Entity blueprint)
     {
         Blueprint = blueprint;
+        BlueprintId = Blueprint.Id;
         DisplayName = blueprint.DisplayName;
         
         // TODO not sure why the below is needed... perhaps should be removed? (also from scene)
@@ -83,21 +95,20 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public void SnapTo(Vector2 globalPosition) => GlobalPosition = globalPosition;
 
-    public void SetForPlacement(bool to, bool placementValid = false)
+    public void SetForPlacement()
     {
-        if ((Sprite.Material is ShaderMaterial shaderMaterial) is false) 
-            return;
+        EntityState = State.InPlacement;
+        SetTint(true);
+        SetTransparency(true);
         
-        shaderMaterial.SetShaderParam("tint_effect_factor", to ? 1 : 0);
-        Sprite.Modulate = new Color(Colors.White, to ? 0.5f : 1);
-        
-        CanBePlaced = placementValid;
-        SetPlacementValidityColor(placementValid);
+        CanBePlaced = false;
+        SetPlacementValidityColor(CanBePlaced);
     }
 
-    public bool DeterminePlacementValidity(IList<Tiles.TileInstance> tiles)
+    public bool DeterminePlacementValidity(bool requiresTargetTiles)
     {
-        CanBePlaced = IsPlacementGenerallyValid(tiles)
+        var tiles = GetTiles(EntityOccupyingPositions);
+        CanBePlaced = IsPlacementGenerallyValid(tiles, requiresTargetTiles)
                       && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles));
         
         // TODO check for masks
@@ -106,46 +117,78 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         SetPlacementValidityColor(CanBePlaced);
         return CanBePlaced;
     }
-
-    public void Place()
+    
+    public bool SetAsCandidate()
     {
+        if (EntityState != State.InPlacement)
+            return false;
+        
         if (CanBePlaced is false)
         {
             QueueFree();
-            return;
+            return false;
+        }
+
+        EntityState = State.Candidate;
+        SetTint(true);
+        SetTransparency(true);
+        
+        CanBePlaced = true;
+        SetPlacementValidityColor(CanBePlaced);
+        return true;
+    }
+
+    public bool Place()
+    {
+        if (EntityState != State.Candidate && CanBePlaced is false)
+        {
+            QueueFree();
+            return false;
         }
         
-        SetForPlacement(false);
-        Behaviours.RemoveAll<BuildableNode>(); // TODO should be left until building is finished (payment is completed)
+        EntityState = State.Placed;
+        SetTint(false);
+        SetTransparency(true);
+        
+        Complete(); // TODO should be called outside of this class when e.g. building is finished (payment is completed)
+        return true;
+    }
+
+    public void Complete()
+    {
+        if (EntityState != State.Placed)
+            return;
+
+        EntityState = State.Completed;
+        SetTransparency(false);
+        
+        Behaviours.RemoveAll<BuildableNode>();
     }
     
     public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Vector2 resultingPosition)
     {
-        EntityPosition = resultingPosition;
+        EntityPrimaryPosition = resultingPosition;
         
         globalPositionPath.Remove(globalPositionPath.First());
         _movePath = globalPositionPath;
         MoveToNextTarget();
-    }
-    
-    public IEnumerable<Vector2> GetOccupiedPositions()
-    {
-        var positions = new List<Vector2>();
-        for (var x = 0; x < EntitySize.x; x++)
-        {
-            for (var y = 0; y < EntitySize.y; y++)
-            {
-                positions.Add(new Vector2(EntityPosition.x + x, EntityPosition.y + y));
-            }
-        }
-
-        return positions;
     }
 
     protected void SetPlacementValidityColor(bool to)
     {
         if (Sprite.Material is ShaderMaterial shaderMaterial)
             shaderMaterial.SetShaderParam("tint_color", to ? PlacementColorSuccess : PlacementColorInvalid);
+    }
+
+    protected void SetTint(bool to)
+    {
+        if (Sprite.Material is ShaderMaterial shaderMaterial)
+            shaderMaterial.SetShaderParam("tint_effect_factor", to ? 1 : 0);
+    }
+
+    protected void SetTransparency(bool to)
+    {
+        Sprite.Modulate = new Color(Colors.White, to ? 0.5f : 1);
     }
 
     protected void AdjustSpriteOffset()
@@ -160,12 +203,12 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Sprite.Offset = (Blueprint.CenterOffset.ToGodotVector2() * -1) + offsetFromX + offsetFromY;
     }
     
-    private bool IsPlacementGenerallyValid(IList<Tiles.TileInstance> tiles)
+    private bool IsPlacementGenerallyValid(IList<Tiles.TileInstance> tiles, bool requiresTargetTiles)
     {
         if (tiles.Any(x => x is null))
             return false;
 
-        if (tiles.All(x => x.IsTarget is false))
+        if (requiresTargetTiles && tiles.All(x => x.IsTarget is false))
             return false;
 
         return true;
