@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Tiles;
@@ -76,6 +77,19 @@ public class Creator : Node2D
         }
         
         image.Unlock();
-        MapCreated(new MapCreatedEvent(mapSize, startingPositions, tiles));
+        
+        MapCreated(new MapCreatedEvent(mapSize, AssignStartingPositions(startingPositions.ToSquareRects()), tiles));
+    }
+
+    private static Dictionary<int, IList<Rect2>> AssignStartingPositions(IList<Rect2> positions)
+    {
+        var assigned = new Dictionary<int, IList<Rect2>>();
+        foreach (var player in Data.Instance.Players)
+        {
+            assigned[player.Id] = new List<Rect2> { positions.First() };
+            positions.RemoveAt(0);
+        }
+
+        return assigned;
     }
 }

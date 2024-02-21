@@ -13,7 +13,7 @@ public class ClientMap : Map
 
     public Entities Entities { get; private set; }
     
-    private ICollection<Vector2> _startingPositions = new List<Vector2>();
+    private IList<Rect2> _startingPositions = new List<Rect2>();
     private Vector2 _mapSize = Vector2.Inf;
     private Tiles.TileInstance _hoveredTile = null;
     private Tiles _tileMap;
@@ -77,12 +77,12 @@ public class ClientMap : Map
         if (DebugEnabled) GD.Print($"{nameof(ClientMap)}.{nameof(Initialize)}");
         
         _mapSize = @event.MapSize;
-        _startingPositions = @event.StartingPositions;
+        _startingPositions = @event.StartingPositions[GetTree().GetNetworkUniqueId()];
         
         Position = new Vector2((Mathf.Max(_mapSize.x, _mapSize.y) * Constants.TileWidth) / 2, Position.y);
         _tileMap.Initialize(_mapSize, @event.Tiles);
         Pathfinding.Initialize(_mapSize, @event.Tiles);
-        Entities.Initialize(_tileMap.GetTiles);
+        Entities.Initialize(_tileMap.GetTiles, _startingPositions[0].ToList());
         
         _tileMap.FillMapOutsideWithMountains();
         _tileMap.UpdateALlBitmaps();
@@ -133,7 +133,7 @@ public class ClientMap : Map
     
     private void HandleLeftClick()
     {
-        if (_hoveredTile.IsInBoundsOf(_mapSize) is false)
+        if (_hoveredTile is null || _hoveredTile.IsInBoundsOf(_mapSize) is false)
             return;
         
         if (Entities.EntityMoving)

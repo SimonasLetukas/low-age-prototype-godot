@@ -36,33 +36,25 @@ public class Entities : YSort
         _structures = GetNode<YSort>("Structures");
     }
     
-    public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles)
+    public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles, IList<Vector2> startingPositions)
     {
         _getTiles = getTiles;
         
         // Force-add units for testing
         var slaveBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Slave));
-        var mapPositionsToSpawn = new List<Vector2> { new Vector2(30, 40), new Vector2(32, 48), 
-            new Vector2(34, 46), new Vector2(35, 35), new Vector2(36, 38), new Vector2(1, 13) };
-        foreach (var mapPosition in mapPositionsToSpawn)
-        {
-            PlaceEntity(slaveBlueprint, mapPosition);
-        }
+        PlaceEntity(slaveBlueprint, startingPositions[0]);
         
         var horriorBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Horrior));
-        PlaceEntity(horriorBlueprint, new Vector2(39, 39));
+        PlaceEntity(horriorBlueprint, startingPositions[1]);
         
         var marksmanBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Marksman));
-        PlaceEntity(marksmanBlueprint, new Vector2(38, 42));
+        PlaceEntity(marksmanBlueprint, startingPositions[2]);
         
         var bigBadBullBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.BigBadBull));
-        PlaceEntity(bigBadBullBlueprint, new Vector2(38, 46));
-        
-        var obeliskBlueprint = Data.Instance.Blueprint.Entities.Structures.Single(x => x.Id.Equals(StructureId.Obelisk));
-        PlaceEntity(obeliskBlueprint, new Vector2(31, 36));
+        PlaceEntity(bigBadBullBlueprint, startingPositions[0] - new Vector2(2, 2));
         
         var citadelBlueprint = Data.Instance.Blueprint.Entities.Structures.Single(x => x.Id.Equals(StructureId.Citadel));
-        PlaceEntity(citadelBlueprint, new Vector2(33, 41));
+        PlaceEntity(citadelBlueprint, startingPositions[3]);
     }
     
     public override void _ExitTree()
