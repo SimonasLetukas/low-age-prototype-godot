@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public class Research : MarginContainer
 {
@@ -11,7 +10,6 @@ public class Research : MarginContainer
     {
         SetResearch(ResearchName);
         GetNode<Label>($"{nameof(Label)}").Text = ResearchTemplate;
-        GetNode<Label>($"{nameof(Label)}/Shadow").Text = ResearchTemplate;
     }
 
     public void SetResearch(string name)

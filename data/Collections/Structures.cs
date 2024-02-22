@@ -46,7 +46,8 @@ namespace low_age_data.Collections
                 new Structure(
                     id: StructureId.Hut,
                     displayName: nameof(StructureId.Hut).CamelCaseToWords(),
-                    description: "",
+                    description: $"{nameof(StructureId.Hut).CamelCaseToWords()} brings Scraps income and should be " +
+                                 $"built on top of Scraps resources.",
                     sprite: "res://assets/sprites/structures/revs/collectors hut indexed 2x2.png",
                     centerOffset: new Vector2<int>(15, 14),
                     statistics: new List<Stat>
@@ -72,7 +73,8 @@ namespace low_age_data.Collections
                 new Structure(
                     id: StructureId.Obelisk,
                     displayName: nameof(StructureId.Obelisk).CamelCaseToWords(),
-                    description: "",
+                    description: $"{nameof(StructureId.Obelisk).CamelCaseToWords()} provides Celestium income and " +
+                                 $"should be built on top of Celestium resources",
                     sprite: "res://assets/sprites/structures/revs/obelisk indexed 2x2 or 1x1.png",
                     centerOffset: new Vector2<int>(8, 29),
                     statistics: new List<Stat>
@@ -99,7 +101,8 @@ namespace low_age_data.Collections
                 new Structure(
                     id: StructureId.Shack,
                     displayName: nameof(StructureId.Shack).CamelCaseToWords(),
-                    description: "",
+                    description: $"{nameof(StructureId.Shack).CamelCaseToWords()} houses Population needed for new " +
+                                 $"unit production.",
                     sprite: "res://assets/sprites/structures/revs/shack indexed 1x1.png",
                     centerOffset: new Vector2<int>(7, 11),
                     statistics: new List<Stat>
@@ -125,7 +128,7 @@ namespace low_age_data.Collections
                 new Structure(
                     id: StructureId.Smith,
                     displayName: nameof(StructureId.Smith).CamelCaseToWords(),
-                    description: "",
+                    description: $"{nameof(StructureId.Smith).CamelCaseToWords()} works on Melee Weapon production.",
                     sprite: "res://assets/sprites/structures/revs/smith indexed 1x2.png",
                     centerOffset: new Vector2<int>(12, 10),
                     statistics: new List<Stat>
@@ -151,7 +154,7 @@ namespace low_age_data.Collections
                 new Structure(
                     id: StructureId.Fletcher,
                     displayName: nameof(StructureId.Fletcher).CamelCaseToWords(),
-                    description: "",
+                    description: $"{nameof(StructureId.Fletcher).CamelCaseToWords()} works on Ranged Weapon production.",
                     sprite: "res://assets/sprites/structures/revs/fletchery indexed 2x2.png",
                     centerOffset: new Vector2<int>(15, 14),
                     statistics: new List<Stat>
@@ -177,7 +180,7 @@ namespace low_age_data.Collections
                 new Structure(
                     id: StructureId.Alchemy,
                     displayName: nameof(StructureId.Alchemy).CamelCaseToWords(),
-                    description: "",
+                    description: $"{nameof(StructureId.Alchemy).CamelCaseToWords()} works on Special Weapon production.",
                     sprite: "res://assets/sprites/structures/revs/alchemy indexed 2x3.png",
                     centerOffset: new Vector2<int>(16, 17),
                     statistics: new List<Stat>
@@ -203,7 +206,7 @@ namespace low_age_data.Collections
                 new Structure(
                     id: StructureId.Depot,
                     displayName: nameof(StructureId.Depot).CamelCaseToWords(),
-                    description: "",
+                    description: $"{nameof(StructureId.Depot).CamelCaseToWords()} provides storage to all Weapons.",
                     sprite: "res://assets/sprites/structures/revs/depot indexed 2x2.png",
                     centerOffset: new Vector2<int>(14, 20),
                     statistics: new List<Stat>
@@ -229,7 +232,8 @@ namespace low_age_data.Collections
                 new Structure(
                     id: StructureId.Workshop,
                     displayName: nameof(StructureId.Workshop).CamelCaseToWords(),
-                    description: "",
+                    description: $"{nameof(StructureId.Workshop).CamelCaseToWords()} can be used to research various " +
+                                 $"upgrades.",
                     sprite: "res://assets/sprites/structures/revs/workshop indexed 2x2.png",
                     centerOffset: new Vector2<int>(11, 18),
                     statistics: new List<Stat>
@@ -255,7 +259,7 @@ namespace low_age_data.Collections
                 new Structure(
                     id: StructureId.Outpost,
                     displayName: nameof(StructureId.Outpost).CamelCaseToWords(),
-                    description: "",
+                    description: $"{nameof(StructureId.Outpost).CamelCaseToWords()} can be climbed and used as a tower.",
                     sprite: "res://assets/sprites/structures/revs/outpost indexed 1x1.png",
                     centerOffset: new Vector2<int>(8, 17),
                     statistics: new List<Stat>
@@ -282,7 +286,8 @@ namespace low_age_data.Collections
                 new Structure(
                     id: StructureId.Barricade,
                     displayName: nameof(StructureId.Barricade).CamelCaseToWords(),
-                    description: "",
+                    description: $"{nameof(StructureId.Barricade).CamelCaseToWords()} helps to defend against ranged " +
+                                 $"attacks and acts as an obstacle for melee units.",
                     sprite: "res://assets/sprites/structures/revs/barricade front indexed 1x1.png", // TODO
                     centerOffset: new Vector2<int>(0, 0), // TODO
                     statistics: new List<Stat>

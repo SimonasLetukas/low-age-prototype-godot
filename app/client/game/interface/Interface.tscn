@@ -38,21 +38,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Shadow" type="Label" parent="Theme/DebugPanel/Coordinates"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 3.0
-margin_top = -20.0
-margin_right = -35.0
-text = "(-100, -100)"
-valign = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="TerrainType" type="Label" parent="Theme/DebugPanel"]
 anchor_top = 1.0
 anchor_right = 1.0
@@ -61,21 +46,6 @@ margin_left = 27.0
 margin_top = -32.0
 margin_right = -102.0
 margin_bottom = -12.0
-text = "Mountains"
-valign = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Shadow" type="Label" parent="Theme/DebugPanel/TerrainType"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 3.0
-margin_top = -20.0
-margin_right = -64.0
 text = "Mountains"
 valign = 2
 __meta__ = {

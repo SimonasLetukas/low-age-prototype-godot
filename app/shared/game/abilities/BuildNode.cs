@@ -55,15 +55,16 @@ public class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelectable
         var research = string.Empty;
         if (item.ResearchNeeded.Any())
         {
-            research += "\n\nResearch needed to unlock: ";
+            research += "\nResearch needed to unlock: ";
             research = item.ResearchNeeded.Aggregate(research, (current, researchId) 
                 => current + $"{researchId}, ");
             research = research.Remove(research.Length - 2);
         }
 
-        return $"Build {entity.DisplayName} \n\n" +
-               $"Cost: {cost} " + // TODO describe how long it will take to build this with the current income
-               research;
+        return $"Build {entity.DisplayName} \n" +
+               $"{research}" +
+               $"\nCost: {cost} \n\n" + // TODO describe how long it will take to build this with the current income
+               $"{entity.Description.WrapToLines(50)}";
     }
 
     public bool IsSelectableItemDisabled(Id selectableItemId)

@@ -31,6 +31,5 @@ public class StatBlockText : MarginContainer
     public void SetText(string text)
     {
         GetNode<Label>($"{nameof(MarginContainer)}/TextType").Text = text;
-        GetNode<Label>($"{nameof(MarginContainer)}/TextType/Shadow").Text = text;
     }
 }

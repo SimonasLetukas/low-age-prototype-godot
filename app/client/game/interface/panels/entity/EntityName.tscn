@@ -32,16 +32,3 @@ custom_fonts/font = SubResource( 1 )
 text = "Big Bad Bull"
 align = 2
 valign = 2
-
-[node name="Shadow" type="Label" parent="NameLabel"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 2.0
-margin_right = 236.0
-margin_bottom = 18.0
-rect_min_size = Vector2( 0, 4 )
-custom_constants/line_spacing = -2
-custom_fonts/font = SubResource( 1 )
-text = "Big Bad Bull"
-align = 2
-valign = 2

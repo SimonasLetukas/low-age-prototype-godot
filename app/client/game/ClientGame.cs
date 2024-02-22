@@ -52,6 +52,7 @@ public class ClientGame : Game
 
         _map.FinishedInitializing += OnMapFinishedInitializing;
         _map.NewTileHovered += _interface.OnMapNewTileHovered;
+        _map.EntityIsBeingPlaced += _interface.SelectionPanel.OnEntityIsBeingPlaced;
         _map.Entities.EntitySelected += _interface.OnEntitySelected;
         _map.Entities.EntityDeselected += _interface.OnEntityDeselected;
         
@@ -67,6 +68,7 @@ public class ClientGame : Game
         
         _map.FinishedInitializing -= OnMapFinishedInitializing;
         _map.NewTileHovered -= _interface.OnMapNewTileHovered;
+        _map.EntityIsBeingPlaced -= _interface.SelectionPanel.OnEntityIsBeingPlaced;
         _map.Entities.EntitySelected -= _interface.OnEntitySelected;
         _map.Entities.EntityDeselected -= _interface.OnEntityDeselected;
         

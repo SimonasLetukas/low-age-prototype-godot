@@ -44,8 +44,8 @@ namespace low_age_data.Collections
                     },
                     negativeIncomeDescription: "Caution, there are more units than the supported population."),
 
-                new Resource(id: ResourceId.WeaponStorage,
-                    displayName: nameof(ResourceId.WeaponStorage).CamelCaseToWords(),
+                new Resource(id: ResourceId.Weapons,
+                    displayName: nameof(ResourceId.Weapons).CamelCaseToWords(),
                     description: "Maximum amount of storage for all melee, ranged and special weapons. The most " +
                                  "valuable weapons are lost if the maximum storage is decreased for any reason.",
                     sprite: "res://assets/sprites/resources/weapon all indexed.png",
@@ -60,7 +60,7 @@ namespace low_age_data.Collections
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
-                    storedAs: ResourceId.WeaponStorage),
+                    storedAs: ResourceId.Weapons),
 
                 new Resource(id: ResourceId.RangedWeapon,
                     displayName: nameof(ResourceId.MeleeWeapon).CamelCaseToWords(),
@@ -69,7 +69,7 @@ namespace low_age_data.Collections
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
-                    storedAs: ResourceId.WeaponStorage),
+                    storedAs: ResourceId.Weapons),
 
                 new Resource(id: ResourceId.SpecialWeapon,
                     displayName: nameof(ResourceId.MeleeWeapon).CamelCaseToWords(),
@@ -78,7 +78,7 @@ namespace low_age_data.Collections
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
-                    storedAs: ResourceId.WeaponStorage),
+                    storedAs: ResourceId.Weapons),
                 
                 new Resource(id: ResourceId.Faith,
                     displayName: nameof(ResourceId.Faith).CamelCaseToWords(),

@@ -38,7 +38,5 @@ public class StatBlock : MarginContainer
         }
 
         GetNode<Label>($"{nameof(HBoxContainer)}/{nameof(MarginContainer)}/{nameof(Label)}").Text = newLabelValue;
-        GetNode<Label>($"{nameof(HBoxContainer)}/{nameof(MarginContainer)}/{nameof(Label)}/Shadow").Text = 
-            newLabelValue;
     }
 }

@@ -60,13 +60,13 @@
       }
     },
     {
-      "id": "resource-weapon-storage",
-      "displayName": "Weapon Storage",
+      "id": "resource-weapons",
+      "displayName": "Weapons",
       "description": "Maximum amount of storage for all melee, ranged and special weapons. The most valuable weapons are lost if the maximum storage is decreased for any reason.",
       "hasLimit": false,
       "isConsumable": false,
       "hasBank": false,
-      "storedAs": "resource-weapon-storage",
+      "storedAs": "resource-weapons",
       "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
@@ -85,7 +85,7 @@
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
-      "storedAs": "resource-weapon-storage",
+      "storedAs": "resource-weapons",
       "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
@@ -104,7 +104,7 @@
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
-      "storedAs": "resource-weapon-storage",
+      "storedAs": "resource-weapons",
       "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
@@ -123,7 +123,7 @@
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
-      "storedAs": "resource-weapon-storage",
+      "storedAs": "resource-weapons",
       "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
@@ -1932,7 +1932,7 @@
           "ability-shared-scraps-income"
         ],
         "displayName": "Hut",
-        "description": "",
+        "description": "Hut brings Scraps income and should be built on top of Scraps resources.",
         "sprite": "res://assets/sprites/structures/revs/collectors hut indexed 2x2.png",
         "centerOffset": {
           "x": 15,
@@ -1999,7 +1999,7 @@
           "ability-obelisk-celestium-discharge"
         ],
         "displayName": "Obelisk",
-        "description": "",
+        "description": "Obelisk provides Celestium income and should be built on top of Celestium resources",
         "sprite": "res://assets/sprites/structures/revs/obelisk indexed 2x2 or 1x1.png",
         "centerOffset": {
           "x": 8,
@@ -2065,7 +2065,7 @@
           "ability-shack-accommodation"
         ],
         "displayName": "Shack",
-        "description": "",
+        "description": "Shack houses Population needed for new unit production.",
         "sprite": "res://assets/sprites/structures/revs/shack indexed 1x1.png",
         "centerOffset": {
           "x": 7,
@@ -2131,7 +2131,7 @@
           "ability-smith-melee-weapon-production"
         ],
         "displayName": "Smith",
-        "description": "",
+        "description": "Smith works on Melee Weapon production.",
         "sprite": "res://assets/sprites/structures/revs/smith indexed 1x2.png",
         "centerOffset": {
           "x": 12,
@@ -2197,7 +2197,7 @@
           "ability-fletcher-ranged-weapon-production"
         ],
         "displayName": "Fletcher",
-        "description": "",
+        "description": "Fletcher works on Ranged Weapon production.",
         "sprite": "res://assets/sprites/structures/revs/fletchery indexed 2x2.png",
         "centerOffset": {
           "x": 15,
@@ -2263,7 +2263,7 @@
           "ability-alchemy-special-weapon-production"
         ],
         "displayName": "Alchemy",
-        "description": "",
+        "description": "Alchemy works on Special Weapon production.",
         "sprite": "res://assets/sprites/structures/revs/alchemy indexed 2x3.png",
         "centerOffset": {
           "x": 16,
@@ -2329,7 +2329,7 @@
           "ability-depot-weapon-storage"
         ],
         "displayName": "Depot",
-        "description": "",
+        "description": "Depot provides storage to all Weapons.",
         "sprite": "res://assets/sprites/structures/revs/depot indexed 2x2.png",
         "centerOffset": {
           "x": 14,
@@ -2395,7 +2395,7 @@
           "ability-workshop-research"
         ],
         "displayName": "Workshop",
-        "description": "",
+        "description": "Workshop can be used to research various upgrades.",
         "sprite": "res://assets/sprites/structures/revs/workshop indexed 2x2.png",
         "centerOffset": {
           "x": 11,
@@ -2462,7 +2462,7 @@
           "ability-outpost-high-ground"
         ],
         "displayName": "Outpost",
-        "description": "",
+        "description": "Outpost can be climbed and used as a tower.",
         "sprite": "res://assets/sprites/structures/revs/outpost indexed 1x1.png",
         "centerOffset": {
           "x": 8,
@@ -2530,7 +2530,7 @@
           "ability-barricade-decompose"
         ],
         "displayName": "Barricade",
-        "description": "",
+        "description": "Barricade helps to defend against ranged attacks and acts as an obstacle for melee units.",
         "sprite": "res://assets/sprites/structures/revs/barricade front indexed 1x1.png",
         "centerOffset": {
           "x": 0,
@@ -11718,7 +11718,7 @@
           "amount": 4.0
         },
         {
-          "resource": "resource-weapon-storage",
+          "resource": "resource-weapons",
           "change": "Change.AddCurrent",
           "amount": 4.0
         }
@@ -12063,7 +12063,7 @@
       "id": "behaviour-depot-weapon-storage-income",
       "resources": [
         {
-          "resource": "resource-weapon-storage",
+          "resource": "resource-weapons",
           "change": "Change.AddCurrent",
           "amount": 4.0
         }

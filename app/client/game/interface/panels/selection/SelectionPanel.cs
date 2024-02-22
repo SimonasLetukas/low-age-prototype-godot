@@ -12,6 +12,7 @@ public class SelectionPanel : Control
     private NinePatchRect _background;
     private Tween _tween;
     private GridContainer _gridContainer;
+    private RichTextLabel _text;
     private int _selectionAmount = 0;
     private const int OneLineSize = 100;
     private const int NewLineHeight = 44;
@@ -26,6 +27,7 @@ public class SelectionPanel : Control
         _tween = GetNode<Tween>(nameof(Tween));
         _gridContainer = GetNode<GridContainer>(nameof(GridContainer));
         _gridContainer.Columns = Columns;
+        _text = GetNode<RichTextLabel>(nameof(RichTextLabel));
         
         Reset();
         HidePanel();
@@ -49,6 +51,17 @@ public class SelectionPanel : Control
     public void OnGoBackPressed()
     {
         HidePanel();
+    }
+
+    public void OnEntityIsBeingPlaced(EntityNode entity)
+    {
+        var buildableBehaviours = entity.Behaviours.GetBuildables();
+        var text = buildableBehaviours.Aggregate(string.Empty, (current, behaviour) => 
+            current + behaviour.Description + "\n\n");
+        _text.BbcodeText = text;
+        
+        _text.Visible = true;
+        _gridContainer.Visible = false;
     }
 
     private void Populate(ISelectable ability)
@@ -76,8 +89,11 @@ public class SelectionPanel : Control
         }
     }
 
-    private void OnBuildSelectionItemPressed(ISelectable abilityNode, Id id) 
-        => SelectedToBuild((BuildNode)abilityNode, (EntityId)id);
+    private void OnBuildSelectionItemPressed(ISelectable abilityNode, Id id)
+    {
+        
+        SelectedToBuild((BuildNode)abilityNode, (EntityId)id);
+    }
 
     private void HidePanel()
     {
@@ -108,6 +124,9 @@ public class SelectionPanel : Control
             child.Clicked -= OnBuildSelectionItemPressed;
             child.QueueFree();
         }
+
+        _text.Visible = false;
+        _gridContainer.Visible = true;
         
         RectSize = new Vector2(RectSize.x, OneLineSize);
         MarginTop = 0;

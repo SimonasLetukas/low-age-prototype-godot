@@ -92,6 +92,9 @@ public class BaseButton : NinePatchRect
     
     private void OnBaseButtonGuiInput(InputEvent inputEvent)
     {
+        if (IsDisabled)
+            return;
+        
         if (inputEvent.IsActionPressed("mouse_left"))
             SetClicked(true);
         

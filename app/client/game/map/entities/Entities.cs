@@ -103,7 +103,7 @@ public class Entities : YSort
             return false;
 
         var occupationExists = tile.Occupants.Any();
-        var occupantEntity = tile.Occupants.FirstOrDefault(); // TODO handle high-ground
+        var occupantEntity = tile.Occupants.LastOrDefault(); // TODO handle high-ground
         
         if (occupationExists && HoveredEntity != null && HoveredEntity.InstanceId.Equals(occupantEntity?.InstanceId))
             return true;

@@ -79,17 +79,3 @@ rect_min_size = Vector2( 56, 0 )
 theme = ExtResource( 2 )
 text = "999/999"
 align = 1
-
-[node name="Shadow" type="Label" parent="HBoxContainer/MarginContainer/Label"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 1.0
-margin_right = 60.0
-margin_bottom = 19.0
-rect_min_size = Vector2( 56, 0 )
-theme = ExtResource( 2 )
-text = "999/999"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}

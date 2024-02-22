@@ -95,8 +95,6 @@ public class Interface : CanvasLayer
         }
 
         GetNode<Label>("Theme/DebugPanel/Coordinates").Text = coordinatesText;
-        GetNode<Label>("Theme/DebugPanel/Coordinates/Shadow").Text = coordinatesText;
         GetNode<Label>("Theme/DebugPanel/TerrainType").Text = terrainText;
-        GetNode<Label>("Theme/DebugPanel/TerrainType/Shadow").Text = terrainText;
     }
 }

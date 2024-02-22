@@ -9,6 +9,7 @@ public class ClientMap : Map
 {
     public event Action FinishedInitializing = delegate { };
     public event Action<Vector2, Terrain, IList<EntityNode>> NewTileHovered = delegate { };
+    public event Action<EntityNode> EntityIsBeingPlaced = delegate { };
     public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
 
     public Entities Entities { get; private set; }
@@ -275,7 +276,7 @@ public class ClientMap : Map
         _tileMap.ClearPath();
         _tileMap.DisableFocusedTile();
         
-        Entities.SetEntityForPlacement(entityId);
+        var entity = Entities.SetEntityForPlacement(entityId);
         
         _tileMap.SetTargetTiles(buildAbility.PlacementArea.ToPositions(
             Entities.SelectedEntity.EntityPrimaryPosition, 
@@ -283,8 +284,6 @@ public class ClientMap : Map
             Entities.SelectedEntity));
         
         _selectionOverlay = SelectionOverlay.Placement;
-        
-        // TODO make multiplayer work with a new event (also figure out duplication during initialization)
-        // TODO show buildable description as tooltip while in placement: https://www.reddit.com/r/godot/comments/jg6dtt/new_custom_tooltip_node_turn_any_control_node/
+        EntityIsBeingPlaced(entity);
     }
 }

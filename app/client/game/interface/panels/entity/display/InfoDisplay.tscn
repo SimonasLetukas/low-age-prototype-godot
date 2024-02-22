@@ -181,20 +181,6 @@ custom_colors/font_color = Color( 0.662745, 0.203922, 0.0117647, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "[R]"
 
-[node name="Shadow" type="Label" parent="VBoxContainer/TopPart/AbilityTitle/Top/Research/Label"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 2.0
-margin_right = 22.0
-margin_bottom = 20.0
-size_flags_horizontal = 0
-theme = ExtResource( 6 )
-custom_fonts/font = SubResource( 1 )
-text = "[R]"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Name" type="MarginContainer" parent="VBoxContainer/TopPart/AbilityTitle/Top"]
 margin_right = 212.0
 margin_bottom = 20.0
@@ -209,19 +195,6 @@ margin_bottom = 20.0
 theme = ExtResource( 6 )
 custom_fonts/font = SubResource( 1 )
 text = "Unleash the Rage"
-
-[node name="Shadow" type="Label" parent="VBoxContainer/TopPart/AbilityTitle/Top/Name/Label"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 2.0
-margin_right = 198.0
-margin_bottom = 20.0
-theme = ExtResource( 6 )
-custom_fonts/font = SubResource( 1 )
-text = "Unleash the Rage"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="AbilitySubtitle" type="MarginContainer" parent="VBoxContainer/TopPart/AbilityTitle"]
 margin_top = 84.0
@@ -240,19 +213,6 @@ custom_colors/font_color = Color( 0.756863, 0.843137, 0.87451, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Planning (cooldown: 3 action phases)"
 valign = 2
-
-[node name="Shadow" type="Label" parent="VBoxContainer/TopPart/AbilityTitle/AbilitySubtitle/Label"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 2.0
-margin_right = 198.0
-margin_bottom = 16.0
-custom_fonts/font = SubResource( 2 )
-text = "Planning (cooldown: 3 action phases)"
-valign = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="NavigationBox" parent="VBoxContainer/TopPart" instance=ExtResource( 19 )]
 visible = false
@@ -291,19 +251,6 @@ theme = ExtResource( 6 )
 custom_fonts/font = SubResource( 1 )
 text = "Venom Fangs"
 
-[node name="Shadow" type="Label" parent="VBoxContainer/TopPart/LeftSide/Rows/TopText/Name/Label"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 2.0
-margin_right = 198.0
-margin_bottom = 20.0
-theme = ExtResource( 6 )
-custom_fonts/font = SubResource( 1 )
-text = "Venom Fangs"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Type" type="MarginContainer" parent="VBoxContainer/TopPart/LeftSide/Rows/TopText"]
 margin_top = 16.0
 margin_right = 200.0
@@ -318,19 +265,6 @@ custom_colors/font_color = Color( 0.756863, 0.843137, 0.87451, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Ranged"
 valign = 2
-
-[node name="Shadow" type="Label" parent="VBoxContainer/TopPart/LeftSide/Rows/TopText/Type/Label"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 2.0
-margin_right = 198.0
-margin_bottom = 16.0
-custom_fonts/font = SubResource( 2 )
-text = "Ranged"
-valign = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Top" type="HBoxContainer" parent="VBoxContainer/TopPart/LeftSide/Rows"]
 margin_right = 200.0
@@ -454,6 +388,9 @@ rect_clip_content = false
 size_flags_horizontal = 3
 size_flags_vertical = 2
 theme = ExtResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 0
 custom_constants/line_separation = -1
 custom_fonts/bold_font = SubResource( 6 )
 custom_fonts/normal_font = SubResource( 7 )
@@ -476,26 +413,6 @@ text = "  and  as the selected target, cannot act, can be attacked and stays for
 e_big.png[/img]to the selected target. If "
 fit_content_height = true
 
-[node name="Shadow" type="RichTextLabel" parent="VBoxContainer/AbilityDescription/Text"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 2.0
-margin_right = 242.0
-margin_bottom = 270.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource( 6 )
-custom_constants/line_separation = -1
-custom_fonts/bold_font = SubResource( 6 )
-custom_fonts/normal_font = SubResource( 7 )
-bbcode_enabled = true
-bbcode_text = "Place a ghostly rendition of a selected enemy unit in [b]7[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] to an unoccupied space in a [b]3[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] from the selected target. The rendition has the same amount of [img=15x11]Client/UI/Icons/icon_health_big.png[/img], [img=15x11]Client/UI/Icons/icon_melee_armour_big.png[/img] and [img=15x11]Client/UI/Icons/icon_ranged_armour_big.png[/img] as the selected target, cannot act, can be attacked and stays for [b]2[/b] action phases. [b]50%[/b] of all [img=15x11]Client/UI/Icons/icon_damage_big.png[/img] done to the rendition is done as pure [img=15x11]Client/UI/Icons/icon_damage_big.png[/img]to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals [b]10[/b][img=15x11]Client/UI/Icons/icon_melee_attack.png[/img] and slows all adjacent enemies by [b]50%[/b] until the end of their next action."
-text = "Place a ghostly rendition of a selected enemy unit in 7  to an unoccupied space in a 3  from the selected target. The rendition has the same amount of ,  and  as the selected target, cannot act, can be attacked and stays for 2 action phases. 50% of all  done to the rendition is done as pure to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals 10 and slows all adjacent enemies by 50% until the end of their next action."
-fit_content_height = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="ActorAttributes" type="MarginContainer" parent="VBoxContainer"]
 margin_top = 100.0
 margin_right = 244.0
@@ -507,22 +424,6 @@ script = ExtResource( 3 )
 [node name="Label" type="Label" parent="VBoxContainer/ActorAttributes"]
 margin_right = 244.0
 margin_bottom = 18.0
-rect_min_size = Vector2( 3, 5 )
-size_flags_horizontal = 3
-theme = ExtResource( 6 )
-text = "Light - Biological"
-align = 1
-valign = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Shadow" type="Label" parent="VBoxContainer/ActorAttributes/Label"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 3.0
-margin_right = 247.0
-margin_bottom = 19.0
 rect_min_size = Vector2( 3, 5 )
 size_flags_horizontal = 3
 theme = ExtResource( 6 )

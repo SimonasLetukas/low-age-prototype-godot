@@ -40,21 +40,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Shadow" type="Label" parent="TextVs"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 3.0
-margin_right = 97.0
-margin_bottom = 17.0
-rect_min_size = Vector2( 94, 0 )
-size_flags_horizontal = 8
-custom_colors/font_color = Color( 0.756863, 0.843137, 0.87451, 1 )
-custom_fonts/font = SubResource( 1 )
-text = "vs."
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_left = 124.0
 margin_top = 7.0
@@ -67,24 +52,6 @@ custom_constants/margin_right = 6
 
 [node name="TextType" type="Label" parent="MarginContainer"]
 margin_right = 70.0
-margin_bottom = 17.0
-grow_horizontal = 0
-rect_min_size = Vector2( 68, 0 )
-size_flags_horizontal = 8
-size_flags_vertical = 8
-custom_fonts/font = SubResource( 2 )
-text = "Mechanical"
-align = 1
-valign = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Shadow" type="Label" parent="MarginContainer/TextType"]
-self_modulate = Color( 0, 0, 0, 1 )
-show_behind_parent = true
-margin_left = 2.0
-margin_right = 72.0
 margin_bottom = 17.0
 grow_horizontal = 0
 rect_min_size = Vector2( 68, 0 )

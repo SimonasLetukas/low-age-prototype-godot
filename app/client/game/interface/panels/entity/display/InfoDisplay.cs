@@ -331,12 +331,10 @@ public class InfoDisplay : MarginContainer
     private void ShowAbility()
     {
         GetNode<Label>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Label").Text = _valueAbilityName;
-        GetNode<Label>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Label/Shadow").Text = _valueAbilityName;
         _researchText.SetResearch(_valueResearchText);
         GetNode<AbilitySubtitle>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(AbilitySubtitle)}")
             .SetAbilitySubtitle(_valueAbilityTurnPhase, _valueAbilityCooldown);
         _abilityDescription.GetNode<RichTextLabel>("Text").BbcodeText = _valueAbilityText;
-        _abilityDescription.GetNode<RichTextLabel>("Text/Shadow").BbcodeText = _valueAbilityText;
 
         _abilityTitle.Visible = true;
         _researchText.Visible = _valueResearchText.Empty() is false;

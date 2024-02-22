@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using low_age_data.Domain.Common;
 
 public class AbilitySubtitle : MarginContainer
@@ -17,12 +16,10 @@ public class AbilitySubtitle : MarginContainer
         }
 
         GetNode<Label>("Label").Text = newText;
-        GetNode<Label>("Label/Shadow").Text = newText;
     }
 
     public void SetSubtitle(string text)
     {
         GetNode<Label>("Label").Text = text;
-        GetNode<Label>("Label/Shadow").Text = text;
     }
 }
