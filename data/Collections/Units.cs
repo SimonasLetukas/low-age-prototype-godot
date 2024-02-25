@@ -41,6 +41,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Slave.Build,
                         AbilityId.Slave.Repair,
                         AbilityId.Slave.ManualLabour
@@ -117,6 +118,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Quickdraw.Doubleshot,
                         AbilityId.Quickdraw.Cripple
                     }),
@@ -151,6 +153,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Gorger.FanaticSuicide,
                         AbilityId.Gorger.FanaticSuicidePassive
                     }),
@@ -185,6 +188,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Camou.SilentAssassin,
                         AbilityId.Camou.Climb
                     }),
@@ -225,6 +229,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Shaman.WondrousGoo
                     }),
 
@@ -264,6 +269,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Pyre.WallOfFlames,
                         AbilityId.Pyre.PhantomMenace
                     }),
@@ -298,6 +304,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.BigBadBull.UnleashTheRage
                     },
                     size: 2),
@@ -330,6 +337,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Mummy.SpawnRoach,
                         AbilityId.Mummy.LeapOfHunger
                     }),
@@ -396,6 +404,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Parasite.ParalysingGrasp
                     }),
 
@@ -430,6 +439,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Horrior.ExpertFormation,
                         AbilityId.Horrior.Mount
                     }),
@@ -471,6 +481,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Marksman.CriticalMark
                     }),
 
@@ -505,6 +516,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Surfer.Dismount
                     }),
 
@@ -545,6 +557,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Mortar.DeadlyAmmunition,
                         AbilityId.Mortar.Reload,
                         AbilityId.Mortar.PiercingBlast
@@ -581,6 +594,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Hawk.TacticalGoggles,
                         AbilityId.Hawk.Leadership,
                         AbilityId.Hawk.HealthKit
@@ -617,6 +631,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Engineer.AssembleMachine,
                         AbilityId.Engineer.Operate,
                         AbilityId.Engineer.Repair
@@ -760,6 +775,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Vessel.Machine,
                         AbilityId.Vessel.AbsorbentField,
                         AbilityId.Vessel.Fortify
@@ -804,6 +820,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.UnitInProduction,
                         AbilityId.Omen.Rendition
                     })
             };

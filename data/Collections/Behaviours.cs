@@ -89,10 +89,9 @@ namespace low_age_data.Collections
                     diminishingReturn: 2),
                 
                 new Buildable(
-                    id: BehaviourId.Shared.Revelators.BuildingBuildable,
-                    displayName: nameof(BehaviourId.Shared.Revelators.BuildingBuildable).CamelCaseToWords(),
-                    description: "This building can only be placed on the low ground and can be built by multiple " +
-                                 "Slaves simultaneously.",
+                    id: BehaviourId.Shared.UnitInProductionBuildable,
+                    displayName: nameof(BehaviourId.Shared.UnitInProductionBuildable).CamelCaseToWords(),
+                    description: "This unit should be placed in the allowed placement area.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
@@ -103,6 +102,28 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                        }),
+                    }),
+                
+                new Buildable(
+                    id: BehaviourId.Shared.Revelators.BuildingStructureBuildable,
+                    displayName: nameof(BehaviourId.Shared.Revelators.BuildingStructureBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground and can be built by multiple " +
+                                 "Slaves simultaneously. The placement can include a maximum of 2 marsh tiles.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    placementValidators: new List<Validator>
+                    {
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Marsh, 3)
                         }),
                     }),
 
@@ -118,9 +139,10 @@ namespace low_age_data.Collections
                         multiplier: 2)),
                 
                 new Buildable(
-                    id: BehaviourId.Shared.Uee.BuildingBuildable,
-                    displayName: nameof(BehaviourId.Shared.Uee.BuildingBuildable).CamelCaseToWords(),
-                    description: "This building can only be placed on the low ground tiles with Power.",
+                    id: BehaviourId.Shared.Uee.BuildingStructureBuildable,
+                    displayName: nameof(BehaviourId.Shared.Uee.BuildingStructureBuildable).CamelCaseToWords(),
+                    description: "This building can only be placed on the low ground tiles with Power. Cannot be " +
+                                 "placed on marsh tiles.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementValidators: new List<Validator>
                     {
@@ -131,6 +153,10 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Marsh)
                         }),
                         new Validator(conditions: new List<Condition>
                         {

@@ -56,20 +56,28 @@ namespace low_age_data.Collections
                     }),
                 
                 new Passive(
-                    id: AbilityId.Shared.Revelators.Building,
-                    displayName: nameof(AbilityId.Shared.Revelators.Building).CamelCaseToWords(),
+                    id: AbilityId.Shared.UnitInProduction,
+                    displayName: nameof(AbilityId.Shared.UnitInProduction).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     sprite: null,
-                    onBuildBehaviour: BehaviourId.Shared.Revelators.BuildingBuildable),
+                    onBuildBehaviour: BehaviourId.Shared.UnitInProductionBuildable),
                 
                 new Passive(
-                    id: AbilityId.Shared.Uee.Building,
-                    displayName: nameof(AbilityId.Shared.Uee.Building).CamelCaseToWords(),
+                    id: AbilityId.Shared.Revelators.BuildingStructure,
+                    displayName: nameof(AbilityId.Shared.Revelators.BuildingStructure).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     sprite: null,
-                    onBuildBehaviour: BehaviourId.Shared.Uee.BuildingBuildable),
+                    onBuildBehaviour: BehaviourId.Shared.Revelators.BuildingStructureBuildable),
+                
+                new Passive(
+                    id: AbilityId.Shared.Uee.BuildingStructure,
+                    displayName: nameof(AbilityId.Shared.Uee.BuildingStructure).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    sprite: null,
+                    onBuildBehaviour: BehaviourId.Shared.Uee.BuildingStructureBuildable),
                 
                 new Passive(
                     id: AbilityId.Shared.Uee.PowerGenerator,
@@ -89,6 +97,7 @@ namespace low_age_data.Collections
                                  "Extractor can be built on tiles without Power.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementArea: new Map(),
+                    useWalkableTilesAsPlacementArea: false,
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: StructureId.Collector, cost: new List<Payment>
@@ -246,11 +255,13 @@ namespace low_age_data.Collections
                         EffectId.Citadel.HighGroundApplyBehaviour
                     }),
 
-                new Produce(
+                new Build(
                     id: AbilityId.Citadel.PromoteGoons,
                     displayName: nameof(AbilityId.Citadel.PromoteGoons).CamelCaseToWords(),
                     description: "Promote a new Revelators goon from the remaining Population.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    placementArea: new Map(),
+                    useWalkableTilesAsPlacementArea: true,
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: UnitId.Slave, cost: new List<Payment>
@@ -312,9 +323,8 @@ namespace low_age_data.Collections
                             new Payment(resource: ResourceId.Population, amount: 1)
                         }),
                     },
-                    canPlaceInWalkableAreaOnly: true,
-                    hasQueue: false,
-                    producedInstantly: true),
+                    casterConsumesAction: false,
+                    canHelp: false),
 
                 new Instant(
                     id: AbilityId.Obelisk.CelestiumDischarge,
@@ -716,12 +726,14 @@ namespace low_age_data.Collections
                         EffectId.Temple.KeepingTheFaithApplyBehaviourIncome
                     }),
                 
-                new Produce(
+                new Build(
                     id: AbilityId.MilitaryBase.Train,
                     displayName: nameof(AbilityId.MilitaryBase.Train).CamelCaseToWords(),
                     description: "Select a unit to be created at the specified location using Celestium for " +
                                  "production.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    placementArea: new Map(),
+                    useWalkableTilesAsPlacementArea: true,
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: UnitId.Horrior, cost: new List<Payment>
@@ -759,16 +771,17 @@ namespace low_age_data.Collections
                             ResearchId.Uee.CelestiumCoreUpgrade
                         })
                     },
-                    canPlaceInWalkableAreaOnly: true,
-                    hasQueue: true,
-                    producedInstantly: false),
+                    casterConsumesAction: true,
+                    canHelp: false),
                 
-                new Produce(
+                new Build(
                     id: AbilityId.Factory.Train,
                     displayName: nameof(AbilityId.Factory.Train).CamelCaseToWords(),
                     description: "Select a unit to be created at the specified location using Celestium for " +
                                  "production.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    placementArea: new Map(),
+                    useWalkableTilesAsPlacementArea: true,
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: UnitId.Engineer, cost: new List<Payment>
@@ -788,16 +801,17 @@ namespace low_age_data.Collections
                             ResearchId.Uee.CelestiumCoreUpgrade
                         })
                     },
-                    canPlaceInWalkableAreaOnly: true,
-                    hasQueue: true,
-                    producedInstantly: false),
+                    casterConsumesAction: true,
+                    canHelp: false),
                 
-                new Produce(
+                new Build(
                     id: AbilityId.Laboratory.Train,
                     displayName: nameof(AbilityId.Laboratory.Train).CamelCaseToWords(),
                     description: "Select a unit to be created at the specified location using Celestium for " +
                                  "production.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    placementArea: new Map(),
+                    useWalkableTilesAsPlacementArea: true,
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: UnitId.Omen, cost: new List<Payment>
@@ -808,10 +822,9 @@ namespace low_age_data.Collections
                         {
                             ResearchId.Uee.CelestiumCoreUpgrade
                         })
-                    },
-                    canPlaceInWalkableAreaOnly: true,
-                    hasQueue: true,
-                    producedInstantly: false),
+                    }, 
+                    casterConsumesAction: true,
+                    canHelp: false),
                 
                 new Research(
                     id: AbilityId.Armoury.Research,
@@ -1015,6 +1028,7 @@ namespace low_age_data.Collections
                                  "Celestium production to the construction than the previous Slave.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementArea: new Circle(radius: 1, ignoreRadius: 0),
+                    useWalkableTilesAsPlacementArea: false,
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: StructureId.Hut, cost: new List<Payment>
@@ -1563,6 +1577,7 @@ namespace low_age_data.Collections
                     "production to the construction.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     placementArea: new Circle(radius: 1, ignoreRadius: 0),
+                    useWalkableTilesAsPlacementArea: false,
                     selection: new List<Selection<EntityId>>
                     {
                         new Selection<EntityId>(name: UnitId.Cannon, cost: new List<Payment>

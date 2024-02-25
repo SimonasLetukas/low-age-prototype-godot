@@ -15,6 +15,8 @@
     public const int TileWidth = 16;
     public const int TileHeight = 8;
 
+    public const int MaxTooltipCharCount = 40;
+
     public static string ServerIp { get; private set; }
     public const int ServerPort = 3000;
     public const int ServerId = 1;

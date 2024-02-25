@@ -18,16 +18,17 @@ namespace low_age_data.Domain.Behaviours
             public static BehaviourId PassiveIncomeIncome => new BehaviourId($"{nameof(Shared)}{nameof(PassiveIncomeIncome)}".ToKebabCase(), true);
             public static BehaviourId ScrapsIncomeIncome => new BehaviourId($"{nameof(Shared)}{nameof(ScrapsIncomeIncome)}".ToKebabCase(), true);
             public static BehaviourId CelestiumIncomeIncome => new BehaviourId($"{nameof(Shared)}{nameof(CelestiumIncomeIncome)}".ToKebabCase(), true);
+            public static BehaviourId UnitInProductionBuildable => new BehaviourId($"{nameof(Shared)}{nameof(UnitInProductionBuildable)}".ToKebabCase(), true);
 
             public static class Revelators
             {
-                public static BehaviourId BuildingBuildable => new BehaviourId($"{nameof(Shared)}{nameof(Revelators)}{nameof(BuildingBuildable)}".ToKebabCase(), true);
+                public static BehaviourId BuildingStructureBuildable => new BehaviourId($"{nameof(Shared)}{nameof(Revelators)}{nameof(BuildingStructureBuildable)}".ToKebabCase(), true);
                 public static BehaviourId NoPopulationSpaceInterceptDamage => new BehaviourId($"{nameof(Shared)}{nameof(Revelators)}{nameof(NoPopulationSpaceInterceptDamage)}".ToKebabCase(), true);
             }
             
             public static class Uee
             {
-                public static BehaviourId BuildingBuildable => new BehaviourId($"{nameof(Shared)}{nameof(Uee)}{nameof(BuildingBuildable)}".ToKebabCase(), true);
+                public static BehaviourId BuildingStructureBuildable => new BehaviourId($"{nameof(Shared)}{nameof(Uee)}{nameof(BuildingStructureBuildable)}".ToKebabCase(), true);
                 public static BehaviourId PowerGeneratorBuff => new BehaviourId($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerGeneratorBuff)}".ToKebabCase(), true);
                 public static BehaviourId PowerDependencyBuff => new BehaviourId($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyBuff)}".ToKebabCase(), true);
                 public static BehaviourId PowerDependencyBuffDisable => new BehaviourId($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependencyBuffDisable)}".ToKebabCase(), true);

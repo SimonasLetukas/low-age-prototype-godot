@@ -58,6 +58,10 @@ public class ValidationHandler
         switch (conditionFlag)
         {
             case var _ when conditionFlag.Equals(ConditionFlag.TargetIsLowGround):
+                return _tileSource.All(t => t.Occupants.IsEmpty() 
+                                            || (t.IsTarget && t.Occupants.All(o => 
+                                                o is StructureNode structure 
+                                                && structure.WalkablePositions.Contains(t.Position))));
             case var _ when conditionFlag.Equals(ConditionFlag.TargetIsUnoccupied):
                 return _tileSource.All(x => x.Occupants.IsEmpty());
             

@@ -112,7 +112,6 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
                       && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles));
         
         // TODO check for masks
-        // TODO figure out how the checks should be made different for "produce" ability
         
         SetPlacementValidityColor(CanBePlaced);
         return CanBePlaced;

@@ -4,7 +4,9 @@ using System.Linq;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Common;
+using low_age_data.Domain.Common.Durations;
 using low_age_data.Domain.Common.Filters;
+using low_age_data.Domain.Common.Flags;
 using low_age_data.Domain.Common.Modifications;
 using low_age_data.Domain.Common.Shape;
 using low_age_data.Domain.Effects;
@@ -54,6 +56,12 @@ namespace low_age_data.Shared
             // Logic:
             typeof(BehaviourCondition), typeof(EntityCondition), typeof(MaskCondition), typeof(ResultValidator), 
             typeof(TileCondition), 
+            
+            // EnumValueObjects:
+            typeof(ActorAttribute), typeof(Alignment), typeof(AmountFlag), typeof(AttackAttribute), typeof(Attacks),
+            typeof(Change), typeof(ConditionFlag), typeof(DamageType), typeof(EndsAt), typeof(Event), typeof(FilterFlag),
+            typeof(Location), typeof(ModificationFlag), typeof(ModifyPlayerFlag), typeof(SearchFlag), typeof(StatType), 
+            typeof(Terrain), typeof(TurnPhase),
         };
 
         public Type BindToType(string? assemblyName, string typeName)

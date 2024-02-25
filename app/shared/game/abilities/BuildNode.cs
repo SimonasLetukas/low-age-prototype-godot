@@ -42,6 +42,16 @@ public class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelectable
         Selection = Blueprint.Selection;
     }
 
+    public IEnumerable<Vector2> GetPlacementPositions(EntityNode caster, Vector2 mapSize)
+    {
+        if (Blueprint.UseWalkableTilesAsPlacementArea && caster is StructureNode structure)
+        {
+            return structure.WalkablePositions;
+        }
+
+        return PlacementArea.ToPositions(caster, mapSize);
+    }
+
     public string GetSelectableItemText(Id selectableItemId)
     {
         var item = Selection.First(x => x.Name.Equals(selectableItemId));
@@ -63,8 +73,10 @@ public class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelectable
 
         return $"Build {entity.DisplayName} \n" +
                $"{research}" +
-               $"\nCost: {cost} \n\n" + // TODO describe how long it will take to build this with the current income
-               $"{entity.Description.WrapToLines(50)}";
+               $"\nCost: {cost.WrapToLines(Constants.MaxTooltipCharCount)} \n\n" + // TODO describe how long it will
+                                                                                   // take to build this with the
+                                                                                   // current income
+               $"{entity.Description.WrapToLines(Constants.MaxTooltipCharCount)}";
     }
 
     public bool IsSelectableItemDisabled(Id selectableItemId)

@@ -58,3 +58,4 @@ msbuild.wrn
 /server.exe
 /server.pck
 /low-age-prototype-godot.zip
+*.TMP

@@ -276,12 +276,9 @@ public class ClientMap : Map
         _tileMap.ClearPath();
         _tileMap.DisableFocusedTile();
         
-        var entity = Entities.SetEntityForPlacement(entityId);
+        _tileMap.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity, _mapSize));
         
-        _tileMap.SetTargetTiles(buildAbility.PlacementArea.ToPositions(
-            Entities.SelectedEntity.EntityPrimaryPosition, 
-            _mapSize,
-            Entities.SelectedEntity));
+        var entity = Entities.SetEntityForPlacement(entityId); // TODO pass in the cost to be tracked inside the buildableNode
         
         _selectionOverlay = SelectionOverlay.Placement;
         EntityIsBeingPlaced(entity);

@@ -6,6 +6,14 @@ using low_age_data.Domain.Common.Shape;
 
 public static class IShapeExtensions
 {
+    public static IEnumerable<Vector2> ToPositions(this IShape shape, EntityNode entity, Vector2 mapSize)
+    {
+        return shape.ToPositions(
+            entity.EntityPrimaryPosition, 
+            mapSize, 
+            entity);
+    }
+    
     public static IEnumerable<Vector2> ToPositions(this IShape shape, Vector2 centerPoint, Vector2 mapSize, EntityNode entity)
     {
         return shape.ToPositions(

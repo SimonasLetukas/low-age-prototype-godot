@@ -1,5 +1,9 @@
-﻿namespace low_age_data.Domain.Common
+﻿using System;
+using Newtonsoft.Json;
+
+namespace low_age_data.Domain.Common
 {
+    [Serializable]
     public struct Area
     {
         public Area(Vector2<int> size)
@@ -7,7 +11,8 @@
             Start = new Vector2<int>(0, 0);
             Size = size;
         }
-
+        
+        [JsonConstructor]
         public Area(Vector2<int> start, Vector2<int> size)
         {
             Start = start;

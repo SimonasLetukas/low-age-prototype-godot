@@ -120,7 +120,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Shared.Revelators.BuildingStructure,
                         AbilityId.Shack.Accommodation
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
@@ -146,7 +146,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Shared.Revelators.BuildingStructure,
                         AbilityId.Smith.MeleeWeaponProduction,
                     },
                     size: new Vector2<int>(x: 1, y: 2)),
@@ -172,7 +172,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Shared.Revelators.BuildingStructure,
                         AbilityId.Fletcher.RangedWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
@@ -198,7 +198,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Shared.Revelators.BuildingStructure,
                         AbilityId.Alchemy.SpecialWeaponProduction,
                     },
                     size: new Vector2<int>(x: 2, y: 3)),
@@ -224,7 +224,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Shared.Revelators.BuildingStructure,
                         AbilityId.Depot.WeaponStorage,
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
@@ -251,7 +251,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Shared.Revelators.BuildingStructure,
                         AbilityId.Workshop.Research
                     },
                     size: new Vector2<int>(x: 2, y: 2)),
@@ -277,7 +277,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Shared.Revelators.BuildingStructure,
                         AbilityId.Outpost.Ascendable,
                         AbilityId.Outpost.HighGround
                     },
@@ -305,7 +305,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Revelators.Building,
+                        AbilityId.Shared.Revelators.BuildingStructure,
                         AbilityId.Barricade.ProtectiveShield,
                         AbilityId.Barricade.Caltrops,
                         AbilityId.Barricade.Decompose
@@ -482,7 +482,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.PowerPole.PowerGrid,
                         AbilityId.PowerPole.ExcessDistribution,
@@ -512,7 +512,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.Temple.KeepingTheFaith
                     },
@@ -540,7 +540,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.MilitaryBase.Train
                     },
@@ -574,7 +574,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.Factory.Train
                     },
@@ -608,7 +608,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.Laboratory.Train
                     },
@@ -642,7 +642,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.Armoury.Research
                     },
@@ -698,7 +698,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.Stairs.Ascendable
                     },
@@ -726,7 +726,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.Gate.HighGround,
                         AbilityId.Gate.Ascendable,
@@ -756,7 +756,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.Watchtower.VantagePoint
                     },
@@ -784,7 +784,7 @@ namespace low_age_data.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.Building,
+                        AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.Bastion.Battlement
                     },

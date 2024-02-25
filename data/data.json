@@ -255,6 +255,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-slave-build",
           "ability-slave-repair",
           "ability-slave-manual-labour"
@@ -404,6 +405,7 @@
           "ActorAttribute.Ranged"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-quickdraw-doubleshot",
           "ability-quickdraw-cripple"
         ],
@@ -472,6 +474,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-gorger-fanatic-suicide",
           "ability-gorger-fanatic-suicide-passive"
         ],
@@ -540,6 +543,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-camou-silent-assassin",
           "ability-camou-climb"
         ],
@@ -619,6 +623,7 @@
           "ActorAttribute.Ranged"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-shaman-wondrous-goo"
         ],
         "displayName": "Shaman",
@@ -697,6 +702,7 @@
           "ActorAttribute.Ranged"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-pyre-wall-of-flames",
           "ability-pyre-phantom-menace"
         ],
@@ -765,6 +771,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-big-bad-bull-unleash-the-rage"
         ],
         "displayName": "Big Bad Bull",
@@ -832,6 +839,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-mummy-spawn-roach",
           "ability-mummy-leap-of-hunger"
         ],
@@ -968,6 +976,7 @@
           "ActorAttribute.Celestial"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-parasite-paralysing-grasp"
         ],
         "displayName": "Parasite",
@@ -1041,6 +1050,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-horrior-expert-formation",
           "ability-horrior-mount"
         ],
@@ -1126,6 +1136,7 @@
           "ActorAttribute.Ranged"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-marksman-critical-mark"
         ],
         "displayName": "Marksman",
@@ -1199,6 +1210,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-surfer-dismount"
         ],
         "displayName": "Surfer",
@@ -1283,6 +1295,7 @@
           "ActorAttribute.Ranged"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-mortar-deadly-ammunition",
           "ability-mortar-reload",
           "ability-mortar-piercing-blast"
@@ -1358,6 +1371,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-hawk-tactical-goggles",
           "ability-hawk-leadership",
           "ability-hawk-health-kit"
@@ -1433,6 +1447,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-engineer-assemble-machine",
           "ability-engineer-operate",
           "ability-engineer-repair"
@@ -1728,6 +1743,7 @@
           "ActorAttribute.Mechanical"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-vessel-machine",
           "ability-vessel-absorbent-field",
           "ability-vessel-fortify"
@@ -1813,6 +1829,7 @@
           "ActorAttribute.Ranged"
         ],
         "abilities": [
+          "ability-shared-unit-in-production",
           "ability-omen-rendition"
         ],
         "displayName": "Omen",
@@ -2061,7 +2078,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building",
+          "ability-shared-revelators-building-structure",
           "ability-shack-accommodation"
         ],
         "displayName": "Shack",
@@ -2127,7 +2144,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building",
+          "ability-shared-revelators-building-structure",
           "ability-smith-melee-weapon-production"
         ],
         "displayName": "Smith",
@@ -2193,7 +2210,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building",
+          "ability-shared-revelators-building-structure",
           "ability-fletcher-ranged-weapon-production"
         ],
         "displayName": "Fletcher",
@@ -2259,7 +2276,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building",
+          "ability-shared-revelators-building-structure",
           "ability-alchemy-special-weapon-production"
         ],
         "displayName": "Alchemy",
@@ -2325,7 +2342,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building",
+          "ability-shared-revelators-building-structure",
           "ability-depot-weapon-storage"
         ],
         "displayName": "Depot",
@@ -2391,7 +2408,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building",
+          "ability-shared-revelators-building-structure",
           "ability-workshop-research"
         ],
         "displayName": "Workshop",
@@ -2457,7 +2474,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building",
+          "ability-shared-revelators-building-structure",
           "ability-outpost-ascendable",
           "ability-outpost-high-ground"
         ],
@@ -2524,7 +2541,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building",
+          "ability-shared-revelators-building-structure",
           "ability-barricade-protective-shield",
           "ability-barricade-caltrops",
           "ability-barricade-decompose"
@@ -2971,7 +2988,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building",
+          "ability-shared-uee-building-structure",
           "ability-shared-uee-power-dependency",
           "ability-power-pole-power-grid",
           "ability-power-pole-excess-distribution",
@@ -3046,7 +3063,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building",
+          "ability-shared-uee-building-structure",
           "ability-shared-uee-power-dependency",
           "ability-temple-keeping-the-faith"
         ],
@@ -3119,7 +3136,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building",
+          "ability-shared-uee-building-structure",
           "ability-shared-uee-power-dependency",
           "ability-military-base-train"
         ],
@@ -3192,7 +3209,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building",
+          "ability-shared-uee-building-structure",
           "ability-shared-uee-power-dependency",
           "ability-factory-train"
         ],
@@ -3265,7 +3282,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building",
+          "ability-shared-uee-building-structure",
           "ability-shared-uee-power-dependency",
           "ability-laboratory-train"
         ],
@@ -3338,7 +3355,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building",
+          "ability-shared-uee-building-structure",
           "ability-shared-uee-power-dependency",
           "ability-armoury-research"
         ],
@@ -3484,7 +3501,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building",
+          "ability-shared-uee-building-structure",
           "ability-shared-uee-power-dependency",
           "ability-stairs-ascendable"
         ],
@@ -3557,7 +3574,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building",
+          "ability-shared-uee-building-structure",
           "ability-shared-uee-power-dependency",
           "ability-gate-high-ground",
           "ability-gate-ascendable",
@@ -3632,7 +3649,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building",
+          "ability-shared-uee-building-structure",
           "ability-shared-uee-power-dependency",
           "ability-watchtower-vantage-point"
         ],
@@ -3705,7 +3722,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building",
+          "ability-shared-uee-building-structure",
           "ability-shared-uee-power-dependency",
           "ability-bastion-battlement"
         ],
@@ -3997,18 +4014,18 @@
     },
     {
       "$type": "Passive",
-      "id": "ability-shared-revelators-building",
+      "id": "ability-shared-unit-in-production",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
-      "onBuildBehaviour": "behaviour-shared-revelators-building-buildable",
+      "onBuildBehaviour": "behaviour-shared-unit-in-production-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
       "cost": [],
-      "displayName": "Building",
+      "displayName": "Unit In Production",
       "description": "",
       "sprite": null,
       "centerOffset": {
@@ -4018,18 +4035,39 @@
     },
     {
       "$type": "Passive",
-      "id": "ability-shared-uee-building",
+      "id": "ability-shared-revelators-building-structure",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
       "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
-      "onBuildBehaviour": "behaviour-shared-uee-building-buildable",
+      "onBuildBehaviour": "behaviour-shared-revelators-building-structure-buildable",
       "hasButton": false,
       "cooldown": "EndsAt.Instant",
       "cost": [],
-      "displayName": "Building",
+      "displayName": "Building Structure",
+      "description": "",
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "$type": "Passive",
+      "id": "ability-shared-uee-building-structure",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffects": [],
+      "onBuildBehaviour": "behaviour-shared-uee-building-structure-buildable",
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Building Structure",
       "description": "",
       "sprite": null,
       "centerOffset": {
@@ -4068,6 +4106,7 @@
       "placementArea": {
         "$type": "Map"
       },
+      "useWalkableTilesAsPlacementArea": false,
       "selection": [
         {
           "name": "structure-collector",
@@ -4456,10 +4495,14 @@
       }
     },
     {
-      "$type": "Produce",
+      "$type": "Build",
       "id": "ability-citadel-promote-goons",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
+      "placementArea": {
+        "$type": "Map"
+      },
+      "useWalkableTilesAsPlacementArea": true,
       "selection": [
         {
           "name": "unit-slave",
@@ -4658,9 +4701,9 @@
           "grayOutIfAlreadyExists": false
         }
       ],
-      "canPlaceInWalkableAreaOnly": true,
-      "hasQueue": false,
-      "producedInstantly": true,
+      "casterConsumesAction": false,
+      "canHelp": false,
+      "helpEfficiency": 1.0,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
@@ -5416,10 +5459,14 @@
       }
     },
     {
-      "$type": "Produce",
+      "$type": "Build",
       "id": "ability-military-base-train",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
+      "placementArea": {
+        "$type": "Map"
+      },
+      "useWalkableTilesAsPlacementArea": true,
       "selection": [
         {
           "name": "unit-horrior",
@@ -5508,9 +5555,9 @@
           "grayOutIfAlreadyExists": false
         }
       ],
-      "canPlaceInWalkableAreaOnly": true,
-      "hasQueue": true,
-      "producedInstantly": false,
+      "casterConsumesAction": true,
+      "canHelp": false,
+      "helpEfficiency": 1.0,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
@@ -5523,10 +5570,14 @@
       }
     },
     {
-      "$type": "Produce",
+      "$type": "Build",
       "id": "ability-factory-train",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
+      "placementArea": {
+        "$type": "Map"
+      },
+      "useWalkableTilesAsPlacementArea": true,
       "selection": [
         {
           "name": "unit-engineer",
@@ -5565,9 +5616,9 @@
           "grayOutIfAlreadyExists": false
         }
       ],
-      "canPlaceInWalkableAreaOnly": true,
-      "hasQueue": true,
-      "producedInstantly": false,
+      "casterConsumesAction": true,
+      "canHelp": false,
+      "helpEfficiency": 1.0,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
@@ -5580,10 +5631,14 @@
       }
     },
     {
-      "$type": "Produce",
+      "$type": "Build",
       "id": "ability-laboratory-train",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
+      "placementArea": {
+        "$type": "Map"
+      },
+      "useWalkableTilesAsPlacementArea": true,
       "selection": [
         {
           "name": "unit-omen",
@@ -5604,9 +5659,9 @@
           "grayOutIfAlreadyExists": false
         }
       ],
-      "canPlaceInWalkableAreaOnly": true,
-      "hasQueue": true,
-      "producedInstantly": false,
+      "casterConsumesAction": true,
+      "canHelp": false,
+      "helpEfficiency": 1.0,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
@@ -5966,6 +6021,7 @@
         "radius": 1,
         "ignoreRadius": 0
       },
+      "useWalkableTilesAsPlacementArea": false,
       "selection": [
         {
           "name": "structure-hut",
@@ -6977,6 +7033,7 @@
         "radius": 1,
         "ignoreRadius": 0
       },
+      "useWalkableTilesAsPlacementArea": false,
       "selection": [
         {
           "name": "unit-cannon",
@@ -11361,7 +11418,7 @@
     },
     {
       "$type": "Buildable",
-      "id": "behaviour-shared-revelators-building-buildable",
+      "id": "behaviour-shared-unit-in-production-buildable",
       "placementValidators": [
         {
           "conditions": [
@@ -11385,8 +11442,62 @@
       ],
       "maximumHelpers": -1,
       "canBeDragged": false,
-      "displayName": "Building Buildable",
-      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously.",
+      "displayName": "Unit In Production Buildable",
+      "description": "This unit should be placed in the allowed placement area.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "$type": "Buildable",
+      "id": "behaviour-shared-revelators-building-structure-buildable",
+      "placementValidators": [
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfTilesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
+              "conditionedTile": "tile-marsh",
+              "amountOfTilesRequired": 3,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
+        }
+      ],
+      "maximumHelpers": -1,
+      "canBeDragged": false,
+      "displayName": "Building Structure Buildable",
+      "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously. The placement can include a maximum of 2 marsh tiles.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,
@@ -11437,7 +11548,7 @@
     },
     {
       "$type": "Buildable",
-      "id": "behaviour-shared-uee-building-buildable",
+      "id": "behaviour-shared-uee-building-structure-buildable",
       "placementValidators": [
         {
           "conditions": [
@@ -11461,6 +11572,17 @@
         {
           "conditions": [
             {
+              "$type": "TileCondition",
+              "conditionedTile": "tile-marsh",
+              "amountOfTilesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "MaskCondition",
               "conditionedMask": "mask-power",
               "conditionFlag": "ConditionFlag.Exists"
@@ -11471,8 +11593,8 @@
       ],
       "maximumHelpers": -1,
       "canBeDragged": false,
-      "displayName": "Building Buildable",
-      "description": "This building can only be placed on the low ground tiles with Power.",
+      "displayName": "Building Structure Buildable",
+      "description": "This building can only be placed on the low ground tiles with Power. Cannot be placed on marsh tiles.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,

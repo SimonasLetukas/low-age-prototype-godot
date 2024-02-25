@@ -5,11 +5,15 @@ using low_age_data.Domain.Entities.Actors.Structures;
 
 namespace low_age_data.Domain.Abilities
 {
+    /// <summary>
+    /// Used for making a new <see cref="Entity"/> out of an existing <see cref="Entity"/>.
+    ///
+    /// Note: no adequate UX could be designed for this ability, so for now <see cref="Build"/> have taken over. To be
+    /// revisited in the future if the need arises to be able to have queues and work on entities safely inside of other
+    /// entities.
+    /// </summary>
     public class Produce : Ability
     {
-        /// <summary>
-        /// Used for making a new <see cref="Entity"/> out of an existing <see cref="Entity"/>.
-        /// </summary>
         public Produce(
             AbilityId id,
             string displayName,

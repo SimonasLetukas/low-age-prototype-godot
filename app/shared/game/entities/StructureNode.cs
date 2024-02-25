@@ -17,7 +17,11 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
     }
     
     public Vector2 CenterPoint { get; protected set; }
-    public List<Rect2> WalkableAreas { get; protected set; }
+    public IList<Rect2> WalkableAreasBlueprint { get; protected set; }
+    public IEnumerable<Rect2> WalkableAreas => WalkableAreasBlueprint.Select(x => 
+        new Rect2(x.Position + EntityPrimaryPosition, x.Size)).ToList();
+    public IEnumerable<Vector2> WalkablePositions => WalkableAreas.Select(walkableArea => walkableArea.ToList())
+        .SelectMany(walkablePositions => walkablePositions).ToHashSet();
     
     private Structure Blueprint { get; set; }
 
@@ -27,7 +31,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         Blueprint = blueprint;
         EntitySize = blueprint.Size.ToGodotVector2();
         CenterPoint = blueprint.CenterPoint.ToGodotVector2();
-        WalkableAreas = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(EntitySize)).ToList();
+        WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(EntitySize)).ToList();
         
         AdjustSpriteOffset();
     }
@@ -52,7 +56,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
                     centerPointAssigned = true;
                 }
 
-                newWalkableAreas.AddRange(WalkableAreas
+                newWalkableAreas.AddRange(WalkableAreasBlueprint
                     .Where(walkableArea => walkableArea.Position.IsEqualApprox(currentPoint))
                     .Select(walkableArea => new Rect2(
                         new Vector2((newX - walkableArea.Size.y) + 1, newY),
@@ -60,7 +64,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
             }
         }
 
-        WalkableAreas = newWalkableAreas;
+        WalkableAreasBlueprint = newWalkableAreas;
         EntitySize = new Vector2(EntitySize.y, EntitySize.x);
         
         switch (ActorRotation)

@@ -83,6 +83,7 @@ public class EntityPanel : Control
         if (_isShowingAbility && clickedAbility != null)
         {
             var abilityBlueprint = _abilitiesBlueprint.First(x => x.Id.Equals(clickedAbility.Ability.Id));
+            // TODO should probably get all of these properties from AbilityNode instead of all blueprints 
             var abilityInstance = clickedAbility.Ability;
             var name = abilityBlueprint.DisplayName;
             var turnPhase = abilityBlueprint.TurnPhase;

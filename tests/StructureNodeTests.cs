@@ -246,32 +246,32 @@ o center:   | 1,1		| 1,1       | 1,1       | 1,1
                 .With(x => x.WalkableAreas, initialValues.WalkableAreas.ToList())
                 .Create();
             _structure.SetBlueprint(blueprint);
-            (Vector2 Size, Vector2 CenterPoint, List<Rect2> WalkableAreas) expectedAfter4Rotations = 
-                (_structure.EntitySize, _structure.CenterPoint, _structure.WalkableAreas);
+            (Vector2 Size, Vector2 CenterPoint, IList<Rect2> WalkableAreas) expectedAfter4Rotations = 
+                (_structure.EntitySize, _structure.CenterPoint, _structure.WalkableAreasBlueprint);
 
             _structure.Rotate();
 
             _structure.EntitySize.Should().Be(expectedAfter1Rotation.Size);
             _structure.CenterPoint.Should().Be(expectedAfter1Rotation.CenterPoint);
-            _structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter1Rotation.WalkableAreas);
+            _structure.WalkableAreasBlueprint.Should().BeEquivalentTo(expectedAfter1Rotation.WalkableAreas);
             
             _structure.Rotate();
             
             _structure.EntitySize.Should().Be(expectedAfter2Rotations.Size);
             _structure.CenterPoint.Should().Be(expectedAfter2Rotations.CenterPoint);
-            _structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter2Rotations.WalkableAreas);
+            _structure.WalkableAreasBlueprint.Should().BeEquivalentTo(expectedAfter2Rotations.WalkableAreas);
             
             _structure.Rotate();
             
             _structure.EntitySize.Should().Be(expectedAfter3Rotations.Size);
             _structure.CenterPoint.Should().Be(expectedAfter3Rotations.CenterPoint);
-            _structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter3Rotations.WalkableAreas);
+            _structure.WalkableAreasBlueprint.Should().BeEquivalentTo(expectedAfter3Rotations.WalkableAreas);
             
             _structure.Rotate();
             
             _structure.EntitySize.Should().Be(expectedAfter4Rotations.Size);
             _structure.CenterPoint.Should().Be(expectedAfter4Rotations.CenterPoint);
-            _structure.WalkableAreas.Should().BeEquivalentTo(expectedAfter4Rotations.WalkableAreas);
+            _structure.WalkableAreasBlueprint.Should().BeEquivalentTo(expectedAfter4Rotations.WalkableAreas);
         }
 
         [Fact]

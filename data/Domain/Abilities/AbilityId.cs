@@ -17,15 +17,16 @@ namespace low_age_data.Domain.Abilities
             public static AbilityId PassiveIncome => new AbilityId($"{nameof(Shared)}{nameof(PassiveIncome)}".ToKebabCase(), true);
             public static AbilityId ScrapsIncome => new AbilityId($"{nameof(Shared)}{nameof(ScrapsIncome)}".ToKebabCase(), true);
             public static AbilityId CelestiumIncome => new AbilityId($"{nameof(Shared)}{nameof(CelestiumIncome)}".ToKebabCase(), true);
+            public static AbilityId UnitInProduction => new AbilityId($"{nameof(Shared)}{nameof(UnitInProduction)}".ToKebabCase(), true);
 
             public static class Revelators
             {
-                public static AbilityId Building => new AbilityId($"{nameof(Shared)}{nameof(Revelators)}{nameof(Building)}".ToKebabCase(), true);
+                public static AbilityId BuildingStructure => new AbilityId($"{nameof(Shared)}{nameof(Revelators)}{nameof(BuildingStructure)}".ToKebabCase(), true);
             }
 
             public static class Uee
             {
-                public static AbilityId Building => new AbilityId($"{nameof(Shared)}{nameof(Uee)}{nameof(Building)}".ToKebabCase(), true);
+                public static AbilityId BuildingStructure => new AbilityId($"{nameof(Shared)}{nameof(Uee)}{nameof(BuildingStructure)}".ToKebabCase(), true);
                 public static AbilityId PowerGenerator => new AbilityId($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerGenerator)}".ToKebabCase(), true);
                 public static AbilityId Build => new AbilityId($"{nameof(Shared)}{nameof(Uee)}{nameof(Build)}".ToKebabCase(), true);
                 public static AbilityId PowerDependency => new AbilityId($"{nameof(Shared)}{nameof(Uee)}{nameof(PowerDependency)}".ToKebabCase(), true);

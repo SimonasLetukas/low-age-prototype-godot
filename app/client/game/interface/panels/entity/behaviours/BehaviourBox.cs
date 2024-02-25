@@ -12,9 +12,7 @@ public class BehaviourBox : NinePatchRect
         behaviourBox.Initialize(behaviour);
         return behaviourBox;
     }
-
-    [Export] public int LineWidth { get; set; } = 40;
-
+    
     private TextureRect _texture;
 
     public override void _Ready()
@@ -27,8 +25,9 @@ public class BehaviourBox : NinePatchRect
     {
         // TODO also change icon
         
-        HintTooltip = behaviour.Description.WrapToLines(LineWidth);
-        
+        HintTooltip = behaviour.Description.WrapToLines(Constants.MaxTooltipCharCount);
+        // TODO tooltip should probably also include the name of the behaviour (and remove the behaviour type from the name)
+
         if (behaviour.Alignment.Equals(Alignment.Negative))
             _texture.Modulate = Colors.Red; // TODO take colors from palette
         if (behaviour.Alignment.Equals(Alignment.Positive))
