@@ -24,7 +24,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 6, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 7, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -45,7 +45,8 @@ namespace low_age_data.Collections
                         AbilityId.Slave.Build,
                         AbilityId.Slave.Repair,
                         AbilityId.Slave.ManualLabour
-                    }),
+                    },
+                    size: 2),
 
                 new Unit(
                     id: UnitId.Leader,
@@ -93,7 +94,7 @@ namespace low_age_data.Collections
                         new CombatStat(maxAmount: 13, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 7, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 18, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -121,7 +122,8 @@ namespace low_age_data.Collections
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Quickdraw.Doubleshot,
                         AbilityId.Quickdraw.Cripple
-                    }),
+                    },
+                    size: 3),
 
                 new Unit(
                     id: UnitId.Gorger,

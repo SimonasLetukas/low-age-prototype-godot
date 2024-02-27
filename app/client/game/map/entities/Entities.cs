@@ -42,9 +42,12 @@ public class Entities : YSort
         
         // Force-add units for testing
         var slaveBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Slave));
-        PlaceEntity(slaveBlueprint, startingPositions[0]);
+        PlaceEntity(slaveBlueprint, startingPositions[0] - new Vector2(2, 2));
         
-        var horriorBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Horrior));
+        var quickdraw = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Quickdraw));
+        PlaceEntity(quickdraw, startingPositions[3]);
+        
+        /*var horriorBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Horrior));
         PlaceEntity(horriorBlueprint, startingPositions[1]);
         
         var marksmanBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Marksman));
@@ -54,7 +57,7 @@ public class Entities : YSort
         PlaceEntity(bigBadBullBlueprint, startingPositions[0] - new Vector2(2, 2));
         
         var citadelBlueprint = Data.Instance.Blueprint.Entities.Structures.Single(x => x.Id.Equals(StructureId.Citadel));
-        PlaceEntity(citadelBlueprint, startingPositions[3]);
+        PlaceEntity(citadelBlueprint, startingPositions[3]);*/
     }
     
     public override void _ExitTree()
