@@ -1,118 +1,392 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Godot;
+using low_age_data;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Tiles;
-using Newtonsoft.Json;
 using Object = Godot.Object;
 
 public class Pathfinding : Node
 {
-    public Vector2 MapSize { get; private set; }
-    public Godot.Collections.Dictionary<Vector2, int> PointIdsByPositions { get; private set; }
-    public Godot.Collections.Dictionary<int, Vector2> PositionsByPointIds { get; private set; }
+	public event Action FinishedInitializing = delegate { };
 
-    private static Godot.Collections.Dictionary<int, float> TerrainWeights = new Godot.Collections.Dictionary<int, float>
+	private Vector2 MapSize { get; set; }
+    private Blueprint Blueprint { get; set; }
+    private Godot.Collections.Dictionary<Vector2, int> PointIdsByPositions { get; set; }
+    private Godot.Collections.Dictionary<int, Vector2> PositionsByPointIds { get; set; }
+    private Godot.Collections.Dictionary<int, float> WeightsByPointIds { get; } =
+	    new Godot.Collections.Dictionary<int, float>();
+    private Godot.Collections.Dictionary<int, float> WeightsByPointIds2X { get; } =
+	    new Godot.Collections.Dictionary<int, float>();
+    private Godot.Collections.Dictionary<int, float> WeightsByPointIds3X { get; } =
+	    new Godot.Collections.Dictionary<int, float>();
+
+    private static Godot.Collections.Dictionary<int, float> _terrainWeights = new Godot.Collections.Dictionary<int, float>
     {
         { Terrain.Grass.ToIndex(),     1.0f },
         { Terrain.Mountains.ToIndex(), float.PositiveInfinity },
-        { Terrain.Marsh.ToIndex(),     2.0f }
+        { Terrain.Marsh.ToIndex(),     2.0f },
+        { ImpassableIndex, float.PositiveInfinity }
     };
+    private const int ImpassableIndex = -1;
     
     // Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/DOCUMENTATION.md
     private DijkstraMap _pathfinding = new DijkstraMap();
+    private DijkstraMap _pathfinding2X = new DijkstraMap();
+    private DijkstraMap _pathfinding3X = new DijkstraMap();
 
     private Vector2 _previousPosition = Vector2.Inf;
     private float _previousRange = -1.0f;
+    private int _previousSize = 1;
 
-    public void Initialize(Vector2 mapSize, ICollection<(Vector2, TileId)> tiles)
+    private bool _terrainGraphInitialized = false;
+    private IList<(Vector2, TileId)> _tilesForInitialization;
+    private bool _terrainDilationInitialized = false;
+    private Dictionary<int, IList<Vector2>> _coordinatesByTerrainForInitialization;
+    private bool _diagonalConnectionsInitialized = false;
+    private Dictionary<Vector2, int> _pointIdsByPositionsForInitialization;
+    private bool _initialized = true;
+    private readonly Stopwatch _stopwatch = new Stopwatch();
+    
+    public override void _Ready()
     {
-	    GD.Print($"{nameof(Pathfinding)}.{nameof(Initialize)}: started.");
-	    
-	    _pathfinding = new DijkstraMap();
-	    
+	    PauseMode = PauseModeEnum.Process;
+    }
+
+    #region Initialization
+
+    public void Initialize(Vector2 mapSize, IEnumerable<(Vector2, TileId)> tiles)
+    {
 	    MapSize = mapSize;
+	    Blueprint = Data.Instance.Blueprint;
+	    _tilesForInitialization = tiles.ToList();
+	    
+	    InitializePathfindingGraphs();
+	    InitializePositionToPointIdReferences();
+	    InitializeTerrainWeights();
+
+	    _initialized = false;
+    }
+
+    public override void _Process(float delta)
+    {
+	    base._Process(delta);
+	    if (_initialized)
+		    return;
+        
+	    CheckInitialization();
+        
+	    var deltaMs = (int)(delta * 1000);
+	    _stopwatch.Reset();
+	    _stopwatch.Start();
+
+	    while (_stopwatch.ElapsedMilliseconds < deltaMs)
+	    {
+		    if (_terrainGraphInitialized is false)
+		    {
+			    IterateTerrainGraphInitialization();
+			    continue;
+		    }
+
+		    if (_terrainDilationInitialized is false)
+		    {
+			    IterateTerrainDilationInitialization();
+			    continue;
+		    }
+		    
+		    if (_diagonalConnectionsInitialized is false)
+			    IterateDiagonalConnectionUpdate();
+	    }
+        
+	    _stopwatch.Stop();
+    }
+    
+    private void CheckInitialization()
+    {
+	    if (_terrainGraphInitialized is false 
+	        || _terrainDilationInitialized is false 
+	        || _diagonalConnectionsInitialized is false)
+		    return;
+
+	    _initialized = true;
+	    FinishedInitializing();
+    }
+    
+    private void InitializePathfindingGraphs()
+    {
+	    _pathfinding = new DijkstraMap();
+	    _pathfinding2X = Blueprint.Entities.Units.Any(u => u.Size == 2) ? new DijkstraMap() : null;
+	    _pathfinding3X = Blueprint.Entities.Units.Any(u => u.Size == 3) ? new DijkstraMap() : null;
 	    
 	    PointIdsByPositions = _pathfinding.AddSquareGrid(
 		    new Rect2(0, 0, MapSize.x, MapSize.y),
 		    Terrain.Grass.ToIndex(),
 		    1.0f,
 		    Mathf.Sqrt(2));
+	    _pathfinding2X?.DuplicateGraphFrom(_pathfinding);
+	    _pathfinding3X?.DuplicateGraphFrom(_pathfinding);
 
+	    _pointIdsByPositionsForInitialization = new Dictionary<Vector2, int>();
+	    foreach (var entry in PointIdsByPositions)
+	    {
+		    _pointIdsByPositionsForInitialization.Add(entry.Key, entry.Value);
+	    }
+    }
+    
+    private void InitializePositionToPointIdReferences()
+    {
 	    PositionsByPointIds = new Godot.Collections.Dictionary<int, Vector2>();
 	    foreach (var position in PointIdsByPositions.Keys)
 	    {
 		    var id = PointIdsByPositions[position];
 		    PositionsByPointIds[id] = position;
 	    }
-
-	    var blueprint = Data.Instance.Blueprint;
-
-	    TerrainWeights = new Godot.Collections.Dictionary<int, float>();
-	    foreach (var tile in blueprint.Tiles)
-	    {
-		    TerrainWeights.Add(tile.Terrain.ToIndex(), tile.MovementCost);
-	    }
-	    
-	    foreach (var (coordinates, tile) in tiles)
-	    {
-		    SetTerrainForPoint(coordinates, blueprint.Tiles.Single(x => x.Id.Equals(tile)).Terrain);
-	    }
     }
 
-    public Vector2[] GetAvailablePositions(Vector2 from, float range, int size = 1)
+    private void InitializeTerrainWeights()
     {
-	    if (IsCached(from, range) is false)
+	    _terrainWeights = new Godot.Collections.Dictionary<int, float>();
+	    foreach (var tile in Blueprint.Tiles)
 	    {
-		    _pathfinding.Recalculate(
+		    _terrainWeights.Add(tile.Terrain.ToIndex(), tile.MovementCost);
+	    }
+	    _terrainWeights.Add(ImpassableIndex, float.PositiveInfinity);
+	    
+	    _coordinatesByTerrainForInitialization = _terrainWeights
+		    .OrderBy(x => x.Value)
+		    .ToDictionary<KeyValuePair<int, float>, int, IList<Vector2>>(terrainWeight => 
+			    terrainWeight.Key, terrainWeight => new List<Vector2>());
+    }
+
+    private void IterateTerrainGraphInitialization()
+    {
+	    if (_tilesForInitialization.IsEmpty())
+	    {
+		    GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
+		             $"{nameof(Pathfinding)}.{nameof(IterateTerrainGraphInitialization)} completed");
+		    _terrainGraphInitialized = true;
+		    return;
+	    }
+	    
+	    var (coordinates, tileId) = _tilesForInitialization[0];
+	    _tilesForInitialization.RemoveAt(0);
+
+	    var terrainIndex = Blueprint.Tiles.Single(x => x.Id.Equals(tileId)).Terrain.ToIndex();
+	    SetTerrainForPoint(coordinates, terrainIndex, 1);
+	    _coordinatesByTerrainForInitialization[terrainIndex].Add(coordinates);
+	    
+	    WeightsByPointIds[PointIdsByPositions[coordinates]] = _terrainWeights[terrainIndex];
+	    
+	    if (_pathfinding2X != null)
+		    WeightsByPointIds2X[PointIdsByPositions[coordinates]] = _terrainWeights[terrainIndex];
+	    
+	    if (_pathfinding3X != null)
+		    WeightsByPointIds3X[PointIdsByPositions[coordinates]] = _terrainWeights[terrainIndex];
+    }
+
+    private void IterateTerrainDilationInitialization()
+    {
+	    if (_coordinatesByTerrainForInitialization.IsEmpty())
+	    {
+		    GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
+		             $"{nameof(Pathfinding)}.{nameof(IterateTerrainDilationInitialization)} completed");
+		    _terrainDilationInitialized = true;
+		    return;
+	    }
+	    
+	    var entry = _coordinatesByTerrainForInitialization.First();
+	    _coordinatesByTerrainForInitialization.Remove(entry.Key);
+	    
+	    if (_terrainWeights.ContainsKey(entry.Key) && _terrainWeights[entry.Key].Equals(1f))
+		    return;
+		    
+	    foreach (var coordinate in entry.Value)
+	    {
+		    if (_pathfinding2X != null)
+		    {
+			    for (var xOffset = 0; xOffset < 2; xOffset++)
+			    {
+				    for (var yOffset = 0; yOffset < 2; yOffset++)
+				    { 
+					    var resultingCoordinates = coordinate - new Vector2(xOffset, yOffset);
+					    if (resultingCoordinates.IsInBoundsOf(MapSize) is false) 
+						    continue;
+					    
+					    SetTerrainForPoint(resultingCoordinates, entry.Key, 2);
+					    WeightsByPointIds2X[PointIdsByPositions[resultingCoordinates]] = _terrainWeights[entry.Key];
+				    }
+			    }
+		    }
+
+		    if (_pathfinding3X == null) 
+			    continue;
+		    
+		    for (var xOffset = 0; xOffset < 3; xOffset++)
+		    {
+			    for (var yOffset = 0; yOffset < 3; yOffset++)
+			    {
+				    var resultingCoordinates = coordinate - new Vector2(xOffset, yOffset);
+				    if (resultingCoordinates.IsInBoundsOf(MapSize) is false)
+					    continue;
+					    
+				    SetTerrainForPoint(resultingCoordinates, entry.Key, 3);
+				    WeightsByPointIds3X[PointIdsByPositions[resultingCoordinates]] = _terrainWeights[entry.Key];
+			    }
+		    }
+	    }
+    }
+    
+    private void IterateDiagonalConnectionUpdate()
+    {
+	    if (_pointIdsByPositionsForInitialization.IsEmpty())
+	    {
+		    GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
+		             $"{nameof(Pathfinding)}.{nameof(IterateDiagonalConnectionUpdate)} completed");
+		    _diagonalConnectionsInitialized = true;
+		    return;
+	    }
+	    
+	    var entry = _pointIdsByPositionsForInitialization.First();
+	    _pointIdsByPositionsForInitialization.Remove(entry.Key);
+	    
+	    IterateDiagonalConnectionUpdate(entry, 1);
+	    
+	    if (_pathfinding2X != null)
+		    IterateDiagonalConnectionUpdate(entry, 2);
+	    
+	    if (_pathfinding3X != null)
+		    IterateDiagonalConnectionUpdate(entry, 3);
+    }
+    
+    private void IterateDiagonalConnectionUpdate(KeyValuePair<Vector2, int> point, int size)
+    {
+	    var pathfinding = GetPathfindingForSize(size);
+	    
+	    var diagonalPosition = point.Key + new Vector2(1, 1);
+	    if (diagonalPosition.IsInBoundsOf(MapSize) is false)
+		    return;
+		    
+	    var rightNeighbour = PointIdsByPositions[point.Key + new Vector2(1, 0)];
+	    var bottomNeighbour = PointIdsByPositions[point.Key + new Vector2(0, 1)];
+	    var diagonalNeighbour = PointIdsByPositions[diagonalPosition];
+
+	    if (IsInfiniteWeight(point.Value, size)
+	        && IsInfiniteWeight(diagonalNeighbour, size)
+	        && IsInfiniteWeight(rightNeighbour, size) is false
+	        && IsInfiniteWeight(bottomNeighbour, size) is false)
+	    {
+		    pathfinding.RemoveConnection(rightNeighbour, bottomNeighbour);
+	    }
+
+	    if (IsInfiniteWeight(point.Value, size) is false
+	        && IsInfiniteWeight(diagonalNeighbour, size) is false
+	        && IsInfiniteWeight(rightNeighbour, size)
+	        && IsInfiniteWeight(bottomNeighbour, size))
+	    {
+		    pathfinding.RemoveConnection(point.Value, diagonalNeighbour);
+	    }
+    }
+    
+    #endregion Initialization
+
+    public IEnumerable<Vector2> GetAvailablePositions(Vector2 from, float range, int size)
+    {
+	    if (size > 3) throw new ArgumentException($"{nameof(Pathfinding)}.{nameof(GetAvailablePositions)}: " +
+	                                              $"argument {nameof(size)} '{size}' exceeded maximum value of '3'.");
+	    
+	    var pathfinding = GetPathfindingForSize(size);
+	    if (pathfinding is null)
+		    return Enumerable.Empty<Vector2>();
+	    
+	    if (IsCached(from, range, size) is false)
+	    {
+		    pathfinding.Recalculate(
 			    PointIdsByPositions[from],
 			    new Godot.Collections.Dictionary<string, object>
 			    {
 				    { "maximum_cost", range },
-				    { "terrain_weights", TerrainWeights }
+				    { "terrain_weights", _terrainWeights }
 			    });
-		    Cache(from, range);
+		    Cache(from, range, size);
 	    }
 
-	    var availablePointIds = _pathfinding.GetAllPointsWithCostBetween(0.0f, range);
-	    return availablePointIds.Select(pointId => PositionsByPointIds[pointId]).ToArray();
+	    var availablePointIds = pathfinding.GetAllPointsWithCostBetween(0.0f, range);
+	    var availablePositions = availablePointIds.Select(pointId => PositionsByPointIds[pointId]);
+	    return availablePositions;
     }
 
-    public Vector2[] FindPath(Vector2 to)
+    public IEnumerable<Vector2> FindPath(Vector2 to, int size)
     {
 	    if (to.IsInBoundsOf(MapSize) is false)
 	    {
-		    return new []{ to };
+		    return Enumerable.Empty<Vector2>();
 	    }
 
+	    var pathfinding = GetPathfindingForSize(size);
+	    if (pathfinding is null)
+		    return Enumerable.Empty<Vector2>();
+
 	    var targetPointId = PointIdsByPositions[to];
-	    var pathOfPointIds = _pathfinding.GetShortestPathFromPoint(targetPointId);
+	    var pathOfPointIds = pathfinding.GetShortestPathFromPoint(targetPointId);
 
 	    var path = new List<Vector2> { to };
 	    path.AddRange(pathOfPointIds.Select(pointId => PositionsByPointIds[pointId]));
 	    path.Reverse();
 
-	    return path.ToArray();
+	    return path;
     }
     
-    private void SetTerrainForPoint(Vector2 at, Terrain terrain)
+    private void SetTerrainForPoint(Vector2 at, int terrain, int size)
     {
 	    if (at.IsInBoundsOf(MapSize))
 	    {
-		    _pathfinding.SetTerrainForPoint(
+		    GetPathfindingForSize(size).SetTerrainForPoint(
 			    PointIdsByPositions[at],
-			    terrain.ToIndex());
+			    terrain);
 	    }
     }
 
-    private bool IsCached(Vector2 position, float range) 
-	    => position.Equals(_previousPosition) && range.Equals(_previousRange);
+    private bool IsInfiniteWeight(int pointId, int size) => GetWeightsByPointIds(size)[pointId]
+	    .Equals(float.PositiveInfinity);
 
-    private void Cache(Vector2 position, float range)
+    private Godot.Collections.Dictionary<int, float> GetWeightsByPointIds(int size)
+    {
+	    switch (size)
+	    {
+		    case 3:
+			    return WeightsByPointIds3X;
+		    case 2:
+			    return WeightsByPointIds2X;
+		    case 1:
+		    default:
+			    return WeightsByPointIds;
+	    }
+    }
+
+    private DijkstraMap GetPathfindingForSize(int size)
+    {
+	    switch (size)
+	    {
+		    case 3:
+			    return _pathfinding3X;
+		    case 2:
+			    return _pathfinding2X;
+		    case 1:
+		    default:
+			    return _pathfinding;
+	    }
+    }
+
+    private bool IsCached(Vector2 position, float range, int size) 
+	    => position.Equals(_previousPosition) && range.Equals(_previousRange) && size.Equals(_previousSize);
+
+    private void Cache(Vector2 position, float range, int size)
     {
 	    _previousPosition = position;
 	    _previousRange = range;
+	    _previousSize = size;
     }
 }
 
@@ -126,7 +400,7 @@ public class DijkstraMap : Node
 		_dijkstraMap = dijkstraMapScript?.New() as Object;
 		if (_dijkstraMap is null) throw new ArgumentNullException($"{nameof(_dijkstraMap)} cannot be null.");
 	}
-
+	
 	public Godot.Collections.Dictionary<Vector2, int> AddSquareGrid(Rect2 bounds, int terrain, float orthCost,
 		float diagCost)
 	{
@@ -138,6 +412,11 @@ public class DijkstraMap : Node
 	public void SetTerrainForPoint(int pointId, int terrain)
 	{
 		_dijkstraMap.Call("set_terrain_for_point", pointId, terrain);
+	}
+	
+	public int GetTerrainForPoint(int pointId)
+	{
+		return (int)_dijkstraMap.Call("get_terrain_for_point", pointId);
 	}
 
 	public void Recalculate(int pointId, Godot.Collections.Dictionary<string, object> options)
@@ -156,4 +435,74 @@ public class DijkstraMap : Node
 		return _dijkstraMap.Call("get_shortest_path_from_point", pointId)
 			as int[];
 	}
+
+	public void Clear()
+    {
+        _dijkstraMap.Call("clear");
+    }
+
+    public Error DuplicateGraphFrom(DijkstraMap sourceInstance)
+    {
+        return (Error)_dijkstraMap.Call("duplicate_graph_from", sourceInstance._dijkstraMap);
+    }
+
+    public int GetAvailablePointId()
+    {
+        return (int)_dijkstraMap.Call("get_available_point_id");
+    }
+
+    public Error AddPoint(int pointId, int terrainType = -1)
+    {
+        return (Error)_dijkstraMap.Call("add_point", pointId, terrainType);
+    }
+
+    public Error RemovePoint(int pointId)
+    {
+        return (Error)_dijkstraMap.Call("remove_point", pointId);
+    }
+
+    public bool HasPoint(int pointId)
+    {
+        return (bool)_dijkstraMap.Call("has_point", pointId);
+    }
+    
+    public Error DisablePoint(int pointId)
+    {
+        return (Error)_dijkstraMap.Call("disable_point", pointId);
+    }
+    
+    public Error EnablePoint(int pointId)
+    {
+        return (Error)_dijkstraMap.Call("enable_point", pointId);
+    }
+    
+    public bool IsPointDisabled(int pointId)
+    {
+        return (bool)_dijkstraMap.Call("is_point_disabled", pointId);
+    }
+    
+    public Error ConnectPoints(int source, int target, float weight = 1f, bool bidirectional = true)
+    {
+        return (Error)_dijkstraMap.Call("connect_points", source, target, weight, bidirectional);
+    }
+    
+    public Error RemoveConnection(int source, int target, bool bidirectional = true)
+    {
+        return (Error)_dijkstraMap.Call("remove_connection", source, target, bidirectional);
+    }
+    
+    public bool HasConnection(int source, int target)
+    {
+        return (bool)_dijkstraMap.Call("has_connection", source, target);
+    }
+
+    public int GetDirectionAtPoint(int pointId)
+    {
+        return (int)_dijkstraMap.Call("get_direction_at_point", pointId);
+    }
+    
+    public float GetCostAtPoint(int pointId)
+    {
+        return (float)_dijkstraMap.Call("get_cost_at_point", pointId);
+    }
 }

@@ -21,6 +21,9 @@
     public const int ServerPort = 3000;
     public const int ServerId = 1;
     public const int MaxPlayers = 2;
+    public const int TimeoutLimitMs = 20_000;
+    public const int TimeoutMinimumMs = 30_000;
+    public const int TimeoutMaximumMs = 60_000;
 
     public static void SetLocalServer()
     {

@@ -27,6 +27,9 @@ public class ClientMap : Map
         Attack
     }
 
+    private bool _tileMapIsInitialized = false;
+    private bool _pathfindingIsInitialized = false;
+
     public override void _Ready()
     {
         base._Ready();
@@ -34,8 +37,59 @@ public class ClientMap : Map
         Entities = GetNode<Entities>($"{nameof(Entities)}");
 
         Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
+        _tileMap.FinishedInitializing += OnTileMapFinishedInitializing;
+        Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing;
+    }
+    
+    public override void _ExitTree()
+    {
+        Entities.NewPositionOccupied -= OnEntitiesNewPositionOccupied;
+        _tileMap.FinishedInitializing -= OnTileMapFinishedInitializing;
+        Pathfinding.FinishedInitializing -= OnPathfindingFinishedInitializing;
+        base._ExitTree();
     }
 
+    public void Initialize(MapCreatedEvent @event)
+    {
+        if (DebugEnabled) GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} {nameof(ClientMap)}.{nameof(Initialize)}");
+        
+        _mapSize = @event.MapSize;
+        _startingPositions = @event.StartingPositions[GetTree().GetNetworkUniqueId()];
+        
+        Position = new Vector2((Mathf.Max(_mapSize.x, _mapSize.y) * Constants.TileWidth) / 2, Position.y);
+        _tileMap.Initialize(_mapSize, @event.Tiles);
+        Pathfinding.Initialize(_mapSize, @event.Tiles);
+    }
+
+    private void OnTileMapFinishedInitializing()
+    {
+        if (DebugEnabled) GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
+                                   $"{nameof(ClientMap)}.{nameof(OnTileMapFinishedInitializing)}");
+        _tileMapIsInitialized = true;
+        FinishInitialization();
+    }
+
+    private void OnPathfindingFinishedInitializing()
+    {
+        if (DebugEnabled) GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
+                                   $"{nameof(ClientMap)}.{nameof(OnPathfindingFinishedInitializing)}");
+        _pathfindingIsInitialized = true;
+        FinishInitialization();
+    }
+
+    private void FinishInitialization()
+    {
+        if (_tileMapIsInitialized is false || _pathfindingIsInitialized is false)
+            return;
+        
+        Entities.Initialize(_tileMap.GetTiles, _startingPositions[0].ToList());
+        
+        _tileMap.FillMapOutsideWithMountains();
+        _tileMap.UpdateALlBitmaps();
+        
+        FinishedInitializing();
+    }
+    
     public override void _Process(float delta)
     {
         base._Process(delta);
@@ -55,8 +109,11 @@ public class ClientMap : Map
             // TODO optimization: only if hovered tile changed from above, display path
             if (_hoveredTile != null)
             {
-                var path = Pathfinding.FindPath(_hoveredTile.Position);
-                _tileMap.SetPathTiles(path);
+                var size = (int)Entities.SelectedEntity.EntitySize.x;
+                var path = Pathfinding.FindPath(
+                    _hoveredTile.Position, 
+                    size);
+                _tileMap.SetPathTiles(path, size);
             }
         }
 
@@ -65,30 +122,6 @@ public class ClientMap : Map
             var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(mapPosition);
             Entities.UpdateEntityInPlacement(mapPosition, globalPosition, _tileMap.GetTiles);
         }
-    }
-    
-    public override void _ExitTree()
-    {
-        Entities.NewPositionOccupied -= OnEntitiesNewPositionOccupied;
-        base._ExitTree();
-    }
-
-    public void Initialize(MapCreatedEvent @event)
-    {
-        if (DebugEnabled) GD.Print($"{nameof(ClientMap)}.{nameof(Initialize)}");
-        
-        _mapSize = @event.MapSize;
-        _startingPositions = @event.StartingPositions[GetTree().GetNetworkUniqueId()];
-        
-        Position = new Vector2((Mathf.Max(_mapSize.x, _mapSize.y) * Constants.TileWidth) / 2, Position.y);
-        _tileMap.Initialize(_mapSize, @event.Tiles);
-        Pathfinding.Initialize(_mapSize, @event.Tiles);
-        Entities.Initialize(_tileMap.GetTiles, _startingPositions[0].ToList());
-        
-        _tileMap.FillMapOutsideWithMountains();
-        _tileMap.UpdateALlBitmaps();
-        
-        FinishedInitializing();
     }
 
     public EntityNode UpdateHoveredEntity(Vector2 mousePosition)
@@ -129,7 +162,7 @@ public class ClientMap : Map
     {
         var selectedEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
         _tileMap.RemoveOccupation(selectedEntity);
-        Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path);
+        Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
     }
     
     private void HandleLeftClick()
@@ -173,8 +206,12 @@ public class ClientMap : Map
         
         if (entity is UnitNode unit)
         {
-            var availableTiles = Pathfinding.GetAvailablePositions(entity.EntityPrimaryPosition, unit.Movement);
-            _tileMap.SetAvailableTiles(availableTiles);
+            var size = (int)unit.EntitySize.x;
+            var availableTiles = Pathfinding.GetAvailablePositions(
+                entity.EntityPrimaryPosition, 
+                unit.Movement, 
+                size);
+            _tileMap.SetAvailableTiles(availableTiles, size);
             _selectionOverlay = SelectionOverlay.Movement;
         }
     }
@@ -220,9 +257,9 @@ public class ClientMap : Map
         
         // TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
         
-        var path = Pathfinding.FindPath(_hoveredTile.Position);
-        var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
         var selectedEntity = Entities.SelectedEntity;
+        var path = Pathfinding.FindPath(_hoveredTile.Position, (int)selectedEntity.EntitySize.x).ToList();
+        var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
         UnitMovementIssued(new UnitMovedAlongPathEvent(selectedEntity.InstanceId, globalPath, path));
         HandleDeselecting();
     }

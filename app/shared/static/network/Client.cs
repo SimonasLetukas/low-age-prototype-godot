@@ -39,6 +39,7 @@ public class Client : Network
         }
         
         GetTree().NetworkPeer = peer;
+        SetPeerTimeout();
         GD.Print("Connecting to server...");
         return true;
     }

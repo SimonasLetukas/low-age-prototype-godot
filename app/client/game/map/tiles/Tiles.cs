@@ -1,5 +1,7 @@
+using System;
 using Godot;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Tiles;
@@ -23,7 +25,9 @@ public class Tiles : Node2D
         public bool IsInBoundsOf(Vector2 bounds) => Position.IsInBoundsOf(bounds);
     }
     
-    private ICollection<TileInstance> _tiles;
+    public event Action FinishedInitializing = delegate { };
+    
+    private ICollection<TileInstance> _tiles = new List<TileInstance>();
     private IList<Tile> _tilesBlueprint;
     private Vector2 _mapSize;
     private Vector2 _tilemapOffset;
@@ -34,9 +38,10 @@ public class Tiles : Node2D
     private TileMap _marsh;
     private TileMap _mountains;
     private FocusedTile _focusedTile;
-    private TileMap _availableTiles;
+    private TileMap _availableTilesVisual;
+    private IEnumerable<Vector2> _availableTilesSource = new List<Vector2>();
     private TileMap _targetTiles;
-    private ICollection<TileInstance> _targetTileInstances = new List<TileInstance>();
+    private readonly ICollection<TileInstance> _targetTileInstances = new List<TileInstance>();
     private TileMap _path;
     
     private const int TileMapGrassIndex = 6;
@@ -58,14 +63,23 @@ public class Tiles : Node2D
         { Terrain.Celestium, TileMapCelestiumIndex }
     };
 
+    private bool _dataInitialized = false;
+    private IList<(Vector2, TileId)> _tilesForDataInitialization;
+    private bool _visualsInitialized = false;
+    private IList<(Vector2, TileId)> _tilesForVisualsInitialization;
+    private bool _initialized = true;
+    private readonly Stopwatch _stopwatch = new Stopwatch();
+
     public override void _Ready()
     {
+        PauseMode = PauseModeEnum.Process;
+        
         _grass = GetNode<TileMap>("Grass");
         _scraps = GetNode<TileMap>("Scraps");
         _marsh = GetNode<TileMap>("Marsh");
         _mountains = GetNode<TileMap>("Stone");
         _focusedTile = GetNode<FocusedTile>("FocusedTile");
-        _availableTiles = GetNode<TileMap>("Alpha/Available");
+        _availableTilesVisual = GetNode<TileMap>("Alpha/Available");
         _targetTiles = GetNode<TileMap>("Alpha/Target");
         _path = GetNode<TileMap>("Path");
         
@@ -75,31 +89,89 @@ public class Tiles : Node2D
     public void Initialize(Vector2 mapSize, ICollection<(Vector2, TileId)> tiles)
     {
         _tilesBlueprint = Data.Instance.Blueprint.Tiles;
-        
-        var tileInstances = new List<TileInstance>();
-        foreach (var (position, blueprint) in tiles)
-        {
-            tileInstances.Add(new TileInstance
-            {
-                Position = position,
-                Blueprint = blueprint,
-                Terrain = GetBlueprint(blueprint).Terrain,
-                Occupants = new List<EntityNode>()
-            });
-        }
-        _tiles = tileInstances;
-        
         _mapSize = mapSize;
         _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
         _mountainsFillOffset = (int)Mathf.Max(mapSize.x, mapSize.y);
         _tileOffset = new Vector2(1, (float)Constants.TileHeight / 2);
         ClearTilemaps();
+        _tilesForDataInitialization = tiles.ToList();
+        _tilesForVisualsInitialization = tiles.ToList();
         
-        foreach (var (coordinates, _) in tiles)
+        _initialized = false;
+    }
+
+    public override void _Process(float delta)
+    {
+        base._Process(delta);
+        if (_initialized)
+            return;
+        
+        CheckInitialization();
+        
+        var deltaMs = (int)(delta * 1000);
+        _stopwatch.Reset();
+        _stopwatch.Start();
+
+        while (_stopwatch.ElapsedMilliseconds < deltaMs)
         {
-            _grass.SetCellv(coordinates, TileMapGrassIndex); // needed to fill up gaps
-            SetCell(coordinates, GetTerrain(coordinates));
+            if (_dataInitialized is false)
+            {
+                IterateDataInitialization();
+                continue;
+            }
+
+            if (_visualsInitialized is false) 
+                IterateVisualInitialization();
         }
+        
+        _stopwatch.Stop();
+    }
+
+    private void CheckInitialization()
+    {
+        if (_dataInitialized is false || _visualsInitialized is false)
+            return;
+
+        _initialized = true;
+        FinishedInitializing();
+    }
+
+    private void IterateDataInitialization()
+    {
+        if (_tilesForDataInitialization.IsEmpty())
+        {
+            GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
+                     $"{nameof(Tiles)}.{nameof(IterateDataInitialization)} completed");
+            _dataInitialized = true;
+            return;
+        }
+
+        var (position, blueprintId) = _tilesForDataInitialization[0];
+        _tilesForDataInitialization.RemoveAt(0);
+        _tiles.Add(new TileInstance
+        {
+            Position = position,
+            Blueprint = blueprintId,
+            Terrain = GetBlueprint(blueprintId).Terrain,
+            Occupants = new List<EntityNode>()
+        });
+    }
+
+    private void IterateVisualInitialization()
+    {
+        if (_tilesForVisualsInitialization.IsEmpty())
+        {
+            GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
+                     $"{nameof(Tiles)}.{nameof(IterateVisualInitialization)} completed");
+            _visualsInitialized = true;
+            return;
+        }
+
+        var (position, blueprintId) = _tilesForVisualsInitialization[0];
+        _tilesForVisualsInitialization.RemoveAt(0);
+        
+        _grass.SetCellv(position, TileMapGrassIndex); // needed to fill up gaps
+        SetCell(position, GetTerrain(position));
     }
 
     public Vector2 GetMapPositionFromGlobalPosition(Vector2 globalPosition) 
@@ -163,21 +235,23 @@ public class Tiles : Node2D
         _focusedTile.MoveTo(GetGlobalPositionFromMapPosition(position));
     }
 
-    public void SetAvailableTiles(IEnumerable<Vector2> availablePositions)
+    public void SetAvailableTiles(IEnumerable<Vector2> availablePositions, int size)
     {
         ClearAvailableTiles();
+        var availableTilesSource = availablePositions.ToList();
+        _availableTilesSource = availableTilesSource;
 
-        foreach (var availablePosition in availablePositions)
+        var dilatedPositions = GetDilated(availableTilesSource, size);
+        foreach (var availablePosition in dilatedPositions)
         {
-            _availableTiles.SetCellv(availablePosition, TileMapAvailableTileIndex);
-            _availableTiles.UpdateBitmaskRegion(availablePosition);
+            _availableTilesVisual.SetCellv(availablePosition, TileMapAvailableTileIndex);
+            _availableTilesVisual.UpdateBitmaskRegion(availablePosition);
         }
     }
 
     public bool IsCurrentlyAvailable(TileInstance tile) => IsCurrentlyAvailable(tile.Position);
     
-    public bool IsCurrentlyAvailable(Vector2 mapPosition) 
-        => _availableTiles.GetCellv(mapPosition) == TileMapAvailableTileIndex;
+    public bool IsCurrentlyAvailable(Vector2 mapPosition) => _availableTilesSource.Any(x => x.Equals(mapPosition));
 
     public void SetTargetTiles(IEnumerable<Vector2> targets, bool isPositive = true)
     {
@@ -199,11 +273,12 @@ public class Tiles : Node2D
         => _targetTiles.GetCellv(mapPosition) == TileMapNegativeTargetTileIndex 
            || _targetTiles.GetCellv(mapPosition) == TileMapPositiveTargetTileIndex;
 
-    public void SetPathTiles(IEnumerable<Vector2> pathPositions)
+    public void SetPathTiles(IEnumerable<Vector2> pathPositions, int size)
     {
         ClearPath();
 
-        foreach (var pathPosition in pathPositions)
+        var positions = GetDilated(pathPositions, size);
+        foreach (var pathPosition in positions)
         {
             _path.SetCellv(pathPosition, TileMapPathTileIndex);
         }
@@ -229,7 +304,11 @@ public class Tiles : Node2D
 
     public void ClearPath() => _path.Clear();
     
-    public void ClearAvailableTiles() => _availableTiles.Clear();
+    public void ClearAvailableTiles()
+    {
+        _availableTilesVisual.Clear();
+        _availableTilesSource = Enumerable.Empty<Vector2>();
+    }
 
     public void ClearTargetTiles()
     {
@@ -267,6 +346,25 @@ public class Tiles : Node2D
     private int GetTilemapIndexFrom(Terrain terrain) => _tileMapIndexesByTerrain.ContainsKey(terrain) 
         ? _tileMapIndexesByTerrain[terrain] 
         : TileMapGrassIndex;
+
+    private IEnumerable<Vector2> GetDilated(IEnumerable<Vector2> positions, int size)
+    {
+        var newPositions = new HashSet<Vector2>();
+        foreach (var position in positions)
+        {
+            for (var xOffset = 0; xOffset < size; xOffset++)
+            {
+                for (var yOffset = 0; yOffset < size; yOffset++)
+                {
+                    var resultingCoordinates = position + new Vector2(xOffset, yOffset);
+                    if (resultingCoordinates.IsInBoundsOf(_mapSize))
+                        newPositions.Add(resultingCoordinates);
+                }
+            }
+        }
+
+        return newPositions;
+    }
     
     private void ClearTilemaps()
     {

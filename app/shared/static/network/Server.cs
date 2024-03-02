@@ -88,6 +88,7 @@ public class Server : Network
 
         GetTree().NetworkPeer = peer;
         GetTree().Connect(Constants.ENet.NetworkPeerConnectedEvent, this, nameof(OnPlayerConnected));
+        SetPeerTimeout();
         
         Data.Instance.ReadBlueprint();
         

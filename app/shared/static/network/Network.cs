@@ -18,10 +18,14 @@ public class Network : Node
     public void ResetNetwork()
     {
 	    var peer = GetTree().NetworkPeer as NetworkedMultiplayerENet;
-	    if (peer is null is false)
-	    {
-		    peer.CloseConnection();
-	    }
+	    peer?.CloseConnection();
+    }
+
+    protected void SetPeerTimeout()
+    {
+	    var peer = GetTree().NetworkPeer as NetworkedMultiplayerENet;
+	    peer?.SetPeerTimeout(peer.GetUniqueId(), Constants.TimeoutLimitMs, Constants.TimeoutMinimumMs, 
+		    Constants.TimeoutMaximumMs);
     }
 
     /// <summary>
