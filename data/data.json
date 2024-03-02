@@ -200,7 +200,7 @@
     "units": [
       {
         "id": "unit-slave",
-        "size": 2,
+        "size": 1,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -223,7 +223,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 7,
+            "maxAmount": 5,
             "hasCurrent": true
           },
           {
@@ -339,7 +339,7 @@
       },
       {
         "id": "unit-quickdraw",
-        "size": 3,
+        "size": 1,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -362,7 +362,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 7,
+            "maxAmount": 4,
             "hasCurrent": true
           },
           {
