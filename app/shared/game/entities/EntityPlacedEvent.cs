@@ -12,7 +12,7 @@ public class EntityPlacedEvent : IGameEvent
     }
     
     public Guid Id { get; set; } = Guid.NewGuid();
-    public EntityId BlueprintId { get; set; }
-    public Vector2 MapPosition { get; set; }
-    public Guid InstanceId { get; set; }
+    public EntityId BlueprintId { get; }
+    public Vector2 MapPosition { get; }
+    public Guid InstanceId { get; }
 }

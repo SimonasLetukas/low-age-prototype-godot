@@ -40,6 +40,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     private bool _selected;
     private float _movementDuration;
     private Tween _movement;
+    private bool _canBePlacedOnTheWholeMap = false;
     
     public override void _Ready()
     {
@@ -95,7 +96,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public void SnapTo(Vector2 globalPosition) => GlobalPosition = globalPosition;
 
-    public void SetForPlacement()
+    public void SetForPlacement(bool canBePlacedOnTheWholeMap)
     {
         EntityState = State.InPlacement;
         SetTint(true);
@@ -103,10 +104,14 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         
         CanBePlaced = false;
         SetPlacementValidityColor(CanBePlaced);
+        _canBePlacedOnTheWholeMap = canBePlacedOnTheWholeMap;
     }
+
+    public void OverridePlacementValidity() => CanBePlaced = true;
 
     public bool DeterminePlacementValidity(bool requiresTargetTiles)
     {
+        requiresTargetTiles = requiresTargetTiles && _canBePlacedOnTheWholeMap is false;
         var tiles = GetTiles(EntityOccupyingPositions);
         CanBePlaced = IsPlacementGenerallyValid(tiles, requiresTargetTiles)
                       && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles));

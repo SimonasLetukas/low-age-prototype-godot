@@ -40,6 +40,9 @@ public class FactionSelection : OptionButton
             _optionButtonIndexesByFactionId[faction.Id] = optionButtonIndex;
             optionButtonIndex++;
         }
+
+        // TODO for testing only (selects the last faction by default)
+        Selected = optionButtonIndex - 1;
     }
 
     private void OnItemSelected(int index)

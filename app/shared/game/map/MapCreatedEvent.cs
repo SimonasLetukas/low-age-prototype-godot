@@ -14,11 +14,11 @@ public class MapCreatedEvent : IGameEvent
     }
 
     public Guid Id { get; set; } = Guid.NewGuid();
-    public Vector2 MapSize { get; set; }
-    public Dictionary<int, IList<Rect2>> StartingPositions { get; set; } // TODO might be better to have a
-                                                                         // Dictionary<int, IList<Vector2>> for each
-                                                                         // player ID instead and to use flood fill
-                                                                         // algorithms to be able to have non-square
-                                                                         // starting positions
-    public ICollection<(Vector2, TileId)> Tiles { get; set; }
+    public Vector2 MapSize { get; }
+    public Dictionary<int, IList<Rect2>> StartingPositions { get; } // TODO might be better to have a
+                                                                    // Dictionary<int, IList<Vector2>> for each
+                                                                    // player ID instead and to use flood fill
+                                                                    // algorithms to be able to have non-square
+                                                                    // starting positions
+    public ICollection<(Vector2, TileId)> Tiles { get; }
 }

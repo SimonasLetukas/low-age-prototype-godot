@@ -5,6 +5,7 @@ using System.Linq;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
+using low_age_data.Domain.Factions;
 using Array = Godot.Collections.Array;
 
 /// <summary>
@@ -36,25 +37,24 @@ public class Entities : YSort
         _structures = GetNode<YSort>("Structures");
     }
     
-    public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles, IList<Vector2> startingPositions)
+    public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles)
     {
         _getTiles = getTiles;
-        
-        // Force-add units for testing
-        var slaveBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Slave));
-        PlaceEntity(slaveBlueprint, startingPositions[0]);
-        
-        var horriorBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Horrior));
-        PlaceEntity(horriorBlueprint, startingPositions[1]);
-        
-        var marksmanBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.Marksman));
-        PlaceEntity(marksmanBlueprint, startingPositions[2]);
-        
-        var bigBadBullBlueprint = Data.Instance.Blueprint.Entities.Units.Single(x => x.Id.Equals(UnitId.BigBadBull));
-        PlaceEntity(bigBadBullBlueprint, startingPositions[0] - new Vector2(2, 2));
-        
-        var citadelBlueprint = Data.Instance.Blueprint.Entities.Structures.Single(x => x.Id.Equals(StructureId.Citadel));
-        PlaceEntity(citadelBlueprint, startingPositions[3]);
+    }
+
+    public void SetupStartingEntities(IList<Vector2> startingPositions, FactionId factionId)
+    {
+        var startingEntities = Data.Instance.Blueprint.Factions.First(x => x.Id.Equals(factionId))
+            .StartingEntities;
+
+        for (var i = 0; i < startingPositions.Count; i++)
+        {
+            if (i >= startingEntities.Count)
+                continue;
+
+            var entityBlueprint = Data.Instance.GetEntityBlueprintById(startingEntities[i]);
+            PlaceEntity(entityBlueprint, startingPositions[i]);
+        }
     }
     
     public override void _ExitTree()
@@ -173,12 +173,12 @@ public class Entities : YSort
         entity.MoveUntilFinished(globalPath.ToList(), targetPosition);
     }
     
-    public EntityNode SetEntityForPlacement(EntityId entityId)
+    public EntityNode SetEntityForPlacement(EntityId entityId, bool canBePlacedOnTheWholeMap)
     {
         var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
         var newEntity = InstantiateEntity(newEntityBlueprint);
         
-        newEntity.SetForPlacement();
+        newEntity.SetForPlacement(canBePlacedOnTheWholeMap);
         EntityInPlacement = newEntity;
         
         return newEntity;
@@ -215,7 +215,7 @@ public class Entities : YSort
             entity = InstantiateEntity(entityBlueprint);
             entity.InstanceId = @event.InstanceId;
             entity.EntityPrimaryPosition = @event.MapPosition;
-            entity.DeterminePlacementValidity(false);
+            entity.OverridePlacementValidity();
         }
 
         return PlaceEntity(entity, false);

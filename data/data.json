@@ -171,8 +171,10 @@
         "resource-special-weapon"
       ],
       "startingEntities": [
-        "structure-citadel",
-        "unit-leader"
+        "unit-slave",
+        "unit-slave",
+        "unit-leader",
+        "structure-citadel"
       ],
       "bonusStartingResources": [
         {
@@ -191,6 +193,8 @@
         "resource-faith"
       ],
       "startingEntities": [
+        "unit-marksman",
+        "unit-horrior",
         "structure-battery-core"
       ],
       "bonusStartingResources": []

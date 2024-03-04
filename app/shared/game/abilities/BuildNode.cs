@@ -19,10 +19,10 @@ public class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelectable
         return ability;
     }
     
-    public IShape PlacementArea { get; private set; }
     public IList<Selection<EntityId>> Selection { get; private set; }
     
     private Build Blueprint { get; set; }
+    private IShape PlacementArea { get; set; }
 
     public override void _Ready()
     {
@@ -41,6 +41,9 @@ public class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelectable
         PlacementArea = Blueprint.PlacementArea;
         Selection = Blueprint.Selection;
     }
+
+    public bool CanBePlacedOnTheWholeMap() => PlacementArea is low_age_data.Domain.Common.Shape.Map 
+                                             && Blueprint.UseWalkableTilesAsPlacementArea is false;
 
     public IEnumerable<Vector2> GetPlacementPositions(EntityNode caster, Vector2 mapSize)
     {

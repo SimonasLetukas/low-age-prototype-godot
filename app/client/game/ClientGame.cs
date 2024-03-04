@@ -112,6 +112,9 @@ public class ClientGame : Game
                 _interface.SetMapSize(mapCreatedEvent.MapSize);
                 _map.Initialize(mapCreatedEvent);
                 break;
+            case InitializationCompletedEvent initializationCompletedEvent:
+                OnEveryoneFinishedInitializing();
+                break;
             case UnitMovedAlongPathEvent unitMovedAlongPathEvent:
                 _map.MoveUnit(unitMovedAlongPathEvent);
                 break;
@@ -120,7 +123,7 @@ public class ClientGame : Game
                 break;
             default:
                 GD.PrintErr($"{nameof(ClientGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
-                            $"'{EventToString(gameEvent)}'. Type not implemented.");
+                            $"'{EventToString(gameEvent)}'. Type not implemented or not relevant for client.");
                 break;
         }
     }
@@ -128,6 +131,12 @@ public class ClientGame : Game
     private void OnMapFinishedInitializing()
     {
         GD.Print($"{nameof(ClientGame)}.{nameof(OnMapFinishedInitializing)}");
+        RegisterNewGameEvent(new ClientFinishedInitializingEvent(GetTree().GetNetworkUniqueId()));
+    }
+
+    private void OnEveryoneFinishedInitializing()
+    {
+        _map.SetupFactionStart();
         GetTree().Paused = false;
     }
 }

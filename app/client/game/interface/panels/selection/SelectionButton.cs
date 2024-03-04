@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using low_age_data.Domain.Entities;
 using low_age_data.Shared;
 
 public class SelectionButton : BaseButton
@@ -38,6 +39,10 @@ public class SelectionButton : BaseButton
         SelectionId = selectionId;
         
         HintTooltip = ability.GetSelectableItemText(selectionId);
+
+        var entity = Data.Instance.GetEntityBlueprintById((EntityId)selectionId);
+        if (entity?.Sprite != null)
+            SetIcon(GD.Load<Texture>(entity.Sprite));
     }
     
     private void OnButtonClicked() => Clicked(Ability, SelectionId);

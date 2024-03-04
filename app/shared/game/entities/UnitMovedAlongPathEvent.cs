@@ -13,7 +13,7 @@ public class UnitMovedAlongPathEvent : IGameEvent
     }
     
     public Guid Id { get; set; } = Guid.NewGuid();
-    public Guid EntityInstanceId { get; set; }
-    public IEnumerable<Vector2> GlobalPath { get; set; } // TODO perhaps this can be calculated in each client instead?
-    public IEnumerable<Vector2> Path { get; set; }
+    public Guid EntityInstanceId { get; }
+    public IEnumerable<Vector2> GlobalPath { get; } // TODO perhaps this can be calculated in each client instead?
+    public IEnumerable<Vector2> Path { get; }
 }

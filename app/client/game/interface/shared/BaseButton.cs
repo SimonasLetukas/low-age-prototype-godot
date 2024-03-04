@@ -66,8 +66,7 @@ public class BaseButton : NinePatchRect
             shaderMaterial.SetShaderParam("disabled", to);
 
         var icon = GetNode<TextureRect>(nameof(TextureRect));
-        if (icon.Material is ShaderMaterial iconMaterial) 
-            iconMaterial.SetShaderParam("disabled", to);
+        icon.Modulate = new Color(Colors.White, to ? 0.5f : 1);
     }
 
     private void OnBaseButtonMouseEntered()

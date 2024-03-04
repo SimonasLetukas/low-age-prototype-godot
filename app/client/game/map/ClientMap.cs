@@ -13,7 +13,8 @@ public class ClientMap : Map
     public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
 
     public Entities Entities { get; private set; }
-    
+
+    private Player _currentPlayer;
     private IList<Rect2> _startingPositions = new List<Rect2>();
     private Vector2 _mapSize = Vector2.Inf;
     private Tiles.TileInstance _hoveredTile = null;
@@ -52,9 +53,10 @@ public class ClientMap : Map
     public void Initialize(MapCreatedEvent @event)
     {
         if (DebugEnabled) GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} {nameof(ClientMap)}.{nameof(Initialize)}");
-        
+
+        _currentPlayer = Data.Instance.Players.Single(x => x.Id.Equals(GetTree().GetNetworkUniqueId()));
         _mapSize = @event.MapSize;
-        _startingPositions = @event.StartingPositions[GetTree().GetNetworkUniqueId()];
+        _startingPositions = @event.StartingPositions[_currentPlayer.Id];
         
         Position = new Vector2((Mathf.Max(_mapSize.x, _mapSize.y) * Constants.TileWidth) / 2, Position.y);
         _tileMap.Initialize(_mapSize, @event.Tiles);
@@ -82,7 +84,7 @@ public class ClientMap : Map
         if (_tileMapIsInitialized is false || _pathfindingIsInitialized is false)
             return;
         
-        Entities.Initialize(_tileMap.GetTiles, _startingPositions[0].ToList());
+        Entities.Initialize(_tileMap.GetTiles);
         
         _tileMap.FillMapOutsideWithMountains();
         _tileMap.UpdateALlBitmaps();
@@ -148,6 +150,11 @@ public class ClientMap : Map
         }
 
         return null;
+    }
+
+    public void SetupFactionStart()
+    {
+        Entities.SetupStartingEntities(_startingPositions.First().ToList(), _currentPlayer.Faction);
     }
 
     public void HandleDeselecting()
@@ -312,10 +319,12 @@ public class ClientMap : Map
         _tileMap.ClearAvailableTiles();
         _tileMap.ClearPath();
         _tileMap.DisableFocusedTile();
+
+        var canBePlacedOnTheWholeMap = buildAbility.CanBePlacedOnTheWholeMap();
+        _tileMap.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity, _mapSize), 
+            canBePlacedOnTheWholeMap);
         
-        _tileMap.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity, _mapSize));
-        
-        var entity = Entities.SetEntityForPlacement(entityId); // TODO pass in the cost to be tracked inside the buildableNode
+        var entity = Entities.SetEntityForPlacement(entityId, canBePlacedOnTheWholeMap); // TODO pass in the cost to be tracked inside the buildableNode
         
         _selectionOverlay = SelectionOverlay.Placement;
         EntityIsBeingPlaced(entity);

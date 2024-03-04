@@ -29,8 +29,10 @@ namespace low_age_data.Collections
                     },
                     startingEntities: new List<EntityId>
                     {
+                        UnitId.Slave,
+                        UnitId.Slave,
+                        UnitId.Leader,
                         StructureId.Citadel,
-                        UnitId.Leader
                     },
                     bonusStartingResources: new List<Payment>
                     {
@@ -48,6 +50,8 @@ namespace low_age_data.Collections
                     },
                     startingEntities: new List<EntityId>
                     {
+                        UnitId.Marksman,
+                        UnitId.Horrior,
                         StructureId.BatteryCore
                     })
             };

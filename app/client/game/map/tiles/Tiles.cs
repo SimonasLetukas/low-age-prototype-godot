@@ -41,6 +41,8 @@ public class Tiles : Node2D
     private TileMap _availableTilesVisual;
     private IEnumerable<Vector2> _availableTilesSource = new List<Vector2>();
     private TileMap _targetTiles;
+    private TileMap _targetMapPositiveTiles;
+    private TileMap _targetMapNegativeTiles;
     private readonly ICollection<TileInstance> _targetTileInstances = new List<TileInstance>();
     private TileMap _path;
     
@@ -78,11 +80,17 @@ public class Tiles : Node2D
         _scraps = GetNode<TileMap>("Scraps");
         _marsh = GetNode<TileMap>("Marsh");
         _mountains = GetNode<TileMap>("Stone");
-        _focusedTile = GetNode<FocusedTile>("FocusedTile");
+        
         _availableTilesVisual = GetNode<TileMap>("Alpha/Available");
         _targetTiles = GetNode<TileMap>("Alpha/Target");
+        _targetMapPositiveTiles = GetNode<TileMap>("Alpha/TargetMapPositive");
+        _targetMapPositiveTiles.Visible = false;
+        _targetMapNegativeTiles = GetNode<TileMap>("Alpha/TargetMapNegative");
+        _targetMapNegativeTiles.Visible = false;
+        
         _path = GetNode<TileMap>("Path");
         
+        _focusedTile = GetNode<FocusedTile>("FocusedTile");
         _focusedTile.Disable();
     }
 
@@ -172,6 +180,9 @@ public class Tiles : Node2D
         
         _grass.SetCellv(position, TileMapGrassIndex); // needed to fill up gaps
         SetCell(position, GetTerrain(position));
+
+        _targetMapPositiveTiles.SetCellv(position, TileMapPositiveTargetTileIndex);
+        _targetMapNegativeTiles.SetCellv(position, TileMapNegativeTargetTileIndex);
     }
 
     public Vector2 GetMapPositionFromGlobalPosition(Vector2 globalPosition) 
@@ -253,13 +264,21 @@ public class Tiles : Node2D
     
     public bool IsCurrentlyAvailable(Vector2 mapPosition) => _availableTilesSource.Any(x => x.Equals(mapPosition));
 
-    public void SetTargetTiles(IEnumerable<Vector2> targets, bool isPositive = true)
+    public void SetTargetTiles(IEnumerable<Vector2> targets, bool isPlacementAreaTheWholeMap, bool isTargetPositive = true)
     {
+        if (isPlacementAreaTheWholeMap)
+        {
+            _targetMapPositiveTiles.Visible = isTargetPositive;
+            _targetMapNegativeTiles.Visible = isTargetPositive is false;
+            
+            return;
+        }
+        
         ClearTargetTiles();
 
         foreach (var target in targets)
         {
-            _targetTiles.SetCellv(target, isPositive 
+            _targetTiles.SetCellv(target, isTargetPositive 
                 ? TileMapPositiveTargetTileIndex 
                 : TileMapNegativeTargetTileIndex);
             
@@ -312,6 +331,8 @@ public class Tiles : Node2D
 
     public void ClearTargetTiles()
     {
+        _targetMapPositiveTiles.Visible = false;
+        _targetMapNegativeTiles.Visible = false;
         _targetTiles.Clear();
         foreach (var tileInstance in _targetTileInstances) 
             tileInstance.IsTarget = false;
