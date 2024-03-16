@@ -5,7 +5,7 @@ using low_age_data.Domain.Factions;
 
 namespace low_age_data.Domain.Entities.Actors.Structures
 {
-    public class Structure : Actor
+    public class Structure : Actor, IRotatable
     {
         public Structure(
             StructureId id,
@@ -17,6 +17,8 @@ namespace low_age_data.Domain.Entities.Actors.Structures
             FactionId originalFaction,
             IList<ActorAttribute> actorAttributes,
             IList<AbilityId> abilities,
+            string? backSideSprite = null,
+            Vector2<int>? backSideCenterOffset = null,
             Vector2<int>? size = null,
             Vector2<int>? centerPoint = null,
             bool? destructible = null,
@@ -41,6 +43,8 @@ namespace low_age_data.Domain.Entities.Actors.Structures
             {
                 new Area(new Vector2<int>(0, 0))
             };
+            BackSideSprite = backSideSprite ?? sprite;
+            BackSideCenterOffset = backSideCenterOffset ?? centerOffset;
         }
         
         /// <summary>
@@ -63,5 +67,9 @@ namespace low_age_data.Domain.Entities.Actors.Structures
         /// is usually used to reserve space in which units can be created but other buildings cannot be placed. 
         /// </summary>
         public IList<Area> WalkableAreas { get; }
+        
+        public string? BackSideSprite { get; }
+        
+        public Vector2<int> BackSideCenterOffset { get; }
     }
 }

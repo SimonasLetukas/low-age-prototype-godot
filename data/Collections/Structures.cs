@@ -19,6 +19,8 @@ namespace low_age_data.Collections
                     description: "",
                     sprite: "res://assets/sprites/structures/revs/boss post front indexed 2x3.png",
                     centerOffset: new Vector2<int>(30, 22),
+                    backSideSprite: "res://assets/sprites/structures/revs/boss post back indexed 2x3.png",
+                    backSideCenterOffset: new Vector2<int>(14, 14),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision)
@@ -288,8 +290,10 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Barricade).CamelCaseToWords(),
                     description: $"{nameof(StructureId.Barricade).CamelCaseToWords()} helps to defend against ranged " +
                                  $"attacks and acts as an obstacle for melee units.",
-                    sprite: "res://assets/sprites/structures/revs/barricade front indexed 1x1.png", // TODO
-                    centerOffset: new Vector2<int>(0, 0), // TODO
+                    sprite: "res://assets/sprites/structures/revs/barricade front indexed 2x1.png",
+                    centerOffset: new Vector2<int>(12, 16),
+                    backSideSprite: "res://assets/sprites/structures/revs/barricade back indexed 2x1.png",
+                    backSideCenterOffset: new Vector2<int>(15, 11),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 65, hasCurrent: true, combatType: StatType.Health),
@@ -310,7 +314,7 @@ namespace low_age_data.Collections
                         AbilityId.Barricade.Caltrops,
                         AbilityId.Barricade.Decompose
                     },
-                    size: new Vector2<int>(x: 1, y: 2)),
+                    size: new Vector2<int>(x: 2, y: 1)),
                 
                 new Structure(
                     id: StructureId.BatteryCore,
@@ -523,7 +527,8 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.MilitaryBase).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/military base indexed 1x2.png",
-                    centerOffset: new Vector2<int>(5, 11),
+                    centerOffset: new Vector2<int>(12, 11),
+                    backSideCenterOffset: new Vector2<int>(5, 7),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 80, hasCurrent: true, combatType: StatType.Health),
@@ -544,11 +549,11 @@ namespace low_age_data.Collections
                         AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.MilitaryBase.Train
                     },
-                    size: new Vector2<int>(x: 1, y: 3),
+                    size: new Vector2<int>(x: 3, y: 1),
                     walkableAreas: new List<Area>
                     {
                         new Area(
-                            start: new Vector2<int>(x: 0, y: 2),
+                            start: new Vector2<int>(x: 2, y: 0),
                             size: new Vector2<int>(x: 1, y: 1))
                     }),
                 
@@ -556,8 +561,10 @@ namespace low_age_data.Collections
                     id: StructureId.Factory,
                     displayName: nameof(StructureId.Factory).CamelCaseToWords(),
                     description: "",
-                    sprite: "res://assets/sprites/structures/uee/factory 2 indexed 3x2.png",
+                    sprite: "res://assets/sprites/structures/uee/factory front indexed 3x2.png",
                     centerOffset: new Vector2<int>(25, 26),
+                    backSideSprite: "res://assets/sprites/structures/uee/factory back indexed 3x2.png",
+                    backSideCenterOffset: new Vector2<int>(8, 14),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 95, hasCurrent: true, combatType: StatType.Health),
@@ -582,7 +589,7 @@ namespace low_age_data.Collections
                     walkableAreas: new List<Area>
                     {
                         new Area(
-                            start: new Vector2<int>(x: 2, y: 0),
+                            start: new Vector2<int>(x: 3, y: 0),
                             size: new Vector2<int>(x: 2, y: 2))
                     }),
                 
@@ -590,8 +597,10 @@ namespace low_age_data.Collections
                     id: StructureId.Laboratory,
                     displayName: nameof(StructureId.Laboratory).CamelCaseToWords(),
                     description: "",
-                    sprite: "res://assets/sprites/structures/uee/lab4 indexed 3x3.png",
+                    sprite: "res://assets/sprites/structures/uee/lab front indexed 3x3.png",
                     centerOffset: new Vector2<int>(22, 25),
+                    backSideSprite: "res://assets/sprites/structures/uee/lab back indexed 3x3.png",
+                    backSideCenterOffset: new Vector2<int>(22, 25),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 110, hasCurrent: true, combatType: StatType.Health),
@@ -682,6 +691,8 @@ namespace low_age_data.Collections
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/stairs front indexed 2x1.png",
                     centerOffset: new Vector2<int>(10, 21),
+                    backSideSprite: "res://assets/sprites/structures/uee/stairs back indexed 2x1.png",
+                    backSideCenterOffset: new Vector2<int>(9, 15),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 60, hasCurrent: true, combatType: StatType.Health),

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lab4 indexed 3x3.png-bcea2139e1efc71fa066b81cd580e8f1.stex"
+path="res://.import/barricade front indexed 2x1.png-3522cc6600d3eee172339438c1ede163.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/structures/uee/lab4 indexed 3x3.png"
-dest_files=[ "res://.import/lab4 indexed 3x3.png-bcea2139e1efc71fa066b81cd580e8f1.stex" ]
+source_file="res://assets/sprites/structures/revs/barricade front indexed 2x1.png"
+dest_files=[ "res://.import/barricade front indexed 2x1.png-3522cc6600d3eee172339438c1ede163.stex" ]
 
 [params]
 

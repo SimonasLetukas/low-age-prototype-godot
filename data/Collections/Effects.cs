@@ -372,7 +372,7 @@ namespace low_age_data.Collections
                     id: EffectId.Barricade.CaltropsSearch,
                     shape: new Custom(areas: new List<Area>
                     {
-                        new Area(start: new Vector2<int>(x: -1,y: 1), 
+                        new Area(start: new Vector2<int>(x: 1,y: -1), 
                             size: new Vector2<int> (x: 3, y: 2))
                     }),
                     searchFlags: new List<SearchFlag>

@@ -83,8 +83,6 @@ public class SelectionPanel : Control
         foreach (var selectionId in selectionIds)
         {
             var selectionButton = SelectionButton.InstantiateAsChild(ability, selectionId, _gridContainer);
-            selectionButton.SetDisabled(ability.IsSelectableItemDisabled(selectionId));
-            // TODO set icon
             selectionButton.Clicked += selectionButtonOnClicked;
         }
     }

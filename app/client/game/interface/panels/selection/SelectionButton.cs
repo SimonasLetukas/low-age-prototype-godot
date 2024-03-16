@@ -43,6 +43,9 @@ public class SelectionButton : BaseButton
         var entity = Data.Instance.GetEntityBlueprintById((EntityId)selectionId);
         if (entity?.Sprite != null)
             SetIcon(GD.Load<Texture>(entity.Sprite));
+        
+        if (Config.Instance.ResearchEnabled)
+            SetDisabled(ability.IsSelectableItemDisabled(selectionId));
     }
     
     private void OnButtonClicked() => Clicked(Ability, SelectionId);

@@ -41,8 +41,9 @@ public class FactionSelection : OptionButton
             optionButtonIndex++;
         }
 
-        // TODO for testing only (selects the last faction by default)
-        Selected = optionButtonIndex - 1;
+        Selected = _optionButtonIndexesByFactionId.TryGetValue(Config.Instance.StartingFaction, out var preferredFaction) 
+            ? preferredFaction
+            : optionButtonIndex;
     }
 
     private void OnItemSelected(int index)
