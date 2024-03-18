@@ -39,12 +39,12 @@ public class Mouse : Node2D
     {
         var mousePos = GetViewport().GetMousePosition();
 
-        if (Input.IsActionJustPressed("mouse_left"))
+        if (Input.IsActionJustPressed(Constants.Input.MouseLeft))
         {
 	        _startPosition = mousePos;
         }
         
-        if (Input.IsActionPressed("mouse_left"))
+        if (Input.IsActionPressed(Constants.Input.MouseLeft))
         {
 	        if (_cameraIsMoving)
 	        {
@@ -65,7 +65,7 @@ public class Mouse : Node2D
 	        }
         }
 
-        if (Input.IsActionJustReleased("mouse_left"))
+        if (Input.IsActionJustReleased(Constants.Input.MouseLeft))
         {
 	        _cameraIsMoving = false;
 	        SetCursorToArrow();
@@ -77,13 +77,13 @@ public class Mouse : Node2D
 	        }
         }
 
-        if (Input.IsActionJustPressed("mouse_right"))
+        if (Input.IsActionJustPressed(Constants.Input.MouseRight))
         {
 	        // TODO examine functionality etc
 	        // Track holding of key
         }
 
-        if (Input.IsActionJustReleased("mouse_right"))
+        if (Input.IsActionJustReleased(Constants.Input.MouseRight))
         {
 	        EmitSignal(nameof(RightReleasedWithoutExamine));
         }

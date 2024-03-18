@@ -65,7 +65,15 @@ public class Entities : YSort
         }
         base._ExitTree();
     }
-    
+
+    public override void _Process(float delta)
+    {
+        if (Input.IsActionJustPressed(Constants.Input.Rotate) && EntityInPlacement is ActorNode actor)
+        {
+            actor.Rotate();
+        }
+    }
+
     public EntityNode GetEntityByInstanceId(Guid instanceId) => _entitiesByIds.ContainsKey(instanceId)
         ? _entitiesByIds[instanceId]
         : null;
@@ -208,14 +216,18 @@ public class Entities : YSort
 
     public EntityNode PlaceEntity(EntityPlacedEvent @event)
     {
-        var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
         var entity = GetEntityByInstanceId(@event.InstanceId);
         if (entity is null)
         {
+            var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
             entity = InstantiateEntity(entityBlueprint);
             entity.InstanceId = @event.InstanceId;
             entity.EntityPrimaryPosition = @event.MapPosition;
             entity.OverridePlacementValidity();
+            if (entity is ActorNode actor)
+                actor.SetActorRotation(@event.ActorRotation);
+            // TODO this is getting quite extensive, think of a way to move the synchronization of entity state to be
+            // handled inside the entity
         }
 
         return PlaceEntity(entity, false);
@@ -240,7 +252,8 @@ public class Entities : YSort
             return null;
         
         if (placeAsCandidate)
-            EntityPlaced(new EntityPlacedEvent(entity.BlueprintId, entity.EntityPrimaryPosition, instanceId));
+            EntityPlaced(new EntityPlacedEvent(entity.BlueprintId, entity.EntityPrimaryPosition, instanceId, 
+                entity is ActorNode actor ? actor.ActorRotation : ActorRotation.BottomRight));
         
         _entitiesByIds[instanceId] = entity;
         NewPositionOccupied(entity);

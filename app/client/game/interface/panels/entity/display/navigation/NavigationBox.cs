@@ -45,10 +45,10 @@ public class NavigationBox : MarginContainer
     
     private void OnNavigationBoxPanelGuiInput(InputEvent inputEvent)
     {
-        if (inputEvent.IsActionPressed("mouse_left"))
+        if (inputEvent.IsActionPressed(Constants.Input.MouseLeft))
             _navigationBoxPanel.SetClicked(true);
         
-        if (inputEvent.IsActionReleased("mouse_left") is false) 
+        if (inputEvent.IsActionReleased(Constants.Input.MouseLeft) is false) 
             return;
         
         _navigationBoxPanel.SetClicked(false);

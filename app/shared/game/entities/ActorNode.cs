@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -50,6 +51,37 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         base.SetOutline(to);
         _health.Visible = to;
         _shields.Visible = to && HasShields;
+    }
+
+    public virtual void Rotate()
+    {
+        switch (ActorRotation)
+        {
+            case ActorRotation.BottomRight:
+                ActorRotation = ActorRotation.BottomLeft;
+                break;
+            case ActorRotation.BottomLeft:
+                ActorRotation = ActorRotation.TopLeft;
+                break;
+            case ActorRotation.TopLeft:
+                ActorRotation = ActorRotation.TopRight;
+                break;
+            case ActorRotation.TopRight:
+                ActorRotation = ActorRotation.BottomRight;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+        UpdateSprite();
+    }
+
+    public void SetActorRotation(ActorRotation to)
+    {
+        var delta = to - ActorRotation;
+        delta = delta < 0 ? delta + 4 : delta;
+        for (var r = 0; r < delta; r++) 
+            Rotate();
     }
 
     public bool HasShields => CurrentStats.Any(x => 

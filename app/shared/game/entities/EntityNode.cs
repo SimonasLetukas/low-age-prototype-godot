@@ -153,6 +153,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         EntityState = State.Placed;
         SetTint(false);
         SetTransparency(true);
+        UpdateSprite();
         
         Complete(); // TODO should be called outside of this class when e.g. building is finished (payment is completed)
         return true;
@@ -195,16 +196,24 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Sprite.Modulate = new Color(Colors.White, to ? 0.5f : 1);
     }
 
-    protected void AdjustSpriteOffset()
+    protected void AdjustSpriteOffset(Vector2? centerOffset = null)
     {
-        if (Blueprint.Sprite != null)
-            Sprite.Texture = GD.Load<Texture>(Blueprint.Sprite);
+        if (centerOffset is null)
+            centerOffset = Blueprint.CenterOffset.ToGodotVector2();
         
         var offsetFromX = (int)(EntitySize.x - 1) * 
                           new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
         var offsetFromY = (int)(EntitySize.y - 1) *
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
-        Sprite.Offset = (Blueprint.CenterOffset.ToGodotVector2() * -1) + offsetFromX + offsetFromY;
+        Sprite.Offset = ((Vector2)centerOffset * -1) + offsetFromX + offsetFromY;
+    }
+
+    protected virtual void UpdateSprite()
+    {
+        if (Blueprint.Sprite != null)
+            Sprite.Texture = GD.Load<Texture>(Blueprint.Sprite);
+        
+        AdjustSpriteOffset();
     }
     
     private bool IsPlacementGenerallyValid(IList<Tiles.TileInstance> tiles, bool requiresTargetTiles)

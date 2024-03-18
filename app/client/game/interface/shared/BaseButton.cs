@@ -94,10 +94,10 @@ public class BaseButton : NinePatchRect
         if (IsDisabled)
             return;
         
-        if (inputEvent.IsActionPressed("mouse_left"))
+        if (inputEvent.IsActionPressed(Constants.Input.MouseLeft))
             SetClicked(true);
         
-        if (inputEvent.IsActionReleased("mouse_left") is false) 
+        if (inputEvent.IsActionReleased(Constants.Input.MouseLeft) is false) 
             return;
         
         SetClicked(false);

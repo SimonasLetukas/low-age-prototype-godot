@@ -33,10 +33,10 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         CenterPoint = blueprint.CenterPoint.ToGodotVector2();
         WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(EntitySize)).ToList();
         
-        AdjustSpriteOffset();
+        UpdateSprite();
     }
 
-    public void Rotate()
+    public override void Rotate()
     {
         var centerPointAssigned = false;
         var newWalkableAreas = new List<Rect2>();
@@ -67,24 +67,22 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         WalkableAreasBlueprint = newWalkableAreas;
         EntitySize = new Vector2(EntitySize.y, EntitySize.x);
         
-        switch (ActorRotation)
-        {
-            case ActorRotation.BottomRight:
-                ActorRotation = ActorRotation.BottomLeft;
-                break;
-            case ActorRotation.BottomLeft:
-                ActorRotation = ActorRotation.TopLeft;
-                break;
-            case ActorRotation.TopLeft:
-                ActorRotation = ActorRotation.TopRight;
-                break;
-            case ActorRotation.TopRight:
-                ActorRotation = ActorRotation.BottomRight;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        base.Rotate();
+    }
+
+    protected override void UpdateSprite()
+    {
+        var needsBackSprite = ActorRotation == ActorRotation.TopLeft || ActorRotation == ActorRotation.TopRight;
+        var needsFlipping = ActorRotation == ActorRotation.BottomLeft || ActorRotation == ActorRotation.TopRight;
         
-        AdjustSpriteOffset();
+        var spriteLocation = needsBackSprite ? Blueprint.BackSideSprite : Blueprint.Sprite;
+        if (spriteLocation.IsNotNullOrEmpty())
+            Sprite.Texture = GD.Load<Texture>(spriteLocation);
+
+        AdjustSpriteOffset(needsBackSprite 
+            ? Blueprint.BackSideCenterOffset.ToGodotVector2() 
+            : Blueprint.CenterOffset.ToGodotVector2());
+        
+        Sprite.Scale = needsFlipping ? new Vector2(-1, Scale.y) : new Vector2(1, Scale.y);
     }
 }

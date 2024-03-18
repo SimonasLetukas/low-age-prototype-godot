@@ -61,10 +61,10 @@ public class AttackTypeBox : MarginContainer
     
     private void OnAttackTypePanelGuiInput(InputEvent inputEvent)
     {
-        if (inputEvent.IsActionPressed("mouse_left"))
+        if (inputEvent.IsActionPressed(Constants.Input.MouseLeft))
             _attackTypePanel.SetClicked(true);
         
-        if (inputEvent.IsActionReleased("mouse_left") is false) 
+        if (inputEvent.IsActionReleased(Constants.Input.MouseLeft) is false) 
             return;
         
         _attackTypePanel.SetClicked(false);
