@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
+using low_age_data.Domain.Entities;
 using Array = Godot.Collections.Array;
 
 public class Interface : CanvasLayer
@@ -11,18 +12,20 @@ public class Interface : CanvasLayer
     
     public event Action MouseEntered = delegate { };
     public event Action MouseExited = delegate { };
-    
-    public SelectionPanel SelectionPanel { get; private set; }
+    public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
     
     private Vector2 _mapSize = Vector2.Zero;
     private EntityPanel _entityPanel;
+    private SelectionPanel _selectionPanel;
+    private InformationalText _informationalText;
     
     public override void _Ready()
     {
         base._Ready();
         
         _entityPanel = GetNode<EntityPanel>($"{nameof(EntityPanel)}");
-        SelectionPanel = GetNode<SelectionPanel>(nameof(SelectionPanel));
+        _selectionPanel = GetNode<SelectionPanel>($"{nameof(SelectionPanel)}");
+        _informationalText = GetNode<InformationalText>($"{nameof(InformationalText)}");
 
         foreach (var firstLevel in GetChildren().OfType<Control>())
         {
@@ -34,20 +37,30 @@ public class Interface : CanvasLayer
             }
         }
 
-        _entityPanel.AbilityViewOpened += SelectionPanel.OnSelectableAbilityPressed;
-        _entityPanel.AbilityViewClosed += SelectionPanel.OnGoBackPressed;
+        _entityPanel.AbilityViewOpened += _selectionPanel.OnSelectableAbilityPressed;
+        _entityPanel.AbilityViewClosed += _selectionPanel.OnGoBackPressed;
+        _selectionPanel.SelectedToBuild += OnSelectionPanelSelectedToBuild;
     }
 
     public override void _ExitTree()
     {
-        _entityPanel.AbilityViewOpened -= SelectionPanel.OnSelectableAbilityPressed;
-        _entityPanel.AbilityViewClosed -= SelectionPanel.OnGoBackPressed;
+        _entityPanel.AbilityViewOpened -= _selectionPanel.OnSelectableAbilityPressed;
+        _entityPanel.AbilityViewClosed -= _selectionPanel.OnGoBackPressed;
+        _selectionPanel.SelectedToBuild -= OnSelectionPanelSelectedToBuild;
         base._ExitTree();
     }
 
     public void SetMapSize(Vector2 mapSize)
     {
         _mapSize = mapSize;
+    }
+
+    public void OnEntityIsBeingPlaced(EntityNode entity)
+    {
+        _selectionPanel.OnEntityIsBeingPlaced(entity);
+        _informationalText.Enable(entity is StructureNode
+            ? InformationalText.InfoTextType.PlacingRotatable 
+            : InformationalText.InfoTextType.Placing);
     }
 
     private void OnControlMouseEntered(Control which)
@@ -69,11 +82,15 @@ public class Interface : CanvasLayer
     internal void OnEntitySelected(EntityNode entity)
     {
         _entityPanel.OnEntitySelected(entity);
+        _informationalText.Enable(entity is StructureNode 
+            ? InformationalText.InfoTextType.Selected 
+            : InformationalText.InfoTextType.SelectedMovement);
     }
 
     internal void OnEntityDeselected()
     {
         _entityPanel.OnEntityDeselected();
+        _informationalText.Disable();
     }
 
     internal void OnMapNewTileHovered(Vector2 tileHovered, Terrain terrain, IList<EntityNode> occupants)
@@ -96,5 +113,10 @@ public class Interface : CanvasLayer
 
         GetNode<Label>("Theme/DebugPanel/Coordinates").Text = coordinatesText;
         GetNode<Label>("Theme/DebugPanel/TerrainType").Text = terrainText;
+    }
+
+    private void OnSelectionPanelSelectedToBuild(BuildNode buildAbility, EntityId entityId)
+    {
+        SelectedToBuild(buildAbility, entityId);
     }
 }

@@ -1,13 +1,16 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://app/client/game/interface/panels/entity/EntityPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://app/client/game/interface/Interface.cs" type="Script" id=2]
 [ext_resource path="res://app/client/game/interface/panels/selection/SelectionPanel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://app/client/game/interface/info-text/InformationalText.tscn" type="PackedScene" id=4]
 [ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=5]
 [ext_resource path="res://assets/sprites/interface/bottom left debug panel.png" type="Texture" id=6]
 
 [node name="Interface" type="CanvasLayer"]
 script = ExtResource( 2 )
+
+[node name="InformationalText" parent="." instance=ExtResource( 4 )]
 
 [node name="Theme" type="Control" parent="."]
 anchor_right = 1.0

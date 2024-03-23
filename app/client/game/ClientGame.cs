@@ -48,11 +48,11 @@ public class ClientGame : Game
         
         _interface.MouseEntered += _mouse.OnInterfaceMouseEntered;
         _interface.MouseExited += _mouse.OnInterfaceMouseExited;
-        _interface.SelectionPanel.SelectedToBuild += _map.OnSelectedToBuild;
+        _interface.SelectedToBuild += _map.OnSelectedToBuild;
 
         _map.FinishedInitializing += OnMapFinishedInitializing;
         _map.NewTileHovered += _interface.OnMapNewTileHovered;
-        _map.EntityIsBeingPlaced += _interface.SelectionPanel.OnEntityIsBeingPlaced;
+        _map.EntityIsBeingPlaced += _interface.OnEntityIsBeingPlaced;
         _map.Entities.EntitySelected += _interface.OnEntitySelected;
         _map.Entities.EntityDeselected += _interface.OnEntityDeselected;
         
@@ -64,11 +64,11 @@ public class ClientGame : Game
     {
         _interface.MouseEntered -= _mouse.OnInterfaceMouseEntered;
         _interface.MouseExited -= _mouse.OnInterfaceMouseExited;
-        _interface.SelectionPanel.SelectedToBuild -= _map.OnSelectedToBuild;
+        _interface.SelectedToBuild -= _map.OnSelectedToBuild;
         
         _map.FinishedInitializing -= OnMapFinishedInitializing;
         _map.NewTileHovered -= _interface.OnMapNewTileHovered;
-        _map.EntityIsBeingPlaced -= _interface.SelectionPanel.OnEntityIsBeingPlaced;
+        _map.EntityIsBeingPlaced -= _interface.OnEntityIsBeingPlaced;
         _map.Entities.EntitySelected -= _interface.OnEntitySelected;
         _map.Entities.EntityDeselected -= _interface.OnEntityDeselected;
         

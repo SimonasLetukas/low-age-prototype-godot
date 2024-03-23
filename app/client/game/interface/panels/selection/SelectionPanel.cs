@@ -89,7 +89,6 @@ public class SelectionPanel : Control
 
     private void OnBuildSelectionItemPressed(ISelectable abilityNode, Id id)
     {
-        
         SelectedToBuild((BuildNode)abilityNode, (EntityId)id);
     }
 
