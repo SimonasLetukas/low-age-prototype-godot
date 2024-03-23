@@ -79,10 +79,13 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         if (spriteLocation.IsNotNullOrEmpty())
             Sprite.Texture = GD.Load<Texture>(spriteLocation);
 
-        AdjustSpriteOffset(needsBackSprite 
-            ? Blueprint.BackSideCenterOffset.ToGodotVector2() 
-            : Blueprint.CenterOffset.ToGodotVector2());
+        var offset = needsBackSprite
+            ? Blueprint.BackSideCenterOffset.ToGodotVector2()
+            : Blueprint.CenterOffset.ToGodotVector2();
+        AdjustSpriteOffset(needsFlipping 
+            ? new Vector2(Sprite.Texture.GetSize().x - offset.x, offset.y)
+            : offset);
         
-        Sprite.Scale = needsFlipping ? new Vector2(-1, Scale.y) : new Vector2(1, Scale.y);
+        Sprite.FlipH = needsFlipping;
     }
 }

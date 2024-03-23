@@ -25,7 +25,7 @@ void vertex()
 	{
 		o = VERTEX;
 		vec2 uv = (UV - 0.5);
-		VERTEX += uv / float(intensity);
+		VERTEX += uv * float(intensity);
 		f = VERTEX;
 	}
 }
