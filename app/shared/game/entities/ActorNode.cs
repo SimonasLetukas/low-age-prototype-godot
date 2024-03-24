@@ -87,4 +87,6 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public bool HasShields => CurrentStats.Any(x => 
         x.Blueprint is CombatStat combatStat 
         && combatStat.CombatType.Equals(StatType.Shields));
+
+    internal Actor GetActorBlueprint() => Blueprint;
 }

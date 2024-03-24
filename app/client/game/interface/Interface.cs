@@ -14,10 +14,10 @@ public class Interface : CanvasLayer
     public event Action MouseExited = delegate { };
     public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
     
-    private Vector2 _mapSize = Vector2.Zero;
     private EntityPanel _entityPanel;
     private SelectionPanel _selectionPanel;
     private InformationalText _informationalText;
+    private HoveringPanel _hoveringPanel;
     
     public override void _Ready()
     {
@@ -26,6 +26,7 @@ public class Interface : CanvasLayer
         _entityPanel = GetNode<EntityPanel>($"{nameof(EntityPanel)}");
         _selectionPanel = GetNode<SelectionPanel>($"{nameof(SelectionPanel)}");
         _informationalText = GetNode<InformationalText>($"{nameof(InformationalText)}");
+        _hoveringPanel = GetNode<HoveringPanel>($"{nameof(HoveringPanel)}");
 
         foreach (var firstLevel in GetChildren().OfType<Control>())
         {
@@ -52,7 +53,7 @@ public class Interface : CanvasLayer
 
     public void SetMapSize(Vector2 mapSize)
     {
-        _mapSize = mapSize;
+        _hoveringPanel.SetMapSize(mapSize);
     }
 
     public void OnEntityIsBeingPlaced(EntityNode entity)
@@ -95,24 +96,7 @@ public class Interface : CanvasLayer
 
     internal void OnMapNewTileHovered(Vector2 tileHovered, Terrain terrain, IList<EntityNode> occupants)
     {
-        string coordinatesText;
-        string terrainText;
-
-        if (tileHovered.IsInBoundsOf(_mapSize) is false)
-        {
-            coordinatesText = "-, -";
-            terrainText = "Mountains";
-        }
-        else
-        {
-            var occupantsText = occupants.Aggregate(string.Empty, (current, occupant) => 
-                current + $", {occupant.DisplayName}");
-            coordinatesText = $"{tileHovered.x}, {tileHovered.y}";
-            terrainText = terrain.ToDisplayValue().Capitalize() + occupantsText; // TODO display more nicely
-        }
-
-        GetNode<Label>("Theme/DebugPanel/Coordinates").Text = coordinatesText;
-        GetNode<Label>("Theme/DebugPanel/TerrainType").Text = terrainText;
+        _hoveringPanel.OnMapNewTileHovered(tileHovered, terrain, occupants);
     }
 
     private void OnSelectionPanelSelectedToBuild(BuildNode buildAbility, EntityId entityId)

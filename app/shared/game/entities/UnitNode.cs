@@ -34,4 +34,29 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         
         UpdateSprite();
     }
+
+    public float GetReach()
+    {
+        var blueprint = GetActorBlueprint();
+        
+        // TODO: take from current max range (in case it is modified by behaviours)
+        
+        var meleeAttack = (AttackStat)blueprint.Statistics.FirstOrDefault(x =>
+            x is AttackStat attackStat
+            && attackStat.AttackType.Equals(Attacks.Melee));
+        var meleeDistance = meleeAttack?.MaximumDistance ?? 0;
+        
+        var rangedAttack = (AttackStat)blueprint.Statistics.FirstOrDefault(x =>
+            x is AttackStat attackStat
+            && attackStat.AttackType.Equals(Attacks.Ranged));
+        var rangedDistance = rangedAttack?.MaximumDistance ?? 0;
+
+        var rangedReach = rangedDistance > 0 ? rangedDistance + 1 : 0;
+        var meleeReach = meleeDistance > 0 ? meleeDistance + Movement : 0;
+        return rangedReach > meleeReach ? rangedReach : meleeReach;
+        
+        // TODO logic (outside of this method too) needs to be made more intelligent, because right now this doesn't
+        // take into account targeting logic (however complex it would be) and everything gets calculated through
+        // pathfinding.
+    }
 }

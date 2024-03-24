@@ -39,6 +39,7 @@ public class Tiles : Node2D
     private TileMap _mountains;
     private FocusedTile _focusedTile;
     private TileMap _availableTilesVisual;
+    private TileMap _availableTilesHovering;
     private IEnumerable<Vector2> _availableTilesSource = new List<Vector2>();
     private TileMap _targetTiles;
     private TileMap _targetMapPositiveTiles;
@@ -82,6 +83,7 @@ public class Tiles : Node2D
         _mountains = GetNode<TileMap>("Stone");
         
         _availableTilesVisual = GetNode<TileMap>("Alpha/Available");
+        _availableTilesHovering = GetNode<TileMap>("Alpha/AvailableHovering");
         _targetTiles = GetNode<TileMap>("Alpha/Target");
         _targetMapPositiveTiles = GetNode<TileMap>("Alpha/TargetMapPositive");
         _targetMapPositiveTiles.Visible = false;
@@ -246,15 +248,25 @@ public class Tiles : Node2D
         _focusedTile.MoveTo(GetGlobalPositionFromMapPosition(position));
     }
 
-    public void SetAvailableTiles(IEnumerable<Vector2> availablePositions, int size)
+    public void SetAvailableTiles(IEnumerable<Vector2> availablePositions, int size, bool hovering)
     {
-        ClearAvailableTiles();
+        ClearAvailableTiles(hovering);
+
         var availableTilesSource = availablePositions.ToList();
-        _availableTilesSource = availableTilesSource;
+
+        if (hovering is false)
+            _availableTilesSource = availableTilesSource;
 
         var dilatedPositions = GetDilated(availableTilesSource, size);
         foreach (var availablePosition in dilatedPositions)
         {
+            if (hovering)
+            {
+                _availableTilesHovering.SetCellv(availablePosition, TileMapAvailableTileIndex);
+                _availableTilesHovering.UpdateBitmaskRegion(availablePosition);
+                continue;
+            }
+            
             _availableTilesVisual.SetCellv(availablePosition, TileMapAvailableTileIndex);
             _availableTilesVisual.UpdateBitmaskRegion(availablePosition);
         }
@@ -323,8 +335,14 @@ public class Tiles : Node2D
 
     public void ClearPath() => _path.Clear();
     
-    public void ClearAvailableTiles()
+    public void ClearAvailableTiles(bool hovering)
     {
+        if (hovering)
+        {
+            _availableTilesHovering.Clear();
+            return;
+        }
+        
         _availableTilesVisual.Clear();
         _availableTilesSource = Enumerable.Empty<Vector2>();
     }
@@ -390,7 +408,8 @@ public class Tiles : Node2D
     private void ClearTilemaps()
     {
         ClearPath();
-        ClearAvailableTiles();
+        ClearAvailableTiles(true);
+        ClearAvailableTiles(false);
         ClearTargetTiles();
         _grass.Clear();
         _scraps.Clear();

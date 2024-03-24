@@ -10,6 +10,7 @@ public class InfoDisplay : MarginContainer
 
     public View CurrentView { get; private set; } = View.UnitStats;
     private View _previousView = View.UnitStats;
+    private bool _showMinimal = false;
 
     private int _valueCurrentHealth = 999;
     private int _valueMaxHealth = 999;
@@ -105,9 +106,10 @@ public class InfoDisplay : MarginContainer
         ShowView(CurrentView);
     }
 
-    public void ShowView(View view)
+    public void ShowView(View view, bool showMinimal = false)
     {
         _previousView = CurrentView;
+        _showMinimal = showMinimal;
         CurrentView = view;
         switch (CurrentView)
         {
@@ -135,7 +137,45 @@ public class InfoDisplay : MarginContainer
         }
     }
 
-    public void SetEntityStats(
+    public void SetEntityStats(EntityNode entity)
+    {
+        var actor = (ActorNode)entity;
+        
+        var currentStats = actor.CurrentStats;
+        var health = currentStats.FirstOrDefault(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.Health));
+        var shields = currentStats.FirstOrDefault(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.Shields));
+        var movement = currentStats.FirstOrDefault(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.Movement));
+        var initiative = currentStats.FirstOrDefault(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.Initiative));
+        var meleeArmour = currentStats.FirstOrDefault(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.MeleeArmour));
+        var rangedArmour = currentStats.FirstOrDefault(x =>
+            x.Blueprint is CombatStat combatStat
+            && combatStat.CombatType.Equals(StatType.RangedArmour));
+        var actorAttributes = actor.Attributes;
+        
+        SetEntityStats(
+            health is null ? 0 : (int)health.CurrentValue, 
+            health is null ? 0 : health.Blueprint.MaxAmount, 
+            movement?.CurrentValue ?? 0, 
+            movement is null ? 0 : movement.Blueprint.MaxAmount, 
+            initiative is null ? 0 : (int)initiative.CurrentValue, 
+            meleeArmour is null ? 0 : (int)meleeArmour.CurrentValue, 
+            rangedArmour is null ? 0 : (int)rangedArmour.CurrentValue, 
+            actorAttributes, 
+            shields is null ? 0 : (int)shields.CurrentValue, 
+            shields is null ? 0 : shields.Blueprint.MaxAmount);
+    }
+
+    private void SetEntityStats(
         int currentHealth,
         int maxHealth,
         float currentMovement,
@@ -213,7 +253,7 @@ public class InfoDisplay : MarginContainer
         _hasRangedAttack = false;
     }
 
-    private void Reset()
+    public void Reset()
     {
         _abilityTitle.Visible = false;
         _researchText.Visible = false;
@@ -255,7 +295,7 @@ public class InfoDisplay : MarginContainer
         _leftSideMiddleInitiative.Visible = _valueInitiative > 0;
         _leftSideBottomMeleeArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _leftSideBottomRangedArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
-        _rightSide.Visible = true;
+        _rightSide.Visible = _showMinimal is false;
         _rightSideMeleeAttack.Visible = _hasMeleeAttack;
         _rightSideRangedAttack.Visible = _hasRangedAttack;
         _actorAttributes.Visible = true;

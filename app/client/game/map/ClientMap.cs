@@ -159,7 +159,7 @@ public class ClientMap : Map
 
     public void HandleDeselecting()
     {
-        _tileMap.ClearAvailableTiles();
+        _tileMap.ClearAvailableTiles(false);
         _tileMap.ClearPath();
         Entities.DeselectEntity();
         _selectionOverlay = SelectionOverlay.None;
@@ -218,7 +218,8 @@ public class ClientMap : Map
                 entity.EntityPrimaryPosition, 
                 unit.Movement, 
                 size);
-            _tileMap.SetAvailableTiles(availableTiles, size);
+            _tileMap.ClearAvailableTiles(true);
+            _tileMap.SetAvailableTiles(availableTiles, size, false);
             _selectionOverlay = SelectionOverlay.Movement;
         }
     }
@@ -290,6 +291,31 @@ public class ClientMap : Map
         
         if (_selectionOverlay != SelectionOverlay.Placement)
             _tileMap.MoveFocusedTileTo(mapPosition);
+
+        if (_hoveredTile is null)
+            return;
+
+        if (_hoveredTile.Occupants.IsEmpty())
+        {
+            _tileMap.ClearAvailableTiles(true);
+            return;
+        }
+
+        if (_hoveredTile.Occupants.Last() is UnitNode unit)
+        {
+            if (Entities.IsEntitySelected() && unit.InstanceId == Entities.SelectedEntity.InstanceId)
+                return;
+            
+            _tileMap.SetAvailableTiles(Pathfinding.GetAvailablePositions(
+                    unit.EntityPrimaryPosition,
+                    unit.GetReach(),
+                    (int)unit.EntitySize.x,
+                    true),
+                (int)unit.EntitySize.x,
+                true);
+        }
+        else
+            _tileMap.ClearAvailableTiles(true);
     }
 
     private Vector2 GetMapPositionFromMousePosition() 
@@ -316,7 +342,7 @@ public class ClientMap : Map
     internal void OnSelectedToBuild(BuildNode buildAbility, EntityId entityId)
     {
         Entities.CancelPlacement();
-        _tileMap.ClearAvailableTiles();
+        _tileMap.ClearAvailableTiles(false);
         _tileMap.ClearPath();
         _tileMap.DisableFocusedTile();
 

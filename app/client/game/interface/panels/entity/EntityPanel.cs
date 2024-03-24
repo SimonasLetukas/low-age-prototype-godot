@@ -101,39 +101,8 @@ public class EntityPanel : Control
 
         var selectedActor = (ActorNode)_selectedEntity;
         
-        var currentStats = selectedActor.CurrentStats;
-        var health = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.Health));
-        var shields = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.Shields));
-        var movement = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.Movement));
-        var initiative = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.Initiative));
-        var meleeArmour = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.MeleeArmour));
-        var rangedArmour = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.RangedArmour));
-        var actorAttributes = selectedActor.Attributes;
-        
         // TODO this should show current values and update whenever values change dynamically while the display is open
-        _display.SetEntityStats(
-            health is null ? 0 : (int)health.CurrentValue, 
-            health is null ? 0 : health.Blueprint.MaxAmount, 
-            movement?.CurrentValue ?? 0, 
-            movement is null ? 0 : movement.Blueprint.MaxAmount, 
-            initiative is null ? 0 : (int)initiative.CurrentValue, 
-            meleeArmour is null ? 0 : (int)meleeArmour.CurrentValue, 
-            rangedArmour is null ? 0 : (int)rangedArmour.CurrentValue, 
-            actorAttributes, 
-            shields is null ? 0 : (int)shields.CurrentValue, 
-            shields is null ? 0 : shields.Blueprint.MaxAmount);
+        _display.SetEntityStats(_selectedEntity);
 
         if (selectedActor is UnitNode selectedUnit)
         {

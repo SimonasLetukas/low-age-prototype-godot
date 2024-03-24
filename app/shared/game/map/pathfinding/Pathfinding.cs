@@ -291,7 +291,7 @@ public class Pathfinding : Node
     
     #endregion Initialization
 
-    public IEnumerable<Vector2> GetAvailablePositions(Vector2 from, float range, int size)
+    public IEnumerable<Vector2> GetAvailablePositions(Vector2 from, float range, int size, bool temporary = false)
     {
 	    if (size > 3) throw new ArgumentException($"{nameof(Pathfinding)}.{nameof(GetAvailablePositions)}: " +
 	                                              $"argument {nameof(size)} '{size}' exceeded maximum value of '3'.");
@@ -309,11 +309,26 @@ public class Pathfinding : Node
 				    { "maximum_cost", range },
 				    { "terrain_weights", _terrainWeights }
 			    });
-		    Cache(from, range, size);
+		    
+		    if (temporary is false)
+				Cache(from, range, size);
 	    }
 
 	    var availablePointIds = pathfinding.GetAllPointsWithCostBetween(0.0f, range);
 	    var availablePositions = availablePointIds.Select(pointId => PositionsByPointIds[pointId]);
+	    
+	    if (temporary && size == _previousSize 
+	                  && PointIdsByPositions.TryGetValue(_previousPosition, out var previousPointId))
+	    {
+		    pathfinding.Recalculate(
+			    previousPointId,
+			    new Godot.Collections.Dictionary<string, object>
+			    {
+				    { "maximum_cost", _previousRange },
+				    { "terrain_weights", _terrainWeights }
+			    });
+	    }
+	    
 	    return availablePositions;
     }
 
