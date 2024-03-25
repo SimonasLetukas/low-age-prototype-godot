@@ -260,7 +260,8 @@ public class ClientMap : Map
 
     private void ExecuteMovement()
     {
-        if (_tileMap.IsCurrentlyAvailable(_hoveredTile) is false)
+        if (_tileMap.IsCurrentlyAvailable(_hoveredTile) is false 
+            || Entities.SelectedEntity.EntityPrimaryPosition.Equals(_hoveredTile.Position))
             return;
         
         // TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
