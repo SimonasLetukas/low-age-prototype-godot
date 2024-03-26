@@ -59,3 +59,4 @@ msbuild.wrn
 /server.pck
 /low-age-prototype-godot.zip
 *.TMP
+/data/config.json

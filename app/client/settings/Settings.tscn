@@ -1,0 +1,246 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=1]
+[ext_resource path="res://assets/fonts/Karla-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://app/shared/lobby/players/faction/FactionSelection.tscn" type="PackedScene" id=3]
+[ext_resource path="res://app/client/settings/Settings.cs" type="Script" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 26
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 26
+font_data = ExtResource( 2 )
+
+[node name="Settings" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 4 )
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Items" type="VBoxContainer" parent="."]
+margin_top = 100.0
+margin_right = 1280.0
+margin_bottom = 619.0
+custom_constants/separation = 40
+
+[node name="Title" type="Label" parent="Items"]
+margin_right = 1280.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = SubResource( 1 )
+text = "Settings"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartingFaction" type="HBoxContainer" parent="Items"]
+margin_top = 79.0
+margin_right = 1280.0
+margin_bottom = 119.0
+custom_constants/separation = 66
+alignment = 1
+
+[node name="Title" type="Label" parent="Items/StartingFaction"]
+margin_left = 357.0
+margin_top = 4.0
+margin_right = 556.0
+margin_bottom = 35.0
+hint_tooltip = "Preferred starting faction."
+mouse_filter = 1
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = SubResource( 2 )
+text = "Starting Faction:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Faction" parent="Items/StartingFaction" instance=ExtResource( 3 )]
+margin_left = 622.0
+margin_right = 922.0
+text = ""
+
+[node name="AnimationSpeed" type="HBoxContainer" parent="Items"]
+margin_top = 159.0
+margin_right = 1280.0
+margin_bottom = 199.0
+custom_constants/separation = 56
+alignment = 1
+
+[node name="Title" type="Label" parent="Items/AnimationSpeed"]
+margin_left = 357.0
+margin_top = 4.0
+margin_right = 566.0
+margin_bottom = 35.0
+hint_tooltip = "Determines how fast all
+animations play out."
+mouse_filter = 1
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = SubResource( 2 )
+text = "Animation Speed:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Animation" type="OptionButton" parent="Items/AnimationSpeed"]
+margin_left = 622.0
+margin_right = 922.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 300, 40 )
+size_flags_vertical = 4
+text = "Fast"
+items = [ "Slow", null, false, 0, null, "Medium", null, false, 1, null, "Fast", null, false, 2, null ]
+selected = 2
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="ResearchEnabled" type="HBoxContainer" parent="Items"]
+margin_top = 239.0
+margin_right = 1280.0
+margin_bottom = 279.0
+custom_constants/separation = 56
+alignment = 1
+
+[node name="Title" type="Label" parent="Items/ResearchEnabled"]
+margin_left = 354.0
+margin_top = 4.0
+margin_right = 569.0
+margin_bottom = 35.0
+hint_tooltip = "If checked, research becomes
+required to unlock various
+abilities. Useful to disable
+during testing."
+mouse_filter = 1
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = SubResource( 2 )
+text = "Research Enabled:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Research" type="CheckBox" parent="Items/ResearchEnabled"]
+margin_left = 625.0
+margin_right = 925.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 300, 40 )
+size_flags_vertical = 4
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="CursorSize" type="HBoxContainer" parent="Items"]
+margin_top = 319.0
+margin_right = 1280.0
+margin_bottom = 359.0
+custom_constants/separation = 118
+alignment = 1
+
+[node name="Title" type="Label" parent="Items/CursorSize"]
+margin_left = 354.0
+margin_top = 4.0
+margin_right = 507.0
+margin_bottom = 35.0
+hint_tooltip = "If checked, cursor becomes
+larger in-game. This is useful
+for screens with big resolution."
+mouse_filter = 1
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = SubResource( 2 )
+text = "Large Cursor:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BigCursor" type="CheckBox" parent="Items/CursorSize"]
+margin_left = 625.0
+margin_right = 925.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 300, 40 )
+size_flags_vertical = 4
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="TextInput" type="HBoxContainer" parent="Items"]
+visible = false
+margin_top = -180.0
+margin_right = 1280.0
+margin_bottom = -140.0
+custom_constants/separation = 65
+alignment = 1
+
+[node name="Title" type="Label" parent="Items/TextInput"]
+margin_left = 358.0
+margin_top = 4.0
+margin_right = 557.0
+margin_bottom = 35.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = SubResource( 3 )
+text = "Starting Faction:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Input" type="LineEdit" parent="Items/TextInput"]
+margin_left = 622.0
+margin_right = 922.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 300, 40 )
+size_flags_vertical = 4
+text = "Username"
+max_length = 20
+clear_button_enabled = true
+selecting_enabled = false
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="MarginContainer" type="MarginContainer" parent="Items"]
+margin_top = 399.0
+margin_right = 1280.0
+margin_bottom = 519.0
+custom_constants/margin_top = 80
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Items/MarginContainer"]
+margin_top = 80.0
+margin_right = 1280.0
+margin_bottom = 120.0
+custom_constants/separation = 22
+alignment = 1
+
+[node name="EmptySpace" type="Control" parent="Items/MarginContainer/HBoxContainer"]
+margin_left = 498.0
+margin_right = 600.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 102, 0 )
+
+[node name="Back" type="Button" parent="Items/MarginContainer/HBoxContainer"]
+margin_left = 622.0
+margin_right = 782.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 160, 40 )
+size_flags_vertical = 4
+text = "Back"

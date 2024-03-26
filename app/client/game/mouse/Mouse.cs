@@ -12,7 +12,9 @@ using Godot;
 public class Mouse : Node2D
 {
     [Export(PropertyHint.File, "*.png")] public string ArrowCursorFileLocation { get; set; }
+    [Export(PropertyHint.File, "*.png")] public string ArrowCursorSmallFileLocation { get; set; }
     [Export(PropertyHint.File, "*.png")] public string GrabCursorFileLocation { get; set; }
+    [Export(PropertyHint.File, "*.png")] public string GrabCursorSmallFileLocation { get; set; }
     [Export(PropertyHint.Range, "0.01,15")] public float MinimumMouseDistanceToStartDrag { get; set; } = 8f;
     
     [Signal] public delegate void MouseDragged(Vector2 by);
@@ -21,7 +23,9 @@ public class Mouse : Node2D
     [Signal] public delegate void RightReleasedWithoutExamine();
 
     private Resource _arrowCursor;
+    private Resource _arrowSmallCursor;
     private Resource _grabCursor;
+    private Resource _grabSmallCursor;
     private bool _cameraIsMoving = false;
     private bool _mouseIsOnUi = false;
     private Vector2 _previousPosition = Vector2.Zero;
@@ -30,7 +34,9 @@ public class Mouse : Node2D
     public override void _Ready()
     {
         _arrowCursor = GD.Load(ArrowCursorFileLocation);
+        _arrowSmallCursor = GD.Load(ArrowCursorSmallFileLocation);
         _grabCursor = GD.Load(GrabCursorFileLocation);
+        _grabSmallCursor = GD.Load(GrabCursorSmallFileLocation);
         
         SetCursorToArrow();
     }
@@ -93,7 +99,15 @@ public class Mouse : Node2D
 
     internal void OnInterfaceMouseExited() => _mouseIsOnUi = false;
 
-    private void SetCursorToArrow() => Input.SetCustomMouseCursor(_arrowCursor);
+    private void SetCursorToArrow() => Input.SetCustomMouseCursor(GetArrowCursorCorrectSize());
 
-    private void SetCursorToGrab() => Input.SetCustomMouseCursor(_grabCursor);
+    private void SetCursorToGrab() => Input.SetCustomMouseCursor(GetGrabCursorCorrectSize());
+
+    private Resource GetArrowCursorCorrectSize() => Config.Instance.LargeCursor
+	    ? _arrowCursor
+	    : _arrowSmallCursor;
+
+    private Resource GetGrabCursorCorrectSize() => Config.Instance.LargeCursor
+	    ? _grabCursor
+	    : _grabSmallCursor;
 }

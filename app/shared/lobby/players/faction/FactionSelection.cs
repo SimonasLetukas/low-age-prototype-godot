@@ -49,6 +49,7 @@ public class FactionSelection : OptionButton
     private void OnItemSelected(int index)
     {
         var factionId = _factionIdsByOptionButtonIndex[index];
+        Config.Instance.StartingFaction = factionId;
         FactionSelected(factionId);
     }
 }
