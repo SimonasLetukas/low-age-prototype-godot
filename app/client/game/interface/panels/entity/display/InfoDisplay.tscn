@@ -354,6 +354,14 @@ margin_right = 400.0
 hint_tooltip = "Bonus Damage"
 Icon = ExtResource( 17 )
 
+[node name="EmptyRow" parent="VBoxContainer/TopPart/LeftSide/Rows/Bottom" instance=ExtResource( 16 )]
+visible = false
+margin_left = 200.0
+margin_right = 400.0
+hint_tooltip = "Bonus Damage"
+Value = 0
+Text = ""
+
 [node name="RightSide" type="MarginContainer" parent="VBoxContainer/TopPart"]
 margin_left = 204.0
 margin_right = 244.0

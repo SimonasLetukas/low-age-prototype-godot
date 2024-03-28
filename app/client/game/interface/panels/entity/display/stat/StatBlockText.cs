@@ -25,11 +25,18 @@ public class StatBlockText : MarginContainer
 
     public void SetValue(int value)
     {
-        _statBlock.SetValue(0);
+        _statBlock.SetValue(value);
     }
 
     public void SetText(string text)
     {
         GetNode<Label>($"{nameof(MarginContainer)}/TextType").Text = text;
+    }
+
+    public void SetEmpty()
+    {
+        _statBlock.Visible = false;
+        if (FindNode("TextVs") is Label vs) vs.Visible = false;
+        if (FindNode("TextType") is Label type) type.Visible = false;
     }
 }

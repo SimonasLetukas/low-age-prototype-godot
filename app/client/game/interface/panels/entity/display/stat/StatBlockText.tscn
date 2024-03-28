@@ -18,6 +18,7 @@ font_data = ExtResource( 5 )
 [node name="StatBlockText" type="MarginContainer"]
 margin_right = 200.0
 margin_bottom = 32.0
+rect_min_size = Vector2( 200, 32 )
 theme = ExtResource( 3 )
 script = ExtResource( 2 )
 

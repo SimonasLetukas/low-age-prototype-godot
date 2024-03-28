@@ -61,6 +61,7 @@ public class InfoDisplay : MarginContainer
     private StatBlock _leftSideBottomMeleeArmour;
     private StatBlock _leftSideBottomRangedArmour;
     private StatBlockText _leftSideBottomStatBlockText;
+    private StatBlockText _leftSideBottomEmptyBlock;
     private Control _rightSide;
     private AttackTypeBox _rightSideMeleeAttack;
     private AttackTypeBox _rightSideRangedAttack;
@@ -84,6 +85,7 @@ public class InfoDisplay : MarginContainer
         _leftSideBottomMeleeArmour = GetNode<StatBlock>($"{nameof(VBoxContainer)}/TopPart/LeftSide/Rows/Bottom/MeleeArmour");
         _leftSideBottomRangedArmour = GetNode<StatBlock>($"{nameof(VBoxContainer)}/TopPart/LeftSide/Rows/Bottom/RangedArmour");
         _leftSideBottomStatBlockText = GetNode<StatBlockText>($"{nameof(VBoxContainer)}/TopPart/LeftSide/Rows/Bottom/{nameof(StatBlockText)}");
+        _leftSideBottomEmptyBlock = GetNode<StatBlockText>($"{nameof(VBoxContainer)}/TopPart/LeftSide/Rows/Bottom/EmptyRow");
         _rightSide = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/RightSide");
         _rightSideMeleeAttack = GetNode<AttackTypeBox>($"{nameof(VBoxContainer)}/TopPart/RightSide/Attacks/Melee");
         _rightSideRangedAttack = GetNode<AttackTypeBox>($"{nameof(VBoxContainer)}/TopPart/RightSide/Attacks/Ranged");
@@ -97,6 +99,7 @@ public class InfoDisplay : MarginContainer
         _navigationBack.Connect(nameof(NavigationBox.Clicked), this, nameof(OnNavigationBoxClicked));
         _abilityDescription.GetNode<RichTextLabel>("Text").Connect("resized", this, nameof(OnTextResized));
         
+        _leftSideBottomEmptyBlock.SetEmpty();
         ShowView(View.UnitStats);
     }
 
@@ -123,11 +126,11 @@ public class InfoDisplay : MarginContainer
                 ShowStructureStats();
                 break;
             case View.AttackMelee:
-                Reset();
+                Reset(false);
                 ShowMeleeAttack();
                 break;
             case View.AttackRanged:
-                Reset();
+                Reset(false);
                 ShowRangedAttack();
                 break;
             case View.Ability:
@@ -253,7 +256,7 @@ public class InfoDisplay : MarginContainer
         _hasRangedAttack = false;
     }
 
-    public void Reset()
+    public void Reset(bool fullReset = true)
     {
         _abilityTitle.Visible = false;
         _researchText.Visible = false;
@@ -270,11 +273,18 @@ public class InfoDisplay : MarginContainer
         _leftSideBottomMeleeArmour.Visible = false;
         _leftSideBottomRangedArmour.Visible = false;
         _leftSideBottomStatBlockText.Visible = false;
+        _leftSideBottomEmptyBlock.Visible = false;
         _rightSide.Visible = false;
         _rightSideMeleeAttack.Visible = false;
         _rightSideRangedAttack.Visible = false;
         _abilityDescription.Visible = false;
         _actorAttributes.Visible = false;
+
+        if (fullReset is false)
+            return;
+        
+        _rightSideMeleeAttack.SetSelected(false);
+        _rightSideRangedAttack.SetSelected(false);
     }
 
     private void ShowUnitStats()
@@ -335,8 +345,11 @@ public class InfoDisplay : MarginContainer
         _rightSideRangedAttack.Visible = _hasRangedAttack;
         _actorAttributes.Visible = true;
 
-        if (_valueMeleeBonusType is null) 
+        if (_valueMeleeBonusType is null)
+        {
+            _leftSideBottomEmptyBlock.Visible = true;
             return;
+        }
         
         _leftSideBottomStatBlockText.SetValue(_valueMeleeBonusDamage);
         _leftSideBottomStatBlockText.SetText(_valueMeleeBonusType.ToDisplayValue());
@@ -359,9 +372,12 @@ public class InfoDisplay : MarginContainer
         _rightSideMeleeAttack.Visible = _hasMeleeAttack;
         _rightSideRangedAttack.Visible = _hasRangedAttack;
         _actorAttributes.Visible = true;
-        
-        if (_valueRangedBonusType is null) 
+
+        if (_valueRangedBonusType is null)
+        {
+            _leftSideBottomEmptyBlock.Visible = true;
             return;
+        }
         
         _leftSideBottomStatBlockText.SetValue(_valueRangedBonusDamage);
         _leftSideBottomStatBlockText.SetText(_valueRangedBonusType.ToDisplayValue());
