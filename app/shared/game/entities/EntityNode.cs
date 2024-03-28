@@ -179,6 +179,16 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         MoveToNextTarget();
     }
 
+    public virtual bool CanBeMovedOnAt(Vector2 position)
+    {
+        if (position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize))
+            return false;
+        
+        return true;
+    }
+
+    public virtual bool CanBeMovedThroughAt(Vector2 position) => true;
+
     protected void SetPlacementValidityColor(bool to)
     {
         if (Sprite.Material is ShaderMaterial shaderMaterial)

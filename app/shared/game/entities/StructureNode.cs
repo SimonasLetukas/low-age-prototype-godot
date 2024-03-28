@@ -70,6 +70,16 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         base.Rotate();
     }
 
+    public override bool CanBeMovedOnAt(Vector2 position)
+    {
+        if (WalkablePositions.Any(position.Equals))
+            return true;
+
+        return base.CanBeMovedOnAt(position);
+    }
+
+    public override bool CanBeMovedThroughAt(Vector2 position) => CanBeMovedOnAt(position);
+
     protected override void UpdateSprite()
     {
         var needsBackSprite = ActorRotation == ActorRotation.TopLeft || ActorRotation == ActorRotation.TopRight;

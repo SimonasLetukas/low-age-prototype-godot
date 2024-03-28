@@ -248,11 +248,15 @@ public class Tiles : Node2D
         _focusedTile.MoveTo(GetGlobalPositionFromMapPosition(position));
     }
 
-    public void SetAvailableTiles(IEnumerable<Vector2> availablePositions, int size, bool hovering)
+    public void SetAvailableTiles(EntityNode entity, IEnumerable<Vector2> availablePositions, int size, bool hovering)
     {
         ClearAvailableTiles(hovering);
 
         var availableTilesSource = availablePositions.ToList();
+
+        foreach (var tileSource in availableTilesSource.ToList()
+                     .Where(tileSource => CanTileBeMovedOn(entity, tileSource, size) is false)) 
+            availableTilesSource.Remove(tileSource);
 
         if (hovering is false)
             _availableTilesSource = availableTilesSource;
@@ -270,6 +274,25 @@ public class Tiles : Node2D
             _availableTilesVisual.SetCellv(availablePosition, TileMapAvailableTileIndex);
             _availableTilesVisual.UpdateBitmaskRegion(availablePosition);
         }
+    }
+
+    private bool CanTileBeMovedOn(EntityNode entity, Vector2 tileSource, int size)
+    {
+        for (var x = 0; x < size; x++)
+        {
+            for (var y = 0; y < size; y++)
+            {
+                var tile = GetTile(tileSource + new Vector2(x, y));
+                
+                if (tile is null || IsOccupied(tile) is false || entity.CanBeMovedOnAt(tile.Position) is false)
+                    continue;
+
+                if (tile.Occupants.Any(occupant => occupant.CanBeMovedOnAt(tile.Position) is false))
+                    return false;
+            }
+        }
+
+        return true;
     }
 
     public bool IsCurrentlyAvailable(TileInstance tile) => IsCurrentlyAvailable(tile.Position);

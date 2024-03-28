@@ -6,11 +6,14 @@ using low_age_data.Domain.Common;
 
 public static class Vector2Extensions
 {
-    public static bool IsInBoundsOf(this Vector2 point, Vector2 bounds) 
-        => !(point.x < 0) 
-           && !(point.y < 0) 
-           && !(point.x >= bounds.x) 
-           && !(point.y >= bounds.y);
+    public static bool IsInBoundsOf(this Vector2 point, Vector2 upperBounds)
+        => point.IsInBoundsOf(Vector2.Zero, upperBounds);
+    
+    public static bool IsInBoundsOf(this Vector2 point, Vector2 lowerBounds, Vector2 upperBounds) 
+        => point.x >= lowerBounds.x 
+           && point.y >= lowerBounds.y 
+           && point.x < upperBounds.x 
+           && point.y < upperBounds.y;
 
     public static Vector2 ToGodotVector2<T>(this Vector2<T> domainVector2) where T : struct, IEquatable<T> 
         => new Vector2(Convert.ToSingle(domainVector2.X), Convert.ToSingle(domainVector2.Y));

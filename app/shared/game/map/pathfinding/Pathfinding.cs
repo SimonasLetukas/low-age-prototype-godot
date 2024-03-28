@@ -12,8 +12,11 @@ public class Pathfinding : Node
 {
 	public event Action FinishedInitializing = delegate { };
 
+	private const float DiagonalCost = Mathf.Sqrt2;
+
 	private Vector2 MapSize { get; set; }
     private Blueprint Blueprint { get; set; }
+    private Dictionary<Vector2, TileId> Tiles { get; set; } = new Dictionary<Vector2, TileId>();
     private Godot.Collections.Dictionary<Vector2, int> PointIdsByPositions { get; set; }
     private Godot.Collections.Dictionary<int, Vector2> PositionsByPointIds { get; set; }
     private Godot.Collections.Dictionary<int, float> WeightsByPointIds { get; } =
@@ -32,7 +35,7 @@ public class Pathfinding : Node
     };
     private const int ImpassableIndex = -1;
     
-    // Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/DOCUMENTATION.md
+    // Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/addons/dijkstra-map/doc/DijkstraMap.md
     private DijkstraMap _pathfinding = new DijkstraMap();
     private DijkstraMap _pathfinding2X = new DijkstraMap();
     private DijkstraMap _pathfinding3X = new DijkstraMap();
@@ -61,7 +64,11 @@ public class Pathfinding : Node
     {
 	    MapSize = mapSize;
 	    Blueprint = Data.Instance.Blueprint;
-	    _tilesForInitialization = tiles.ToList();
+	    
+	    var tilesList = tiles.ToList();
+	    _tilesForInitialization = tilesList;
+	    foreach (var (position, tile) in tilesList) 
+		    Tiles.Add(position, tile);
 	    
 	    InitializePathfindingGraphs();
 	    InitializePositionToPointIdReferences();
@@ -86,13 +93,13 @@ public class Pathfinding : Node
 	    {
 		    if (_terrainGraphInitialized is false)
 		    {
-			    IterateTerrainGraphInitialization();
+			    IterateTerrainGraphUpdate();
 			    continue;
 		    }
 
 		    if (_terrainDilationInitialized is false)
 		    {
-			    IterateTerrainDilationInitialization();
+			    IterateTerrainDilationUpdate();
 			    continue;
 		    }
 		    
@@ -124,7 +131,7 @@ public class Pathfinding : Node
 		    new Rect2(0, 0, MapSize.x, MapSize.y),
 		    Terrain.Grass.ToIndex(),
 		    1.0f,
-		    Mathf.Sqrt(2));
+		    DiagonalCost);
 	    _pathfinding2X?.DuplicateGraphFrom(_pathfinding);
 	    _pathfinding3X?.DuplicateGraphFrom(_pathfinding);
 
@@ -159,24 +166,40 @@ public class Pathfinding : Node
 		    .ToDictionary<KeyValuePair<int, float>, int, IList<Vector2>>(terrainWeight => 
 			    terrainWeight.Key, terrainWeight => new List<Vector2>());
     }
+    
+    #endregion Initialization
 
-    private void IterateTerrainGraphInitialization()
+    #region IterationHelpers
+
+    private void IterateTerrainGraphUpdate(KeyValuePair<Vector2, TileId>? point = null, bool useTerrainWeight = true)
     {
-	    if (_tilesForInitialization.IsEmpty())
+	    if (_tilesForInitialization.IsEmpty() && point is null)
 	    {
 		    GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-		             $"{nameof(Pathfinding)}.{nameof(IterateTerrainGraphInitialization)} completed");
+		             $"{nameof(Pathfinding)}.{nameof(IterateTerrainGraphUpdate)} completed");
 		    _terrainGraphInitialized = true;
 		    return;
 	    }
 	    
-	    var (coordinates, tileId) = _tilesForInitialization[0];
-	    _tilesForInitialization.RemoveAt(0);
+	    (Vector2, TileId) entry; 
+	    if (point is null) // we are initializing
+	    {
+		    entry = _tilesForInitialization[0];
+		    _tilesForInitialization.RemoveAt(0);
+	    }
+	    else // we are updating pathfinding during the game
+		    entry = ((Vector2)point?.Key, point?.Value);
 
-	    var terrainIndex = Blueprint.Tiles.Single(x => x.Id.Equals(tileId)).Terrain.ToIndex();
-	    SetTerrainForPoint(coordinates, terrainIndex, 1);
-	    _coordinatesByTerrainForInitialization[terrainIndex].Add(coordinates);
+	    var (coordinates, tileId) = entry;
+
+	    var terrainIndex = useTerrainWeight
+		    ? Blueprint.Tiles.Single(x => x.Id.Equals(tileId)).Terrain.ToIndex()
+		    : ImpassableIndex;
 	    
+	    if (point is null)
+			_coordinatesByTerrainForInitialization[terrainIndex].Add(coordinates);
+	    
+	    SetTerrainForPoint(coordinates, terrainIndex, 1);
 	    WeightsByPointIds[PointIdsByPositions[coordinates]] = _terrainWeights[terrainIndex];
 	    
 	    if (_pathfinding2X != null)
@@ -186,18 +209,24 @@ public class Pathfinding : Node
 		    WeightsByPointIds3X[PointIdsByPositions[coordinates]] = _terrainWeights[terrainIndex];
     }
 
-    private void IterateTerrainDilationInitialization()
+    private void IterateTerrainDilationUpdate(KeyValuePair<int, IList<Vector2>>? coordinatesByTerrainId = null)
     {
-	    if (_coordinatesByTerrainForInitialization.IsEmpty())
+	    if (_coordinatesByTerrainForInitialization.IsEmpty() && coordinatesByTerrainId is null)
 	    {
 		    GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-		             $"{nameof(Pathfinding)}.{nameof(IterateTerrainDilationInitialization)} completed");
+		             $"{nameof(Pathfinding)}.{nameof(IterateTerrainDilationUpdate)} completed");
 		    _terrainDilationInitialized = true;
 		    return;
 	    }
 	    
-	    var entry = _coordinatesByTerrainForInitialization.First();
-	    _coordinatesByTerrainForInitialization.Remove(entry.Key);
+	    KeyValuePair<int, IList<Vector2>> entry;
+	    if (coordinatesByTerrainId is null) // we are initializing
+	    {
+		    entry = _coordinatesByTerrainForInitialization.First();
+		    _coordinatesByTerrainForInitialization.Remove(entry.Key);
+	    }
+	    else // we are updating pathfinding during the game
+		    entry = new KeyValuePair<int, IList<Vector2>>((int)coordinatesByTerrainId?.Key, coordinatesByTerrainId?.Value);
 	    
 	    if (_terrainWeights.ContainsKey(entry.Key) && _terrainWeights[entry.Key].Equals(1f))
 		    return;
@@ -238,18 +267,24 @@ public class Pathfinding : Node
 	    }
     }
     
-    private void IterateDiagonalConnectionUpdate()
+    private void IterateDiagonalConnectionUpdate(KeyValuePair<Vector2, int>? point = null)
     {
-	    if (_pointIdsByPositionsForInitialization.IsEmpty())
+	    if (_pointIdsByPositionsForInitialization.IsEmpty() && point is null)
 	    {
 		    GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
 		             $"{nameof(Pathfinding)}.{nameof(IterateDiagonalConnectionUpdate)} completed");
 		    _diagonalConnectionsInitialized = true;
 		    return;
 	    }
-	    
-	    var entry = _pointIdsByPositionsForInitialization.First();
-	    _pointIdsByPositionsForInitialization.Remove(entry.Key);
+
+	    KeyValuePair<Vector2, int> entry;
+	    if (point is null) // we are initializing
+	    {
+		    entry = _pointIdsByPositionsForInitialization.First();
+		    _pointIdsByPositionsForInitialization.Remove(entry.Key);
+	    }
+	    else // we are updating pathfinding during the game
+		    entry = new KeyValuePair<Vector2, int>((Vector2)point?.Key, (int)point?.Value);
 	    
 	    IterateDiagonalConnectionUpdate(entry, 1);
 	    
@@ -279,6 +314,10 @@ public class Pathfinding : Node
 	    {
 		    pathfinding.RemoveConnection(rightNeighbour, bottomNeighbour);
 	    }
+	    else
+	    {
+		    pathfinding.ConnectPoints(rightNeighbour, bottomNeighbour, DiagonalCost);
+	    }
 
 	    if (IsInfiniteWeight(point.Value, size) is false
 	        && IsInfiniteWeight(diagonalNeighbour, size) is false
@@ -287,9 +326,13 @@ public class Pathfinding : Node
 	    {
 		    pathfinding.RemoveConnection(point.Value, diagonalNeighbour);
 	    }
+	    else
+	    {
+		    pathfinding.ConnectPoints(point.Value, diagonalNeighbour, DiagonalCost);
+	    }
     }
-    
-    #endregion Initialization
+
+    #endregion IterationHelpers
 
     public IEnumerable<Vector2> GetAvailablePositions(Vector2 from, float range, int size, bool temporary = false)
     {
@@ -351,6 +394,92 @@ public class Pathfinding : Node
 	    path.Reverse();
 
 	    return path;
+    }
+
+    public void AddOccupation(EntityNode entity)
+    {
+	    const int offset = 3;
+	    var foundPoints = new List<Vector2>();
+	    
+	    for (var x = (int)entity.EntityPrimaryPosition.x - offset; 
+	         x < entity.EntityPrimaryPosition.x + entity.EntitySize.x + offset; 
+	         x++)
+	    {
+		    for (var y = (int)entity.EntityPrimaryPosition.y - offset;
+		         y < entity.EntityPrimaryPosition.y + entity.EntitySize.y + offset;
+		         y++)
+		    {
+			    var position = new Vector2(x, y);
+			    if (entity.CanBeMovedThroughAt(position)) 
+				    continue;
+			    
+			    foundPoints.Add(position);
+			    IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(position, TileId.Grass), false);
+		    }
+	    }
+	    
+	    IterateTerrainDilationUpdate(new KeyValuePair<int, IList<Vector2>>(ImpassableIndex, foundPoints));
+
+	    foreach (var point in foundPoints)
+	    {
+		    for (var x = (int)point.x - offset; x <= (int)point.x + offset; x++)
+		    {
+			    for (var y = (int)point.y - offset; y <= (int)point.y + offset; y++)
+			    {
+				    var position = new Vector2(x, y);
+				    if (PointIdsByPositions.ContainsKey(position) is false)
+					    continue;
+				    
+				    IterateDiagonalConnectionUpdate(new KeyValuePair<Vector2, int>(position, 
+					    PointIdsByPositions[position]));
+			    }
+		    }
+	    }
+    }
+
+    public void RemoveOccupation(EntityNode entity) // TODO not tested properly
+    {
+	    const int offset = 3;
+	    var start = entity.EntityPrimaryPosition - Vector2.One * offset;
+	    var end = entity.EntityPrimaryPosition + entity.EntitySize + Vector2.One * offset;
+	    
+	    var coordinatesByTerrain = _terrainWeights
+		    .OrderBy(x => x.Value)
+		    .ToDictionary<KeyValuePair<int, float>, int, IList<Vector2>>(terrainWeight => 
+			    terrainWeight.Key, terrainWeight => new List<Vector2>());
+
+	    for (var x = (int)start.x; x < (int)end.x; x++)
+	    {
+		    for (var y = (int)start.y; y < (int)end.y; y++)
+		    {
+			    var position = new Vector2(x, y);
+			    if (Tiles.ContainsKey(position) is false)
+				    continue;
+			    
+			    if (position.IsInBoundsOf(entity.EntityPrimaryPosition, 
+				        entity.EntityPrimaryPosition + entity.EntitySize))
+					IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(position, Tiles[position]));
+			    
+			    var terrainIndex = Blueprint.Tiles.Single(t => t.Id.Equals(Tiles[position])).Terrain.ToIndex();
+			    coordinatesByTerrain[terrainIndex].Add(position);
+		    }
+	    }
+
+	    foreach (var pair in coordinatesByTerrain) 
+		    IterateTerrainDilationUpdate(pair);
+	    
+	    for (var x = (int)start.x; x < (int)end.x; x++)
+	    {
+		    for (var y = (int)start.y; y < (int)end.y; y++)
+		    {
+			    var position = new Vector2(x, y);
+			    if (PointIdsByPositions.ContainsKey(position) is false)
+				    continue;
+			    
+			    IterateDiagonalConnectionUpdate(new KeyValuePair<Vector2, int>(position, 
+				    PointIdsByPositions[position]));
+		    }
+	    }
     }
     
     private void SetTerrainForPoint(Vector2 at, int terrain, int size)

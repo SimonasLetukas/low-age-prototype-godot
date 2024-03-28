@@ -168,7 +168,7 @@ public class ClientMap : Map
     public void MoveUnit(UnitMovedAlongPathEvent @event)
     {
         var selectedEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
-        _tileMap.RemoveOccupation(selectedEntity);
+        RemoveOccupation(selectedEntity);
         Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
     }
     
@@ -219,7 +219,7 @@ public class ClientMap : Map
                 unit.Movement, 
                 size);
             _tileMap.ClearAvailableTiles(true);
-            _tileMap.SetAvailableTiles(availableTiles, size, false);
+            _tileMap.SetAvailableTiles(unit, availableTiles, size, false);
             _selectionOverlay = SelectionOverlay.Movement;
         }
     }
@@ -307,7 +307,7 @@ public class ClientMap : Map
             if (Entities.IsEntitySelected() && unit.InstanceId == Entities.SelectedEntity.InstanceId)
                 return;
             
-            _tileMap.SetAvailableTiles(Pathfinding.GetAvailablePositions(
+            _tileMap.SetAvailableTiles(unit, Pathfinding.GetAvailablePositions(
                     unit.EntityPrimaryPosition,
                     unit.GetReach(),
                     (int)unit.EntitySize.x,
@@ -322,12 +322,34 @@ public class ClientMap : Map
     private Vector2 GetMapPositionFromMousePosition() 
         => _tileMap.GetMapPositionFromGlobalPosition(GetGlobalMousePosition());
 
+    private void AddOccupation(EntityNode entity)
+    {
+        _tileMap.AddOccupation(entity);
+        Pathfinding.AddOccupation(entity);
+    }
+
+    private void RemoveOccupation(EntityNode entity)
+    {
+        _tileMap.RemoveOccupation(entity);
+        Pathfinding.RemoveOccupation(entity);
+        
+        foreach (var position in entity.EntityOccupyingPositions)
+        {
+            var tile = _tileMap.GetTile(position);
+            if (tile is null || _tileMap.IsOccupied(position) is false)
+                continue;
+
+            foreach (var occupant in tile.Occupants) 
+                Pathfinding.AddOccupation(occupant);
+        }
+    }
+
     private void OnEntitiesNewPositionOccupied(EntityNode entity)
     {
         var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPrimaryPosition);
         Entities.AdjustGlobalPosition(entity, globalPosition);
         
-        _tileMap.AddOccupation(entity);
+        AddOccupation(entity);
     }
 
     internal void OnMouseLeftReleasedWithoutDrag()
