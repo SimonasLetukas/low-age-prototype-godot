@@ -1,18 +1,22 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Camera : Camera2D
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     [Export(PropertyHint.Range, "-200,100,5")] public int HorizontalLimitMargin { get; set; } = 30;
     [Export(PropertyHint.Range, "-200,100,5")] public int VerticalLimitMargin { get; set; } = 5;
-    [Export(PropertyHint.Range, "0.1,0.5,0.1")] public float MinimumZoom { get; set; } = 0.2f;
-    [Export(PropertyHint.Range, "0.1,0.5,0.1")] public float MaximumZoom { get; set; } = 0.5f;
     [Export(PropertyHint.Range, "1,10,1")] public int MapScrollMargin { get; set; } = 5;
     [Export] public bool MapScrollOnBoundaryEnabled { get; set; } = false;
     [Export(PropertyHint.Range, "100,3000,100")] public int MapScrollSpeed { get; set; } = 1800;
     [Export(PropertyHint.Range, "1,10,1")] public int MapLimitElasticity { get; set; } = 6;
-    
+
+    private readonly Dictionary<ZoomLevel, int> _timesPerZoomLevel = new Dictionary<ZoomLevel, int>
+    {
+        { ZoomLevel.Close, 5 }, { ZoomLevel.Medium, 2 }, { ZoomLevel.Far, 1 }
+    };
+    private ZoomLevel _currentZoomLevel = ZoomLevel.Medium;
     private int _mapWidthPixels = 1;
     private int _mapHeightPixels = 2;
     private int _limitLeft;
@@ -27,8 +31,8 @@ public class Camera : Camera2D
         _viewportSize = GetViewport().Size;
 
         Position = new Vector2((float)_mapWidthPixels / 2, (float)_mapHeightPixels / 2);
-        Zoom = new Vector2(MaximumZoom, MaximumZoom);
-
+        UpdateZoom();
+        
         if (DebugEnabled)
         {
             GD.Print($"{nameof(Camera)}: map width '{_mapWidthPixels}'");
@@ -45,28 +49,30 @@ public class Camera : Camera2D
         if (ZoomedIn()) ZoomIn();
         if (ZoomedOut()) ZoomOut(delta);
 
-        var moveVector = Vector2.Zero;
-        var mousePos = GetViewport().GetMousePosition();
-
         if (_cameraIsMoving)
         {
             return;
         }
         
         ClampPositionToBoundaries(delta);
-
+        
+        var moveVector = Vector2.Zero;
+        var mousePos = GetViewport().GetMousePosition();
+        
         if (MovedLeft(mousePos)) moveVector.x -= 1;
         if (MovedRight(mousePos)) moveVector.x += 1;
         if (MovedUp(mousePos)) moveVector.y -= 1;
         if (MovedDown(mousePos)) moveVector.y += 1;
             
-        GlobalTranslate(moveVector.Normalized() * delta * Zoom.x * MapScrollSpeed);
+        if (mousePos.Length() > 0) 
+            GlobalTranslate(moveVector.Normalized() * delta * Zoom.x * MapScrollSpeed);
     }
 
     public void SetMapSize(Vector2 mapSize)
     {
         _mapWidthPixels = Mathf.Max((int)mapSize.x, (int)mapSize.y) * Constants.TileWidth;
         _mapHeightPixels = Mathf.Max((int)mapSize.x, (int)mapSize.y) * Constants.TileHeight;
+        Position = new Vector2((float)_mapWidthPixels / 2, (float)_mapHeightPixels / 2);
         SetLimits();
     }
 
@@ -84,33 +90,45 @@ public class Camera : Camera2D
     
     private bool ZoomedIn()
     {
-        if (Zoom.x <= MinimumZoom) return false;
-        if (Input.IsActionJustReleased("ui_zoom_in") is false) return false;
+        if (_currentZoomLevel is ZoomLevel.Close) 
+            return false;
+        if (Input.IsActionJustReleased("ui_zoom_in") is false) 
+            return false;
         return true;
     }
 
     private bool ZoomedOut()
     {
-        if (Zoom.x >= MaximumZoom) return false;
-        if (Input.IsActionJustReleased("ui_zoom_out") is false) return false;
+        if (_currentZoomLevel is ZoomLevel.Far) 
+            return false;
+        if (Input.IsActionJustReleased("ui_zoom_out") is false) 
+            return false;
         return true;
     }
 
     private void ZoomIn()
     {
-        Zoom = Math.Abs(Mathf.Stepify(Zoom.x, 0.1f) - 0.4f) < 0.01f 
-            ? new Vector2(Zoom.x - 0.2f, Zoom.y - 0.2f) 
-            : new Vector2(Zoom.x - 0.1f, Zoom.y - 0.1f);
-        _viewportSize = GetViewport().Size;
+        var position = GetGlobalMousePosition();
+        _currentZoomLevel++;
+        UpdateZoom();
+        SmoothingEnabled = false;
+        Position = position;
+        ResetSmoothing();
+        SmoothingEnabled = true;
     }
 
     private void ZoomOut(float delta)
     {
-        Zoom = Math.Abs(Mathf.Stepify(Zoom.x, 0.1f) - 0.2f) < 0.01f 
-            ? new Vector2(Zoom.x + 0.2f, Zoom.y + 0.2f) 
-            : new Vector2(Zoom.x + 0.1f, Zoom.y + 0.1f);
-        _viewportSize = GetViewport().Size;
+        _currentZoomLevel--;
+        UpdateZoom();
         ClampPositionToBoundaries(delta);
+    }
+
+    private void UpdateZoom()
+    {
+        var amount = Mathf.Stepify(1f / _timesPerZoomLevel[_currentZoomLevel], 0.1f);
+        Zoom = new Vector2(amount, amount);
+        _viewportSize = GetViewport().Size;
     }
 
     private void ClampPositionToBoundaries(float delta)
@@ -164,5 +182,12 @@ public class Camera : Camera2D
         if (GetCurrentBottomBoundary() >= _limitBottom) return false;
         if (mousePos.y > _viewportSize.y - MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
         return false;
+    }
+
+    private enum ZoomLevel
+    {
+        Far,
+        Medium,
+        Close
     }
 }
