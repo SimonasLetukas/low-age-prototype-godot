@@ -94,7 +94,11 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
             shaderMaterial.SetShaderParam("draw_outline", to);
     }
 
-    public void SnapTo(Vector2 globalPosition) => GlobalPosition = globalPosition;
+    public virtual void SnapTo(Vector2 globalPosition) 
+        => GlobalPosition = globalPosition;// + 
+                            //(EntitySize.x > EntitySize.y ? Vector2.Right : Vector2.Down) * 
+                            //(Mathf.Max(EntitySize.x, EntitySize.y) - Mathf.Min(EntitySize.x, EntitySize.y)) * 
+                            //(EntitySize.x > EntitySize.y ? (int)(Constants.TileWidth / 2) : (int)(Constants.TileHeight / 2));
 
     public void SetForPlacement(bool canBePlacedOnTheWholeMap)
     {
@@ -214,7 +218,10 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         var offsetFromX = (int)(EntitySize.x - 1) * 
                           new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
         var offsetFromY = (int)(EntitySize.y - 1) *
-                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
+                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));// -
+                          //(EntitySize.x > EntitySize.y ? Vector2.Right : Vector2.Down) * 
+                          //(Mathf.Max(EntitySize.x, EntitySize.y) - Mathf.Min(EntitySize.x, EntitySize.y)) * 
+                          //(EntitySize.x > EntitySize.y ? (int)(Constants.TileWidth / 2) : (int)(Constants.TileHeight / 2));
         Sprite.Offset = ((Vector2)centerOffset * -1) + offsetFromX + offsetFromY;
     }
 
