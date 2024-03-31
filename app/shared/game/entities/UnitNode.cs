@@ -31,7 +31,8 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
                                   // decide if this is needed. Argument against: not moving straight diagonally is 
                                   // more cost effective, which is not intuitive for the player. This bonus could be
                                   // added for units with 1 movement only.
-        
+                                  
+        Renderer.Initialize(InstanceId, true, new Rect2(Vector2.Zero, EntitySize), Sprite);
         UpdateSprite();
     }
 

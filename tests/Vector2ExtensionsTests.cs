@@ -89,5 +89,124 @@ namespace low_age_tests
         {
             listOfVector2.ToSquareRects().Should().BeEquivalentTo(expected);
         }
+        
+        public static IEnumerable<object[]> GetExpectedRectsForExceptMethod()
+        {
+            yield return new object[]
+            {
+                Vector2.Zero,
+                Array.Empty<Vector2>(),
+                // Expected:
+                new Rect2()
+            };
+            
+            yield return new object[]
+            {
+                // x.
+                // x.
+                new Vector2(2, 2),
+                new[]
+                {
+                    new Vector2(1, 1),
+                    new Vector2(1, 0)
+                },
+                // Expected:
+                new Rect2(0, 0, 1, 2)
+            };
+            
+            yield return new object[]
+            {
+                // xxx
+                // ...
+                new Vector2(3, 2),
+                new[]
+                {
+                    new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1),
+                },
+                // Expected:
+                new Rect2(0, 0, 3, 1)
+            };
+            
+            yield return new object[]
+            {
+                // ..x
+                // ..x
+                new Vector2(3, 2),
+                new[]
+                {
+                    new Vector2(0, 0), new Vector2(1, 0),
+                    new Vector2(0, 1), new Vector2(1, 1),
+                },
+                // Expected:
+                new Rect2(2, 0, 1, 2)
+            };
+            
+            yield return new object[]
+            {
+                // ....
+                // xxxx
+                new Vector2(4, 2),
+                new[]
+                {
+                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(3, 0), 
+                },
+                // Expected:
+                new Rect2(0, 1, 4, 1)
+            };
+            
+            yield return new object[]
+            {
+                // xxx
+                // xxx
+                // xx.
+                new Vector2(3, 3),
+                new[]
+                {
+                    new Vector2(2, 2),
+                },
+                // Expected:
+                new Rect2(0, 0, 3, 3)
+            };
+            
+            yield return new object[]
+            {
+                // ..x
+                // x.x
+                // .x.
+                new Vector2(3, 3),
+                new[]
+                {
+                    new Vector2(0, 0), new Vector2(1, 0), 
+                    new Vector2(1, 1), 
+                    new Vector2(0, 2), new Vector2(2, 2), 
+                },
+                // Expected:
+                new Rect2(0, 0, 3, 3)
+            };
+            
+            yield return new object[]
+            {
+                // ..x
+                // ...
+                // x..
+                new Vector2(3, 3),
+                new[]
+                {
+                    new Vector2(0, 0), new Vector2(1, 0), 
+                    new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1), 
+                    new Vector2(1, 2), new Vector2(2, 2), 
+                },
+                // Expected:
+                new Rect2(0, 0, 3, 3)
+            };
+        }
+        
+        [Theory]
+        [MemberData(nameof(GetExpectedRectsForExceptMethod))]
+        public void Except_ShouldCorrectlyConvertToRect_GivenSizeAndListOfVector2(Vector2 size, 
+            IList<Vector2> listOfVector2, Rect2 expected)
+        {
+            size.Except(listOfVector2).Should().Be(expected);
+        }
     }
 }

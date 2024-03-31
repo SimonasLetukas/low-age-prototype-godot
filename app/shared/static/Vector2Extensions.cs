@@ -15,6 +15,32 @@ public static class Vector2Extensions
            && point.x < upperBounds.x 
            && point.y < upperBounds.y;
 
+    public static Rect2 Except(this Vector2 size, IEnumerable<Vector2> points)
+    {
+        var allPoints = new Rect2(Vector2.Zero, size).ToList();
+        var remainingPoints = allPoints.Except(points).ToList();
+        if (remainingPoints.IsEmpty())
+            return new Rect2(0, 0, 0, 0);
+        
+        var smallestX = float.MaxValue;
+        var smallestY = float.MaxValue;
+        var highestX = float.MinValue;
+        var highestY = float.MinValue;
+        foreach (var point in remainingPoints)
+        {
+            if (point.x < smallestX)
+                smallestX = point.x;
+            if (point.y < smallestY)
+                smallestY = point.y;
+            if (point.x > highestX)
+                highestX = point.x;
+            if (point.y > highestY)
+                highestY = point.y;
+        }
+
+        return new Rect2(smallestX, smallestY, highestX - smallestX + 1, highestY - smallestY + 1);
+    }
+
     public static Vector2 ToGodotVector2<T>(this Vector2<T> domainVector2) where T : struct, IEquatable<T> 
         => new Vector2(Convert.ToSingle(domainVector2.X), Convert.ToSingle(domainVector2.Y));
 

@@ -18,6 +18,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public EntityId BlueprintId { get; set; }
     public Guid InstanceId { get; set; } = Guid.NewGuid();
+    public EntityRenderer Renderer { get; private set; }
     public Vector2 EntityPrimaryPosition { get; set; }
     public Vector2 EntitySize { get; protected set; } = Vector2.One;
     public IList<Vector2> EntityOccupyingPositions => new Rect2(EntityPrimaryPosition, EntitySize).ToList();
@@ -44,6 +45,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public override void _Ready()
     {
+        Renderer = GetNode<EntityRenderer>($"{nameof(EntityRenderer)}");
         Behaviours = GetNode<Behaviours>(nameof(Behaviours));
         
         _movePath = new List<Vector2>();
@@ -95,10 +97,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     }
 
     public virtual void SnapTo(Vector2 globalPosition) 
-        => GlobalPosition = globalPosition;// + 
-                            //(EntitySize.x > EntitySize.y ? Vector2.Right : Vector2.Down) * 
-                            //(Mathf.Max(EntitySize.x, EntitySize.y) - Mathf.Min(EntitySize.x, EntitySize.y)) * 
-                            //(EntitySize.x > EntitySize.y ? (int)(Constants.TileWidth / 2) : (int)(Constants.TileHeight / 2));
+        => GlobalPosition = globalPosition;
 
     public void SetForPlacement(bool canBePlacedOnTheWholeMap)
     {
@@ -218,10 +217,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         var offsetFromX = (int)(EntitySize.x - 1) * 
                           new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
         var offsetFromY = (int)(EntitySize.y - 1) *
-                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));// -
-                          //(EntitySize.x > EntitySize.y ? Vector2.Right : Vector2.Down) * 
-                          //(Mathf.Max(EntitySize.x, EntitySize.y) - Mathf.Min(EntitySize.x, EntitySize.y)) * 
-                          //(EntitySize.x > EntitySize.y ? (int)(Constants.TileWidth / 2) : (int)(Constants.TileHeight / 2));
+                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
         Sprite.Offset = ((Vector2)centerOffset * -1) + offsetFromX + offsetFromY;
     }
 

@@ -29,9 +29,11 @@ namespace low_age_tests
             Data.Instance.ReadBlueprint();
             _blueprint = _fixture
                 .For<Structure>()
-                .With(x => x.Sprite, "res://assets/sprites/structures/revs/boss post front indexed 2x3.png");
+                .With(x => x.Sprite, "res://assets/sprites/structures/revs/boss post front indexed 2x3.png")
+                .With(x => x.BackSideSprite, "res://assets/sprites/structures/revs/boss post back indexed 2x3.png");
             _structure = StructureNode.Instance();
             _structure._Ready();
+            _structure.Renderer._Ready();
         }
         
         public static IEnumerable<object[]> GetExpectedRotationResultsByInitialStructureConfiguration()
