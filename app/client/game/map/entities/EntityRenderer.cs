@@ -15,15 +15,18 @@ public class EntityRenderer : Node2D
     public bool IsDynamic { get; private set; } = false;
     public SpriteBounds SpriteBounds { get; private set; }
     public SortTypes SortType { get; private set; } = SortTypes.Point;
+    public Vector2 SpriteSize => _sprite.Texture.GetSize();
 
     public readonly List<EntityRenderer> StaticDependencies = new List<EntityRenderer>();
     public readonly List<EntityRenderer> DynamicDependencies = new List<EntityRenderer>();
     
     private Vector2 _topOrigin;
     private Vector2 _bottomOrigin;
-
+    
     private Sprite _topOriginSprite;
     private Sprite _bottomOriginSprite;
+
+    private Sprite _sprite;
 
     public Vector2 AsPoint => SortType is SortTypes.Point 
         ? _topOrigin 
@@ -37,20 +40,61 @@ public class EntityRenderer : Node2D
     {
         _topOriginSprite = GetNode<Sprite>("OriginTop");
         _bottomOriginSprite = GetNode<Sprite>("OriginBottom");
+        _sprite = GetNode<Sprite>($"{nameof(Sprite)}");
     }
     
-    public void Initialize(Guid instanceId, bool isDynamic, Rect2 entityRelativeSize, Sprite sprite) 
-        // TODO move sprite inside of the renderer
-        // TODO also call RegisterRenderer
+    public void Initialize(Guid instanceId, bool isDynamic, Rect2 entityRelativeSize, string spriteLocation) 
+        // TODO call RegisterRenderer
     {
         InstanceId = instanceId;
         ZIndex = 0;
         IsDynamic = isDynamic;
         SortType = (int)entityRelativeSize.Size.x == (int)entityRelativeSize.Size.y ? SortTypes.Point : SortTypes.Line;
         
-        SpriteBounds = new SpriteBounds(sprite.GetRect().Position + GlobalPosition, sprite.GetRect().Size + GlobalPosition); // TODO this doesn't work
+        SetSpriteTexture(spriteLocation);
+        SpriteBounds = new SpriteBounds(_sprite.GetRect().Position + GlobalPosition, _sprite.GetRect().Size + GlobalPosition); // TODO this doesn't work
         
         UpdateOrigins(entityRelativeSize);
+    }
+
+    public void SetOutline(bool to)
+    {
+        if (_sprite.Material is ShaderMaterial shaderMaterial) 
+            shaderMaterial.SetShaderParam("draw_outline", to);
+    }
+
+    public void SetTintColor(Color color)
+    {
+        if (_sprite.Material is ShaderMaterial shaderMaterial)
+            shaderMaterial.SetShaderParam("tint_color", color);
+    }
+
+    public void SetTintAmount(float amount)
+    {
+        if (_sprite.Material is ShaderMaterial shaderMaterial)
+            shaderMaterial.SetShaderParam("tint_effect_factor", amount);
+    }
+
+    public void SetAlphaAmount(float amount) => _sprite.Modulate = new Color(Colors.White, amount);
+
+    public void SetSpriteTexture(string location) => _sprite.Texture = GD.Load<Texture>(location);
+
+    public void UpdateSpriteOffset(Vector2 entitySize, Vector2 centerOffset)
+    { 
+        var offsetFromX = (int)(entitySize.x - 1) * 
+                        new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
+        var offsetFromY = (int)(entitySize.y - 1) *
+                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
+        _sprite.Offset = (centerOffset * -1) + offsetFromX + offsetFromY;
+    }
+
+    public void FlipSprite(bool to) => _sprite.FlipH = to;
+
+    public void AimSprite(Vector2 target)
+    {
+        _sprite.Scale = GlobalPosition.x > target.x 
+            ? new Vector2(-1, _sprite.Scale.y) 
+            : new Vector2(1, _sprite.Scale.y);
     }
 
     public void UpdateOrigins(Rect2 entityRelativeSize)

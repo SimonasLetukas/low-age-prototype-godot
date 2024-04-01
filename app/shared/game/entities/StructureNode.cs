@@ -36,7 +36,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         CenterPoint = blueprint.CenterPoint.ToGodotVector2();
         WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(EntitySize)).ToList();
         
-        Renderer.Initialize(InstanceId, false, RelativeSize, Sprite);
+        Renderer.Initialize(InstanceId, false, RelativeSize, Blueprint.Sprite);
         UpdateSprite();
     }
 
@@ -70,7 +70,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 
         WalkableAreasBlueprint = newWalkableAreas;
         EntitySize = new Vector2(EntitySize.y, EntitySize.x);
-        Renderer.UpdateOrigins(RelativeSize, Sprite);
+        Renderer.UpdateOrigins(RelativeSize);
         
         base.Rotate();
     }
@@ -92,15 +92,15 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         
         var spriteLocation = needsBackSprite ? Blueprint.BackSideSprite : Blueprint.Sprite;
         if (spriteLocation.IsNotNullOrEmpty())
-            Sprite.Texture = GD.Load<Texture>(spriteLocation);
+            Renderer.SetSpriteTexture(spriteLocation);
 
         var offset = needsBackSprite
             ? Blueprint.BackSideCenterOffset.ToGodotVector2()
             : Blueprint.CenterOffset.ToGodotVector2();
         AdjustSpriteOffset(needsFlipping 
-            ? new Vector2(Sprite.Texture.GetSize().x - offset.x, offset.y)
+            ? new Vector2(Renderer.SpriteSize.x - offset.x, offset.y)
             : offset);
         
-        Sprite.FlipH = needsFlipping;
+        Renderer.FlipSprite(needsFlipping);
     }
 }

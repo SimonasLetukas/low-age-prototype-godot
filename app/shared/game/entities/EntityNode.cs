@@ -28,7 +28,6 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public Func<IList<Vector2>, IList<Tiles.TileInstance>> GetTiles { protected get; set; }
     
     private Entity Blueprint { get; set; }
-    protected Sprite Sprite { get; private set; }
     protected State EntityState { get; private set; }
     protected enum State
     { // Flow (one-way): InPlacement -> Candidate -> Placed -> Completed
@@ -51,7 +50,6 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         _movePath = new List<Vector2>();
         _selected = false;
         _movementDuration = GetDurationFromAnimationSpeed();
-        Sprite = GetNode<Sprite>(nameof(Godot.Sprite));
         _movement = GetNode<Tween>("Movement");
 
         _movement.Connect("tween_all_completed", this, nameof(OnMovementTweenAllCompleted));
@@ -64,7 +62,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         DisplayName = blueprint.DisplayName;
         
         // TODO not sure why the below is needed... perhaps should be removed? (also from scene)
-        var spriteSize = Sprite.Texture.GetSize();
+        var spriteSize = Renderer.SpriteSize;
         var area = GetNode<Area2D>(nameof(Area2D));
         
         var shape = new RectangleShape2D();
@@ -90,11 +88,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         SetOutline(to);
     }
 
-    public virtual void SetOutline(bool to)
-    {
-        if (Sprite.Material is ShaderMaterial shaderMaterial) 
-            shaderMaterial.SetShaderParam("draw_outline", to);
-    }
+    public virtual void SetOutline(bool to) => Renderer.SetOutline(to);
 
     public virtual void SnapTo(Vector2 globalPosition) 
         => GlobalPosition = globalPosition;
@@ -192,39 +186,25 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public virtual bool CanBeMovedThroughAt(Vector2 position) => true;
 
-    protected void SetPlacementValidityColor(bool to)
-    {
-        if (Sprite.Material is ShaderMaterial shaderMaterial)
-            shaderMaterial.SetShaderParam("tint_color", to ? PlacementColorSuccess : PlacementColorInvalid);
-    }
+    protected void SetPlacementValidityColor(bool to) 
+        => Renderer.SetTintColor(to ? PlacementColorSuccess : PlacementColorInvalid);
 
-    protected void SetTint(bool to)
-    {
-        if (Sprite.Material is ShaderMaterial shaderMaterial)
-            shaderMaterial.SetShaderParam("tint_effect_factor", to ? 1 : 0);
-    }
+    protected void SetTint(bool to) => Renderer.SetTintAmount(to ? 1 : 0);
 
-    protected void SetTransparency(bool to)
-    {
-        Sprite.Modulate = new Color(Colors.White, to ? 0.5f : 1);
-    }
+    protected void SetTransparency(bool to) => Renderer.SetAlphaAmount(to ? 0.5f : 1);
 
     protected void AdjustSpriteOffset(Vector2? centerOffset = null)
     {
         if (centerOffset is null)
             centerOffset = Blueprint.CenterOffset.ToGodotVector2();
         
-        var offsetFromX = (int)(EntitySize.x - 1) * 
-                          new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
-        var offsetFromY = (int)(EntitySize.y - 1) *
-                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
-        Sprite.Offset = ((Vector2)centerOffset * -1) + offsetFromX + offsetFromY;
+        Renderer.UpdateSpriteOffset(EntitySize, (Vector2)centerOffset);
     }
 
     protected virtual void UpdateSprite()
     {
         if (Blueprint.Sprite != null)
-            Sprite.Texture = GD.Load<Texture>(Blueprint.Sprite);
+            Renderer.SetSpriteTexture(Blueprint.Sprite);
         
         AdjustSpriteOffset();
     }
@@ -256,9 +236,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         var nextMoveTarget = _movePath.First();
         _movePath.Remove(nextMoveTarget);
 
-        Sprite.Scale = GlobalPosition.x > nextMoveTarget.x 
-            ? new Vector2(-1, Sprite.Scale.y) 
-            : new Vector2(1, Sprite.Scale.y);
+        Renderer.AimSprite(nextMoveTarget);
 
         _movement.InterpolateProperty(this, "global_position", GlobalPosition, 
             nextMoveTarget, _movementDuration, Tween.TransitionType.Quad, Tween.EaseType.InOut);

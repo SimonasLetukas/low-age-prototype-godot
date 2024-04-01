@@ -32,12 +32,14 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
                                   // more cost effective, which is not intuitive for the player. This bonus could be
                                   // added for units with 1 movement only.
                                   
-        Renderer.Initialize(InstanceId, true, new Rect2(Vector2.Zero, EntitySize), Sprite);
+        Renderer.Initialize(InstanceId, true, new Rect2(Vector2.Zero, EntitySize), Blueprint.Sprite);
         UpdateSprite();
     }
 
     public float GetReach()
     {
+        return Movement;
+        
         var blueprint = GetActorBlueprint();
         
         // TODO: take from current max range (in case it is modified by behaviours)
