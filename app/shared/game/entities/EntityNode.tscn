@@ -31,4 +31,5 @@ offset = Vector2( -3, -14 )
 texture = ExtResource( 5 )
 
 [node name="OriginTop" type="Sprite" parent="EntityRenderer"]
+modulate = Color( 0.392157, 0.392157, 0.392157, 1 )
 texture = ExtResource( 5 )

@@ -52,8 +52,7 @@ public class EntityRenderer : Node2D
         SortType = (int)entityRelativeSize.Size.x == (int)entityRelativeSize.Size.y ? SortTypes.Point : SortTypes.Line;
         
         SetSpriteTexture(spriteLocation);
-        SpriteBounds = new SpriteBounds(_sprite.GetRect().Position + GlobalPosition, _sprite.GetRect().Size + GlobalPosition); // TODO this doesn't work
-        
+        UpdateSpriteBounds();        
         UpdateOrigins(entityRelativeSize);
     }
 
@@ -77,24 +76,34 @@ public class EntityRenderer : Node2D
 
     public void SetAlphaAmount(float amount) => _sprite.Modulate = new Color(Colors.White, amount);
 
-    public void SetSpriteTexture(string location) => _sprite.Texture = GD.Load<Texture>(location);
+    public void SetSpriteTexture(string location)
+    {
+        _sprite.Texture = GD.Load<Texture>(location);
+        UpdateSpriteBounds();
+    }
 
     public void UpdateSpriteOffset(Vector2 entitySize, Vector2 centerOffset)
-    { 
+    {
         var offsetFromX = (int)(entitySize.x - 1) * 
                         new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
         var offsetFromY = (int)(entitySize.y - 1) *
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
         _sprite.Offset = (centerOffset * -1) + offsetFromX + offsetFromY;
+        UpdateSpriteBounds();
     }
 
-    public void FlipSprite(bool to) => _sprite.FlipH = to;
+    public void FlipSprite(bool to)
+    {
+        _sprite.FlipH = to;
+        UpdateSpriteBounds();
+    }
 
     public void AimSprite(Vector2 target)
     {
-        _sprite.Scale = GlobalPosition.x > target.x 
-            ? new Vector2(-1, _sprite.Scale.y) 
+        _sprite.Scale = GlobalPosition.x > target.x
+            ? new Vector2(-1, _sprite.Scale.y)
             : new Vector2(1, _sprite.Scale.y);
+        UpdateSpriteBounds();
     }
 
     public void UpdateOrigins(Rect2 entityRelativeSize)
@@ -124,6 +133,18 @@ public class EntityRenderer : Node2D
 
         _topOriginSprite.GlobalPosition = _topOrigin;
         _bottomOriginSprite.GlobalPosition = _bottomOrigin;
+    }
+
+    private void UpdateSpriteBounds()
+    {
+        var top = _sprite.Scale.x > 0 
+            ? _sprite.Position + _sprite.Offset 
+            : _sprite.Position + new Vector2(-_sprite.Offset.x - SpriteSize.x, _sprite.Offset.y);
+        var bottom = top + SpriteSize;
+        SpriteBounds = new SpriteBounds(ToGlobal(top), ToGlobal(bottom));
+        
+        //_topOriginSprite.GlobalPosition = ToGlobal(top);
+        //_bottomOriginSprite.GlobalPosition = ToGlobal(bottom);
     }
 
     // A result of -1 means renderer1 is above renderer2 in physical space
