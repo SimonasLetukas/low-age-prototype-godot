@@ -9,9 +9,9 @@ using low_age_data.Domain.Factions;
 using Array = Godot.Collections.Array;
 
 /// <summary>
-/// Parent of all entities (units & structures) on the map.
+/// Parent of all entities (units & structures) and their rendering on the map.
 /// </summary>
-public class Entities : YSort
+public class Entities : Node2D
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     
@@ -25,16 +25,20 @@ public class Entities : YSort
     public EntityNode EntityInPlacement { get; private set; } = null;
     public EntityNode HoveredEntity { get; private set; } = null;
 
-    private YSort _units;
-    private YSort _structures;
+    private EntityRenderers _renderers;
+    private Node2D _units;
+    private Node2D _structures;
     private Func<IList<Vector2>, IList<Tiles.TileInstance>> _getTiles;
 
     private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new Dictionary<Guid, EntityNode>();
 
     public override void _Ready()
     {
-        _units = GetNode<YSort>("Units");
-        _structures = GetNode<YSort>("Structures");
+        _renderers = GetNode<EntityRenderers>(nameof(EntityRenderers));
+        _units = GetNode<Node2D>("Units");
+        _structures = GetNode<Node2D>("Structures");
+
+        NewPositionOccupied += _renderers.UpdateSorting;
     }
     
     public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles)
@@ -59,6 +63,7 @@ public class Entities : YSort
     
     public override void _ExitTree()
     {
+        NewPositionOccupied -= _renderers.UpdateSorting;
         foreach (var unit in _units.GetChildren().OfType<UnitNode>())
         {
             unit.FinishedMoving -= OnEntityFinishedMoving;
@@ -68,10 +73,11 @@ public class Entities : YSort
 
     public override void _Process(float delta)
     {
-        if (Input.IsActionJustPressed(Constants.Input.Rotate) && EntityInPlacement is ActorNode actor)
-        {
+        if (Input.IsActionJustPressed(Constants.Input.Rotate) && EntityInPlacement is ActorNode actor) 
             actor.Rotate();
-        }
+        
+        //if (EntityMoving)
+            _renderers.UpdateSorting();
     }
 
     public EntityNode GetEntityByInstanceId(Guid instanceId) => _entitiesByIds.ContainsKey(instanceId)
@@ -257,6 +263,7 @@ public class Entities : YSort
         
         _entitiesByIds[instanceId] = entity;
         NewPositionOccupied(entity);
+        _renderers.RegisterRenderer(entity.Renderer);
         
         return entity;
     }

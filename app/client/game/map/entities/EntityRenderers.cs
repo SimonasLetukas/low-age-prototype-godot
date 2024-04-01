@@ -8,7 +8,7 @@ public class EntityRenderers : Node2D
     
     private static readonly List<EntityRenderer> SortedRenderers = new List<EntityRenderer>();
 
-    public static void RegisterRenderer(EntityRenderer newRenderer)
+    public void RegisterRenderer(EntityRenderer newRenderer)
     {
         if (newRenderer.Registered) 
             return;
@@ -22,6 +22,7 @@ public class EntityRenderers : Node2D
             StaticRenderers.Add(newRenderer);
             SetupStaticDependencies(newRenderer);
         }
+        
         newRenderer.Registered = true;
     }
 
@@ -44,7 +45,8 @@ public class EntityRenderers : Node2D
         }
     }
 
-    public static void UnregisterRenderer(EntityRenderer rendererToRemove)
+    // TODO: to be called before entity is removed / destroyed
+    public void UnregisterRenderer(EntityRenderer rendererToRemove)
     {
         if (rendererToRemove.Registered is false) 
             return;
@@ -71,13 +73,12 @@ public class EntityRenderers : Node2D
         }
         rendererToRemove.StaticDependencies.Clear();
     }
+    
+    // Only needed to allow non-anonymous delegate unsubscription in Entities.cs:
+    // https://stackoverflow.com/questions/8803064/event-unsubscription-via-anonymous-delegate
+    public void UpdateSorting(EntityNode entity) => UpdateSorting();
 
-    public void Update()
-    {
-        UpdateSorting();
-    }
-
-    private static void UpdateSorting()
+    public void UpdateSorting()
     {
         ClearDynamicDependencies(StaticRenderers);
         ClearDynamicDependencies(DynamicRenderers);
@@ -136,11 +137,11 @@ public class EntityRenderers : Node2D
 
     private static void SetZIndexForRenderers(List<EntityRenderer> sortedRenderers)
     {
-        var orderCurrent = 0;
+        var orderCurrent = sortedRenderers.Count;
         foreach (var renderer in sortedRenderers)
         {
             renderer.ZIndex = orderCurrent;
-            orderCurrent += 1;
+            orderCurrent -= 1;
         }
     }
 }

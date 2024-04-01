@@ -17,7 +17,18 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public event Action<EntityNode> FinishedMoving = delegate { };
     
     public EntityId BlueprintId { get; set; }
-    public Guid InstanceId { get; set; } = Guid.NewGuid();
+
+    private Guid _instanceId = Guid.NewGuid();
+    public Guid InstanceId
+    {
+        get => _instanceId;
+        set
+        {
+            _instanceId = value;
+            Renderer.InstanceId = value;
+        }
+    }
+
     public EntityRenderer Renderer { get; private set; }
     public Vector2 EntityPrimaryPosition { get; set; }
     public Vector2 EntitySize { get; protected set; } = Vector2.One;

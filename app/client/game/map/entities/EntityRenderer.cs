@@ -10,7 +10,7 @@ public class EntityRenderer : Node2D
         Line
     }
     
-    public Guid InstanceId { get; private set; } = Guid.NewGuid();
+    public Guid InstanceId { get; set; } = Guid.NewGuid();
     public bool Registered { get; set; } = false;
     public bool IsDynamic { get; private set; } = false;
     public SpriteBounds SpriteBounds { get; private set; }
@@ -44,7 +44,6 @@ public class EntityRenderer : Node2D
     }
     
     public void Initialize(Guid instanceId, bool isDynamic, Rect2 entityRelativeSize, string spriteLocation) 
-        // TODO call RegisterRenderer
     {
         InstanceId = instanceId;
         ZIndex = 0;

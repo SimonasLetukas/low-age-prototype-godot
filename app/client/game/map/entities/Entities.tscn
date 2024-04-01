@@ -1,12 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://app/client/game/map/entities/Entities.cs" type="Script" id=1]
 [ext_resource path="res://app/client/game/map/entities/Units.tscn" type="PackedScene" id=2]
 [ext_resource path="res://app/client/game/map/entities/Structures.tscn" type="PackedScene" id=3]
+[ext_resource path="res://app/client/game/map/entities/EntityRenderers.cs" type="Script" id=4]
 
-[node name="Entities" type="YSort"]
+[node name="Entities" type="Node2D"]
 script = ExtResource( 1 )
+
+[node name="Structures" parent="." instance=ExtResource( 3 )]
 
 [node name="Units" parent="." instance=ExtResource( 2 )]
 
-[node name="Structures" parent="." instance=ExtResource( 3 )]
+[node name="EntityRenderers" type="Node2D" parent="."]
+script = ExtResource( 4 )
