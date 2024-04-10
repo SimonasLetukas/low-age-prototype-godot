@@ -13,7 +13,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 {
     [Export] public Color PlacementColorSuccess { get; set; } = Colors.Green;
     [Export] public Color PlacementColorInvalid { get; set; } = Colors.Red;
-    
+
+    public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> FinishedMoving = delegate { };
     
     public EntityId BlueprintId { get; set; }
@@ -38,7 +39,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public Behaviours Behaviours { get; protected set; }
     public Func<IList<Vector2>, IList<Tiles.TileInstance>> GetTiles { protected get; set; }
     
-    private Entity Blueprint { get; set; }
+    protected virtual Rect2 RelativeSize => new Rect2(Vector2.Zero, EntitySize);
     protected State EntityState { get; private set; }
     protected enum State
     { // Flow (one-way): InPlacement -> Candidate -> Placed -> Completed
@@ -47,6 +48,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Placed, // visible for all clients, in process of being paid for so cannot use abilities, but can be attacked
         Completed // visible for all clients and fully functional
     }
+    
+    private Entity Blueprint { get; set; }
+    
     private IList<Vector2> _movePath;
     private bool _selected;
     private float _movementDuration;
@@ -101,8 +105,12 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public virtual void SetOutline(bool to) => Renderer.SetOutline(to);
 
-    public virtual void SnapTo(Vector2 globalPosition) 
-        => GlobalPosition = globalPosition;
+    public virtual void SnapTo(Vector2 globalPosition)
+    {
+        GlobalPosition = globalPosition;
+        Renderer.AdjustToRelativeSize(RelativeSize);
+        Renderer.UpdateSpriteBounds();
+    }
 
     public void SetForPlacement(bool canBePlacedOnTheWholeMap)
     {
@@ -113,6 +121,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         CanBePlaced = false;
         SetPlacementValidityColor(CanBePlaced);
         _canBePlacedOnTheWholeMap = canBePlacedOnTheWholeMap;
+        Renderer.MakeDynamic();
     }
 
     public void OverridePlacementValidity() => CanBePlaced = true;
@@ -137,7 +146,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         
         if (CanBePlaced is false)
         {
-            QueueFree();
+            Destroy();
             return false;
         }
 
@@ -154,14 +163,13 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     {
         if (EntityState != State.Candidate && CanBePlaced is false)
         {
-            QueueFree();
+            Destroy();
             return false;
         }
         
         EntityState = State.Placed;
         SetTint(false);
         SetTransparency(true);
-        UpdateSprite();
         
         Complete(); // TODO should be called outside of this class when e.g. building is finished (payment is completed)
         return true;
@@ -196,6 +204,12 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     }
 
     public virtual bool CanBeMovedThroughAt(Vector2 position) => true;
+    
+    public void Destroy()
+    {
+        Destroyed(this);
+        QueueFree();
+    }
 
     protected void SetPlacementValidityColor(bool to) 
         => Renderer.SetTintColor(to ? PlacementColorSuccess : PlacementColorInvalid);
@@ -233,6 +247,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     private void OnMovementTweenAllCompleted()
     {
+        Renderer.UpdateOrigins();
+        Renderer.UpdateSpriteBounds();
+        
         if (_movePath.IsEmpty())
         {
             FinishedMoving(this);

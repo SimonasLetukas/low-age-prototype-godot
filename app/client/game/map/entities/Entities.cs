@@ -67,6 +67,7 @@ public class Entities : Node2D
         foreach (var unit in _units.GetChildren().OfType<UnitNode>())
         {
             unit.FinishedMoving -= OnEntityFinishedMoving;
+            unit.Destroyed -= OnEntityDestroyed;
         }
         base._ExitTree();
     }
@@ -76,7 +77,7 @@ public class Entities : Node2D
         if (Input.IsActionJustPressed(Constants.Input.Rotate) && EntityInPlacement is ActorNode actor) 
             actor.Rotate();
         
-        //if (EntityMoving)
+        if (EntityMoving || EntityInPlacement != null)
             _renderers.UpdateSorting();
     }
 
@@ -187,13 +188,18 @@ public class Entities : Node2D
         entity.MoveUntilFinished(globalPath.ToList(), targetPosition);
     }
     
-    public EntityNode SetEntityForPlacement(EntityId entityId, bool canBePlacedOnTheWholeMap)
+    public void RegisterRenderer(EntityNode entity) => _renderers.RegisterRenderer(entity.Renderer);
+    
+    public EntityNode SetEntityForPlacement(EntityId entityId, 
+        bool canBePlacedOnTheWholeMap)
     {
         var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
         var newEntity = InstantiateEntity(newEntityBlueprint);
         
         newEntity.SetForPlacement(canBePlacedOnTheWholeMap);
         EntityInPlacement = newEntity;
+        
+        _renderers.RegisterRenderer(EntityInPlacement.Renderer);
         
         return newEntity;
     }
@@ -208,7 +214,7 @@ public class Entities : Node2D
 
     public void CancelPlacement()
     {
-        EntityInPlacement?.QueueFree();
+        EntityInPlacement?.Destroy();
         EntityInPlacement = null;
     }
 
@@ -216,6 +222,11 @@ public class Entities : Node2D
     {
         var entity = EntityInPlacement;
         EntityInPlacement = null;
+        
+        _renderers.UnregisterRenderer(entity.Renderer);
+        if (entity is ActorNode)
+            entity.Renderer.MakeStatic();
+        
         entity.DeterminePlacementValidity(true);
         return PlaceEntity(entity, true);
     }
@@ -263,7 +274,6 @@ public class Entities : Node2D
         
         _entitiesByIds[instanceId] = entity;
         NewPositionOccupied(entity);
-        _renderers.RegisterRenderer(entity.Renderer);
         
         return entity;
     }
@@ -279,16 +289,23 @@ public class Entities : Node2D
 
     private EntityNode InstantiateEntity(Entity entityBlueprint)
     {
+        EntityNode entity;
         switch (entityBlueprint)
         {
             case Structure structure:
-                return InstantiateStructure(structure);
+                entity = InstantiateStructure(structure);
+                break;
             case Unit unit:
-                return InstantiateUnit(unit);
+                entity = InstantiateUnit(unit);
+                break;
             // TODO case Doodad doodad:
             default:
                 throw new ArgumentOutOfRangeException($"No possible cast for entity '{entityBlueprint.Id}'");
         }
+
+        entity.Destroyed += OnEntityDestroyed;
+        
+        return entity;
     }
 
     private StructureNode InstantiateStructure(Structure structureBlueprint)
@@ -313,5 +330,13 @@ public class Entities : Node2D
     {
         EntityMoving = false;
         NewPositionOccupied(entity);
+    }
+
+    private void OnEntityDestroyed(EntityNode entity)
+    {
+        _renderers.UnregisterRenderer(entity.Renderer);
+        
+        entity.FinishedMoving -= OnEntityFinishedMoving;
+        entity.Destroyed -= OnEntityDestroyed;
     }
 }

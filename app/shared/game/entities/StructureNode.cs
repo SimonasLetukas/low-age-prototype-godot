@@ -24,7 +24,8 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         .SelectMany(walkablePositions => walkablePositions).ToHashSet();
     public IEnumerable<Vector2> WalkablePositionsBlueprint => WalkableAreasBlueprint.Select(walkableArea =>
         walkableArea.ToList()).SelectMany(walkablePositions => walkablePositions).ToHashSet();
-    public Rect2 RelativeSize => EntitySize.Except(WalkablePositionsBlueprint);
+    
+    protected override Rect2 RelativeSize => EntitySize.Except(WalkablePositionsBlueprint);
     
     private Structure Blueprint { get; set; }
 
@@ -36,7 +37,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         CenterPoint = blueprint.CenterPoint.ToGodotVector2();
         WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(EntitySize)).ToList();
         
-        Renderer.Initialize(InstanceId, false, RelativeSize, Blueprint.Sprite);
+        Renderer.Initialize(InstanceId, Blueprint.DisplayName, false, RelativeSize);
         UpdateSprite();
     }
 
@@ -70,7 +71,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 
         WalkableAreasBlueprint = newWalkableAreas;
         EntitySize = new Vector2(EntitySize.y, EntitySize.x);
-        Renderer.UpdateOrigins(RelativeSize);
+        Renderer.AdjustToRelativeSize(RelativeSize);
         
         base.Rotate();
     }

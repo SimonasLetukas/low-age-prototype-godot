@@ -32,7 +32,8 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
                                   // more cost effective, which is not intuitive for the player. This bonus could be
                                   // added for units with 1 movement only.
                                   
-        Renderer.Initialize(InstanceId, true, new Rect2(Vector2.Zero, EntitySize), Blueprint.Sprite);
+        Renderer.Initialize(InstanceId, Blueprint.DisplayName, true, 
+            new Rect2(Vector2.Zero, EntitySize));
         UpdateSprite();
     }
 

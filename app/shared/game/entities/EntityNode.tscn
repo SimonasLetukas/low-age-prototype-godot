@@ -21,15 +21,28 @@ PlacementColorInvalid = Color( 1, 0.482353, 0.482353, 1 )
 [node name="EntityRenderer" type="Node2D" parent="."]
 script = ExtResource( 6 )
 
-[node name="Sprite" type="Sprite" parent="EntityRenderer"]
+[node name="SpriteContainer" type="Node2D" parent="EntityRenderer"]
+
+[node name="Sprite" type="Sprite" parent="EntityRenderer/SpriteContainer"]
 material = ExtResource( 2 )
 texture = ExtResource( 3 )
 centered = false
 offset = Vector2( -3, -14 )
 
-[node name="OriginBottom" type="Sprite" parent="EntityRenderer"]
+[node name="Debug" type="Node2D" parent="EntityRenderer"]
+
+[node name="OriginBottom" type="Sprite" parent="EntityRenderer/Debug"]
 texture = ExtResource( 5 )
 
-[node name="OriginTop" type="Sprite" parent="EntityRenderer"]
+[node name="OriginTop" type="Sprite" parent="EntityRenderer/Debug"]
 modulate = Color( 0.392157, 0.392157, 0.392157, 1 )
 texture = ExtResource( 5 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EntityRenderer/Debug"]
+modulate = Color( 0, 1, 0.0627451, 1 )
+margin_left = -2.0
+margin_top = -5.0
+margin_right = 18.0
+margin_bottom = 15.0
+rect_scale = Vector2( 0.5, 0.5 )
+text = "1"

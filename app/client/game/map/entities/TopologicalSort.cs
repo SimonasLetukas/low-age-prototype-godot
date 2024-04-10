@@ -17,27 +17,30 @@ public static class TopologicalSort
         AllSprites.AddRange(dynamicSprites);
         AllSprites.AddRange(staticSprites);
         
+        var allSpritesCount = AllSprites.Count;
         for (var i = 0; i < 5; i++)
         {
             CircularDepStack.Clear();
             CircularDepData.Clear();
             var removedDependency = false;
             
-            foreach (var _ in AllSprites.Where(RemoveCircularDependencies)) 
-                removedDependency = true;
+            for (var j = 0; j < allSpritesCount; j++)
+                if (RemoveCircularDependencies(AllSprites[j]))
+                    removedDependency = true;
             
-            if (removedDependency == false)
+            if (!removedDependency)
                 break;
         }
 
         Visited.Clear();
-        foreach (var sprite in AllSprites)
+        for (var i = 0; i < allSpritesCount; i++)
         {
+            var sprite = AllSprites[i];
             Visit(sprite, sortedSprites);
         }
     }
 
-    private static void Visit(EntityRenderer item, List<EntityRenderer> sortedSprites)
+    private static void Visit(EntityRenderer item, ICollection<EntityRenderer> sortedSprites)
     {
         var id = item.InstanceId;
         if (Visited.Add(id) is false) 
@@ -54,34 +57,44 @@ public static class TopologicalSort
 
     private static bool RemoveCircularDependencies(EntityRenderer item)
     {
-        CircularDepStack.Add(item);
-        var removedDependency = false;
-
-        var id = item.InstanceId;
-        var alreadyVisited = CircularDepData.TryGetValue(id, out var inProcess);
-        if (alreadyVisited)
+        try
         {
-            if (inProcess)
+            CircularDepStack.Add(item);
+            var removedDependency = false;
+
+            var id = item.InstanceId;
+            var alreadyVisited = CircularDepData.TryGetValue(id, out var inProcess);
+            if (alreadyVisited)
             {
-                RemoveCircularDependencyFromStack();
-                removedDependency = true;
+                if (inProcess)
+                {
+                    RemoveCircularDependencyFromStack();
+                    removedDependency = true;
+                }
             }
-        }
-        else
-        {
-            CircularDepData[id] = true;
+            else
+            {
+                CircularDepData[id] = true;
 
-            foreach (var _ in item.DynamicDependencies.Where(RemoveCircularDependencies)) 
-                removedDependency = true;
+                foreach (var _ in item.DynamicDependencies.Where(RemoveCircularDependencies)) 
+                    removedDependency = true;
             
-            foreach (var _ in item.StaticDependencies.Where(RemoveCircularDependencies)) 
-                removedDependency = true;
+                foreach (var _ in item.StaticDependencies.Where(RemoveCircularDependencies)) 
+                    removedDependency = true;
 
-            CircularDepData[id] = false;
+                CircularDepData[id] = false;
+            }
+
+            CircularDepStack.RemoveAt(CircularDepStack.Count - 1);
+            return removedDependency;
         }
-
-        CircularDepStack.RemoveAt(CircularDepStack.Count - 1);
-        return removedDependency;
+        // This is to specifically catch "System.InvalidOperationException: Collection was modified; enumeration
+        // operation may not execute". Could not debug how to stop this and catching it here does not impact the
+        // overall functionality.
+        catch (InvalidOperationException) 
+        {
+            return true;
+        }
     }
 
     private static void RemoveCircularDependencyFromStack()

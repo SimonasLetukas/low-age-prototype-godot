@@ -4,28 +4,36 @@ using Godot;
 
 public class EntityRenderer : Node2D
 {
+    [Export]
+    public bool DebugEnabled { get; set; } = false;
+    
     public enum SortTypes
     {
         Point,
         Line
     }
     
+    public string EntityName { get; set; }
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     public bool Registered { get; set; } = false;
     public bool IsDynamic { get; private set; } = false;
-    public SpriteBounds SpriteBounds { get; private set; }
+    public Rect2 SpriteBounds { get; private set; }
     public SortTypes SortType { get; private set; } = SortTypes.Point;
     public Vector2 SpriteSize => _sprite.Texture.GetSize();
+    public Rect2 EntityRelativeSize { get; private set; }
 
     public readonly List<EntityRenderer> StaticDependencies = new List<EntityRenderer>();
     public readonly List<EntityRenderer> DynamicDependencies = new List<EntityRenderer>();
     
     private Vector2 _topOrigin;
     private Vector2 _bottomOrigin;
-    
+
+    private Node2D _debugVisuals;
     private Sprite _topOriginSprite;
     private Sprite _bottomOriginSprite;
+    private RichTextLabel _zIndexText;
 
+    private Node2D _spriteContainer;
     private Sprite _sprite;
 
     public Vector2 AsPoint => SortType is SortTypes.Point 
@@ -38,22 +46,29 @@ public class EntityRenderer : Node2D
 
     public override void _Ready()
     {
-        _topOriginSprite = GetNode<Sprite>("OriginTop");
-        _bottomOriginSprite = GetNode<Sprite>("OriginBottom");
-        _sprite = GetNode<Sprite>($"{nameof(Sprite)}");
+        _debugVisuals = GetNode<Node2D>($"Debug");
+        _topOriginSprite = GetNode<Sprite>("Debug/OriginTop");
+        _bottomOriginSprite = GetNode<Sprite>("Debug/OriginBottom");
+        _zIndexText = GetNode<RichTextLabel>($"Debug/{nameof(RichTextLabel)}");
+        _spriteContainer = GetNode<Node2D>($"SpriteContainer");
+        _sprite = GetNode<Sprite>($"SpriteContainer/{nameof(Sprite)}");
+
+        _debugVisuals.Visible = DebugEnabled;
     }
     
-    public void Initialize(Guid instanceId, bool isDynamic, Rect2 entityRelativeSize, string spriteLocation) 
+    public void Initialize(Guid instanceId, string name, bool isDynamic, Rect2 entityRelativeSize) 
     {
         InstanceId = instanceId;
+        EntityName = name;
         ZIndex = 0;
         IsDynamic = isDynamic;
         SortType = (int)entityRelativeSize.Size.x == (int)entityRelativeSize.Size.y ? SortTypes.Point : SortTypes.Line;
         
-        SetSpriteTexture(spriteLocation);
-        UpdateSpriteBounds();        
-        UpdateOrigins(entityRelativeSize);
+        AdjustToRelativeSize(entityRelativeSize);
     }
+
+    public void MakeDynamic() => IsDynamic = true;
+    public void MakeStatic() => IsDynamic = false;
 
     public void SetOutline(bool to)
     {
@@ -78,6 +93,7 @@ public class EntityRenderer : Node2D
     public void SetSpriteTexture(string location)
     {
         _sprite.Texture = GD.Load<Texture>(location);
+        
         UpdateSpriteBounds();
     }
 
@@ -88,27 +104,36 @@ public class EntityRenderer : Node2D
         var offsetFromY = (int)(entitySize.y - 1) *
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
         _sprite.Offset = (centerOffset * -1) + offsetFromX + offsetFromY;
+        
         UpdateSpriteBounds();
     }
 
     public void FlipSprite(bool to)
     {
         _sprite.FlipH = to;
+        
         UpdateSpriteBounds();
     }
 
     public void AimSprite(Vector2 target)
     {
-        _sprite.Scale = GlobalPosition.x > target.x
-            ? new Vector2(-1, _sprite.Scale.y)
-            : new Vector2(1, _sprite.Scale.y);
+        _spriteContainer.Scale = GlobalPosition.x > target.x
+            ? new Vector2(-1, _spriteContainer.Scale.y)
+            : new Vector2(1, _spriteContainer.Scale.y);
+        
         UpdateSpriteBounds();
     }
 
-    public void UpdateOrigins(Rect2 entityRelativeSize)
+    public void AdjustToRelativeSize(Rect2 entityRelativeSize)
     {
-        var position = entityRelativeSize.Position;
-        var entitySize = entityRelativeSize.Size;
+        EntityRelativeSize = entityRelativeSize;
+        UpdateOrigins();
+    }
+
+    public void UpdateOrigins()
+    {
+        var position = EntityRelativeSize.Position;
+        var entitySize = EntityRelativeSize.Size;
         var xBiggerThanY = entitySize.x > entitySize.y;
 
         var px = position.x;
@@ -134,35 +159,72 @@ public class EntityRenderer : Node2D
         _bottomOriginSprite.GlobalPosition = _bottomOrigin;
     }
 
-    private void UpdateSpriteBounds()
+    public void UpdateSpriteBounds()
     {
-        var top = _sprite.Scale.x > 0 
-            ? _sprite.Position + _sprite.Offset 
-            : _sprite.Position + new Vector2(-_sprite.Offset.x - SpriteSize.x, _sprite.Offset.y);
+        var top = _spriteContainer.Scale.x > 0 
+            ? _sprite.GlobalPosition + _sprite.Offset 
+            : _sprite.GlobalPosition + new Vector2(-_sprite.Offset.x - SpriteSize.x, _sprite.Offset.y);
         var bottom = top + SpriteSize;
-        SpriteBounds = new SpriteBounds(ToGlobal(top), ToGlobal(bottom));
+        SpriteBounds = new Rect2(top, SpriteSize);
         
-        //_topOriginSprite.GlobalPosition = ToGlobal(top);
-        //_bottomOriginSprite.GlobalPosition = ToGlobal(bottom);
+        if (DebugEnabled)
+            GD.Print($"New {EntityName} sprite bounds: {SpriteBounds}");
+        
+        //_topOriginSprite.GlobalPosition = SpriteBounds.Position;
+        //_bottomOriginSprite.GlobalPosition = SpriteBounds.End;
+    }
+
+    public void UpdateZIndex(int to)
+    {
+        ZIndex = to;
+        _zIndexText.Text = to.ToString();
     }
 
     // A result of -1 means renderer1 is above renderer2 in physical space
     public int CompareRenderers(EntityRenderer renderer2)
     {
         var renderer1 = this;
+        int result;
         switch (renderer1.SortType)
         {
             case SortTypes.Point when renderer2.SortType == SortTypes.Point:
-                return renderer2._topOrigin.y.CompareTo(renderer1._topOrigin.y);
+                if (DebugEnabled)
+                    GD.Print($"'{renderer1.EntityName}' topOrigin: '{renderer1._topOrigin}', " +
+                             $"'{renderer2.EntityName}' topOrigin: '{renderer2._topOrigin}'.");
+                result = renderer2._topOrigin.y.CompareTo(renderer1._topOrigin.y);
+                break;
             case SortTypes.Line when renderer2.SortType == SortTypes.Line:
-                return CompareLineAndLine(renderer1, renderer2);
+                result = CompareLineAndLine(renderer1, renderer2);
+                break;
             case SortTypes.Point when renderer2.SortType == SortTypes.Line:
-                return ComparePointAndLine(renderer1._topOrigin, renderer2);
+                result = ComparePointAndLine(renderer1._topOrigin, renderer2);
+                break;
             case SortTypes.Line when renderer2.SortType == SortTypes.Point:
-                return -ComparePointAndLine(renderer2._topOrigin, renderer1);
+                result = -ComparePointAndLine(renderer2._topOrigin, renderer1);
+                break;
             default:
-                return 0;
+                result = 0;
+                break;
         }
+        
+        if (DebugEnabled)
+        {
+            var resultText = result == 0 ? "Both the same." : result > 0 
+                ? $"'{renderer2.EntityName}' is on top." : $"'{renderer1.EntityName}' is on top.";
+            GD.Print($"Renderer '{renderer1.EntityName}' of type '{renderer1.SortType}' compared to " +
+                  $"'{renderer2.EntityName}' of type {renderer2.SortType} with the result of {result}. " + resultText);
+        }
+
+        if (result == 0 && ((renderer1.IsDynamic && renderer2.IsDynamic is false)
+                            || (renderer2.IsDynamic && renderer1.IsDynamic is false)))
+        {
+            result = renderer1.IsDynamic ? -1 : 1;
+            if (DebugEnabled)
+                GD.Print(result > 0 ? $"'{renderer2.EntityName}' is on top because it's dynamic." 
+                    : $"'{renderer1.EntityName}' is on top because it's dynamic.");
+        }
+        
+        return result;
     }
 
     private static int CompareLineAndLine(EntityRenderer line1, EntityRenderer line2)

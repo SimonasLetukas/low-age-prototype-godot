@@ -30,7 +30,7 @@ public class EntityRenderers : Node2D
     {
         foreach (var otherRenderer in StaticRenderers)
         {
-            if (CalculateBoundsIntersection(newRenderer, otherRenderer) is false) 
+            if (BoundsIntersect(newRenderer, otherRenderer) is false) 
                 continue;
             
             var compareResult = newRenderer.CompareRenderers(otherRenderer);
@@ -97,7 +97,7 @@ public class EntityRenderers : Node2D
         {
             foreach (var staticRenderer in staticRenderers)
             {
-                if (CalculateBoundsIntersection(dynamicRenderer, staticRenderer) is false) 
+                if (BoundsIntersect(dynamicRenderer, staticRenderer) is false) 
                     continue;
                 
                 var compareResult = dynamicRenderer.CompareRenderers(staticRenderer);
@@ -113,13 +113,13 @@ public class EntityRenderers : Node2D
 
             foreach (var dynamicRendererInner in dynamicRenderers)
             {
-                if (CalculateBoundsIntersection(dynamicRendererInner, dynamicRendererInner) is false) 
+                if (BoundsIntersect(dynamicRenderer, dynamicRendererInner) is false) 
                     continue;
                 
-                var compareResult = dynamicRendererInner.CompareRenderers(dynamicRendererInner);
+                var compareResult = dynamicRenderer.CompareRenderers(dynamicRendererInner);
                 if (compareResult == -1)
                 {
-                    dynamicRendererInner.DynamicDependencies.Add(dynamicRendererInner);
+                    dynamicRendererInner.DynamicDependencies.Add(dynamicRenderer);
                 }
             }
         }
@@ -130,18 +130,20 @@ public class EntityRenderers : Node2D
         foreach (var renderer in renderers) renderer.DynamicDependencies.Clear();
     }
 
-    private static bool CalculateBoundsIntersection(EntityRenderer renderer, EntityRenderer otherRenderer)
+    private static bool BoundsIntersect(EntityRenderer renderer, EntityRenderer otherRenderer)
     {
-        return renderer.SpriteBounds.Intersects(otherRenderer.SpriteBounds);
+        var result = renderer.SpriteBounds.Intersects(otherRenderer.SpriteBounds);
+        return result;
     }
 
     private static void SetZIndexForRenderers(List<EntityRenderer> sortedRenderers)
     {
-        var orderCurrent = sortedRenderers.Count;
+        var currentOrder = sortedRenderers.Count;
         foreach (var renderer in sortedRenderers)
         {
-            renderer.ZIndex = orderCurrent;
-            orderCurrent -= 1;
+            renderer.ZIndex = currentOrder;
+            renderer.UpdateZIndex(currentOrder);
+            currentOrder -= 1;
         }
     }
 }

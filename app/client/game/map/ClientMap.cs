@@ -39,7 +39,7 @@ public class ClientMap : Map
 
         Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
         _tileMap.FinishedInitializing += OnTileMapFinishedInitializing;
-        Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing;
+        Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing; 
     }
     
     public override void _ExitTree()
@@ -348,6 +348,7 @@ public class ClientMap : Map
     {
         var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPrimaryPosition);
         Entities.AdjustGlobalPosition(entity, globalPosition);
+        Entities.RegisterRenderer(entity);
         
         AddOccupation(entity);
     }
@@ -373,7 +374,8 @@ public class ClientMap : Map
         _tileMap.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity, _mapSize), 
             canBePlacedOnTheWholeMap);
         
-        var entity = Entities.SetEntityForPlacement(entityId, canBePlacedOnTheWholeMap); // TODO pass in the cost to be tracked inside the buildableNode
+        var entity = Entities.SetEntityForPlacement(entityId, canBePlacedOnTheWholeMap); 
+        // TODO pass in the cost to be tracked inside the buildableNode
         
         _selectionOverlay = SelectionOverlay.Placement;
         EntityIsBeingPlaced(entity);
