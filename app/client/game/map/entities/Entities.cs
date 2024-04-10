@@ -188,8 +188,12 @@ public class Entities : Node2D
         entity.MoveUntilFinished(globalPath.ToList(), targetPosition);
     }
     
-    public void RegisterRenderer(EntityNode entity) => _renderers.RegisterRenderer(entity.Renderer);
-    
+    public void RegisterRenderer(EntityNode entity)
+    {
+        _renderers.RegisterRenderer(entity.Renderer);
+        _renderers.UpdateSorting();
+    }
+
     public EntityNode SetEntityForPlacement(EntityId entityId, 
         bool canBePlacedOnTheWholeMap)
     {
@@ -224,7 +228,7 @@ public class Entities : Node2D
         EntityInPlacement = null;
         
         _renderers.UnregisterRenderer(entity.Renderer);
-        if (entity is ActorNode)
+        if (entity is StructureNode)
             entity.Renderer.MakeStatic();
         
         entity.DeterminePlacementValidity(true);
