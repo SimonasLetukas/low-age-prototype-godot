@@ -227,6 +227,7 @@ public class ClientMap : Map
     private void ExecutePlacement()
     {
         Entities.PlaceEntity();
+        Pathfinding.ClearCache();
         ExecuteCancellation();
     }
     

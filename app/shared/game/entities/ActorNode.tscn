@@ -20,7 +20,15 @@ shader_param/tint_effect_factor = 0.0
 [node name="ActorNode" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
-[node name="Health" type="TextureProgress" parent="." index="0"]
+[node name="Abilities" parent="." index="3" instance=ExtResource( 4 )]
+
+[node name="Sprite" parent="EntityRenderer/SpriteContainer" index="0"]
+material = SubResource( 1 )
+
+[node name="Vitals" type="Node2D" parent="." index="5"]
+z_index = 4096
+
+[node name="Health" type="TextureProgress" parent="Vitals" index="0"]
 margin_left = -4.0
 margin_right = 4.0
 margin_bottom = 1.0
@@ -32,7 +40,7 @@ tint_under = Color( 0, 0, 0, 1 )
 tint_over = Color( 1, 1, 1, 0 )
 tint_progress = Color( 0.384314, 0.815686, 0.384314, 1 )
 
-[node name="Shields" type="TextureProgress" parent="." index="1"]
+[node name="Shields" type="TextureProgress" parent="Vitals" index="1"]
 margin_left = -4.0
 margin_top = -1.0
 margin_right = 4.0
@@ -42,8 +50,3 @@ texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 3 )
 tint_under = Color( 0, 0, 0, 1 )
 tint_over = Color( 1, 1, 1, 0 )
-
-[node name="Sprite" parent="." index="2"]
-material = SubResource( 1 )
-
-[node name="Abilities" parent="." index="5" instance=ExtResource( 4 )]

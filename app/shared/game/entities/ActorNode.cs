@@ -18,6 +18,8 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     private Actor Blueprint { get; set; }
     private TextureProgress _health;
     private TextureProgress _shields;
+    private Vector2 _startingHealthPosition;
+    private Vector2 _startingShieldsPosition;
     
     public override void _Ready()
     {
@@ -25,8 +27,14 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         
         Abilities = GetNode<Abilities>(nameof(Abilities));
 
-        _health = GetNode<TextureProgress>("Health");
-        _shields = GetNode<TextureProgress>("Shields");
+        _health = GetNode<TextureProgress>($"Vitals/Health");
+        _shields = GetNode<TextureProgress>($"Vitals/Shields");
+
+        _startingHealthPosition = _health.RectPosition;
+        _startingShieldsPosition = _shields.RectPosition;
+        
+        _health.Visible = false;
+        _shields.Visible = false;
     }
     
     public void SetBlueprint(Actor blueprint)
@@ -38,18 +46,12 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         ActorRotation = ActorRotation.BottomRight;
         Abilities.PopulateFromBlueprint(Blueprint.Abilities);
         Behaviours.AddOnBuildBehaviours(Abilities.GetPassives());
-        
-        var spriteSize = Renderer.SpriteSize;
-        _health.RectPosition = new Vector2(_health.RectPosition.x, (spriteSize.y * -1) - 2);
-        _health.Visible = false;
-        _shields.RectPosition = new Vector2(_shields.RectPosition.x, (spriteSize.y * -1) - 3);
-        _shields.Visible = false;
     }
 
     public override void SetOutline(bool to)
     {
         base.SetOutline(to);
-        _health.Visible = to;
+        _health.Visible = to && HasHealth;
         _shields.Visible = to && HasShields;
     }
 
@@ -74,6 +76,7 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         }
         
         UpdateSprite();
+        UpdateVitalsPosition();
     }
 
     public void SetActorRotation(ActorRotation to)
@@ -84,9 +87,30 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             Rotate();
     }
 
+    public bool HasHealth => CurrentStats.Any(x =>
+        x.Blueprint is CombatStat combatStat
+        && combatStat.CombatType.Equals(StatType.Health));
+    
     public bool HasShields => CurrentStats.Any(x => 
         x.Blueprint is CombatStat combatStat 
         && combatStat.CombatType.Equals(StatType.Shields));
 
-    internal Actor GetActorBlueprint() => Blueprint;
+    protected Actor GetActorBlueprint() => Blueprint;
+
+    protected void UpdateVitalsPosition()
+    {
+        var spriteSize = Renderer.SpriteSize;
+        var offsetFromX = (int)(RelativeSize.Size.x - 1) * 
+                          new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 2)) +
+                          (int)RelativeSize.Position.x * 
+                          new Vector2((int)(Constants.TileWidth / 2), (int)(Constants.TileHeight / 2));
+        var offsetFromY = (int)(RelativeSize.Size.y - 1) *
+                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 2)) +
+                          (int)RelativeSize.Position.y * 
+                          new Vector2((int)(Constants.TileWidth / 2) * -1, (int)(Constants.TileHeight / 2));
+        _health.RectPosition = 
+            new Vector2(_startingHealthPosition.x, (spriteSize.y * -1) - 2) + offsetFromX + offsetFromY;
+        _shields.RectPosition = 
+            new Vector2(_startingShieldsPosition.x, (spriteSize.y * -1) - 3) + offsetFromX + offsetFromY;
+    }
 }

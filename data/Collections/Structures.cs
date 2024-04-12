@@ -720,7 +720,7 @@ namespace low_age_data.Collections
                     displayName: nameof(StructureId.Gate).CamelCaseToWords(),
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/gate 0 indexed 1x4.png",
-                    centerOffset: new Vector2<int>(20, 30),
+                    centerOffset: new Vector2<int>(20, 26),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 300, hasCurrent: true, combatType: StatType.Health),

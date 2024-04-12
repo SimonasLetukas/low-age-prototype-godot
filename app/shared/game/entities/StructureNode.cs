@@ -39,6 +39,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         
         Renderer.Initialize(InstanceId, Blueprint.DisplayName, false, RelativeSize);
         UpdateSprite();
+        UpdateVitalsPosition();
     }
 
     public override void Rotate()

@@ -35,6 +35,7 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         Renderer.Initialize(InstanceId, Blueprint.DisplayName, true, 
             new Rect2(Vector2.Zero, EntitySize));
         UpdateSprite();
+        UpdateVitalsPosition();
     }
 
     public float GetReach()

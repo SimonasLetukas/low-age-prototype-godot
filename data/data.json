@@ -3663,7 +3663,7 @@
         "backSideSprite": "res://assets/sprites/structures/uee/gate 0 indexed 1x4.png",
         "backSideCenterOffset": {
           "x": 20,
-          "y": 30
+          "y": 26
         },
         "statistics": [
           {
@@ -3714,7 +3714,7 @@
         "sprite": "res://assets/sprites/structures/uee/gate 0 indexed 1x4.png",
         "centerOffset": {
           "x": 20,
-          "y": 30
+          "y": 26
         }
       },
       {

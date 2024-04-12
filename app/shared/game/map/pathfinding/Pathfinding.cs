@@ -334,6 +334,8 @@ public class Pathfinding : Node
 
     #endregion IterationHelpers
 
+    public void ClearCache() => Cache(Vector2.Inf, -1.0f, 1);
+    
     public IEnumerable<Vector2> GetAvailablePositions(Vector2 from, float range, int size, bool temporary = false)
     {
 	    if (size > 3) throw new ArgumentException($"{nameof(Pathfinding)}.{nameof(GetAvailablePositions)}: " +
