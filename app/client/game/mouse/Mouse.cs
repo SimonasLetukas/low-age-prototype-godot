@@ -77,10 +77,8 @@ public class Mouse : Node2D
 	        SetCursorToArrow();
 	        EmitSignal(nameof(TakingControl), false);
 	        var travelVector = mousePos - _startPosition;
-	        if (travelVector.Length() <= MinimumMouseDistanceToStartDrag && _mouseIsOnUi is false)
-	        {
+	        if (travelVector.Length() <= MinimumMouseDistanceToStartDrag && _mouseIsOnUi is false) 
 		        EmitSignal(nameof(LeftReleasedWithoutDrag));
-	        }
         }
 
         if (Input.IsActionJustPressed(Constants.Input.MouseRight))
@@ -91,7 +89,8 @@ public class Mouse : Node2D
 
         if (Input.IsActionJustReleased(Constants.Input.MouseRight))
         {
-	        EmitSignal(nameof(RightReleasedWithoutExamine));
+	        if (_mouseIsOnUi is false)
+				EmitSignal(nameof(RightReleasedWithoutExamine));
         }
     }
     

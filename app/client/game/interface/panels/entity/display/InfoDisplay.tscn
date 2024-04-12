@@ -170,6 +170,7 @@ visible = false
 margin_right = 20.0
 margin_bottom = 20.0
 hint_tooltip = "Research: Hardened Matrix"
+mouse_filter = 1
 size_flags_vertical = 0
 custom_constants/margin_right = -4
 custom_constants/margin_left = 4
@@ -179,6 +180,7 @@ script = ExtResource( 4 )
 margin_left = 4.0
 margin_right = 24.0
 margin_bottom = 20.0
+mouse_filter = 1
 size_flags_horizontal = 0
 theme = ExtResource( 6 )
 custom_colors/font_color = Color( 0.662745, 0.203922, 0.0117647, 1 )
@@ -188,6 +190,7 @@ text = "[R]"
 [node name="Name" type="MarginContainer" parent="VBoxContainer/TopPart/AbilityTitle/Top"]
 margin_right = 212.0
 margin_bottom = 20.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 0
 custom_constants/margin_left = 4
@@ -196,6 +199,7 @@ custom_constants/margin_left = 4
 margin_left = 4.0
 margin_right = 212.0
 margin_bottom = 20.0
+mouse_filter = 1
 theme = ExtResource( 6 )
 custom_fonts/font = SubResource( 1 )
 text = "Unleash the Rage"
@@ -213,6 +217,7 @@ script = ExtResource( 1 )
 margin_left = 4.0
 margin_right = 212.0
 margin_bottom = 16.0
+mouse_filter = 1
 custom_colors/font_color = Color( 0.756863, 0.843137, 0.87451, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Planning (cooldown: 3 action phases)"
@@ -227,6 +232,7 @@ size_flags_vertical = 0
 [node name="LeftSide" type="MarginContainer" parent="VBoxContainer/TopPart"]
 margin_right = 200.0
 margin_bottom = 96.0
+mouse_filter = 1
 size_flags_horizontal = 3
 
 [node name="Rows" type="VBoxContainer" parent="VBoxContainer/TopPart/LeftSide"]
@@ -245,12 +251,14 @@ script = ExtResource( 2 )
 [node name="Name" type="MarginContainer" parent="VBoxContainer/TopPart/LeftSide/Rows/TopText"]
 margin_right = 200.0
 margin_bottom = 20.0
+mouse_filter = 1
 custom_constants/margin_left = 4
 
 [node name="Label" type="Label" parent="VBoxContainer/TopPart/LeftSide/Rows/TopText/Name"]
 margin_left = 4.0
 margin_right = 200.0
 margin_bottom = 20.0
+mouse_filter = 1
 theme = ExtResource( 6 )
 custom_fonts/font = SubResource( 1 )
 text = "Venom Fangs"
@@ -259,12 +267,14 @@ text = "Venom Fangs"
 margin_top = 16.0
 margin_right = 200.0
 margin_bottom = 32.0
+mouse_filter = 1
 custom_constants/margin_left = 4
 
 [node name="Label" type="Label" parent="VBoxContainer/TopPart/LeftSide/Rows/TopText/Type"]
 margin_left = 4.0
 margin_right = 200.0
 margin_bottom = 16.0
+mouse_filter = 1
 custom_colors/font_color = Color( 0.756863, 0.843137, 0.87451, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Ranged"
@@ -397,6 +407,7 @@ margin_left = 4.0
 margin_right = 244.0
 margin_bottom = 132.0
 rect_clip_content = false
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 2
 theme = ExtResource( 6 )
@@ -437,6 +448,7 @@ script = ExtResource( 3 )
 margin_right = 244.0
 margin_bottom = 18.0
 rect_min_size = Vector2( 3, 5 )
+mouse_filter = 1
 size_flags_horizontal = 3
 theme = ExtResource( 6 )
 text = "Light - Biological"
