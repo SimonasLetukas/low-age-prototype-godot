@@ -79,11 +79,9 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         UpdateVitalsPosition();
     }
 
-    public void SetActorRotation(ActorRotation to)
+    public void SetActorRotation(ActorRotation targetRotation)
     {
-        var delta = to - ActorRotation;
-        delta = delta < 0 ? delta + 4 : delta;
-        for (var r = 0; r < delta; r++) 
+        for (var r = 0; r < ActorRotation.CountTo(targetRotation); r++) 
             Rotate();
     }
 

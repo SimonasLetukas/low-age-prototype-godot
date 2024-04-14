@@ -45,32 +45,30 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
     public override void Rotate()
     {
         var centerPointAssigned = false;
-        var newWalkableAreas = new List<Rect2>();
         
         for (var x = 0; x < EntitySize.x; x++)
         {
+            if (centerPointAssigned)
+                break;
+            
             for (var y = 0; y < EntitySize.y; y++)
             {
+                if (centerPointAssigned)
+                    break;
+                
                 var currentPoint = new Vector2(x, y);
                 var newX = EntitySize.y - 1 - y;
                 var newY = x;
-                
-                if (CenterPoint.IsEqualApprox(currentPoint) 
-                    && centerPointAssigned is false)
-                {
-                    CenterPoint = new Vector2(newX, newY);
-                    centerPointAssigned = true;
-                }
 
-                newWalkableAreas.AddRange(WalkableAreasBlueprint
-                    .Where(walkableArea => walkableArea.Position.IsEqualApprox(currentPoint))
-                    .Select(walkableArea => new Rect2(
-                        new Vector2((newX - walkableArea.Size.y) + 1, newY),
-                        new Vector2(walkableArea.Size.y, walkableArea.Size.x))));
+                if (CenterPoint.IsEqualApprox(currentPoint) is false)
+                    continue;
+                
+                CenterPoint = new Vector2(newX, newY);
+                centerPointAssigned = true;
             }
         }
 
-        WalkableAreasBlueprint = newWalkableAreas;
+        WalkableAreasBlueprint = WalkableAreasBlueprint.RotateClockwiseInside(EntitySize);
         EntitySize = new Vector2(EntitySize.y, EntitySize.x);
         Renderer.AdjustToRelativeSize(RelativeSize);
         
