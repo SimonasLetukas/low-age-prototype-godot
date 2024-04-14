@@ -12,6 +12,8 @@ namespace low_age_data.Domain.Common
         public static Terrain Marsh => new Terrain(TerrainsEnum.Marsh);
         public static Terrain Scraps => new Terrain(TerrainsEnum.Scraps);
         public static Terrain Celestium => new Terrain(TerrainsEnum.Celestium);
+        public static Terrain HighGround => new Terrain(TerrainsEnum.HighGround); 
+        public static Terrain Ascendable => new Terrain(TerrainsEnum.Ascendable); 
         public static Terrain FromIndex(int index) => new Terrain((TerrainsEnum)index);
 
         public int ToIndex() => (int)Value;
@@ -28,6 +30,8 @@ namespace low_age_data.Domain.Common
             Marsh = 2,
             Scraps = 3,
             Celestium = 4,
+            HighGround = 5,
+            Ascendable = 6,
         }
         
         private class TerrainJsonConverter : JsonConverter

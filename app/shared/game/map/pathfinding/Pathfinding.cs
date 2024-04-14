@@ -400,7 +400,7 @@ public class Pathfinding : Node
 
     public void AddOccupation(EntityNode entity)
     {
-	    const int offset = 3;
+	    const int offset = 3; // Depends on maximum possible size
 	    var foundPoints = new List<Vector2>();
 	    
 	    for (var x = (int)entity.EntityPrimaryPosition.x - offset; 

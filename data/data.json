@@ -4045,40 +4045,49 @@
       "displayName": "Grass",
       "description": "",
       "terrain": "Terrain.Grass",
-      "movementCost": 1.0,
-      "allowsBuilding": true
+      "movementCost": 1.0
     },
     {
       "id": "tile-mountains",
       "displayName": "Mountains",
       "description": "",
       "terrain": "Terrain.Mountains",
-      "movementCost": "Infinity",
-      "allowsBuilding": false
+      "movementCost": "Infinity"
     },
     {
       "id": "tile-marsh",
       "displayName": "Marsh",
       "description": "",
       "terrain": "Terrain.Marsh",
-      "movementCost": 2.0,
-      "allowsBuilding": false
+      "movementCost": 2.0
     },
     {
       "id": "tile-scraps",
       "displayName": "Scraps",
       "description": "",
       "terrain": "Terrain.Scraps",
-      "movementCost": 1.0,
-      "allowsBuilding": true
+      "movementCost": 1.0
     },
     {
       "id": "tile-celestium",
       "displayName": "Celestium",
       "description": "",
       "terrain": "Terrain.Celestium",
-      "movementCost": 1.0,
-      "allowsBuilding": true
+      "movementCost": 1.0
+    },
+    {
+      "id": "tile-highground",
+      "displayName": "High Ground",
+      "description": "",
+      "terrain": "Terrain.HighGround",
+      "movementCost": 1.0
+    },
+    {
+      "id": "tile-ascendable",
+      "displayName": "Ascendable",
+      "description": "",
+      "terrain": "Terrain.Ascendable",
+      "movementCost": 1.0
     }
   ],
   "abilities": [
