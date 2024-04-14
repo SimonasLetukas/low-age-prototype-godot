@@ -81,7 +81,8 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
     public void SetActorRotation(ActorRotation targetRotation)
     {
-        for (var r = 0; r < ActorRotation.CountTo(targetRotation); r++) 
+        var startingRotation = ActorRotation;
+        for (var r = 0; r < startingRotation.CountTo(targetRotation); r++) 
             Rotate();
     }
 
