@@ -27,6 +27,7 @@ public class ClientMap : Map
         Placement,
         Attack
     }
+    private bool _flattened = false;
 
     private bool _tileMapIsInitialized = false;
     private bool _pathfindingIsInitialized = false;
@@ -124,6 +125,8 @@ public class ClientMap : Map
             var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(mapPosition);
             Entities.UpdateEntityInPlacement(mapPosition, globalPosition, _tileMap.GetTiles);
         }
+
+        HandleFlattenInput();
     }
 
     public EntityNode UpdateHoveredEntity(Vector2 mousePosition)
@@ -170,6 +173,22 @@ public class ClientMap : Map
         var selectedEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
         RemoveOccupation(selectedEntity);
         Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
+    }
+
+    private void HandleFlattenInput()
+    {
+        if (Input.IsActionJustReleased(Constants.Input.Flatten) is false)
+            return;
+
+        _flattened = !_flattened;
+        Entities.SetFlattened(_flattened);
+        if (_flattened)
+        {
+            _tileMap.StructureFoundations.Enable();
+            return;
+        }
+        
+        _tileMap.StructureFoundations.Disable();
     }
     
     private void HandleLeftClick()

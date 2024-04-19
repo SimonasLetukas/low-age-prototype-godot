@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -16,24 +15,28 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         return structure;
     }
     
+    public override Rect2 RelativeSize => EntitySize.Except(WalkablePositionsBlueprint);
+    public string FlattenedSprite { get; private set; }
+    public Vector2? FlattenedCenterOffset { get; private set; }
     public Vector2 CenterPoint { get; protected set; }
     public IList<Rect2> WalkableAreasBlueprint { get; protected set; }
     public IEnumerable<Rect2> WalkableAreas => WalkableAreasBlueprint.Select(x => 
         new Rect2(x.Position + EntityPrimaryPosition, x.Size)).ToList();
-    public IEnumerable<Vector2> WalkablePositions => WalkableAreas.Select(walkableArea => walkableArea.ToList())
-        .SelectMany(walkablePositions => walkablePositions).ToHashSet();
     public IEnumerable<Vector2> WalkablePositionsBlueprint => WalkableAreasBlueprint.Select(walkableArea =>
         walkableArea.ToList()).SelectMany(walkablePositions => walkablePositions).ToHashSet();
-    
-    protected override Rect2 RelativeSize => EntitySize.Except(WalkablePositionsBlueprint);
+    public IEnumerable<Vector2> WalkablePositions => WalkableAreas.Select(walkableArea => walkableArea.ToList())
+        .SelectMany(walkablePositions => walkablePositions).ToHashSet();
+    public IEnumerable<Vector2> NonWalkablePositions => EntityOccupyingPositions.Except(WalkablePositions);
     
     private Structure Blueprint { get; set; }
-
+    
     public void SetBlueprint(Structure blueprint)
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
         EntitySize = blueprint.Size.ToGodotVector2();
+        FlattenedSprite = blueprint.FlattenedSprite;
+        FlattenedCenterOffset = Blueprint.FlattenedCenterOffset?.ToGodotVector2();
         CenterPoint = blueprint.CenterPoint.ToGodotVector2();
         WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(EntitySize)).ToList();
         
@@ -84,6 +87,26 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
     }
 
     public override bool CanBeMovedThroughAt(Vector2 position) => CanBeMovedOnAt(position);
+    
+    protected override void UpdateVisuals()
+    {
+        base.UpdateVisuals();
+        Renderer.SetSpriteVisibility(true);
+        UpdateSprite();
+        
+        if (EntityState != State.Completed || Flattened is false) 
+            return;
+        
+        if (FlattenedSprite is null || FlattenedCenterOffset is null)
+        {
+            Renderer.SetSpriteVisibility(false); 
+            Renderer.SetIconVisibility(true);
+            return;
+        }
+
+        Renderer.SetSpriteTexture(FlattenedSprite);
+        AdjustSpriteOffset(FlattenedCenterOffset);
+    }
 
     protected override void UpdateSprite()
     {

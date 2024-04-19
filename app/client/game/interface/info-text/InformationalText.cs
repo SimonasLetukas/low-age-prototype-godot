@@ -6,39 +6,37 @@ public class InformationalText : Control
 {
     public enum InfoTextType
     {
+        Default,
         Placing,
         PlacingRotatable,
         Selected,
         SelectedMovement
     }
     
-    private bool _enabled = false;
     private VBoxContainer _vBoxContainer;
     
     public override void _Ready()
     {
         _vBoxContainer = GetNode<VBoxContainer>(nameof(VBoxContainer));
-        
-        Disable();
-        Reset();
+
+        Visible = true;
+        SwitchToDefault();
     }
 
     public override void _Process(float delta)
     {
-        if (_enabled is false)
-            return;
-
         RectPosition = GetGlobalMousePosition();
     }
 
-    public void Enable(InfoTextType type)
+    public void SwitchTo(InfoTextType type)
     {
         Reset();
         
         switch (type)
         {
+            case InfoTextType.Default:
+                break;
             case InfoTextType.PlacingRotatable:
-                AddText($"{GetInput(Constants.Input.Rotate)}: rotate clockwise");
                 AddText($"Left-click: place");
                 AddText($"Right-click: cancel");
                 break;
@@ -56,15 +54,13 @@ public class InformationalText : Control
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
-
-        _enabled = true;
-        Visible = true;
+        
+        AddText($"{GetInput(Constants.Input.Flatten)}: flat mode");
     }
     
-    public void Disable()
+    public void SwitchToDefault()
     {
-        _enabled = false;
-        Visible = false;
+        SwitchTo(InfoTextType.Default);
     }
 
     private void Reset()

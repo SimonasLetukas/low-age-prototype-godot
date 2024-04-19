@@ -22,7 +22,9 @@ namespace low_age_data.Domain.Entities.Actors.Structures
             Vector2<int>? size = null,
             Vector2<int>? centerPoint = null,
             bool? destructible = null,
-            IList<Area>? walkableAreas = null) 
+            IList<Area>? walkableAreas = null,
+            string? flattenedSprite = null,
+            Vector2<int>? flattenedCenterOffset = null) 
             : base(
                 id, 
                 displayName, 
@@ -45,6 +47,8 @@ namespace low_age_data.Domain.Entities.Actors.Structures
             };
             BackSideSprite = backSideSprite ?? sprite;
             BackSideCenterOffset = backSideCenterOffset ?? centerOffset;
+            FlattenedSprite = flattenedSprite;
+            FlattenedCenterOffset = flattenedCenterOffset;
         }
         
         /// <summary>
@@ -71,5 +75,12 @@ namespace low_age_data.Domain.Entities.Actors.Structures
         public string? BackSideSprite { get; }
         
         public Vector2<int> BackSideCenterOffset { get; }
+        
+        /// <summary>
+        /// Path to the sprite to be used for showing the <see cref="Structure"/> in a flattened state.
+        /// </summary>
+        public string? FlattenedSprite { get; }
+        
+        public Vector2<int>? FlattenedCenterOffset { get; }
     }
 }

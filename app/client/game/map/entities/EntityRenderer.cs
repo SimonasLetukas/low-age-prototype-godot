@@ -35,6 +35,8 @@ public class EntityRenderer : Node2D
 
     private Node2D _spriteContainer;
     private Sprite _sprite;
+    private TextureRect _icon;
+    private readonly Vector2 _iconOffset = new Vector2(-4, -5);
 
     public Vector2 AsPoint => SortType is SortTypes.Point 
         ? _topOrigin 
@@ -52,6 +54,8 @@ public class EntityRenderer : Node2D
         _zIndexText = GetNode<RichTextLabel>($"Debug/{nameof(RichTextLabel)}");
         _spriteContainer = GetNode<Node2D>($"SpriteContainer");
         _sprite = GetNode<Sprite>($"SpriteContainer/{nameof(Sprite)}");
+        _icon = GetNode<TextureRect>($"Icon");
+        _icon.Texture = null;
 
         _debugVisuals.Visible = DebugEnabled;
     }
@@ -65,15 +69,20 @@ public class EntityRenderer : Node2D
         SortType = (int)entityRelativeSize.Size.x == (int)entityRelativeSize.Size.y ? SortTypes.Point : SortTypes.Line;
         
         AdjustToRelativeSize(entityRelativeSize);
+        SetSpriteVisibility(true);
     }
+
+    public void SetSpriteVisibility(bool to) => _spriteContainer.Visible = to;
+
+    public void SetIconVisibility(bool to) => _icon.Visible = to;
 
     public void MakeDynamic() => IsDynamic = true;
     public void MakeStatic() => IsDynamic = false;
 
     public void SetOutline(bool to)
     {
-        if (_sprite.Material is ShaderMaterial shaderMaterial) 
-            shaderMaterial.SetShaderParam("draw_outline", to);
+        if (_sprite.Material is ShaderMaterial spriteShaderMaterial) 
+            spriteShaderMaterial.SetShaderParam("draw_outline", to);
     }
 
     public void SetTintColor(Color color)
@@ -93,6 +102,7 @@ public class EntityRenderer : Node2D
     public void SetSpriteTexture(string location)
     {
         _sprite.Texture = GD.Load<Texture>(location);
+        _icon.Texture = GD.Load<Texture>(location);
         
         UpdateSpriteBounds();
     }
@@ -104,13 +114,13 @@ public class EntityRenderer : Node2D
         var offsetFromY = (int)(entitySize.y - 1) *
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
         _sprite.Offset = (centerOffset * -1) + offsetFromX + offsetFromY;
-        
         UpdateSpriteBounds();
     }
 
     public void FlipSprite(bool to)
     {
         _sprite.FlipH = to;
+        _icon.FlipH = to;
         
         UpdateSpriteBounds();
     }
@@ -157,6 +167,17 @@ public class EntityRenderer : Node2D
 
         _topOriginSprite.GlobalPosition = _topOrigin;
         _bottomOriginSprite.GlobalPosition = _bottomOrigin;
+        
+        const int widthHalfStep = Constants.TileWidth / 4;
+        const int heightHalfStep = Constants.TileHeight / 4;
+        
+        var offsetFromX = (int)px * new Vector2((int)(widthStep), (int)(heightHalfStep)) + 
+                          (int)(sx - 1) * new Vector2((int)(widthHalfStep), (int)(heightHalfStep));
+        var offsetFromY = (int)py * new Vector2((int)(widthStep) * -1, (int)(heightHalfStep)) + 
+                          (int)(sy - 1) * new Vector2((int)(widthHalfStep) * -1, (int)(heightHalfStep));
+        _icon.RectPosition = offsetFromX + offsetFromY + _iconOffset + (SortType is SortTypes.Point 
+            ? Vector2.Zero 
+            : (xBiggerThanY ? px * Vector2.Down : py * Vector2.Down) * heightHalfStep);
     }
 
     public void UpdateSpriteBounds()

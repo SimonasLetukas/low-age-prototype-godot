@@ -25,6 +25,7 @@ public class Entities : Node2D
     public EntityNode EntityInPlacement { get; private set; } = null;
     public EntityNode HoveredEntity { get; private set; } = null;
 
+    private bool _flattened = false;
     private EntityRenderers _renderers;
     private Node2D _units;
     private Node2D _structures;
@@ -180,6 +181,15 @@ public class Entities : Node2D
         return zIndex;
     }
     
+    public void SetFlattened(bool to)
+    {
+        _flattened = to;
+        foreach (var entity in _entitiesByIds.Values) 
+            entity.SetFlattened(to);
+        
+        // TODO recalculate high ground offsets
+    }
+    
     public void MoveEntity(EntityNode entity, IEnumerable<Vector2> globalPath, ICollection<Vector2> path)
     {
         var targetPosition = path.Last();
@@ -241,8 +251,7 @@ public class Entities : Node2D
         if (entity is null)
         {
             var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
-            entity = InstantiateEntity(entityBlueprint);
-            entity.InstanceId = @event.InstanceId;
+            entity = InstantiateEntity(entityBlueprint, @event.InstanceId);
             entity.EntityPrimaryPosition = @event.MapPosition;
             entity.OverridePlacementValidity();
             if (entity is ActorNode actor)
@@ -276,7 +285,6 @@ public class Entities : Node2D
             EntityPlaced(new EntityPlacedEvent(entity.BlueprintId, entity.EntityPrimaryPosition, instanceId, 
                 entity is ActorNode actor ? actor.ActorRotation : ActorRotation.BottomRight));
         
-        _entitiesByIds[instanceId] = entity;
         NewPositionOccupied(entity);
         
         return entity;
@@ -291,7 +299,7 @@ public class Entities : Node2D
         return placedSuccessfully;
     }
 
-    private EntityNode InstantiateEntity(Entity entityBlueprint)
+    private EntityNode InstantiateEntity(Entity entityBlueprint, Guid? instanceId = null)
     {
         EntityNode entity;
         switch (entityBlueprint)
@@ -308,6 +316,12 @@ public class Entities : Node2D
         }
 
         entity.Destroyed += OnEntityDestroyed;
+
+        if (instanceId != null)
+            entity.InstanceId = (Guid)instanceId;
+        _entitiesByIds[entity.InstanceId] = entity;
+        
+        entity.SetFlattened(_flattened);
         
         return entity;
     }
@@ -342,5 +356,8 @@ public class Entities : Node2D
         
         entity.FinishedMoving -= OnEntityFinishedMoving;
         entity.Destroyed -= OnEntityDestroyed;
+
+        if (_entitiesByIds.ContainsKey(entity.InstanceId))
+            _entitiesByIds.Remove(entity.InstanceId);
     }
 }

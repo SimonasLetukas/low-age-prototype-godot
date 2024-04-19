@@ -33,13 +33,16 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public EntityRenderer Renderer { get; private set; }
     public Vector2 EntityPrimaryPosition { get; set; }
     public Vector2 EntitySize { get; protected set; } = Vector2.One;
+    public virtual Rect2 RelativeSize => new Rect2(Vector2.Zero, EntitySize);
     public IList<Vector2> EntityOccupyingPositions => new Rect2(EntityPrimaryPosition, EntitySize).ToList();
     public string DisplayName { get; protected set; }
     public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; }
     public Func<IList<Vector2>, IList<Tiles.TileInstance>> GetTiles { protected get; set; }
     
-    protected virtual Rect2 RelativeSize => new Rect2(Vector2.Zero, EntitySize);
+    protected bool Selected { get; private set; } = false;
+    protected bool Flattened { get; private set; } = false;
+    protected bool Hovered { get; private set; } = false;
     protected State EntityState { get; private set; }
     protected enum State
     { // Flow (one-way): InPlacement -> Candidate -> Placed -> Completed
@@ -50,9 +53,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     }
     
     private Entity Blueprint { get; set; }
+
+    private IList<Vector2> _movePath = new List<Vector2>();
     
-    private IList<Vector2> _movePath;
-    private bool _selected;
     private float _movementDuration;
     private Tween _movement;
     private bool _canBePlacedOnTheWholeMap = false;
@@ -62,8 +65,6 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Renderer = GetNode<EntityRenderer>($"{nameof(EntityRenderer)}");
         Behaviours = GetNode<Behaviours>(nameof(Behaviours));
         
-        _movePath = new List<Vector2>();
-        _selected = false;
         _movementDuration = GetDurationFromAnimationSpeed();
         _movement = GetNode<Tween>("Movement");
 
@@ -92,15 +93,18 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public void SetTileHovered(bool to)
     {
-        if (_selected) 
+        Hovered = to;
+        if (Selected) 
             return;
         SetOutline(to);
+        UpdateVisuals();
     }
     
     public void SetSelected(bool to)
     {
-        _selected = to;
+        Selected = to;
         SetOutline(to);
+        UpdateVisuals();
     }
 
     public virtual void SetOutline(bool to) => Renderer.SetOutline(to);
@@ -112,16 +116,21 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Renderer.UpdateSpriteBounds();
     }
 
+    public void SetFlattened(bool to)
+    {
+        Flattened = to;
+        UpdateVisuals();
+    }
+
     public void SetForPlacement(bool canBePlacedOnTheWholeMap)
     {
         EntityState = State.InPlacement;
-        SetTint(true);
-        SetTransparency(true);
         
         CanBePlaced = false;
-        SetPlacementValidityColor(CanBePlaced);
         _canBePlacedOnTheWholeMap = canBePlacedOnTheWholeMap;
         Renderer.MakeDynamic();
+        
+        UpdateVisuals();
     }
 
     public void OverridePlacementValidity() => CanBePlaced = true;
@@ -135,7 +144,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         
         // TODO check for masks
         
-        SetPlacementValidityColor(CanBePlaced);
+        UpdateVisuals();
         return CanBePlaced;
     }
     
@@ -151,11 +160,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         }
 
         EntityState = State.Candidate;
-        SetTint(true);
-        SetTransparency(true);
-        
         CanBePlaced = true;
-        SetPlacementValidityColor(CanBePlaced);
+        UpdateVisuals();
+        
         return true;
     }
 
@@ -168,8 +175,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         }
         
         EntityState = State.Placed;
-        SetTint(false);
-        SetTransparency(true);
+        UpdateVisuals();
         
         Complete(); // TODO should be called outside of this class when e.g. building is finished (payment is completed)
         return true;
@@ -181,7 +187,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
             return;
 
         EntityState = State.Completed;
-        SetTransparency(false);
+        UpdateVisuals();
         
         Behaviours.RemoveAll<BuildableNode>();
     }
@@ -211,6 +217,42 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         QueueFree();
     }
 
+    protected virtual void UpdateVisuals()
+    {
+        switch (EntityState)
+        {
+            case State.InPlacement:
+                SetTint(true);
+                SetTransparency(true);
+                SetPlacementValidityColor(CanBePlaced);
+                break;
+            case State.Candidate:
+                SetTint(true);
+                SetTransparency(true);
+                SetPlacementValidityColor(CanBePlaced);
+                break;
+            case State.Placed:
+                SetTint(false);
+                SetTransparency(true);
+                break;
+            case State.Completed:
+                SetTransparency(false);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+        Renderer.SetIconVisibility(false);
+    }
+    
+    protected virtual void UpdateSprite() // TODO fuse with UpdateVisuals?
+    {
+        if (Blueprint.Sprite != null)
+            Renderer.SetSpriteTexture(Blueprint.Sprite);
+        
+        AdjustSpriteOffset();
+    }
+
     protected void SetPlacementValidityColor(bool to) 
         => Renderer.SetTintColor(to ? PlacementColorSuccess : PlacementColorInvalid);
 
@@ -224,14 +266,6 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
             centerOffset = Blueprint.CenterOffset.ToGodotVector2();
         
         Renderer.UpdateSpriteOffset(EntitySize, (Vector2)centerOffset);
-    }
-
-    protected virtual void UpdateSprite()
-    {
-        if (Blueprint.Sprite != null)
-            Renderer.SetSpriteTexture(Blueprint.Sprite);
-        
-        AdjustSpriteOffset();
     }
     
     private bool IsPlacementGenerallyValid(IList<Tiles.TileInstance> tiles, bool requiresTargetTiles)

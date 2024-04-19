@@ -1874,6 +1874,11 @@
           "x": 14,
           "y": 14
         },
+        "flattenedSprite": "res://assets/sprites/structures/revs/boss post bottom indexed 2x3.png",
+        "flattenedCenterOffset": {
+          "x": 28,
+          "y": 15
+        },
         "statistics": [
           {
             "$type": "CombatStat",
@@ -1927,6 +1932,8 @@
           "x": 15,
           "y": 14
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -1998,6 +2005,8 @@
           "x": 8,
           "y": 29
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2070,6 +2079,8 @@
           "x": 7,
           "y": 11
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2141,6 +2152,8 @@
           "x": 12,
           "y": 10
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2212,6 +2225,8 @@
           "x": 15,
           "y": 14
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2283,6 +2298,8 @@
           "x": 16,
           "y": 17
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2354,6 +2371,8 @@
           "x": 14,
           "y": 20
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2425,6 +2444,8 @@
           "x": 11,
           "y": 18
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2495,6 +2516,11 @@
         "backSideCenterOffset": {
           "x": 8,
           "y": 17
+        },
+        "flattenedSprite": "res://assets/sprites/structures/revs/outpost bottom indexed 1x1.png",
+        "flattenedCenterOffset": {
+          "x": 6,
+          "y": 6
         },
         "statistics": [
           {
@@ -2568,6 +2594,8 @@
           "x": 15,
           "y": 11
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2641,6 +2669,8 @@
           "x": 19,
           "y": 10
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2721,6 +2751,8 @@
           "x": 17,
           "y": 13
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2802,6 +2834,8 @@
           "x": 15,
           "y": 19
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2883,6 +2917,8 @@
           "x": 9,
           "y": 15
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2961,6 +2997,8 @@
           "x": 11,
           "y": 17
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3039,6 +3077,8 @@
           "x": 4,
           "y": 17
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3119,6 +3159,8 @@
           "x": 9,
           "y": 19
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3197,6 +3239,8 @@
           "x": 5,
           "y": 7
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3275,6 +3319,8 @@
           "x": 8,
           "y": 14
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3353,6 +3399,8 @@
           "x": 22,
           "y": 25
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3431,6 +3479,8 @@
           "x": 11,
           "y": 8
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3508,6 +3558,11 @@
         "backSideCenterOffset": {
           "x": 8,
           "y": 20
+        },
+        "flattenedSprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+        "flattenedCenterOffset": {
+          "x": 8,
+          "y": 6
         },
         "statistics": [
           {
@@ -3587,6 +3642,11 @@
           "x": 9,
           "y": 15
         },
+        "flattenedSprite": "res://assets/sprites/structures/uee/stairs bottom indexed 2x1.png",
+        "flattenedCenterOffset": {
+          "x": 10,
+          "y": 5
+        },
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3664,6 +3724,11 @@
         "backSideCenterOffset": {
           "x": 20,
           "y": 26
+        },
+        "flattenedSprite": "res://assets/sprites/structures/uee/gate bottom indexed 1x4.png",
+        "flattenedCenterOffset": {
+          "x": 20,
+          "y": 12
         },
         "statistics": [
           {
@@ -3745,6 +3810,11 @@
           "x": 8,
           "y": 27
         },
+        "flattenedSprite": "res://assets/sprites/structures/uee/watchtower bottom indexed 1x1.png",
+        "flattenedCenterOffset": {
+          "x": 8,
+          "y": 8
+        },
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3822,6 +3892,11 @@
         "backSideCenterOffset": {
           "x": 16,
           "y": 23
+        },
+        "flattenedSprite": "res://assets/sprites/structures/uee/tower bottom indexed 2x2.png",
+        "flattenedCenterOffset": {
+          "x": 12,
+          "y": 10
         },
         "statistics": [
           {

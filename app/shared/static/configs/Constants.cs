@@ -5,6 +5,7 @@
         public const string MouseLeft = "mouse_left";
         public const string MouseRight = "mouse_right";
         public const string Rotate = "rotate";
+        public const string Flatten = "flatten";
     }
     
     public static class ENet

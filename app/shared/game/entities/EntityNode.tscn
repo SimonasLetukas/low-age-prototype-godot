@@ -29,7 +29,18 @@ texture = ExtResource( 3 )
 centered = false
 offset = Vector2( -3, -14 )
 
+[node name="Icon" type="TextureRect" parent="EntityRenderer"]
+material = ExtResource( 2 )
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 3.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
 [node name="Debug" type="Node2D" parent="EntityRenderer"]
+visible = false
 
 [node name="OriginBottom" type="Sprite" parent="EntityRenderer/Debug"]
 texture = ExtResource( 5 )

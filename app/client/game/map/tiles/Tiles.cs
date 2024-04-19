@@ -27,6 +27,8 @@ public class Tiles : Node2D
     
     public event Action FinishedInitializing = delegate { };
     
+    public StructureFoundations StructureFoundations;
+    
     private ICollection<TileInstance> _tiles = new List<TileInstance>();
     private IList<Tile> _tilesBlueprint;
     private Vector2 _mapSize;
@@ -81,6 +83,8 @@ public class Tiles : Node2D
         _scraps = GetNode<TileMap>("Scraps");
         _marsh = GetNode<TileMap>("Marsh");
         _mountains = GetNode<TileMap>("Stone");
+
+        StructureFoundations = GetNode<StructureFoundations>($"{nameof(StructureFoundations)}");
         
         _availableTilesVisual = GetNode<TileMap>("Alpha/Available");
         _availableTilesHovering = GetNode<TileMap>("Alpha/AvailableHovering");
@@ -226,6 +230,9 @@ public class Tiles : Node2D
             
             tile.Occupants.Add(entity);
         }
+        
+        if (entity is StructureNode structure)
+            StructureFoundations.AddOccupation(structure);
     }
 
     public void RemoveOccupation(EntityNode entity)
@@ -235,6 +242,9 @@ public class Tiles : Node2D
             var tile = GetTile(position);
             tile.Occupants.Remove(entity);
         }
+        
+        if (entity is StructureNode structure)
+            StructureFoundations.RemoveOccupation(structure);
     }
 
     public void DisableFocusedTile()

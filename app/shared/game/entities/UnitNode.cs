@@ -64,4 +64,15 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         // take into account targeting logic (however complex it would be) and everything gets calculated through
         // pathfinding.
     }
+
+    protected override void UpdateVisuals()
+    {
+        base.UpdateVisuals();
+
+        if (Selected || Hovered)
+            return;
+        
+        if (EntityState is State.Completed && Flattened)
+            SetTransparency(true);
+    }
 }
