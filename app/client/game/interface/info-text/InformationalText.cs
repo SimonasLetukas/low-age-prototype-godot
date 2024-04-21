@@ -35,15 +35,19 @@ public class InformationalText : Control
         switch (type)
         {
             case InfoTextType.Default:
+                AddText($"Left-click: select");
                 AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
                 break;
             case InfoTextType.PlacingRotatable:
+                AddText($"{GetInput(Constants.Input.Rotate)}: rotate clockwise");
                 AddText($"Left-click: place");
                 AddText($"Right-click: cancel");
+                AddText($"{GetInput(Constants.Input.RepeatPlacement)}: repeated placement");
                 break;
             case InfoTextType.Placing:
                 AddText($"Left-click: place");
                 AddText($"Right-click: cancel");
+                AddText($"{GetInput(Constants.Input.RepeatPlacement)}: repeated placement");
                 break;
             case InfoTextType.Selected:
                 AddText($"Left-click: select");

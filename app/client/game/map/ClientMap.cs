@@ -28,6 +28,7 @@ public class ClientMap : Map
         Attack
     }
     private bool _flattened = false;
+    private (BuildNode, EntityId) _previousBuildSelection = (null, null);
 
     private bool _tileMapIsInitialized = false;
     private bool _pathfindingIsInitialized = false;
@@ -221,6 +222,13 @@ public class ClientMap : Map
     {
         Entities.PlaceEntity();
         Pathfinding.ClearCache();
+        
+        if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
+        {
+            OnSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2);
+            return;
+        }
+        
         ExecuteCancellation();
     }
     
@@ -271,6 +279,7 @@ public class ClientMap : Map
     {
         _tileMap.ClearTargetTiles();
         Entities.CancelPlacement();
+        _previousBuildSelection = (null, null);
         ExecuteEntitySelection(true);
     }
     
@@ -383,9 +392,11 @@ public class ClientMap : Map
     {
         HandleRightClick();
     }
-
+    
     internal void OnSelectedToBuild(BuildNode buildAbility, EntityId entityId)
     {
+        _previousBuildSelection = (buildAbility, entityId);
+        
         Entities.CancelPlacement();
         _tileMap.ClearAvailableTiles(false);
         _tileMap.ClearPath();

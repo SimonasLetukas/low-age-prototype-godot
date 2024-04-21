@@ -7,6 +7,7 @@
         public const string Rotate = "rotate";
         public const string Flatten = "flatten";
         public const string FocusSelection = "focus_selection";
+        public const string RepeatPlacement = "repeat_placement";
     }
     
     public static class ENet
