@@ -35,6 +35,7 @@ public class InformationalText : Control
         switch (type)
         {
             case InfoTextType.Default:
+                AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
                 break;
             case InfoTextType.PlacingRotatable:
                 AddText($"Left-click: place");
@@ -46,10 +47,12 @@ public class InformationalText : Control
                 break;
             case InfoTextType.Selected:
                 AddText($"Left-click: select");
+                AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
                 break;
             case InfoTextType.SelectedMovement:
                 AddText($"Left-click: select");
                 AddText($"Right-click: move");
+                AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);

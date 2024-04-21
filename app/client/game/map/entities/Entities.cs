@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot.Collections;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
@@ -13,7 +14,7 @@ using Array = Godot.Collections.Array;
 /// </summary>
 public class Entities : Node2D
 {
-    [Export] public bool DebugEnabled { get; set; } = true;
+    [Export] public bool DebugEnabled { get; set; } = false;
     
     public event Action<EntityPlacedEvent> EntityPlaced = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
@@ -31,7 +32,7 @@ public class Entities : Node2D
     private Node2D _structures;
     private Func<IList<Vector2>, IList<Tiles.TileInstance>> _getTiles;
 
-    private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new Dictionary<Guid, EntityNode>();
+    private readonly System.Collections.Generic.Dictionary<Guid, EntityNode> _entitiesByIds = new System.Collections.Generic.Dictionary<Guid, EntityNode>();
 
     public override void _Ready()
     {
@@ -113,6 +114,14 @@ public class Entities : Node2D
 
     public bool IsEntitySelected() => SelectedEntity != null;
 
+    public bool IsEntitySelected(EntityNode entity) => IsEntitySelected() 
+                                                       && SelectedEntity.InstanceId == entity?.InstanceId;
+
+    public bool IsEntityHovered() => HoveredEntity != null;
+
+    public bool IsEntityHovered(EntityNode entity) => IsEntityHovered() 
+                                                      && HoveredEntity.InstanceId == entity?.InstanceId;
+
     public bool TryHoveringEntityOn(Tiles.TileInstance tile)
     {
         if (EntityMoving)
@@ -121,7 +130,7 @@ public class Entities : Node2D
         var occupationExists = tile.Occupants.Any();
         var occupantEntity = tile.Occupants.LastOrDefault(); // TODO handle high-ground
         
-        if (occupationExists && HoveredEntity != null && HoveredEntity.InstanceId.Equals(occupantEntity?.InstanceId))
+        if (occupationExists && IsEntityHovered(occupantEntity))
             return true;
 
         HoveredEntity?.SetTileHovered(false);
@@ -137,48 +146,32 @@ public class Entities : Node2D
         return false;
     }
     
-    // TODO: seems like each entity has z_index of 0 and so this method doesn't work
-    // This method is supposed to return the entity that has its sprite visible where the mouse is hovering at,
-    // could be considered not required and annoying in the future -- need to make it work and test it out UX
-    // with high-ground entities
     public EntityNode GetTopEntity(Vector2 globalPosition)
     {
         var topZ = float.NegativeInfinity;
         EntityNode topEntity = null;
-        
-        var intersections = GetWorld2d().DirectSpaceState.IntersectPoint(globalPosition, 32, 
-            new Array(), 0x7FFFFFFF, true, true);
 
-        foreach (var node in intersections.OfType<KinematicCollision2D>())
+        var colliders = Colliders.GetAt(globalPosition, GetWorld2d());
+        
+        foreach (var collider in colliders)
         {
-            if ((node.Collider is Area2D area) is false 
-                || (area.GetParent() is EntityNode entity) is false)
+            if ((collider.GetParent().GetParent() is EntityNode entity) is false)
                 continue;
 
-            if (entity.ZIndex <= topZ) 
+            if (entity.Renderer.ContainsSpriteAt(globalPosition) is false)
+                continue;
+
+            if (entity.Renderer.ZIndex <= topZ) 
                 continue;
             
-            topZ = entity.ZIndex;
+            topZ = entity.Renderer.ZIndex;
             topEntity = entity;
         }
+        
+        if (DebugEnabled && topEntity != null)
+            GD.Print($"{nameof(Entities)}.{nameof(GetTopEntity)}: entity found '{topEntity.DisplayName}'");
 
         return topEntity;
-    }
-
-    public static int GetAbsoluteZIndex(Node target)
-    {
-        var node = target as Node2D;
-        var zIndex = 0;
-        while (node != null && node.IsClass(nameof(Node2D)))
-        {
-            zIndex += node.ZIndex;
-            if (node.ZAsRelative is false)
-                break;
-
-            node = node.GetParent() as Node2D;
-        }
-
-        return zIndex;
     }
     
     public void SetFlattened(bool to)

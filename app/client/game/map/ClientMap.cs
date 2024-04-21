@@ -129,32 +129,6 @@ public class ClientMap : Map
         HandleFlattenInput();
     }
 
-    public EntityNode UpdateHoveredEntity(Vector2 mousePosition)
-    {
-        var entity = Entities.GetTopEntity(mousePosition);
-
-        if (entity != null) // TODO GetTopEntity doesn't work so this is always skipped
-        {
-            var entityMapPosition = entity.EntityPrimaryPosition;
-            if (_hoveredTile.Position == entityMapPosition) 
-                return entity;
-            
-            UpdateHoveredTile(entityMapPosition);
-            return entity;
-        }
-        
-        if (_hoveredTile is null)
-            return null;
-
-        var entityWasHovered = Entities.TryHoveringEntityOn(_hoveredTile);
-        if (entityWasHovered)
-        {
-            return Entities.HoveredEntity;
-        }
-
-        return null;
-    }
-
     public void SetupFactionStart()
     {
         Entities.SetupStartingEntities(_startingPositions.First().ToList(), _currentPlayer.Faction);
@@ -299,6 +273,31 @@ public class ClientMap : Map
         Entities.CancelPlacement();
         ExecuteEntitySelection(true);
     }
+    
+    private EntityNode UpdateHoveredEntity(Vector2 mousePosition)
+    {
+        var topEntity = Entities.GetTopEntity(mousePosition);
+
+        if (topEntity != null && Input.IsActionPressed(Constants.Input.FocusSelection) is false)
+        {
+            var entityMapPosition = topEntity.EntityPrimaryPosition;
+            UpdateHoveredTile(entityMapPosition);
+            
+            if (Entities.IsEntityHovered(topEntity))
+                return topEntity;
+        }
+        
+        if (_hoveredTile is null)
+            return null;
+
+        var entityWasHovered = Entities.TryHoveringEntityOn(_hoveredTile);
+        if (entityWasHovered)
+        {
+            return Entities.HoveredEntity;
+        }
+
+        return null;
+    }
 
     private void UpdateHoveredTile(Vector2 mapPosition)
     {
@@ -309,9 +308,11 @@ public class ClientMap : Map
         _hoveredTile = _tileMap.GetTile(mapPosition);
         var hoveredTerrain = _tileMap.GetTerrain(_hoveredTile);
         NewTileHovered(mapPosition, hoveredTerrain, _hoveredTile?.Occupants);
+
+        if (_selectionOverlay is SelectionOverlay.Placement)
+            return;
         
-        if (_selectionOverlay != SelectionOverlay.Placement)
-            _tileMap.MoveFocusedTileTo(mapPosition);
+        _tileMap.MoveFocusedTileTo(mapPosition);
 
         if (_hoveredTile is null)
             return;
@@ -324,7 +325,7 @@ public class ClientMap : Map
 
         if (_hoveredTile.Occupants.Last() is UnitNode unit)
         {
-            if (Entities.IsEntitySelected() && unit.InstanceId == Entities.SelectedEntity.InstanceId)
+            if (Entities.IsEntitySelected(unit))
                 return;
             
             _tileMap.SetAvailableTiles(unit, Pathfinding.GetAvailablePositions(

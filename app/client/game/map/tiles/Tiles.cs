@@ -210,7 +210,9 @@ public class Tiles : Node2D
 
     public IList<TileInstance> GetTiles(IList<Vector2> at) => at.Select(GetTile).ToList();
 
-    public TileInstance GetTile(Vector2 at) => _tiles.SingleOrDefault(x => x.Position.Equals(at));
+    public TileInstance GetTile(Vector2 at) => at.IsInBoundsOf(_mapSize) 
+        ? _tiles.SingleOrDefault(x => x.Position.Equals(at)) 
+        : null;
 
     public Tile GetBlueprint(TileId of) => _tilesBlueprint.SingleOrDefault(x => x.Id.Equals(of));
 

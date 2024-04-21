@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public class EntityRenderer : Node2D
@@ -38,6 +39,9 @@ public class EntityRenderer : Node2D
     private TextureRect _icon;
     private readonly Vector2 _iconOffset = new Vector2(-4, -5);
 
+    private Area2D _area;
+    private Rect2 _previousSpriteBounds = new Rect2();
+
     public Vector2 AsPoint => SortType is SortTypes.Point 
         ? _topOrigin 
         : (_topOrigin + _bottomOrigin) / 2;
@@ -55,8 +59,9 @@ public class EntityRenderer : Node2D
         _spriteContainer = GetNode<Node2D>($"SpriteContainer");
         _sprite = GetNode<Sprite>($"SpriteContainer/{nameof(Sprite)}");
         _icon = GetNode<TextureRect>($"Icon");
-        _icon.Texture = null;
+        _area = GetNode<Area2D>(nameof(Area2D));
 
+        _icon.Texture = null;
         _debugVisuals.Visible = DebugEnabled;
     }
     
@@ -191,6 +196,8 @@ public class EntityRenderer : Node2D
         if (DebugEnabled)
             GD.Print($"New {EntityName} sprite bounds: {SpriteBounds}");
         
+        UpdateCollisionShape();
+        
         //_topOriginSprite.GlobalPosition = SpriteBounds.Position;
         //_bottomOriginSprite.GlobalPosition = SpriteBounds.End;
     }
@@ -199,6 +206,16 @@ public class EntityRenderer : Node2D
     {
         ZIndex = to;
         _zIndexText.Text = to.ToString();
+    }
+
+    public bool ContainsSpriteAt(Vector2 globalPosition)
+    {
+        var localPosition = ToLocal(globalPosition);
+        var result = _sprite.IsPixelOpaque(localPosition);
+        if (DebugEnabled)
+            GD.Print($"{nameof(EntityRenderer)}.{nameof(ContainsSpriteAt)}: {nameof(result)} '{result}' " +
+                     $"at {nameof(localPosition)} '{localPosition}', {nameof(globalPosition)} '{globalPosition}'");
+        return result;
     }
 
     // A result of -1 means renderer1 is above renderer2 in physical space
@@ -315,5 +332,25 @@ public class EntityRenderer : Node2D
         var intercept = line._topOrigin.y - (slope * line._topOrigin.x);
         var yOnLineForPoint = (slope * point.x) + intercept;
         return yOnLineForPoint > point.y ? 1 : -1;
+    }
+
+    private void UpdateCollisionShape()
+    {
+        var previousBounds = _previousSpriteBounds;
+        _previousSpriteBounds = SpriteBounds;
+        if (previousBounds.Equals(SpriteBounds))
+            return;
+
+        foreach (var node in _area.GetChildren().OfType<Node>()) 
+            node.QueueFree();
+        
+        var shape = new RectangleShape2D();
+        shape.Extents = SpriteBounds.Size / 2;
+
+        var collision = new CollisionShape2D();
+        collision.Shape = shape;
+        
+        _area.AddChild(collision);
+        _area.GlobalPosition = SpriteBounds.Position + shape.Extents;
     }
 }

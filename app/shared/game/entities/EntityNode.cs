@@ -76,19 +76,6 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Blueprint = blueprint;
         BlueprintId = Blueprint.Id;
         DisplayName = blueprint.DisplayName;
-        
-        // TODO not sure why the below is needed... perhaps should be removed? (also from scene)
-        var spriteSize = Renderer.SpriteSize;
-        var area = GetNode<Area2D>(nameof(Area2D));
-        
-        var shape = new RectangleShape2D();
-        shape.Extents = new Vector2(spriteSize.x / 2, spriteSize.y / 2);
-
-        var collision = new CollisionShape2D();
-        collision.Shape = shape;
-        
-        area.AddChild(collision);
-        area.Position = new Vector2(Position.x, Position.y - spriteSize.y / 2);
     }
     
     public void SetTileHovered(bool to)
