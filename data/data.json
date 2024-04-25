@@ -12093,13 +12093,19 @@
       "id": "behaviour-citadel-ascendable-ascendable",
       "path": [
         {
-          "start": {
-            "x": 1,
-            "y": 1
+          "area": {
+            "start": {
+              "x": 1,
+              "y": 1
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 9
           }
         }
       ],
@@ -12125,13 +12131,19 @@
       "id": "behaviour-citadel-high-ground-high-ground",
       "highGroundAreas": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 3,
+              "y": 2
+            }
           },
-          "size": {
-            "x": 3,
-            "y": 2
+          "spriteOffset": {
+            "x": 0,
+            "y": 9
           }
         }
       ],
@@ -12438,13 +12450,19 @@
       "id": "behaviour-outpost-ascendable-ascendable",
       "path": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 12
           }
         }
       ],
@@ -12470,13 +12488,19 @@
       "id": "behaviour-outpost-high-ground-high-ground",
       "highGroundAreas": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 12
           }
         }
       ],
@@ -13211,13 +13235,19 @@
       "id": "behaviour-wall-high-ground-high-ground",
       "highGroundAreas": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 16
           }
         }
       ],
@@ -13246,23 +13276,35 @@
       "id": "behaviour-stairs-ascendable-ascendable",
       "path": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 13
           }
         },
         {
-          "start": {
-            "x": 0,
-            "y": 1
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 1
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 6
           }
         }
       ],
@@ -13288,13 +13330,19 @@
       "id": "behaviour-gate-high-ground-high-ground",
       "highGroundAreas": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 4
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 4
+          "spriteOffset": {
+            "x": 0,
+            "y": 16
           }
         }
       ],
@@ -13323,13 +13371,19 @@
       "id": "behaviour-gate-ascendable-ascendable",
       "path": [
         {
-          "start": {
-            "x": 0,
-            "y": 1
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 1
+            },
+            "size": {
+              "x": 1,
+              "y": 2
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 2
+          "spriteOffset": {
+            "x": 0,
+            "y": 16
           }
         }
       ],

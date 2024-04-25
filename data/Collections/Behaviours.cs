@@ -101,7 +101,7 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                     }),
                 
@@ -119,11 +119,11 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Marsh, 3)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Marsh, amountOfTilesRequired: 3)
                         }),
                     }),
 
@@ -152,11 +152,11 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Marsh)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Marsh)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -327,10 +327,12 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Citadel.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    path: new List<Area>
+                    path: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 1, y: 1),
-                            size: new Vector2<int>(x: 1, y: 1))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 1, y: 1), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 9)),
                     }),
 
                 new HighGround(
@@ -339,10 +341,12 @@ namespace low_age_data.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    highGroundAreas: new List<Area>
+                    highGroundAreas: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 3, y: 2))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 3, y: 2)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 9)),
                     }),
 
                 new Buff(
@@ -495,10 +499,12 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Outpost.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    path: new List<Area>
+                    path: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 1, y: 1))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 12)),
                     }),
 
                 new HighGround(
@@ -507,10 +513,12 @@ namespace low_age_data.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    highGroundAreas: new List<Area>
+                    highGroundAreas: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 1, y: 1))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 12)),
                     }),
                 
                 new Buff(
@@ -569,7 +577,7 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -593,7 +601,7 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -617,7 +625,7 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -874,10 +882,12 @@ namespace low_age_data.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    highGroundAreas: new List<Area>
+                    highGroundAreas: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 1, y: 1))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 16)),
                     }),
                 
                 new Ascendable(
@@ -885,12 +895,16 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Stairs.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    path: new List<Area>
+                    path: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 1, y: 1)),
-                        new Area(start: new Vector2<int>(x: 0, y: 1),
-                            size: new Vector2<int>(x: 1, y: 1))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 13)),
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 1), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 6)),
                     }),
                 
                 new HighGround(
@@ -899,10 +913,12 @@ namespace low_age_data.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    highGroundAreas: new List<Area>
+                    highGroundAreas: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 1, y: 4))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 4)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 16)),
                     }),
                 
                 new Ascendable(
@@ -910,10 +926,12 @@ namespace low_age_data.Collections
                     displayName: nameof(BehaviourId.Gate.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    path: new List<Area>
+                    path: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 1),
-                            size: new Vector2<int>(x: 1, y: 2)),
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 1), 
+                                size: new Vector2<int>(x: 1, y: 2)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 16)),
                     }),
                 
                 new MovementBlock(
@@ -1064,7 +1082,7 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -1089,7 +1107,7 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -1833,7 +1851,7 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                     },
                     maximumHelpers: 3),
@@ -1875,7 +1893,7 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                     },
                     maximumHelpers: 1),

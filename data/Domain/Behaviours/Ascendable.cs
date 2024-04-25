@@ -17,7 +17,7 @@ namespace low_age_data.Domain.Behaviours
             string displayName, 
             string description,
             string sprite,
-            IList<Area> path) 
+            IList<HighGroundArea> path) 
             : base(
                 id, 
                 displayName, 
@@ -39,6 +39,6 @@ namespace low_age_data.Domain.Behaviours
         /// between the first and the last connect to each other in sequence. Only the first element can also be layered
         /// with a <see cref="HighGround"/>'s <see cref="HighGround.HighGroundAreas"/>. 
         /// </summary>
-        public IList<Area> Path { get; }
+        public IList<HighGroundArea> Path { get; }
     }
 }
