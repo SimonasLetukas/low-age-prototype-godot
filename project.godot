@@ -33,6 +33,7 @@ Data="*res://app/shared/static/Data.cs"
 Client="*res://app/shared/static/network/Client.cs"
 Server="*res://app/shared/static/network/Server.cs"
 Config="*res://app/shared/static/configs/Config.cs"
+EventBus="*res://app/shared/static/EventBus.cs"
 
 [display]
 

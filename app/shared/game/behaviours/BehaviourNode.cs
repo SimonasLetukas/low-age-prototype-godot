@@ -13,6 +13,8 @@ public class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
     public Guid? OwnerActorId { get; protected set; }
     public EndsAtNode CurrentDuration { get; protected set; }
     
+    protected Effects History { get; set; }
+    
     private Behaviour Blueprint { get; set; }
     
     public void SetBlueprint(Behaviour blueprint)

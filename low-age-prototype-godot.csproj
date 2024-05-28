@@ -20,7 +20,6 @@
     <ProjectReference Include="data\low-age-data.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\shared\game\behaviours" />
-    <Folder Include="app\shared\game\effects" />
+    <Folder Include="app\shared\static\event-bus\" />
   </ItemGroup>
 </Project>

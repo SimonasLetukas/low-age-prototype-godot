@@ -1408,7 +1408,6 @@ namespace low_age_data.Collections
                     {
                         EffectId.Parasite.ParalysingGraspApplyTetherBehaviour,
                         EffectId.Parasite.ParalysingGraspApplyAttackBehaviour,
-                        EffectId.Parasite.ParalysingGraspApplySelfBehaviour,
                     },
                     onHitAttackTypes: new List<Attacks>
                     {

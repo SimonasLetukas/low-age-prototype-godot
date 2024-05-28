@@ -168,7 +168,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         return true;
     }
 
-    public void Complete()
+    public virtual void Complete()
     {
         if (EntityState != State.Placed)
             return;

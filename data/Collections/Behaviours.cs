@@ -1683,7 +1683,8 @@ namespace low_age_data.Collections
                     id: BehaviourId.Mortar.DeadlyAmmunitionAmmunition,
                     displayName: nameof(BehaviourId.Mortar.DeadlyAmmunitionAmmunition).CamelCaseToWords(),
                     description: "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out " +
-                                 "of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
+                                 "of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around " +
+                                 "the target.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maxAmmunitionAmount: 2,
                     ammunitionAttackTypes: new List<Attacks>

@@ -6993,8 +6993,7 @@
       "periodicEffect": null,
       "onHitEffects": [
         "effect-parasite-paralysing-grasp-apply-tether-behaviour",
-        "effect-parasite-paralysing-grasp-apply-attack-behaviour",
-        "effect-parasite-paralysing-grasp-apply-self-behaviour"
+        "effect-parasite-paralysing-grasp-apply-attack-behaviour"
       ],
       "onHitAttackTypes": [
         "Attacks.Melee"

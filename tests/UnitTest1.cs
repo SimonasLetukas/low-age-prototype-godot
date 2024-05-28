@@ -1,4 +1,5 @@
 using Godot;
+using low_age_data.Domain.Common;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -24,6 +25,22 @@ namespace low_age_tests
             //System.Environment.CurrentManagedThreadId
             Assert.Equal("ClientStartup", main.Name);
             //Assert.Equal("LocalStartup1", main.Name);
+        }
+
+        [Fact]
+        public void ValueObjectTest()
+        {
+            var location = Location.Actor;
+
+            switch (location)
+            {
+                case var _ when location.Equals(Location.Actor):
+                    GD.Print(Location.Actor);
+                    break;
+                default:
+                    GD.Print($"Not {Location.Actor}");
+                    break;
+            }
         }
     }
 }

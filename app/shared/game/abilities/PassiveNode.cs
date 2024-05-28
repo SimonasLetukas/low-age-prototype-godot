@@ -26,4 +26,18 @@ public class PassiveNode : AbilityNode, INodeFromBlueprint<Passive>
     {
         return Blueprint.OnBuildBehaviour;
     }
+
+    public void OnActorBirth(EntityNode actor)
+    {
+        var onBirthEffects = Blueprint.OnBirthEffects;
+        if (onBirthEffects.IsEmpty())
+            return;
+
+        foreach (var effectId in onBirthEffects)
+        {
+            var effects = new Effects(effectId, actor);
+            if (effects.ValidateLast())
+                effects.ExecuteLast();
+        }
+    }
 }

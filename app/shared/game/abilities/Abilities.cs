@@ -26,4 +26,10 @@ public class Abilities : Node2D
             }
         }
     }
+
+    public void OnActorBirth(EntityNode actor)
+    {
+        foreach (var passive in GetPassives()) 
+            passive.OnActorBirth(actor);
+    }
 }

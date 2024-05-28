@@ -55,6 +55,12 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         _shields.Visible = to && HasShields;
     }
 
+    public override void Complete()
+    {
+        base.Complete();
+        Abilities.OnActorBirth(this);
+    }
+
     public virtual void Rotate()
     {
         switch (ActorRotation)
