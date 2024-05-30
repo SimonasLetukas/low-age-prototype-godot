@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using FluentAssertions;
 using Godot;
 using low_age_data.Domain.Common;
 using Xunit;
@@ -41,6 +43,44 @@ namespace low_age_tests
                     GD.Print($"Not {Location.Actor}");
                     break;
             }
+        }
+
+        [Fact]
+        public void CSharpDictionaryTupleTest()
+        {
+            var dictionary = new Dictionary<(Vector2, bool), int>();
+            dictionary[(new Vector2(0, 0), true)] = 0;
+            dictionary[(new Vector2(0, 0), false)] = 1;
+            dictionary[(new Vector2(1, 1), false)] = 2;
+            dictionary[(new Vector2(1, 1), false)] = 3;
+
+            dictionary[(new Vector2(0, 0), true)].Should().Be(0);
+            dictionary[(new Vector2(0, 0), false)].Should().Be(1);
+            dictionary[(new Vector2(1, 1), false)].Should().Be(3);
+        }
+
+        [Fact]
+        public void DijkstraLibraryRemovePointAlsoRemovesConnections()
+        {
+            /*
+            Test cannot be instantiated but was tested in a game environment, so keeping this as a reference of 
+            the library's behaviour:
+             
+            var pathfinding = new DijkstraMap();
+            pathfinding.AddPoint(0);
+            pathfinding.AddPoint(1);
+            pathfinding.ConnectPoints(0, 1);
+
+            pathfinding.HasConnection(0, 1).Should().Be(true);
+
+            pathfinding.RemovePoint(1);
+
+            pathfinding.HasConnection(0, 1).Should().Be(false);
+
+            pathfinding.AddPoint(1);
+
+            pathfinding.HasConnection(0, 1).Should().Be(false);
+            */
         }
     }
 }

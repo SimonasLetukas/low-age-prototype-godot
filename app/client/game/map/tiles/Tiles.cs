@@ -197,8 +197,8 @@ public class Tiles : Node2D
     public Vector2 GetGlobalPositionFromMapPosition(Vector2 mapPosition) 
         => _grass.MapToWorld(mapPosition + _tilemapOffset, true) + _tileOffset;
 
-    public Vector2[] GetGlobalPositionsFromMapPositions(IEnumerable<Vector2> mapPositions) 
-        => mapPositions.Select(GetGlobalPositionFromMapPosition).ToArray();
+    public IEnumerable<Vector2> GetGlobalPositionsFromMapPoints(IEnumerable<Point> mapPositions) 
+        => mapPositions.Select(x => GetGlobalPositionFromMapPosition(x.Position) + Vector2.Up * x.YSpriteOffset);
 
     public Terrain GetTerrain(TileInstance tile) => tile is null 
         ? Terrain.Mountains 
@@ -260,11 +260,11 @@ public class Tiles : Node2D
         _focusedTile.MoveTo(GetGlobalPositionFromMapPosition(position));
     }
 
-    public void SetAvailableTiles(EntityNode entity, IEnumerable<Vector2> availablePositions, int size, bool hovering)
+    public void SetAvailableTiles(EntityNode entity, IEnumerable<Point> availablePoints, int size, bool hovering)
     {
         ClearAvailableTiles(hovering);
-
-        var availableTilesSource = availablePositions.ToList();
+        
+        var availableTilesSource = availablePoints.Select(x => x.Position).ToList(); // TODO handle elevation
 
         foreach (var tileSource in availableTilesSource.ToList()
                      .Where(tileSource => CanTileBeMovedOn(entity, tileSource, size) is false)) 
@@ -296,7 +296,7 @@ public class Tiles : Node2D
             {
                 var tile = GetTile(tileSource + new Vector2(x, y));
                 
-                if (tile is null || IsOccupied(tile) is false || entity.CanBeMovedOnAt(tile.Position) is false)
+                if (tile is null || entity.CanBeMovedOnAt(tile.Position) is false)
                     continue;
 
                 if (tile.Occupants.Any(occupant => occupant.CanBeMovedOnAt(tile.Position) is false))
@@ -339,9 +339,11 @@ public class Tiles : Node2D
         => _targetTiles.GetCellv(mapPosition) == TileMapNegativeTargetTileIndex 
            || _targetTiles.GetCellv(mapPosition) == TileMapPositiveTargetTileIndex;
 
-    public void SetPathTiles(IEnumerable<Vector2> pathPositions, int size)
+    public void SetPathTiles(IEnumerable<Point> pathPoints, int size)
     {
         ClearPath();
+
+        var pathPositions = pathPoints.Select(x => x.Position); // TODO handle elevation
 
         var positions = GetDilated(pathPositions, size);
         foreach (var pathPosition in positions)

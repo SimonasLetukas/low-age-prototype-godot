@@ -4,6 +4,11 @@ using System.Linq;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Effects;
 
+/// <summary>
+/// A new effect chain is always created from abilities. Behaviours and effects then continue the chain. Effects that
+/// create other effects retain the same initiator. Behaviours that create effects set their attached entities as
+/// initiators.
+/// </summary>
 public class Effects
 {
     private IList<EffectNode> Chain { get; set; } = new List<EffectNode>();

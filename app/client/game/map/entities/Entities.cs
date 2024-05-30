@@ -183,12 +183,12 @@ public class Entities : Node2D
         // TODO recalculate high ground offsets
     }
     
-    public void MoveEntity(EntityNode entity, IEnumerable<Vector2> globalPath, ICollection<Vector2> path)
+    public void MoveEntity(EntityNode entity, IEnumerable<Vector2> globalPath, ICollection<Point> path)
     {
-        var targetPosition = path.Last();
-        var startPosition = path.First();
+        var targetPoint = path.Last();
+        var startPoint = path.First();
         EntityMoving = true;
-        entity.MoveUntilFinished(globalPath.ToList(), targetPosition);
+        entity.MoveUntilFinished(globalPath.ToList(), targetPoint);
     }
     
     public void RegisterRenderer(EntityNode entity)

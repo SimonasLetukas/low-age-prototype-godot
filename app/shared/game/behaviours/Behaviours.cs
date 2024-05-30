@@ -16,6 +16,7 @@ public class Behaviours : Node2D
 
     public IList<BehaviourNode> GetAll() => GetChildren().OfType<BehaviourNode>().ToList();
     public IList<BuildableNode> GetBuildables() => GetChildren().OfType<BuildableNode>().ToList();
+    public IList<IPathfindingUpdatable> GetPathfindingUpdatables => GetChildren().OfType<IPathfindingUpdatable>().ToList();
 
     public void AddOnBuildBehaviours(IEnumerable<PassiveNode> passiveAbilities)
     {
@@ -60,10 +61,10 @@ public class Behaviours : Node2D
         switch (behaviourBlueprint)
         {
             case Ascendable ascendable:
-                return AscendableNode.InstantiateAsChild(ascendable, this, history);
+                return AscendableNode.InstantiateAsChild(ascendable, this, history, Parent);
             
             case HighGround highGround:
-                return HighGroundNode.InstantiateAsChild(highGround, this, history);
+                return HighGroundNode.InstantiateAsChild(highGround, this, history, Parent);
             
             default:
                 return null;

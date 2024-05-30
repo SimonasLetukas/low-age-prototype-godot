@@ -8,17 +8,85 @@ using low_age_data.Domain.Common;
 using low_age_data.Domain.Tiles;
 using Object = Godot.Object;
 
+public struct Point
+{
+	public int Id { get; set; }
+	public Vector2 Position { get; set; }
+	public bool IsHighGround { get; set; }
+	public int HighGroundAscensionLevel { get; set; }
+	public int YSpriteOffset { get; set; }
+}
+
 public class Pathfinding : Node
 {
+	private class PointContainer
+	{
+		public Dictionary<Vector2, int> NonHighGroundIdsByPosition { get; set; } = new Dictionary<Vector2, int>();
+		private Dictionary<int, Point> PointsByIds { get; set; } = new Dictionary<int, Point>();
+		private Dictionary<(Vector2, bool), int> IdsByPositionAndLevel { get; set; } = new Dictionary<(Vector2, bool), int>();
+
+		public void SetBase(Godot.Collections.Dictionary<Vector2, int> graph)
+		{
+			foreach (var entry in graph)
+			{
+				var point = new Point
+				{
+					Id = entry.Value,
+					Position = entry.Key,
+					IsHighGround = false,
+					HighGroundAscensionLevel = 0
+				};
+				
+				PointsByIds[entry.Value] = point;
+				IdsByPositionAndLevel[(entry.Key, false)] = entry.Value;
+				NonHighGroundIdsByPosition[entry.Key] = entry.Value;
+			}
+		}
+
+		public Point GetPoint(int id) => PointsByIds[id];
+
+		public Point GetPoint(Vector2 position, bool isHighGround = false) => GetPoint(GetId(position, isHighGround));
+
+		public bool ContainsPoint(Vector2 position, bool isHighGround = false)
+			=> IdsByPositionAndLevel.ContainsKey((position, isHighGround));
+
+		public bool TryGetId(Vector2 position, out int id, bool isHighGround = false)
+		{
+			var result = IdsByPositionAndLevel.TryGetValue((position, isHighGround), out var idResult);
+			id = idResult;
+			return result;
+		}
+		
+		public int GetId(Point point) => GetId(point.Position, point.IsHighGround);
+		
+		public int GetId(Vector2 position, bool isHighGround = false) 
+			=> IdsByPositionAndLevel[(position, isHighGround)];
+
+		public void Add(Point point)
+		{
+			PointsByIds[point.Id] = point;
+			IdsByPositionAndLevel[(point.Position, point.IsHighGround)] = point.Id;
+		}
+
+		public void Remove(int id)
+		{
+			var point = PointsByIds[id];
+			
+			PointsByIds.Remove(id);
+			IdsByPositionAndLevel.Remove((point.Position, point.IsHighGround));
+		}
+	}
+	
 	public event Action FinishedInitializing = delegate { };
 
 	private const float DiagonalCost = Mathf.Sqrt2;
-
+	private const int HighGroundTolerance = 13; // works until approx 18 levels of ascension
+	
 	private Vector2 MapSize { get; set; }
     private Blueprint Blueprint { get; set; }
     private Dictionary<Vector2, TileId> Tiles { get; set; } = new Dictionary<Vector2, TileId>();
-    private Godot.Collections.Dictionary<Vector2, int> PointIdsByPositions { get; set; }
-    private Godot.Collections.Dictionary<int, Vector2> PositionsByPointIds { get; set; }
+    private PointContainer Points { get; set; } = new PointContainer();
+    private int PointIdIterator { get; set; } = 0;
     private Godot.Collections.Dictionary<int, float> WeightsByPointIds { get; } =
 	    new Godot.Collections.Dictionary<int, float>();
     private Godot.Collections.Dictionary<int, float> WeightsByPointIds2X { get; } =
@@ -31,9 +99,11 @@ public class Pathfinding : Node
         { Terrain.Grass.ToIndex(),     1.0f },
         { Terrain.Mountains.ToIndex(), float.PositiveInfinity },
         { Terrain.Marsh.ToIndex(),     2.0f },
-        { ImpassableIndex, float.PositiveInfinity }
+        { ImpassableIndex, float.PositiveInfinity },
+        { HighGroundIndex, 1.0f }
     };
     private const int ImpassableIndex = -1;
+    private const int HighGroundIndex = -2;
     
     // Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/addons/dijkstra-map/doc/DijkstraMap.md
     private DijkstraMap _pathfinding = new DijkstraMap();
@@ -55,7 +125,17 @@ public class Pathfinding : Node
     
     public override void _Ready()
     {
+	    base._Ready();
 	    PauseMode = PauseModeEnum.Process;
+	    
+	    EventBus.Instance.PathfindingUpdated += OnPathfindingUpdated;
+    }
+
+    public override void _ExitTree()
+    {
+	    base._ExitTree();
+	    
+	    EventBus.Instance.PathfindingUpdated -= OnPathfindingUpdated;
     }
 
     #region Initialization
@@ -71,7 +151,6 @@ public class Pathfinding : Node
 		    Tiles.Add(position, tile);
 	    
 	    InitializePathfindingGraphs();
-	    InitializePositionToPointIdReferences();
 	    InitializeTerrainWeights();
 
 	    _initialized = false;
@@ -126,30 +205,17 @@ public class Pathfinding : Node
 	    _pathfinding = new DijkstraMap();
 	    _pathfinding2X = Blueprint.Entities.Units.Any(u => u.Size == 2) ? new DijkstraMap() : null;
 	    _pathfinding3X = Blueprint.Entities.Units.Any(u => u.Size == 3) ? new DijkstraMap() : null;
-	    
-	    PointIdsByPositions = _pathfinding.AddSquareGrid(
+
+	    PointIdIterator = (int)MapSize.x * (int)MapSize.y;
+	    Points.SetBase(_pathfinding.AddSquareGrid(
 		    new Rect2(0, 0, MapSize.x, MapSize.y),
 		    Terrain.Grass.ToIndex(),
 		    1.0f,
-		    DiagonalCost);
+		    DiagonalCost));
 	    _pathfinding2X?.DuplicateGraphFrom(_pathfinding);
 	    _pathfinding3X?.DuplicateGraphFrom(_pathfinding);
 
-	    _pointIdsByPositionsForInitialization = new Dictionary<Vector2, int>();
-	    foreach (var entry in PointIdsByPositions)
-	    {
-		    _pointIdsByPositionsForInitialization.Add(entry.Key, entry.Value);
-	    }
-    }
-    
-    private void InitializePositionToPointIdReferences()
-    {
-	    PositionsByPointIds = new Godot.Collections.Dictionary<int, Vector2>();
-	    foreach (var position in PointIdsByPositions.Keys)
-	    {
-		    var id = PointIdsByPositions[position];
-		    PositionsByPointIds[id] = position;
-	    }
+	    _pointIdsByPositionsForInitialization = Points.NonHighGroundIdsByPosition;
     }
 
     private void InitializeTerrainWeights()
@@ -160,6 +226,7 @@ public class Pathfinding : Node
 		    _terrainWeights.Add(tile.Terrain.ToIndex(), tile.MovementCost);
 	    }
 	    _terrainWeights.Add(ImpassableIndex, float.PositiveInfinity);
+	    _terrainWeights.Add(HighGroundIndex, 1.0f);
 	    
 	    _coordinatesByTerrainForInitialization = _terrainWeights
 		    .OrderBy(x => x.Value)
@@ -200,13 +267,13 @@ public class Pathfinding : Node
 			_coordinatesByTerrainForInitialization[terrainIndex].Add(coordinates);
 	    
 	    SetTerrainForPoint(coordinates, terrainIndex, 1);
-	    WeightsByPointIds[PointIdsByPositions[coordinates]] = _terrainWeights[terrainIndex];
+	    WeightsByPointIds[Points.GetId(coordinates)] = _terrainWeights[terrainIndex];
 	    
 	    if (_pathfinding2X != null)
-		    WeightsByPointIds2X[PointIdsByPositions[coordinates]] = _terrainWeights[terrainIndex];
+		    WeightsByPointIds2X[Points.GetId(coordinates)] = _terrainWeights[terrainIndex];
 	    
 	    if (_pathfinding3X != null)
-		    WeightsByPointIds3X[PointIdsByPositions[coordinates]] = _terrainWeights[terrainIndex];
+		    WeightsByPointIds3X[Points.GetId(coordinates)] = _terrainWeights[terrainIndex];
     }
 
     private void IterateTerrainDilationUpdate(KeyValuePair<int, IList<Vector2>>? coordinatesByTerrainId = null)
@@ -244,7 +311,7 @@ public class Pathfinding : Node
 						    continue;
 					    
 					    SetTerrainForPoint(resultingCoordinates, entry.Key, 2);
-					    WeightsByPointIds2X[PointIdsByPositions[resultingCoordinates]] = _terrainWeights[entry.Key];
+					    WeightsByPointIds2X[Points.GetId(resultingCoordinates)] = _terrainWeights[entry.Key];
 				    }
 			    }
 		    }
@@ -261,7 +328,7 @@ public class Pathfinding : Node
 					    continue;
 					    
 				    SetTerrainForPoint(resultingCoordinates, entry.Key, 3);
-				    WeightsByPointIds3X[PointIdsByPositions[resultingCoordinates]] = _terrainWeights[entry.Key];
+				    WeightsByPointIds3X[Points.GetId(resultingCoordinates)] = _terrainWeights[entry.Key];
 			    }
 		    }
 	    }
@@ -303,9 +370,9 @@ public class Pathfinding : Node
 	    if (diagonalPosition.IsInBoundsOf(MapSize) is false)
 		    return;
 		    
-	    var rightNeighbour = PointIdsByPositions[point.Key + new Vector2(1, 0)];
-	    var bottomNeighbour = PointIdsByPositions[point.Key + new Vector2(0, 1)];
-	    var diagonalNeighbour = PointIdsByPositions[diagonalPosition];
+	    var rightNeighbour = Points.GetId(point.Key + new Vector2(1, 0));
+	    var bottomNeighbour = Points.GetId(point.Key + new Vector2(0, 1));
+	    var diagonalNeighbour = Points.GetId(diagonalPosition);
 
 	    if (IsInfiniteWeight(point.Value, size)
 	        && IsInfiniteWeight(diagonalNeighbour, size)
@@ -336,19 +403,20 @@ public class Pathfinding : Node
 
     public void ClearCache() => Cache(Vector2.Inf, -1.0f, 1);
     
-    public IEnumerable<Vector2> GetAvailablePositions(Vector2 from, float range, int size, bool temporary = false)
+    public IEnumerable<Point> GetAvailablePoints(Vector2 from, float range, bool isOnHighGround, int size, 
+	    bool temporary = false)
     {
-	    if (size > 3) throw new ArgumentException($"{nameof(Pathfinding)}.{nameof(GetAvailablePositions)}: " +
+	    if (size > 3) throw new ArgumentException($"{nameof(Pathfinding)}.{nameof(GetAvailablePoints)}: " +
 	                                              $"argument {nameof(size)} '{size}' exceeded maximum value of '3'.");
 	    
 	    var pathfinding = GetPathfindingForSize(size);
 	    if (pathfinding is null)
-		    return Enumerable.Empty<Vector2>();
+		    return Enumerable.Empty<Point>();
 	    
 	    if (IsCached(from, range, size) is false)
 	    {
 		    pathfinding.Recalculate(
-			    PointIdsByPositions[from],
+			    Points.GetId(from, isOnHighGround),
 			    new Godot.Collections.Dictionary<string, object>
 			    {
 				    { "maximum_cost", range },
@@ -360,10 +428,10 @@ public class Pathfinding : Node
 	    }
 
 	    var availablePointIds = pathfinding.GetAllPointsWithCostBetween(0.0f, range);
-	    var availablePositions = availablePointIds.Select(pointId => PositionsByPointIds[pointId]);
+	    var availablePositions = availablePointIds.Select(pointId => Points.GetPoint(pointId));
 	    
 	    if (temporary && size == _previousSize 
-	                  && PointIdsByPositions.TryGetValue(_previousPosition, out var previousPointId))
+	                  && Points.TryGetId(_previousPosition, out var previousPointId, isOnHighGround))
 	    {
 		    pathfinding.Recalculate(
 			    previousPointId,
@@ -377,22 +445,22 @@ public class Pathfinding : Node
 	    return availablePositions;
     }
 
-    public IEnumerable<Vector2> FindPath(Vector2 to, int size)
+    public IEnumerable<Point> FindPath(Vector2 to, int size, bool isHighGround)
     {
 	    if (to.IsInBoundsOf(MapSize) is false)
 	    {
-		    return Enumerable.Empty<Vector2>();
+		    return Enumerable.Empty<Point>();
 	    }
 
 	    var pathfinding = GetPathfindingForSize(size);
 	    if (pathfinding is null)
-		    return Enumerable.Empty<Vector2>();
+		    return Enumerable.Empty<Point>();
 
-	    var targetPointId = PointIdsByPositions[to];
+	    var targetPointId = Points.GetId(to, isHighGround);
 	    var pathOfPointIds = pathfinding.GetShortestPathFromPoint(targetPointId);
 
-	    var path = new List<Vector2> { to };
-	    path.AddRange(pathOfPointIds.Select(pointId => PositionsByPointIds[pointId]));
+	    var path = new List<Point> { Points.GetPoint(targetPointId) };
+	    path.AddRange(pathOfPointIds.Select(pointId => Points.GetPoint(pointId)));
 	    path.Reverse();
 
 	    return path;
@@ -429,11 +497,10 @@ public class Pathfinding : Node
 			    for (var y = (int)point.y - offset; y <= (int)point.y + offset; y++)
 			    {
 				    var position = new Vector2(x, y);
-				    if (PointIdsByPositions.ContainsKey(position) is false)
+				    if (Points.ContainsPoint(position) is false)
 					    continue;
-				    
-				    IterateDiagonalConnectionUpdate(new KeyValuePair<Vector2, int>(position, 
-					    PointIdsByPositions[position]));
+
+				    IterateDiagonalConnectionUpdate(new KeyValuePair<Vector2, int>(position, Points.GetId(position)));
 			    }
 		    }
 	    }
@@ -475,13 +542,217 @@ public class Pathfinding : Node
 		    for (var y = (int)start.y; y < (int)end.y; y++)
 		    {
 			    var position = new Vector2(x, y);
-			    if (PointIdsByPositions.ContainsKey(position) is false)
+			    if (Points.ContainsPoint(position) is false)
 				    continue;
 			    
-			    IterateDiagonalConnectionUpdate(new KeyValuePair<Vector2, int>(position, 
-				    PointIdsByPositions[position]));
+			    IterateDiagonalConnectionUpdate(new KeyValuePair<Vector2, int>(position, Points.GetId(position)));
 		    }
 	    }
+    }
+
+    private void OnPathfindingUpdated(IPathfindingUpdatable source, bool isAdded)
+    {
+	    var positions = source.LeveledPositions;
+	    switch (source)
+	    {
+		    case AscendableNode _:
+			    if (isAdded)
+				    AddAscendableHighGround(positions);
+			    else
+					RemoveAscendableHighGround(positions);
+			    return;
+		    case HighGroundNode _:
+			    if (isAdded)
+				    AddHighGround(positions);
+			    else
+				    RemoveHighGround(positions);
+			    return;
+		    default:
+			    return;
+	    }
+    }
+
+    private void AddAscendableHighGround(IReadOnlyList<(IList<Vector2>, int)> path) // TODO 2x 3x pathfindings
+    {
+	    if (path.IsEmpty()) 
+		    return;
+	    
+	    var currentAscensionLevel = 0;
+	    var ascensionGain = (int)(100f / path.Count);
+	    for (var i = 0; i < path.Count; i++)
+	    {
+		    currentAscensionLevel += ascensionGain;
+		    foreach (var pos in path[i].Item1)
+		    {
+			    if (pos.IsInBoundsOf(MapSize) is false)
+				    continue;
+
+			    int pointId;
+			    Point point;
+			    if (Points.ContainsPoint(pos, true))
+			    {
+				    pointId = Points.GetId(pos, true);
+				    point = Points.GetPoint(pointId);
+			    }
+			    else
+			    {
+				    pointId = ++PointIdIterator;
+				    _pathfinding.AddPoint(pointId, HighGroundIndex);
+				    point = new Point
+				    {
+					    Id = pointId,
+					    Position = pos,
+					    IsHighGround = true,
+					    HighGroundAscensionLevel = currentAscensionLevel,
+					    YSpriteOffset = path[i].Item2
+				    };
+				    Points.Add(point);
+			    }
+		    
+			    for (var xOffset = -1; xOffset < 2; xOffset++)
+			    {
+				    for (var yOffset = -1; yOffset < 2; yOffset++)
+				    {
+					    var lowGroundPoint = GetAdjacentPoint(point, new Vector2(xOffset, yOffset), 
+						    false);
+					    if (i == 0 && lowGroundPoint != null)
+					    {
+						    _pathfinding.ConnectPoints(pointId, ((Point)lowGroundPoint).Id);
+					    }
+
+					    if (path.Count > 1 && i != 0)
+					    {
+						    var offsetPosition = point.Position + new Vector2(xOffset, yOffset);
+						    var previousStepPositionExists = path[i - 1].Item1.Any(x => 
+							    x.Equals(offsetPosition));
+						    if (previousStepPositionExists)
+						    {
+							    var previousStepPosition = path[i - 1].Item1.FirstOrDefault(x => 
+								    x.Equals(offsetPosition));
+							    var previousStepPoint = Points.GetPoint(previousStepPosition, true);
+							    _pathfinding.ConnectPoints(pointId, previousStepPoint.Id);
+						    }
+					    }
+					    
+					    var highGroundPoint = GetAdjacentPoint(point, new Vector2(xOffset, yOffset), 
+						    true);
+					    if (highGroundPoint is null)
+						    continue;
+
+					    _pathfinding.ConnectPoints(pointId, ((Point)highGroundPoint).Id);
+				    }
+			    }
+		    }
+	    }
+    }
+
+    private void RemoveAscendableHighGround(List<(IList<Vector2>, int)> path) // TODO 2x 3x pathfindings; not tested properly
+    {
+	    RemoveHighGround(path);
+    }
+
+    private void AddHighGround(List<(IList<Vector2>, int)> path) // TODO 2x 3x pathfindings
+    {
+	    var flattenedPositions = GetFlattenedPositions(path);
+
+	    foreach (var pos in flattenedPositions)
+	    {
+		    if (pos.IsInBoundsOf(MapSize) is false)
+			    continue;
+		    
+		    if (Points.ContainsPoint(pos, true))
+			    continue;
+
+		    var pointId = ++PointIdIterator;
+		    _pathfinding.AddPoint(pointId, HighGroundIndex);
+		    var point = new Point
+		    {
+			    Id = pointId,
+			    Position = pos,
+			    IsHighGround = true,
+			    HighGroundAscensionLevel = 100,
+			    YSpriteOffset = path.First().Item2
+		    };
+		    Points.Add(point);
+		    
+		    for (var xOffset = -1; xOffset < 2; xOffset++)
+		    {
+			    for (var yOffset = -1; yOffset < 2; yOffset++)
+			    {
+				    var otherPoint = GetAdjacentPoint(point, new Vector2(xOffset, yOffset), true);
+				    if (otherPoint is null)
+					    continue;
+
+				    _pathfinding.ConnectPoints(pointId, ((Point)otherPoint).Id);
+			    }
+		    }
+	    }
+    }
+
+    private void RemoveHighGround(List<(IList<Vector2>, int)> path)  // TODO 2x 3x pathfindings; not tested properly
+    {
+	    var flattenedPositions = GetFlattenedPositions(path);
+	    
+	    foreach (var pos in flattenedPositions)
+	    {
+		    if (pos.IsInBoundsOf(MapSize) is false)
+			    continue;
+		    
+		    if (Points.ContainsPoint(pos, true) is false)
+			    continue;
+
+		    var point = Points.GetPoint(pos, true);
+		    
+		    /*for (var xOffset = -1; xOffset < 2; xOffset++)
+		    {
+			    for (var yOffset = -1; yOffset < 2; yOffset++)
+			    {
+				    var otherPoint = GetAdjacentHighGroundPoint(point, new Vector2(xOffset, yOffset));
+				    if (otherPoint is null)
+					    continue;
+
+				    _pathfinding.RemoveConnection(point.Id, ((Point)otherPoint).Id);
+			    }
+		    }*/ // TODO test it out before removing
+		    
+		    _pathfinding.RemovePoint(point.Id);
+		    Points.Remove(point.Id);
+	    }
+    }
+
+    private static IEnumerable<Vector2> GetFlattenedPositions(List<(IList<Vector2>, int)> from)
+    {
+	    var flattenedPositions = new HashSet<Vector2>();
+	    foreach (var step in from)
+	    {
+		    foreach (var position in step.Item1)
+		    {
+			    flattenedPositions.Add(position);
+		    }
+	    }
+
+	    return flattenedPositions;
+    }
+
+    private Point? GetAdjacentPoint(Point point, Vector2 offset, bool isHighGround)
+    {
+	    var otherPosition = point.Position + offset;
+	    if (otherPosition.IsInBoundsOf(MapSize) is false)
+		    return null;
+
+	    if (otherPosition.IsEqualApprox(point.Position))
+		    return null;
+	    
+	    if (Points.ContainsPoint(otherPosition, isHighGround) is false)
+		    return null;
+	    
+	    var otherPoint = Points.GetPoint(otherPosition, isHighGround);
+
+	    if (isHighGround 
+	        && Mathf.Abs(otherPoint.HighGroundAscensionLevel - point.HighGroundAscensionLevel) > HighGroundTolerance)
+		    return null;
+
+	    return otherPoint;
     }
     
     private void SetTerrainForPoint(Vector2 at, int terrain, int size)
@@ -489,7 +760,7 @@ public class Pathfinding : Node
 	    if (at.IsInBoundsOf(MapSize))
 	    {
 		    GetPathfindingForSize(size).SetTerrainForPoint(
-			    PointIdsByPositions[at],
+			    Points.GetId(at),
 			    terrain);
 	    }
     }
@@ -538,8 +809,8 @@ public class Pathfinding : Node
 
 public class DijkstraMap : Node
 {
-	private Object _dijkstraMap; 
-
+	private Object _dijkstraMap;
+	
 	public DijkstraMap()
 	{
 		var dijkstraMapScript = GD.Load("res://addons/dijkstra-map/Dijkstra_map_library/nativescript.gdns") as NativeScript;

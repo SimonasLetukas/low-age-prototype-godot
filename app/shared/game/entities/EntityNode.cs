@@ -179,9 +179,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Behaviours.RemoveAll<BuildableNode>();
     }
     
-    public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Vector2 resultingPosition)
+    public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
     {
-        EntityPrimaryPosition = resultingPosition;
+        EntityPrimaryPosition = resultingPoint.Position;
         
         globalPositionPath.Remove(globalPositionPath.First());
         _movePath = globalPositionPath;
@@ -190,6 +190,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public virtual bool CanBeMovedOnAt(Vector2 position)
     {
+        if (HasHighGroundAt(position))
+            return true;
+
         if (position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize))
             return false;
         
@@ -197,6 +200,18 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     }
 
     public virtual bool CanBeMovedThroughAt(Vector2 position) => true;
+
+    public bool HasHighGroundAt(Vector2 position)
+    {
+        if (position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize) is false)
+            return false;
+        
+        var pathfindingUpdatableBehaviours = Behaviours.GetPathfindingUpdatables;
+        if (pathfindingUpdatableBehaviours.IsEmpty())
+            return false;
+        
+        return pathfindingUpdatableBehaviours.All(x => x.CanBeMovedOnAt(position));
+    }
     
     public void Destroy()
     {

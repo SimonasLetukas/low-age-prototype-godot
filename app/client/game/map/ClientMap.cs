@@ -116,7 +116,9 @@ public class ClientMap : Map
                 var size = (int)Entities.SelectedEntity.EntitySize.x;
                 var path = Pathfinding.FindPath(
                     _hoveredTile.Position, 
-                    size);
+                    size,
+                    _hoveredTile.Occupants.Any() && _hoveredTile.Occupants.All(x => 
+                        x.HasHighGroundAt(_hoveredTile.Position)));
                 _tileMap.SetPathTiles(path, size);
             }
         }
@@ -208,12 +210,13 @@ public class ClientMap : Map
         if (entity is UnitNode unit)
         {
             var size = (int)unit.EntitySize.x;
-            var availableTiles = Pathfinding.GetAvailablePositions(
+            var availablePoints = Pathfinding.GetAvailablePoints(
                 entity.EntityPrimaryPosition, 
                 unit.Movement, 
+                unit.IsOnHighGround,
                 size);
             _tileMap.ClearAvailableTiles(true);
-            _tileMap.SetAvailableTiles(unit, availableTiles, size, false);
+            _tileMap.SetAvailableTiles(unit, availablePoints, size, false);
             _selectionOverlay = SelectionOverlay.Movement;
         }
     }
@@ -269,8 +272,11 @@ public class ClientMap : Map
         // TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
         
         var selectedEntity = Entities.SelectedEntity;
-        var path = Pathfinding.FindPath(_hoveredTile.Position, (int)selectedEntity.EntitySize.x).ToList();
-        var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
+        var path = Pathfinding.FindPath(_hoveredTile.Position, (int)selectedEntity.EntitySize.x, 
+                _hoveredTile.Occupants.Any() 
+                && _hoveredTile.Occupants.All(x => x.HasHighGroundAt(_hoveredTile.Position)))
+            .ToList();
+        var globalPath = _tileMap.GetGlobalPositionsFromMapPoints(path);
         UnitMovementIssued(new UnitMovedAlongPathEvent(selectedEntity.InstanceId, globalPath, path));
         HandleDeselecting();
     }
@@ -337,9 +343,10 @@ public class ClientMap : Map
             if (Entities.IsEntitySelected(unit))
                 return;
             
-            _tileMap.SetAvailableTiles(unit, Pathfinding.GetAvailablePositions(
+            _tileMap.SetAvailableTiles(unit, Pathfinding.GetAvailablePoints(
                     unit.EntityPrimaryPosition,
                     unit.GetReach(),
+                    unit.IsOnHighGround,
                     (int)unit.EntitySize.x,
                     true),
                 (int)unit.EntitySize.x,

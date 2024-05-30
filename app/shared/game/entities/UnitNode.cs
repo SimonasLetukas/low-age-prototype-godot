@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
@@ -15,6 +16,7 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         return unit;
     }
     
+    public bool IsOnHighGround { get; protected set; } = false;
     public float Movement { get; protected set; }
     
     private Unit Blueprint { get; set; }
@@ -74,5 +76,11 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         
         if (EntityState is State.Completed && Flattened)
             SetTransparency(true);
+    }
+
+    public override void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
+    {
+        IsOnHighGround = resultingPoint.IsHighGround;
+        base.MoveUntilFinished(globalPositionPath, resultingPoint);
     }
 }
