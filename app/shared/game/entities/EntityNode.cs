@@ -188,21 +188,26 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         MoveToNextTarget();
     }
 
-    public virtual bool CanBeMovedOnAt(Vector2 position)
+    public virtual bool CanBeMovedOnAt(Point point)
     {
-        if (HasHighGroundAt(position))
+        if (HasHighGroundAt(point))
             return true;
 
-        if (position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize))
+        if (point.Position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize))
             return false;
         
         return true;
     }
 
-    public virtual bool CanBeMovedThroughAt(Vector2 position) => true;
+    public virtual bool CanBeMovedThroughAt(Point point) => true;
 
-    public bool HasHighGroundAt(Vector2 position)
+    public bool HasHighGroundAt(Point point)
     {
+        if (point.IsHighGround is false)
+            return false;
+
+        var position = point.Position;
+        
         if (position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize) is false)
             return false;
         

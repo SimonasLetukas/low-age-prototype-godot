@@ -14,6 +14,9 @@ using low_age_data.Domain.Tiles;
 /// </summary>
 public class Tiles : Node2D
 {
+    /// <summary>
+    /// Wrapper of <see cref="Point"/>.
+    /// </summary>
     public class TileInstance
     {
         public Vector2 Position { get; set; }
@@ -21,11 +24,13 @@ public class Tiles : Node2D
         public Terrain Terrain { get; set; }
         public bool IsTarget { get; set; }
         public IList<EntityNode> Occupants { get; set; }
+        public Point Point { get; set; }
 
         public bool IsInBoundsOf(Vector2 bounds) => Position.IsInBoundsOf(bounds);
     }
     
-    public event Action FinishedInitializing = delegate { };
+    public event Action FinishedInitialInitializing = delegate { };
+    public event Action FinishedPointInitialization = delegate { };
     
     public StructureFoundations StructureFoundations;
     
@@ -72,6 +77,10 @@ public class Tiles : Node2D
     private IList<(Vector2, TileId)> _tilesForDataInitialization;
     private bool _visualsInitialized = false;
     private IList<(Vector2, TileId)> _tilesForVisualsInitialization;
+    private bool _initialInitializationDone = false;
+    private IList<Point> _pointsForInitialization;
+    private bool _pointsStartedInitializing = false;
+    private bool _pointsInitialized = false;
     private bool _initialized = true;
     private readonly Stopwatch _stopwatch = new Stopwatch();
 
@@ -134,8 +143,16 @@ public class Tiles : Node2D
                 continue;
             }
 
-            if (_visualsInitialized is false) 
+            if (_visualsInitialized is false)
+            {
                 IterateVisualInitialization();
+                continue;
+            }
+
+            if (_pointsInitialized is false && _pointsStartedInitializing)
+            {
+                IteratePointInitialization();
+            }
         }
         
         _stopwatch.Stop();
@@ -143,11 +160,18 @@ public class Tiles : Node2D
 
     private void CheckInitialization()
     {
-        if (_dataInitialized is false || _visualsInitialized is false)
+        if (_pointsInitialized && _pointsStartedInitializing)
+        {
+            FinishedPointInitialization();
+            _initialized = true;
             return;
+        }
 
-        _initialized = true;
-        FinishedInitializing();
+        if (_dataInitialized && _visualsInitialized && _initialInitializationDone is false)
+        {
+            FinishedInitialInitializing();
+            _initialInitializationDone = true;
+        }
     }
 
     private void IterateDataInitialization()
@@ -189,6 +213,29 @@ public class Tiles : Node2D
 
         _targetMapPositiveTiles.SetCellv(position, TileMapPositiveTargetTileIndex);
         _targetMapNegativeTiles.SetCellv(position, TileMapNegativeTargetTileIndex);
+    }
+
+    public void AddPoints(IEnumerable<Point> points)
+    {
+        _pointsForInitialization = points.ToList();
+        _pointsStartedInitializing = true;
+    }
+    
+    private void IteratePointInitialization()
+    {
+        if (_pointsForInitialization.IsEmpty())
+        {
+            GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
+                     $"{nameof(Tiles)}.{nameof(IteratePointInitialization)} completed");
+            _pointsInitialized = true;
+            return;
+        }
+
+        var point = _pointsForInitialization[0];
+        _pointsForInitialization.RemoveAt(0);
+        
+        var tile = _tiles.First(x => x.Position.IsEqualApprox(point.Position));
+        tile.Point = point;
     }
 
     public Vector2 GetMapPositionFromGlobalPosition(Vector2 globalPosition) 
@@ -296,10 +343,10 @@ public class Tiles : Node2D
             {
                 var tile = GetTile(tileSource + new Vector2(x, y));
                 
-                if (tile is null || entity.CanBeMovedOnAt(tile.Position) is false)
+                if (tile is null || entity.CanBeMovedOnAt(tile.Point) is false)
                     continue;
 
-                if (tile.Occupants.Any(occupant => occupant.CanBeMovedOnAt(tile.Position) is false))
+                if (tile.Occupants.Any(occupant => occupant.CanBeMovedOnAt(tile.Point) is false))
                     return false;
             }
         }

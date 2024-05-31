@@ -32,6 +32,8 @@ public class ClientMap : Map
 
     private bool _tileMapIsInitialized = false;
     private bool _pathfindingIsInitialized = false;
+    private bool _tileMapPointsStartedInitialization = false;
+    private bool _tileMapPointsInitialized = false;
 
     public override void _Ready()
     {
@@ -40,14 +42,16 @@ public class ClientMap : Map
         Entities = GetNode<Entities>($"{nameof(Entities)}");
 
         Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
-        _tileMap.FinishedInitializing += OnTileMapFinishedInitializing;
-        Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing; 
+        _tileMap.FinishedInitialInitializing += OnTileMapFinishedInitialInitializing;
+        _tileMap.FinishedPointInitialization += OnTileMapFinishedPointInitialization;
+        Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing;
     }
     
     public override void _ExitTree()
     {
         Entities.NewPositionOccupied -= OnEntitiesNewPositionOccupied;
-        _tileMap.FinishedInitializing -= OnTileMapFinishedInitializing;
+        _tileMap.FinishedInitialInitializing -= OnTileMapFinishedInitialInitializing;
+        _tileMap.FinishedPointInitialization -= OnTileMapFinishedPointInitialization;
         Pathfinding.FinishedInitializing -= OnPathfindingFinishedInitializing;
         base._ExitTree();
     }
@@ -65,10 +69,10 @@ public class ClientMap : Map
         Pathfinding.Initialize(_mapSize, @event.Tiles);
     }
 
-    private void OnTileMapFinishedInitializing()
+    private void OnTileMapFinishedInitialInitializing()
     {
         if (DebugEnabled) GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-                                   $"{nameof(ClientMap)}.{nameof(OnTileMapFinishedInitializing)}");
+                                   $"{nameof(ClientMap)}.{nameof(OnTileMapFinishedInitialInitializing)}");
         _tileMapIsInitialized = true;
         FinishInitialization();
     }
@@ -80,10 +84,28 @@ public class ClientMap : Map
         _pathfindingIsInitialized = true;
         FinishInitialization();
     }
+    
+    private void OnTileMapFinishedPointInitialization()
+    {
+        if (DebugEnabled) GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
+                                   $"{nameof(ClientMap)}.{nameof(OnTileMapFinishedPointInitialization)}");
+        _tileMapPointsInitialized = true;
+        FinishInitialization();
+    }
 
     private void FinishInitialization()
     {
         if (_tileMapIsInitialized is false || _pathfindingIsInitialized is false)
+            return;
+
+        if (_tileMapPointsStartedInitialization is false)
+        {
+            _tileMap.AddPoints(Pathfinding.Points.GetAll());
+            _tileMapPointsStartedInitialization = true;
+            return;
+        }
+
+        if (_tileMapPointsInitialized is false)
             return;
         
         Entities.Initialize(_tileMap.GetTiles);
@@ -118,7 +140,7 @@ public class ClientMap : Map
                     _hoveredTile.Position, 
                     size,
                     _hoveredTile.Occupants.Any() && _hoveredTile.Occupants.All(x => 
-                        x.HasHighGroundAt(_hoveredTile.Position)));
+                        x.HasHighGroundAt(_hoveredTile.Point)));
                 _tileMap.SetPathTiles(path, size);
             }
         }
@@ -274,7 +296,7 @@ public class ClientMap : Map
         var selectedEntity = Entities.SelectedEntity;
         var path = Pathfinding.FindPath(_hoveredTile.Position, (int)selectedEntity.EntitySize.x, 
                 _hoveredTile.Occupants.Any() 
-                && _hoveredTile.Occupants.All(x => x.HasHighGroundAt(_hoveredTile.Position)))
+                && _hoveredTile.Occupants.All(x => x.HasHighGroundAt(_hoveredTile.Point)))
             .ToList();
         var globalPath = _tileMap.GetGlobalPositionsFromMapPoints(path);
         UnitMovementIssued(new UnitMovedAlongPathEvent(selectedEntity.InstanceId, globalPath, path));

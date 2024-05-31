@@ -6,6 +6,7 @@ using Godot;
 using low_age_data;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Tiles;
+using Newtonsoft.Json;
 using Object = Godot.Object;
 
 public struct Point
@@ -19,7 +20,7 @@ public struct Point
 
 public class Pathfinding : Node
 {
-	private class PointContainer
+	public class PointContainer
 	{
 		public Dictionary<Vector2, int> NonHighGroundIdsByPosition { get; set; } = new Dictionary<Vector2, int>();
 		private Dictionary<int, Point> PointsByIds { get; set; } = new Dictionary<int, Point>();
@@ -42,6 +43,8 @@ public class Pathfinding : Node
 				NonHighGroundIdsByPosition[entry.Key] = entry.Value;
 			}
 		}
+
+		public IEnumerable<Point> GetAll() => PointsByIds.Values;
 
 		public Point GetPoint(int id) => PointsByIds[id];
 
@@ -82,10 +85,11 @@ public class Pathfinding : Node
 	private const float DiagonalCost = Mathf.Sqrt2;
 	private const int HighGroundTolerance = 13; // works until approx 18 levels of ascension
 	
+	public PointContainer Points { get; } = new PointContainer();
+	
 	private Vector2 MapSize { get; set; }
     private Blueprint Blueprint { get; set; }
     private Dictionary<Vector2, TileId> Tiles { get; set; } = new Dictionary<Vector2, TileId>();
-    private PointContainer Points { get; set; } = new PointContainer();
     private int PointIdIterator { get; set; } = 0;
     private Godot.Collections.Dictionary<int, float> WeightsByPointIds { get; } =
 	    new Godot.Collections.Dictionary<int, float>();
@@ -469,7 +473,7 @@ public class Pathfinding : Node
     public void AddOccupation(EntityNode entity)
     {
 	    const int offset = 3; // Depends on maximum possible size
-	    var foundPoints = new List<Vector2>();
+	    var foundPoints = new List<Point>();
 	    
 	    for (var x = (int)entity.EntityPrimaryPosition.x - offset; 
 	         x < entity.EntityPrimaryPosition.x + entity.EntitySize.x + offset; 
@@ -479,22 +483,28 @@ public class Pathfinding : Node
 		         y < entity.EntityPrimaryPosition.y + entity.EntitySize.y + offset;
 		         y++)
 		    {
-			    var position = new Vector2(x, y);
-			    if (entity.CanBeMovedThroughAt(position)) 
+			    var pointFound = Points.TryGetId(new Vector2(x, y), out var pointId);
+			    if (pointFound is false)
+				    continue;
+
+			    var point = Points.GetPoint(pointId);
+			    if (entity.CanBeMovedThroughAt(point)) 
 				    continue;
 			    
-			    foundPoints.Add(position);
-			    IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(position, TileId.Grass), false);
+			    foundPoints.Add(point);
+			    IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(point.Position, TileId.Grass), 
+				    false);
 		    }
 	    }
 	    
-	    IterateTerrainDilationUpdate(new KeyValuePair<int, IList<Vector2>>(ImpassableIndex, foundPoints));
+	    IterateTerrainDilationUpdate(new KeyValuePair<int, IList<Vector2>>(ImpassableIndex, 
+		    foundPoints.Select(x => x.Position).ToList()));
 
-	    foreach (var point in foundPoints)
+	    foreach (var foundPosition in foundPoints.Select(x => x.Position))
 	    {
-		    for (var x = (int)point.x - offset; x <= (int)point.x + offset; x++)
+		    for (var x = (int)foundPosition.x - offset; x <= (int)foundPosition.x + offset; x++)
 		    {
-			    for (var y = (int)point.y - offset; y <= (int)point.y + offset; y++)
+			    for (var y = (int)foundPosition.y - offset; y <= (int)foundPosition.y + offset; y++)
 			    {
 				    var position = new Vector2(x, y);
 				    if (Points.ContainsPoint(position) is false)
@@ -593,6 +603,7 @@ public class Pathfinding : Node
 			    {
 				    pointId = Points.GetId(pos, true);
 				    point = Points.GetPoint(pointId);
+				    GD.Print($"1. Found existing point {JsonConvert.SerializeObject(point)}");
 			    }
 			    else
 			    {
@@ -607,6 +618,7 @@ public class Pathfinding : Node
 					    YSpriteOffset = path[i].Item2
 				    };
 				    Points.Add(point);
+				    GD.Print($"2. Creating point {JsonConvert.SerializeObject(point)}");
 			    }
 		    
 			    for (var xOffset = -1; xOffset < 2; xOffset++)
@@ -618,6 +630,7 @@ public class Pathfinding : Node
 					    if (i == 0 && lowGroundPoint != null)
 					    {
 						    _pathfinding.ConnectPoints(pointId, ((Point)lowGroundPoint).Id);
+						    GD.Print($"3. Connecting to low ground point {JsonConvert.SerializeObject(lowGroundPoint)}");
 					    }
 
 					    if (path.Count > 1 && i != 0)
@@ -631,6 +644,7 @@ public class Pathfinding : Node
 								    x.Equals(offsetPosition));
 							    var previousStepPoint = Points.GetPoint(previousStepPosition, true);
 							    _pathfinding.ConnectPoints(pointId, previousStepPoint.Id);
+							    GD.Print($"4. Connecting to previous step point {JsonConvert.SerializeObject(previousStepPoint)}");
 						    }
 					    }
 					    
@@ -640,6 +654,7 @@ public class Pathfinding : Node
 						    continue;
 
 					    _pathfinding.ConnectPoints(pointId, ((Point)highGroundPoint).Id);
+					    GD.Print($"5. Connecting to adjacent high ground point {JsonConvert.SerializeObject(highGroundPoint)}");
 				    }
 			    }
 		    }
@@ -674,6 +689,7 @@ public class Pathfinding : Node
 			    YSpriteOffset = path.First().Item2
 		    };
 		    Points.Add(point);
+		    GD.Print($"1. Creating point {JsonConvert.SerializeObject(point)}");
 		    
 		    for (var xOffset = -1; xOffset < 2; xOffset++)
 		    {
@@ -684,6 +700,7 @@ public class Pathfinding : Node
 					    continue;
 
 				    _pathfinding.ConnectPoints(pointId, ((Point)otherPoint).Id);
+				    GD.Print($"5. Connecting to adjacent high ground point {JsonConvert.SerializeObject(otherPoint)}");
 			    }
 		    }
 	    }
