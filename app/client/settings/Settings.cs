@@ -13,6 +13,7 @@ public class Settings : Control
     private OptionButton _animationSelection;
     private CheckBox _researchToggle;
     private CheckBox _bigCursorToggle;
+    private CheckBox _showHintsToggle;
     private Button _backButton;
     
     public override void _Ready()
@@ -21,18 +22,21 @@ public class Settings : Control
         _animationSelection = FindNode("Animation") as OptionButton;
         _researchToggle = FindNode("Research") as CheckBox;
         _bigCursorToggle = FindNode("BigCursor") as CheckBox;
+        _showHintsToggle = FindNode("ShowHints") as CheckBox;
         _backButton = FindNode("Back") as Button;
 
         _factionSelection.FactionSelected += OnFactionSelected;
         _animationSelection?.Connect("item_selected", this, nameof(OnAnimationSpeedSelected));
         _researchToggle?.Connect(nameof(_researchToggle.Pressed).ToLower(), this, nameof(OnResearchToggled));
         _bigCursorToggle?.Connect(nameof(_bigCursorToggle.Pressed).ToLower(), this, nameof(OnCursorSizeToggled));
+        _showHintsToggle?.Connect(nameof(_showHintsToggle.Pressed).ToLower(), this, nameof(OnShowHintsToggled));
         _backButton?.Connect(nameof(_backButton.Pressed).ToLower(), this, nameof(OnBackPressed));
         
         _factionSelection.SetSelectedFaction(Config.Instance.StartingFaction);
         if (_animationSelection != null) _animationSelection.Selected = (int)Config.Instance.AnimationSpeed;
         if (_researchToggle != null) _researchToggle.Pressed = Config.Instance.ResearchEnabled;
         if (_bigCursorToggle != null) _bigCursorToggle.Pressed = Config.Instance.LargeCursor;
+        if (_showHintsToggle != null) _showHintsToggle.Pressed = Config.Instance.ShowHints;
     }
 
     public override void _ExitTree()
@@ -45,6 +49,8 @@ public class Settings : Control
     private void OnResearchToggled() => Config.Instance.ResearchEnabled = _researchToggle.Pressed;
 
     private void OnCursorSizeToggled() => Config.Instance.LargeCursor = _bigCursorToggle.Pressed;
+    
+    private void OnShowHintsToggled() => Config.Instance.ShowHints = _showHintsToggle.Pressed;
 
     private void OnBackPressed()
     {

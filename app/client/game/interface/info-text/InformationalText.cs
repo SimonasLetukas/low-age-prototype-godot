@@ -19,7 +19,7 @@ public class InformationalText : Control
     {
         _vBoxContainer = GetNode<VBoxContainer>(nameof(VBoxContainer));
 
-        Visible = true;
+        Visible = Config.Instance.ShowHints;
         SwitchToDefault();
     }
 

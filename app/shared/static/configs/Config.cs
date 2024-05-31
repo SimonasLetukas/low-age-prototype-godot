@@ -68,6 +68,12 @@ public class Config : Node
         set => _data.LargeCursor = value;
     }
 
+    public bool ShowHints
+    {
+        get => _data.ShowHints;
+        set => _data.ShowHints = value;
+    }
+
     private ConfigData _data = new ConfigData();
     
     public override void _Ready()
@@ -88,6 +94,7 @@ public class Config : Node
         public bool ResearchEnabled { get; set; } = false;
         public FactionId StartingFaction { get; set; } = FactionId.Uee;
         public bool LargeCursor { get; set; } = false;
+        public bool ShowHints { get; set; } = true;
     }
 
     public enum AnimationSpeeds
