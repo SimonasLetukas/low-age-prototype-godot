@@ -618,6 +618,7 @@ public class Pathfinding : Node
 					    YSpriteOffset = path[i].Item2
 				    };
 				    Points.Add(point);
+				    EventBus.Instance.RaiseHighGroundPointCreated(point);
 				    GD.Print($"2. Creating point {JsonConvert.SerializeObject(point)}");
 			    }
 		    
@@ -689,6 +690,7 @@ public class Pathfinding : Node
 			    YSpriteOffset = path.First().Item2
 		    };
 		    Points.Add(point);
+		    EventBus.Instance.RaiseHighGroundPointCreated(point);
 		    GD.Print($"1. Creating point {JsonConvert.SerializeObject(point)}");
 		    
 		    for (var xOffset = -1; xOffset < 2; xOffset++)
@@ -733,6 +735,7 @@ public class Pathfinding : Node
 		    }*/ // TODO test it out before removing
 		    
 		    _pathfinding.RemovePoint(point.Id);
+		    EventBus.Instance.RaiseHighGroundPointRemoved(point);
 		    Points.Remove(point.Id);
 	    }
     }

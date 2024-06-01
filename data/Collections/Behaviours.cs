@@ -345,7 +345,7 @@ namespace low_age_data.Collections
                     {
                         new HighGroundArea(area: new Area(
                                 start: new Vector2<int>(x: 0, y: 0), 
-                                size: new Vector2<int>(x: 3, y: 2)),
+                                size: new Vector2<int>(x: 2, y: 3)),
                             spriteOffset: new Vector2<int>(x: 0, y: 9)),
                     }),
 

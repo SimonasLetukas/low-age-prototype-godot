@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://app/client/game/map/tiles/IsometricTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://app/client/game/map/tiles/elevatable/AvailableHoveringTiles.cs" type="Script" id=2]
+
+[node name="AvailableHoveringTiles" type="TileMap"]
+modulate = Color( 1, 0.623529, 0.623529, 1 )
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 8 )
+format = 1
+tile_data = PoolIntArray( 262180, 0, 0, 393235, 8, 0, 393236, 8, 1, 393237, 8, 1, 393238, 8, 1, 393239, 8, 2, 458771, 8, 131072, 458772, 8, 4, 458773, 8, 4, 458774, 8, 4, 458775, 8, 4, 458776, 8, 2, 524308, 8, 131072, 524309, 8, 131073, 524310, 8, 4, 524311, 8, 131073, 524312, 8, 131074, 589846, 8, 131075 )
+script = ExtResource( 2 )

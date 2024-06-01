@@ -27,5 +27,11 @@ public class EventBus : Node
     public event Action<IPathfindingUpdatable, bool> PathfindingUpdated = delegate { };
     public void RaisePathfindingUpdated(IPathfindingUpdatable data, bool isAdded) => PathfindingUpdated(data, isAdded);
 
+    public event Action<Point> HighGroundPointCreated = delegate { };
+    public void RaiseHighGroundPointCreated(Point point) => HighGroundPointCreated(point);
+    
+    public event Action<Point> HighGroundPointRemoved = delegate { };
+    public void RaiseHighGroundPointRemoved(Point point) => HighGroundPointRemoved(point);
+
     #endregion Events
 }

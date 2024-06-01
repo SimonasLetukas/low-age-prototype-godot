@@ -141,14 +141,14 @@ public class ClientMap : Map
                     size,
                     _hoveredTile.Occupants.Any() && _hoveredTile.Occupants.All(x => 
                         x.HasHighGroundAt(_hoveredTile.Point)));
-                _tileMap.SetPathTiles(path, size);
+                _tileMap.Elevatable.SetPathTiles(path, size);
             }
         }
 
         if (_selectionOverlay is SelectionOverlay.Placement)
         {
             var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(mapPosition);
-            Entities.UpdateEntityInPlacement(mapPosition, globalPosition, _tileMap.GetTiles);
+            Entities.UpdateEntityInPlacement(mapPosition, globalPosition);
         }
 
         HandleFlattenInput();
@@ -161,8 +161,8 @@ public class ClientMap : Map
 
     public void HandleDeselecting()
     {
-        _tileMap.ClearAvailableTiles(false);
-        _tileMap.ClearPath();
+        _tileMap.Elevatable.ClearAvailableTiles(false);
+        _tileMap.Elevatable.ClearPath();
         Entities.DeselectEntity();
         _selectionOverlay = SelectionOverlay.None;
     }
@@ -237,8 +237,8 @@ public class ClientMap : Map
                 unit.Movement, 
                 unit.IsOnHighGround,
                 size);
-            _tileMap.ClearAvailableTiles(true);
-            _tileMap.SetAvailableTiles(unit, availablePoints, size, false);
+            _tileMap.Elevatable.ClearAvailableTiles(true);
+            _tileMap.Elevatable.SetAvailableTiles(unit, availablePoints, size, false);
             _selectionOverlay = SelectionOverlay.Movement;
         }
     }
@@ -287,7 +287,7 @@ public class ClientMap : Map
 
     private void ExecuteMovement()
     {
-        if (_tileMap.IsCurrentlyAvailable(_hoveredTile) is false 
+        if (_tileMap.Elevatable.IsCurrentlyAvailable(_hoveredTile) is false 
             || Entities.SelectedEntity.EntityPrimaryPosition.Equals(_hoveredTile.Position))
             return;
         
@@ -305,7 +305,7 @@ public class ClientMap : Map
 
     private void ExecuteCancellation()
     {
-        _tileMap.ClearTargetTiles();
+        _tileMap.Elevatable.ClearTargetTiles();
         Entities.CancelPlacement();
         _previousBuildSelection = (null, null);
         ExecuteEntitySelection(true);
@@ -349,14 +349,14 @@ public class ClientMap : Map
         if (_selectionOverlay is SelectionOverlay.Placement)
             return;
         
-        _tileMap.MoveFocusedTileTo(mapPosition);
+        _tileMap.Elevatable.MoveFocusedTileTo(mapPosition);
 
         if (_hoveredTile is null)
             return;
 
         if (_hoveredTile.Occupants.IsEmpty())
         {
-            _tileMap.ClearAvailableTiles(true);
+            _tileMap.Elevatable.ClearAvailableTiles(true);
             return;
         }
 
@@ -365,7 +365,7 @@ public class ClientMap : Map
             if (Entities.IsEntitySelected(unit))
                 return;
             
-            _tileMap.SetAvailableTiles(unit, Pathfinding.GetAvailablePoints(
+            _tileMap.Elevatable.SetAvailableTiles(unit, Pathfinding.GetAvailablePoints(
                     unit.EntityPrimaryPosition,
                     unit.GetReach(),
                     unit.IsOnHighGround,
@@ -375,7 +375,7 @@ public class ClientMap : Map
                 true);
         }
         else
-            _tileMap.ClearAvailableTiles(true);
+            _tileMap.Elevatable.ClearAvailableTiles(true);
     }
 
     private Vector2 GetMapPositionFromMousePosition() 
@@ -427,12 +427,12 @@ public class ClientMap : Map
         _previousBuildSelection = (buildAbility, entityId);
         
         Entities.CancelPlacement();
-        _tileMap.ClearAvailableTiles(false);
-        _tileMap.ClearPath();
-        _tileMap.DisableFocusedTile();
+        _tileMap.Elevatable.ClearAvailableTiles(false);
+        _tileMap.Elevatable.ClearPath();
+        _tileMap.Elevatable.DisableFocusedTile();
 
         var canBePlacedOnTheWholeMap = buildAbility.CanBePlacedOnTheWholeMap();
-        _tileMap.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity, _mapSize), 
+        _tileMap.Elevatable.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity, _mapSize), 
             canBePlacedOnTheWholeMap);
         
         var entity = Entities.SetEntityForPlacement(entityId, canBePlacedOnTheWholeMap); 

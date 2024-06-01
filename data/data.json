@@ -4156,13 +4156,6 @@
       "description": "",
       "terrain": "Terrain.HighGround",
       "movementCost": 1.0
-    },
-    {
-      "id": "tile-ascendable",
-      "displayName": "Ascendable",
-      "description": "",
-      "terrain": "Terrain.Ascendable",
-      "movementCost": 1.0
     }
   ],
   "abilities": [
@@ -12136,8 +12129,8 @@
               "y": 0
             },
             "size": {
-              "x": 3,
-              "y": 2
+              "x": 2,
+              "y": 3
             }
           },
           "spriteOffset": {

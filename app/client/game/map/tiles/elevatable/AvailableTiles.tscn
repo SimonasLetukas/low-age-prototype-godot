@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://app/client/game/map/tiles/IsometricTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://app/client/game/map/tiles/elevatable/AvailableTiles.cs" type="Script" id=2]
+
+[node name="AvailableTiles" type="TileMap"]
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 8 )
+format = 1
+tile_data = PoolIntArray( -65538, 8, 0, -65537, 8, 1, -131072, 8, 1, -131071, 8, 2, -2, 8, 65536, -1, 8, 4, -65536, 8, 4, -65535, 8, 65538, 65534, 8, 65536, 65535, 8, 4, 0, 8, 4, 1, 8, 65538, 131070, 8, 131072, 131071, 8, 131073, 65536, 8, 131073, 65537, 8, 131074, 262169, 8, 0, 262170, 8, 2, 262180, 0, 0, 327704, 8, 0, 327705, 8, 4, 327706, 8, 4, 327707, 8, 2, 393239, 8, 0, 393240, 8, 4, 393241, 8, 4, 393242, 8, 4, 393243, 8, 4, 393244, 8, 2, 458775, 8, 131072, 458776, 8, 4, 458777, 8, 4, 458778, 8, 4, 458779, 8, 4, 458780, 8, 131074, 524312, 8, 131072, 524313, 8, 4, 524314, 8, 4, 524315, 8, 131074, 589849, 8, 131072, 589850, 8, 131074 )
+script = ExtResource( 2 )

@@ -47,12 +47,6 @@ namespace low_age_data.Collections
                     description: "",
                     terrain: Terrain.HighGround,
                     movementCost: 1.0f),
-                new Tile(
-                    id: TileId.Ascendable,
-                    displayName: nameof(TileId.Ascendable).CamelCaseToWords(),
-                    description: "",
-                    terrain: Terrain.Ascendable,
-                    movementCost: 1.0f),
             };
         }
     }

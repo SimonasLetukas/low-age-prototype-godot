@@ -18,7 +18,6 @@ namespace low_age_data.Domain.Tiles
         public static TileId Scraps => new TileId(nameof(Scraps).ToLower(), true);
         public static TileId Celestium => new TileId(nameof(Celestium).ToLower(), true);
         public static TileId HighGround => new TileId(nameof(HighGround).ToLower(), true);
-        public static TileId Ascendable => new TileId(nameof(Ascendable).ToLower(), true);
         
         private class TileIdJsonConverter : JsonConverter
         {
