@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://app/client/game/map/tiles/IsometricTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://app/client/game/map/tiles/elevatable/AvailableTiles.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://app/client/game/map/tiles/elevatable/focused/FocusedTile.tscn" type="PackedScene" id=4]
 [ext_resource path="res://app/client/game/map/tiles/elevatable/ElevatableTiles.cs" type="Script" id=5]
 [ext_resource path="res://app/client/game/map/tiles/elevatable/PathTiles.tscn" type="PackedScene" id=6]
+[ext_resource path="res://app/client/game/map/tiles/elevatable/TargetTiles.tscn" type="PackedScene" id=7]
 
 [node name="ElevatableTiles" type="Node2D"]
 script = ExtResource( 5 )
@@ -17,12 +18,7 @@ modulate = Color( 1, 1, 1, 0.54902 )
 
 [node name="AvailableHoveringTiles" parent="Alpha" instance=ExtResource( 3 )]
 
-[node name="Target" type="TileMap" parent="Alpha"]
-mode = 1
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 16, 8 )
-format = 1
-tile_data = PoolIntArray( -196608, 11, 0, -196607, 11, 0, -196606, 11, 0, -131072, 11, 0, -131071, 11, 0, -131070, 11, 0, -65536, 11, 0, -65535, 11, 0, -65534, 11, 0, 0, 12, 0, 1, 12, 0, 2, 12, 0, 65536, 12, 0, 65537, 12, 0, 65538, 12, 0, 131072, 12, 0, 131073, 12, 0, 131074, 12, 0, 196631, 12, 0, 196632, 12, 0, 196633, 12, 0, 262167, 12, 0, 262168, 12, 0, 262169, 12, 0, 262180, 0, 0, 327698, 11, 0, 327703, 12, 0, 327704, 12, 0, 327705, 12, 0 )
+[node name="TargetTiles" parent="Alpha" instance=ExtResource( 7 )]
 
 [node name="TargetMapPositive" type="TileMap" parent="Alpha"]
 mode = 1
@@ -41,3 +37,4 @@ tile_data = PoolIntArray( -196608, 11, 0, -196607, 11, 0, -196606, 11, 0, -13107
 [node name="PathTiles" parent="." instance=ExtResource( 6 )]
 
 [node name="FocusedTile" parent="." instance=ExtResource( 4 )]
+frame = 2

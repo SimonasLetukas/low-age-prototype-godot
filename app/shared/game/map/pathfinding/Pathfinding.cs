@@ -132,14 +132,14 @@ public class Pathfinding : Node
 	    base._Ready();
 	    PauseMode = PauseModeEnum.Process;
 	    
-	    EventBus.Instance.PathfindingUpdated += OnPathfindingUpdated;
+	    EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
     }
 
     public override void _ExitTree()
     {
 	    base._ExitTree();
 	    
-	    EventBus.Instance.PathfindingUpdated -= OnPathfindingUpdated;
+	    EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
     }
 
     #region Initialization
@@ -560,8 +560,9 @@ public class Pathfinding : Node
 	    }
     }
 
-    private void OnPathfindingUpdated(IPathfindingUpdatable source, bool isAdded)
+    private void OnPathfindingUpdating(IPathfindingUpdatable source, bool isAdded)
     {
+	    ClearCache();
 	    var positions = source.LeveledPositions;
 	    switch (source)
 	    {

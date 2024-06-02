@@ -31,13 +31,13 @@ public class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendable>, IPa
 
         SetupPositions();
         
-        EventBus.Instance.RaisePathfindingUpdated(this, true);
+        EventBus.Instance.RaisePathfindingUpdating(this, true);
     }
 
     public override void _ExitTree()
     {
         base._ExitTree();
-        EventBus.Instance.RaisePathfindingUpdated(this, false);
+        EventBus.Instance.RaisePathfindingUpdating(this, false);
     }
     
     public bool CanBeMovedOnAt(Vector2 position) => FlattenedPositions.Any(x => x.IsEqualApprox(position));

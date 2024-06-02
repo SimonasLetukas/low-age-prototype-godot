@@ -38,7 +38,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public string DisplayName { get; protected set; }
     public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; }
-    public Func<IList<Vector2>, bool, IList<Tiles.TileInstance>> GetTiles { protected get; set; }
+    public Func<IList<Vector2>, IList<Tiles.TileInstance>> GetTiles { protected get; set; }
     
     protected bool Selected { get; private set; } = false;
     protected bool Flattened { get; private set; } = false;
@@ -125,7 +125,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public bool DeterminePlacementValidity(bool requiresTargetTiles)
     {
         requiresTargetTiles = requiresTargetTiles && _canBePlacedOnTheWholeMap is false;
-        var tiles = GetTiles(EntityOccupyingPositions, false);
+        var tiles = GetTiles(EntityOccupyingPositions);
         CanBePlaced = IsPlacementGenerallyValid(tiles, requiresTargetTiles)
                       && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles));
         
@@ -162,6 +162,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         }
         
         EntityState = State.Placed;
+        EventBus.Instance.RaiseEntityPlaced(this);
         UpdateVisuals();
         
         Complete(); // TODO should be called outside of this class when e.g. building is finished (payment is completed)

@@ -35,7 +35,7 @@ public class Tiles : Node2D
     public StructureFoundations StructureFoundations { get; private set; }
     public ElevatableTiles Elevatable { get; private set; }
     
-    private readonly ICollection<TileInstance> _tiles = new List<TileInstance>();
+    private readonly Dictionary<(Vector2, bool), TileInstance> _tiles = new Dictionary<(Vector2, bool), TileInstance>();
     private IList<Tile> _tilesBlueprint;
     private Vector2 _mapSize;
     private Vector2 _tilemapOffset;
@@ -174,13 +174,14 @@ public class Tiles : Node2D
 
         var (position, blueprintId) = _tilesForDataInitialization[0];
         _tilesForDataInitialization.RemoveAt(0);
-        _tiles.Add(new TileInstance
+        var tile = new TileInstance
         {
             Position = position,
             Blueprint = blueprintId,
             Terrain = GetBlueprint(blueprintId).Terrain,
             Occupants = new List<EntityNode>()
-        });
+        };
+        _tiles[(position, false)] = tile;
     }
 
     private void IterateVisualInitialization()
@@ -221,7 +222,7 @@ public class Tiles : Node2D
         var point = _pointsForInitialization[0];
         _pointsForInitialization.RemoveAt(0);
         
-        var tile = _tiles.First(x => x.Position.IsEqualApprox(point.Position));
+        var tile = GetTile(point.Position);
         tile.Point = point;
     }
 
@@ -242,14 +243,16 @@ public class Tiles : Node2D
         ? GetTile(at).Terrain
         : Terrain.Mountains;
 
-    public IList<TileInstance> GetTiles(IList<Vector2> at, bool isHighGround = false) 
-        => at.Select(x => GetTile(x, isHighGround)).ToList();
+    public IList<TileInstance> GetTiles(IList<Vector2> at) 
+        => at.Select(x => GetTile(x, true) ?? GetTile(x)).ToList();
 
     public TileInstance GetTile(Vector2 at, bool isHighGround = false) => at.IsInBoundsOf(_mapSize) 
-        ? _tiles.SingleOrDefault(x => x.Position.IsEqualApprox(at) && x.Point.IsHighGround == isHighGround) 
+        ? _tiles.ContainsKey((at, isHighGround)) 
+            ? _tiles[(at, isHighGround)] 
+            : null 
         : null;
-
-    public TileInstance GetTile(Point point) => _tiles.First(x => x.Point.Id.Equals(point.Id));
+    
+    public TileInstance GetTile(Point point) => GetTile(point.Position, point.IsHighGround);
 
     public Tile GetBlueprint(TileId of) => _tilesBlueprint.SingleOrDefault(x => x.Id.Equals(of));
 
@@ -367,7 +370,7 @@ public class Tiles : Node2D
 
     private void OnHighGroundPointCreated(Point point)
     {
-        _tiles.Add(new TileInstance
+        var tile = new TileInstance
         {
             Position = point.Position,
             Blueprint = TileId.HighGround,
@@ -375,8 +378,9 @@ public class Tiles : Node2D
             IsTarget = false,
             Occupants = new List<EntityNode>(),
             Point = point
-        });
+        };
+        _tiles[(point.Position, true)] = tile;
     }
 
-    private void OnHighGroundPointRemoved(Point point) => _tiles.Remove(GetTile(point));
+    private void OnHighGroundPointRemoved(Point point) => _tiles.Remove((point.Position, true));
 }

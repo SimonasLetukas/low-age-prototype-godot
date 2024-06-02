@@ -11689,6 +11689,14 @@
         {
           "conditions": [
             {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
               "amountOfTilesRequired": 1,
@@ -11769,6 +11777,14 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
             }
           ],
           "filters": []
@@ -12619,6 +12635,14 @@
         {
           "conditions": [
             {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
               "amountOfTilesRequired": 1,
@@ -12673,6 +12697,14 @@
         {
           "conditions": [
             {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
               "amountOfTilesRequired": 1,
@@ -12720,6 +12752,14 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
             }
           ],
           "filters": []
@@ -13659,6 +13699,14 @@
         {
           "conditions": [
             {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
               "amountOfTilesRequired": 1,
@@ -13706,6 +13754,14 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
             }
           ],
           "filters": []
@@ -14862,6 +14918,14 @@
         {
           "conditions": [
             {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
               "amountOfTilesRequired": 1,
@@ -14939,6 +15003,14 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
             }
           ],
           "filters": []

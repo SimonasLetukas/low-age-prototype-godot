@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -11,11 +12,16 @@ public class ElevatableTiles : Node2D
     private readonly Dictionary<int, AvailableTiles> _availableTilesVisual = new Dictionary<int, AvailableTiles>();
     private readonly Dictionary<int, AvailableHoveringTiles> _availableTilesHovering = new Dictionary<int, AvailableHoveringTiles>();
     private IEnumerable<Point> _availableTilesCache = new List<Point>();
-    private TileMap _targetTiles;
+    private Dictionary<int, TargetTiles> _targetTileMaps = new Dictionary<int, TargetTiles>();
     private TileMap _targetMapPositiveTiles;
     private TileMap _targetMapNegativeTiles;
     private readonly ICollection<Tiles.TileInstance> _targetTileInstances = new List<Tiles.TileInstance>();
     private readonly Dictionary<int, PathTiles> _pathTileMaps = new Dictionary<int, PathTiles>();
+    
+    private Guid? _availableTilesCachedEntity = Guid.Empty;
+    private Vector2 _availableTilesCachedEntityPosition = Vector2.Zero;
+    private Guid? _availableHoveringTilesCachedEntity = Guid.Empty;
+    private Vector2 _availableHoveringTilesCachedEntityPosition = Vector2.Zero;
     
     private const int TileMapAvailableTileIndex = 8;
     private const int TileMapPathTileIndex = 9;
@@ -30,7 +36,7 @@ public class ElevatableTiles : Node2D
         _availableTilesVisual[0] = GetNode<AvailableTiles>($"Alpha/{nameof(AvailableTiles)}");
         _availableTilesHovering[0] = GetNode<AvailableHoveringTiles>($"Alpha/{nameof(AvailableHoveringTiles)}");
         GD.Print($"Count: {_availableTilesVisual.Count}");
-        _targetTiles = GetNode<TileMap>("Alpha/Target");
+        _targetTileMaps[0] = GetNode<TargetTiles>($"Alpha/{nameof(TargetTiles)}");
         _targetMapPositiveTiles = GetNode<TileMap>("Alpha/TargetMapPositive");
         _targetMapPositiveTiles.Clear();
         _targetMapNegativeTiles = GetNode<TileMap>("Alpha/TargetMapNegative");
@@ -68,6 +74,13 @@ public class ElevatableTiles : Node2D
 
     public void SetAvailableTiles(EntityNode entity, IEnumerable<Point> availablePoints, int size, bool hovering)
     {
+        if (AvailableTilesCachedFor(entity, hovering))
+        {
+            ShowCachedAvailableTiles(hovering);
+            return;
+        }
+
+        ClearAvailableTilesCache(hovering);
         ClearAvailableTiles(hovering);
 
         var availablePointsSource = availablePoints.ToList();
@@ -75,14 +88,11 @@ public class ElevatableTiles : Node2D
         foreach (var tileSource in availablePointsSource.ToList()
                      .Where(tileSource => CanTileBeMovedOn(entity, tileSource, size) is false)) // TODO test this method out...
             availablePointsSource.Remove(tileSource);
-
-        if (hovering is false)
-            _availableTilesCache = availablePointsSource;
-
+        
         var dilatedPoints = _tiles.GetDilated(availablePointsSource, size).Select(x => x.Point).ToList();
         var pointsByElevation = SplitIntoElevations(dilatedPoints);
         var tileMapsByElevation = GetAndPrepareAllElevationsOfAvailableTileMaps(pointsByElevation.Keys);
-
+        
         foreach (var tileMapsByElevationEntry in tileMapsByElevation)
         {
             var (availableTiles, availableHoveringTiles) = tileMapsByElevationEntry.Value;
@@ -102,40 +112,10 @@ public class ElevatableTiles : Node2D
                 availableTiles.UpdateBitmaskRegion(availablePosition);
             }
         }
+        
+        CacheAvailableTiles(entity, hovering, availablePointsSource);
     }
-
-    private Dictionary<int, (AvailableTiles, AvailableHoveringTiles)> GetAndPrepareAllElevationsOfAvailableTileMaps(
-        IEnumerable<int> elevations)
-    {
-        var result = new Dictionary<int, (AvailableTiles, AvailableHoveringTiles)>();
-        foreach (var elevation in elevations)
-        {
-            PrepareElevation(elevation);
-            result[elevation] = (_availableTilesVisual[elevation], _availableTilesHovering[elevation]);
-        }
-
-        return result;
-    }
-
-    private bool CanTileBeMovedOn(EntityNode entity, Point point, int size)
-    {
-        for (var x = 0; x < size; x++)
-        {
-            for (var y = 0; y < size; y++)
-            {
-                var tile = _tiles.GetTile(point.Position + new Vector2(x, y), point.IsHighGround);
-                
-                if (tile is null || entity.CanBeMovedOnAt(tile.Point) is false)
-                    continue;
-
-                if (tile.Occupants.Any(occupant => occupant.CanBeMovedOnAt(tile.Point) is false))
-                    return false;
-            }
-        }
-
-        return true;
-    }
-
+    
     public bool IsCurrentlyAvailable(Tiles.TileInstance tile) => IsCurrentlyAvailable(tile.Point);
     
     public bool IsCurrentlyAvailable(Point point) => _availableTilesCache.Any(x => x.Equals(point));
@@ -154,19 +134,26 @@ public class ElevatableTiles : Node2D
 
         foreach (var target in targets)
         {
-            _targetTiles.SetCellv(target, isTargetPositive 
-                ? TileMapPositiveTargetTileIndex 
-                : TileMapNegativeTargetTileIndex);
-            
-            var tileInstance = _tiles.GetTile(target);
+            var tileInstance = _tiles.GetTile(target, true) ?? _tiles.GetTile(target);
             tileInstance.IsTarget = true;
             _targetTileInstances.Add(tileInstance);
         }
-    }
 
-    public bool IsCurrentlyTarget(Vector2 mapPosition) 
-        => _targetTiles.GetCellv(mapPosition) == TileMapNegativeTargetTileIndex 
-           || _targetTiles.GetCellv(mapPosition) == TileMapPositiveTargetTileIndex;
+        var pointsByElevation = SplitIntoElevations(_targetTileInstances.Select(x => x.Point));
+        var tileMapsByElevation = GetAndPrepareAllElevationsOfTargetTileMap(pointsByElevation.Keys);
+        
+        foreach (var entry in tileMapsByElevation)
+        {
+            foreach (var targetPosition in pointsByElevation
+                         .Where(x => x.Key == entry.Key)
+                         .SelectMany(x => x.Value, (_, point) => point.Position))
+            {
+                entry.Value.SetCellv(targetPosition, isTargetPositive 
+                    ? TileMapPositiveTargetTileIndex 
+                    : TileMapNegativeTargetTileIndex);
+            }
+        }
+    }
 
     public void SetPathTiles(IEnumerable<Point> pathPoints, int size)
     {
@@ -187,6 +174,104 @@ public class ElevatableTiles : Node2D
         }
     }
     
+    public void ClearAvailableTiles(bool hovering)
+    {
+        if (hovering)
+        {
+            foreach (var availableTilesHovering in _availableTilesHovering.Values)
+            {
+                if (_availableHoveringTilesCachedEntity != null)
+                {
+                    availableTilesHovering.Visible = false;
+                    continue;
+                }
+                
+                availableTilesHovering.Clear();
+                availableTilesHovering.Visible = true;
+            }
+            return;
+        }
+        
+        foreach (var availableTilesVisual in _availableTilesVisual.Values)
+        {
+            if (_availableTilesCachedEntity != null)
+            {
+                availableTilesVisual.Visible = false;
+                continue;
+            }
+            
+            availableTilesVisual.Clear();
+            availableTilesVisual.Visible = true;
+        }
+    }
+    
+    public void ClearTargetTiles()
+    {
+        _targetMapPositiveTiles.Visible = false;
+        _targetMapNegativeTiles.Visible = false;
+        foreach (var targetTiles in _targetTileMaps.Values)
+        {
+            targetTiles.Clear();
+        }
+        foreach (var tileInstance in _targetTileInstances) 
+            tileInstance.IsTarget = false;
+        _targetTileInstances.Clear();
+    }
+    
+    public void ClearPath()
+    {
+        foreach (var tileMap in _pathTileMaps.Values)
+        {
+            tileMap.Clear();
+        }
+    }
+    
+    public void ClearCache()
+    {
+        ClearAvailableTilesCache(true);
+        ClearAvailableTilesCache(false);
+    }
+    
+    private static Dictionary<int, ICollection<Point>> SplitIntoElevations(IEnumerable<Point> points)
+    {
+        var result = new Dictionary<int, ICollection<Point>>();
+        foreach (var point in points)
+        {
+            var elevation = point.YSpriteOffset;
+            if (result.ContainsKey(elevation) is false)
+                result[elevation] = new List<Point>();
+
+            result[elevation].Add(point);
+        }
+
+        return result;
+    }
+    
+    private Dictionary<int, (AvailableTiles, AvailableHoveringTiles)> GetAndPrepareAllElevationsOfAvailableTileMaps(
+        IEnumerable<int> elevations)
+    {
+        var result = new Dictionary<int, (AvailableTiles, AvailableHoveringTiles)>();
+        foreach (var elevation in elevations)
+        {
+            PrepareElevation(elevation);
+            result[elevation] = (_availableTilesVisual[elevation], _availableTilesHovering[elevation]);
+        }
+
+        return result;
+    }
+    
+    private Dictionary<int, TargetTiles> GetAndPrepareAllElevationsOfTargetTileMap(IEnumerable<int> elevations)
+    {
+        var result = new Dictionary<int, TargetTiles>();
+        foreach (var elevation in elevations)
+        {
+            PrepareElevation(elevation);
+            result[elevation] = _targetTileMaps[elevation];
+        }
+
+        return result;
+    }
+    
     private Dictionary<int, PathTiles> GetAndPrepareAllElevationsOfPathTileMap(IEnumerable<int> elevations)
     {
         var result = new Dictionary<int, PathTiles>();
@@ -197,42 +282,6 @@ public class ElevatableTiles : Node2D
         }
 
         return result;
-    }
-    
-    public void ClearPath()
-    {
-        foreach (var tileMap in _pathTileMaps.Values)
-        {
-            tileMap.Clear();
-        }
-    }
-
-    public void ClearAvailableTiles(bool hovering)
-    {
-        if (hovering)
-        {
-            foreach (var availableTilesHovering in _availableTilesHovering.Values)
-            {
-                availableTilesHovering.Clear();
-            }
-            return;
-        }
-        
-        foreach (var availableTilesVisual in _availableTilesVisual.Values)
-        {
-            availableTilesVisual.Clear();
-        }
-        _availableTilesCache = Enumerable.Empty<Point>();
-    }
-    
-    public void ClearTargetTiles()
-    {
-        _targetMapPositiveTiles.Visible = false;
-        _targetMapNegativeTiles.Visible = false;
-        _targetTiles.Clear();
-        foreach (var tileInstance in _targetTileInstances) 
-            tileInstance.IsTarget = false;
-        _targetTileInstances.Clear();
     }
     
     private void PrepareElevation(int elevation)
@@ -254,6 +303,14 @@ public class ElevatableTiles : Node2D
         _availableTilesVisual[elevation] = availableTiles;
         _availableTilesHovering[elevation] = availableHoveringTiles;
         
+        // Target tiles
+        var targetTiles = TargetTiles.InstantiateAsChild(_alpha);
+        targetTiles.Position = Vector2.Up * elevation;
+        // TODO use: targetTiles.TileSet.TileSetZIndex();
+        targetTiles.ZIndex = 1000; // TODO be one higher than structure below & change upon each render update
+            
+        _targetTileMaps[elevation] = targetTiles;
+        
         // Path tiles
         var pathTiles = PathTiles.InstantiateAsChild(this);
         pathTiles.Position = Vector2.Up * elevation;
@@ -262,19 +319,63 @@ public class ElevatableTiles : Node2D
             
         _pathTileMaps[elevation] = pathTiles;
     }
-
-    private static Dictionary<int, ICollection<Point>> SplitIntoElevations(IEnumerable<Point> points)
+    
+    private bool CanTileBeMovedOn(EntityNode entity, Point point, int size)
     {
-        var result = new Dictionary<int, ICollection<Point>>();
-        foreach (var point in points)
+        for (var x = 0; x < size; x++)
         {
-            var elevation = point.YSpriteOffset;
-            if (result.ContainsKey(elevation) is false)
-                result[elevation] = new List<Point>();
+            for (var y = 0; y < size; y++)
+            {
+                var tile = _tiles.GetTile(point.Position + new Vector2(x, y), point.IsHighGround);
+                
+                if (tile is null || entity.CanBeMovedOnAt(tile.Point) is false)
+                    continue;
 
-            result[elevation].Add(point);
+                if (tile.Occupants.Any(occupant => occupant.CanBeMovedOnAt(tile.Point) is false))
+                    return false;
+            }
         }
 
-        return result;
+        return true;
+    }
+    
+    private bool AvailableTilesCachedFor(EntityNode entity, bool hovering) => hovering
+        ? _availableHoveringTilesCachedEntity != null 
+          && _availableHoveringTilesCachedEntity.Equals(entity.InstanceId) 
+          && _availableHoveringTilesCachedEntityPosition.Equals(entity.EntityPrimaryPosition)
+        : _availableTilesCachedEntity != null 
+          && _availableTilesCachedEntity.Equals(entity.InstanceId) 
+          && _availableTilesCachedEntityPosition.Equals(entity.EntityPrimaryPosition);
+
+    private void ShowCachedAvailableTiles(bool hovering)
+    {
+        foreach (var tileMap in hovering ? _availableTilesHovering.Values.Cast<TileMap>() : _availableTilesVisual.Values)
+            tileMap.Visible = true;
+    }
+
+    private void ClearAvailableTilesCache(bool hovering)
+    {
+        if (hovering)
+        {
+            _availableHoveringTilesCachedEntity = null;
+            return;
+        }
+
+        _availableTilesCache = Enumerable.Empty<Point>();
+        _availableTilesCachedEntity = null;
+    }
+    
+    private void CacheAvailableTiles(EntityNode entity, bool hovering, IEnumerable<Point> availableTiles)
+    {
+        if (hovering)
+        {
+            _availableHoveringTilesCachedEntity = entity.InstanceId;
+            _availableHoveringTilesCachedEntityPosition = entity.EntityPrimaryPosition;
+            return;
+        }
+
+        _availableTilesCachedEntity = entity.InstanceId;
+        _availableTilesCachedEntityPosition = entity.EntityPrimaryPosition;
+        _availableTilesCache = availableTiles;
     }
 }

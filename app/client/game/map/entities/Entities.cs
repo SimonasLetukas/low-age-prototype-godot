@@ -30,7 +30,7 @@ public class Entities : Node2D
     private EntityRenderers _renderers;
     private Node2D _units;
     private Node2D _structures;
-    private Func<IList<Vector2>, bool, IList<Tiles.TileInstance>> _getTiles;
+    private Func<IList<Vector2>, IList<Tiles.TileInstance>> _getTiles;
 
     private readonly System.Collections.Generic.Dictionary<Guid, EntityNode> _entitiesByIds = new System.Collections.Generic.Dictionary<Guid, EntityNode>();
 
@@ -43,7 +43,7 @@ public class Entities : Node2D
         NewPositionOccupied += _renderers.UpdateSorting;
     }
     
-    public void Initialize(Func<IList<Vector2>, bool, IList<Tiles.TileInstance>> getTiles)
+    public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles)
     {
         _getTiles = getTiles;
     }

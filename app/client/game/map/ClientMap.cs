@@ -247,6 +247,7 @@ public class ClientMap : Map
     {
         Entities.PlaceEntity();
         Pathfinding.ClearCache();
+        _tileMap.Elevatable.ClearCache();
         
         if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
         {

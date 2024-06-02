@@ -23,9 +23,12 @@ public class EventBus : Node
     #endregion Singleton
 
     #region Events
+    
+    public event Action<EntityNode> EntityPlaced = delegate { };
+    public void RaiseEntityPlaced(EntityNode entity) => EntityPlaced(entity);
 
-    public event Action<IPathfindingUpdatable, bool> PathfindingUpdated = delegate { };
-    public void RaisePathfindingUpdated(IPathfindingUpdatable data, bool isAdded) => PathfindingUpdated(data, isAdded);
+    public event Action<IPathfindingUpdatable, bool> PathfindingUpdating = delegate { };
+    public void RaisePathfindingUpdating(IPathfindingUpdatable data, bool isAdded) => PathfindingUpdating(data, isAdded);
 
     public event Action<Point> HighGroundPointCreated = delegate { };
     public void RaiseHighGroundPointCreated(Point point) => HighGroundPointCreated(point);

@@ -119,6 +119,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
                             new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
@@ -149,6 +153,10 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -577,6 +585,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
                             new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
@@ -601,6 +613,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
                             new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
@@ -622,6 +638,10 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -1082,6 +1102,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
                             new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
@@ -1104,6 +1128,10 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -1852,6 +1880,10 @@ namespace low_age_data.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
                             new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                     },
@@ -1891,6 +1923,10 @@ namespace low_age_data.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
