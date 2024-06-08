@@ -14,17 +14,19 @@ public class EntityRenderer : Node2D
         Line
     }
     
-    public string EntityName { get; set; }
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     public bool Registered { get; set; } = false;
     public bool IsDynamic { get; private set; } = false;
     public Rect2 SpriteBounds { get; private set; }
     public SortTypes SortType { get; private set; } = SortTypes.Point;
     public Vector2 SpriteSize => _sprite.Texture.GetSize();
-    public Rect2 EntityRelativeSize { get; private set; }
+    public int YHighGroundOffset { get; private set; } = 0;
 
     public readonly List<EntityRenderer> StaticDependencies = new List<EntityRenderer>();
     public readonly List<EntityRenderer> DynamicDependencies = new List<EntityRenderer>();
+    
+    private string _entityName;
+    private Rect2 _entityRelativeSize;
     
     private Vector2 _topOrigin;
     private Vector2 _bottomOrigin;
@@ -41,6 +43,9 @@ public class EntityRenderer : Node2D
 
     private Area2D _area;
     private Rect2 _previousSpriteBounds = new Rect2();
+
+    private EntityNode _entityBelow = null;
+    private bool _isOnHighGround = false;
 
     public Vector2 AsPoint => SortType is SortTypes.Point 
         ? _topOrigin 
@@ -68,7 +73,7 @@ public class EntityRenderer : Node2D
     public void Initialize(Guid instanceId, string name, bool isDynamic, Rect2 entityRelativeSize) 
     {
         InstanceId = instanceId;
-        EntityName = name;
+        _entityName = name;
         ZIndex = 0;
         IsDynamic = isDynamic;
         SortType = (int)entityRelativeSize.Size.x == (int)entityRelativeSize.Size.y ? SortTypes.Point : SortTypes.Line;
@@ -141,14 +146,14 @@ public class EntityRenderer : Node2D
 
     public void AdjustToRelativeSize(Rect2 entityRelativeSize)
     {
-        EntityRelativeSize = entityRelativeSize;
+        _entityRelativeSize = entityRelativeSize;
         UpdateOrigins();
     }
 
     public void UpdateOrigins()
     {
-        var position = EntityRelativeSize.Position;
-        var entitySize = EntityRelativeSize.Size;
+        var position = _entityRelativeSize.Position;
+        var entitySize = _entityRelativeSize.Size;
         var xBiggerThanY = entitySize.x > entitySize.y;
 
         var px = position.x;
@@ -194,7 +199,7 @@ public class EntityRenderer : Node2D
         SpriteBounds = new Rect2(top, SpriteSize);
         
         if (DebugEnabled)
-            GD.Print($"New {EntityName} sprite bounds: {SpriteBounds}");
+            GD.Print($"New {_entityName} sprite bounds: {SpriteBounds}");
         
         UpdateCollisionShape();
         
@@ -202,15 +207,37 @@ public class EntityRenderer : Node2D
         //_bottomOriginSprite.GlobalPosition = SpriteBounds.End;
     }
 
+    public void UpdateElevation(bool isOnHighGround, int yHighGroundOffset, EntityNode entityBelow)
+    {
+        _isOnHighGround = isOnHighGround;
+        YHighGroundOffset = yHighGroundOffset;
+        _entityBelow = entityBelow;
+    }
+    
+    public void ResetElevationOffset()
+    {
+        _sprite.Position = Vector2.Up * 0;
+    }
+
+    public void AdjustElevationOffset()
+    {
+        _sprite.Position = Vector2.Up * YHighGroundOffset;
+        _previousSpriteBounds = new Rect2();
+        UpdateSpriteBounds();
+    }
+
     public void UpdateZIndex(int to)
     {
+        if (_isOnHighGround && _entityBelow != null)
+            to = _entityBelow.Renderer.ZIndex + 1;
+        
         ZIndex = to;
         _zIndexText.Text = to.ToString();
     }
 
     public bool ContainsSpriteAt(Vector2 globalPosition)
     {
-        var localPosition = ToLocal(globalPosition);
+        var localPosition = _sprite.ToLocal(globalPosition);
         var result = _sprite.IsPixelOpaque(localPosition);
         if (DebugEnabled)
             GD.Print($"{nameof(EntityRenderer)}.{nameof(ContainsSpriteAt)}: {nameof(result)} '{result}' " +
@@ -227,8 +254,8 @@ public class EntityRenderer : Node2D
         {
             case SortTypes.Point when renderer2.SortType == SortTypes.Point:
                 if (DebugEnabled)
-                    GD.Print($"'{renderer1.EntityName}' topOrigin: '{renderer1._topOrigin}', " +
-                             $"'{renderer2.EntityName}' topOrigin: '{renderer2._topOrigin}'.");
+                    GD.Print($"'{renderer1._entityName}' topOrigin: '{renderer1._topOrigin}', " +
+                             $"'{renderer2._entityName}' topOrigin: '{renderer2._topOrigin}'.");
                 result = renderer2._topOrigin.y.CompareTo(renderer1._topOrigin.y);
                 break;
             case SortTypes.Line when renderer2.SortType == SortTypes.Line:
@@ -248,9 +275,9 @@ public class EntityRenderer : Node2D
         if (DebugEnabled)
         {
             var resultText = result == 0 ? "Both the same." : result > 0 
-                ? $"'{renderer2.EntityName}' is on top." : $"'{renderer1.EntityName}' is on top.";
-            GD.Print($"Renderer '{renderer1.EntityName}' of type '{renderer1.SortType}' compared to " +
-                  $"'{renderer2.EntityName}' of type {renderer2.SortType} with the result of {result}. " + resultText);
+                ? $"'{renderer2._entityName}' is on top." : $"'{renderer1._entityName}' is on top.";
+            GD.Print($"Renderer '{renderer1._entityName}' of type '{renderer1.SortType}' compared to " +
+                  $"'{renderer2._entityName}' of type {renderer2.SortType} with the result of {result}. " + resultText);
         }
 
         if (result == 0 && ((renderer1.IsDynamic && renderer2.IsDynamic is false)
@@ -258,8 +285,8 @@ public class EntityRenderer : Node2D
         {
             result = renderer1.IsDynamic ? -1 : 1;
             if (DebugEnabled)
-                GD.Print(result > 0 ? $"'{renderer2.EntityName}' is on top because it's dynamic." 
-                    : $"'{renderer1.EntityName}' is on top because it's dynamic.");
+                GD.Print(result > 0 ? $"'{renderer2._entityName}' is on top because it's dynamic." 
+                    : $"'{renderer1._entityName}' is on top because it's dynamic.");
         }
         
         return result;
@@ -340,7 +367,7 @@ public class EntityRenderer : Node2D
         _previousSpriteBounds = SpriteBounds;
         if (previousBounds.Equals(SpriteBounds))
             return;
-
+        
         foreach (var node in _area.GetChildren().OfType<Node>()) 
             node.QueueFree();
         

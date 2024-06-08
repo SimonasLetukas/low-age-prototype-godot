@@ -81,6 +81,10 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     public override void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
     {
         IsOnHighGround = resultingPoint.IsHighGround;
+        Renderer.UpdateElevation(IsOnHighGround, resultingPoint.YSpriteOffset, 
+            GetTile(resultingPoint.Position, false)?.Occupants.FirstOrDefault());
+        UpdateVitalsPosition();
+        
         base.MoveUntilFinished(globalPositionPath, resultingPoint);
     }
 }

@@ -111,7 +111,7 @@ public class ClientMap : Map
         if (_tileMapPointsInitialized is false)
             return;
         
-        Entities.Initialize(_tileMap.GetHighestTiles);
+        Entities.Initialize(_tileMap.GetHighestTiles, _tileMap.GetTile);
         
         _tileMap.FillMapOutsideWithMountains();
         _tileMap.UpdateALlBitmaps();
@@ -345,10 +345,11 @@ public class ClientMap : Map
         _tileMap.RemoveOccupation(entity);
         Pathfinding.RemoveOccupation(entity);
         
+        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
         foreach (var position in entity.EntityOccupyingPositions)
         {
-            var tile = _tileMap.GetTile(position);
-            if (tile is null || _tileMap.IsOccupied(position) is false)
+            var tile = _tileMap.GetTile(position, isOnHighGround);
+            if (tile is null || _tileMap.IsOccupied(tile) is false)
                 continue;
 
             foreach (var occupant in tile.Occupants) 

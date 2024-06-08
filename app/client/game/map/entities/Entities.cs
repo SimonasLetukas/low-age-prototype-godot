@@ -2,12 +2,10 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Godot.Collections;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Factions;
-using Array = Godot.Collections.Array;
 
 /// <summary>
 /// Parent of all entities (units & structures) and their rendering on the map.
@@ -30,7 +28,8 @@ public class Entities : Node2D
     private EntityRenderers _renderers;
     private Node2D _units;
     private Node2D _structures;
-    private Func<IList<Vector2>, IList<Tiles.TileInstance>> _getTiles;
+    private Func<IList<Vector2>, IList<Tiles.TileInstance>> _getHighestTiles;
+    private Func<Vector2, bool, Tiles.TileInstance> _getTile;
 
     private readonly System.Collections.Generic.Dictionary<Guid, EntityNode> _entitiesByIds = new System.Collections.Generic.Dictionary<Guid, EntityNode>();
 
@@ -43,9 +42,11 @@ public class Entities : Node2D
         NewPositionOccupied += _renderers.UpdateSorting;
     }
     
-    public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles)
+    public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getHighestTiles, 
+        Func<Vector2, bool, Tiles.TileInstance> getTile)
     {
-        _getTiles = getTiles;
+        _getHighestTiles = getHighestTiles;
+        _getTile = getTile;
     }
 
     public void SetupStartingEntities(IList<Vector2> startingPositions, FactionId factionId)
@@ -321,7 +322,8 @@ public class Entities : Node2D
     private StructureNode InstantiateStructure(Structure structureBlueprint)
     {
         var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures);
-        structure.GetTiles = _getTiles;
+        structure.GetHighestTiles = _getHighestTiles;
+        structure.GetTile = _getTile;
 
         return structure;
     }
@@ -330,7 +332,8 @@ public class Entities : Node2D
     {
         var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units);
 
-        unit.GetTiles = _getTiles;
+        unit.GetHighestTiles = _getHighestTiles;
+        unit.GetTile = _getTile;
         unit.FinishedMoving += OnEntityFinishedMoving;
 
         return unit;

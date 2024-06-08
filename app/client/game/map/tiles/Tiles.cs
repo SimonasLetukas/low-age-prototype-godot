@@ -256,18 +256,17 @@ public class Tiles : Node2D
     public TileInstance GetTile(Point point) => GetTile(point.Position, point.IsHighGround);
 
     public Tile GetBlueprint(TileId of) => _tilesBlueprint.SingleOrDefault(x => x.Id.Equals(of));
-
-    public bool IsOccupied(Vector2 at, EntityNode by = null) => IsOccupied(GetTile(at), by);
-
+    
     public bool IsOccupied(TileInstance tile, EntityNode by = null) => by is null 
         ? tile.Occupants.Any() 
         : tile.Occupants.Contains(by);
 
     public void AddOccupation(EntityNode entity)
     {
+        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
         foreach (var position in entity.EntityOccupyingPositions)
         {
-            var tile = GetTile(position);
+            var tile = GetTile(position, isOnHighGround);
             if (IsOccupied(tile, entity))
                 continue;
             
@@ -280,9 +279,10 @@ public class Tiles : Node2D
 
     public void RemoveOccupation(EntityNode entity)
     {
+        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
         foreach (var position in entity.EntityOccupyingPositions)
         {
-            var tile = GetTile(position);
+            var tile = GetTile(position, isOnHighGround);
             tile.Occupants.Remove(entity);
         }
         

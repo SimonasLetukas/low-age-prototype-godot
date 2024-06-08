@@ -38,7 +38,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public string DisplayName { get; protected set; }
     public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; }
-    public Func<IList<Vector2>, IList<Tiles.TileInstance>> GetTiles { protected get; set; }
+    public Func<IList<Vector2>, IList<Tiles.TileInstance>> GetHighestTiles { protected get; set; }
+    public Func<Vector2, bool, Tiles.TileInstance> GetTile { protected get; set; }
     
     protected bool Selected { get; private set; } = false;
     protected bool Flattened { get; private set; } = false;
@@ -99,6 +100,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public virtual void SnapTo(Vector2 globalPosition)
     {
         GlobalPosition = globalPosition;
+        Renderer.AdjustElevationOffset();
         Renderer.AdjustToRelativeSize(RelativeSize);
         Renderer.UpdateSpriteBounds();
     }
@@ -125,7 +127,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public bool DeterminePlacementValidity(bool requiresTargetTiles)
     {
         requiresTargetTiles = requiresTargetTiles && _canBePlacedOnTheWholeMap is false;
-        var tiles = GetTiles(EntityOccupyingPositions);
+        var tiles = GetHighestTiles(EntityOccupyingPositions);
         CanBePlaced = IsPlacementGenerallyValid(tiles, requiresTargetTiles)
                       && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles));
         
@@ -183,6 +185,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
     {
         EntityPrimaryPosition = resultingPoint.Position;
+        Renderer.ResetElevationOffset();
         
         globalPositionPath.Remove(globalPositionPath.First());
         _movePath = globalPositionPath;

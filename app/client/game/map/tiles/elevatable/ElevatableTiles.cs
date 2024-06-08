@@ -153,7 +153,7 @@ public class ElevatableTiles : Node2D
 
         foreach (var target in targets)
         {
-            var tileInstance = _tiles.GetTile(target, true) ?? _tiles.GetTile(target);
+            var tileInstance = _tiles.GetHighestTile(target);
             tileInstance.IsTarget = true;
             _targetTileInstances.Add(tileInstance);
         }

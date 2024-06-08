@@ -14,17 +14,17 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public IList<ActorAttribute> Attributes { get; protected set; }
     public ActorRotation ActorRotation { get; protected set; }
     public Abilities Abilities { get; protected set; }
-    
+
     private Actor Blueprint { get; set; }
     private TextureProgress _health;
     private TextureProgress _shields;
     private Vector2 _startingHealthPosition;
     private Vector2 _startingShieldsPosition;
-    
+
     public override void _Ready()
     {
         base._Ready();
-        
+
         Abilities = GetNode<Abilities>(nameof(Abilities));
 
         _health = GetNode<TextureProgress>($"Vitals/Health");
@@ -32,11 +32,11 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
         _startingHealthPosition = _health.RectPosition;
         _startingShieldsPosition = _shields.RectPosition;
-        
+
         _health.Visible = false;
         _shields.Visible = false;
     }
-    
+
     public void SetBlueprint(Actor blueprint)
     {
         base.SetBlueprint(blueprint);
@@ -80,7 +80,7 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        
+
         UpdateSprite();
         UpdateVitalsPosition();
     }
@@ -88,16 +88,16 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public void SetActorRotation(ActorRotation targetRotation)
     {
         var startingRotation = ActorRotation;
-        for (var r = 0; r < startingRotation.CountTo(targetRotation); r++) 
+        for (var r = 0; r < startingRotation.CountTo(targetRotation); r++)
             Rotate();
     }
 
     public bool HasHealth => CurrentStats.Any(x =>
         x.Blueprint is CombatStat combatStat
         && combatStat.CombatType.Equals(StatType.Health));
-    
-    public bool HasShields => CurrentStats.Any(x => 
-        x.Blueprint is CombatStat combatStat 
+
+    public bool HasShields => CurrentStats.Any(x =>
+        x.Blueprint is CombatStat combatStat
         && combatStat.CombatType.Equals(StatType.Shields));
 
     protected Actor GetActorBlueprint() => Blueprint;
@@ -105,17 +105,17 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     protected void UpdateVitalsPosition()
     {
         var spriteSize = Renderer.SpriteSize;
-        var offsetFromX = (int)(RelativeSize.Size.x - 1) * 
+        var offsetFromX = (int)(RelativeSize.Size.x - 1) *
                           new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 2)) +
-                          (int)RelativeSize.Position.x * 
+                          (int)RelativeSize.Position.x *
                           new Vector2((int)(Constants.TileWidth / 2), (int)(Constants.TileHeight / 2));
         var offsetFromY = (int)(RelativeSize.Size.y - 1) *
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 2)) +
-                          (int)RelativeSize.Position.y * 
+                          (int)RelativeSize.Position.y *
                           new Vector2((int)(Constants.TileWidth / 2) * -1, (int)(Constants.TileHeight / 2));
-        _health.RectPosition = 
-            new Vector2(_startingHealthPosition.x, (spriteSize.y * -1) - 2) + offsetFromX + offsetFromY;
-        _shields.RectPosition = 
-            new Vector2(_startingShieldsPosition.x, (spriteSize.y * -1) - 3) + offsetFromX + offsetFromY;
+        _health.RectPosition = new Vector2(_startingHealthPosition.x,
+            (spriteSize.y * -1) - 2 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
+        _shields.RectPosition = new Vector2(_startingShieldsPosition.x,
+            (spriteSize.y * -1) - 3 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
     }
 }

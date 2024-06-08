@@ -3,6 +3,9 @@ using Godot;
 
 public class FocusedTile : AnimatedSprite
 {
+    [Export]
+    public bool DebugEnabled { get; set; } = false;
+    
     public Tiles.TileInstance CurrentTile { get; private set; }
     public bool IsWithinTheMap => CurrentTile != null;
 
@@ -11,9 +14,14 @@ public class FocusedTile : AnimatedSprite
     private Vector2 _previousPosition = Vector2.Zero;
     private bool _stateChanged = false;
 
+    private RichTextLabel _zIndexText;
+
     public override void _Ready()
     {
         base._Ready();
+
+        _zIndexText = GetNode<RichTextLabel>($"{nameof(RichTextLabel)}");
+        _zIndexText.Visible = DebugEnabled;
         
         Disable();
     }
@@ -92,5 +100,6 @@ public class FocusedTile : AnimatedSprite
         Enable();
         GlobalPosition = _tiles.GetGlobalPositionFromMapPosition(position) + Vector2.Up * height;
         ZIndex = zIndex;
+        _zIndexText.Text = ZIndex.ToString();
     }
 }
