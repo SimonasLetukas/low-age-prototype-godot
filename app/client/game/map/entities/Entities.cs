@@ -24,14 +24,13 @@ public class Entities : Node2D
     public EntityNode EntityInPlacement { get; private set; } = null;
     public EntityNode HoveredEntity { get; private set; } = null;
 
-    private bool _flattened = false;
     private EntityRenderers _renderers;
     private Node2D _units;
     private Node2D _structures;
     private Func<IList<Vector2>, IList<Tiles.TileInstance>> _getHighestTiles;
     private Func<Vector2, bool, Tiles.TileInstance> _getTile;
 
-    private readonly System.Collections.Generic.Dictionary<Guid, EntityNode> _entitiesByIds = new System.Collections.Generic.Dictionary<Guid, EntityNode>();
+    private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new Dictionary<Guid, EntityNode>();
 
     public override void _Ready()
     {
@@ -175,15 +174,6 @@ public class Entities : Node2D
         return topEntity;
     }
     
-    public void SetFlattened(bool to)
-    {
-        _flattened = to;
-        foreach (var entity in _entitiesByIds.Values) 
-            entity.SetFlattened(to);
-        
-        // TODO recalculate high ground offsets
-    }
-    
     public void MoveEntity(EntityNode entity, IEnumerable<Vector2> globalPath, ICollection<Point> path)
     {
         var targetPoint = path.Last();
@@ -313,8 +303,6 @@ public class Entities : Node2D
         if (instanceId != null)
             entity.InstanceId = (Guid)instanceId;
         _entitiesByIds[entity.InstanceId] = entity;
-        
-        entity.SetFlattened(_flattened);
         
         return entity;
     }

@@ -26,7 +26,6 @@ public class ClientMap : Map
         Placement,
         Attack
     }
-    private bool _flattened = false;
     private (BuildNode, EntityId) _previousBuildSelection = (null, null);
 
     private bool _tileMapIsInitialized = false;
@@ -178,16 +177,8 @@ public class ClientMap : Map
     {
         if (Input.IsActionJustReleased(Constants.Input.Flatten) is false)
             return;
-
-        _flattened = !_flattened;
-        Entities.SetFlattened(_flattened);
-        if (_flattened)
-        {
-            _tileMap.StructureFoundations.Enable();
-            return;
-        }
         
-        _tileMap.StructureFoundations.Disable();
+        ClientState.Instance.ToggleFlattened();
     }
     
     private void HandleLeftClick()

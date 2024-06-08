@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-public class AvailableTiles : TileMap
+public class AvailableTiles : ElevatableTileMap
 {
     public const string ScenePath = @"res://app/client/game/map/tiles/elevatable/AvailableTiles.tscn";
     public static AvailableTiles Instance() => (AvailableTiles) GD.Load<PackedScene>(ScenePath).Instance();

@@ -94,7 +94,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         Renderer.SetSpriteVisibility(true);
         UpdateSprite();
         
-        if (EntityState != State.Completed || Flattened is false) 
+        if (EntityState != State.Completed || ClientState.Instance.Flattened is false) 
             return;
         
         if (FlattenedSprite is null || FlattenedCenterOffset is null)

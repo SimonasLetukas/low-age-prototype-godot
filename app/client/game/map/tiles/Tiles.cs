@@ -233,7 +233,10 @@ public class Tiles : Node2D
         => _grass.MapToWorld(mapPosition + _tilemapOffset, true) + _tileOffset;
 
     public IEnumerable<Vector2> GetGlobalPositionsFromMapPoints(IEnumerable<Point> mapPositions) 
-        => mapPositions.Select(x => GetGlobalPositionFromMapPosition(x.Position) + Vector2.Up * x.YSpriteOffset);
+        => mapPositions.Select(x => GetGlobalPositionFromMapPosition(x.Position) + Vector2.Up * 
+            (x.YSpriteOffset > 0 && ClientState.Instance.Flattened 
+                ? Constants.FlattenedHighGroundHeight 
+                : x.YSpriteOffset));
 
     public Terrain GetTerrain(TileInstance tile) => tile is null 
         ? Terrain.Mountains 

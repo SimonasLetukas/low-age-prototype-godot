@@ -24,6 +24,15 @@ public class FocusedTile : AnimatedSprite
         _zIndexText.Visible = DebugEnabled;
         
         Disable();
+
+        EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        
+        EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
     }
 
     public override void _Process(float delta)
@@ -58,16 +67,8 @@ public class FocusedTile : AnimatedSprite
         
         var hoveredTerrain = _tiles.GetTerrain(tile);
         EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.Occupants);
-
-        Tiles.TileInstance tileBelow = null;
-        if (tile != null) 
-            tileBelow = _tiles.GetTile(tile.Position, false);
-
-        var zIndex = tile?.Occupants.FirstOrDefault()?.Renderer.ZIndex
-                     ?? tileBelow?.Occupants.FirstOrDefault()?.Renderer.ZIndex + 1
-                     ?? 0;
         
-        MoveTo(mapPosition, tile?.Point.YSpriteOffset ?? 0, zIndex);
+        MoveTo(mapPosition, GetHeight(tile), GetZIndex(tile));
         _previousPosition = mapPosition;
         _stateChanged = false;
 
@@ -97,9 +98,30 @@ public class FocusedTile : AnimatedSprite
     
     private void MoveTo(Vector2 position, int height, int zIndex)
     {
-        Enable();
         GlobalPosition = _tiles.GetGlobalPositionFromMapPosition(position) + Vector2.Up * height;
         ZIndex = zIndex;
         _zIndexText.Text = ZIndex.ToString();
     }
+
+    private static int GetHeight(Tiles.TileInstance tile)
+    {
+        var height = tile?.Point.YSpriteOffset ?? 0;
+        height = height > 0 && ClientState.Instance.Flattened 
+            ? Constants.FlattenedHighGroundHeight 
+            : height;
+        return height;
+    }
+
+    private int GetZIndex(Tiles.TileInstance tile)
+    {
+        Tiles.TileInstance tileBelow = null;
+        if (tile != null) 
+            tileBelow = _tiles.GetTile(tile.Position, false);
+        
+        return tile?.Occupants.FirstOrDefault()?.Renderer.ZIndex
+               ?? tileBelow?.Occupants.FirstOrDefault()?.Renderer.ZIndex + 1
+               ?? 0;
+    }
+
+    private void OnWhenFlattenedChanged(bool to) => _stateChanged = true;
 }

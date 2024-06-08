@@ -8,6 +8,20 @@ public class EntityRenderers : Node2D
     
     private static readonly List<EntityRenderer> SortedRenderers = new List<EntityRenderer>();
 
+    public override void _Ready()
+    {
+        base._Ready();
+
+        EventBus.Instance.AfterFlattenedChanged += OnAfterFlattenedChanged;
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        
+        EventBus.Instance.AfterFlattenedChanged -= OnAfterFlattenedChanged;
+    }
+
     public void RegisterRenderer(EntityRenderer newRenderer)
     {
         if (newRenderer.Registered) 
@@ -146,4 +160,6 @@ public class EntityRenderers : Node2D
             currentOrder -= 1;
         }
     }
+
+    private void OnAfterFlattenedChanged(bool to) => UpdateSorting();
 }

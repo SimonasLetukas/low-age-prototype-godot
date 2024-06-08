@@ -1,12 +1,11 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://app/client/game/map/tiles/IsometricTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://app/client/game/map/tiles/elevatable/PathTiles.cs" type="Script" id=2]
 
-[node name="PathTiles" type="TileMap"]
-mode = 1
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 16, 8 )
-format = 1
-tile_data = PoolIntArray( 262180, 0, 0, 786447, 9, 0, 851983, 9, 0, 851984, 9, 0, 851985, 9, 0, 917521, 9, 0, 917522, 9, 0, 983058, 9, 0, 983059, 9, 0, 1048595, 9, 0, 1048596, 9, 0, 1048597, 9, 0, 1048598, 9, 0, 1048599, 9, 0, 1048600, 9, 0 )
+[node name="PathTiles" instance=ExtResource( 1 )]
+tile_data = PoolIntArray( 524299, 9, 0, 589836, 9, 0, 655373, 9, 0, 720910, 9, 0, 786447, 9, 0, 851984, 9, 0, 917521, 9, 0, 917522, 9, 0, 917523, 9, 0, 917524, 9, 0, 917525, 9, 0, 917526, 9, 0, 917527, 9, 0, 917528, 9, 0 )
 script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}

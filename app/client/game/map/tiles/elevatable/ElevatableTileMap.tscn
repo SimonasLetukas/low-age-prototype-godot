@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://app/client/game/map/tiles/IsometricTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.cs" type="Script" id=2]
+
+[node name="ElevatableTileMap" type="TileMap"]
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 8 )
+format = 1
+script = ExtResource( 2 )

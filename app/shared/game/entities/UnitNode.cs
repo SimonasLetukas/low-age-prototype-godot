@@ -74,7 +74,7 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         if (Selected || Hovered)
             return;
         
-        if (EntityState is State.Completed && Flattened)
+        if (EntityState is State.Completed && ClientState.Instance.Flattened)
             SetTransparency(true);
     }
 

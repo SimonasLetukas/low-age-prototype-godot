@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-public class PathTiles : TileMap
+public class PathTiles : ElevatableTileMap
 {
     public const string ScenePath = @"res://app/client/game/map/tiles/elevatable/PathTiles.tscn";
     public static PathTiles Instance() => (PathTiles) GD.Load<PackedScene>(ScenePath).Instance();

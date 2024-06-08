@@ -15,6 +15,15 @@ public class StructureFoundations : Node2D
         Visible = false;
         foreach (var child in GetChildren().OfType<Node>()) 
             child.QueueFree();
+
+        EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        
+        EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
     }
 
     public void AddOccupation(StructureNode structure)
@@ -34,13 +43,24 @@ public class StructureFoundations : Node2D
         _foundationsByInstanceId.Remove(structure.InstanceId);
     }
 
-    public void Enable()
+    private void Enable()
     {
         Visible = true;
     }
 
-    public void Disable()
+    private void Disable()
     {
         Visible = false;
+    }
+
+    private void OnWhenFlattenedChanged(bool to)
+    {
+        if (to)
+        {
+            Enable();
+            return;
+        }
+        
+        Disable();
     }
 }

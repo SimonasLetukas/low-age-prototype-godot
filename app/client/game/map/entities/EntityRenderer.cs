@@ -68,8 +68,17 @@ public class EntityRenderer : Node2D
 
         _icon.Texture = null;
         _debugVisuals.Visible = DebugEnabled;
+
+        EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
     }
-    
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        
+        EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
+    }
+
     public void Initialize(Guid instanceId, string name, bool isDynamic, Rect2 entityRelativeSize) 
     {
         InstanceId = instanceId;
@@ -221,7 +230,9 @@ public class EntityRenderer : Node2D
 
     public void AdjustElevationOffset()
     {
-        _sprite.Position = Vector2.Up * YHighGroundOffset;
+        _sprite.Position = Vector2.Up * (ClientState.Instance.Flattened && _isOnHighGround
+            ? Constants.FlattenedHighGroundHeight 
+            : YHighGroundOffset);
         _previousSpriteBounds = new Rect2();
         UpdateSpriteBounds();
     }
@@ -380,4 +391,6 @@ public class EntityRenderer : Node2D
         _area.AddChild(collision);
         _area.GlobalPosition = SpriteBounds.Position + shape.Extents;
     }
+
+    private void OnWhenFlattenedChanged(bool to) => AdjustElevationOffset();
 }

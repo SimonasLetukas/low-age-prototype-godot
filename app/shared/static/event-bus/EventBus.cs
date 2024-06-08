@@ -42,5 +42,11 @@ public class EventBus : Node
     public event Action<Point> HighGroundPointRemoved = delegate { };
     public void RaiseHighGroundPointRemoved(Point point) => HighGroundPointRemoved(point);
 
+    public event Action<bool> WhenFlattenedChanged = delegate { };
+    public void RaiseWhenFlattenedChanged(bool to) => WhenFlattenedChanged(to);
+    
+    public event Action<bool> AfterFlattenedChanged = delegate { };
+    public void RaiseAfterFlattenedChanged(bool to) => AfterFlattenedChanged(to);
+
     #endregion Events
 }

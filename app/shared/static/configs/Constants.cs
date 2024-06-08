@@ -25,6 +25,8 @@
     public const int TileWidth = 16;
     public const int TileHeight = 8;
 
+    public const int FlattenedHighGroundHeight = 2;
+
     public const int MaxTooltipCharCount = 40;
 
     public static string ServerIp { get; private set; }

@@ -312,8 +312,8 @@ public class ElevatableTiles : Node2D
         var availableTiles = AvailableTiles.InstantiateAsChild(_alpha);
         var availableHoveringTiles = AvailableHoveringTiles.InstantiateAsChild(_alpha);
             
-        availableTiles.Position = Vector2.Up * elevation;
-        availableHoveringTiles.Position = Vector2.Up * elevation;
+        availableTiles.SetElevation(elevation);
+        availableHoveringTiles.SetElevation(elevation);
 
         // TODO use: availableTiles.TileSet.TileSetZIndex();
         availableTiles.ZIndex = 1000; // TODO be one higher than structure below & change upon each render update
@@ -324,7 +324,7 @@ public class ElevatableTiles : Node2D
         
         // Target tiles
         var targetTiles = TargetTiles.InstantiateAsChild(_alpha);
-        targetTiles.Position = Vector2.Up * elevation;
+        targetTiles.SetElevation(elevation);
         // TODO use: targetTiles.TileSet.TileSetZIndex();
         targetTiles.ZIndex = 1000; // TODO be one higher than structure below & change upon each render update
             
@@ -332,7 +332,7 @@ public class ElevatableTiles : Node2D
         
         // Path tiles
         var pathTiles = PathTiles.InstantiateAsChild(this);
-        pathTiles.Position = Vector2.Up * elevation;
+        pathTiles.SetElevation(elevation);
         // TODO use: pathTiles.TileSet.TileSetZIndex();
         pathTiles.ZIndex = 1000; // TODO be one higher than structure below & change upon each render update
             

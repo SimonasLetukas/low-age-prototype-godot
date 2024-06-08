@@ -42,7 +42,6 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public Func<Vector2, bool, Tiles.TileInstance> GetTile { protected get; set; }
     
     protected bool Selected { get; private set; } = false;
-    protected bool Flattened { get; private set; } = false;
     protected bool Hovered { get; private set; } = false;
     protected State EntityState { get; private set; }
     protected enum State
@@ -70,8 +69,16 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         _movement = GetNode<Tween>("Movement");
 
         _movement.Connect("tween_all_completed", this, nameof(OnMovementTweenAllCompleted));
+        EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
     }
-    
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
+    }
+
     public void SetBlueprint(Entity blueprint)
     {
         Blueprint = blueprint;
@@ -103,12 +110,6 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Renderer.AdjustElevationOffset();
         Renderer.AdjustToRelativeSize(RelativeSize);
         Renderer.UpdateSpriteBounds();
-    }
-
-    public void SetFlattened(bool to)
-    {
-        Flattened = to;
-        UpdateVisuals();
     }
 
     public void SetForPlacement(bool canBePlacedOnTheWholeMap)
@@ -334,6 +335,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
                 return 0.25f;
         }
     }
+    
+    private void OnWhenFlattenedChanged(bool to) => UpdateVisuals();
 
     public override bool Equals(object obj)
     {
