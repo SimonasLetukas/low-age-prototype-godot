@@ -5,9 +5,11 @@ using Godot;
 
 public class ElevatableTiles : Node2D
 {
+    public FocusedTile Focused { get; private set; }
+    
     private Tiles _tiles;
+    private Vector2 _tilemapOffset;
     private readonly HashSet<int> _preparedElevations = new HashSet<int> { 0 }; 
-    private FocusedTile _focusedTile; // TODO add elevation
     private Node2D _alpha;
     private readonly Dictionary<int, AvailableTiles> _availableTilesVisual = new Dictionary<int, AvailableTiles>();
     private readonly Dictionary<int, AvailableHoveringTiles> _availableTilesHovering = new Dictionary<int, AvailableHoveringTiles>();
@@ -44,8 +46,7 @@ public class ElevatableTiles : Node2D
         
         _pathTileMaps[0] = GetNode<PathTiles>($"{nameof(PathTiles)}");
         
-        _focusedTile = GetNode<FocusedTile>("FocusedTile");
-        _focusedTile.Disable();
+        Focused = GetNode<FocusedTile>($"{nameof(FocusedTile)}");
         
         ClearPath();
         ClearAvailableTiles(true);
@@ -53,23 +54,17 @@ public class ElevatableTiles : Node2D
         ClearTargetTiles();
     }
 
-    public void Initialize(Tiles parent) => _tiles = parent;
+    public void Initialize(Vector2 mapSize, Tiles parent)
+    {
+        _tiles = parent;
+        Focused.Initialize(parent);
+        _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
+    }
 
     public void SetMapWideTargetTiles(Vector2 at)
     {
         _targetMapPositiveTiles.SetCellv(at, TileMapPositiveTargetTileIndex);
         _targetMapNegativeTiles.SetCellv(at, TileMapNegativeTargetTileIndex);
-    }
-    
-    public void DisableFocusedTile()
-    {
-        _focusedTile.Disable();
-    }
-
-    public void MoveFocusedTileTo(Vector2 position)
-    {
-        _focusedTile.Enable();
-        _focusedTile.MoveTo(_tiles.GetGlobalPositionFromMapPosition(position));
     }
 
     public void SetAvailableTiles(EntityNode entity, IEnumerable<Point> availablePoints, int size, bool hovering)
@@ -114,6 +109,30 @@ public class ElevatableTiles : Node2D
         }
         
         CacheAvailableTiles(entity, hovering, availablePointsSource);
+    }
+
+    public Tiles.TileInstance GetAvailableTileAtMousePosition()
+    {
+        if (_availableTilesVisual.Values.Any(x => x.Visible is false))
+            return null;
+        
+        var mousePosition = GetGlobalMousePosition();
+        var highestElevation = -1;
+        Tiles.TileInstance result = null;
+        foreach (var availableTiles in _availableTilesVisual)
+        {
+            var position = availableTiles.Value.WorldToMap(mousePosition 
+                                                           - availableTiles.Value.Position) - _tilemapOffset;
+            var tileExists = _availableTilesCache.Any(x => x.Position.Equals(position) 
+                                                           && x.YSpriteOffset.Equals(availableTiles.Key));
+            if (tileExists is false || availableTiles.Key <= highestElevation) 
+                continue;
+            
+            result = _tiles.GetTile(_availableTilesCache.First(x => x.Position.Equals(position)));
+            highestElevation = availableTiles.Key;
+        }
+
+        return result;
     }
     
     public bool IsCurrentlyAvailable(Tiles.TileInstance tile) => IsCurrentlyAvailable(tile.Point);

@@ -103,7 +103,7 @@ public class Tiles : Node2D
         _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
         _mountainsFillOffset = (int)Mathf.Max(mapSize.x, mapSize.y);
         _tileOffset = new Vector2(1, (float)Constants.TileHeight / 2);
-        Elevatable.Initialize(this);
+        Elevatable.Initialize(mapSize, this);
         ClearTilemaps();
         _tilesForDataInitialization = tiles.ToList();
         _tilesForVisualsInitialization = tiles.ToList();
@@ -237,14 +237,15 @@ public class Tiles : Node2D
 
     public Terrain GetTerrain(TileInstance tile) => tile is null 
         ? Terrain.Mountains 
-        : GetTerrain(tile.Position);
+        : GetTerrain(tile.Position, tile.Point.IsHighGround);
     
-    public Terrain GetTerrain(Vector2 at) => at.IsInBoundsOf(_mapSize)
-        ? GetTile(at).Terrain
+    public Terrain GetTerrain(Vector2 at, bool isHighGround = false) => at.IsInBoundsOf(_mapSize)
+        ? GetTile(at, isHighGround).Terrain
         : Terrain.Mountains;
 
-    public IList<TileInstance> GetTiles(IList<Vector2> at) 
-        => at.Select(x => GetTile(x, true) ?? GetTile(x)).ToList();
+    public IList<TileInstance> GetHighestTiles(IList<Vector2> at) => at.Select(GetHighestTile).ToList();
+
+    public TileInstance GetHighestTile(Vector2 at) => GetTile(at, true) ?? GetTile(at);
 
     public TileInstance GetTile(Vector2 at, bool isHighGround = false) => at.IsInBoundsOf(_mapSize) 
         ? _tiles.ContainsKey((at, isHighGround)) 
@@ -309,22 +310,22 @@ public class Tiles : Node2D
     
     public IEnumerable<TileInstance> GetDilated(IEnumerable<Point> points, int size)
     {
-        var newPositions = new HashSet<Vector2>();
-        foreach (var position in points)
+        var tileSearchSet = new HashSet<(Vector2, bool)>();
+        foreach (var point in points)
         {
             for (var xOffset = 0; xOffset < size; xOffset++)
             {
                 for (var yOffset = 0; yOffset < size; yOffset++)
                 {
-                    var resultingCoordinates = position.Position + new Vector2(xOffset, yOffset);
+                    var resultingCoordinates = point.Position + new Vector2(xOffset, yOffset);
                     
                     if (resultingCoordinates.IsInBoundsOf(_mapSize))
-                        newPositions.Add(resultingCoordinates);
+                        tileSearchSet.Add((resultingCoordinates, point.IsHighGround));
                 }
             }
         }
 
-        return newPositions.Select(position => GetTile(position, true) ?? GetTile(position));
+        return tileSearchSet.Select(x => GetTile(x.Item1, x.Item2));
     }
 
     private void SetCell(Vector2 at, Terrain terrain)

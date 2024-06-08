@@ -449,9 +449,9 @@ public class Pathfinding : Node
 	    return availablePositions;
     }
 
-    public IEnumerable<Point> FindPath(Vector2 to, int size, bool isHighGround)
+    public IEnumerable<Point> FindPath(Point to, int size)
     {
-	    if (to.IsInBoundsOf(MapSize) is false)
+	    if (to.Position.IsInBoundsOf(MapSize) is false)
 	    {
 		    return Enumerable.Empty<Point>();
 	    }
@@ -460,10 +460,9 @@ public class Pathfinding : Node
 	    if (pathfinding is null)
 		    return Enumerable.Empty<Point>();
 
-	    var targetPointId = Points.GetId(to, isHighGround);
-	    var pathOfPointIds = pathfinding.GetShortestPathFromPoint(targetPointId);
+	    var pathOfPointIds = pathfinding.GetShortestPathFromPoint(to.Id);
 
-	    var path = new List<Point> { Points.GetPoint(targetPointId) };
+	    var path = new List<Point> { Points.GetPoint(to.Id) };
 	    path.AddRange(pathOfPointIds.Select(pointId => Points.GetPoint(pointId)));
 	    path.Reverse();
 

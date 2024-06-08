@@ -94,11 +94,6 @@ public class Interface : CanvasLayer
         _informationalText.SwitchToDefault();
     }
 
-    internal void OnMapNewTileHovered(Vector2 tileHovered, Terrain terrain, IList<EntityNode> occupants)
-    {
-        _hoveringPanel.OnMapNewTileHovered(tileHovered, terrain, occupants);
-    }
-
     private void OnSelectionPanelSelectedToBuild(BuildNode buildAbility, EntityId entityId)
     {
         SelectedToBuild(buildAbility, entityId);

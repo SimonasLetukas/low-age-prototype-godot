@@ -8,7 +8,6 @@ using low_age_data.Domain.Entities;
 public class ClientMap : Map
 {
     public event Action FinishedInitializing = delegate { };
-    public event Action<Vector2, Terrain, IList<EntityNode>> NewTileHovered = delegate { };
     public event Action<EntityNode> EntityIsBeingPlaced = delegate { };
     public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
 
@@ -17,8 +16,8 @@ public class ClientMap : Map
     private Player _currentPlayer;
     private IList<Rect2> _startingPositions = new List<Rect2>();
     private Vector2 _mapSize = Vector2.Inf;
-    private Tiles.TileInstance _hoveredTile = null;
     private Tiles _tileMap;
+    private FocusedTile _focusedTile;
     private SelectionOverlay _selectionOverlay = SelectionOverlay.None;
     private enum SelectionOverlay
     {
@@ -45,6 +44,7 @@ public class ClientMap : Map
         _tileMap.FinishedInitialInitializing += OnTileMapFinishedInitialInitializing;
         _tileMap.FinishedPointInitialization += OnTileMapFinishedPointInitialization;
         Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing;
+        EventBus.Instance.NewTileFocused += OnNewTileFocused;
     }
     
     public override void _ExitTree()
@@ -53,6 +53,7 @@ public class ClientMap : Map
         _tileMap.FinishedInitialInitializing -= OnTileMapFinishedInitialInitializing;
         _tileMap.FinishedPointInitialization -= OnTileMapFinishedPointInitialization;
         Pathfinding.FinishedInitializing -= OnPathfindingFinishedInitializing;
+        EventBus.Instance.NewTileFocused -= OnNewTileFocused;
         base._ExitTree();
     }
 
@@ -67,6 +68,8 @@ public class ClientMap : Map
         Position = new Vector2((Mathf.Max(_mapSize.x, _mapSize.y) * Constants.TileWidth) / 2, Position.y);
         _tileMap.Initialize(_mapSize, @event.Tiles);
         Pathfinding.Initialize(_mapSize, @event.Tiles);
+        
+        _focusedTile = _tileMap.Elevatable.Focused;
     }
 
     private void OnTileMapFinishedInitialInitializing()
@@ -108,7 +111,7 @@ public class ClientMap : Map
         if (_tileMapPointsInitialized is false)
             return;
         
-        Entities.Initialize(_tileMap.GetTiles);
+        Entities.Initialize(_tileMap.GetHighestTiles);
         
         _tileMap.FillMapOutsideWithMountains();
         _tileMap.UpdateALlBitmaps();
@@ -120,8 +123,6 @@ public class ClientMap : Map
     {
         base._Process(delta);
         var mousePosition = GetGlobalMousePosition();
-        var mapPosition = _tileMap.GetMapPositionFromGlobalPosition(mousePosition);
-        UpdateHoveredTile(mapPosition);
 
         if (_selectionOverlay is SelectionOverlay.None)
         {
@@ -132,21 +133,20 @@ public class ClientMap : Map
         {
             UpdateHoveredEntity(mousePosition);
 
-            // TODO optimization: only if hovered tile changed from above, display path
-            if (_hoveredTile != null)
+            // TODO optimization: only if focused tile changed from above, display path
+            if (_focusedTile.IsWithinTheMap)
             {
                 var size = (int)Entities.SelectedEntity.EntitySize.x;
                 var path = Pathfinding.FindPath(
-                    _hoveredTile.Position, 
-                    size,
-                    _hoveredTile.Occupants.Any() && _hoveredTile.Occupants.All(x => 
-                        x.HasHighGroundAt(_hoveredTile.Point)));
+                    _focusedTile.CurrentTile.Point,
+                    size);
                 _tileMap.Elevatable.SetPathTiles(path, size);
             }
         }
 
         if (_selectionOverlay is SelectionOverlay.Placement)
         {
+            var mapPosition = _tileMap.GetMapPositionFromGlobalPosition(mousePosition);
             var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(mapPosition);
             Entities.UpdateEntityInPlacement(mapPosition, globalPosition);
         }
@@ -192,14 +192,13 @@ public class ClientMap : Map
     
     private void HandleLeftClick()
     {
-        if (_hoveredTile is null || _hoveredTile.IsInBoundsOf(_mapSize) is false)
+        if (_focusedTile.IsWithinTheMap is false)
             return;
         
         if (Entities.EntityMoving)
             return;
         
-        var mapPosition = GetMapPositionFromMousePosition();
-        UpdateHoveredTile(mapPosition);
+        _focusedTile.UpdateTile();
 
         if (_selectionOverlay is SelectionOverlay.None
             || _selectionOverlay is SelectionOverlay.Movement)
@@ -260,7 +259,7 @@ public class ClientMap : Map
     
     private void HandleRightClick()
     {
-        if (_hoveredTile is null || _hoveredTile.IsInBoundsOf(_mapSize) is false)
+        if (_focusedTile.IsWithinTheMap is false)
             return;
         
         if (Entities.EntityMoving)
@@ -271,9 +270,7 @@ public class ClientMap : Map
 
         if (_selectionOverlay is SelectionOverlay.Movement)
         {
-            var mapPosition = GetMapPositionFromMousePosition();
-            UpdateHoveredTile(mapPosition);
-            
+            _focusedTile.UpdateTile();
             ExecuteMovement();
             return;
         }
@@ -288,17 +285,16 @@ public class ClientMap : Map
 
     private void ExecuteMovement()
     {
-        if (_tileMap.Elevatable.IsCurrentlyAvailable(_hoveredTile) is false 
-            || Entities.SelectedEntity.EntityPrimaryPosition.Equals(_hoveredTile.Position))
+        if (_tileMap.Elevatable.IsCurrentlyAvailable(_focusedTile.CurrentTile) is false 
+            || Entities.SelectedEntity.EntityPrimaryPosition.Equals(_focusedTile.CurrentTile.Position))
             return;
         
         // TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
         
         var selectedEntity = Entities.SelectedEntity;
-        var path = Pathfinding.FindPath(_hoveredTile.Position, (int)selectedEntity.EntitySize.x, 
-                _hoveredTile.Occupants.Any() 
-                && _hoveredTile.Occupants.All(x => x.HasHighGroundAt(_hoveredTile.Point)))
-            .ToList();
+        var path = Pathfinding.FindPath(
+            _focusedTile.CurrentTile.Point,
+            (int)Entities.SelectedEntity.EntitySize.x).ToList();
         var globalPath = _tileMap.GetGlobalPositionsFromMapPoints(path);
         UnitMovementIssued(new UnitMovedAlongPathEvent(selectedEntity.InstanceId, globalPath, path));
         HandleDeselecting();
@@ -309,74 +305,30 @@ public class ClientMap : Map
         _tileMap.Elevatable.ClearTargetTiles();
         Entities.CancelPlacement();
         _previousBuildSelection = (null, null);
+        _focusedTile.Enable();
         ExecuteEntitySelection(true);
     }
     
     private EntityNode UpdateHoveredEntity(Vector2 mousePosition)
     {
+        if (_focusedTile.IsWithinTheMap is false)
+            return null;
+        
         var topEntity = Entities.GetTopEntity(mousePosition);
 
         if (topEntity != null && Input.IsActionPressed(Constants.Input.FocusSelection) is false)
         {
-            var entityMapPosition = topEntity.EntityPrimaryPosition;
-            UpdateHoveredTile(entityMapPosition);
+            _focusedTile.FocusEntity(topEntity);
+            _focusedTile.UpdateTile();
             
             if (Entities.IsEntityHovered(topEntity))
                 return topEntity;
         }
+
+        var entityWasHovered = Entities.TryHoveringEntityOn(_focusedTile.CurrentTile);
+        _focusedTile.StopEntityFocus(); // TODO remove flashing when focusing from one entity to another
         
-        if (_hoveredTile is null)
-            return null;
-
-        var entityWasHovered = Entities.TryHoveringEntityOn(_hoveredTile);
-        if (entityWasHovered)
-        {
-            return Entities.HoveredEntity;
-        }
-
-        return null;
-    }
-
-    private void UpdateHoveredTile(Vector2 mapPosition)
-    {
-        if (_hoveredTile?.Position == mapPosition)
-            return;
-        
-        // TODO handle hovered tile for entities bigger than 1x1 (2x2, 3x2...)
-        _hoveredTile = _tileMap.GetTile(mapPosition);
-        var hoveredTerrain = _tileMap.GetTerrain(_hoveredTile);
-        NewTileHovered(mapPosition, hoveredTerrain, _hoveredTile?.Occupants);
-
-        if (_selectionOverlay is SelectionOverlay.Placement)
-            return;
-        
-        _tileMap.Elevatable.MoveFocusedTileTo(mapPosition);
-
-        if (_hoveredTile is null)
-            return;
-
-        if (_hoveredTile.Occupants.IsEmpty())
-        {
-            _tileMap.Elevatable.ClearAvailableTiles(true);
-            return;
-        }
-
-        if (_hoveredTile.Occupants.Last() is UnitNode unit)
-        {
-            if (Entities.IsEntitySelected(unit))
-                return;
-            
-            _tileMap.Elevatable.SetAvailableTiles(unit, Pathfinding.GetAvailablePoints(
-                    unit.EntityPrimaryPosition,
-                    unit.GetReach(),
-                    unit.IsOnHighGround,
-                    (int)unit.EntitySize.x,
-                    true),
-                (int)unit.EntitySize.x,
-                true);
-        }
-        else
-            _tileMap.Elevatable.ClearAvailableTiles(true);
+        return entityWasHovered ? Entities.HoveredEntity : null;
     }
 
     private Vector2 GetMapPositionFromMousePosition() 
@@ -402,6 +354,35 @@ public class ClientMap : Map
             foreach (var occupant in tile.Occupants) 
                 Pathfinding.AddOccupation(occupant);
         }
+    }
+    
+    private void OnNewTileFocused(Vector2 mapPosition, Terrain terrain, IList<EntityNode> occupants)
+    {
+        if (_focusedTile.IsWithinTheMap is false)
+            return;
+
+        if (_focusedTile.CurrentTile.Occupants.IsEmpty())
+        {
+            _tileMap.Elevatable.ClearAvailableTiles(true);
+            return;
+        }
+
+        if (_focusedTile.CurrentTile.Occupants.Last() is UnitNode unit)
+        {
+            if (Entities.IsEntitySelected(unit))
+                return;
+            
+            _tileMap.Elevatable.SetAvailableTiles(unit, Pathfinding.GetAvailablePoints(
+                    unit.EntityPrimaryPosition,
+                    unit.GetReach(),
+                    unit.IsOnHighGround,
+                    (int)unit.EntitySize.x,
+                    true),
+                (int)unit.EntitySize.x,
+                true);
+        }
+        else
+            _tileMap.Elevatable.ClearAvailableTiles(true);
     }
 
     private void OnEntitiesNewPositionOccupied(EntityNode entity)
@@ -430,7 +411,7 @@ public class ClientMap : Map
         Entities.CancelPlacement();
         _tileMap.Elevatable.ClearAvailableTiles(false);
         _tileMap.Elevatable.ClearPath();
-        _tileMap.Elevatable.DisableFocusedTile();
+        _focusedTile.Disable();
 
         var canBePlacedOnTheWholeMap = buildAbility.CanBePlacedOnTheWholeMap();
         _tileMap.Elevatable.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity, _mapSize), 

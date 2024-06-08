@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Godot;
+using low_age_data.Domain.Common;
 
 /// <summary>
 /// Used to pass around events globally when wiring them directly is not an option
@@ -23,6 +25,10 @@ public class EventBus : Node
     #endregion Singleton
 
     #region Events
+
+    public event Action<Vector2, Terrain, IList<EntityNode>> NewTileFocused = delegate { };
+    public void RaiseNewTileFocused(Vector2 mapPosition, Terrain terrain, IList<EntityNode> occupants)
+        => NewTileFocused(mapPosition, terrain, occupants);
     
     public event Action<EntityNode> EntityPlaced = delegate { };
     public void RaiseEntityPlaced(EntityNode entity) => EntityPlaced(entity);

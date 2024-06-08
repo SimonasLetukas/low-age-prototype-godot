@@ -13,6 +13,14 @@ public class HoveringPanel : Control
     {
         _infoDisplay = GetNode<InfoDisplay>($"{nameof(InfoDisplay)}");
         _infoDisplay.Reset();
+        
+        EventBus.Instance.NewTileFocused += OnNewTileFocused;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus.Instance.NewTileFocused -= OnNewTileFocused;
+        base._ExitTree();
     }
 
     public void SetMapSize(Vector2 mapSize)
@@ -20,7 +28,7 @@ public class HoveringPanel : Control
         _mapSize = mapSize;
     }
     
-    public void OnMapNewTileHovered(Vector2 tileHovered, Terrain terrain, IList<EntityNode> occupants)
+    private void OnNewTileFocused(Vector2 tileHovered, Terrain terrain, IList<EntityNode> occupants)
     {
         string coordinatesText;
         string terrainText;

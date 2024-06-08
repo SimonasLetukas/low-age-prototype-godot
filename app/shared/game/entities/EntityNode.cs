@@ -215,8 +215,12 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         var pathfindingUpdatableBehaviours = Behaviours.GetPathfindingUpdatables;
         if (pathfindingUpdatableBehaviours.IsEmpty())
             return false;
+
+        var result = pathfindingUpdatableBehaviours.All(x => x.CanBeMovedOnAt(position));
+        if (result)
+            GD.Print("Result returned true");
         
-        return pathfindingUpdatableBehaviours.All(x => x.CanBeMovedOnAt(position));
+        return result;
     }
     
     public void Destroy()
