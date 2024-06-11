@@ -44,22 +44,38 @@ public class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGround>, IPa
     
     private void SetupPositions()
     {
-        var primaryPosition = Parent.EntityPrimaryPosition;
-        var outerCollection = new List<(IList<Vector2>, int)>();
+        var startingRotation = ActorRotation.BottomRight;
+        var finalRotation = Parent is ActorNode actor ? actor.ActorRotation : startingRotation;
+        var rotationCount = startingRotation.CountTo(finalRotation);
+
+        var leveledRectsBlueprint = Blueprint.HighGroundAreas.Select(step => 
+            (step.Area.ToGodotRect2(), step.SpriteOffset.Y)).ToList();
         
-        foreach (var step in Blueprint.HighGroundAreas)
+        var entityBoundsBeforeRotation = finalRotation is ActorRotation.BottomLeft 
+                                         || finalRotation is ActorRotation.TopRight 
+            ? new Vector2(Parent.EntitySize.y, Parent.EntitySize.x) 
+            : Parent.EntitySize;
+        
+        var rotatedRectsBlueprint = leveledRectsBlueprint.Select(entry => entry.Item1).ToList();
+        rotatedRectsBlueprint = rotatedRectsBlueprint.RotateClockwiseInside(entityBoundsBeforeRotation, rotationCount)
+            .ToList();
+        
+        var primaryPosition = Parent.EntityPrimaryPosition;
+        
+        var leveledPositions = new List<(IList<Vector2>, int)>();
+        for (var i = 0; i < leveledRectsBlueprint.Count; i++)
         {
-            // TODO factor in actor rotation
-            var rect2 = step.Area.ToGodotRect2();
+            var rect2 = rotatedRectsBlueprint[i];
             rect2.Position += primaryPosition;
             var positions = rect2.ToList();
-            outerCollection.Add((positions, step.SpriteOffset.Y));
-            foreach (var pos in positions)
+            var height = leveledRectsBlueprint[i].Item2;
+            leveledPositions.Add((positions, height));
+            foreach (var position in positions)
             {
-                FlattenedPositions.Add(pos);
+                FlattenedPositions.Add(position);
             }
         }
 
-        LeveledPositions = outerCollection;
+        LeveledPositions = leveledPositions;
     }
 }

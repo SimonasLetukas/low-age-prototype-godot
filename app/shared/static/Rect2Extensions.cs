@@ -2,6 +2,7 @@
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
+using Newtonsoft.Json;
 using Area = low_age_data.Domain.Common.Area;
 
 public static class Rect2Extensions
@@ -27,15 +28,18 @@ public static class Rect2Extensions
 
     public static IList<Rect2> RotateClockwiseInside(this IList<Rect2> rects, Vector2 bounds, int iterations)
     {
-        for (var i = 0; i < iterations; i++) 
+        for (var i = 0; i < iterations; i++)
+        {
             rects = RotateClockwiseInside(rects, bounds);
+            bounds = new Vector2(bounds.y, bounds.x);
+        }
 
         return rects;
     }
-
+    
     public static IList<Rect2> RotateClockwiseInside(this IList<Rect2> rects, Vector2 bounds)
     {
-        var newRects = new List<Rect2>();
+        var positionMap = new Dictionary<Vector2, Vector2>();
 
         for (var x = 0; x < bounds.x; x++)
         {
@@ -44,13 +48,24 @@ public static class Rect2Extensions
                 var currentPoint = new Vector2(x, y);
                 var newX = (int)bounds.y - 1 - y;
                 var newY = x;
-                
-                newRects.AddRange(rects
-                    .Where(walkableArea => walkableArea.Position.IsEqualApprox(currentPoint))
-                    .Select(walkableArea => new Rect2(
-                        new Vector2((newX - walkableArea.Size.y) + 1, newY),
-                        new Vector2(walkableArea.Size.y, walkableArea.Size.x))));
+                var rotatedPoint = new Vector2(newX, newY);
+
+                positionMap[currentPoint] = rotatedPoint;
             }
+        }
+
+        var newRects = new List<Rect2>(rects.Count);
+
+        foreach (var rect in rects)
+        {
+            if (positionMap.TryGetValue(rect.Position, out var newPosition) is false) 
+                continue;
+            
+            var newRect = new Rect2(
+                new Vector2((newPosition.x - rect.Size.y) + 1, newPosition.y),
+                new Vector2(rect.Size.y, rect.Size.x));
+            
+            newRects.Add(newRect);
         }
 
         return newRects;
