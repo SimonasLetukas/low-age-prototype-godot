@@ -22,6 +22,14 @@ script = ExtResource( 7 )
 
 [node name="Entities" parent="Map" index="2" instance=ExtResource( 6 )]
 
+[node name="Lines" type="Node2D" parent="Map" index="3"]
+
+[node name="Line2D" type="Line2D" parent="Map/Lines" index="0"]
+z_index = 4096
+points = PoolVector2Array( 5, 5, 20, 20, 25, 32 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+
 [node name="Camera" parent="." index="2" instance=ExtResource( 4 )]
 
 [node name="Mouse" parent="." index="3" instance=ExtResource( 3 )]

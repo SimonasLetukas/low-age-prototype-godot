@@ -7,6 +7,8 @@ using low_age_data.Domain.Entities;
 
 public class ClientMap : Map
 {
+    [Export] public bool DebugLinesEnabled { get; set; } = false;
+    
     public event Action FinishedInitializing = delegate { };
     public event Action<EntityNode> EntityIsBeingPlaced = delegate { };
     public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
@@ -27,6 +29,7 @@ public class ClientMap : Map
         Attack
     }
     private (BuildNode, EntityId) _previousBuildSelection = (null, null);
+    private Node2D _lines;
 
     private bool _tileMapIsInitialized = false;
     private bool _pathfindingIsInitialized = false;
@@ -38,6 +41,7 @@ public class ClientMap : Map
         base._Ready();
         _tileMap = GetNode<Tiles>($"{nameof(Tiles)}");
         Entities = GetNode<Entities>($"{nameof(Entities)}");
+        _lines = GetNode<Node2D>($"Lines");
 
         Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
         _tileMap.FinishedInitialInitializing += OnTileMapFinishedInitialInitializing;
@@ -69,6 +73,9 @@ public class ClientMap : Map
         Pathfinding.Initialize(_mapSize, @event.Tiles);
         
         _focusedTile = _tileMap.Elevatable.Focused;
+
+        _lines.Visible = DebugEnabled && DebugLinesEnabled;
+        ResetLines();
     }
 
     private void OnTileMapFinishedInitialInitializing()
@@ -347,6 +354,58 @@ public class ClientMap : Map
                 Pathfinding.AddOccupation(occupant);
         }
     }
+
+    private void ResetLines()
+    {
+        foreach (var node in _lines.GetChildren().OfType<Node>()) 
+            node.QueueFree();
+    }
+
+    private void UpdateLines()
+    {
+        if (DebugEnabled is false || DebugLinesEnabled is false)
+            return;
+        
+        ResetLines();
+
+        const int size = 2;
+        
+        for (var x = 0; x < 10; x++)
+        {
+            for (var y = 0; y < 10; y++)
+            {
+                var position = new Vector2(x, y);
+                var tile = _tileMap.GetHighestTile(position);
+                if (float.IsPositiveInfinity(Pathfinding.GetWeight(tile.Point, size)))
+                    continue;
+
+                for (var offsetX = -1; offsetX < 2; offsetX++)
+                {
+                    for (var offsetY = -1; offsetY < 2; offsetY++)
+                    {
+                        var adjacentPosition = position + new Vector2(offsetX, offsetY);
+                        var adjacentTile = _tileMap.GetHighestTile(adjacentPosition);
+                        if (adjacentTile is null)
+                            continue;
+
+                        if (Pathfinding.HasConnection(tile.Point, adjacentTile.Point, size) is false 
+                            || float.IsPositiveInfinity(Pathfinding.GetWeight(adjacentTile.Point, size)))
+                            continue;
+
+                        var line = new Line2D();
+                        line.Width = 1;
+                        line.ZIndex = 4000;
+                        line.Points = new[]
+                        {
+                            _tileMap.GetGlobalPositionFromMapPosition(position) - Position,
+                            _tileMap.GetGlobalPositionFromMapPosition(adjacentPosition) - Position
+                        };
+                        _lines.AddChild(line);
+                    }
+                }
+            }
+        }
+    }
     
     private void OnNewTileFocused(Vector2 mapPosition, Terrain terrain, IList<EntityNode> occupants)
     {
@@ -384,6 +443,7 @@ public class ClientMap : Map
         Entities.RegisterRenderer(entity);
         
         AddOccupation(entity);
+        UpdateLines();
     }
 
     internal void OnMouseLeftReleasedWithoutDrag()

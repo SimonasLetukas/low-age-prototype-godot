@@ -266,10 +266,9 @@ public class Tiles : Node2D
 
     public void AddOccupation(EntityNode entity)
     {
-        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
         foreach (var position in entity.EntityOccupyingPositions)
         {
-            var tile = GetTile(position, isOnHighGround);
+            var tile = GetHighestTile(position);
             if (IsOccupied(tile, entity))
                 continue;
             
@@ -282,10 +281,9 @@ public class Tiles : Node2D
 
     public void RemoveOccupation(EntityNode entity)
     {
-        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
         foreach (var position in entity.EntityOccupyingPositions)
         {
-            var tile = GetTile(position, isOnHighGround);
+            var tile = GetHighestTile(position);
             tile.Occupants.Remove(entity);
         }
         
@@ -328,7 +326,7 @@ public class Tiles : Node2D
             }
         }
 
-        return tileSearchSet.Select(x => GetTile(x.Item1, x.Item2));
+        return tileSearchSet.Select(x => GetTile(x.Item1, x.Item2) ?? GetHighestTile(x.Item1));
     }
 
     private void SetCell(Vector2 at, Terrain terrain)

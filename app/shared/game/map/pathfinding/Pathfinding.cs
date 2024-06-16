@@ -80,8 +80,11 @@ public class Pathfinding : Node
 		}
 	}
 	
+	[Export] public bool DebugEnabled = false;
+	
 	public event Action FinishedInitializing = delegate { };
 
+	private const int MaxSizeForPathfinding = 3;
 	private const float DiagonalCost = Mathf.Sqrt2;
 	private const int HighGroundTolerance = 13; // works until approx 18 levels of ascension
 	
@@ -246,8 +249,9 @@ public class Pathfinding : Node
     {
 	    if (_tilesForInitialization.IsEmpty() && point is null)
 	    {
-		    GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-		             $"{nameof(Pathfinding)}.{nameof(IterateTerrainGraphUpdate)} completed");
+		    if (DebugEnabled)
+				GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " + 
+				         $"{nameof(Pathfinding)}.{nameof(IterateTerrainGraphUpdate)} completed");
 		    _terrainGraphInitialized = true;
 		    return;
 	    }
@@ -284,8 +288,9 @@ public class Pathfinding : Node
     {
 	    if (_coordinatesByTerrainForInitialization.IsEmpty() && coordinatesByTerrainId is null)
 	    {
-		    GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-		             $"{nameof(Pathfinding)}.{nameof(IterateTerrainDilationUpdate)} completed");
+		    if (DebugEnabled)
+				GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " + 
+				         $"{nameof(Pathfinding)}.{nameof(IterateTerrainDilationUpdate)} completed");
 		    _terrainDilationInitialized = true;
 		    return;
 	    }
@@ -342,8 +347,9 @@ public class Pathfinding : Node
     {
 	    if (_pointIdsByPositionsForInitialization.IsEmpty() && point is null)
 	    {
-		    GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-		             $"{nameof(Pathfinding)}.{nameof(IterateDiagonalConnectionUpdate)} completed");
+		    if (DebugEnabled)
+				GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " + 
+				         $"{nameof(Pathfinding)}.{nameof(IterateDiagonalConnectionUpdate)} completed");
 		    _diagonalConnectionsInitialized = true;
 		    return;
 	    }
@@ -410,8 +416,10 @@ public class Pathfinding : Node
     public IEnumerable<Point> GetAvailablePoints(Vector2 from, float range, bool isOnHighGround, int size, 
 	    bool temporary = false)
     {
-	    if (size > 3) throw new ArgumentException($"{nameof(Pathfinding)}.{nameof(GetAvailablePoints)}: " +
-	                                              $"argument {nameof(size)} '{size}' exceeded maximum value of '3'.");
+	    if (size > MaxSizeForPathfinding) throw new ArgumentException($"{nameof(Pathfinding)}." +
+	                                                                  $"{nameof(GetAvailablePoints)}: argument " +
+	                                                                  $"{nameof(size)} '{size}' exceeded maximum " +
+	                                                                  $"value of '{MaxSizeForPathfinding}'.");
 	    
 	    var pathfinding = GetPathfindingForSize(size);
 	    if (pathfinding is null)
@@ -471,15 +479,14 @@ public class Pathfinding : Node
 
     public void AddOccupation(EntityNode entity)
     {
-	    const int offset = 3; // Depends on maximum possible size
 	    var foundPoints = new List<Point>();
 	    
-	    for (var x = (int)entity.EntityPrimaryPosition.x - offset; 
-	         x < entity.EntityPrimaryPosition.x + entity.EntitySize.x + offset; 
+	    for (var x = (int)entity.EntityPrimaryPosition.x - MaxSizeForPathfinding; 
+	         x < entity.EntityPrimaryPosition.x + entity.EntitySize.x + MaxSizeForPathfinding; 
 	         x++)
 	    {
-		    for (var y = (int)entity.EntityPrimaryPosition.y - offset;
-		         y < entity.EntityPrimaryPosition.y + entity.EntitySize.y + offset;
+		    for (var y = (int)entity.EntityPrimaryPosition.y - MaxSizeForPathfinding;
+		         y < entity.EntityPrimaryPosition.y + entity.EntitySize.y + MaxSizeForPathfinding;
 		         y++)
 		    {
 			    var pointFound = Points.TryGetId(new Vector2(x, y), out var pointId);
@@ -501,9 +508,11 @@ public class Pathfinding : Node
 
 	    foreach (var foundPosition in foundPoints.Select(x => x.Position))
 	    {
-		    for (var x = (int)foundPosition.x - offset; x <= (int)foundPosition.x + offset; x++)
+		    for (var x = (int)foundPosition.x - MaxSizeForPathfinding; 
+		         x <= (int)foundPosition.x + MaxSizeForPathfinding; x++)
 		    {
-			    for (var y = (int)foundPosition.y - offset; y <= (int)foundPosition.y + offset; y++)
+			    for (var y = (int)foundPosition.y - MaxSizeForPathfinding; 
+			         y <= (int)foundPosition.y + MaxSizeForPathfinding; y++)
 			    {
 				    var position = new Vector2(x, y);
 				    if (Points.ContainsPoint(position) is false)
@@ -517,9 +526,8 @@ public class Pathfinding : Node
 
     public void RemoveOccupation(EntityNode entity) // TODO not tested properly
     {
-	    const int offset = 3;
-	    var start = entity.EntityPrimaryPosition - Vector2.One * offset;
-	    var end = entity.EntityPrimaryPosition + entity.EntitySize + Vector2.One * offset;
+	    var start = entity.EntityPrimaryPosition - Vector2.One * MaxSizeForPathfinding;
+	    var end = entity.EntityPrimaryPosition + entity.EntitySize + Vector2.One * MaxSizeForPathfinding;
 	    
 	    var coordinatesByTerrain = _terrainWeights
 		    .OrderBy(x => x.Value)
@@ -559,6 +567,18 @@ public class Pathfinding : Node
 	    }
     }
 
+    public bool HasConnection(Point pointA, Point pointB, int size)
+    {
+	    var pathfinding = GetPathfindingForSize(size);
+	    return pathfinding != null && pathfinding.HasConnection(pointA.Id, pointB.Id);
+    }
+
+    public float GetWeight(Point point, int size)
+    {
+	    var pathfinding = GetPathfindingForSize(size);
+	    return pathfinding is null ? float.PositiveInfinity : _terrainWeights[pathfinding.GetTerrainForPoint(point.Id)];
+    }
+
     private void OnPathfindingUpdating(IPathfindingUpdatable source, bool isAdded)
     {
 	    ClearCache();
@@ -582,7 +602,7 @@ public class Pathfinding : Node
 	    }
     }
 
-    private void AddAscendableHighGround(IReadOnlyList<(IList<Vector2>, int)> path) // TODO 2x 3x pathfindings
+    private void AddAscendableHighGround(IReadOnlyList<(IList<Vector2>, int)> path)
     {
 	    if (path.IsEmpty()) 
 		    return;
@@ -603,7 +623,8 @@ public class Pathfinding : Node
 			    {
 				    pointId = Points.GetId(pos, true);
 				    point = Points.GetPoint(pointId);
-				    GD.Print($"1. Found existing point {JsonConvert.SerializeObject(point)}");
+				    if (DebugEnabled)
+						GD.Print($"1. Found existing point {JsonConvert.SerializeObject(point)}");
 			    }
 			    else
 			    {
@@ -619,7 +640,8 @@ public class Pathfinding : Node
 				    };
 				    Points.Add(point);
 				    EventBus.Instance.RaiseHighGroundPointCreated(point);
-				    GD.Print($"2. Creating point {JsonConvert.SerializeObject(point)}");
+				    if (DebugEnabled)
+					    GD.Print($"2. Creating point {JsonConvert.SerializeObject(point)}");
 			    }
 		    
 			    for (var xOffset = -1; xOffset < 2; xOffset++)
@@ -631,7 +653,8 @@ public class Pathfinding : Node
 					    if (i == 0 && lowGroundPoint != null)
 					    {
 						    _pathfinding.ConnectPoints(pointId, ((Point)lowGroundPoint).Id);
-						    GD.Print($"3. Connecting to low ground point {JsonConvert.SerializeObject(lowGroundPoint)}");
+						    if (DebugEnabled)
+							    GD.Print($"3. Connecting to low ground point {JsonConvert.SerializeObject(lowGroundPoint)}");
 					    }
 
 					    if (path.Count > 1 && i != 0)
@@ -645,7 +668,8 @@ public class Pathfinding : Node
 								    x.Equals(offsetPosition));
 							    var previousStepPoint = Points.GetPoint(previousStepPosition, true);
 							    _pathfinding.ConnectPoints(pointId, previousStepPoint.Id);
-							    GD.Print($"4. Connecting to previous step point {JsonConvert.SerializeObject(previousStepPoint)}");
+							    if (DebugEnabled)
+								    GD.Print($"4. Connecting to previous step point {JsonConvert.SerializeObject(previousStepPoint)}");
 						    }
 					    }
 					    
@@ -655,19 +679,22 @@ public class Pathfinding : Node
 						    continue;
 
 					    _pathfinding.ConnectPoints(pointId, ((Point)highGroundPoint).Id);
-					    GD.Print($"5. Connecting to adjacent high ground point {JsonConvert.SerializeObject(highGroundPoint)}");
+					    if (DebugEnabled)
+						    GD.Print($"5. Connecting to adjacent high ground point {JsonConvert.SerializeObject(highGroundPoint)}");
 				    }
 			    }
+			    
+			    UpdateHighGroundForNon1XPathfinding(point);
 		    }
 	    }
     }
 
-    private void RemoveAscendableHighGround(List<(IList<Vector2>, int)> path) // TODO 2x 3x pathfindings; not tested properly
+    private void RemoveAscendableHighGround(List<(IList<Vector2>, int)> path) // TODO not tested properly
     {
 	    RemoveHighGround(path);
     }
 
-    private void AddHighGround(List<(IList<Vector2>, int)> path) // TODO 2x 3x pathfindings
+    private void AddHighGround(List<(IList<Vector2>, int)> path)
     {
 	    var flattenedPositions = GetFlattenedPositions(path);
 
@@ -691,7 +718,8 @@ public class Pathfinding : Node
 		    };
 		    Points.Add(point);
 		    EventBus.Instance.RaiseHighGroundPointCreated(point);
-		    GD.Print($"1. Creating point {JsonConvert.SerializeObject(point)}");
+		    if (DebugEnabled)
+			    GD.Print($"1. Creating point {JsonConvert.SerializeObject(point)}");
 		    
 		    for (var xOffset = -1; xOffset < 2; xOffset++)
 		    {
@@ -702,13 +730,16 @@ public class Pathfinding : Node
 					    continue;
 
 				    _pathfinding.ConnectPoints(pointId, ((Point)otherPoint).Id);
-				    GD.Print($"5. Connecting to adjacent high ground point {JsonConvert.SerializeObject(otherPoint)}");
+				    if (DebugEnabled)
+					    GD.Print($"5. Connecting to adjacent high ground point {JsonConvert.SerializeObject(otherPoint)}");
 			    }
 		    }
+
+		    UpdateHighGroundForNon1XPathfinding(point);
 	    }
     }
 
-    private void RemoveHighGround(List<(IList<Vector2>, int)> path)  // TODO 2x 3x pathfindings; not tested properly
+    private void RemoveHighGround(List<(IList<Vector2>, int)> path)  // TODO not tested properly
     {
 	    var flattenedPositions = GetFlattenedPositions(path);
 	    
@@ -734,10 +765,168 @@ public class Pathfinding : Node
 			    }
 		    }*/ // TODO test it out before removing
 		    
+		    RemoveHighGroundForNon1XPathfinding(point);
 		    _pathfinding.RemovePoint(point.Id);
 		    EventBus.Instance.RaiseHighGroundPointRemoved(point);
 		    Points.Remove(point.Id);
 	    }
+    }
+
+    private void RemoveHighGroundForNon1XPathfinding(Point removed1XPoint)
+    {
+	    for (var size = 2; size <= MaxSizeForPathfinding; size++)
+	    {
+		    var pathfinding = GetPathfindingForSize(size);
+		    if (pathfinding is null)
+			    continue;
+		    
+		    var result = pathfinding.RemovePoint(removed1XPoint.Id);
+		    if (result != Error.Ok) 
+			    continue;
+
+		    for (var x = (int)removed1XPoint.Position.x - size; x <= (int)removed1XPoint.Position.x + size; x++)
+		    {
+			    for (var y = (int)removed1XPoint.Position.y - size; y <= (int)removed1XPoint.Position.y + size; y++)
+			    {
+				    var position = new Vector2(x, y);
+				    if (Points.ContainsPoint(position, true) is false)
+					    continue;
+
+				    pathfinding.RemovePoint(Points.GetId(position, true));
+			    }
+		    }
+		    
+		    UpdateHighGroundForNon1XPathfinding(removed1XPoint);
+	    }
+    }
+    
+    private void UpdateHighGroundForNon1XPathfinding(Point main1XPoint)
+    {
+	    if (DebugEnabled)
+		    GD.Print($"6. Updating non 1x high ground for main point {JsonConvert.SerializeObject(main1XPoint)}.");
+	    for (var x = (int)main1XPoint.Position.x - MaxSizeForPathfinding; 
+	         x <= (int)main1XPoint.Position.x + MaxSizeForPathfinding; 
+	         x++)
+	    {
+		    for (var y = (int)main1XPoint.Position.y - MaxSizeForPathfinding; 
+		         y <= (int)main1XPoint.Position.y + MaxSizeForPathfinding; 
+		         y++)
+		    {
+			    var currentPosition = new Vector2(x, y);
+			    if (DebugEnabled)
+				    GD.Print($"6.1. Looking at {JsonConvert.SerializeObject(currentPosition)}.");
+
+			    if (Points.ContainsPoint(currentPosition, true) is false)
+			    {
+				    if (DebugEnabled)
+					    GD.Print($"6.2. High ground position {JsonConvert.SerializeObject(currentPosition)} does not exist.");
+				    continue;
+			    }
+				    
+			    var point = Points.GetPoint(currentPosition, true);
+
+			    for (var size = 2; size <= MaxSizeForPathfinding; size++)
+			    {
+				    if (DebugEnabled)
+					    GD.Print($"6.3. Looking at size {size} with {nameof(AllHighGroundPointsAreFilledForSize)}: " +
+				                              $"{AllHighGroundPointsAreFilledForSize(size, currentPosition)}, " +
+				                              $"{nameof(PointHasAdjacentLowGroundConnections)}: {PointHasAdjacentLowGroundConnections(point)}.");
+
+				    if (AllHighGroundPointsAreFilledForSize(size, currentPosition) is false
+				        && PointHasAdjacentLowGroundConnections(point) is false)
+				    {
+					    if (DebugEnabled)
+						    GD.Print($"6.4. Returning {JsonConvert.SerializeObject(currentPosition)}.");
+					    continue;
+				    }
+
+				    var pathfinding = GetPathfindingForSize(size);
+				    if (pathfinding is null)
+				    {
+					    if (DebugEnabled)
+						    GD.Print($"6.5. {size}x pathfinding is null.");
+					    continue;
+				    }
+
+				    if (pathfinding.HasPoint(point.Id) is false)
+				    {
+					    var result = pathfinding.AddPoint(point.Id, HighGroundIndex);
+					    if (DebugEnabled)
+						    GD.Print($"6.6. Adding point to {size}X pathfinding {JsonConvert.SerializeObject(point)} with result: {result}.");
+				    }
+				    
+				    for (var xAdjacent = x - 1; xAdjacent <= x + 1; xAdjacent++)
+				    {
+					    for (var yAdjacent = y - 1; yAdjacent <= y + 1; yAdjacent++)
+					    {
+						    var adjacentPosition = new Vector2(xAdjacent, yAdjacent);
+						    if (DebugEnabled)
+							    GD.Print($"7. Looking at adjacent position {JsonConvert.SerializeObject(adjacentPosition)}.");
+
+						    if (Points.ContainsPoint(adjacentPosition, false))
+						    {
+							    if (DebugEnabled)
+								    GD.Print($"8.1. Adjacent point exists on low ground.");
+
+							    var adjacentLowGroundPoint = Points.GetPoint(adjacentPosition, false);
+							    if (_pathfinding.HasConnection(point.Id, adjacentLowGroundPoint.Id))
+							    {
+								    var result = pathfinding.ConnectPoints(point.Id, adjacentLowGroundPoint.Id);
+								    if (DebugEnabled)
+									    GD.Print($"8.2. Connecting {size}X pathfinding point {point.Id} with low ground point {JsonConvert.SerializeObject(adjacentLowGroundPoint)}, result: {result}.");
+							    }
+						    }
+
+						    if (Points.ContainsPoint(adjacentPosition, true))
+						    {
+							    if (DebugEnabled)
+								    GD.Print($"9.1. Adjacent point exists on high ground.");
+							    
+							    var adjacentHighGroundPoint = Points.GetPoint(adjacentPosition, true);
+							    if (_pathfinding.HasConnection(point.Id, adjacentHighGroundPoint.Id))
+							    {
+								    var result = pathfinding.ConnectPoints(point.Id, adjacentHighGroundPoint.Id);
+								    if (DebugEnabled)
+									    GD.Print($"9.2. Connecting {size}X pathfinding point {point.Id} with high ground point {JsonConvert.SerializeObject(adjacentHighGroundPoint)}, result: {result}.");
+							    }
+						    }
+					    }
+				    } 
+			    }
+		    }
+	    }
+    }
+
+    private bool AllHighGroundPointsAreFilledForSize(int size, Vector2 at)
+    {
+	    for (var x = (int)at.x; x < (int)at.x + size; x++) 
+	    for (var y = (int)at.y; y < (int)at.y + size; y++)
+		    if (Points.ContainsPoint(new Vector2(x, y), true) is false)
+		    {
+			    
+			    return false;
+		    }
+
+	    return true;
+    }
+
+    private bool PointHasAdjacentLowGroundConnections(Point point)
+    {
+	    for (var x = (int)point.Position.x - 1; x <= (int)point.Position.x + 1; x++)
+	    {
+		    for (var y = (int)point.Position.y - 1; y <= (int)point.Position.y + 1; y++)
+		    {
+			    var position = new Vector2(x, y);
+			    if (Points.ContainsPoint(position, false) is false)
+				    continue;
+
+			    var lowGroundPoint = Points.GetPoint(position, false);
+			    if (_pathfinding.HasConnection(point.Id, lowGroundPoint.Id))
+				    return true;
+		    }
+	    }
+
+	    return false;
     }
 
     private static IEnumerable<Vector2> GetFlattenedPositions(List<(IList<Vector2>, int)> from)
@@ -827,6 +1016,7 @@ public class Pathfinding : Node
     }
 }
 
+// Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/addons/dijkstra-map/doc/DijkstraMap.md
 public class DijkstraMap : Node
 {
 	private Object _dijkstraMap;
