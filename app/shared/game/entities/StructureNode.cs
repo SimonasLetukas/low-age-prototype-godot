@@ -40,7 +40,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         CenterPoint = blueprint.CenterPoint.ToGodotVector2();
         WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(EntitySize)).ToList();
         
-        Renderer.Initialize(InstanceId, Blueprint.DisplayName, false, RelativeSize);
+        Renderer.Initialize(this, false);
         UpdateSprite();
         UpdateVitalsPosition();
     }

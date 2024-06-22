@@ -266,9 +266,11 @@ public class Tiles : Node2D
 
     public void AddOccupation(EntityNode entity)
     {
+        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
         foreach (var position in entity.EntityOccupyingPositions)
         {
-            var tile = GetHighestTile(position);
+            var tile = isOnHighGround ? GetHighestTile(position) : GetTile(position, false);
+
             if (IsOccupied(tile, entity))
                 continue;
             
@@ -281,9 +283,11 @@ public class Tiles : Node2D
 
     public void RemoveOccupation(EntityNode entity)
     {
+        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
+        
         foreach (var position in entity.EntityOccupyingPositions)
         {
-            var tile = GetHighestTile(position);
+            var tile = isOnHighGround ? GetHighestTile(position) : GetTile(position, false);
             tile.Occupants.Remove(entity);
         }
         

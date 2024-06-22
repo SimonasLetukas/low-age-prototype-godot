@@ -33,6 +33,9 @@ public class EventBus : Node
     public event Action<EntityNode> EntityPlaced = delegate { };
     public void RaiseEntityPlaced(EntityNode entity) => EntityPlaced(entity);
 
+    public event Action<EntityNode, int> EntityZIndexUpdated = delegate { };
+    public void RaiseEntityZIndexUpdated(EntityNode entity, int zIndex) => EntityZIndexUpdated(entity, zIndex);
+
     public event Action<IPathfindingUpdatable, bool> PathfindingUpdating = delegate { };
     public void RaisePathfindingUpdating(IPathfindingUpdatable data, bool isAdded) => PathfindingUpdating(data, isAdded);
 

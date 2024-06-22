@@ -602,7 +602,7 @@ public class Pathfinding : Node
 	    }
     }
 
-    private void AddAscendableHighGround(IReadOnlyList<(IList<Vector2>, int)> path)
+    private void AddAscendableHighGround(IList<(IEnumerable<Vector2>, int)> path)
     {
 	    if (path.IsEmpty()) 
 		    return;
@@ -689,12 +689,12 @@ public class Pathfinding : Node
 	    }
     }
 
-    private void RemoveAscendableHighGround(List<(IList<Vector2>, int)> path) // TODO not tested properly
+    private void RemoveAscendableHighGround(IList<(IEnumerable<Vector2>, int)> path) // TODO not tested properly
     {
 	    RemoveHighGround(path);
     }
 
-    private void AddHighGround(List<(IList<Vector2>, int)> path)
+    private void AddHighGround(IList<(IEnumerable<Vector2>, int)> path)
     {
 	    var flattenedPositions = GetFlattenedPositions(path);
 
@@ -739,7 +739,7 @@ public class Pathfinding : Node
 	    }
     }
 
-    private void RemoveHighGround(List<(IList<Vector2>, int)> path)  // TODO not tested properly
+    private void RemoveHighGround(IList<(IEnumerable<Vector2>, int)> path)  // TODO not tested properly
     {
 	    var flattenedPositions = GetFlattenedPositions(path);
 	    
@@ -929,7 +929,7 @@ public class Pathfinding : Node
 	    return false;
     }
 
-    private static IEnumerable<Vector2> GetFlattenedPositions(List<(IList<Vector2>, int)> from)
+    private static IEnumerable<Vector2> GetFlattenedPositions(IList<(IEnumerable<Vector2>, int)> from)
     {
 	    var flattenedPositions = new HashSet<Vector2>();
 	    foreach (var step in from)

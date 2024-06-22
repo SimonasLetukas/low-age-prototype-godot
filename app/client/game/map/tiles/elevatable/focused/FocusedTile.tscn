@@ -29,7 +29,7 @@ animations = [ {
 
 [node name="SelectedTile" type="AnimatedSprite"]
 frames = SubResource( 5 )
-frame = 3
+frame = 2
 playing = true
 centered = false
 offset = Vector2( -8, -4 )

@@ -13,8 +13,8 @@ public class EntityRenderer : Node2D
         Point,
         Line
     }
-    
-    public Guid InstanceId { get; set; } = Guid.NewGuid();
+
+    public Guid InstanceId => _parentEntity?.InstanceId ?? Guid.NewGuid();
     public bool Registered { get; set; } = false;
     public bool IsDynamic { get; private set; } = false;
     public Rect2 SpriteBounds { get; private set; }
@@ -25,7 +25,7 @@ public class EntityRenderer : Node2D
     public readonly List<EntityRenderer> StaticDependencies = new List<EntityRenderer>();
     public readonly List<EntityRenderer> DynamicDependencies = new List<EntityRenderer>();
     
-    private string _entityName;
+    private EntityNode _parentEntity;
     private Rect2 _entityRelativeSize;
     
     private Vector2 _topOrigin;
@@ -79,12 +79,13 @@ public class EntityRenderer : Node2D
         EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
     }
 
-    public void Initialize(Guid instanceId, string name, bool isDynamic, Rect2 entityRelativeSize) 
+    public void Initialize(EntityNode parentEntity, bool isDynamic)
     {
-        InstanceId = instanceId;
-        _entityName = name;
+        _parentEntity = parentEntity;
         ZIndex = 0;
         IsDynamic = isDynamic;
+
+        var entityRelativeSize = parentEntity.RelativeSize;
         SortType = (int)entityRelativeSize.Size.x == (int)entityRelativeSize.Size.y ? SortTypes.Point : SortTypes.Line;
         
         AdjustToRelativeSize(entityRelativeSize);
@@ -208,14 +209,14 @@ public class EntityRenderer : Node2D
         SpriteBounds = new Rect2(top, SpriteSize);
         
         if (DebugEnabled)
-            GD.Print($"New {_entityName} sprite bounds: {SpriteBounds}");
+            GD.Print($"New {_parentEntity.DisplayName} sprite bounds: {SpriteBounds}");
         
         UpdateCollisionShape();
         
         //_topOriginSprite.GlobalPosition = SpriteBounds.Position;
         //_bottomOriginSprite.GlobalPosition = SpriteBounds.End;
     }
-
+    
     public void UpdateElevation(bool isOnHighGround, int yHighGroundOffset, EntityNode entityBelow)
     {
         _isOnHighGround = isOnHighGround;
@@ -244,6 +245,8 @@ public class EntityRenderer : Node2D
         
         ZIndex = to;
         _zIndexText.Text = to.ToString();
+
+        EventBus.Instance.RaiseEntityZIndexUpdated(_parentEntity, ZIndex);
     }
 
     public bool ContainsSpriteAt(Vector2 globalPosition)
@@ -265,8 +268,8 @@ public class EntityRenderer : Node2D
         {
             case SortTypes.Point when renderer2.SortType == SortTypes.Point:
                 if (DebugEnabled)
-                    GD.Print($"'{renderer1._entityName}' topOrigin: '{renderer1._topOrigin}', " +
-                             $"'{renderer2._entityName}' topOrigin: '{renderer2._topOrigin}'.");
+                    GD.Print($"'{renderer1._parentEntity.DisplayName}' topOrigin: '{renderer1._topOrigin}', " +
+                             $"'{renderer2._parentEntity.DisplayName}' topOrigin: '{renderer2._topOrigin}'.");
                 result = renderer2._topOrigin.y.CompareTo(renderer1._topOrigin.y);
                 break;
             case SortTypes.Line when renderer2.SortType == SortTypes.Line:
@@ -286,9 +289,9 @@ public class EntityRenderer : Node2D
         if (DebugEnabled)
         {
             var resultText = result == 0 ? "Both the same." : result > 0 
-                ? $"'{renderer2._entityName}' is on top." : $"'{renderer1._entityName}' is on top.";
-            GD.Print($"Renderer '{renderer1._entityName}' of type '{renderer1.SortType}' compared to " +
-                  $"'{renderer2._entityName}' of type {renderer2.SortType} with the result of {result}. " + resultText);
+                ? $"'{renderer2._parentEntity.DisplayName}' is on top." : $"'{renderer1._parentEntity.DisplayName}' is on top.";
+            GD.Print($"Renderer '{renderer1._parentEntity.DisplayName}' of type '{renderer1.SortType}' compared to " +
+                  $"'{renderer2._parentEntity.DisplayName}' of type {renderer2.SortType} with the result of {result}. " + resultText);
         }
 
         if (result == 0 && ((renderer1.IsDynamic && renderer2.IsDynamic is false)
@@ -296,8 +299,8 @@ public class EntityRenderer : Node2D
         {
             result = renderer1.IsDynamic ? -1 : 1;
             if (DebugEnabled)
-                GD.Print(result > 0 ? $"'{renderer2._entityName}' is on top because it's dynamic." 
-                    : $"'{renderer1._entityName}' is on top because it's dynamic.");
+                GD.Print(result > 0 ? $"'{renderer2._parentEntity.DisplayName}' is on top because it's dynamic." 
+                    : $"'{renderer1._parentEntity.DisplayName}' is on top because it's dynamic.");
         }
         
         return result;

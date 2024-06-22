@@ -19,22 +19,16 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public EntityId BlueprintId { get; set; }
 
-    private Guid _instanceId = Guid.NewGuid();
-    public Guid InstanceId
-    {
-        get => _instanceId;
-        set
-        {
-            _instanceId = value;
-            Renderer.InstanceId = value;
-        }
-    }
+    public Guid InstanceId { get; set; } = Guid.NewGuid();
 
     public EntityRenderer Renderer { get; private set; }
     public Vector2 EntityPrimaryPosition { get; set; }
     public Vector2 EntitySize { get; protected set; } = Vector2.One;
     public virtual Rect2 RelativeSize => new Rect2(Vector2.Zero, EntitySize);
     public IList<Vector2> EntityOccupyingPositions => new Rect2(EntityPrimaryPosition, EntitySize).ToList();
+    public Dictionary<Vector2, int> ProvidedHighGroundHeightByOccupyingPosition =>
+        _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
+            pair => pair.Value);
     public string DisplayName { get; protected set; }
     public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; }
@@ -55,7 +49,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     private Entity Blueprint { get; set; }
 
     private IList<Vector2> _movePath = new List<Vector2>();
-    
+
+    private Dictionary<Vector2, int> _providingHighGroundHeightByLocalEntityPosition = new Dictionary<Vector2, int>();
     private float _movementDuration;
     private Tween _movement;
     private bool _canBePlacedOnTheWholeMap = false;
@@ -70,6 +65,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
         _movement.Connect("tween_all_completed", this, nameof(OnMovementTweenAllCompleted));
         EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
+        EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
     }
 
     public override void _ExitTree()
@@ -77,6 +73,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         base._ExitTree();
 
         EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
+        EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
     }
 
     public void SetBlueprint(Entity blueprint)
@@ -221,8 +218,6 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
             return false;
 
         var result = pathfindingUpdatableBehaviours.All(x => x.CanBeMovedOnAt(position));
-        if (result)
-            GD.Print("Result returned true");
         
         return result;
     }
@@ -337,6 +332,14 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
     }
     
     private void OnWhenFlattenedChanged(bool to) => UpdateVisuals();
+    
+    private void OnPathfindingUpdating(IPathfindingUpdatable data, bool isAdded)
+    {
+        if (isAdded is false || data.IsParentEntity(this) is false)
+            return;
+
+        _providingHighGroundHeightByLocalEntityPosition = data.FlattenedLocalPositions;
+    }
 
     public override bool Equals(object obj)
     {

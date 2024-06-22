@@ -37,4 +37,4 @@ tile_data = PoolIntArray( -196608, 11, 0, -196607, 11, 0, -196606, 11, 0, -13107
 [node name="PathTiles" parent="." instance=ExtResource( 6 )]
 
 [node name="FocusedTile" parent="." instance=ExtResource( 4 )]
-frame = 2
+frame = 1

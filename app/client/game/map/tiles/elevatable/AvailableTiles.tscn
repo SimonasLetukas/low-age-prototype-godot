@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://app/client/game/map/tiles/elevatable/AvailableTiles.cs" type="Script" id=2]
+[ext_resource path="res://assets/sprites/tiles/available.png" type="Texture" id=3]
 
 [node name="AvailableTiles" instance=ExtResource( 1 )]
 tile_data = PoolIntArray( -65538, 8, 0, -65537, 8, 1, -131072, 8, 1, -131071, 8, 2, -2, 8, 65536, -1, 8, 4, -65536, 8, 4, -65535, 8, 65538, 65534, 8, 65536, 65535, 8, 4, 0, 8, 4, 1, 8, 65538, 131070, 8, 131072, 131071, 8, 131073, 65536, 8, 131073, 65537, 8, 131074, 196633, 8, 0, 196634, 8, 1, 196635, 8, 1, 196636, 8, 2, 262168, 8, 0, 262169, 8, 4, 262170, 8, 4, 262171, 8, 4, 262172, 8, 4, 262173, 8, 2, 327704, 8, 65536, 327705, 8, 4, 327706, 8, 4, 327707, 8, 4, 327708, 8, 4, 327709, 8, 4, 327710, 8, 2, 393240, 8, 131072, 393241, 8, 4, 393242, 8, 4, 393243, 8, 4, 393244, 8, 4, 393245, 8, 4, 393246, 8, 65538, 458777, 8, 131072, 458778, 8, 4, 458779, 8, 4, 458780, 8, 4, 458781, 8, 4, 458782, 8, 131074, 524314, 8, 131072, 524315, 8, 131073, 524316, 8, 131073, 524317, 8, 131074 )
@@ -9,3 +10,4 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
+ElevatedSpriteTexture = ExtResource( 3 )

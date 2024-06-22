@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://app/client/game/map/tiles/elevatable/AvailableHoveringTiles.cs" type="Script" id=2]
+[ext_resource path="res://assets/sprites/tiles/available.png" type="Texture" id=3]
 
 [node name="AvailableHoveringTiles" instance=ExtResource( 1 )]
 modulate = Color( 1, 0.623529, 0.623529, 1 )
@@ -10,3 +11,4 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
+ElevatedSpriteTexture = ExtResource( 3 )

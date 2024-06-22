@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://app/client/game/map/tiles/elevatable/PathTiles.cs" type="Script" id=2]
+[ext_resource path="res://assets/sprites/tiles/path.png" type="Texture" id=3]
 
 [node name="PathTiles" instance=ExtResource( 1 )]
 tile_data = PoolIntArray( 524299, 9, 0, 589836, 9, 0, 655373, 9, 0, 720910, 9, 0, 786447, 9, 0, 851984, 9, 0, 917521, 9, 0, 917522, 9, 0, 917523, 9, 0, 917524, 9, 0, 917525, 9, 0, 917526, 9, 0, 917527, 9, 0, 917528, 9, 0 )
@@ -9,3 +10,4 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
+ElevatedSpriteTexture = ExtResource( 3 )

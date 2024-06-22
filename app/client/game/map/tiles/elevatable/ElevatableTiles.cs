@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Newtonsoft.Json;
 
 public class ElevatableTiles : Node2D
 {
@@ -11,10 +12,12 @@ public class ElevatableTiles : Node2D
     private Vector2 _tilemapOffset;
     private readonly HashSet<int> _preparedElevations = new HashSet<int> { 0 }; 
     private Node2D _alpha;
+
+    private readonly Dictionary<(Vector2, int), int> _zIndexesByPositionAndElevation = new Dictionary<(Vector2, int), int>();
     private readonly Dictionary<int, AvailableTiles> _availableTilesVisual = new Dictionary<int, AvailableTiles>();
     private readonly Dictionary<int, AvailableHoveringTiles> _availableTilesHovering = new Dictionary<int, AvailableHoveringTiles>();
     private IEnumerable<Point> _availableTilesCache = new List<Point>();
-    private Dictionary<int, TargetTiles> _targetTileMaps = new Dictionary<int, TargetTiles>();
+    private readonly Dictionary<int, TargetTiles> _targetTileMaps = new Dictionary<int, TargetTiles>();
     private TileMap _targetMapPositiveTiles;
     private TileMap _targetMapNegativeTiles;
     private readonly ICollection<Tiles.TileInstance> _targetTileInstances = new List<Tiles.TileInstance>();
@@ -27,8 +30,6 @@ public class ElevatableTiles : Node2D
     
     private const int TileMapAvailableTileIndex = 8;
     private const int TileMapPathTileIndex = 9;
-    private const int TileMapNegativeTargetTileIndex = 11;
-    private const int TileMapPositiveTargetTileIndex = 12;
 
     public override void _Ready()
     {
@@ -47,11 +48,22 @@ public class ElevatableTiles : Node2D
         _pathTileMaps[0] = GetNode<PathTiles>($"{nameof(PathTiles)}");
         
         Focused = GetNode<FocusedTile>($"{nameof(FocusedTile)}");
+
+        EventBus.Instance.EntityZIndexUpdated += OnEntityZIndexUpdated;
+        EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
         
         ClearPath();
         ClearAvailableTiles(true);
         ClearAvailableTiles(false);
         ClearTargetTiles();
+    }
+    
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        EventBus.Instance.EntityZIndexUpdated -= OnEntityZIndexUpdated;
+        EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
     }
 
     public void Initialize(Vector2 mapSize, Tiles parent)
@@ -63,8 +75,8 @@ public class ElevatableTiles : Node2D
 
     public void SetMapWideTargetTiles(Vector2 at)
     {
-        _targetMapPositiveTiles.SetCellv(at, TileMapPositiveTargetTileIndex);
-        _targetMapNegativeTiles.SetCellv(at, TileMapNegativeTargetTileIndex);
+        _targetMapPositiveTiles.SetCellv(at, TargetTiles.TileMapPositiveTargetTileIndex);
+        _targetMapNegativeTiles.SetCellv(at, TargetTiles.TileMapNegativeTargetTileIndex);
     }
 
     public void SetAvailableTiles(EntityNode entity, IEnumerable<Point> availablePoints, int size, bool hovering)
@@ -81,7 +93,7 @@ public class ElevatableTiles : Node2D
         var availablePointsSource = availablePoints.ToList();
         
         foreach (var tileSource in availablePointsSource.ToList()
-                     .Where(tileSource => CanTileBeMovedOn(entity, tileSource, size) is false)) // TODO test this method out...
+                     .Where(tileSource => CanTileBeMovedOn(entity, tileSource, size) is false))
             availablePointsSource.Remove(tileSource);
         
         var dilatedPoints = _tiles.GetDilated(availablePointsSource, size).Select(x => x.Point).ToList();
@@ -98,12 +110,14 @@ public class ElevatableTiles : Node2D
             {
                 if (hovering)
                 {
-                    availableHoveringTiles.SetCellv(availablePosition, TileMapAvailableTileIndex);
+                    availableHoveringTiles.SetTile(availablePosition, TileMapAvailableTileIndex, 
+                        GetZIndexAt(availablePosition, tileMapsByElevationEntry.Key));
                     availableHoveringTiles.UpdateBitmaskRegion(availablePosition);
                     continue;
                 }
         
-                availableTiles.SetCellv(availablePosition, TileMapAvailableTileIndex);
+                availableTiles.SetTile(availablePosition, TileMapAvailableTileIndex, 
+                    GetZIndexAt(availablePosition, tileMapsByElevationEntry.Key));
                 availableTiles.UpdateBitmaskRegion(availablePosition);
             }
         }
@@ -167,9 +181,7 @@ public class ElevatableTiles : Node2D
                          .Where(x => x.Key == entry.Key)
                          .SelectMany(x => x.Value, (_, point) => point.Position))
             {
-                entry.Value.SetCellv(targetPosition, isTargetPositive 
-                    ? TileMapPositiveTargetTileIndex 
-                    : TileMapNegativeTargetTileIndex);
+                entry.Value.SetTile(targetPosition, isTargetPositive, GetZIndexAt(targetPosition, entry.Key));
             }
         }
     }
@@ -188,7 +200,7 @@ public class ElevatableTiles : Node2D
                          .Where(x => x.Key == entry.Key)
                          .SelectMany(x => x.Value, (_, point) => point.Position))
             {
-                entry.Value.SetCellv(pathPosition, TileMapPathTileIndex);
+                entry.Value.SetTile(pathPosition, TileMapPathTileIndex, GetZIndexAt(pathPosition, entry.Key));
             }
         }
     }
@@ -314,28 +326,18 @@ public class ElevatableTiles : Node2D
             
         availableTiles.SetElevation(elevation);
         availableHoveringTiles.SetElevation(elevation);
-
-        // TODO use: availableTiles.TileSet.TileSetZIndex();
-        availableTiles.ZIndex = 1000; // TODO be one higher than structure below & change upon each render update
-        availableHoveringTiles.ZIndex = 1000; // TODO be one higher than structure below & change upon each render update
-            
+        
         _availableTilesVisual[elevation] = availableTiles;
         _availableTilesHovering[elevation] = availableHoveringTiles;
         
         // Target tiles
         var targetTiles = TargetTiles.InstantiateAsChild(_alpha);
         targetTiles.SetElevation(elevation);
-        // TODO use: targetTiles.TileSet.TileSetZIndex();
-        targetTiles.ZIndex = 1000; // TODO be one higher than structure below & change upon each render update
-            
         _targetTileMaps[elevation] = targetTiles;
         
         // Path tiles
         var pathTiles = PathTiles.InstantiateAsChild(this);
         pathTiles.SetElevation(elevation);
-        // TODO use: pathTiles.TileSet.TileSetZIndex();
-        pathTiles.ZIndex = 1000; // TODO be one higher than structure below & change upon each render update
-            
         _pathTileMaps[elevation] = pathTiles;
     }
     
@@ -397,4 +399,33 @@ public class ElevatableTiles : Node2D
         _availableTilesCachedEntityPosition = entity.EntityPrimaryPosition;
         _availableTilesCache = availableTiles;
     }
+
+    private int GetZIndexAt(Vector2 position, int elevation) 
+        => _zIndexesByPositionAndElevation.ContainsKey((position, elevation))
+            ? _zIndexesByPositionAndElevation[(position, elevation)] 
+            : 0;
+
+    private void OnEntityZIndexUpdated(EntityNode entity, int to)
+    {
+        foreach (var pair in entity.ProvidedHighGroundHeightByOccupyingPosition)
+        {
+            var position = pair.Key;
+            var elevation = pair.Value;
+
+            if (elevation is 0)
+                return;
+            
+            _zIndexesByPositionAndElevation[(position, elevation)] = to;
+            
+            if (_preparedElevations.Contains(elevation) is false)
+                return;
+            
+            _availableTilesVisual[elevation].SetTileZIndex(position, to);
+            _availableTilesHovering[elevation].SetTileZIndex(position, to);
+            _targetTileMaps[elevation].SetTileZIndex(position, to);
+            _pathTileMaps[elevation].SetTileZIndex(position, to);
+        }
+    }
+    
+    private void OnPathfindingUpdating(IPathfindingUpdatable data, bool isAdded) => ClearCache();
 }

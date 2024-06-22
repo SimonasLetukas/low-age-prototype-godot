@@ -3,7 +3,7 @@ using System;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Common;
 
-public class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
+public class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBehaviour
 {
     public event Action<BehaviourNode> Ended = delegate { };
     
@@ -32,7 +32,11 @@ public class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
         CurrentDuration.Completed -= OnDurationEnded;
         base._ExitTree();
     }
+    
+    public EntityNode GetParentEntity() => Parent;
 
+    public bool IsParentEntity(EntityNode entity) => Parent.InstanceId.Equals(entity.InstanceId);
+    
     protected virtual void OnDurationEnded()
     {
         Ended(this);
