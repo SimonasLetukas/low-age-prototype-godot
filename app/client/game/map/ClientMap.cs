@@ -474,5 +474,11 @@ public class ClientMap : Map
         EntityIsBeingPlaced(entity);
     }
 
-    internal void OnEntityPlaced() => ExecuteCancellation();
+    internal void OnEntityPlaced()
+    {
+        if (_selectionOverlay is SelectionOverlay.Placement)
+            return;
+        
+        ExecuteCancellation();
+    }
 }

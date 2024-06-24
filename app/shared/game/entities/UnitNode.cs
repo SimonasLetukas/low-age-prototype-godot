@@ -80,10 +80,25 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     public override void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
     {
         IsOnHighGround = resultingPoint.IsHighGround;
-        Renderer.UpdateElevation(IsOnHighGround, resultingPoint.YSpriteOffset, 
-            GetTile(resultingPoint.Position, false)?.Occupants.FirstOrDefault());
         UpdateVitalsPosition();
         
         base.MoveUntilFinished(globalPositionPath, resultingPoint);
+        
+        Renderer.UpdateElevation(IsOnHighGround, resultingPoint.YSpriteOffset, 
+            GetEntitiesBelow().OrderByDescending(x => x.Renderer.ZIndex).FirstOrDefault());
+    }
+
+    private IList<EntityNode> GetEntitiesBelow()
+    {
+        var entities = new List<EntityNode>();
+        foreach (var position in EntityOccupyingPositions)
+        {
+            var lowGroundTile = GetTile(position, false);
+            var entity = lowGroundTile.Occupants.FirstOrDefault();
+            if (entity != null && entities.Any(x => x.InstanceId.Equals(entity.InstanceId)) is false)
+                entities.Add(entity);
+        }
+
+        return entities;
     }
 }
