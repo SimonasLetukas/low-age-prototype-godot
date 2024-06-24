@@ -243,8 +243,6 @@ public class ClientMap : Map
     private void ExecutePlacement()
     {
         Entities.PlaceEntity();
-        Pathfinding.ClearCache();
-        _tileMap.Elevatable.ClearCache();
         
         if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
         {
@@ -300,6 +298,8 @@ public class ClientMap : Map
 
     private void ExecuteCancellation()
     {
+        Pathfinding.ClearCache();
+        _tileMap.Elevatable.ClearCache();
         _tileMap.Elevatable.ClearTargetTiles();
         Entities.CancelPlacement();
         _previousBuildSelection = (null, null);
@@ -473,4 +473,6 @@ public class ClientMap : Map
         _selectionOverlay = SelectionOverlay.Placement;
         EntityIsBeingPlaced(entity);
     }
+
+    internal void OnEntityPlaced() => ExecuteCancellation();
 }

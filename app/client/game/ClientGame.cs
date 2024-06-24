@@ -118,6 +118,7 @@ public class ClientGame : Game
                 break;
             case EntityPlacedEvent entityPlacedEvent:
                 _map.Entities.PlaceEntity(entityPlacedEvent);
+                _map.OnEntityPlaced();
                 break;
             default:
                 GD.PrintErr($"{nameof(ClientGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
