@@ -338,7 +338,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         if (isAdded is false || data.IsParentEntity(this) is false)
             return;
 
-        _providingHighGroundHeightByLocalEntityPosition = data.FlattenedLocalPositions;
+        foreach (var pair in data.FlattenedLocalPositions) 
+            _providingHighGroundHeightByLocalEntityPosition[pair.Key] = pair.Value;
     }
 
     public override bool Equals(object obj)
