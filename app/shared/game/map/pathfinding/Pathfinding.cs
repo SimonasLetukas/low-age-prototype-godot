@@ -46,6 +46,38 @@ public class Pathfinding : Node
 
 		public IEnumerable<Point> GetAll() => PointsByIds.Values;
 
+		public IList<Point> GetPointsForEntity(EntityNode entity)
+		{
+			var points = new List<Point>();
+			var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
+			for (var x = (int)entity.EntityPrimaryPosition.x - MaxSizeForPathfinding; 
+			     x < entity.EntityPrimaryPosition.x + entity.EntitySize.x + MaxSizeForPathfinding; 
+			     x++)
+			{
+				for (var y = (int)entity.EntityPrimaryPosition.y - MaxSizeForPathfinding;
+				     y < entity.EntityPrimaryPosition.y + entity.EntitySize.y + MaxSizeForPathfinding;
+				     y++)
+				{
+					var position = new Vector2(x, y);
+					var highGroundPointFound = TryGetId(position, out var highGroundPointId, true);
+					var lowGroundPointFound = TryGetId(position, out var lowGroundPointId);
+					
+					if (highGroundPointFound && isOnHighGround)
+					{
+						points.Add(GetPoint(highGroundPointId));
+						continue;
+					}
+
+					if (lowGroundPointFound is false)
+						continue;
+					
+					points.Add(GetPoint(lowGroundPointId));
+				}
+			}
+
+			return points;
+		}
+		
 		public Point GetPoint(int id) => PointsByIds[id];
 
 		public Point GetPoint(Vector2 position, bool isHighGround = false) => GetPoint(GetId(position, isHighGround));
@@ -354,14 +386,14 @@ public class Pathfinding : Node
 		    return;
 	    }
 
-	    KeyValuePair<Vector2, int> entry;
+	    Point entry;
 	    if (point is null) // we are initializing
 	    {
-		    entry = _pointIdsByPositionsForInitialization.First();
-		    _pointIdsByPositionsForInitialization.Remove(entry.Key);
+		    entry = Points.GetPoint(_pointIdsByPositionsForInitialization.First().Value);
+		    _pointIdsByPositionsForInitialization.Remove(entry.Position);
 	    }
 	    else // we are updating pathfinding during the game
-		    entry = new KeyValuePair<Vector2, int>((Vector2)point?.Key, (int)point?.Value);
+		    entry = Points.GetPoint(point.Value.Value);
 	    
 	    IterateDiagonalConnectionUpdate(entry, 1);
 	    
@@ -372,19 +404,22 @@ public class Pathfinding : Node
 		    IterateDiagonalConnectionUpdate(entry, 3);
     }
     
-    private void IterateDiagonalConnectionUpdate(KeyValuePair<Vector2, int> point, int size)
+    private void IterateDiagonalConnectionUpdate(Point point, int size)
     {
+	    if (point.IsHighGround)
+		    return;
+	    
 	    var pathfinding = GetPathfindingForSize(size);
 	    
-	    var diagonalPosition = point.Key + new Vector2(1, 1);
+	    var diagonalPosition = point.Position + new Vector2(1, 1);
 	    if (diagonalPosition.IsInBoundsOf(MapSize) is false)
 		    return;
 		    
-	    var rightNeighbour = Points.GetId(point.Key + new Vector2(1, 0));
-	    var bottomNeighbour = Points.GetId(point.Key + new Vector2(0, 1));
-	    var diagonalNeighbour = Points.GetId(diagonalPosition);
+	    var rightNeighbour = Points.GetId(point.Position + new Vector2(1, 0), false);
+	    var bottomNeighbour = Points.GetId(point.Position + new Vector2(0, 1), false);
+	    var diagonalNeighbour = Points.GetId(diagonalPosition, false);
 
-	    if (IsInfiniteWeight(point.Value, size)
+	    if (IsInfiniteWeight(point.Id, size)
 	        && IsInfiniteWeight(diagonalNeighbour, size)
 	        && IsInfiniteWeight(rightNeighbour, size) is false
 	        && IsInfiniteWeight(bottomNeighbour, size) is false)
@@ -396,16 +431,16 @@ public class Pathfinding : Node
 		    pathfinding.ConnectPoints(rightNeighbour, bottomNeighbour, DiagonalCost);
 	    }
 
-	    if (IsInfiniteWeight(point.Value, size) is false
+	    if (IsInfiniteWeight(point.Id, size) is false
 	        && IsInfiniteWeight(diagonalNeighbour, size) is false
 	        && IsInfiniteWeight(rightNeighbour, size)
 	        && IsInfiniteWeight(bottomNeighbour, size))
 	    {
-		    pathfinding.RemoveConnection(point.Value, diagonalNeighbour);
+		    pathfinding.RemoveConnection(point.Id, diagonalNeighbour);
 	    }
 	    else
 	    {
-		    pathfinding.ConnectPoints(point.Value, diagonalNeighbour, DiagonalCost);
+		    pathfinding.ConnectPoints(point.Id, diagonalNeighbour, DiagonalCost);
 	    }
     }
 
@@ -480,33 +515,22 @@ public class Pathfinding : Node
     public void AddOccupation(EntityNode entity)
     {
 	    var foundPoints = new List<Point>();
-	    
-	    for (var x = (int)entity.EntityPrimaryPosition.x - MaxSizeForPathfinding; 
-	         x < entity.EntityPrimaryPosition.x + entity.EntitySize.x + MaxSizeForPathfinding; 
-	         x++)
+	    foreach (var point in Points.GetPointsForEntity(entity))
 	    {
-		    for (var y = (int)entity.EntityPrimaryPosition.y - MaxSizeForPathfinding;
-		         y < entity.EntityPrimaryPosition.y + entity.EntitySize.y + MaxSizeForPathfinding;
-		         y++)
-		    {
-			    var pointFound = Points.TryGetId(new Vector2(x, y), out var pointId);
-			    if (pointFound is false)
-				    continue;
-
-			    var point = Points.GetPoint(pointId);
-			    if (entity.CanBeMovedThroughAt(point)) 
-				    continue;
+		    if (entity.CanBeMovedThroughAt(point)) 
+			    continue;
 			    
-			    foundPoints.Add(point);
-			    IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(point.Position, TileId.Grass), 
-				    false);
-		    }
+		    foundPoints.Add(point);
+		    IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(point.Position, TileId.Grass), 
+			    false);
 	    }
 	    
 	    IterateTerrainDilationUpdate(new KeyValuePair<int, IList<Vector2>>(ImpassableIndex, 
 		    foundPoints.Select(x => x.Position).ToList()));
 
-	    foreach (var foundPosition in foundPoints.Select(x => x.Position))
+	    foreach (var foundPosition in foundPoints
+		             .Where(x => x.IsHighGround is false)
+		             .Select(x => x.Position))
 	    {
 		    for (var x = (int)foundPosition.x - MaxSizeForPathfinding; 
 		         x <= (int)foundPosition.x + MaxSizeForPathfinding; x++)
@@ -534,21 +558,20 @@ public class Pathfinding : Node
 		    .ToDictionary<KeyValuePair<int, float>, int, IList<Vector2>>(terrainWeight => 
 			    terrainWeight.Key, terrainWeight => new List<Vector2>());
 
-	    for (var x = (int)start.x; x < (int)end.x; x++)
+	    foreach (var point in Points.GetPointsForEntity(entity))
 	    {
-		    for (var y = (int)start.y; y < (int)end.y; y++)
+		    if (point.IsHighGround)
+			    continue;
+		    
+		    var position = point.Position;
+		    if (position.IsInBoundsOf(entity.EntityPrimaryPosition, 
+			        entity.EntityPrimaryPosition + entity.EntitySize))
 		    {
-			    var position = new Vector2(x, y);
-			    if (Tiles.ContainsKey(position) is false)
-				    continue;
-			    
-			    if (position.IsInBoundsOf(entity.EntityPrimaryPosition, 
-				        entity.EntityPrimaryPosition + entity.EntitySize))
-					IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(position, Tiles[position]));
-			    
-			    var terrainIndex = Blueprint.Tiles.Single(t => t.Id.Equals(Tiles[position])).Terrain.ToIndex();
-			    coordinatesByTerrain[terrainIndex].Add(position);
+			    IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(position, Tiles[position]));
 		    }
+			    
+		    var terrainIndex = Blueprint.Tiles.Single(t => t.Id.Equals(Tiles[position])).Terrain.ToIndex();
+		    coordinatesByTerrain[terrainIndex].Add(position);
 	    }
 
 	    foreach (var pair in coordinatesByTerrain) 

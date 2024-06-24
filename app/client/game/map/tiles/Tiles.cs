@@ -246,6 +246,11 @@ public class Tiles : Node2D
         ? GetTile(at, isHighGround).Terrain
         : Terrain.Mountains;
 
+    public IList<TileInstance> GetEntityTiles(EntityNode entity) 
+        => entity.EntityOccupyingPositions.Select(position => entity is UnitNode unit && unit.IsOnHighGround 
+            ? GetHighestTile(position) 
+            : GetTile(position, false)).ToList();
+
     public IList<TileInstance> GetHighestTiles(IList<Vector2> at) => at.Select(GetHighestTile).ToList();
 
     public TileInstance GetHighestTile(Vector2 at) => GetTile(at, true) ?? GetTile(at);
@@ -266,11 +271,8 @@ public class Tiles : Node2D
 
     public void AddOccupation(EntityNode entity)
     {
-        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
-        foreach (var position in entity.EntityOccupyingPositions)
+        foreach (var tile in GetEntityTiles(entity))
         {
-            var tile = isOnHighGround ? GetHighestTile(position) : GetTile(position, false);
-
             if (IsOccupied(tile, entity))
                 continue;
             
@@ -283,11 +285,8 @@ public class Tiles : Node2D
 
     public void RemoveOccupation(EntityNode entity)
     {
-        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
-        
-        foreach (var position in entity.EntityOccupyingPositions)
+        foreach (var tile in GetEntityTiles(entity))
         {
-            var tile = isOnHighGround ? GetHighestTile(position) : GetTile(position, false);
             tile.Occupants.Remove(entity);
         }
         

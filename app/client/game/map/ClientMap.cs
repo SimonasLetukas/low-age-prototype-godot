@@ -343,10 +343,8 @@ public class ClientMap : Map
         _tileMap.RemoveOccupation(entity);
         Pathfinding.RemoveOccupation(entity);
         
-        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
-        foreach (var position in entity.EntityOccupyingPositions)
+        foreach (var tile in _tileMap.GetEntityTiles(entity))
         {
-            var tile = _tileMap.GetTile(position, isOnHighGround);
             if (tile is null || _tileMap.IsOccupied(tile) is false)
                 continue;
 
