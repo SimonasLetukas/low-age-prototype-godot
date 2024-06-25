@@ -162,11 +162,13 @@ namespace low_age_data.Domain.Behaviours
 
         public static class Watchtower
         {
+            public static BehaviourId VantagePointHighGround => new BehaviourId($"{nameof(Watchtower)}{nameof(VantagePointHighGround)}".ToKebabCase(), true);
             public static BehaviourId VantagePointBuff => new BehaviourId($"{nameof(Watchtower)}{nameof(VantagePointBuff)}".ToKebabCase(), true);
         }
 
         public static class Bastion
         {
+            public static BehaviourId BattlementHighGround => new BehaviourId($"{nameof(Bastion)}{nameof(BattlementHighGround)}".ToKebabCase(), true);
             public static BehaviourId BattlementBuff => new BehaviourId($"{nameof(Bastion)}{nameof(BattlementBuff)}".ToKebabCase(), true);
         }
 

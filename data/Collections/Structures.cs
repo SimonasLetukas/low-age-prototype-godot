@@ -781,7 +781,7 @@ namespace low_age_data.Collections
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Watchtower.VantagePoint
+                        AbilityId.Watchtower.VantagePoint,
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                 
@@ -811,7 +811,7 @@ namespace low_age_data.Collections
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Bastion.Battlement
+                        AbilityId.Bastion.Battlement,
                     },
                     size: new Vector2<int>(x: 2, y: 2)), 
             };

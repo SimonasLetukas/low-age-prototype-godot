@@ -739,6 +739,14 @@ namespace low_age_data.Collections
                     },
                     target: Location.Self), 
                 
+                new ApplyBehaviour(
+                    id: EffectId.Watchtower.VantagePointApplyBehaviourHighGround,
+                    behavioursToApply: new List<BehaviourId>
+                    {
+                        BehaviourId.Watchtower.VantagePointHighGround
+                    },
+                    target: Location.Self),
+                
                 new Search(
                     id: EffectId.Watchtower.VantagePointSearch,
                     shape: new Circle(radius: 0),
@@ -762,16 +770,24 @@ namespace low_age_data.Collections
                     },
                     effects: new List<EffectId>
                     {
-                        EffectId.Watchtower.VantagePointApplyBehaviour
+                        EffectId.Watchtower.VantagePointApplyBehaviourBuff
                     },
                     location: Location.Self),
 
                 new ApplyBehaviour(
-                    id: EffectId.Watchtower.VantagePointApplyBehaviour,
+                    id: EffectId.Watchtower.VantagePointApplyBehaviourBuff,
                     behavioursToApply: new List<BehaviourId>
                     {
                         BehaviourId.Watchtower.VantagePointBuff
                     }), 
+                
+                new ApplyBehaviour(
+                    id: EffectId.Bastion.BattlementApplyBehaviourHighGround,
+                    behavioursToApply: new List<BehaviourId>
+                    {
+                        BehaviourId.Bastion.BattlementHighGround
+                    },
+                    target: Location.Self),
                 
                 new Search(
                     id: EffectId.Bastion.BattlementSearch,
@@ -796,12 +812,12 @@ namespace low_age_data.Collections
                     },
                     effects: new List<EffectId>
                     {
-                        EffectId.Bastion.BattlementApplyBehaviour
+                        EffectId.Bastion.BattlementApplyBehaviourBuff
                     },
                     location: Location.Self),
                 
                 new ApplyBehaviour(
-                    id: EffectId.Bastion.BattlementApplyBehaviour,
+                    id: EffectId.Bastion.BattlementApplyBehaviourBuff,
                     behavioursToApply: new List<BehaviourId>
                     {
                         BehaviourId.Bastion.BattlementBuff

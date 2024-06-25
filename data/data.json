@@ -6117,16 +6117,18 @@
       "id": "ability-watchtower-vantage-point",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-watchtower-vantage-point-search",
+      "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffects": [],
+      "onBirthEffects": [
+        "effect-watchtower-vantage-point-apply-behaviour-high-ground"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Vantage Point",
-      "description": "Provides additional +1 vision range and +1 Range Damage to ranged units.",
+      "description": "Provides +2 vision range, +1 Attack Distance and +1 Range Damage to ranged units on top.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6138,16 +6140,18 @@
       "id": "ability-bastion-battlement",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-bastion-battlement-search",
+      "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffects": [],
+      "onBirthEffects": [
+        "effect-bastion-battlement-apply-behaviour-high-ground"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Battlement",
-      "description": "Provides additional +1 Range Armour to all units on top.",
+      "description": "Provides +1 Range Armour, +1 vision range and +1 Attack Distance to all units on top.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -8962,6 +8966,18 @@
       "validators": []
     },
     {
+      "$type": "ApplyBehaviour",
+      "id": "effect-watchtower-vantage-point-apply-behaviour-high-ground",
+      "behavioursToApply": [
+        "behaviour-watchtower-vantage-point-high-ground"
+      ],
+      "target": "Location.Self",
+      "filters": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
       "$type": "Search",
       "id": "effect-watchtower-vantage-point-search",
       "shape": {
@@ -8999,7 +9015,7 @@
         }
       ],
       "effects": [
-        "effect-watchtower-vantage-point-apply-behaviour"
+        "effect-watchtower-vantage-point-apply-behaviour-buff"
       ],
       "location": "Location.Self",
       "usedForValidator": false,
@@ -9007,11 +9023,23 @@
     },
     {
       "$type": "ApplyBehaviour",
-      "id": "effect-watchtower-vantage-point-apply-behaviour",
+      "id": "effect-watchtower-vantage-point-apply-behaviour-buff",
       "behavioursToApply": [
         "behaviour-watchtower-vantage-point-buff"
       ],
       "target": "Location.Inherited",
+      "filters": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "$type": "ApplyBehaviour",
+      "id": "effect-bastion-battlement-apply-behaviour-high-ground",
+      "behavioursToApply": [
+        "behaviour-bastion-battlement-high-ground"
+      ],
+      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -9055,7 +9083,7 @@
         }
       ],
       "effects": [
-        "effect-bastion-battlement-apply-behaviour"
+        "effect-bastion-battlement-apply-behaviour-buff"
       ],
       "location": "Location.Self",
       "usedForValidator": false,
@@ -9063,7 +9091,7 @@
     },
     {
       "$type": "ApplyBehaviour",
-      "id": "effect-bastion-battlement-apply-behaviour",
+      "id": "effect-bastion-battlement-apply-behaviour-buff",
       "behavioursToApply": [
         "behaviour-bastion-battlement-buff"
       ],
@@ -13479,6 +13507,47 @@
       }
     },
     {
+      "$type": "HighGround",
+      "id": "behaviour-watchtower-vantage-point-high-ground",
+      "highGroundAreas": [
+        {
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
+          },
+          "spriteOffset": {
+            "x": 0,
+            "y": 22
+          }
+        }
+      ],
+      "onCollisionEffects": [
+        "effect-watchtower-vantage-point-search"
+      ],
+      "displayName": "Vantage Point High Ground",
+      "description": "Provides an area of high ground to other units, who all gain +2 vision range, +1 Attack Distance and +1 Range Damage for their ranged attacks.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
       "$type": "Buff",
       "id": "behaviour-watchtower-vantage-point-buff",
       "modificationFlags": [],
@@ -13492,10 +13561,18 @@
           "amount": 1.0
         },
         {
+          "$type": "AttackModification",
+          "attackType": "Attacks.Ranged",
+          "attribute": "AttackAttribute.MaxDistance",
+          "modificationFlags": [],
+          "change": "Change.AddMax",
+          "amount": 1.0
+        },
+        {
           "$type": "StatModification",
           "statType": "StatType.Vision",
           "change": "Change.AddMax",
-          "amount": 1.0
+          "amount": 2.0
         }
       ],
       "initialEffects": [],
@@ -13503,9 +13580,50 @@
       "finalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Vantage Point Buff",
-      "description": "Unit is on a Watchtower and has +1 vision range and +1 Range Damage for ranged attacks.",
+      "description": "Unit is on a Watchtower and has +2 vision range, +1 Attack Distance and +1 Range Damage for ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "$type": "HighGround",
+      "id": "behaviour-bastion-battlement-high-ground",
+      "highGroundAreas": [
+        {
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "spriteOffset": {
+            "x": 0,
+            "y": 15
+          }
+        }
+      ],
+      "onCollisionEffects": [
+        "effect-bastion-battlement-search"
+      ],
+      "displayName": "Battlement High Ground",
+      "description": "Provides an area of high ground to other units, who all gain +1 Range Armour, +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
       "canStack": false,
       "canResetDuration": false,
       "triggers": [],
@@ -13529,6 +13647,20 @@
           "statType": "StatType.RangedArmour",
           "change": "Change.AddMax",
           "amount": 1.0
+        },
+        {
+          "$type": "AttackModification",
+          "attackType": "Attacks.Ranged",
+          "attribute": "AttackAttribute.MaxAmount",
+          "modificationFlags": [],
+          "change": "Change.AddMax",
+          "amount": 1.0
+        },
+        {
+          "$type": "StatModification",
+          "statType": "StatType.Vision",
+          "change": "Change.AddMax",
+          "amount": 1.0
         }
       ],
       "initialEffects": [],
@@ -13536,7 +13668,7 @@
       "finalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Battlement Buff",
-      "description": "Unit is on a Bastion and has +1 Range Armour.",
+      "description": "Unit is on a Bastion and has +1 Range Armour in addition to the default high ground bonus: +1 vision range and +1 Attack Distance for the ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Positive",
       "canStack": false,

@@ -970,18 +970,26 @@ namespace low_age_data.Collections
                 new Passive(
                     id: AbilityId.Watchtower.VantagePoint,
                     displayName: nameof(AbilityId.Watchtower.VantagePoint).CamelCaseToWords(),
-                    description: "Provides additional +1 vision range and +1 Range Damage to ranged units.",
+                    description: "Provides +2 vision range, +1 Attack Distance and +1 Range Damage to ranged " +
+                                 "units on top.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    periodicEffect: EffectId.Watchtower.VantagePointSearch),
+                    onBirthEffects: new List<EffectId>
+                    {
+                        EffectId.Watchtower.VantagePointApplyBehaviourHighGround
+                    }),
                 
                 new Passive(
                     id: AbilityId.Bastion.Battlement,
                     displayName: nameof(AbilityId.Bastion.Battlement).CamelCaseToWords(),
-                    description: "Provides additional +1 Range Armour to all units on top.",
+                    description: "Provides +1 Range Armour, +1 vision range and +1 Attack Distance to all units " +
+                                 "on top.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    periodicEffect: EffectId.Bastion.BattlementSearch),
+                    onBirthEffects: new List<EffectId>
+                    {
+                        EffectId.Bastion.BattlementApplyBehaviourHighGround
+                    }),
 
                 #endregion
                 

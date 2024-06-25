@@ -970,14 +970,80 @@ namespace low_age_data.Collections
                         new SpecificFlag(value: FilterFlag.Unit)
                     }),
                 
+                new HighGround(
+                    id: BehaviourId.Watchtower.VantagePointHighGround,
+                    displayName: nameof(BehaviourId.Watchtower.VantagePointHighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +2 vision range, " +
+                                 "+1 Attack Distance and +1 Range Damage for their ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    highGroundAreas: new List<HighGroundArea>
+                    {
+                        new HighGroundArea(
+                            area: new Area(size: new Vector2<int>(x: 1, y: 1)), 
+                            spriteOffset: new Vector2<int>(x: 0, y: 22))
+                    },
+                    onCollisionEffects: new List<EffectId>
+                    {
+                        EffectId.Watchtower.VantagePointSearch
+                    }),
+                
                 new Buff(
                     id: BehaviourId.Watchtower.VantagePointBuff,
                     displayName: nameof(BehaviourId.Watchtower.VantagePointBuff).CamelCaseToWords(),
-                    description: "Unit is on a Watchtower and has +1 vision range and +1 Range Damage for ranged " +
-                                 "attacks.",
+                    description: "Unit is on a Watchtower and has +2 vision range, +1 Attack Distance and +1 Range " +
+                                 "Damage for ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
+                        new AttackModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            attackType: Attacks.Ranged,
+                            attribute: AttackAttribute.MaxAmount),
+                        new AttackModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            attackType: Attacks.Ranged,
+                            attribute: AttackAttribute.MaxDistance),
+                        new StatModification(
+                            change: Change.AddMax,
+                            amount: 2,
+                            statType: StatType.Vision)
+                    },
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    restoreChangesOnEnd: true),
+                
+                new HighGround(
+                    id: BehaviourId.Bastion.BattlementHighGround,
+                    displayName: nameof(BehaviourId.Bastion.BattlementHighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +1 Range Armour, " +
+                                 "+1 vision range and +1 Attack Distance for their ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    highGroundAreas: new List<HighGroundArea>
+                    {
+                        new HighGroundArea(
+                            area: new Area(size: new Vector2<int>(x: 2, y: 2)), 
+                            spriteOffset: new Vector2<int>(x: 0, y: 15))
+                    },
+                    onCollisionEffects: new List<EffectId>
+                    {
+                        EffectId.Bastion.BattlementSearch
+                    }),
+                
+                new Buff(
+                    id: BehaviourId.Bastion.BattlementBuff,
+                    displayName: nameof(BehaviourId.Bastion.BattlementBuff).CamelCaseToWords(),
+                    description: "Unit is on a Bastion and has +1 Range Armour in addition to the default high " +
+                                 "ground bonus: +1 vision range and +1 Attack Distance for the ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            statType: StatType.RangedArmour),
                         new AttackModification(
                             change: Change.AddMax,
                             amount: 1,
@@ -987,23 +1053,6 @@ namespace low_age_data.Collections
                             change: Change.AddMax,
                             amount: 1,
                             statType: StatType.Vision)
-                    },
-                    canStack: false,
-                    canResetDuration: false,
-                    alignment: Alignment.Positive,
-                    restoreChangesOnEnd: true),
-                
-                new Buff(
-                    id: BehaviourId.Bastion.BattlementBuff,
-                    displayName: nameof(BehaviourId.Bastion.BattlementBuff).CamelCaseToWords(),
-                    description: "Unit is on a Bastion and has +1 Range Armour.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    initialModifications: new List<Modification>
-                    {
-                        new StatModification(
-                            change: Change.AddMax,
-                            amount: 1,
-                            statType: StatType.RangedArmour)
                     },
                     canStack: false,
                     canResetDuration: false,
@@ -2505,7 +2554,7 @@ namespace low_age_data.Collections
                     conditionalEffects: null,
                     restoreChangesOnEnd: true)
                 
-                #endregion
+                #endregion Units
             };
         }
     }
