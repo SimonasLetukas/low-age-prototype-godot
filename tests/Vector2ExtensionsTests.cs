@@ -208,5 +208,152 @@ namespace low_age_tests
         {
             size.Except(listOfVector2).Should().Be(expected);
         }
+        
+        public static IEnumerable<object[]> GetExpectedRectsByListOfVector22()
+        {
+            yield return new object[]
+            {
+                new Vector2(0, 0),
+                new Vector2(0, 0),
+                // Expected:
+                true
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(-1, 2),
+                new Vector2(-2, 1),
+                // Expected:
+                true
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(3, -2),
+                new Vector2(3, -3),
+                // Expected:
+                false
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(5, 0),
+                new Vector2(6, -1),
+                // Expected:
+                true
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(5, 3),
+                new Vector2(6, 3),
+                // Expected:
+                false
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(3, 6),
+                new Vector2(4, 7),
+                // Expected:
+                true
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(-5, 4),
+                new Vector2(-5, 5),
+                // Expected:
+                false
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(-6, -2),
+                new Vector2(-7, -1),
+                // Expected:
+                true
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(-1, -5),
+                new Vector2(-2, -5),
+                // Expected:
+                false
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(-6, -7),
+                new Vector2(-4, -7),
+                // Expected:
+                false
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(3, -7),
+                new Vector2(5, -5),
+                // Expected:
+                true
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(1, -3),
+                new Vector2(1, 2),
+                // Expected:
+                false
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(-3, -2),
+                new Vector2(-4, 0),
+                // Expected:
+                false
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(5, 4),
+                new Vector2(10, 5),
+                // Expected:
+                false
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(10, -4),
+                new Vector2(2, 4),
+                // Expected:
+                true
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(10, -3),
+                new Vector2(2, 6),
+                // Expected:
+                false
+            };
+            
+            yield return new object[]
+            {
+                new Vector2(0, 0),
+                new Vector2(100, 100),
+                // Expected:
+                true
+            };
+        }
+        
+        [Theory]
+        [MemberData(nameof(GetExpectedRectsByListOfVector22))]
+        public void IsDiagonalTo_ShouldReturnCorrectResponse_WithGivenInput(Vector2 source, Vector2 point, 
+            bool expectedResult)
+        {
+            source.IsDiagonalTo(point).Should().Be(expectedResult);
+        }
     }
 }

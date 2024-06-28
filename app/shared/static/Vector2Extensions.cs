@@ -101,4 +101,8 @@ public static class Vector2Extensions
 
         return false;
     }
+
+    public static bool IsDiagonalTo(this Vector2 source, Vector2 point) =>
+        (int)source.x - (int)source.y == (int)point.x - (int)point.y 
+        || (int)source.x + (int)source.y == (int)point.x + (int)point.y;
 }

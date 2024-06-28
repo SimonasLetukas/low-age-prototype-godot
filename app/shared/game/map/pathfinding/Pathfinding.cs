@@ -151,6 +151,7 @@ public class Pathfinding : Node
 
     private Vector2 _previousPosition = Vector2.Inf;
     private float _previousRange = -1.0f;
+    private bool _previousIsOnHighGround = false;
     private int _previousSize = 1;
 
     private bool _terrainGraphInitialized = false;
@@ -446,7 +447,7 @@ public class Pathfinding : Node
 
     #endregion IterationHelpers
 
-    public void ClearCache() => Cache(Vector2.Inf, -1.0f, 1);
+    public void ClearCache() => Cache(Vector2.Inf, -1.0f, false, 1);
     
     public IEnumerable<Point> GetAvailablePoints(Vector2 from, float range, bool isOnHighGround, int size, 
 	    bool temporary = false)
@@ -460,7 +461,7 @@ public class Pathfinding : Node
 	    if (pathfinding is null)
 		    return Enumerable.Empty<Point>();
 	    
-	    if (IsCached(from, range, size) is false)
+	    if (IsCached(from, range, isOnHighGround, size) is false)
 	    {
 		    pathfinding.Recalculate(
 			    Points.GetId(from, isOnHighGround),
@@ -471,14 +472,14 @@ public class Pathfinding : Node
 			    });
 		    
 		    if (temporary is false)
-				Cache(from, range, size);
+				Cache(from, range, isOnHighGround, size);
 	    }
 
 	    var availablePointIds = pathfinding.GetAllPointsWithCostBetween(0.0f, range);
 	    var availablePositions = availablePointIds.Select(pointId => Points.GetPoint(pointId));
 	    
 	    if (temporary && size == _previousSize 
-	                  && Points.TryGetId(_previousPosition, out var previousPointId, isOnHighGround))
+	                  && Points.TryGetId(_previousPosition, out var previousPointId, _previousIsOnHighGround))
 	    {
 		    pathfinding.Recalculate(
 			    previousPointId,
@@ -671,18 +672,23 @@ public class Pathfinding : Node
 			    {
 				    for (var yOffset = -1; yOffset < 2; yOffset++)
 				    {
-					    var lowGroundPoint = GetAdjacentPoint(point, new Vector2(xOffset, yOffset), 
-						    false);
+					    var offset = new Vector2(xOffset, yOffset);
+					    var isDiagonallyAdjacent = point.Position.IsDiagonalTo(point.Position + offset);
+					    
+					    var lowGroundPoint = GetAdjacentPoint(point, offset, false);
 					    if (i == 0 && lowGroundPoint != null)
 					    {
-						    _pathfinding.ConnectPoints(pointId, ((Point)lowGroundPoint).Id);
+						    _pathfinding.ConnectPoints(pointId, ((Point)lowGroundPoint).Id, 
+							    isDiagonallyAdjacent ? DiagonalCost : 1F);
 						    if (DebugEnabled)
-							    GD.Print($"3. Connecting to low ground point {JsonConvert.SerializeObject(lowGroundPoint)}");
+							    GD.Print($"3. Connecting {JsonConvert.SerializeObject(point)} to low ground " +
+							             $"point {JsonConvert.SerializeObject(lowGroundPoint)}, " +
+							             $"{nameof(isDiagonallyAdjacent)}: {isDiagonallyAdjacent}. ");
 					    }
 
 					    if (path.Count > 1 && i != 0)
 					    {
-						    var offsetPosition = point.Position + new Vector2(xOffset, yOffset);
+						    var offsetPosition = point.Position + offset;
 						    var previousStepPositionExists = path[i - 1].Item1.Any(x => 
 							    x.Equals(offsetPosition));
 						    if (previousStepPositionExists)
@@ -690,20 +696,25 @@ public class Pathfinding : Node
 							    var previousStepPosition = path[i - 1].Item1.FirstOrDefault(x => 
 								    x.Equals(offsetPosition));
 							    var previousStepPoint = Points.GetPoint(previousStepPosition, true);
-							    _pathfinding.ConnectPoints(pointId, previousStepPoint.Id);
+							    _pathfinding.ConnectPoints(pointId, previousStepPoint.Id,
+								    isDiagonallyAdjacent ? DiagonalCost : 1F);
 							    if (DebugEnabled)
-								    GD.Print($"4. Connecting to previous step point {JsonConvert.SerializeObject(previousStepPoint)}");
+								    GD.Print($"4. Connecting {JsonConvert.SerializeObject(point)} to previous " +
+								             $"step point {JsonConvert.SerializeObject(previousStepPoint)}, " +
+								             $"{nameof(isDiagonallyAdjacent)}: {isDiagonallyAdjacent}. ");
 						    }
 					    }
 					    
-					    var highGroundPoint = GetAdjacentPoint(point, new Vector2(xOffset, yOffset), 
-						    true);
+					    var highGroundPoint = GetAdjacentPoint(point, offset, true);
 					    if (highGroundPoint is null)
 						    continue;
 
-					    _pathfinding.ConnectPoints(pointId, ((Point)highGroundPoint).Id);
+					    _pathfinding.ConnectPoints(pointId, ((Point)highGroundPoint).Id,
+						    isDiagonallyAdjacent ? DiagonalCost : 1F);
 					    if (DebugEnabled)
-						    GD.Print($"5. Connecting to adjacent high ground point {JsonConvert.SerializeObject(highGroundPoint)}");
+						    GD.Print($"5. Connecting {JsonConvert.SerializeObject(point)} to adjacent high " +
+						             $"ground point {JsonConvert.SerializeObject(highGroundPoint)}, " +
+						             $"{nameof(isDiagonallyAdjacent)}: {isDiagonallyAdjacent}. ");
 				    }
 			    }
 			    
@@ -748,13 +759,19 @@ public class Pathfinding : Node
 		    {
 			    for (var yOffset = -1; yOffset < 2; yOffset++)
 			    {
-				    var otherPoint = GetAdjacentPoint(point, new Vector2(xOffset, yOffset), true);
+				    var offset = new Vector2(xOffset, yOffset);
+				    var isDiagonallyAdjacent = point.Position.IsDiagonalTo(point.Position + offset);
+				    
+				    var otherPoint = GetAdjacentPoint(point, offset, true);
 				    if (otherPoint is null)
 					    continue;
 
-				    _pathfinding.ConnectPoints(pointId, ((Point)otherPoint).Id);
+				    _pathfinding.ConnectPoints(pointId, ((Point)otherPoint).Id, 
+					    isDiagonallyAdjacent ? DiagonalCost : 1F);
 				    if (DebugEnabled)
-					    GD.Print($"5. Connecting to adjacent high ground point {JsonConvert.SerializeObject(otherPoint)}");
+					    GD.Print($"5. Connecting {JsonConvert.SerializeObject(point)} to adjacent high " +
+					             $"ground point {JsonConvert.SerializeObject(otherPoint)}, " +
+					             $"{nameof(isDiagonallyAdjacent)}: {isDiagonallyAdjacent}. ");
 			    }
 		    }
 
@@ -842,7 +859,8 @@ public class Pathfinding : Node
 			    if (Points.ContainsPoint(currentPosition, true) is false)
 			    {
 				    if (DebugEnabled)
-					    GD.Print($"6.2. High ground position {JsonConvert.SerializeObject(currentPosition)} does not exist.");
+					    GD.Print($"6.2. High ground position {JsonConvert.SerializeObject(currentPosition)} " +
+					             $"does not exist.");
 				    continue;
 			    }
 				    
@@ -875,7 +893,8 @@ public class Pathfinding : Node
 				    {
 					    var result = pathfinding.AddPoint(point.Id, HighGroundIndex);
 					    if (DebugEnabled)
-						    GD.Print($"6.6. Adding point to {size}X pathfinding {JsonConvert.SerializeObject(point)} with result: {result}.");
+						    GD.Print($"6.6. Adding point to {size}X pathfinding " +
+						             $"{JsonConvert.SerializeObject(point)} with result: {result}.");
 				    }
 				    
 				    for (var xAdjacent = x - 1; xAdjacent <= x + 1; xAdjacent++)
@@ -883,8 +902,11 @@ public class Pathfinding : Node
 					    for (var yAdjacent = y - 1; yAdjacent <= y + 1; yAdjacent++)
 					    {
 						    var adjacentPosition = new Vector2(xAdjacent, yAdjacent);
+						    var isDiagonallyAdjacent = currentPosition.IsDiagonalTo(adjacentPosition);
+						    
 						    if (DebugEnabled)
-							    GD.Print($"7. Looking at adjacent position {JsonConvert.SerializeObject(adjacentPosition)}.");
+							    GD.Print($"7. Looking at adjacent position " +
+							             $"{JsonConvert.SerializeObject(adjacentPosition)}.");
 
 						    if (Points.ContainsPoint(adjacentPosition, false))
 						    {
@@ -894,9 +916,14 @@ public class Pathfinding : Node
 							    var adjacentLowGroundPoint = Points.GetPoint(adjacentPosition, false);
 							    if (_pathfinding.HasConnection(point.Id, adjacentLowGroundPoint.Id))
 							    {
-								    var result = pathfinding.ConnectPoints(point.Id, adjacentLowGroundPoint.Id);
+								    var result = pathfinding.ConnectPoints(point.Id, adjacentLowGroundPoint.Id,
+									    isDiagonallyAdjacent ? DiagonalCost : 1F);
 								    if (DebugEnabled)
-									    GD.Print($"8.2. Connecting {size}X pathfinding point {point.Id} with low ground point {JsonConvert.SerializeObject(adjacentLowGroundPoint)}, result: {result}.");
+									    GD.Print($"8.2. Connecting {size}X pathfinding point " +
+									             $"{JsonConvert.SerializeObject(point)} with low ground point " +
+									             $"{JsonConvert.SerializeObject(adjacentLowGroundPoint)}, " +
+									             $"{nameof(isDiagonallyAdjacent)}: {isDiagonallyAdjacent}, " +
+									             $"result: {result}.");
 							    }
 						    }
 
@@ -908,9 +935,14 @@ public class Pathfinding : Node
 							    var adjacentHighGroundPoint = Points.GetPoint(adjacentPosition, true);
 							    if (_pathfinding.HasConnection(point.Id, adjacentHighGroundPoint.Id))
 							    {
-								    var result = pathfinding.ConnectPoints(point.Id, adjacentHighGroundPoint.Id);
+								    var result = pathfinding.ConnectPoints(point.Id, adjacentHighGroundPoint.Id,
+									    isDiagonallyAdjacent ? DiagonalCost : 1F);
 								    if (DebugEnabled)
-									    GD.Print($"9.2. Connecting {size}X pathfinding point {point.Id} with high ground point {JsonConvert.SerializeObject(adjacentHighGroundPoint)}, result: {result}.");
+									    GD.Print($"9.2. Connecting {size}X pathfinding point " +
+									             $"{JsonConvert.SerializeObject(point)} with high ground point " +
+									             $"{JsonConvert.SerializeObject(adjacentHighGroundPoint)}, " +
+									             $"{nameof(isDiagonallyAdjacent)}: {isDiagonallyAdjacent}, " +
+									             $"result: {result}.");
 							    }
 						    }
 					    }
@@ -1028,13 +1060,17 @@ public class Pathfinding : Node
 	    }
     }
 
-    private bool IsCached(Vector2 position, float range, int size) 
-	    => position.Equals(_previousPosition) && range.Equals(_previousRange) && size.Equals(_previousSize);
+    private bool IsCached(Vector2 position, float range, bool isOnHighGround, int size) 
+	    => position.Equals(_previousPosition) 
+	       && range.Equals(_previousRange)
+	       && isOnHighGround.Equals(_previousIsOnHighGround) 
+	       && size.Equals(_previousSize);
 
-    private void Cache(Vector2 position, float range, int size)
+    private void Cache(Vector2 position, float range, bool isOnHighGround, int size)
     {
 	    _previousPosition = position;
 	    _previousRange = range;
+	    _previousIsOnHighGround = isOnHighGround;
 	    _previousSize = size;
     }
 }
