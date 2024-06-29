@@ -289,9 +289,12 @@ public class EntityRenderer : Node2D
         if (DebugEnabled)
         {
             var resultText = result == 0 ? "Both the same." : result > 0 
-                ? $"'{renderer2._parentEntity.DisplayName}' is on top." : $"'{renderer1._parentEntity.DisplayName}' is on top.";
-            GD.Print($"Renderer '{renderer1._parentEntity.DisplayName}' of type '{renderer1.SortType}' compared to " +
-                  $"'{renderer2._parentEntity.DisplayName}' of type {renderer2.SortType} with the result of {result}. " + resultText);
+                ? $"'{renderer2._parentEntity.DisplayName}' at '{renderer2._parentEntity.EntityPrimaryPosition}' is on top." 
+                : $"'{renderer1._parentEntity.DisplayName}' at '{renderer1._parentEntity.EntityPrimaryPosition}' is on top.";
+            GD.Print($"Renderer '{renderer1._parentEntity.DisplayName}' at " +
+                     $"'{renderer1._parentEntity.EntityPrimaryPosition}' of type '{renderer1.SortType}' compared to " +
+                     $"'{renderer2._parentEntity.DisplayName}' at '{renderer2._parentEntity.EntityPrimaryPosition}' " +
+                     $"of type '{renderer2.SortType}' with the result of {result}. " + resultText);
         }
 
         if (result == 0 && ((renderer1.IsDynamic && renderer2.IsDynamic is false)
@@ -312,7 +315,7 @@ public class EntityRenderer : Node2D
         var line1BottomOrigin = line1._bottomOrigin;
         var line2TopOrigin = line2._topOrigin;
         var line2BottomOrigin = line2._bottomOrigin;
-
+        
         var comp1 = ComparePointAndLine(line1TopOrigin, line2);
         var comp2 = ComparePointAndLine(line1BottomOrigin, line2);
         var oneVsTwo = int.MinValue;
@@ -353,7 +356,7 @@ public class EntityRenderer : Node2D
 
     private static int CompareLineCenters(EntityRenderer line1, EntityRenderer line2)
     {
-        return -line1.SortingLineCenterHeight.CompareTo(line2.SortingLineCenterHeight);
+        return line1.SortingLineCenterHeight.CompareTo(line2.SortingLineCenterHeight);
     }
 
     private static int ComparePointAndLine(Vector2 point, EntityRenderer line)
