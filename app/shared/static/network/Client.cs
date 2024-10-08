@@ -31,7 +31,7 @@ public class Client : Network
         
         GetTree().Connect(Constants.ENet.ConnectedToServerEvent, this, nameof(OnConnectedToServer));
         var peer = new NetworkedMultiplayerENet();
-        var result = peer.CreateClient(Constants.ServerIp, Constants.ServerPort);
+        var result = peer.CreateClient(Constants.ENet.ServerIp, Constants.ENet.ServerPort);
 
         if (result != Error.Ok)
         {

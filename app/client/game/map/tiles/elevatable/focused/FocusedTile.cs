@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
@@ -66,7 +68,7 @@ public class FocusedTile : AnimatedSprite
                    ?? _tiles.GetTile(mapPosition, _focusedEntity is UnitNode unit && unit.IsOnHighGround);
         
         var hoveredTerrain = _tiles.GetTerrain(tile);
-        EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.Occupants);
+        EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.Occupants ?? new List<EntityNode>());
         
         MoveTo(mapPosition, GetHeight(tile), GetZIndex(tile));
         _previousPosition = mapPosition;

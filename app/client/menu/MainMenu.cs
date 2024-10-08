@@ -91,7 +91,7 @@ public class MainMenu : Control
 
     private void OnConnectPressed()
     {
-        Constants.SetRemoteServer();
+        Constants.ENet.SetRemoteServer();
         ConnectToServer();
     }
 
@@ -99,7 +99,7 @@ public class MainMenu : Control
     {
         Server.Instance.RunLocalServerInstance();
         Client.Instance.QuickStartEnabled = QuickStartCheckBox.Pressed;
-        Constants.SetLocalServer();
+        Constants.ENet.SetLocalServer();
         ConnectToServer();
     }
 

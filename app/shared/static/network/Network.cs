@@ -24,8 +24,8 @@ public class Network : Node
     protected void SetPeerTimeout()
     {
 	    var peer = GetTree().NetworkPeer as NetworkedMultiplayerENet;
-	    peer?.SetPeerTimeout(GetTree().GetNetworkUniqueId(), Constants.TimeoutLimitMs, 
-		    Constants.TimeoutMinimumMs, Constants.TimeoutMaximumMs);
+	    peer?.SetPeerTimeout(GetTree().GetNetworkUniqueId(), Constants.ENet.TimeoutLimitMs, 
+		    Constants.ENet.TimeoutMinimumMs, Constants.ENet.TimeoutMaximumMs);
     }
 
     /// <summary>

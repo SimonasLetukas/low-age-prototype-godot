@@ -209,7 +209,7 @@ namespace low_age_tests
             size.Except(listOfVector2).Should().Be(expected);
         }
         
-        public static IEnumerable<object[]> GetExpectedRectsByListOfVector22()
+        public static IEnumerable<object[]> GetExpectedResultsForDiagonalToMethod()
         {
             yield return new object[]
             {
@@ -349,7 +349,7 @@ namespace low_age_tests
         }
         
         [Theory]
-        [MemberData(nameof(GetExpectedRectsByListOfVector22))]
+        [MemberData(nameof(GetExpectedResultsForDiagonalToMethod))]
         public void IsDiagonalTo_ShouldReturnCorrectResponse_WithGivenInput(Vector2 source, Vector2 point, 
             bool expectedResult)
         {

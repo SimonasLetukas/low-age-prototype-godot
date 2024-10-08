@@ -9,129 +9,23 @@ using low_age_data.Domain.Tiles;
 using Newtonsoft.Json;
 using Object = Godot.Object;
 
-public struct Point
-{
-	public int Id { get; set; }
-	public Vector2 Position { get; set; }
-	public bool IsHighGround { get; set; }
-	public int HighGroundAscensionLevel { get; set; }
-	public int YSpriteOffset { get; set; }
-}
-
 public class Pathfinding : Node
 {
-	public class PointContainer
-	{
-		public Dictionary<Vector2, int> NonHighGroundIdsByPosition { get; set; } = new Dictionary<Vector2, int>();
-		private Dictionary<int, Point> PointsByIds { get; set; } = new Dictionary<int, Point>();
-		private Dictionary<(Vector2, bool), int> IdsByPositionAndLevel { get; set; } = new Dictionary<(Vector2, bool), int>();
-
-		public void SetBase(Godot.Collections.Dictionary<Vector2, int> graph)
-		{
-			foreach (var entry in graph)
-			{
-				var point = new Point
-				{
-					Id = entry.Value,
-					Position = entry.Key,
-					IsHighGround = false,
-					HighGroundAscensionLevel = 0
-				};
-				
-				PointsByIds[entry.Value] = point;
-				IdsByPositionAndLevel[(entry.Key, false)] = entry.Value;
-				NonHighGroundIdsByPosition[entry.Key] = entry.Value;
-			}
-		}
-
-		public IEnumerable<Point> GetAll() => PointsByIds.Values;
-
-		public IList<Point> GetPointsForEntity(EntityNode entity)
-		{
-			var points = new List<Point>();
-			var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
-			for (var x = (int)entity.EntityPrimaryPosition.x - MaxSizeForPathfinding; 
-			     x < entity.EntityPrimaryPosition.x + entity.EntitySize.x + MaxSizeForPathfinding; 
-			     x++)
-			{
-				for (var y = (int)entity.EntityPrimaryPosition.y - MaxSizeForPathfinding;
-				     y < entity.EntityPrimaryPosition.y + entity.EntitySize.y + MaxSizeForPathfinding;
-				     y++)
-				{
-					var position = new Vector2(x, y);
-					var highGroundPointFound = TryGetId(position, out var highGroundPointId, true);
-					var lowGroundPointFound = TryGetId(position, out var lowGroundPointId);
-					
-					if (highGroundPointFound && isOnHighGround)
-					{
-						points.Add(GetPoint(highGroundPointId));
-						continue;
-					}
-
-					if (lowGroundPointFound is false)
-						continue;
-					
-					points.Add(GetPoint(lowGroundPointId));
-				}
-			}
-
-			return points;
-		}
-		
-		public Point GetPoint(int id) => PointsByIds[id];
-
-		public Point GetPoint(Vector2 position, bool isHighGround = false) => GetPoint(GetId(position, isHighGround));
-
-		public bool ContainsPoint(Vector2 position, bool isHighGround = false)
-			=> IdsByPositionAndLevel.ContainsKey((position, isHighGround));
-
-		public bool TryGetId(Vector2 position, out int id, bool isHighGround = false)
-		{
-			var result = IdsByPositionAndLevel.TryGetValue((position, isHighGround), out var idResult);
-			id = idResult;
-			return result;
-		}
-		
-		public int GetId(Point point) => GetId(point.Position, point.IsHighGround);
-		
-		public int GetId(Vector2 position, bool isHighGround = false) 
-			=> IdsByPositionAndLevel[(position, isHighGround)];
-
-		public void Add(Point point)
-		{
-			PointsByIds[point.Id] = point;
-			IdsByPositionAndLevel[(point.Position, point.IsHighGround)] = point.Id;
-		}
-
-		public void Remove(int id)
-		{
-			var point = PointsByIds[id];
-			
-			PointsByIds.Remove(id);
-			IdsByPositionAndLevel.Remove((point.Position, point.IsHighGround));
-		}
-	}
-	
 	[Export] public bool DebugEnabled = false;
 	
 	public event Action FinishedInitializing = delegate { };
+	
+	public const string ScenePath = @"res://app/shared/game/map/pathfinding/Pathfinding.tscn";
 
-	private const int MaxSizeForPathfinding = 3;
-	private const float DiagonalCost = Mathf.Sqrt2;
+	private const int MaxSizeForPathfinding = Constants.Pathfinding.MaxSizeForPathfinding;
+	private const float DiagonalCost = Constants.Pathfinding.DiagonalCost;
 	private const int HighGroundTolerance = 13; // works until approx 18 levels of ascension
 	
-	public PointContainer Points { get; } = new PointContainer();
+	public Graph Graph { get; } = new Graph();
 	
 	private Vector2 MapSize { get; set; }
     private Blueprint Blueprint { get; set; }
     private Dictionary<Vector2, TileId> Tiles { get; set; } = new Dictionary<Vector2, TileId>();
-    private int PointIdIterator { get; set; } = 0;
-    private Godot.Collections.Dictionary<int, float> WeightsByPointIds { get; } =
-	    new Godot.Collections.Dictionary<int, float>();
-    private Godot.Collections.Dictionary<int, float> WeightsByPointIds2X { get; } =
-	    new Godot.Collections.Dictionary<int, float>();
-    private Godot.Collections.Dictionary<int, float> WeightsByPointIds3X { get; } =
-	    new Godot.Collections.Dictionary<int, float>();
 
     private static Godot.Collections.Dictionary<int, float> _terrainWeights = new Godot.Collections.Dictionary<int, float>
     {
@@ -141,19 +35,15 @@ public class Pathfinding : Node
         { ImpassableIndex, float.PositiveInfinity },
         { HighGroundIndex, 1.0f }
     };
-    private const int ImpassableIndex = -1;
-    private const int HighGroundIndex = -2;
-    
-    // Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/addons/dijkstra-map/doc/DijkstraMap.md
-    private DijkstraMap _pathfinding = new DijkstraMap();
-    private DijkstraMap _pathfinding2X = new DijkstraMap();
-    private DijkstraMap _pathfinding3X = new DijkstraMap();
+    private const int ImpassableIndex = Constants.Pathfinding.ImpassableIndex;
+    private const int HighGroundIndex = Constants.Pathfinding.HighGroundIndex;
 
     private Vector2 _previousPosition = Vector2.Inf;
     private float _previousRange = -1.0f;
     private bool _previousIsOnHighGround = false;
     private int _previousSize = 1;
 
+    private bool _iterateInitialization = false;
     private bool _terrainGraphInitialized = false;
     private IList<(Vector2, TileId)> _tilesForInitialization;
     private bool _terrainDilationInitialized = false;
@@ -180,10 +70,13 @@ public class Pathfinding : Node
 
     #region Initialization
 
-    public void Initialize(Vector2 mapSize, IEnumerable<(Vector2, TileId)> tiles)
+    public void Initialize(Vector2 mapSize, IEnumerable<(Vector2, TileId)> tiles, bool iterateInitialization = true)
     {
 	    MapSize = mapSize;
 	    Blueprint = Data.Instance.Blueprint;
+	    Graph.Initialize(mapSize);
+	    
+	    _iterateInitialization = iterateInitialization;
 	    
 	    var tilesList = tiles.ToList();
 	    _tilesForInitialization = tilesList;
@@ -208,7 +101,7 @@ public class Pathfinding : Node
 	    _stopwatch.Reset();
 	    _stopwatch.Start();
 
-	    while (_stopwatch.ElapsedMilliseconds < deltaMs)
+	    while (_stopwatch.ElapsedMilliseconds < deltaMs || (_iterateInitialization && CheckInitialization() is false))
 	    {
 		    if (_terrainGraphInitialized is false)
 		    {
@@ -229,33 +122,23 @@ public class Pathfinding : Node
 	    _stopwatch.Stop();
     }
     
-    private void CheckInitialization()
+    private bool CheckInitialization()
     {
 	    if (_terrainGraphInitialized is false 
 	        || _terrainDilationInitialized is false 
 	        || _diagonalConnectionsInitialized is false)
-		    return;
+		    return false;
 
 	    _initialized = true;
 	    FinishedInitializing();
+	    return _initialized;
     }
     
     private void InitializePathfindingGraphs()
     {
-	    _pathfinding = new DijkstraMap();
-	    _pathfinding2X = Blueprint.Entities.Units.Any(u => u.Size == 2) ? new DijkstraMap() : null;
-	    _pathfinding3X = Blueprint.Entities.Units.Any(u => u.Size == 3) ? new DijkstraMap() : null;
-
-	    PointIdIterator = (int)MapSize.x * (int)MapSize.y;
-	    Points.SetBase(_pathfinding.AddSquareGrid(
-		    new Rect2(0, 0, MapSize.x, MapSize.y),
-		    Terrain.Grass.ToIndex(),
-		    1.0f,
-		    DiagonalCost));
-	    _pathfinding2X?.DuplicateGraphFrom(_pathfinding);
-	    _pathfinding3X?.DuplicateGraphFrom(_pathfinding);
-
-	    _pointIdsByPositionsForInitialization = Points.NonHighGroundIdsByPosition;
+	    _pointIdsByPositionsForInitialization = Graph.InitializeSquareGrid(
+		    new Rect2(0, 0, MapSize.x, MapSize.y), 
+		    Terrain.Grass.ToIndex());
     }
 
     private void InitializeTerrainWeights()
@@ -307,14 +190,8 @@ public class Pathfinding : Node
 	    if (point is null)
 			_coordinatesByTerrainForInitialization[terrainIndex].Add(coordinates);
 	    
-	    SetTerrainForPoint(coordinates, terrainIndex, 1);
-	    WeightsByPointIds[Points.GetId(coordinates)] = _terrainWeights[terrainIndex];
-	    
-	    if (_pathfinding2X != null)
-		    WeightsByPointIds2X[Points.GetId(coordinates)] = _terrainWeights[terrainIndex];
-	    
-	    if (_pathfinding3X != null)
-		    WeightsByPointIds3X[Points.GetId(coordinates)] = _terrainWeights[terrainIndex];
+	    Graph.SetTerrainForPoint(coordinates, terrainIndex, _terrainWeights[terrainIndex]);
+	    Graph.SaveChanges();
     }
 
     private void IterateTerrainDilationUpdate(KeyValuePair<int, IList<Vector2>>? coordinatesByTerrainId = null)
@@ -353,7 +230,7 @@ public class Pathfinding : Node
 						    continue;
 					    
 					    SetTerrainForPoint(resultingCoordinates, entry.Key, 2);
-					    WeightsByPointIds2X[Points.GetId(resultingCoordinates)] = _terrainWeights[entry.Key];
+					    WeightsByPointIds2X[Graph.GetId(resultingCoordinates)] = _terrainWeights[entry.Key];
 				    }
 			    }
 		    }
@@ -370,7 +247,7 @@ public class Pathfinding : Node
 					    continue;
 					    
 				    SetTerrainForPoint(resultingCoordinates, entry.Key, 3);
-				    WeightsByPointIds3X[Points.GetId(resultingCoordinates)] = _terrainWeights[entry.Key];
+				    WeightsByPointIds3X[Graph.GetId(resultingCoordinates)] = _terrainWeights[entry.Key];
 			    }
 		    }
 	    }
@@ -390,11 +267,11 @@ public class Pathfinding : Node
 	    Point entry;
 	    if (point is null) // we are initializing
 	    {
-		    entry = Points.GetPoint(_pointIdsByPositionsForInitialization.First().Value);
+		    entry = Graph.GetPoint(_pointIdsByPositionsForInitialization.First().Value);
 		    _pointIdsByPositionsForInitialization.Remove(entry.Position);
 	    }
 	    else // we are updating pathfinding during the game
-		    entry = Points.GetPoint(point.Value.Value);
+		    entry = Graph.GetPoint(point.Value.Value);
 	    
 	    IterateDiagonalConnectionUpdate(entry, 1);
 	    
@@ -416,9 +293,9 @@ public class Pathfinding : Node
 	    if (diagonalPosition.IsInBoundsOf(MapSize) is false)
 		    return;
 		    
-	    var rightNeighbour = Points.GetId(point.Position + new Vector2(1, 0), false);
-	    var bottomNeighbour = Points.GetId(point.Position + new Vector2(0, 1), false);
-	    var diagonalNeighbour = Points.GetId(diagonalPosition, false);
+	    var rightNeighbour = Graph.GetId(point.Position + new Vector2(1, 0), false);
+	    var bottomNeighbour = Graph.GetId(point.Position + new Vector2(0, 1), false);
+	    var diagonalNeighbour = Graph.GetId(diagonalPosition, false);
 
 	    if (IsInfiniteWeight(point.Id, size)
 	        && IsInfiniteWeight(diagonalNeighbour, size)
@@ -464,7 +341,7 @@ public class Pathfinding : Node
 	    if (IsCached(from, range, isOnHighGround, size) is false)
 	    {
 		    pathfinding.Recalculate(
-			    Points.GetId(from, isOnHighGround),
+			    Graph.GetId(from, isOnHighGround),
 			    new Godot.Collections.Dictionary<string, object>
 			    {
 				    { "maximum_cost", range },
@@ -476,10 +353,10 @@ public class Pathfinding : Node
 	    }
 
 	    var availablePointIds = pathfinding.GetAllPointsWithCostBetween(0.0f, range);
-	    var availablePositions = availablePointIds.Select(pointId => Points.GetPoint(pointId));
+	    var availablePositions = availablePointIds.Select(pointId => Graph.GetPoint(pointId));
 	    
 	    if (temporary && size == _previousSize 
-	                  && Points.TryGetId(_previousPosition, out var previousPointId, _previousIsOnHighGround))
+	                  && Graph.TryGetId(_previousPosition, out var previousPointId, _previousIsOnHighGround))
 	    {
 		    pathfinding.Recalculate(
 			    previousPointId,
@@ -506,8 +383,8 @@ public class Pathfinding : Node
 
 	    var pathOfPointIds = pathfinding.GetShortestPathFromPoint(to.Id);
 
-	    var path = new List<Point> { Points.GetPoint(to.Id) };
-	    path.AddRange(pathOfPointIds.Select(pointId => Points.GetPoint(pointId)));
+	    var path = new List<Point> { Graph.GetPoint(to.Id) };
+	    path.AddRange(pathOfPointIds.Select(pointId => Graph.GetPoint(pointId)));
 	    path.Reverse();
 
 	    return path;
@@ -516,7 +393,7 @@ public class Pathfinding : Node
     public void AddOccupation(EntityNode entity)
     {
 	    var foundPoints = new List<Point>();
-	    foreach (var point in Points.GetPointsForEntity(entity))
+	    foreach (var point in Graph.GetPointsForEntity(entity))
 	    {
 		    if (entity.CanBeMovedThroughAt(point)) 
 			    continue;
@@ -540,10 +417,10 @@ public class Pathfinding : Node
 			         y <= (int)foundPosition.y + MaxSizeForPathfinding; y++)
 			    {
 				    var position = new Vector2(x, y);
-				    if (Points.ContainsPoint(position) is false)
+				    if (Graph.ContainsPoint(position) is false)
 					    continue;
 
-				    IterateDiagonalConnectionUpdate(new KeyValuePair<Vector2, int>(position, Points.GetId(position)));
+				    IterateDiagonalConnectionUpdate(new KeyValuePair<Vector2, int>(position, Graph.GetId(position)));
 			    }
 		    }
 	    }
@@ -559,7 +436,7 @@ public class Pathfinding : Node
 		    .ToDictionary<KeyValuePair<int, float>, int, IList<Vector2>>(terrainWeight => 
 			    terrainWeight.Key, terrainWeight => new List<Vector2>());
 
-	    foreach (var point in Points.GetPointsForEntity(entity))
+	    foreach (var point in Graph.GetPointsForEntity(entity))
 	    {
 		    if (point.IsHighGround)
 			    continue;
@@ -583,10 +460,10 @@ public class Pathfinding : Node
 		    for (var y = (int)start.y; y < (int)end.y; y++)
 		    {
 			    var position = new Vector2(x, y);
-			    if (Points.ContainsPoint(position) is false)
+			    if (Graph.ContainsPoint(position) is false)
 				    continue;
 			    
-			    IterateDiagonalConnectionUpdate(new KeyValuePair<Vector2, int>(position, Points.GetId(position)));
+			    IterateDiagonalConnectionUpdate(new KeyValuePair<Vector2, int>(position, Graph.GetId(position)));
 		    }
 	    }
     }
@@ -643,10 +520,10 @@ public class Pathfinding : Node
 
 			    int pointId;
 			    Point point;
-			    if (Points.ContainsPoint(pos, true))
+			    if (Graph.ContainsPoint(pos, true))
 			    {
-				    pointId = Points.GetId(pos, true);
-				    point = Points.GetPoint(pointId);
+				    pointId = Graph.GetId(pos, true);
+				    point = Graph.GetPoint(pointId);
 				    if (DebugEnabled)
 						GD.Print($"1. Found existing point {JsonConvert.SerializeObject(point)}");
 			    }
@@ -662,7 +539,7 @@ public class Pathfinding : Node
 					    HighGroundAscensionLevel = currentAscensionLevel,
 					    YSpriteOffset = path[i].Item2
 				    };
-				    Points.Add(point);
+				    Graph.Add(point);
 				    EventBus.Instance.RaiseHighGroundPointCreated(point);
 				    if (DebugEnabled)
 					    GD.Print($"2. Creating point {JsonConvert.SerializeObject(point)}");
@@ -695,7 +572,7 @@ public class Pathfinding : Node
 						    {
 							    var previousStepPosition = path[i - 1].Item1.FirstOrDefault(x => 
 								    x.Equals(offsetPosition));
-							    var previousStepPoint = Points.GetPoint(previousStepPosition, true);
+							    var previousStepPoint = Graph.GetPoint(previousStepPosition, true);
 							    _pathfinding.ConnectPoints(pointId, previousStepPoint.Id,
 								    isDiagonallyAdjacent ? DiagonalCost : 1F);
 							    if (DebugEnabled)
@@ -737,7 +614,7 @@ public class Pathfinding : Node
 		    if (pos.IsInBoundsOf(MapSize) is false)
 			    continue;
 		    
-		    if (Points.ContainsPoint(pos, true))
+		    if (Graph.ContainsPoint(pos, true))
 			    continue;
 
 		    var pointId = ++PointIdIterator;
@@ -750,7 +627,7 @@ public class Pathfinding : Node
 			    HighGroundAscensionLevel = 100,
 			    YSpriteOffset = path.First().Item2
 		    };
-		    Points.Add(point);
+		    Graph.Add(point);
 		    EventBus.Instance.RaiseHighGroundPointCreated(point);
 		    if (DebugEnabled)
 			    GD.Print($"1. Creating point {JsonConvert.SerializeObject(point)}");
@@ -788,10 +665,10 @@ public class Pathfinding : Node
 		    if (pos.IsInBoundsOf(MapSize) is false)
 			    continue;
 		    
-		    if (Points.ContainsPoint(pos, true) is false)
+		    if (Graph.ContainsPoint(pos, true) is false)
 			    continue;
 
-		    var point = Points.GetPoint(pos, true);
+		    var point = Graph.GetPoint(pos, true);
 		    
 		    /*for (var xOffset = -1; xOffset < 2; xOffset++)
 		    {
@@ -808,7 +685,7 @@ public class Pathfinding : Node
 		    RemoveHighGroundForNon1XPathfinding(point);
 		    _pathfinding.RemovePoint(point.Id);
 		    EventBus.Instance.RaiseHighGroundPointRemoved(point);
-		    Points.Remove(point.Id);
+		    Graph.Remove(point.Id);
 	    }
     }
 
@@ -829,10 +706,10 @@ public class Pathfinding : Node
 			    for (var y = (int)removed1XPoint.Position.y - size; y <= (int)removed1XPoint.Position.y + size; y++)
 			    {
 				    var position = new Vector2(x, y);
-				    if (Points.ContainsPoint(position, true) is false)
+				    if (Graph.ContainsPoint(position, true) is false)
 					    continue;
 
-				    pathfinding.RemovePoint(Points.GetId(position, true));
+				    pathfinding.RemovePoint(Graph.GetId(position, true));
 			    }
 		    }
 		    
@@ -856,7 +733,7 @@ public class Pathfinding : Node
 			    if (DebugEnabled)
 				    GD.Print($"6.1. Looking at {JsonConvert.SerializeObject(currentPosition)}.");
 
-			    if (Points.ContainsPoint(currentPosition, true) is false)
+			    if (Graph.ContainsPoint(currentPosition, true) is false)
 			    {
 				    if (DebugEnabled)
 					    GD.Print($"6.2. High ground position {JsonConvert.SerializeObject(currentPosition)} " +
@@ -864,7 +741,7 @@ public class Pathfinding : Node
 				    continue;
 			    }
 				    
-			    var point = Points.GetPoint(currentPosition, true);
+			    var point = Graph.GetPoint(currentPosition, true);
 
 			    for (var size = 2; size <= MaxSizeForPathfinding; size++)
 			    {
@@ -908,12 +785,12 @@ public class Pathfinding : Node
 							    GD.Print($"7. Looking at adjacent position " +
 							             $"{JsonConvert.SerializeObject(adjacentPosition)}.");
 
-						    if (Points.ContainsPoint(adjacentPosition, false))
+						    if (Graph.ContainsPoint(adjacentPosition, false))
 						    {
 							    if (DebugEnabled)
 								    GD.Print($"8.1. Adjacent point exists on low ground.");
 
-							    var adjacentLowGroundPoint = Points.GetPoint(adjacentPosition, false);
+							    var adjacentLowGroundPoint = Graph.GetPoint(adjacentPosition, false);
 							    if (_pathfinding.HasConnection(point.Id, adjacentLowGroundPoint.Id))
 							    {
 								    var result = pathfinding.ConnectPoints(point.Id, adjacentLowGroundPoint.Id,
@@ -927,12 +804,12 @@ public class Pathfinding : Node
 							    }
 						    }
 
-						    if (Points.ContainsPoint(adjacentPosition, true))
+						    if (Graph.ContainsPoint(adjacentPosition, true))
 						    {
 							    if (DebugEnabled)
 								    GD.Print($"9.1. Adjacent point exists on high ground.");
 							    
-							    var adjacentHighGroundPoint = Points.GetPoint(adjacentPosition, true);
+							    var adjacentHighGroundPoint = Graph.GetPoint(adjacentPosition, true);
 							    if (_pathfinding.HasConnection(point.Id, adjacentHighGroundPoint.Id))
 							    {
 								    var result = pathfinding.ConnectPoints(point.Id, adjacentHighGroundPoint.Id,
@@ -956,7 +833,7 @@ public class Pathfinding : Node
     {
 	    for (var x = (int)at.x; x < (int)at.x + size; x++) 
 	    for (var y = (int)at.y; y < (int)at.y + size; y++)
-		    if (Points.ContainsPoint(new Vector2(x, y), true) is false)
+		    if (Graph.ContainsPoint(new Vector2(x, y), true) is false)
 		    {
 			    
 			    return false;
@@ -972,10 +849,10 @@ public class Pathfinding : Node
 		    for (var y = (int)point.Position.y - 1; y <= (int)point.Position.y + 1; y++)
 		    {
 			    var position = new Vector2(x, y);
-			    if (Points.ContainsPoint(position, false) is false)
+			    if (Graph.ContainsPoint(position, false) is false)
 				    continue;
 
-			    var lowGroundPoint = Points.GetPoint(position, false);
+			    var lowGroundPoint = Graph.GetPoint(position, false);
 			    if (_pathfinding.HasConnection(point.Id, lowGroundPoint.Id))
 				    return true;
 		    }
@@ -1007,10 +884,10 @@ public class Pathfinding : Node
 	    if (otherPosition.IsEqualApprox(point.Position))
 		    return null;
 	    
-	    if (Points.ContainsPoint(otherPosition, isHighGround) is false)
+	    if (Graph.ContainsPoint(otherPosition, isHighGround) is false)
 		    return null;
 	    
-	    var otherPoint = Points.GetPoint(otherPosition, isHighGround);
+	    var otherPoint = Graph.GetPoint(otherPosition, isHighGround);
 
 	    if (isHighGround 
 	        && Mathf.Abs(otherPoint.HighGroundAscensionLevel - point.HighGroundAscensionLevel) > HighGroundTolerance)
@@ -1024,7 +901,7 @@ public class Pathfinding : Node
 	    if (at.IsInBoundsOf(MapSize))
 	    {
 		    GetPathfindingForSize(size).SetTerrainForPoint(
-			    Points.GetId(at),
+			    Graph.GetId(at),
 			    terrain);
 	    }
     }
@@ -1072,123 +949,5 @@ public class Pathfinding : Node
 	    _previousRange = range;
 	    _previousIsOnHighGround = isOnHighGround;
 	    _previousSize = size;
-    }
-}
-
-// Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/addons/dijkstra-map/doc/DijkstraMap.md
-public class DijkstraMap : Node
-{
-	private Object _dijkstraMap;
-	
-	public DijkstraMap()
-	{
-		var dijkstraMapScript = GD.Load("res://addons/dijkstra-map/Dijkstra_map_library/nativescript.gdns") as NativeScript;
-		_dijkstraMap = dijkstraMapScript?.New() as Object;
-		if (_dijkstraMap is null) throw new ArgumentNullException($"{nameof(_dijkstraMap)} cannot be null.");
-	}
-	
-	public Godot.Collections.Dictionary<Vector2, int> AddSquareGrid(Rect2 bounds, int terrain, float orthCost,
-		float diagCost)
-	{
-		var dictionary = _dijkstraMap.Call("add_square_grid", bounds, terrain, orthCost, diagCost) 
-			as Godot.Collections.Dictionary;
-		return new Godot.Collections.Dictionary<Vector2, int>(dictionary);
-	}
-
-	public void SetTerrainForPoint(int pointId, int terrain)
-	{
-		_dijkstraMap.Call("set_terrain_for_point", pointId, terrain);
-	}
-	
-	public int GetTerrainForPoint(int pointId)
-	{
-		return (int)_dijkstraMap.Call("get_terrain_for_point", pointId);
-	}
-
-	public void Recalculate(int pointId, Godot.Collections.Dictionary<string, object> options)
-	{
-		_dijkstraMap.Call("recalculate", pointId, options);
-	}
-
-	public int[] GetAllPointsWithCostBetween(float min, float max)
-	{
-		return _dijkstraMap.Call("get_all_points_with_cost_between", min, max)
-			as int[];
-	}
-
-	public int[] GetShortestPathFromPoint(int pointId)
-	{
-		return _dijkstraMap.Call("get_shortest_path_from_point", pointId)
-			as int[];
-	}
-
-	public void Clear()
-    {
-        _dijkstraMap.Call("clear");
-    }
-
-    public Error DuplicateGraphFrom(DijkstraMap sourceInstance)
-    {
-        return (Error)_dijkstraMap.Call("duplicate_graph_from", sourceInstance._dijkstraMap);
-    }
-
-    public int GetAvailablePointId()
-    {
-        return (int)_dijkstraMap.Call("get_available_point_id");
-    }
-
-    public Error AddPoint(int pointId, int terrainType = -1)
-    {
-        return (Error)_dijkstraMap.Call("add_point", pointId, terrainType);
-    }
-
-    public Error RemovePoint(int pointId)
-    {
-        return (Error)_dijkstraMap.Call("remove_point", pointId);
-    }
-
-    public bool HasPoint(int pointId)
-    {
-        return (bool)_dijkstraMap.Call("has_point", pointId);
-    }
-    
-    public Error DisablePoint(int pointId)
-    {
-        return (Error)_dijkstraMap.Call("disable_point", pointId);
-    }
-    
-    public Error EnablePoint(int pointId)
-    {
-        return (Error)_dijkstraMap.Call("enable_point", pointId);
-    }
-    
-    public bool IsPointDisabled(int pointId)
-    {
-        return (bool)_dijkstraMap.Call("is_point_disabled", pointId);
-    }
-    
-    public Error ConnectPoints(int source, int target, float weight = 1f, bool bidirectional = true)
-    {
-        return (Error)_dijkstraMap.Call("connect_points", source, target, weight, bidirectional);
-    }
-    
-    public Error RemoveConnection(int source, int target, bool bidirectional = true)
-    {
-        return (Error)_dijkstraMap.Call("remove_connection", source, target, bidirectional);
-    }
-    
-    public bool HasConnection(int source, int target)
-    {
-        return (bool)_dijkstraMap.Call("has_connection", source, target);
-    }
-
-    public int GetDirectionAtPoint(int pointId)
-    {
-        return (int)_dijkstraMap.Call("get_direction_at_point", pointId);
-    }
-    
-    public float GetCostAtPoint(int pointId)
-    {
-        return (float)_dijkstraMap.Call("get_cost_at_point", pointId);
     }
 }

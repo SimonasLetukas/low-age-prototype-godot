@@ -109,7 +109,7 @@ public class ClientMap : Map
 
         if (_tileMapPointsStartedInitialization is false)
         {
-            _tileMap.AddPoints(Pathfinding.Points.GetAll());
+            _tileMap.AddPoints(Pathfinding.Graph.GetAllTerrainPoints());
             _tileMapPointsStartedInitialization = true;
             return;
         }

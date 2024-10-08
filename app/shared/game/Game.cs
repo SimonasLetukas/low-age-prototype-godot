@@ -28,7 +28,7 @@ public class Game : Node2D
             return;
         
         GD.Print($"{nameof(Game)}: calling {nameof(ServerGame.OnClientLoaded)} as RPC.");
-        RpcId(Constants.ServerId, nameof(ServerGame.OnClientLoaded), GetTree().GetNetworkUniqueId());
+        RpcId(Constants.ENet.ServerId, nameof(ServerGame.OnClientLoaded), GetTree().GetNetworkUniqueId());
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class Game : Node2D
         if (GetTree().IsNetworkServer())
             return;
         
-        RpcId(Constants.ServerId, nameof(ServerGame.OnRegisterNewGameEvent), EventToString(gameEvent));
+        RpcId(Constants.ENet.ServerId, nameof(ServerGame.OnRegisterNewGameEvent), EventToString(gameEvent));
     }
 
     #endregion

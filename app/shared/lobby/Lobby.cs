@@ -62,7 +62,7 @@ public class Lobby : VBoxContainer
         
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedFaction)}: calling " +
                  $"{nameof(ServerLobby.UpdateSelectedPlayerFaction)}.");
-        RpcId(Constants.ServerId, nameof(ServerLobby.UpdateSelectedPlayerFaction), playerId, 
+        RpcId(Constants.ENet.ServerId, nameof(ServerLobby.UpdateSelectedPlayerFaction), playerId, 
             newFactionId.ToString());
     }
     
@@ -105,7 +105,7 @@ public class Lobby : VBoxContainer
         
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedReadyStatus)}: calling " +
                  $"{nameof(ServerLobby.UpdatePlayerReadyStatus)}.");
-        RpcId(Constants.ServerId, nameof(ServerLobby.UpdatePlayerReadyStatus), playerId, newReadyStatus);
+        RpcId(Constants.ENet.ServerId, nameof(ServerLobby.UpdatePlayerReadyStatus), playerId, newReadyStatus);
     }
     
     /// <summary>
