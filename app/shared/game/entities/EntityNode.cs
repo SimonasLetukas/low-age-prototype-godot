@@ -286,6 +286,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
         if (requiresTargetTiles && tiles.All(x => x.IsTarget is false))
             return false;
+        
+        if (tiles.Any(x => x.Occupants.Any(y => y is UnitNode)))
+            return false;
 
         return true;
     }
