@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data;
+using low_age_data.Domain.Common;
 using Object = Godot.Object;
 
-public struct Point
+public struct Point : IEquatable<Point>
 {
 	public int Id { get; set; }
 	public Vector2 Position { get; set; }
@@ -14,11 +15,47 @@ public struct Point
 	public int YSpriteOffset { get; set; }
 	public int TerrainIndex { get; set; }
 	public bool IsImpassable { get; set; }
+
+	public bool Equals(Point other)
+	{
+		return Id == other.Id 
+		       && Position.Equals(other.Position) 
+		       && IsHighGround == other.IsHighGround 
+		       && HighGroundAscensionLevel == other.HighGroundAscensionLevel 
+		       && YSpriteOffset == other.YSpriteOffset 
+		       && TerrainIndex == other.TerrainIndex 
+		       && IsImpassable == other.IsImpassable;
+	}
+
+	public override bool Equals(object obj)
+	{
+		return obj is Point other && Equals(other);
+	}
+
+	public override int GetHashCode()
+	{
+		unchecked
+		{
+			var hashCode = Id;
+			hashCode = (hashCode * 397) ^ Position.GetHashCode();
+			hashCode = (hashCode * 397) ^ IsHighGround.GetHashCode();
+			hashCode = (hashCode * 397) ^ HighGroundAscensionLevel;
+			hashCode = (hashCode * 397) ^ YSpriteOffset;
+			hashCode = (hashCode * 397) ^ TerrainIndex;
+			hashCode = (hashCode * 397) ^ IsImpassable.GetHashCode();
+			return hashCode;
+		}
+	}
 }
 
 /// <summary>
+/// <para>
 /// Extends <see cref="DijkstraMap"/> with additional dimensions: size, team. Manages the resulting multiple
 /// <see cref="DijkstraMap"/>s and <see cref="Point"/>s within.
+/// </para>
+/// <para>
+/// "Main" graph implies a size of 1 and *any* team.
+/// </para>
 /// </summary>
 public class Graph
 {
@@ -34,9 +71,9 @@ public class Graph
 
 	private class PointConnectionsAdded : IPointChange
 	{
-		public IList<Connection> Connections { get; }
+		public IEnumerable<Connection> Connections { get; }
 		
-		public PointConnectionsAdded(IList<Connection> connections)
+		public PointConnectionsAdded(IEnumerable<Connection> connections)
 		{
 			Connections = connections;
 		}
@@ -44,9 +81,9 @@ public class Graph
 	
 	private class PointConnectionsRemoved : IPointChange
 	{
-		public IList<Point> Points { get; }
+		public IEnumerable<Point> Points { get; }
 		
-		public PointConnectionsRemoved(IList<Point> points)
+		public PointConnectionsRemoved(IEnumerable<Point> points)
 		{
 			Points = points;
 		}
@@ -66,17 +103,27 @@ public class Graph
 
 	#endregion
 
-	public IList<int> SupportedSizes = new List<int>();
+	public IList<int> SupportedTeams { get; } = new List<int>();
+	public IList<int> SupportedSizes { get; } = new List<int>();
 	
-    private const int MaxSizeForPathfinding = Constants.Pathfinding.MaxSizeForPathfinding;
+	private const int MaxSizeForPathfinding = Constants.Pathfinding.MaxSizeForPathfinding;
     private const float DiagonalCost = Constants.Pathfinding.DiagonalCost;
     private const int ImpassableIndex = Constants.Pathfinding.ImpassableIndex;
     private const int HighGroundIndex = Constants.Pathfinding.HighGroundIndex;
     
     private Vector2 MapSize { get; set; }
-    private IList<int> SupportedTeams = new List<int>();
     private int PointIdIterator { get; set; }
     private Blueprint Blueprint { get; set; }
+
+    private static Godot.Collections.Dictionary<int, float> _terrainWeights =
+	    new Godot.Collections.Dictionary<int, float>
+	    {
+		    { Terrain.Grass.ToIndex(), 1.0f },
+		    { Terrain.Mountains.ToIndex(), float.PositiveInfinity },
+		    { Terrain.Marsh.ToIndex(), 2.0f },
+		    { ImpassableIndex, float.PositiveInfinity },
+		    { HighGroundIndex, 1.0f }
+	    };
 
     private class PointById : Dictionary<int, Point> { }
     private class PointByIdBySize : Dictionary<int, PointById> { }
@@ -131,10 +178,19 @@ public class Graph
 				ChangedPointByIdBySizeByTeam[team][size] = new ChangedPointById();
 				PointTerrainWeightByIdBySizeByTeam[team][size] = new TerrainWeightByPointId();
 				
-				var dijkstraMap = new DijkstraMap();
+				var dijkstraMap = new DijkstraMap(); // TODO inject as a dependency and mock its interface for tests
 				DijkstraMapBySizeByTeam[team][size] = dijkstraMap;
 			}
 		}
+		
+		_terrainWeights = new Godot.Collections.Dictionary<int, float>();
+		foreach (var tile in Blueprint.Tiles)
+		{
+			_terrainWeights.Add(tile.Terrain.ToIndex(), tile.MovementCost);
+		}
+
+		_terrainWeights.Add(ImpassableIndex, float.PositiveInfinity);
+		_terrainWeights.Add(HighGroundIndex, 1.0f);
 	}
 	
 	/// <summary>
@@ -243,17 +299,27 @@ public class Graph
 							                                      $"{nameof(status)}");
 					}
 				}
-				
-				changedPointBySize.Clear();
+			}
+		}
+
+		foreach (var team in SupportedTeams)
+		{
+			ChangedPointByIdBySizeByTeam[team] = new ChangedPointByIdBySize();
+
+			foreach (var size in SupportedSizes)
+			{
+				ChangedPointByIdBySizeByTeam[team][size] = new ChangedPointById();
 			}
 		}
 	}
 
-	#region Terrain
+	public bool IsSupported(int team, int size) => SupportedTeams.Contains(team) && SupportedSizes.Contains(size);
 
-	public void SetTerrainForPoint(Vector2 coordinates, int terrainIndex, float terrainWeight)
+	#region Terrain
+	
+	public void SetTerrainForPoint(Vector2 coordinates, int terrainIndex)
 	{
-		if (TryGetId(coordinates, 1, 1, out _) is false)
+		if (TryGetPointId(coordinates, 1, 1, out _) is false)
 			return;
 
 		foreach (var team in SupportedTeams)
@@ -263,13 +329,113 @@ public class Graph
 				var dilatedPositions = Iterate.Positions(coordinates, coordinates + Vector2.One * size);
 				foreach (var position in dilatedPositions)
 				{
-					if (TryGetId(position, team, size, out var pointId) is false)
+					if (TryGetPointId(position, team, size, out var pointId) is false)
 						continue;
 				
 					var point = GetPoint(pointId, team, size);
 					point.TerrainIndex = terrainIndex;
 					ChangedPointByIdBySizeByTeam[team][size][pointId] = new PointTerrainChanged();
-					PointTerrainWeightByIdBySizeByTeam[team][size][pointId] = terrainWeight;
+					PointTerrainWeightByIdBySizeByTeam[team][size][pointId] = _terrainWeights[terrainIndex];
+				}
+			}
+		}
+	}
+
+	public void SetPointsImpassable(bool to, IEnumerable<Point> points)
+	{
+		foreach (var originPoint in points)
+		{
+			foreach (var team in SupportedTeams)
+			{
+				foreach (var size in SupportedSizes)
+				{
+					var dilatedPositions = Iterate.Positions(
+						originPoint.Position, 
+						originPoint.Position + Vector2.One * size);
+					
+					foreach (var position in dilatedPositions)
+					{
+						if (TryGetPointId(position, team, size, out var pointId) is false)
+							continue;
+				
+						var point = GetPoint(pointId, team, size);
+						SetPointImpassible(to, point, team, size);
+					}
+				}
+			}
+		}
+	}
+	
+	public void SetPointImpassible(bool to, Point point, int team, int size)
+	{
+		point.IsImpassable = to;
+		ChangedPointByIdBySizeByTeam[team][size][point.Id] = new PointTerrainChanged();
+	}
+
+	public void UpdateDiagonalConnection(Vector2 position)
+	{
+		var diagonalPosition = position + new Vector2(1, 1);
+		if (diagonalPosition.IsInBoundsOf(MapSize) is false)
+			return;
+		
+		var rightPosition = position + new Vector2(1, 0);
+		var bottomPosition = position + new Vector2(0, 1);
+
+		foreach (var team in SupportedTeams)
+		{
+			foreach (var size in SupportedSizes)
+			{
+				var points = new List<Point>();
+				if (TryGetPointId(position, team, size, out var highGroundPointId, true)) 
+					points.Add(GetPoint(highGroundPointId, team, size));
+				if (TryGetPointId(position, team, size, out var lowGroundPointId, false)) 
+					points.Add(GetPoint(lowGroundPointId, team, size));
+
+				foreach (var point in points)
+				{
+					if (TryGetHighestPoint(rightPosition, team, size, point.IsHighGround, 
+						    out var rightNeighbour) is false)
+						continue;
+					if (TryGetHighestPoint(bottomPosition, team, size, point.IsHighGround, 
+						    out var bottomNeighbour) is false)
+						continue;
+					if (TryGetHighestPoint(diagonalPosition, team, size, point.IsHighGround, 
+						    out var diagonalNeighbour) is false)
+						continue;
+					
+					// x.
+					// .x
+					if (IsInfiniteTerrainWeight(point.Id, team, size)
+					    && IsInfiniteTerrainWeight(diagonalNeighbour.Id, team, size)
+					    && IsInfiniteTerrainWeight(rightNeighbour.Id, team, size) is false
+					    && IsInfiniteTerrainWeight(bottomNeighbour.Id, team, size) is false
+					    && rightNeighbour.IsHighGround == bottomNeighbour.IsHighGround) // TODO not tested
+					{
+						ChangedPointByIdBySizeByTeam[team][size][rightNeighbour.Id] =
+							new PointConnectionsRemoved(new[] { bottomNeighbour });
+					}
+					else
+					{
+						ChangedPointByIdBySizeByTeam[team][size][rightNeighbour.Id] =
+							new PointConnectionsAdded(new[] { new Connection(bottomNeighbour, true) });
+					}
+
+					// .x
+					// x.
+					if (IsInfiniteTerrainWeight(point.Id, team, size) is false
+					    && IsInfiniteTerrainWeight(diagonalNeighbour.Id, team, size) is false
+					    && IsInfiniteTerrainWeight(rightNeighbour.Id, team, size)
+					    && IsInfiniteTerrainWeight(bottomNeighbour.Id, team, size)
+					    && point.IsHighGround == diagonalNeighbour.IsHighGround) // TODO not tested
+					{
+						ChangedPointByIdBySizeByTeam[team][size][point.Id] =
+							new PointConnectionsRemoved(new[] { diagonalNeighbour });
+					}
+					else
+					{
+						ChangedPointByIdBySizeByTeam[team][size][point.Id] =
+							new PointConnectionsAdded(new[] { new Connection(diagonalNeighbour, true) });
+					}
 				}
 			}
 		}
@@ -284,9 +450,19 @@ public class Graph
 	#region Points
 
 	/// <summary>
-	/// Gets all terrain points from the main graph. Terrain is the same for all teams.
+	/// Gets all terrain (low ground) points from the main (1x1) graph. Can be used to get actual terrain of a point.
+	/// Terrain is the same for all teams.
 	/// </summary>
-	public IEnumerable<Point> GetAllTerrainPoints() => PointByIdBySizeByTeam[1][1].Values;
+	public IEnumerable<Point> GetTerrainPoints() => PointByIdBySizeByTeam[1][1].Values.Where(x => 
+		x.IsHighGround is false);
+
+	public Point? GetTerrainPoint(int id)
+	{
+		var point = GetPoint(id, 1, 1);
+		if (point.IsHighGround)
+			return null;
+		return point;
+	}
 
 	public IList<Point> GetPointsForEntity(EntityNode entity)
 	{
@@ -304,19 +480,11 @@ public class Graph
 			     y++)
 			{
 				var position = new Vector2(x, y);
-				var highGroundPointFound = TryGetId(position, team, size, out var highGroundPointId, true);
-				var lowGroundPointFound = TryGetId(position, team, size, out var lowGroundPointId);
-				
-				if (highGroundPointFound && isOnHighGround)
-				{
-					points.Add(GetPoint(highGroundPointId, team, size));
-					continue;
-				}
-
-				if (lowGroundPointFound is false)
+				var point = GetHighestPoint(position, team, size, isOnHighGround);
+				if (point is null)
 					continue;
 				
-				points.Add(GetPoint(lowGroundPointId, team, size));
+				points.Add(point.Value);
 			}
 		}
 
@@ -326,12 +494,45 @@ public class Graph
 	public Point GetPoint(int id, int team, int size) => PointByIdBySizeByTeam[team][size][id];
 
 	public Point GetPoint(Vector2 position, int team, int size, bool isHighGround = false) 
-		=> GetPoint(GetId(position, team, size, isHighGround), team, size);
+		=> GetPoint(GetPointId(position, team, size, isHighGround), team, size);
+
+	public Point GetMainPoint(int id, int team = 1) => GetPoint(id, team, 1);
+	
+	public Point GetMainPoint(Vector2 position, bool isHighGround = false, int team = 1)
+		=> GetPoint(position, team, 1, isHighGround);
+
+	public bool TryGetHighestPoint(Vector2 position, int team, int size, bool lookingFromHighGround, out Point point)
+	{
+		point = new Point();
+		var result = GetHighestPoint(position, team, size, lookingFromHighGround);
+		if (result is null)
+			return false;
+		
+		point = result.Value;
+		return true;
+	}
+	
+	public Point? GetHighestPoint(Vector2 position, int team, int size, bool lookingFromHighGround)
+	{
+		var highGroundPointFound = TryGetPointId(position, team, size, out var highGroundPointId, true);
+		var lowGroundPointFound = TryGetPointId(position, team, size, out var lowGroundPointId);
+				
+		if (highGroundPointFound && lookingFromHighGround)
+			return GetPoint(highGroundPointId, team, size);
+
+		if (lowGroundPointFound is false)
+			return null;
+
+		return GetPoint(lowGroundPointId, team, size);
+	}
+
+	public bool ContainsMainPoint(Vector2 position, bool isHighGround = false, int team = 1)
+		=> ContainsPoint(position, team, 1, isHighGround);
 
 	public bool ContainsPoint(Vector2 position, int team, int size, bool isHighGround = false)
 		=> PointIdByPositionBySizeByTeam[team][size].ContainsKey((position, isHighGround));
 
-	public bool TryGetId(Vector2 position, int team, int size, out int id, bool isHighGround = false)
+	public bool TryGetPointId(Vector2 position, int team, int size, out int id, bool isHighGround = false)
 	{
 		id = -1;
 		
@@ -349,10 +550,13 @@ public class Graph
 		return result;
 	}
 	
-	public int GetId(Vector2 position, int team, int size, bool isHighGround = false) 
+	public int GetPointId(Vector2 position, int team, int size, bool isHighGround = false) 
 		=> PointIdByPositionBySizeByTeam[team][size][(position, isHighGround)];
+	
+	public int GetMainPointId(Vector2 position, bool isHighGround = false, int team = 1)
+		=> GetPointId(position, team, 1, isHighGround);
 
-	public void Add(Vector2 position, bool isHighGround, int highGroundAscensionLevel, int ySpriteOffset, 
+	public Point AddPoint(Vector2 position, bool isHighGround, int highGroundAscensionLevel, int ySpriteOffset, 
 		int terrainIndex = ImpassableIndex)
 	{
 		var point = new Point
@@ -372,23 +576,46 @@ public class Graph
 			{
 				PointByIdBySizeByTeam[team][size][point.Id] = point;
 				PointIdByPositionBySizeByTeam[team][size][(point.Position, point.IsHighGround)] = point.Id;
+				PointTerrainWeightByIdBySizeByTeam[team][size][point.Id] = _terrainWeights[point.TerrainIndex];
 				ChangedPointByIdBySizeByTeam[team][size][point.Id] = new PointAdded();
 			}
 		}
+
+		return point;
 	}
 
-	public void RemoveAll(int id)
+	/// <summary>
+	/// Removes point for all teams and all sizes.
+	/// </summary>
+	/// <param name="id">Point ID</param>
+	public void RemoveAllPoints(int id)
 	{
-		foreach (var team in SupportedTeams)
+		foreach (var size in SupportedSizes)
 		{
-			foreach (var size in SupportedSizes)
-			{
-				Remove(id, team, size);
-			}
+			RemovePoint(id, size);
 		}
 	}
 
-	public void Remove(int id, int team, int size)
+	/// <summary>
+	/// Removes point for all teams in the specified size graph.
+	/// </summary>
+	/// <param name="id">Point ID</param>
+	/// <param name="size">Size graph</param>
+	public void RemovePoint(int id, int size)
+	{
+		foreach (var team in SupportedTeams)
+		{
+			RemovePoint(id, team, size);
+		}
+	}
+
+	/// <summary>
+	/// Removes point for specified team and size graph.
+	/// </summary>
+	/// <param name="id">Point ID</param>
+	/// <param name="team">Team graph</param>
+	/// <param name="size">Size graph</param>
+	public void RemovePoint(int id, int team, int size)
 	{
 		var point = PointByIdBySizeByTeam[team][size][id];
 
@@ -396,6 +623,60 @@ public class Graph
 		PointIdByPositionBySizeByTeam[team][size].Remove((point.Position, point.IsHighGround));
 
 		ChangedPointByIdBySizeByTeam[team][size][point.Id] = new PointRemoved();
+	}
+
+	#endregion
+
+	#region Path
+
+	public void Recalculate(Vector2 from, float range, bool isOnHighGround, int team, int size)
+	{
+		var point = GetPoint(from, team, size, isOnHighGround);
+		Recalculate(point.Id, range, team, size);
+	}
+
+	public void Recalculate(int pointId, float range, int team, int size)
+	{
+		DijkstraMapBySizeByTeam[team][size].Recalculate(pointId, new Godot.Collections.Dictionary<string, object>
+		{
+			{ "maximum_cost", range },
+			{ "terrain_weights", _terrainWeights }
+		});
+	}
+
+	public IEnumerable<Point> GetAllPointsWithCostBetween(float min, float max, int team, int size)
+	{
+		var pointIds = DijkstraMapBySizeByTeam[team][size].GetAllPointsWithCostBetween(min, max);
+		var points = pointIds.Select(id => GetPoint(id, team, size));
+		return points;
+	}
+
+	public IEnumerable<Point> GetShortestPathFromPoint(int pointId, int team, int size)
+	{
+		var pointIds = DijkstraMapBySizeByTeam[team][size].GetShortestPathFromPoint(pointId);
+		var points = pointIds.Select(id => GetPoint(id, team, size));
+		return points;
+	}
+
+	#endregion
+
+	#region Connections
+
+	public bool HasConnection(Point pointA, Point pointB, int team, int size)
+		=> DijkstraMapBySizeByTeam[team][size].HasConnection(pointA.Id, pointB.Id);
+	
+	public bool HasMainConnection(Point pointA, Point pointB, int team = 1)
+		=> HasConnection(pointA, pointB, team, 1);
+
+	public void ConnectPoints(Point pointA, Point pointB, bool isDiagonallyAdjacent, int size)
+	{
+		foreach (var team in SupportedTeams)
+		{
+			ChangedPointByIdBySizeByTeam[team][size][pointA.Id] = new PointConnectionsAdded(new[]
+			{
+				new Connection(pointB, isDiagonallyAdjacent)
+			});
+		}
 	}
 
 	#endregion

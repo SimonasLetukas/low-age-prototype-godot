@@ -109,7 +109,7 @@ public class ClientMap : Map
 
         if (_tileMapPointsStartedInitialization is false)
         {
-            _tileMap.AddPoints(Pathfinding.Graph.GetAllTerrainPoints());
+            _tileMap.AddPoints(Pathfinding.Graph.GetTerrainPoints());
             _tileMapPointsStartedInitialization = true;
             return;
         }
@@ -367,6 +367,7 @@ public class ClientMap : Map
         ResetLines();
 
         const int size = 2;
+        const int team = 1;
         
         for (var x = 0; x < 10; x++)
         {
@@ -374,7 +375,7 @@ public class ClientMap : Map
             {
                 var position = new Vector2(x, y);
                 var tile = _tileMap.GetHighestTile(position);
-                if (float.IsPositiveInfinity(Pathfinding.GetWeight(tile.Point, size)))
+                if (Pathfinding.Graph.IsInfiniteTerrainWeight(tile.Point.Id, team, size))
                     continue;
 
                 for (var offsetX = -1; offsetX < 2; offsetX++)
@@ -386,8 +387,8 @@ public class ClientMap : Map
                         if (adjacentTile is null)
                             continue;
 
-                        if (Pathfinding.HasConnection(tile.Point, adjacentTile.Point, size) is false 
-                            || float.IsPositiveInfinity(Pathfinding.GetWeight(adjacentTile.Point, size)))
+                        if (Pathfinding.HasConnection(tile.Point, adjacentTile.Point, team, size) is false 
+                            || Pathfinding.Graph.IsInfiniteTerrainWeight(adjacentTile.Point.Id, team, size))
                             continue;
 
                         var line = new Line2D();
@@ -420,15 +421,15 @@ public class ClientMap : Map
         {
             if (Entities.IsEntitySelected(unit))
                 return;
-            
-            _tileMap.Elevatable.SetAvailableTiles(unit, Pathfinding.GetAvailablePoints(
-                    unit.EntityPrimaryPosition,
-                    unit.GetReach(),
-                    unit.IsOnHighGround,
-                    (int)unit.EntitySize.x,
-                    true),
+
+            var temporaryAvailablePoints = Pathfinding.GetAvailablePoints(
+                unit.EntityPrimaryPosition,
+                unit.GetReach(),
+                unit.IsOnHighGround,
                 (int)unit.EntitySize.x,
                 true);
+            
+            _tileMap.Elevatable.SetAvailableTiles(unit, temporaryAvailablePoints, (int)unit.EntitySize.x, true);
         }
         else
             _tileMap.Elevatable.ClearAvailableTiles(true);
