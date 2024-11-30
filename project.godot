@@ -8,16 +8,6 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "",
-"class": "DijkstraMap",
-"language": "NativeScript",
-"path": "res://addons/dijkstra-map/Dijkstra_map_library/nativescript.gdns"
-} ]
-_global_script_class_icons={
-"DijkstraMap": ""
-}
-
 [application]
 
 config/name="low-age-prototype-godot"

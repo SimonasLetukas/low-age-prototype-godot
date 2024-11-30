@@ -156,6 +156,59 @@ namespace low_age_dijkstra
         /// actually uses Dijkstra's algorithm.
         /// </para>
         /// </summary>
+        /// <param name="origin">ID of the origin point.</param>
+        /// <param name="additionalOrigins">Additional origin points.</param>
+        /// <param name="inputIsDestination">If true, input points are seen as <b>destinations</b>. This means
+        /// the algorithm will compute path <b>from</b> various points <b>to</b> the closest input point.
+        /// Default = true.</param>
+        /// <param name="maximumCost">Specifies maximum cost. Once all the shortest paths no
+        /// longer than the maximum cost are found, the algorithm terminates. All points with
+        /// cost bigger than this are treated as inaccessible. Default = <see cref="float.PositiveInfinity"/>.</param>
+        /// <param name="initialCosts">Specifies initial costs for the given <see cref="origin"/>s. Values are
+        /// paired with corresponding indices in the <see cref="origin"/> and <see cref="additionalOrigins"/>
+        /// arguments. Every unspecified cost is defaulted to `0.0`.
+        /// Can be used to weigh the <see cref="origin"/>s with a preference.</param>
+        /// <param name="terrainWeights">Specifies weights of terrain types. Keys are terrain type IDs and values
+        /// are floats. Unspecified terrains will have <see cref="float.PositiveInfinity"/> weight.
+        /// <b>Note</b> that `-1` correspond to the default terrain (which have a weight of `1.0`), and will thus be
+        /// ignored if it appears in the keys.</param>
+        /// <param name="terminationPoints">A set of points that stop the computation if they are
+        /// reached by the algorithm.</param>
+        public void Recalculate(
+            int origin,
+            IEnumerable<int> additionalOrigins = null,
+            bool? inputIsDestination = null,
+            float? maximumCost = null,
+            List<float> initialCosts = null,
+            Dictionary<int, float> terrainWeights = null,
+            HashSet<int> terminationPoints = null)
+        {
+            additionalOrigins = additionalOrigins ?? new List<int>();
+            inputIsDestination = inputIsDestination ?? true;
+            initialCosts = initialCosts ?? new List<float>();
+            terrainWeights = terrainWeights ?? new Dictionary<int, float>();
+            terminationPoints = terminationPoints ?? new HashSet<int>();
+            
+            Recalculate(
+                origin,
+                additionalOrigins.Select(x => new PointId(x)).ToList(),
+                inputIsDestination is true ? InputDirection.InputIsDestination : InputDirection.InputIsOrigin,
+                maximumCost,
+                initialCosts.Select(x => new Cost(x)).ToList(),
+                terrainWeights.ToDictionary(kvp => new Terrain(kvp.Key), kvp => new Weight(kvp.Value)),
+                terminationPoints.Select(x => new PointId(x)).ToHashSet());
+        }
+        
+        /// <summary>
+        /// <para>
+        /// Recalculates cost map and direction map information for each
+        /// point, overriding previous results.
+        /// </para>
+        /// <para>
+        /// This is the central function of the library, the one that
+        /// actually uses Dijkstra's algorithm.
+        /// </para>
+        /// </summary>
         /// <param name="origin">ID of the origin point. <see cref="int"/> type can be used.</param>
         /// <param name="additionalOrigins">Additional origin points.</param>
         /// <param name="inputDirection">Specify how the <see cref="origin"/> point(s) are seen as.
@@ -283,6 +336,15 @@ namespace low_age_dijkstra
                 ComputedInfo = new Dictionary<PointId, PointComputedInfo>(ComputedInfo),
                 DisabledPoints = new HashSet<PointId>(DisabledPoints),
             };
+        }
+
+        /// Updates current <see cref="DijkstraMap"/> with the values copied from another <see cref="DijkstraMap"/>.
+        public void DuplicateGraphFrom(DijkstraMap other)
+        {
+            Points = new Dictionary<PointId, PointInfo>(other.Points);
+            SortedPoints = new List<PointId>(other.SortedPoints);
+            ComputedInfo = new Dictionary<PointId, PointComputedInfo>(other.ComputedInfo);
+            DisabledPoints = new HashSet<PointId>(other.DisabledPoints);
         }
     }
 }

@@ -7,7 +7,7 @@ public class Config : Node
 {
     public const string SavePath = @"res://data/config.json";
     public static Config Instance = null;
-
+    
     public void Save()
     {
         var file = new File();
@@ -86,6 +86,7 @@ public class Config : Node
         }
         
         Load();
+        Save();
     }
 
     private class ConfigData

@@ -22,6 +22,6 @@ namespace low_age_dijkstra
 
         public override int GetHashCode() => Value.GetHashCode();
         
-        public static implicit operator int(Terrain terrain) => terrain.Value;
+        public static implicit operator Terrain(int terrain) => new Terrain(terrain);
     }
 }

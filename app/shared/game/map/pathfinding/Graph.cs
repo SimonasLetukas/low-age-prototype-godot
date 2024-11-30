@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data;
-using low_age_data.Domain.Common;
+using low_age_dijkstra;
+using low_age_dijkstra.Methods;
+using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
 using Object = Godot.Object;
+using Terrain = low_age_data.Domain.Common.Terrain;
 
 public struct Point : IEquatable<Point>
 {
@@ -51,8 +54,8 @@ public struct Point : IEquatable<Point>
 
 /// <summary>
 /// <para>
-/// Extends <see cref="DijkstraMap"/> with additional dimensions: size, team. Manages the resulting multiple
-/// <see cref="DijkstraMap"/>s and <see cref="Point"/>s within.
+/// Extends <see cref="low_age_dijkstra.DijkstraMap"/> with additional dimensions: size, team. Manages the resulting multiple
+/// <see cref="low_age_dijkstra.DijkstraMap"/>s and <see cref="Point"/>s within.
 /// </para>
 /// <para>
 /// "Main" graph implies a size of 1 and *any* team.
@@ -106,7 +109,7 @@ public class Graph
 
 	public IList<int> SupportedTeams { get; } = new List<int>();
 	public IList<int> SupportedSizes { get; } = new List<int>();
-	
+
 	private const int MaxSizeForPathfinding = Constants.Pathfinding.MaxSizeForPathfinding;
     private const float DiagonalCost = Constants.Pathfinding.DiagonalCost;
     private const int ImpassableIndex = Constants.Pathfinding.ImpassableIndex;
@@ -116,8 +119,8 @@ public class Graph
     private int PointIdIterator { get; set; }
     private Blueprint Blueprint { get; set; }
 
-    private static Godot.Collections.Dictionary<int, float> _terrainWeights =
-	    new Godot.Collections.Dictionary<int, float>
+    private static Dictionary<int, float> _terrainWeights =
+	    new Dictionary<int, float>
 	    {
 		    { Terrain.Grass.ToIndex(), 1.0f },
 		    { Terrain.Mountains.ToIndex(), float.PositiveInfinity },
@@ -184,7 +187,7 @@ public class Graph
 			}
 		}
 		
-		_terrainWeights = new Godot.Collections.Dictionary<int, float>();
+		_terrainWeights = new Dictionary<int, float>();
 		foreach (var tile in Blueprint.Tiles)
 		{
 			_terrainWeights.Add(tile.Terrain.ToIndex(), tile.MovementCost);
@@ -208,10 +211,12 @@ public class Graph
 		{
 			var mainDijkstraMap = MainDijkstraMap(team);
 			var graph = mainDijkstraMap.AddSquareGrid(
-				bounds,
-				terrainIndex,
-				1.0f,
-				DiagonalCost);
+				(int)bounds.Size.x,
+				(int)bounds.Size.y,
+				initialOffset: new Vector2<int>((int)bounds.Position.x, (int)bounds.Position.y),
+				defaultTerrain: terrainIndex,
+				orthogonalCost: 1.0f,
+				diagonalCost: DiagonalCost);
 			pointIdByPositionResult = SetBasePoints(team, 1, graph, terrainIndex);
 
 			foreach (var nonMainDijkstraMap in NonMainDijkstraMaps(team))
@@ -224,13 +229,15 @@ public class Graph
 		return pointIdByPositionResult;
 	}
 	
-	private Dictionary<Vector2, int> SetBasePoints(int team, int size, Godot.Collections.Dictionary<Vector2, int> graph, 
+	private Dictionary<Vector2, int> SetBasePoints(int team, int size, Dictionary<Vector2<int>, PointId> graph, 
 		int basePointTerrainIndex)
 	{
 		var pointIdByPosition = new Dictionary<Vector2, int>();
 		
-		foreach (var (position, id) in graph)
+		foreach (var (pos, pointId) in graph)
 		{
+			var id = pointId.Value;
+			var position = pos.ToGodotVector2();
 			var point = new Point
 			{
 				Id = id,
@@ -638,24 +645,22 @@ public class Graph
 
 	public void Recalculate(int pointId, float range, int team, int size)
 	{
-		DijkstraMapBySizeByTeam[team][size].Recalculate(pointId, new Godot.Collections.Dictionary<string, object>
-		{
-			{ "maximum_cost", range },
-			{ "terrain_weights", _terrainWeights }
-		});
+		DijkstraMapBySizeByTeam[team][size].Recalculate(pointId,
+			maximumCost: range,
+			terrainWeights: _terrainWeights);
 	}
 
 	public IEnumerable<Point> GetAllPointsWithCostBetween(float min, float max, int team, int size)
 	{
 		var pointIds = DijkstraMapBySizeByTeam[team][size].GetAllPointsWithCostBetween(min, max);
-		var points = pointIds.Select(id => GetPoint(id, team, size));
+		var points = pointIds.Select(id => GetPoint(id.Value, team, size));
 		return points;
 	}
 
 	public IEnumerable<Point> GetShortestPathFromPoint(int pointId, int team, int size)
 	{
 		var pointIds = DijkstraMapBySizeByTeam[team][size].GetShortestPathFromPoint(pointId);
-		var points = pointIds.Select(id => GetPoint(id, team, size));
+		var points = pointIds.Select(id => GetPoint(id.Value, team, size));
 		return points;
 	}
 
@@ -681,123 +686,4 @@ public class Graph
 	}
 
 	#endregion
-}
-
-// Documentation: https://github.com/MatejSloboda/Dijkstra_map_for_Godot/blob/master/addons/dijkstra-map/doc/DijkstraMap.md
-public class DijkstraMap : Node
-{
-	private Object _dijkstraMap;
-	
-	public DijkstraMap()
-	{
-		var dijkstraMapScript = GD.Load("res://addons/dijkstra-map/Dijkstra_map_library/nativescript.gdns") as NativeScript;
-		_dijkstraMap = dijkstraMapScript?.New() as Object;
-		if (_dijkstraMap is null) 
-			throw new ArgumentNullException($"{nameof(_dijkstraMap)} cannot be null.");
-	}
-	
-	public Godot.Collections.Dictionary<Vector2, int> AddSquareGrid(Rect2 bounds, int terrain, float orthCost,
-		float diagCost)
-	{
-		var dictionary = _dijkstraMap.Call("add_square_grid", bounds, terrain, orthCost, diagCost) 
-			as Godot.Collections.Dictionary;
-		return new Godot.Collections.Dictionary<Vector2, int>(dictionary);
-	}
-
-	public void SetTerrainForPoint(int pointId, int terrain)
-	{
-		_dijkstraMap.Call("set_terrain_for_point", pointId, terrain);
-	}
-	
-	public int GetTerrainForPoint(int pointId)
-	{
-		return (int)_dijkstraMap.Call("get_terrain_for_point", pointId);
-	}
-
-	public void Recalculate(int pointId, Godot.Collections.Dictionary<string, object> options)
-	{
-		_dijkstraMap.Call("recalculate", pointId, options);
-	}
-
-	public int[] GetAllPointsWithCostBetween(float min, float max)
-	{
-		return _dijkstraMap.Call("get_all_points_with_cost_between", min, max)
-			as int[];
-	}
-
-	public int[] GetShortestPathFromPoint(int pointId)
-	{
-		return _dijkstraMap.Call("get_shortest_path_from_point", pointId)
-			as int[];
-	}
-
-	public void Clear()
-    {
-        _dijkstraMap.Call("clear");
-    }
-
-    public Error DuplicateGraphFrom(DijkstraMap sourceInstance)
-    {
-        return (Error)_dijkstraMap.Call("duplicate_graph_from", sourceInstance._dijkstraMap);
-    }
-
-    public int GetAvailablePointId()
-    {
-        return (int)_dijkstraMap.Call("get_available_point_id");
-    }
-
-    public Error AddPoint(int pointId, int terrainType = -1)
-    {
-        return (Error)_dijkstraMap.Call("add_point", pointId, terrainType);
-    }
-
-    public Error RemovePoint(int pointId)
-    {
-        return (Error)_dijkstraMap.Call("remove_point", pointId);
-    }
-
-    public bool HasPoint(int pointId)
-    {
-        return (bool)_dijkstraMap.Call("has_point", pointId);
-    }
-    
-    public Error DisablePoint(int pointId)
-    {
-        return (Error)_dijkstraMap.Call("disable_point", pointId);
-    }
-    
-    public Error EnablePoint(int pointId)
-    {
-        return (Error)_dijkstraMap.Call("enable_point", pointId);
-    }
-    
-    public bool IsPointDisabled(int pointId)
-    {
-        return (bool)_dijkstraMap.Call("is_point_disabled", pointId);
-    }
-    
-    public Error ConnectPoints(int source, int target, float weight = 1f, bool bidirectional = true)
-    {
-        return (Error)_dijkstraMap.Call("connect_points", source, target, weight, bidirectional);
-    }
-    
-    public Error RemoveConnection(int source, int target, bool bidirectional = true)
-    {
-        return (Error)_dijkstraMap.Call("remove_connection", source, target, bidirectional);
-    }
-    
-    public bool HasConnection(int source, int target)
-    {
-        return (bool)_dijkstraMap.Call("has_connection", source, target);
-    }
-
-    public int GetDirectionAtPoint(int pointId)
-    {
-        return (int)_dijkstraMap.Call("get_direction_at_point", pointId);
-    }
-    
-    public float GetCostAtPoint(int pointId)
-    {
-        return (float)_dijkstraMap.Call("get_cost_at_point", pointId);
-    }
 }

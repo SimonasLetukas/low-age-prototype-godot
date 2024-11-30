@@ -122,6 +122,34 @@ public class DijkstraMapTests
         originalMap.HasPoint(4).Should().BeFalse();
         originalMap.HasConnection(4, 5).Should().BeFalse();
     }
+
+    [Fact]
+    public void DuplicateGraphFrom_ShouldWorkCorrectly()
+    {
+        var originalMap = CreateMap(false);
+        var duplicateMap = new DijkstraMap();
+        duplicateMap.DuplicateGraphFrom(originalMap);
+        duplicateMap.AddPoint(4);
+        duplicateMap.ConnectPoints(3, 4, 1);
+
+        duplicateMap.HasPoint(0).Should().BeTrue();
+        duplicateMap.HasPoint(1).Should().BeTrue();
+        duplicateMap.HasPoint(2).Should().BeTrue();
+        duplicateMap.HasPoint(3).Should().BeTrue();
+        duplicateMap.HasConnection(0, 1).Should().BeTrue();
+        duplicateMap.HasConnection(0, 2).Should().BeTrue();
+        duplicateMap.HasConnection(1, 3).Should().BeTrue();
+        duplicateMap.HasConnection(2, 3).Should().BeTrue();
+        duplicateMap.HasConnection(1, 2).Should().BeFalse();
+        duplicateMap.HasConnection(0, 3).Should().BeFalse();
+        duplicateMap.HasPoint(4).Should().BeTrue();
+        duplicateMap.HasConnection(3, 4).Should().BeTrue();
+        duplicateMap.HasPoint(5).Should().BeFalse();
+        duplicateMap.HasConnection(4, 5).Should().BeFalse();
+
+        originalMap.HasPoint(4).Should().BeFalse();
+        originalMap.HasConnection(4, 5).Should().BeFalse();
+    }
     
     private static DijkstraMap CreateMap(bool reverseOrder)
     {
