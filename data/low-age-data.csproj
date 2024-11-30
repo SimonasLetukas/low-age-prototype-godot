@@ -12,4 +12,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\low-age-prototype-common\low-age-prototype-common.csproj" />
+  </ItemGroup>
+
 </Project>

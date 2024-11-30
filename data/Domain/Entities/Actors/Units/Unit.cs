@@ -2,6 +2,8 @@
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Factions;
+using low_age_data.Shared;
+using low_age_prototype_common;
 
 namespace low_age_data.Domain.Entities.Actors.Units
 {

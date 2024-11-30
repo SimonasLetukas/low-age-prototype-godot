@@ -2,7 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace low_age_data.Shared
+namespace low_age_prototype_common
 {
     [JsonConverter(typeof(ToStringJsonConverter))]
     public abstract class ValueObject<T> where T : ValueObject<T>

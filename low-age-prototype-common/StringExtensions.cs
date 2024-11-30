@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace low_age_data.Shared
+namespace low_age_prototype_common
 {
     public static class StringExtensions
     {

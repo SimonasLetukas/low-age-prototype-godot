@@ -5,6 +5,7 @@ using low_age_data.Domain.Common;
 using low_age_data.Domain.Common.Filters;
 using low_age_data.Domain.Common.Flags;
 using low_age_data.Shared;
+using low_age_prototype_common;
 
 namespace low_age_data.Collections
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 using low_age_data;
 using low_age_data.Domain.Common;
+using low_age_prototype_common.Extensions;
 using Object = Godot.Object;
 
 public struct Point : IEquatable<Point>

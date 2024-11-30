@@ -10,13 +10,20 @@
     <Compile Remove="data\**" />
     <Compile Remove="tests\**" />
     <Compile Remove="app\client\game\interface\panels\entity\abilities\button\**" />
+    <Compile Remove="low-age-dijkstra\**" />
+    <Compile Remove="low-age-prototype-common\**" />
+    <Compile Remove="low-age-dijkstra-tests\**" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="data\**" />
     <EmbeddedResource Remove="tests\**" />
     <EmbeddedResource Remove="app\client\game\interface\panels\entity\abilities\button\**" />
+    <EmbeddedResource Remove="low-age-dijkstra\**" />
+    <EmbeddedResource Remove="low-age-prototype-common\**" />
+    <EmbeddedResource Remove="low-age-dijkstra-tests\**" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="data\low-age-data.csproj" />
+    <ProjectReference Include="low-age-dijkstra\low-age-dijkstra.csproj" />
   </ItemGroup>
 </Project>

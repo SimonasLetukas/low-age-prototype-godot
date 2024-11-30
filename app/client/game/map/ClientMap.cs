@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
+using low_age_prototype_common.Extensions;
 
 public class ClientMap : Map
 {

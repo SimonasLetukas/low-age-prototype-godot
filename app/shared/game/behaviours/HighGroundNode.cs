@@ -2,6 +2,7 @@
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Behaviours;
+using low_age_prototype_common.Extensions;
 
 public class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGround>, IPathfindingUpdatable
 {

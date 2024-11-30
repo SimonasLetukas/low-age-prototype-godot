@@ -6,6 +6,8 @@ using FluentAssertions;
 using Godot;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities.Actors.Structures;
+using low_age_data.Shared;
+using low_age_prototype_common;
 using TestProject1.Helpers;
 using Xunit;
 using Area = low_age_data.Domain.Common.Area;

@@ -60,3 +60,4 @@ msbuild.wrn
 /low-age-prototype-godot.zip
 *.TMP
 /data/config.json
+/packages/

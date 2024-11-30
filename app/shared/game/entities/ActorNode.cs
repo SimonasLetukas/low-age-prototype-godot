@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities.Actors;
+using low_age_prototype_common.Extensions;
 
 /// <summary>
 /// <see cref="StructureNode"/> or <see cref="UnitNode"/> with abilities and stats.

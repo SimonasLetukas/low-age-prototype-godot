@@ -2,6 +2,7 @@
 using System.Linq;
 using low_age_data.Domain.Common.Flags;
 using low_age_data.Domain.Logic;
+using low_age_prototype_common.Extensions;
 
 public class ValidationHandler
 {

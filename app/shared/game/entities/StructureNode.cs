@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Entities.Actors.Structures;
+using low_age_prototype_common.Extensions;
 
 public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {

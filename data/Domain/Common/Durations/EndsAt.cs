@@ -3,6 +3,7 @@ using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Entities.Doodads;
 using low_age_data.Shared;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace low_age_data.Domain.Common.Durations
