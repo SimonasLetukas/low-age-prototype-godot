@@ -38,8 +38,11 @@ public class Pathfinding : Node
     private int _previousSize = 1;
 
     private bool _iterateInitialization = false;
-    private bool _terrainGraphInitialized = false;
-    private IList<(Vector2, TileId)> _tilesForInitialization;
+    private bool _terrainGraphFirstPassInitialized = false;
+    private bool _terrainGraphFurtherPassesInitialized = false;
+    private IList<(Vector2, TileId)> _tilesForFirstPassInitialization;
+    private Dictionary<TileId, IList<Vector2>> _tilesForFurtherInitialization;
+    private TileId _tileIdWithSmallestMovementCost;
     private bool _diagonalConnectionsInitialized = false;
     private Dictionary<Vector2, int> _pointIdsByPositionsForInitialization;
     private bool _initialized = true;
@@ -62,16 +65,28 @@ public class Pathfinding : Node
 
     #region Initialization
 
-    public void Initialize(Vector2 mapSize, IEnumerable<(Vector2, TileId)> tiles, bool iterateInitialization = true)
+    public void Initialize(Vector2 mapSize, IEnumerable<(Vector2, TileId)> tiles, int? forceSizesUpTo = null)
     {
         MapSize = mapSize;
         Blueprint = Data.Instance.Blueprint;
-        Graph.Initialize(mapSize);
+        Graph.Initialize(mapSize, forceSizesUpTo: forceSizesUpTo);
 
-        _iterateInitialization = iterateInitialization;
+        _iterateInitialization = true;
+
+        var tileIdsWithAscendingMovementCost = Blueprint.Tiles
+            .OrderBy(x => x.MovementCost)
+            .Select(x => x.Id)
+            .ToList();
+        _tileIdWithSmallestMovementCost = tileIdsWithAscendingMovementCost.First();
+        _tilesForFurtherInitialization = new Dictionary<TileId, IList<Vector2>>();
+        foreach (var tileId in tileIdsWithAscendingMovementCost
+                     .Where(tileId => tileId.Equals(_tileIdWithSmallestMovementCost) is false))
+        {
+            _tilesForFurtherInitialization[tileId] = new List<Vector2>();
+        }
 
         var tilesList = tiles.ToList();
-        _tilesForInitialization = tilesList;
+        _tilesForFirstPassInitialization = tilesList;
         foreach (var (position, tile) in tilesList)
             Tiles.Add(position, tile);
 
@@ -94,9 +109,15 @@ public class Pathfinding : Node
 
         while (_stopwatch.ElapsedMilliseconds < deltaMs || (_iterateInitialization && CheckInitialization() is false))
         {
-            if (_terrainGraphInitialized is false)
+            if (_terrainGraphFirstPassInitialized is false)
             {
-                IterateTerrainGraphUpdate();
+                IterateTerrainGraphFirstPassUpdate();
+                continue;
+            }
+            
+            if (_terrainGraphFurtherPassesInitialized is false)
+            {
+                IterateTerrainGraphFurtherPassUpdate();
                 continue;
             }
 
@@ -109,7 +130,8 @@ public class Pathfinding : Node
 
     private bool CheckInitialization()
     {
-        if (_terrainGraphInitialized is false
+        if (_terrainGraphFirstPassInitialized is false
+            || _terrainGraphFurtherPassesInitialized is false
             || _diagonalConnectionsInitialized is false)
             return false;
 
@@ -129,34 +151,51 @@ public class Pathfinding : Node
 
     #region IterationHelpers
 
-    private void IterateTerrainGraphUpdate(KeyValuePair<Vector2, TileId>? point = null, bool useTerrainWeight = true)
+    private void IterateTerrainGraphFirstPassUpdate()
     {
-        if (_tilesForInitialization.IsEmpty() && point is null)
+        if (_tilesForFirstPassInitialization.IsEmpty())
         {
             if (DebugEnabled)
                 GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-                         $"{nameof(Pathfinding)}.{nameof(IterateTerrainGraphUpdate)} completed");
-            _terrainGraphInitialized = true;
+                         $"{nameof(Pathfinding)}.{nameof(IterateTerrainGraphFirstPassUpdate)} completed");
+            _terrainGraphFirstPassInitialized = true;
+            TrimEmptyTilesForFurtherInitialization();
             return;
         }
-
-        (Vector2, TileId) entry;
-        if (point is null) // we are initializing
-        {
-            entry = _tilesForInitialization[0];
-            _tilesForInitialization.RemoveAt(0);
-        }
-        else // we are updating pathfinding during the game
-            entry = ((Vector2)point?.Key, point?.Value);
+        
+        var entry = _tilesForFirstPassInitialization[0];
+        _tilesForFirstPassInitialization.RemoveAt(0);
 
         var (coordinates, tileId) = entry;
 
-        var terrainIndex = useTerrainWeight
-            ? Blueprint.Tiles.Single(x => x.Id.Equals(tileId)).Terrain.ToIndex()
-            : ImpassableIndex;
+        if (tileId.Equals(_tileIdWithSmallestMovementCost))
+        {
+            var terrainIndex = Blueprint.Tiles.Single(x => x.Id.Equals(tileId)).Terrain.ToIndex();
+            Graph.SetTerrainForPoint(coordinates, terrainIndex);
+            return;
+        }
+        
+        _tilesForFurtherInitialization[tileId].Add(coordinates);
+    }
+    
+    private void IterateTerrainGraphFurtherPassUpdate()
+    {
+        if (_tilesForFurtherInitialization.IsEmpty())
+        {
+            if (DebugEnabled)
+                GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
+                         $"{nameof(Pathfinding)}.{nameof(IterateTerrainGraphFurtherPassUpdate)} completed");
+            _terrainGraphFurtherPassesInitialized = true;
+            return;
+        }
 
+        var tileId = FindTileIdKeyWithLowestMovementCost();
+        var coordinates = _tilesForFurtherInitialization[tileId][0];
+        _tilesForFurtherInitialization[tileId].RemoveAt(0);
+        TrimEmptyTilesForFurtherInitialization();
+        
+        var terrainIndex = Blueprint.Tiles.Single(x => x.Id.Equals(tileId)).Terrain.ToIndex();
         Graph.SetTerrainForPoint(coordinates, terrainIndex);
-        Graph.SaveChanges();
     }
 
     private void IterateDiagonalConnectionUpdate()
@@ -174,7 +213,29 @@ public class Pathfinding : Node
         _pointIdsByPositionsForInitialization.Remove(position);
 
         Graph.UpdateDiagonalConnection(position);
-        Graph.SaveChanges();
+    }
+    
+    private TileId FindTileIdKeyWithLowestMovementCost()
+    {
+        var tileIdsWithAscendingMovementCost = Blueprint.Tiles
+            .OrderBy(x => x.MovementCost)
+            .ToList();
+
+        return tileIdsWithAscendingMovementCost
+            .Where(nextTile => _tilesForFurtherInitialization.ContainsKey(nextTile.Id))
+            .Select(nextTile => nextTile.Id).FirstOrDefault();
+    }
+    
+    private void TrimEmptyTilesForFurtherInitialization()
+    {
+        var keysToRemove = _tilesForFurtherInitialization
+            .Where(entry => entry.Value.Count == 0)
+            .Select(entry => entry.Key).ToList();
+
+        foreach (var key in keysToRemove)
+        {
+            _tilesForFurtherInitialization.Remove(key);
+        }
     }
 
     #endregion IterationHelpers
@@ -238,16 +299,10 @@ public class Pathfinding : Node
         var size = 1; // TODO move AddOccupation to Graph and automatically handle adding
         // occupation for all graph sizes
 
-        var foundPoints = new List<Point>();
-        foreach (var point in Graph.GetPointsForEntity(entity))
-        {
-            if (entity.CanBeMovedThroughAt(point))
-                continue;
-
-            foundPoints.Add(point);
-            IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(point.Position, TileId.Grass),
-                false);
-        }
+        var foundPoints = Graph
+            .GetPointsProjectedDownFromEntity(entity)
+            .Where(point => entity.CanBeMovedThroughAt(point) is false)
+            .ToList();
 
         Graph.SetPointsImpassable(true, foundPoints);
 
@@ -271,8 +326,6 @@ public class Pathfinding : Node
                 }
             }
         }
-
-        Graph.SaveChanges();
     }
 
     public void RemoveOccupation(EntityNode entity) // TODO not tested properly
@@ -289,7 +342,7 @@ public class Pathfinding : Node
             .ToDictionary<KeyValuePair<int, float>, int, IList<Vector2>>(terrainWeight =>
                 terrainWeight.Key, terrainWeight => new List<Vector2>());*/
 
-        foreach (var point in Graph.GetPointsForEntity(entity))
+        foreach (var point in Graph.GetPointsProjectedDownFromEntity(entity))
         {
             if (point.IsHighGround)
                 continue;
@@ -298,7 +351,7 @@ public class Pathfinding : Node
             if (position.IsInBoundsOf(entity.EntityPrimaryPosition,
                     entity.EntityPrimaryPosition + entity.EntitySize))
             {
-                IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(position, Tiles[position]));
+                //IterateTerrainGraphUpdate(new KeyValuePair<Vector2, TileId>(position, Tiles[position]));
             }
 
             var terrainIndex = Blueprint.Tiles.Single(t => t.Id.Equals(Tiles[position])).Terrain.ToIndex();
@@ -433,8 +486,6 @@ public class Pathfinding : Node
                 UpdateHighGroundForNon1XPathfinding(point);
             }
         }
-
-        Graph.SaveChanges();
     }
 
     private void RemoveAscendableHighGround(IList<(IEnumerable<Vector2>, int)> path) // TODO not tested properly
@@ -481,8 +532,6 @@ public class Pathfinding : Node
 
             UpdateHighGroundForNon1XPathfinding(point);
         }
-
-        Graph.SaveChanges();
     }
 
     private void RemoveHighGround(IList<(IEnumerable<Vector2>, int)> path) // TODO not tested properly
@@ -515,8 +564,6 @@ public class Pathfinding : Node
             EventBus.Instance.RaiseHighGroundPointRemoved(point);
             Graph.RemoveAllPoints(point.Id);
         }
-
-        Graph.SaveChanges();
     }
 
     private void RemoveHighGroundForNon1XPathfinding(Point removed1XPoint)

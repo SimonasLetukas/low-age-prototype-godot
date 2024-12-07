@@ -100,9 +100,10 @@ public class DijkstraMapTests
     public void DuplicateGraph_ShouldWorkCorrectly()
     {
         var originalMap = CreateMap(false);
+        originalMap.AddPoint(4);
         var duplicateMap = originalMap.DuplicateGraph();
-        duplicateMap.AddPoint(4);
         duplicateMap.ConnectPoints(3, 4, 1);
+        duplicateMap.AddPoint(5);
 
         duplicateMap.HasPoint(0).Should().BeTrue();
         duplicateMap.HasPoint(1).Should().BeTrue();
@@ -114,12 +115,14 @@ public class DijkstraMapTests
         duplicateMap.HasConnection(2, 3).Should().BeTrue();
         duplicateMap.HasConnection(1, 2).Should().BeFalse();
         duplicateMap.HasConnection(0, 3).Should().BeFalse();
+        
         duplicateMap.HasPoint(4).Should().BeTrue();
         duplicateMap.HasConnection(3, 4).Should().BeTrue();
-        duplicateMap.HasPoint(5).Should().BeFalse();
+        duplicateMap.HasPoint(5).Should().BeTrue();
         duplicateMap.HasConnection(4, 5).Should().BeFalse();
 
-        originalMap.HasPoint(4).Should().BeFalse();
+        originalMap.HasConnection(3, 4).Should().BeFalse();
+        originalMap.HasPoint(5).Should().BeFalse();
         originalMap.HasConnection(4, 5).Should().BeFalse();
     }
 
@@ -127,10 +130,11 @@ public class DijkstraMapTests
     public void DuplicateGraphFrom_ShouldWorkCorrectly()
     {
         var originalMap = CreateMap(false);
+        originalMap.AddPoint(4);
         var duplicateMap = new DijkstraMap();
         duplicateMap.DuplicateGraphFrom(originalMap);
-        duplicateMap.AddPoint(4);
         duplicateMap.ConnectPoints(3, 4, 1);
+        duplicateMap.AddPoint(5);
 
         duplicateMap.HasPoint(0).Should().BeTrue();
         duplicateMap.HasPoint(1).Should().BeTrue();
@@ -142,12 +146,14 @@ public class DijkstraMapTests
         duplicateMap.HasConnection(2, 3).Should().BeTrue();
         duplicateMap.HasConnection(1, 2).Should().BeFalse();
         duplicateMap.HasConnection(0, 3).Should().BeFalse();
+        
         duplicateMap.HasPoint(4).Should().BeTrue();
         duplicateMap.HasConnection(3, 4).Should().BeTrue();
-        duplicateMap.HasPoint(5).Should().BeFalse();
+        duplicateMap.HasPoint(5).Should().BeTrue();
         duplicateMap.HasConnection(4, 5).Should().BeFalse();
 
-        originalMap.HasPoint(4).Should().BeFalse();
+        originalMap.HasConnection(3, 4).Should().BeFalse();
+        originalMap.HasPoint(5).Should().BeFalse();
         originalMap.HasConnection(4, 5).Should().BeFalse();
     }
     

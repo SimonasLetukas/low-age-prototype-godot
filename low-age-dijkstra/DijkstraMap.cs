@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using low_age_dijkstra.Methods;
+using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
 using Priority_Queue;
 
@@ -52,6 +54,17 @@ namespace low_age_dijkstra
         /// </summary>
         public Terrain Terrain { get; set; }
 
+        public PointInfo(PointInfo pointInfo)
+        {
+            Connections = pointInfo.Connections.ToDictionary(
+                entry => new PointId(entry.Key.Value),
+                entry => new Weight(entry.Value.Value));
+            ReverseConnections = pointInfo.ReverseConnections.ToDictionary(
+                entry => new PointId(entry.Key.Value),
+                entry => new Weight(entry.Value.Value));
+            Terrain = new Terrain(pointInfo.Terrain.Value);
+        }
+
         public PointInfo(Dictionary<PointId, Weight> connections, Dictionary<PointId, Weight> reverseConnections,
             Terrain terrain)
         {
@@ -101,6 +114,12 @@ namespace low_age_dijkstra
         /// </summary>
         public PointId Direction { get; }
 
+        public PointComputedInfo(PointComputedInfo pointComputedInfo)
+        {
+            Cost = new Cost(pointComputedInfo.Cost.Value);
+            Direction = new PointId(pointComputedInfo.Direction.Value);
+        }
+        
         public PointComputedInfo(Cost cost, PointId direction)
         {
             Cost = cost;
@@ -331,20 +350,27 @@ namespace low_age_dijkstra
         {
             return new DijkstraMap
             {
-                Points = new Dictionary<PointId, PointInfo>(Points),
-                SortedPoints = new List<PointId>(SortedPoints),
-                ComputedInfo = new Dictionary<PointId, PointComputedInfo>(ComputedInfo),
-                DisabledPoints = new HashSet<PointId>(DisabledPoints),
+                Points = Points.ToDictionary(
+                    entry => new PointId(entry.Key.Value),
+                    entry => new PointInfo(entry.Value)
+                ),
+                SortedPoints = new List<PointId>(SortedPoints.Select(p => new PointId(p.Value))),
+                ComputedInfo = ComputedInfo.ToDictionary(
+                    entry => new PointId(entry.Key.Value), 
+                    entry => new PointComputedInfo(entry.Value)
+                ),
+                DisabledPoints = new HashSet<PointId>(DisabledPoints.Select(p => new PointId(p.Value)))
             };
         }
 
         /// Updates current <see cref="DijkstraMap"/> with the values copied from another <see cref="DijkstraMap"/>.
         public void DuplicateGraphFrom(DijkstraMap other)
         {
-            Points = new Dictionary<PointId, PointInfo>(other.Points);
-            SortedPoints = new List<PointId>(other.SortedPoints);
-            ComputedInfo = new Dictionary<PointId, PointComputedInfo>(other.ComputedInfo);
-            DisabledPoints = new HashSet<PointId>(other.DisabledPoints);
+            var otherCopied = other.DuplicateGraph();
+            Points = new Dictionary<PointId, PointInfo>(otherCopied.Points);
+            SortedPoints = new List<PointId>(otherCopied.SortedPoints);
+            ComputedInfo = new Dictionary<PointId, PointComputedInfo>(otherCopied.ComputedInfo);
+            DisabledPoints = new HashSet<PointId>(otherCopied.DisabledPoints);
         }
     }
 }

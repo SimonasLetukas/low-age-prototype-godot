@@ -14,11 +14,16 @@ public struct Point : IEquatable<Point>
 {
 	public int Id { get; set; }
 	public Vector2 Position { get; set; }
-	public bool IsHighGround { get; set; }
 	public int HighGroundAscensionLevel { get; set; }
 	public int YSpriteOffset { get; set; }
-	public int TerrainIndex { get; set; }
+	public bool IsHighGround { get; set; }
 	public bool IsImpassable { get; set; }
+	public int OriginalTerrainIndex { get; set; }
+	public int CalculatedTerrainIndex => IsImpassable
+		? Constants.Pathfinding.ImpassableIndex
+		: IsHighGround
+			? Constants.Pathfinding.HighGroundIndex
+			: OriginalTerrainIndex;
 
 	public bool Equals(Point other)
 	{
@@ -27,7 +32,7 @@ public struct Point : IEquatable<Point>
 		       && IsHighGround == other.IsHighGround 
 		       && HighGroundAscensionLevel == other.HighGroundAscensionLevel 
 		       && YSpriteOffset == other.YSpriteOffset 
-		       && TerrainIndex == other.TerrainIndex 
+		       && OriginalTerrainIndex == other.OriginalTerrainIndex 
 		       && IsImpassable == other.IsImpassable;
 	}
 
@@ -45,7 +50,7 @@ public struct Point : IEquatable<Point>
 			hashCode = (hashCode * 397) ^ IsHighGround.GetHashCode();
 			hashCode = (hashCode * 397) ^ HighGroundAscensionLevel;
 			hashCode = (hashCode * 397) ^ YSpriteOffset;
-			hashCode = (hashCode * 397) ^ TerrainIndex;
+			hashCode = (hashCode * 397) ^ OriginalTerrainIndex;
 			hashCode = (hashCode * 397) ^ IsImpassable.GetHashCode();
 			return hashCode;
 		}
@@ -63,50 +68,6 @@ public struct Point : IEquatable<Point>
 /// </summary>
 public class Graph
 {
-	#region PointChanges
-
-	private interface IPointChange { }
-
-	private class PointAdded : IPointChange { }
-
-	private class PointTerrainChanged : IPointChange { }
-
-	private class PointRemoved : IPointChange { }
-
-	private class PointConnectionsAdded : IPointChange
-	{
-		public IEnumerable<Connection> Connections { get; }
-		
-		public PointConnectionsAdded(IEnumerable<Connection> connections)
-		{
-			Connections = connections;
-		}
-	}
-	
-	private class PointConnectionsRemoved : IPointChange
-	{
-		public IEnumerable<Point> Points { get; }
-		
-		public PointConnectionsRemoved(IEnumerable<Point> points)
-		{
-			Points = points;
-		}
-	}
-	
-	private struct Connection
-	{
-		public Point Point { get; }
-		public bool IsDiagonallyAdjacent { get; }
-		
-		public Connection(Point point, bool isDiagonallyAdjacent)
-		{
-			Point = point;
-			IsDiagonallyAdjacent = isDiagonallyAdjacent;
-		}
-	}
-
-	#endregion
-
 	public IList<int> SupportedTeams { get; } = new List<int>();
 	public IList<int> SupportedSizes { get; } = new List<int>();
 
@@ -137,10 +98,6 @@ public class Graph
 	private class PointIdByPositionBySize : Dictionary<int, PointIdByPosition> { }
 	private Dictionary<int, PointIdByPositionBySize> PointIdByPositionBySizeByTeam { get; } = new Dictionary<int, PointIdByPositionBySize>();
 	
-	private class ChangedPointById : Dictionary<int, IPointChange> { }
-	private class ChangedPointByIdBySize : Dictionary<int, ChangedPointById> { }
-	private Dictionary<int, ChangedPointByIdBySize> ChangedPointByIdBySizeByTeam { get; } = new Dictionary<int, ChangedPointByIdBySize>();
-	
 	private class TerrainWeightByPointId : Dictionary<int, float> { }
 	private class PointTerrainWeightByIdBySize : Dictionary<int, TerrainWeightByPointId> { }
 	private Dictionary<int, PointTerrainWeightByIdBySize> PointTerrainWeightByIdBySizeByTeam { get; } = new Dictionary<int, PointTerrainWeightByIdBySize>();
@@ -154,8 +111,9 @@ public class Graph
 
 	#region Initialization
 
-	public void Initialize(Vector2 mapSize, int amountOfTeams = 1)
+	public void Initialize(Vector2 mapSize, int amountOfTeams = 1, int? forceSizesUpTo = null)
 	{
+		forceSizesUpTo = forceSizesUpTo ?? 1;
 		MapSize = mapSize;
 		Blueprint = Data.Instance.Blueprint;
 		PointIdIterator = (int)MapSize.x * (int)MapSize.y;
@@ -166,20 +124,19 @@ public class Graph
 
 			PointByIdBySizeByTeam[team] = new PointByIdBySize();
 			PointIdByPositionBySizeByTeam[team] = new PointIdByPositionBySize();
-			ChangedPointByIdBySizeByTeam[team] = new ChangedPointByIdBySize();
 			PointTerrainWeightByIdBySizeByTeam[team] = new PointTerrainWeightByIdBySize();
 			DijkstraMapBySizeByTeam[team] = new DijkstraMapBySize();
 			
 			for (var size = 1; size <= MaxSizeForPathfinding; size++)
 			{
-				if (size != 1 && Blueprint.Entities.Units.Any(u => u.Size == size) is false)
+				var sizeExistsInBlueprint = Blueprint.Entities.Units.Any(u => u.Size == size);
+				if (size != 1 && size > forceSizesUpTo && sizeExistsInBlueprint is false) 
 					continue;
-			
+				
 				SupportedSizes.Add(size);
 
 				PointByIdBySizeByTeam[team][size] = new PointById();
 				PointIdByPositionBySizeByTeam[team][size] = new PointIdByPosition();
-				ChangedPointByIdBySizeByTeam[team][size] = new ChangedPointById();
 				PointTerrainWeightByIdBySizeByTeam[team][size] = new TerrainWeightByPointId();
 				
 				var dijkstraMap = new DijkstraMap(); // TODO inject as a dependency and mock its interface for tests
@@ -218,7 +175,7 @@ public class Graph
 				orthogonalCost: 1.0f,
 				diagonalCost: DiagonalCost);
 			pointIdByPositionResult = SetBasePoints(team, 1, graph, terrainIndex);
-
+			
 			foreach (var nonMainDijkstraMap in NonMainDijkstraMaps(team))
 			{
 				nonMainDijkstraMap.Value.DuplicateGraphFrom(mainDijkstraMap);
@@ -244,7 +201,7 @@ public class Graph
 				Position = position,
 				IsHighGround = false,
 				HighGroundAscensionLevel = 0,
-				TerrainIndex = basePointTerrainIndex,
+				OriginalTerrainIndex = basePointTerrainIndex,
 				IsImpassable = false
 			};
 
@@ -257,69 +214,6 @@ public class Graph
 	}
 
 	#endregion
-
-	public void SaveChanges()
-	{
-		foreach (var (team, changedPointBySize) in ChangedPointByIdBySizeByTeam)
-		{
-			foreach (var (size, changedPoints) in changedPointBySize)
-			{
-				foreach (var (pointId, status) in changedPoints)
-				{
-					var point = GetPoint(pointId, team, size);
-					var terrainIndex = point.IsHighGround 
-						? HighGroundIndex 
-						: point.IsImpassable 
-							? ImpassableIndex 
-							: point.TerrainIndex;
-
-					switch (status)
-					{
-						case PointAdded _:
-							DijkstraMapBySizeByTeam[team][size].AddPoint(point.Id, terrainIndex);
-							break;
-						
-						case PointRemoved _:
-							DijkstraMapBySizeByTeam[team][size].RemovePoint(point.Id);
-							break;
-							
-						case PointTerrainChanged _:
-							DijkstraMapBySizeByTeam[team][size].SetTerrainForPoint(point.Id, terrainIndex);
-							break;
-						
-						case PointConnectionsAdded pointConnectionsAdded:
-							foreach (var connection in pointConnectionsAdded.Connections)
-							{
-								DijkstraMapBySizeByTeam[team][size].ConnectPoints(point.Id, 
-									connection.Point.Id, connection.IsDiagonallyAdjacent ? DiagonalCost : 1f);
-							}
-							break;
-						
-						case PointConnectionsRemoved pointConnectionsRemoved:
-							foreach (var connection in pointConnectionsRemoved.Points)
-							{
-								DijkstraMapBySizeByTeam[team][size].RemoveConnection(point.Id, connection.Id);
-							}
-							break;
-						
-						default:
-							throw new ArgumentOutOfRangeException($"{nameof(Graph)}.{nameof(SaveChanges)}: " +
-							                                      $"{nameof(status)}");
-					}
-				}
-			}
-		}
-
-		foreach (var team in SupportedTeams)
-		{
-			ChangedPointByIdBySizeByTeam[team] = new ChangedPointByIdBySize();
-
-			foreach (var size in SupportedSizes)
-			{
-				ChangedPointByIdBySizeByTeam[team][size] = new ChangedPointById();
-			}
-		}
-	}
 
 	public bool IsSupported(int team, int size) => SupportedTeams.Contains(team) && SupportedSizes.Contains(size);
 
@@ -334,15 +228,17 @@ public class Graph
 		{
 			foreach (var size in SupportedSizes)
 			{
-				var dilatedPositions = Iterate.Positions(coordinates, coordinates + Vector2.One * size);
+				var dilatedPositions = Iterate.Positions(
+					coordinates - Vector2.One * size + Vector2.One, 
+					coordinates + Vector2.One);
 				foreach (var position in dilatedPositions)
 				{
 					if (TryGetPointId(position, team, size, out var pointId) is false)
 						continue;
 				
 					var point = GetPoint(pointId, team, size);
-					point.TerrainIndex = terrainIndex;
-					ChangedPointByIdBySizeByTeam[team][size][pointId] = new PointTerrainChanged();
+					point.OriginalTerrainIndex = terrainIndex;
+					DijkstraMapBySizeByTeam[team][size].SetTerrainForPoint(point.Id, terrainIndex);
 					PointTerrainWeightByIdBySizeByTeam[team][size][pointId] = _terrainWeights[terrainIndex];
 				}
 			}
@@ -358,8 +254,8 @@ public class Graph
 				foreach (var size in SupportedSizes)
 				{
 					var dilatedPositions = Iterate.Positions(
-						originPoint.Position, 
-						originPoint.Position + Vector2.One * size);
+						originPoint.Position - Vector2.One * size + Vector2.One, 
+						originPoint.Position + Vector2.One);
 					
 					foreach (var position in dilatedPositions)
 					{
@@ -377,7 +273,7 @@ public class Graph
 	public void SetPointImpassible(bool to, Point point, int team, int size)
 	{
 		point.IsImpassable = to;
-		ChangedPointByIdBySizeByTeam[team][size][point.Id] = new PointTerrainChanged();
+		DijkstraMapBySizeByTeam[team][size].SetTerrainForPoint(point.Id, point.CalculatedTerrainIndex);
 	}
 
 	public void UpdateDiagonalConnection(Vector2 position)
@@ -419,13 +315,16 @@ public class Graph
 					    && IsInfiniteTerrainWeight(bottomNeighbour.Id, team, size) is false
 					    && rightNeighbour.IsHighGround == bottomNeighbour.IsHighGround) // TODO not tested
 					{
-						ChangedPointByIdBySizeByTeam[team][size][rightNeighbour.Id] =
-							new PointConnectionsRemoved(new[] { bottomNeighbour });
+						DijkstraMapBySizeByTeam[team][size].RemoveConnection(
+							rightNeighbour.Id, 
+							bottomNeighbour.Id);
 					}
 					else
 					{
-						ChangedPointByIdBySizeByTeam[team][size][rightNeighbour.Id] =
-							new PointConnectionsAdded(new[] { new Connection(bottomNeighbour, true) });
+						DijkstraMapBySizeByTeam[team][size].ConnectPoints(
+							rightNeighbour.Id, 
+							bottomNeighbour.Id, 
+							DiagonalCost);
 					}
 
 					// .x
@@ -436,13 +335,16 @@ public class Graph
 					    && IsInfiniteTerrainWeight(bottomNeighbour.Id, team, size)
 					    && point.IsHighGround == diagonalNeighbour.IsHighGround) // TODO not tested
 					{
-						ChangedPointByIdBySizeByTeam[team][size][point.Id] =
-							new PointConnectionsRemoved(new[] { diagonalNeighbour });
+						DijkstraMapBySizeByTeam[team][size].RemoveConnection(
+							point.Id, 
+							diagonalNeighbour.Id);
 					}
 					else
 					{
-						ChangedPointByIdBySizeByTeam[team][size][point.Id] =
-							new PointConnectionsAdded(new[] { new Connection(diagonalNeighbour, true) });
+						DijkstraMapBySizeByTeam[team][size].ConnectPoints(
+							point.Id, 
+							diagonalNeighbour.Id, 
+							DiagonalCost);
 					}
 				}
 			}
@@ -472,7 +374,7 @@ public class Graph
 		return point;
 	}
 
-	public IList<Point> GetPointsForEntity(EntityNode entity)
+	public IList<Point> GetPointsProjectedDownFromEntity(EntityNode entity)
 	{
 		var points = new List<Point>();
 		var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
@@ -574,7 +476,7 @@ public class Graph
 			IsHighGround = isHighGround,
 			HighGroundAscensionLevel = highGroundAscensionLevel,
 			YSpriteOffset = ySpriteOffset,
-			TerrainIndex = isHighGround ? HighGroundIndex : terrainIndex,
+			OriginalTerrainIndex = isHighGround ? HighGroundIndex : terrainIndex,
 			IsImpassable = false
 		};
 
@@ -584,8 +486,9 @@ public class Graph
 			{
 				PointByIdBySizeByTeam[team][size][point.Id] = point;
 				PointIdByPositionBySizeByTeam[team][size][(point.Position, point.IsHighGround)] = point.Id;
-				PointTerrainWeightByIdBySizeByTeam[team][size][point.Id] = _terrainWeights[point.TerrainIndex];
-				ChangedPointByIdBySizeByTeam[team][size][point.Id] = new PointAdded();
+				PointTerrainWeightByIdBySizeByTeam[team][size][point.Id] = _terrainWeights[point.OriginalTerrainIndex];
+				
+				DijkstraMapBySizeByTeam[team][size].AddPoint(point.Id, point.CalculatedTerrainIndex);
 			}
 		}
 
@@ -630,7 +533,7 @@ public class Graph
 		PointByIdBySizeByTeam[team][size].Remove(point.Id);
 		PointIdByPositionBySizeByTeam[team][size].Remove((point.Position, point.IsHighGround));
 
-		ChangedPointByIdBySizeByTeam[team][size][point.Id] = new PointRemoved();
+		DijkstraMapBySizeByTeam[team][size].RemovePoint(point.Id);
 	}
 
 	#endregion
@@ -678,10 +581,10 @@ public class Graph
 	{
 		foreach (var team in SupportedTeams)
 		{
-			ChangedPointByIdBySizeByTeam[team][size][pointA.Id] = new PointConnectionsAdded(new[]
-			{
-				new Connection(pointB, isDiagonallyAdjacent)
-			});
+			DijkstraMapBySizeByTeam[team][size].ConnectPoints(
+				pointA.Id, 
+				pointB.Id, 
+				isDiagonallyAdjacent ? DiagonalCost : 1f);
 		}
 	}
 
