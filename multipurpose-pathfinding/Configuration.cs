@@ -7,7 +7,7 @@ namespace multipurpose_pathfinding
     public class Configuration
     {
         public Vector2<int> MapSize { get; set; } = new Vector2<int>(10, 10);
-
+        public int BaseTerrain { get; set; } = 0;
         public Dictionary<int, float> TerrainWeights { get; set; } =
             new Dictionary<int, float>
             {
@@ -15,7 +15,6 @@ namespace multipurpose_pathfinding
                 { 1, float.PositiveInfinity },
                 { 2, 2.0f }
             };
-
         public PathfindingSize MaxSizeForPathfinding { get; set; } = 3;
         public Team MaxNumberOfTeams { get; set; } = 1;
         public float DiagonalCost { get; set; } = (float)Math.Sqrt(2);

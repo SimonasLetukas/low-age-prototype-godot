@@ -21,6 +21,10 @@ namespace multipurpose_pathfinding
         public override bool Equals(object obj) => obj is PathfindingSize other && Equals(other);
 
         public override int GetHashCode() => Value.GetHashCode();
+        
+        public static bool operator >(PathfindingSize left, PathfindingSize right) => left.Value > right.Value;
+
+        public static bool operator <(PathfindingSize left, PathfindingSize right) => left.Value < right.Value;
 
         public static implicit operator PathfindingSize(int pathfindingSize) => new PathfindingSize(pathfindingSize);
     }

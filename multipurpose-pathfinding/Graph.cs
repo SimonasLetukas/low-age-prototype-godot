@@ -83,10 +83,11 @@ namespace multipurpose_pathfinding
         /// are same across all graphs for all teams and entity sizes).
         /// </summary>
         /// <param name="terrainIndex">Base terrain index to set to all the points initially.</param>
-        public Dictionary<Vector2<int>, int> InitializeSquareGrid(int terrainIndex)
+        public Dictionary<Vector2<int>, int> InitializeSquareGrid()
         {
             var pointIdByPositionResult = new Dictionary<Vector2<int>, int>();
-
+            var terrainIndex = Config.BaseTerrain;
+            
             foreach (var team in SupportedTeams)
             {
                 var mainDijkstraMap = MainDijkstraMap(team);
@@ -137,11 +138,12 @@ namespace multipurpose_pathfinding
 
         #endregion
 
-        public bool IsSupported(int team, int size) => SupportedTeams.Contains(team) && SupportedSizes.Contains(size);
+        public bool IsSupported(Team team, PathfindingSize size) 
+            => SupportedTeams.Contains(team) && SupportedSizes.Contains(size);
 
         #region Terrain
 
-        public void SetTerrainForPoint(Vector2<int> coordinates, int terrainIndex)
+        public void SetTerrainForPoint(Vector2<int> coordinates, Terrain terrainIndex)
         {
             if (TryGetPointId(coordinates, 1, 1, out _) is false)
                 return;
@@ -159,7 +161,7 @@ namespace multipurpose_pathfinding
                             continue;
 
                         var point = GetPoint(pointId, team, size);
-                        point.OriginalTerrainIndex = terrainIndex;
+                        point.OriginalTerrainIndex = terrainIndex.Value;
                         DijkstraMapBySizeByTeam[team][size].SetTerrainForPoint(point.Id, terrainIndex);
                     }
                 }

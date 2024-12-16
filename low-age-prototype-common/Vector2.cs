@@ -10,6 +10,7 @@ namespace low_age_prototype_common
         public static Vector2<int> Up => new Vector2<int>(0, -1);
         public static Vector2<int> Down => new Vector2<int>(0, 1);
         public static Vector2<int> Zero => new Vector2<int>(0, 0);
+        public static Vector2<int> Max => new Vector2<int>(int.MaxValue, int.MaxValue);
     }
 
     [Serializable]
