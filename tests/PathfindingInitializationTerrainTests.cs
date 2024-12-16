@@ -1,12 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using AutoFixture;
-using AutoFixture.AutoMoq;
 using FluentAssertions;
 using Godot;
-using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Tiles;
-using TestProject1.Helpers;
 using Xunit;
 
 namespace low_age_tests
@@ -15,8 +11,8 @@ namespace low_age_tests
     {
         private readonly Vector2 _mapSize = new Vector2(10, 10);
         private readonly Vector2 _startingPoint = new Vector2(0, 0);
-        private readonly float _searchRange = 100f;
-        
+        private const float SearchRange = 100f;
+
         private readonly Pathfinding _pathfinding;
         private bool _pathfindingInitialized = false;
         
@@ -32,7 +28,6 @@ namespace low_age_tests
         
         public static IEnumerable<object[]> GetExpectedMountains()
         {
-            /*
             yield return new object[]
             {
                 1,
@@ -62,7 +57,7 @@ namespace low_age_tests
                     new Vector2(4, 4),
                 }
             };
-            */
+            
             yield return new object[]
             {
                 2,
@@ -77,7 +72,7 @@ namespace low_age_tests
                     new Vector2(3, 3), new Vector2(4, 3), new Vector2(5, 3), 
                 }
             };
-            /*
+            
             yield return new object[]
             {
                 2,
@@ -127,7 +122,7 @@ namespace low_age_tests
                     new Vector2(2, 3), new Vector2(3, 3), new Vector2(4, 3),  
                     new Vector2(2, 4), new Vector2(3, 4), new Vector2(4, 4), 
                 }
-            }; */
+            }; 
         }
         
         [Theory]
@@ -153,25 +148,17 @@ namespace low_age_tests
             _pathfinding.ClearCache();
             var availablePoints = _pathfinding.GetAvailablePoints(
                 _startingPoint,
-                _searchRange,
+                SearchRange,
                 false,
                 pathfindingSize).ToList();
-
-            var foundAvailablePoints = new List<Point>();
-            var missingAvailablePoints = new List<Point>();
+            
             foreach (var position in Iterate.Positions(_mapSize))
             {
                 if (expectedMountainPositions.Contains(position))
-                {
-                    foundAvailablePoints.AddRange(availablePoints.Where(x => x.Position == position));
-                }
+                    availablePoints.Where(x => x.Position == position).Should().BeEmpty();
                 else
-                {
-                    missingAvailablePoints.AddRange(availablePoints.Where(x => x.Position == position));
-                }
+                    availablePoints.Where(x => x.Position == position).Should().NotBeEmpty();
             }
-            foundAvailablePoints.Should().BeEmpty();
-            missingAvailablePoints.Should().NotBeEmpty();
         }
     }
 }

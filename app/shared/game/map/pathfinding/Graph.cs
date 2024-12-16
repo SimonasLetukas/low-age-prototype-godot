@@ -7,7 +7,6 @@ using low_age_dijkstra;
 using low_age_dijkstra.Methods;
 using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
-using Object = Godot.Object;
 using Terrain = low_age_data.Domain.Common.Terrain;
 
 public struct Point : IEquatable<Point>
@@ -98,10 +97,6 @@ public class Graph
 	private class PointIdByPositionBySize : Dictionary<int, PointIdByPosition> { }
 	private Dictionary<int, PointIdByPositionBySize> PointIdByPositionBySizeByTeam { get; } = new Dictionary<int, PointIdByPositionBySize>();
 	
-	private class TerrainWeightByPointId : Dictionary<int, float> { }
-	private class PointTerrainWeightByIdBySize : Dictionary<int, TerrainWeightByPointId> { }
-	private Dictionary<int, PointTerrainWeightByIdBySize> PointTerrainWeightByIdBySizeByTeam { get; } = new Dictionary<int, PointTerrainWeightByIdBySize>();
-	
 	private class DijkstraMapBySize : Dictionary<int, DijkstraMap> { }
 	private Dictionary<int, DijkstraMapBySize> DijkstraMapBySizeByTeam { get; } = new Dictionary<int, DijkstraMapBySize>();
 	
@@ -124,7 +119,6 @@ public class Graph
 
 			PointByIdBySizeByTeam[team] = new PointByIdBySize();
 			PointIdByPositionBySizeByTeam[team] = new PointIdByPositionBySize();
-			PointTerrainWeightByIdBySizeByTeam[team] = new PointTerrainWeightByIdBySize();
 			DijkstraMapBySizeByTeam[team] = new DijkstraMapBySize();
 			
 			for (var size = 1; size <= MaxSizeForPathfinding; size++)
@@ -137,7 +131,6 @@ public class Graph
 
 				PointByIdBySizeByTeam[team][size] = new PointById();
 				PointIdByPositionBySizeByTeam[team][size] = new PointIdByPosition();
-				PointTerrainWeightByIdBySizeByTeam[team][size] = new TerrainWeightByPointId();
 				
 				var dijkstraMap = new DijkstraMap(); // TODO inject as a dependency and mock its interface for tests
 				DijkstraMapBySizeByTeam[team][size] = dijkstraMap;
@@ -239,7 +232,6 @@ public class Graph
 					var point = GetPoint(pointId, team, size);
 					point.OriginalTerrainIndex = terrainIndex;
 					DijkstraMapBySizeByTeam[team][size].SetTerrainForPoint(point.Id, terrainIndex);
-					PointTerrainWeightByIdBySizeByTeam[team][size][pointId] = _terrainWeights[terrainIndex];
 				}
 			}
 		}
@@ -307,53 +299,69 @@ public class Graph
 						    out var diagonalNeighbour) is false)
 						continue;
 					
-					// x.
-					// .x
-					if (IsInfiniteTerrainWeight(point.Id, team, size)
-					    && IsInfiniteTerrainWeight(diagonalNeighbour.Id, team, size)
-					    && IsInfiniteTerrainWeight(rightNeighbour.Id, team, size) is false
-					    && IsInfiniteTerrainWeight(bottomNeighbour.Id, team, size) is false
-					    && rightNeighbour.IsHighGround == bottomNeighbour.IsHighGround) // TODO not tested
-					{
-						DijkstraMapBySizeByTeam[team][size].RemoveConnection(
-							rightNeighbour.Id, 
-							bottomNeighbour.Id);
-					}
-					else
-					{
-						DijkstraMapBySizeByTeam[team][size].ConnectPoints(
-							rightNeighbour.Id, 
-							bottomNeighbour.Id, 
-							DiagonalCost);
-					}
-
-					// .x
-					// x.
-					if (IsInfiniteTerrainWeight(point.Id, team, size) is false
-					    && IsInfiniteTerrainWeight(diagonalNeighbour.Id, team, size) is false
-					    && IsInfiniteTerrainWeight(rightNeighbour.Id, team, size)
-					    && IsInfiniteTerrainWeight(bottomNeighbour.Id, team, size)
-					    && point.IsHighGround == diagonalNeighbour.IsHighGround) // TODO not tested
-					{
-						DijkstraMapBySizeByTeam[team][size].RemoveConnection(
-							point.Id, 
-							diagonalNeighbour.Id);
-					}
-					else
-					{
-						DijkstraMapBySizeByTeam[team][size].ConnectPoints(
-							point.Id, 
-							diagonalNeighbour.Id, 
-							DiagonalCost);
-					}
+					ApplyDiagonalConnectionsForPoints(
+						point, 
+						diagonalNeighbour, 
+						rightNeighbour, 
+						bottomNeighbour, 
+						team, 
+						size);
 				}
 			}
 		}
 	}
+
+	private void ApplyDiagonalConnectionsForPoints(Point point, Point diagonalNeighbour, Point rightNeighbour,
+		Point bottomNeighbour, int team, int size)
+	{
+		// x.
+		// .x
+		if (IsCurrentlyImpassable(point.Id, team, size)
+		    && IsCurrentlyImpassable(diagonalNeighbour.Id, team, size)
+		    && IsCurrentlyImpassable(rightNeighbour.Id, team, size) is false
+		    && IsCurrentlyImpassable(bottomNeighbour.Id, team, size) is false)
+		    //&& rightNeighbour.IsHighGround == bottomNeighbour.IsHighGround) // TODO not tested
+		{
+			DijkstraMapBySizeByTeam[team][size].RemoveConnection(
+				rightNeighbour.Id, 
+				bottomNeighbour.Id);
+		}
+		else
+		{
+			DijkstraMapBySizeByTeam[team][size].ConnectPoints(
+				rightNeighbour.Id, 
+				bottomNeighbour.Id, 
+				DiagonalCost);
+		}
+
+		// .x
+		// x.
+		if (IsCurrentlyImpassable(point.Id, team, size) is false
+		    && IsCurrentlyImpassable(diagonalNeighbour.Id, team, size) is false
+		    && IsCurrentlyImpassable(rightNeighbour.Id, team, size)
+		    && IsCurrentlyImpassable(bottomNeighbour.Id, team, size))
+		    //&& point.IsHighGround == diagonalNeighbour.IsHighGround) // TODO not tested
+		{
+			DijkstraMapBySizeByTeam[team][size].RemoveConnection(
+				point.Id, 
+				diagonalNeighbour.Id);
+		}
+		else
+		{
+			DijkstraMapBySizeByTeam[team][size].ConnectPoints(
+				point.Id, 
+				diagonalNeighbour.Id, 
+				DiagonalCost);
+		}
+	}
 	
-	public bool IsInfiniteTerrainWeight(int pointId, int team, int size)
-		=> PointTerrainWeightByIdBySizeByTeam[team][size][pointId].Equals(float.PositiveInfinity) 
-		   || PointByIdBySizeByTeam[team][size][pointId].IsImpassable;
+
+	public bool IsCurrentlyImpassable(int pointId, int team, int size)
+	{
+		var calculatedTerrainIndex = PointByIdBySizeByTeam[team][size][pointId].CalculatedTerrainIndex;
+		var weight = _terrainWeights[calculatedTerrainIndex];
+		return weight.Equals(float.PositiveInfinity);
+	}
 
 	#endregion
 
@@ -372,33 +380,6 @@ public class Graph
 		if (point.IsHighGround)
 			return null;
 		return point;
-	}
-
-	public IList<Point> GetPointsProjectedDownFromEntity(EntityNode entity)
-	{
-		var points = new List<Point>();
-		var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
-		var size = (int)entity.EntitySize.x;
-		var team = 1; // TODO add team
-		
-		for (var x = (int)entity.EntityPrimaryPosition.x - MaxSizeForPathfinding; 
-		     x < entity.EntityPrimaryPosition.x + entity.EntitySize.x + MaxSizeForPathfinding; 
-		     x++)
-		{
-			for (var y = (int)entity.EntityPrimaryPosition.y - MaxSizeForPathfinding;
-			     y < entity.EntityPrimaryPosition.y + entity.EntitySize.y + MaxSizeForPathfinding;
-			     y++)
-			{
-				var position = new Vector2(x, y);
-				var point = GetHighestPoint(position, team, size, isOnHighGround);
-				if (point is null)
-					continue;
-				
-				points.Add(point.Value);
-			}
-		}
-
-		return points;
 	}
 	
 	public Point GetPoint(int id, int team, int size) => PointByIdBySizeByTeam[team][size][id];
@@ -441,7 +422,7 @@ public class Graph
 
 	public bool ContainsPoint(Vector2 position, int team, int size, bool isHighGround = false)
 		=> PointIdByPositionBySizeByTeam[team][size].ContainsKey((position, isHighGround));
-
+	
 	public bool TryGetPointId(Vector2 position, int team, int size, out int id, bool isHighGround = false)
 	{
 		id = -1;
@@ -486,7 +467,6 @@ public class Graph
 			{
 				PointByIdBySizeByTeam[team][size][point.Id] = point;
 				PointIdByPositionBySizeByTeam[team][size][(point.Position, point.IsHighGround)] = point.Id;
-				PointTerrainWeightByIdBySizeByTeam[team][size][point.Id] = _terrainWeights[point.OriginalTerrainIndex];
 				
 				DijkstraMapBySizeByTeam[team][size].AddPoint(point.Id, point.CalculatedTerrainIndex);
 			}

@@ -13,6 +13,7 @@
     <Compile Remove="low-age-dijkstra\**" />
     <Compile Remove="low-age-prototype-common\**" />
     <Compile Remove="low-age-dijkstra-tests\**" />
+    <Compile Remove="multipurpose-pathfinding\**" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="data\**" />
@@ -21,9 +22,11 @@
     <EmbeddedResource Remove="low-age-dijkstra\**" />
     <EmbeddedResource Remove="low-age-prototype-common\**" />
     <EmbeddedResource Remove="low-age-dijkstra-tests\**" />
+    <EmbeddedResource Remove="multipurpose-pathfinding\**" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="data\low-age-data.csproj" />
     <ProjectReference Include="low-age-dijkstra\low-age-dijkstra.csproj" />
+    <ProjectReference Include="multipurpose-pathfinding\multipurpose-pathfinding.csproj" />
   </ItemGroup>
 </Project>

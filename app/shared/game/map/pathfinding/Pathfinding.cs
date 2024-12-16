@@ -7,8 +7,8 @@ using low_age_data;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Tiles;
 using low_age_prototype_common.Extensions;
+using multipurpose_pathfinding;
 using Newtonsoft.Json;
-using Object = Godot.Object;
 
 public class Pathfinding : Node
 {
@@ -299,8 +299,7 @@ public class Pathfinding : Node
         var size = 1; // TODO move AddOccupation to Graph and automatically handle adding
         // occupation for all graph sizes
 
-        var foundPoints = Graph
-            .GetPointsProjectedDownFromEntity(entity)
+        var foundPoints = GetPointsProjectedDownFromEntity(entity)
             .Where(point => entity.CanBeMovedThroughAt(point) is false)
             .ToList();
 
@@ -342,7 +341,7 @@ public class Pathfinding : Node
             .ToDictionary<KeyValuePair<int, float>, int, IList<Vector2>>(terrainWeight =>
                 terrainWeight.Key, terrainWeight => new List<Vector2>());*/
 
-        foreach (var point in Graph.GetPointsProjectedDownFromEntity(entity))
+        foreach (var point in GetPointsProjectedDownFromEntity(entity))
         {
             if (point.IsHighGround)
                 continue;
@@ -719,6 +718,23 @@ public class Pathfinding : Node
             return null;
 
         return otherPoint;
+    }
+    
+    public IList<Point> GetPointsProjectedDownFromEntity(EntityNode entity)
+    {
+        var isOnHighGround = entity is UnitNode unit && unit.IsOnHighGround;
+        const int pathfindingSize = 1;
+        var team = 1; // TODO add team
+
+        var points = Iterate
+            .Positions(entity.EntityPrimaryPosition, 
+                entity.EntityPrimaryPosition + entity.EntitySize)
+            .Select(position => Graph.GetHighestPoint(position, team, pathfindingSize, isOnHighGround))
+            .Where(point => point != null)
+            .Select(point => point.Value)
+            .ToList();
+
+        return points;
     }
 
     private bool IsCached(Vector2 position, float range, bool isOnHighGround, int team, int size)

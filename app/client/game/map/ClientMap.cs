@@ -376,7 +376,7 @@ public class ClientMap : Map
             {
                 var position = new Vector2(x, y);
                 var tile = _tileMap.GetHighestTile(position);
-                if (Pathfinding.Graph.IsInfiniteTerrainWeight(tile.Point.Id, team, size))
+                if (Pathfinding.Graph.IsCurrentlyImpassable(tile.Point.Id, team, size))
                     continue;
 
                 for (var offsetX = -1; offsetX < 2; offsetX++)
@@ -389,7 +389,7 @@ public class ClientMap : Map
                             continue;
 
                         if (Pathfinding.HasConnection(tile.Point, adjacentTile.Point, team, size) is false 
-                            || Pathfinding.Graph.IsInfiniteTerrainWeight(adjacentTile.Point.Id, team, size))
+                            || Pathfinding.Graph.IsCurrentlyImpassable(adjacentTile.Point.Id, team, size))
                             continue;
 
                         var line = new Line2D();

@@ -56,7 +56,7 @@ public class Behaviours : Node2D
             behaviour.QueueFree();
     }
 
-    /// Avoid calling directly, use other overloads instead. Method is public to make automated testing easier.
+    /// <b>Avoid calling directly</b>, use other overloads instead. Method is public to make automated testing easier.
     public BehaviourNode AddBehaviour(Behaviour behaviourBlueprint, Effects history)
     {
         switch (behaviourBlueprint)
