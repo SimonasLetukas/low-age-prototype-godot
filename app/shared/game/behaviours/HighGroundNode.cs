@@ -26,7 +26,7 @@ public class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGround>, IPa
     public Dictionary<Vector2, int> FlattenedPositions => FlattenedLocalPositions
         .ToDictionary(pair => pair.Key + Parent.EntityPrimaryPosition, pair => pair.Value);
     public Dictionary<Vector2, int> FlattenedLocalPositions { get; set; } = new Dictionary<Vector2, int>();
-    
+
     private HighGround Blueprint { get; set; }
 
     public void SetBlueprint(HighGround blueprint)
@@ -45,7 +45,7 @@ public class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGround>, IPa
         EventBus.Instance.RaisePathfindingUpdating(this, false);
     }
 
-    public bool CanBeMovedOnAt(Vector2 position) => FlattenedPositions.ContainsKey(position);
+    public bool CanBeMovedOnAt(Vector2 position, int team) => FlattenedPositions.ContainsKey(position);
     
     private void SetupPositions()
     {

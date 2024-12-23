@@ -4,6 +4,7 @@ using low_age_dijkstra;
 using low_age_dijkstra.Methods;
 using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
+using NetTopologySuite.Noding;
 
 namespace multipurpose_pathfinding
 {
@@ -22,8 +23,6 @@ namespace multipurpose_pathfinding
         public IList<PathfindingSize> SupportedSizes { get; } = new List<PathfindingSize>();
 
         private Configuration Config { get; set; } = new Configuration();
-
-        private int PointIdIterator { get; set; }
 
         private class PointById : Dictionary<int, Point> { }
 
@@ -51,9 +50,7 @@ namespace multipurpose_pathfinding
         public void Initialize(Configuration configuration)
         {
             Config = configuration;
-
-            PointIdIterator = Config.MapSize.X * Config.MapSize.Y;
-
+            
             Config.TerrainWeights.Add(Config.ImpassableIndex, float.PositiveInfinity);
             Config.TerrainWeights.Add(Config.HighGroundIndex, 1.0f);
 
@@ -80,9 +77,9 @@ namespace multipurpose_pathfinding
 
         /// <summary>
         /// Creates a square grid of points for all teams and entity sizes, and returns all points and their IDs (which
-        /// are same across all graphs for all teams and entity sizes).
+        /// are same across all graphs for all teams and entity sizes). Uses <see cref="Configuration.BaseTerrain"/>
+        /// to set all the points terrain to initially.
         /// </summary>
-        /// <param name="terrainIndex">Base terrain index to set to all the points initially.</param>
         public Dictionary<Vector2<int>, int> InitializeSquareGrid()
         {
             var pointIdByPositionResult = new Dictionary<Vector2<int>, int>();
@@ -305,6 +302,43 @@ namespace multipurpose_pathfinding
             return point;
         }
 
+        /// <summary>
+        /// Resets the points to the initial terrain for all pathfinding sizes and teams. Removes high ground points
+        /// in the process.
+        /// </summary>
+        public void ResetToTerrainPoints(Vector2<int> lowerBounds, Vector2<int> upperBounds)
+        {
+            var positionsByTerrain = new Dictionary<Terrain, IList<Vector2<int>>>();
+            foreach (var terrain in Config.TerrainsInAscendingWeights)
+            {
+                positionsByTerrain[terrain] = new List<Vector2<int>>();
+            }
+            
+            foreach (var position in IterateVector2Int.Positions(lowerBounds, upperBounds))
+            {
+                var highGroundPointExists = TryGetMainPointId(position, 
+                    out var highGroundPointId, true);
+                if (highGroundPointExists)
+                    RemoveAllPoints(highGroundPointId);
+
+                var lowGroundPointExists = TryGetMainPointId(position, 
+                    out var lowGroundPointId, false);
+                if (lowGroundPointExists is false)
+                    continue;
+
+                var point = GetMainPoint(lowGroundPointId);
+                positionsByTerrain[point.OriginalTerrainIndex].Add(point.Position);
+            }
+
+            foreach (var terrain in Config.TerrainsInAscendingWeights)
+            {
+                foreach (var position in positionsByTerrain[terrain])
+                {
+                    SetTerrainForPoint(position, terrain);
+                }
+            }
+        }
+
         public Point GetPoint(int id, Team team, PathfindingSize size) => PointByIdBySizeByTeam[team][size][id];
 
         public Point GetPoint(Vector2<int> position, Team team, PathfindingSize size, bool isHighGround = false)
@@ -312,6 +346,8 @@ namespace multipurpose_pathfinding
 
         public Point GetMainPoint(Vector2<int> position, bool isHighGround = false, Team? team = null)
             => GetPoint(position, team ?? new Team(1), 1, isHighGround);
+
+        public Point GetMainPoint(int id, Team? team = null) => GetPoint(id, team ?? new Team(1), 1);
 
         public bool TryGetHighestPoint(Vector2<int> position, Team team, PathfindingSize size,
             bool lookingFromHighGround,
@@ -372,7 +408,10 @@ namespace multipurpose_pathfinding
         public int GetMainPointId(Vector2<int> position, bool isHighGround = false, Team? team = null)
             => GetPointId(position, team ?? new Team(1), 1, isHighGround);
 
-        public Point AddPoint(Vector2<int> position, bool isHighGround, int highGroundAscensionLevel, int ySpriteOffset,
+        public bool TryGetMainPointId(Vector2<int> position, out int id, bool isHighGround = false, Team? team = null) 
+            => TryGetPointId(position, team ?? new Team(1), 1, out id, isHighGround);
+
+        public Point AddPoint(Vector2<int> position, bool isHighGround, int highGroundAscensionLevel,
             int? terrainIndex = null)
         {
             var originalTerrainIndex = terrainIndex is null
@@ -382,11 +421,10 @@ namespace multipurpose_pathfinding
                     : terrainIndex.Value;
             var point = new Point
             {
-                Id = PointIdIterator++,
+                Id = GetPointId(position.X, position.Y, isHighGround),
                 Position = position,
                 IsHighGround = isHighGround,
                 HighGroundAscensionLevel = highGroundAscensionLevel,
-                YSpriteOffset = ySpriteOffset,
                 OriginalTerrainIndex = originalTerrainIndex,
                 IsImpassable = false
             };
@@ -403,6 +441,14 @@ namespace multipurpose_pathfinding
             }
 
             return point;
+        }
+
+        private int GetPointId(int x, int y, bool isHighGround)
+        {
+            var offset = isHighGround 
+                ? Config.MapSize.X * Config.MapSize.Y 
+                : 0;
+            return offset + x * Config.MapSize.Y + y + 1;
         }
 
         /// <summary>

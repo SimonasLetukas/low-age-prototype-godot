@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using low_age_dijkstra;
 using low_age_prototype_common;
 
 namespace multipurpose_pathfinding
@@ -22,5 +24,9 @@ namespace multipurpose_pathfinding
         public int ImpassableIndex { get; set; } = -1;
         public int HighGroundIndex { get; set; } = -2;
         public bool DebugEnabled { get; set; }
+        
+        internal IEnumerable<Terrain> TerrainsInAscendingWeights => TerrainWeights
+            .OrderBy(x => x.Value)
+            .Select(x => new Terrain(x.Key));
     }
 }

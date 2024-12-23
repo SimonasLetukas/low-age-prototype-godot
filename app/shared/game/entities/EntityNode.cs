@@ -22,6 +22,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public Guid InstanceId { get; set; } = Guid.NewGuid();
 
+    public int Team { get; set; } = 1;
     public EntityRenderer Renderer { get; private set; }
     public Vector2 EntityPrimaryPosition { get; set; }
     public Vector2 EntitySize { get; protected set; } = Vector2.One;
@@ -191,9 +192,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         MoveToNextTarget();
     }
 
-    public virtual bool CanBeMovedOnAt(Point point)
+    public virtual bool CanBeMovedOnAt(Point point, int forTeam)
     {
-        if (HasHighGroundAt(point))
+        if (HasHighGroundAt(point, forTeam))
             return true;
 
         if (point.Position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize))
@@ -202,9 +203,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         return true;
     }
 
-    public virtual bool CanBeMovedThroughAt(Point point) => true;
+    public virtual bool CanBeMovedThroughAt(Point point, int forTeam) => true;
 
-    public bool HasHighGroundAt(Point point)
+    public bool HasHighGroundAt(Point point, int forTeam)
     {
         if (point.IsHighGround is false)
             return false;
@@ -218,7 +219,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         if (pathfindingUpdatableBehaviours.IsEmpty())
             return false;
 
-        var result = pathfindingUpdatableBehaviours.All(x => x.CanBeMovedOnAt(position));
+        var result = pathfindingUpdatableBehaviours.All(x => x.CanBeMovedOnAt(position, forTeam));
         
         return result;
     }

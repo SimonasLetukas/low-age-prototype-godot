@@ -26,6 +26,7 @@ public class Tiles : Node2D
         public bool IsTarget { get; set; }
         public IList<EntityNode> Occupants { get; set; }
         public Point Point { get; set; }
+        public int YSpriteOffset { get; set; }
 
         public bool IsInBoundsOf(Vector2 bounds) => Position.IsInBoundsOf(bounds);
     }
@@ -233,8 +234,9 @@ public class Tiles : Node2D
     public Vector2 GetGlobalPositionFromMapPosition(Vector2 mapPosition) 
         => _grass.MapToWorld(mapPosition + _tilemapOffset, true) + _tileOffset;
 
-    public IEnumerable<Vector2> GetGlobalPositionsFromMapPoints(IEnumerable<Point> mapPositions) 
-        => mapPositions.Select(x => GetGlobalPositionFromMapPosition(x.Position) + Vector2.Up * 
+    public IEnumerable<Vector2> GetGlobalPositionsFromMapPoints(IEnumerable<Point> points) => points
+        .Select(x => GetTile(x.Position, x.IsHighGround))
+        .Select(x => GetGlobalPositionFromMapPosition(x.Position) + Vector2.Up * 
             (x.YSpriteOffset > 0 && ClientState.Instance.Flattened 
                 ? Constants.FlattenedHighGroundHeight 
                 : x.YSpriteOffset));
@@ -374,7 +376,7 @@ public class Tiles : Node2D
         _mountains.Clear();
     }
 
-    private void OnHighGroundPointCreated(Point point)
+    private void OnHighGroundPointCreated(Point point, int ySpriteOffset)
     {
         var tile = new TileInstance
         {
@@ -383,7 +385,8 @@ public class Tiles : Node2D
             Terrain = Terrain.HighGround,
             IsTarget = false,
             Occupants = new List<EntityNode>(),
-            Point = point
+            Point = point,
+            YSpriteOffset = ySpriteOffset
         };
         _tiles[(point.Position, true)] = tile;
     }

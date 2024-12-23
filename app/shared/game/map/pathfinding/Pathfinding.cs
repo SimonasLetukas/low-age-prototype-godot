@@ -300,7 +300,7 @@ public class Pathfinding : Node
         // occupation for all graph sizes
 
         var foundPoints = GetPointsProjectedDownFromEntity(entity)
-            .Where(point => entity.CanBeMovedThroughAt(point) is false)
+            .Where(point => entity.CanBeMovedThroughAt(point, team) is false)
             .ToList();
 
         Graph.SetPointsImpassable(true, foundPoints);
@@ -429,8 +429,8 @@ public class Pathfinding : Node
                 }
                 else
                 {
-                    point = Graph.AddPoint(pos, true, currentAscensionLevel, path[i].Item2);
-                    EventBus.Instance.RaiseHighGroundPointCreated(point);
+                    point = Graph.AddPoint(pos, true, currentAscensionLevel);
+                    EventBus.Instance.RaiseHighGroundPointCreated(point, path[i].Item2);
                     if (DebugEnabled)
                         GD.Print($"2. Creating point {JsonConvert.SerializeObject(point)}");
                 }
@@ -504,8 +504,8 @@ public class Pathfinding : Node
             if (Graph.ContainsMainPoint(pos, true))
                 continue;
 
-            var point = Graph.AddPoint(pos, true, 100, path.First().Item2);
-            EventBus.Instance.RaiseHighGroundPointCreated(point);
+            var point = Graph.AddPoint(pos, true, 100);
+            EventBus.Instance.RaiseHighGroundPointCreated(point, path.First().Item2);
             if (DebugEnabled)
                 GD.Print($"1. Creating point {JsonConvert.SerializeObject(point)}");
 

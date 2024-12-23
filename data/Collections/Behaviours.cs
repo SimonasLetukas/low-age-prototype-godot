@@ -342,7 +342,8 @@ namespace low_age_data.Collections
                                 start: new Vector2<int>(x: 1, y: 1), 
                                 size: new Vector2<int>(x: 1, y: 1)),
                             spriteOffset: new Vector2<int>(x: 0, y: 9)),
-                    }),
+                    },
+                    closingEnabled: false),
 
                 new HighGround(
                     id: BehaviourId.Citadel.HighGroundHighGround,
@@ -514,7 +515,8 @@ namespace low_age_data.Collections
                                 start: new Vector2<int>(x: 0, y: 0), 
                                 size: new Vector2<int>(x: 1, y: 1)),
                             spriteOffset: new Vector2<int>(x: 0, y: 12)),
-                    }),
+                    },
+                    closingEnabled: true),
 
                 new HighGround(
                     id: BehaviourId.Outpost.HighGroundHighGround,
@@ -925,8 +927,9 @@ namespace low_age_data.Collections
                         new HighGroundArea(area: new Area(
                                 start: new Vector2<int>(x: 0, y: 0), 
                                 size: new Vector2<int>(x: 1, y: 1)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 13)),
-                    }),
+                            spriteOffset: new Vector2<int>(x: 0, y: 13)), 
+                    },
+                    closingEnabled: false),
                 
                 new HighGround(
                     id: BehaviourId.Gate.HighGroundHighGround,
@@ -953,7 +956,8 @@ namespace low_age_data.Collections
                                 start: new Vector2<int>(x: 0, y: 1), 
                                 size: new Vector2<int>(x: 1, y: 2)),
                             spriteOffset: new Vector2<int>(x: 0, y: 16)),
-                    }),
+                    },
+                    closingEnabled: true),
                 
                 new MovementBlock(
                     id: BehaviourId.Gate.EntranceMovementBlock,

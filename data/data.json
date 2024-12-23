@@ -12145,6 +12145,7 @@
           }
         }
       ],
+      "closingEnabled": false,
       "displayName": "Ascendable Ascendable",
       "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",
@@ -12502,6 +12503,7 @@
           }
         }
       ],
+      "closingEnabled": true,
       "displayName": "Ascendable Ascendable",
       "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",
@@ -13368,6 +13370,7 @@
           }
         }
       ],
+      "closingEnabled": false,
       "displayName": "Ascendable Ascendable",
       "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",
@@ -13447,6 +13450,7 @@
           }
         }
       ],
+      "closingEnabled": true,
       "displayName": "Ascendable Ascendable",
       "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",

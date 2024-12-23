@@ -26,5 +26,5 @@ public interface IPathfindingUpdatable : IBehaviour
     /// </summary>
     Dictionary<Vector2, int> FlattenedLocalPositions { get; }
 
-    bool CanBeMovedOnAt(Vector2 position);
+    bool CanBeMovedOnAt(Vector2 position, int team);
 }

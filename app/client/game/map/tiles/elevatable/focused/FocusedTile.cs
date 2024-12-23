@@ -107,7 +107,7 @@ public class FocusedTile : AnimatedSprite
 
     private static int GetHeight(Tiles.TileInstance tile)
     {
-        var height = tile?.Point.YSpriteOffset ?? 0;
+        var height = tile?.YSpriteOffset ?? 0;
         height = height > 0 && ClientState.Instance.Flattened 
             ? Constants.FlattenedHighGroundHeight 
             : height;

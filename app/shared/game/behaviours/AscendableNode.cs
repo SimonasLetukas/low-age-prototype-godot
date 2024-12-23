@@ -19,6 +19,8 @@ public class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendable>, IPa
         return behaviour;
     }
 
+    public bool Opened { get; private set; } = true; // TODO connect with logic that tracks when allies or enemies
+                                                     // end movement on any of the ascendable positions
     public IList<(IEnumerable<Vector2>, int)> LeveledPositions => LeveledLocalPositions
         .Select(x => (x.Item1.Select(y => y + Parent.EntityPrimaryPosition), x.Item2))
         .ToList();
@@ -45,7 +47,11 @@ public class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendable>, IPa
         EventBus.Instance.RaisePathfindingUpdating(this, false);
     }
     
-    public bool CanBeMovedOnAt(Vector2 position) => FlattenedPositions.ContainsKey(position);
+    public bool CanBeMovedOnAt(Vector2 position, int team)
+    {
+        var isSameTeam = Blueprint.ClosingEnabled is false || (team == Parent.Team || Opened);
+        return isSameTeam && FlattenedPositions.ContainsKey(position);
+    }
 
     private void SetupPositions()
     {

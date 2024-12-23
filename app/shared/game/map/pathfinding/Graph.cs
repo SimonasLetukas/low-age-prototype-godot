@@ -14,7 +14,6 @@ public struct Point : IEquatable<Point>
 	public int Id { get; set; }
 	public Vector2 Position { get; set; }
 	public int HighGroundAscensionLevel { get; set; }
-	public int YSpriteOffset { get; set; }
 	public bool IsHighGround { get; set; }
 	public bool IsImpassable { get; set; }
 	public int OriginalTerrainIndex { get; set; }
@@ -30,7 +29,6 @@ public struct Point : IEquatable<Point>
 		       && Position.Equals(other.Position) 
 		       && IsHighGround == other.IsHighGround 
 		       && HighGroundAscensionLevel == other.HighGroundAscensionLevel 
-		       && YSpriteOffset == other.YSpriteOffset 
 		       && OriginalTerrainIndex == other.OriginalTerrainIndex 
 		       && IsImpassable == other.IsImpassable;
 	}
@@ -48,7 +46,6 @@ public struct Point : IEquatable<Point>
 			hashCode = (hashCode * 397) ^ Position.GetHashCode();
 			hashCode = (hashCode * 397) ^ IsHighGround.GetHashCode();
 			hashCode = (hashCode * 397) ^ HighGroundAscensionLevel;
-			hashCode = (hashCode * 397) ^ YSpriteOffset;
 			hashCode = (hashCode * 397) ^ OriginalTerrainIndex;
 			hashCode = (hashCode * 397) ^ IsImpassable.GetHashCode();
 			return hashCode;
@@ -447,7 +444,7 @@ public class Graph
 	public int GetMainPointId(Vector2 position, bool isHighGround = false, int team = 1)
 		=> GetPointId(position, team, 1, isHighGround);
 
-	public Point AddPoint(Vector2 position, bool isHighGround, int highGroundAscensionLevel, int ySpriteOffset, 
+	public Point AddPoint(Vector2 position, bool isHighGround, int highGroundAscensionLevel, 
 		int terrainIndex = ImpassableIndex)
 	{
 		var point = new Point
@@ -456,7 +453,6 @@ public class Graph
 			Position = position,
 			IsHighGround = isHighGround,
 			HighGroundAscensionLevel = highGroundAscensionLevel,
-			YSpriteOffset = ySpriteOffset,
 			OriginalTerrainIndex = isHighGround ? HighGroundIndex : terrainIndex,
 			IsImpassable = false
 		};

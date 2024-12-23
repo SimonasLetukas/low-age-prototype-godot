@@ -8,7 +8,6 @@ namespace multipurpose_pathfinding
         public int Id { get; set; }
         public Vector2<int> Position { get; set; }
         public int HighGroundAscensionLevel { get; set; }
-        public int YSpriteOffset { get; set; }
         public bool IsHighGround { get; set; }
         private bool _isImpassable;
 
@@ -40,7 +39,6 @@ namespace multipurpose_pathfinding
                    && Position.Equals(other.Position)
                    && IsHighGround == other.IsHighGround
                    && HighGroundAscensionLevel == other.HighGroundAscensionLevel
-                   && YSpriteOffset == other.YSpriteOffset
                    && OriginalTerrainIndex == other.OriginalTerrainIndex
                    && IsImpassable == other.IsImpassable;
         }
@@ -58,7 +56,6 @@ namespace multipurpose_pathfinding
                 hashCode = (hashCode * 397) ^ Position.GetHashCode();
                 hashCode = (hashCode * 397) ^ IsHighGround.GetHashCode();
                 hashCode = (hashCode * 397) ^ HighGroundAscensionLevel;
-                hashCode = (hashCode * 397) ^ YSpriteOffset;
                 hashCode = (hashCode * 397) ^ OriginalTerrainIndex;
                 hashCode = (hashCode * 397) ^ IsImpassable.GetHashCode();
                 return hashCode;

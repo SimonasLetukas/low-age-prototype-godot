@@ -79,15 +79,15 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         base.Rotate();
     }
 
-    public override bool CanBeMovedOnAt(Point point)
+    public override bool CanBeMovedOnAt(Point point, int forTeam)
     {
         if (WalkablePositions.Any(point.Position.Equals))
             return true;
 
-        return base.CanBeMovedOnAt(point);
+        return base.CanBeMovedOnAt(point, forTeam);
     }
 
-    public override bool CanBeMovedThroughAt(Point point) => CanBeMovedOnAt(point);
+    public override bool CanBeMovedThroughAt(Point point, int forTeam) => CanBeMovedOnAt(point, forTeam);
     
     protected override void UpdateVisuals()
     {

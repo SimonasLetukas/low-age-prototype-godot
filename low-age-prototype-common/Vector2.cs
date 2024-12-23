@@ -36,6 +36,10 @@ namespace low_age_prototype_common
                && (float)(object)Y >= 0
                && (float)(object)X < (float)(object)upperBounds.X
                && (float)(object)Y < (float)(object)upperBounds.Y;
+        
+        public bool IsDiagonalTo(Vector2<T> point) 
+            => (int)(object)X - (int)(object)Y == (int)(object)point.X - (int)(object)point.Y 
+               || (int)(object)X + (int)(object)Y == (int)(object)point.X + (int)(object)point.Y;
 
         public override string ToString()
         {
@@ -79,6 +83,20 @@ namespace low_age_prototype_common
         {
             vec.X = (T)(object)(-(float)(object)vec.X);
             vec.Y = (T)(object)(-(float)(object)vec.Y);
+            return vec;
+        }
+        
+        public static Vector2<T> operator *(Vector2<T> vec, int scale)
+        {
+            vec.X = (T)(object)((float)(object)vec.X * scale);
+            vec.Y = (T)(object)((float)(object)vec.Y * scale);
+            return vec;
+        }
+
+        public static Vector2<T> operator *(int scale, Vector2<T> vec)
+        {
+            vec.X = (T)(object)((float)(object)vec.X * scale);
+            vec.Y = (T)(object)((float)(object)vec.Y * scale);
             return vec;
         }
 

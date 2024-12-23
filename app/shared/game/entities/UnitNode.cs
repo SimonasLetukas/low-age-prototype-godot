@@ -84,7 +84,9 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         
         base.MoveUntilFinished(globalPositionPath, resultingPoint);
         
-        Renderer.UpdateElevation(IsOnHighGround, resultingPoint.YSpriteOffset, 
+        Renderer.UpdateElevation(
+            IsOnHighGround, 
+            GetTile(resultingPoint.Position, resultingPoint.IsHighGround).YSpriteOffset, 
             GetEntitiesBelow().OrderByDescending(x => x.Renderer.ZIndex).FirstOrDefault());
     }
 
