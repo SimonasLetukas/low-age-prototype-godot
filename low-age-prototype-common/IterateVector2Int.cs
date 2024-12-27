@@ -47,7 +47,7 @@ namespace low_age_prototype_common
             }
         }
 
-        public static IEnumerable<Vector2<int>> AdjacentPositions(Vector2<int> center, bool excludeCenter = true)
+        public static IEnumerable<Vector2<int>> AdjacentPositions(this Vector2<int> center, bool excludeCenter = true)
             => AdjacentPositions(center.X, center.Y, excludeCenter);
 
         public static IEnumerable<Vector2<int>> AdjacentPositions(int centerX, int centerY, bool excludeCenter = true)

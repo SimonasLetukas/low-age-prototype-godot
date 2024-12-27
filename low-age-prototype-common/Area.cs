@@ -1,9 +1,8 @@
-﻿using System;
-using low_age_data.Shared;
-using low_age_prototype_common;
+using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common
+namespace low_age_prototype_common
 {
     [Serializable]
     public struct Area
@@ -31,5 +30,9 @@ namespace low_age_data.Domain.Common
         /// Size of the area. Starts from 1.
         /// </summary>
         public Vector2<int> Size { get; }
+        
+        public override string ToString() => $"{Start}, {Size}";
+
+        public IEnumerable<Vector2<int>> ToVectors() => IterateVector2Int.Positions(Start, Start + Size);
     }
 }

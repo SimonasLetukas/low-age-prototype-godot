@@ -15,7 +15,9 @@ namespace multipurpose_pathfinding
             {
                 { 0, 1.0f },
                 { 1, float.PositiveInfinity },
-                { 2, 2.0f }
+                { 2, 2.0f },
+                { 3, 1.0f },
+                { 4, 1.0f }
             };
         public PathfindingSize MaxSizeForPathfinding { get; set; } = 3;
         public Team MaxNumberOfTeams { get; set; } = 1;

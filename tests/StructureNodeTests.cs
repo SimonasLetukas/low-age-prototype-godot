@@ -10,7 +10,7 @@ using low_age_data.Shared;
 using low_age_prototype_common;
 using TestProject1.Helpers;
 using Xunit;
-using Area = low_age_data.Domain.Common.Area;
+using Area = low_age_prototype_common.Area;
 using Array = System.Array;
 
 namespace low_age_tests

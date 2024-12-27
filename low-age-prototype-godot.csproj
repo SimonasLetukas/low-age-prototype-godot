@@ -5,6 +5,7 @@
     <GodotUseNETFrameworkRefAssemblies>true</GodotUseNETFrameworkRefAssemblies>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="data\**" />
@@ -14,6 +15,7 @@
     <Compile Remove="low-age-prototype-common\**" />
     <Compile Remove="low-age-dijkstra-tests\**" />
     <Compile Remove="multipurpose-pathfinding\**" />
+    <Compile Remove="multipurpose-pathfinding-tests\**" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="data\**" />
@@ -23,6 +25,7 @@
     <EmbeddedResource Remove="low-age-prototype-common\**" />
     <EmbeddedResource Remove="low-age-dijkstra-tests\**" />
     <EmbeddedResource Remove="multipurpose-pathfinding\**" />
+    <EmbeddedResource Remove="multipurpose-pathfinding-tests\**" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="data\low-age-data.csproj" />

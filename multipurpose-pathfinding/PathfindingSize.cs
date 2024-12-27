@@ -5,7 +5,7 @@ namespace multipurpose_pathfinding
     /// <summary>
     /// Value used to keep track of the pathfinding size, to enable tracking pathfinding of MxM sized entities.
     /// </summary>
-    public readonly struct PathfindingSize : IEquatable<PathfindingSize>
+    public readonly struct PathfindingSize : IEquatable<PathfindingSize>, IComparable<PathfindingSize>
     {
         public static PathfindingSize Default => new PathfindingSize(1);
 
@@ -15,6 +15,8 @@ namespace multipurpose_pathfinding
         {
             Value = value;
         }
+        
+        public override string ToString() => Value.ToString();
 
         public bool Equals(PathfindingSize other) => Value == other.Value;
 
@@ -27,5 +29,10 @@ namespace multipurpose_pathfinding
         public static bool operator <(PathfindingSize left, PathfindingSize right) => left.Value < right.Value;
 
         public static implicit operator PathfindingSize(int pathfindingSize) => new PathfindingSize(pathfindingSize);
+
+        public int CompareTo(PathfindingSize other)
+        {
+            return Value.CompareTo(other.Value);
+        }
     }
 }

@@ -9,28 +9,25 @@ namespace multipurpose_pathfinding
         public Guid Id { get; }
         public Vector2<int> Position { get; private set; }
         public Vector2<int> Size { get; private set; }
+        public Team Team { get; private set; }
         internal Envelope Bounds { get; private set; }
         internal bool IsOnHighGround { get; private set; }
-        internal Func<bool, Point, Team> CanBeMovedThroughAt { get; }
+        internal Func<Point, Team, bool> CanBeMovedThroughAt { get; }
         internal bool HasOccupation => Size != Vector2Int.Zero;
 
-        public PathfindingEntity(Guid id, Vector2<int> position, Vector2<int> size, bool isOnHighGround,
-            Func<bool, Point, Team> canBeMovedThroughAt)
+        public PathfindingEntity(Guid id, Vector2<int> position, Vector2<int> size, Team team, bool isOnHighGround,
+            Func<Point, Team, bool> canBeMovedThroughAt)
         {
             Id = id;
+            Position = position;
+            Size = size;
+            Team = team;
+            Bounds = new Envelope(position.X, position.X + size.X, position.Y, position.Y + size.Y);
+            IsOnHighGround = isOnHighGround;
             CanBeMovedThroughAt = canBeMovedThroughAt;
-            Update(position, size, isOnHighGround);
         }
 
         internal static PathfindingEntity WithoutOccupation(PathfindingEntity from) => new PathfindingEntity(from.Id,
-            from.Position, Vector2Int.Zero, from.IsOnHighGround, from.CanBeMovedThroughAt);
-
-        private void Update(Vector2<int> position, Vector2<int> size, bool isOnHighGround)
-        {
-            Position = position;
-            Size = size;
-            Bounds = new Envelope(position.X, position.X + size.X, position.Y, position.Y + size.Y);
-            IsOnHighGround = isOnHighGround;
-        }
+            from.Position, Vector2Int.Zero, from.Team, from.IsOnHighGround, from.CanBeMovedThroughAt);
     }
 }

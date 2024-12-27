@@ -3,7 +3,7 @@ using low_age_prototype_common;
 
 namespace multipurpose_pathfinding
 {
-    public struct Point : IEquatable<Point>
+    public class Point : IEquatable<Point>
     {
         public int Id { get; set; }
         public Vector2<int> Position { get; set; }
@@ -25,7 +25,7 @@ namespace multipurpose_pathfinding
 
         public int OriginalTerrainIndex { get; set; }
 
-        public int CalculatedTerrainIndex => IsImpassable
+        public int CalculatedTerrainIndex => _isImpassable
             ? Configuration.ImpassableIndex
             : IsHighGround
                 ? Configuration.HighGroundIndex

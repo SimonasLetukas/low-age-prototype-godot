@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
 using Newtonsoft.Json;
-using Area = low_age_data.Domain.Common.Area;
+using Area = low_age_prototype_common.Area;
 
 public static class Rect2Extensions
 {

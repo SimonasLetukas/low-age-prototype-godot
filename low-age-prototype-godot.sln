@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-dijkstra-tests", "l
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "multipurpose-pathfinding", "multipurpose-pathfinding\multipurpose-pathfinding.csproj", "{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "multipurpose-pathfinding-tests", "multipurpose-pathfinding-tests\multipurpose-pathfinding-tests.csproj", "{A130B8FD-EE79-4A28-BB69-41586584EEF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 	Debug|Any CPU = Debug|Any CPU
@@ -63,5 +65,11 @@ Global
 		{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
 		{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{A130B8FD-EE79-4A28-BB69-41586584EEF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A130B8FD-EE79-4A28-BB69-41586584EEF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A130B8FD-EE79-4A28-BB69-41586584EEF2}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A130B8FD-EE79-4A28-BB69-41586584EEF2}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{A130B8FD-EE79-4A28-BB69-41586584EEF2}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{A130B8FD-EE79-4A28-BB69-41586584EEF2}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

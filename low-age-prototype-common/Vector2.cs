@@ -26,20 +26,20 @@ namespace low_age_prototype_common
         public T Y { get; private set; }
 
         public bool IsInBoundsOf(Vector2<T> lowerBounds, Vector2<T> upperBounds)
-            => (float)(object)X >= (float)(object)lowerBounds.X
-               && (float)(object)Y >= (float)(object)lowerBounds.Y
-               && (float)(object)X < (float)(object)upperBounds.X
-               && (float)(object)Y < (float)(object)upperBounds.Y;
+            => Convert.ToSingle(X) >= Convert.ToSingle(lowerBounds.X)
+               && Convert.ToSingle(Y) >= Convert.ToSingle(lowerBounds.Y)
+               && Convert.ToSingle(X) < Convert.ToSingle(upperBounds.X)
+               && Convert.ToSingle(Y) < Convert.ToSingle(upperBounds.Y);
 
         public bool IsInBoundsOf(Vector2<T> upperBounds)
-            => (float)(object)X >= 0
-               && (float)(object)Y >= 0
-               && (float)(object)X < (float)(object)upperBounds.X
-               && (float)(object)Y < (float)(object)upperBounds.Y;
+            => Convert.ToSingle(X) >= 0
+               && Convert.ToSingle(Y) >= 0
+               && Convert.ToSingle(X) < Convert.ToSingle(upperBounds.X)
+               && Convert.ToSingle(Y) < Convert.ToSingle(upperBounds.Y);
         
         public bool IsDiagonalTo(Vector2<T> point) 
-            => (int)(object)X - (int)(object)Y == (int)(object)point.X - (int)(object)point.Y 
-               || (int)(object)X + (int)(object)Y == (int)(object)point.X + (int)(object)point.Y;
+            => Convert.ToInt32(X) - Convert.ToInt32(Y) == Convert.ToInt32(point.X) - Convert.ToInt32(point.Y) 
+               || Convert.ToInt32(X) + Convert.ToInt32(Y) == Convert.ToInt32(point.X) + Convert.ToInt32(point.Y);
 
         public override string ToString()
         {
@@ -74,51 +74,152 @@ namespace low_age_prototype_common
 
         public static Vector2<T> operator -(Vector2<T> left, Vector2<T> right)
         {
-            left.X = (T)(object)((float)(object)left.X - (float)(object)right.X);
-            left.Y = (T)(object)((float)(object)left.Y - (float)(object)right.Y);
-            return left;
+            if (typeof(T) == typeof(int))
+            {
+                left.X = (T)(object)((int)(object)left.X - (int)(object)right.X);
+                left.Y = (T)(object)((int)(object)left.Y - (int)(object)right.Y);
+                return left;
+            }
+
+            if (typeof(T) == typeof(double))
+            {
+                left.X = (T)(object)((double)(object)left.X - (double)(object)right.X);
+                left.Y = (T)(object)((double)(object)left.Y - (double)(object)right.Y);
+                return left;
+            }
+
+            if (typeof(T) == typeof(float))
+            {
+                left.X = (T)(object)((float)(object)left.X - (float)(object)right.X);
+                left.Y = (T)(object)((float)(object)left.Y - (float)(object)right.Y);
+                return left;
+            }
+
+            if (typeof(T) == typeof(long))
+            {
+                left.X = (T)(object)((long)(object)left.X - (long)(object)right.X);
+                left.Y = (T)(object)((long)(object)left.Y - (long)(object)right.Y);
+                return left;
+            }
+
+            // Add more numeric types as needed.
+
+            throw new NotSupportedException(
+                $"Type {typeof(T)} is not supported for - operator in {nameof(Vector2<T>)}.");
         }
 
         public static Vector2<T> operator -(Vector2<T> vec)
         {
-            vec.X = (T)(object)(-(float)(object)vec.X);
-            vec.Y = (T)(object)(-(float)(object)vec.Y);
-            return vec;
-        }
-        
-        public static Vector2<T> operator *(Vector2<T> vec, int scale)
-        {
-            vec.X = (T)(object)((float)(object)vec.X * scale);
-            vec.Y = (T)(object)((float)(object)vec.Y * scale);
-            return vec;
+            if (typeof(T) == typeof(int))
+            {
+                vec.X = (T)(object)(-(int)(object)vec.X);
+                vec.Y = (T)(object)(-(int)(object)vec.Y);
+                return vec;
+            }
+
+            if (typeof(T) == typeof(double))
+            {
+                vec.X = (T)(object)(-(double)(object)vec.X);
+                vec.Y = (T)(object)(-(double)(object)vec.Y);
+                return vec;
+            }
+
+            if (typeof(T) == typeof(float))
+            {
+                vec.X = (T)(object)(-(float)(object)vec.X);
+                vec.Y = (T)(object)(-(float)(object)vec.Y);
+                return vec;
+            }
+
+            if (typeof(T) == typeof(long))
+            {
+                vec.X = (T)(object)(-(long)(object)vec.X);
+                vec.Y = (T)(object)(-(long)(object)vec.Y);
+                return vec;
+            }
+
+            // Add more numeric types as needed.
+
+            throw new NotSupportedException(
+                $"Type {typeof(T)} is not supported for - negative operator in {nameof(Vector2<T>)}.");
         }
 
-        public static Vector2<T> operator *(int scale, Vector2<T> vec)
-        {
-            vec.X = (T)(object)((float)(object)vec.X * scale);
-            vec.Y = (T)(object)((float)(object)vec.Y * scale);
-            return vec;
-        }
+        public static Vector2<T> operator *(Vector2<T> vec, int scale) => vec * Convert.ToSingle(scale);
 
-        public static Vector2<T> operator *(Vector2<T> vec, float scale)
-        {
-            vec.X = (T)(object)((float)(object)vec.X * scale);
-            vec.Y = (T)(object)((float)(object)vec.Y * scale);
-            return vec;
-        }
+        public static Vector2<T> operator *(int scale, Vector2<T> vec) => vec * Convert.ToSingle(scale);
+
+        public static Vector2<T> operator *(Vector2<T> vec, float scale) => scale * vec;
 
         public static Vector2<T> operator *(float scale, Vector2<T> vec)
         {
-            vec.X = (T)(object)((float)(object)vec.X * scale);
-            vec.Y = (T)(object)((float)(object)vec.Y * scale);
-            return vec;
+            if (typeof(T) == typeof(int))
+            {
+                vec.X = (T)(object)Convert.ToInt32((int)(object)vec.X * scale);
+                vec.Y = (T)(object)Convert.ToInt32((int)(object)vec.Y * scale);
+                return vec;
+            }
+
+            if (typeof(T) == typeof(double))
+            {
+                vec.X = (T)(object)((double)(object)vec.X * scale);
+                vec.Y = (T)(object)((double)(object)vec.Y * scale);
+                return vec;
+            }
+
+            if (typeof(T) == typeof(float))
+            {
+                vec.X = (T)(object)((float)(object)vec.X * scale);
+                vec.Y = (T)(object)((float)(object)vec.Y * scale);
+                return vec;
+            }
+
+            if (typeof(T) == typeof(long))
+            {
+                vec.X = (T)(object)Convert.ToInt64((long)(object)vec.X * scale);
+                vec.Y = (T)(object)Convert.ToInt64((long)(object)vec.Y * scale);
+                return vec;
+            }
+
+            // Add more numeric types as needed.
+
+            throw new NotSupportedException(
+                $"Type {typeof(T)} is not supported for * scaling operator in {nameof(Vector2<T>)}.");
         }
 
         public static Vector2<T> operator *(Vector2<T> left, Vector2<T> right)
         {
-            left.X = (T)(object)((float)(object)left.X * (float)(object)right.X);
-            left.Y = (T)(object)((float)(object)left.Y * (float)(object)right.Y);
-            return left;
+            if (typeof(T) == typeof(int))
+            {
+                left.X = (T)(object)((int)(object)left.X * (int)(object)right.X);
+                left.Y = (T)(object)((int)(object)left.Y * (int)(object)right.Y);
+                return left;
+            }
+
+            if (typeof(T) == typeof(double))
+            {
+                left.X = (T)(object)((double)(object)left.X * (double)(object)right.X);
+                left.Y = (T)(object)((double)(object)left.Y * (double)(object)right.Y);
+                return left;
+            }
+
+            if (typeof(T) == typeof(float))
+            {
+                left.X = (T)(object)((float)(object)left.X * (float)(object)right.X);
+                left.Y = (T)(object)((float)(object)left.Y * (float)(object)right.Y);
+                return left;
+            }
+
+            if (typeof(T) == typeof(long))
+            {
+                left.X = (T)(object)((long)(object)left.X * (long)(object)right.X);
+                left.Y = (T)(object)((long)(object)left.Y * (long)(object)right.Y);
+                return left;
+            }
+
+            // Add more numeric types as needed.
+
+            throw new NotSupportedException(
+                $"Type {typeof(T)} is not supported for * operator in {nameof(Vector2<T>)}.");
         }
 
         public static bool operator ==(Vector2<T> left, Vector2<T> right) => left.Equals(right);

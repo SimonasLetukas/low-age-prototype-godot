@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using low_age_dijkstra;
 using low_age_dijkstra.Methods;
 using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
-using NetTopologySuite.Noding;
 
 namespace multipurpose_pathfinding
 {
@@ -122,7 +122,8 @@ namespace multipurpose_pathfinding
                     IsHighGround = false,
                     HighGroundAscensionLevel = 0,
                     OriginalTerrainIndex = basePointTerrainIndex,
-                    IsImpassable = false
+                    IsImpassable = false,
+                    Configuration = Config
                 };
 
                 PointByIdBySizeByTeam[team][size][id] = point;
@@ -165,6 +166,9 @@ namespace multipurpose_pathfinding
             }
         }
 
+        /// <summary>
+        /// Sets points as impassable for all <see cref="SupportedTeams"/> and <see cref="SupportedSizes"/>.
+        /// </summary>
         public void SetPointsImpassable(bool to, IEnumerable<Point> points)
         {
             foreach (var originPoint in points)
@@ -256,10 +260,7 @@ namespace multipurpose_pathfinding
             }
             else
             {
-                DijkstraMapBySizeByTeam[team][size].ConnectPoints(
-                    rightNeighbour.Id,
-                    bottomNeighbour.Id,
-                    Config.DiagonalCost);
+                ConnectPoints(rightNeighbour, bottomNeighbour, team, size);
             }
 
             // .x
@@ -276,10 +277,7 @@ namespace multipurpose_pathfinding
             }
             else
             {
-                DijkstraMapBySizeByTeam[team][size].ConnectPoints(
-                    point.Id,
-                    diagonalNeighbour.Id,
-                    Config.DiagonalCost);
+                ConnectPoints(point, diagonalNeighbour, team, size);
             }
         }
 
@@ -294,7 +292,10 @@ namespace multipurpose_pathfinding
         public IEnumerable<Point> GetTerrainPoints() => PointByIdBySizeByTeam[1][1].Values.Where(x =>
             x.IsHighGround is false);
 
-        public Point? GetTerrainPoint(int id)
+        /// <summary>
+        /// Returned <see cref="Point"/> can be null.
+        /// </summary>
+        public Point GetTerrainPoint(int id)
         {
             var point = GetPoint(id, 1, 1);
             if (point.IsHighGround)
@@ -303,8 +304,8 @@ namespace multipurpose_pathfinding
         }
 
         /// <summary>
-        /// Resets the points to the initial terrain for all pathfinding sizes and teams. Removes high ground points
-        /// in the process.
+        /// Resets the points to the initial terrain and adds connections to all points for all pathfinding sizes and
+        /// teams. Removes high ground points in the process.
         /// </summary>
         public void ResetToTerrainPoints(Vector2<int> lowerBounds, Vector2<int> upperBounds)
         {
@@ -328,6 +329,17 @@ namespace multipurpose_pathfinding
 
                 var point = GetMainPoint(lowGroundPointId);
                 positionsByTerrain[point.OriginalTerrainIndex].Add(point.Position);
+
+                foreach (var adjacentPosition in point.Position.AdjacentPositions())
+                {
+                    var adjacentPointExists = TryGetMainPointId(adjacentPosition, 
+                        out var adjacentPointId, false);
+                    if (adjacentPointExists is false)
+                        continue;
+
+                    var adjacentPoint = GetMainPoint(adjacentPointId);
+                    ConnectPoints(point, adjacentPoint);
+                }
             }
 
             foreach (var terrain in Config.TerrainsInAscendingWeights)
@@ -358,11 +370,14 @@ namespace multipurpose_pathfinding
             if (result is null)
                 return false;
 
-            point = result.Value;
+            point = result;
             return true;
         }
 
-        public Point? GetHighestPoint(Vector2<int> position, Team team, PathfindingSize size,
+        /// <summary>
+        /// Returned <see cref="Point"/> can be null.
+        /// </summary>
+        public Point GetHighestPoint(Vector2<int> position, Team team, PathfindingSize size,
             bool lookingFromHighGround)
         {
             var highGroundPointFound = TryGetPointId(position, team, size, out var highGroundPointId, true);
@@ -426,9 +441,10 @@ namespace multipurpose_pathfinding
                 IsHighGround = isHighGround,
                 HighGroundAscensionLevel = highGroundAscensionLevel,
                 OriginalTerrainIndex = originalTerrainIndex,
-                IsImpassable = false
+                IsImpassable = false,
+                Configuration = Config
             };
-
+            
             foreach (var team in SupportedTeams)
             {
                 foreach (var size in SupportedSizes)
@@ -533,15 +549,39 @@ namespace multipurpose_pathfinding
         public bool HasMainConnection(Point pointA, Point pointB, Team? team = null)
             => HasConnection(pointA, pointB, team ?? new Team(1), 1);
 
-        public void ConnectPoints(Point pointA, Point pointB, bool isDiagonallyAdjacent, PathfindingSize size)
+        /// <summary>
+        /// Connects points for all <see cref="SupportedSizes"/> and <see cref="SupportedTeams"/>.
+        /// </summary>
+        public void ConnectPoints(Point pointA, Point pointB)
+        {
+            var isDiagonallyAdjacent = pointA.Position.IsDiagonalTo(pointB.Position);
+            foreach (var size in SupportedSizes)
+            {
+                ConnectPoints(pointA, pointB, size);
+            }
+        }
+        
+        /// <summary>
+        /// Connects points for all <see cref="SupportedTeams"/>.
+        /// </summary>
+        public void ConnectPoints(Point pointA, Point pointB, PathfindingSize size)
         {
             foreach (var team in SupportedTeams)
             {
-                DijkstraMapBySizeByTeam[team][size].ConnectPoints(
-                    pointA.Id,
-                    pointB.Id,
-                    isDiagonallyAdjacent ? Config.DiagonalCost : 1f);
+                ConnectPoints(pointA, pointB, team, size);
             }
+        }
+
+        /// <summary>
+        /// Connects points for specified <see cref="PathfindingSize"/> and <see cref="Team"/>.
+        /// </summary>
+        public void ConnectPoints(Point pointA, Point pointB, Team team, PathfindingSize size)
+        {
+            var isDiagonallyAdjacent = pointA.Position.IsDiagonalTo(pointB.Position);
+            DijkstraMapBySizeByTeam[team][size].ConnectPoints(
+                pointA.Id,
+                pointB.Id,
+                isDiagonallyAdjacent ? Config.DiagonalCost : 1f);
         }
 
         #endregion

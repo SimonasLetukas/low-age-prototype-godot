@@ -12,7 +12,7 @@ using low_age_data.Domain.Tiles;
 using low_age_prototype_common;
 using TestProject1.Helpers;
 using Xunit;
-using Area = low_age_data.Domain.Common.Area;
+using Area = low_age_prototype_common.Area;
 using Vector2 = Godot.Vector2;
 
 namespace low_age_tests
