@@ -50,22 +50,28 @@ namespace multipurpose_pathfinding
         public void Initialize(Configuration configuration)
         {
             Config = configuration;
-            
-            Config.TerrainWeights.Add(Config.ImpassableIndex, float.PositiveInfinity);
-            Config.TerrainWeights.Add(Config.HighGroundIndex, 1.0f);
+
+            Config.TerrainWeights[Config.ImpassableIndex] = float.PositiveInfinity;
+            Config.TerrainWeights[Config.HighGroundIndex] = 1.0f;
 
             for (var team = 1; team <= Config.MaxNumberOfTeams.Value; team++)
             {
                 SupportedTeams.Add(team);
+            }
+            
+            for (var size = 1; size <= Config.MaxSizeForPathfinding.Value; size++)
+            {
+                SupportedSizes.Add(size);
+            }
 
+            foreach (var team in SupportedTeams)
+            {
                 PointByIdBySizeByTeam[team] = new PointByIdBySize();
                 PointIdByPositionBySizeByTeam[team] = new PointIdByPositionBySize();
                 DijkstraMapBySizeByTeam[team] = new DijkstraMapBySize();
-
-                for (var size = 1; size <= Config.MaxSizeForPathfinding.Value; size++)
+                
+                foreach (var size in SupportedSizes)
                 {
-                    SupportedSizes.Add(size);
-
                     PointByIdBySizeByTeam[team][size] = new PointById();
                     PointIdByPositionBySizeByTeam[team][size] = new PointIdByPosition();
 
@@ -159,8 +165,13 @@ namespace multipurpose_pathfinding
                             continue;
 
                         var point = GetPoint(pointId, team, size);
-                        point.OriginalTerrainIndex = terrainIndex.Value;
-                        DijkstraMapBySizeByTeam[team][size].SetTerrainForPoint(point.Id, terrainIndex);
+                        var isOnBoundary = position.X == Config.MapSize.X - size.Value + 1
+                                           || position.Y == Config.MapSize.Y - size.Value + 1;
+                        point.OriginalTerrainIndex = isOnBoundary 
+                            ? Config.ImpassableIndex 
+                            : terrainIndex.Value;
+                        DijkstraMapBySizeByTeam[team][size].SetTerrainForPoint(
+                            point.Id, point.OriginalTerrainIndex);
                     }
                 }
             }
@@ -213,32 +224,26 @@ namespace multipurpose_pathfinding
             {
                 foreach (var size in SupportedSizes)
                 {
-                    var points = new List<Point>();
-                    if (TryGetPointId(position, team, size, out var highGroundPointId, true))
-                        points.Add(GetPoint(highGroundPointId, team, size));
-                    if (TryGetPointId(position, team, size, out var lowGroundPointId, false))
-                        points.Add(GetPoint(lowGroundPointId, team, size));
+                    if (TryGetHighestPoint(position, team, size, true, 
+                            out var point) is false)
+                        continue;
+                    if (TryGetHighestPoint(rightPosition, team, size, true,
+                            out var rightNeighbour) is false)
+                        continue;
+                    if (TryGetHighestPoint(bottomPosition, team, size, true,
+                            out var bottomNeighbour) is false)
+                        continue;
+                    if (TryGetHighestPoint(diagonalPosition, team, size, true,
+                            out var diagonalNeighbour) is false)
+                        continue;
 
-                    foreach (var point in points)
-                    {
-                        if (TryGetHighestPoint(rightPosition, team, size, point.IsHighGround,
-                                out var rightNeighbour) is false)
-                            continue;
-                        if (TryGetHighestPoint(bottomPosition, team, size, point.IsHighGround,
-                                out var bottomNeighbour) is false)
-                            continue;
-                        if (TryGetHighestPoint(diagonalPosition, team, size, point.IsHighGround,
-                                out var diagonalNeighbour) is false)
-                            continue;
-
-                        ApplyDiagonalConnectionsForPoints(
-                            point,
-                            diagonalNeighbour,
-                            rightNeighbour,
-                            bottomNeighbour,
-                            team,
-                            size);
-                    }
+                    ApplyDiagonalConnectionsForPoints(
+                        point,
+                        diagonalNeighbour,
+                        rightNeighbour,
+                        bottomNeighbour,
+                        team,
+                        size);
                 }
             }
         }
@@ -246,39 +251,75 @@ namespace multipurpose_pathfinding
         private void ApplyDiagonalConnectionsForPoints(Point point, Point diagonalNeighbour, Point rightNeighbour,
             Point bottomNeighbour, Team team, PathfindingSize size)
         {
-            // x.
             // .x
-            if (point.IsImpassable
-                && diagonalNeighbour.IsImpassable
-                && rightNeighbour.IsImpassable is false
-                && bottomNeighbour.IsImpassable is false)
-                //&& rightNeighbour.IsHighGround == bottomNeighbour.IsHighGround) // TODO not tested
+            // x.
+            if (PointsShouldBeDiagonallyConnected(point, diagonalNeighbour,
+                    rightNeighbour, bottomNeighbour, 
+                    team, size))
             {
-                DijkstraMapBySizeByTeam[team][size].RemoveConnection(
-                    rightNeighbour.Id,
-                    bottomNeighbour.Id);
+                ConnectPoints(point, diagonalNeighbour, team, size);
             }
             else
-            {
-                ConnectPoints(rightNeighbour, bottomNeighbour, team, size);
-            }
-
-            // .x
-            // x.
-            if (point.IsImpassable is false
-                && diagonalNeighbour.IsImpassable is false
-                && rightNeighbour.IsImpassable
-                && bottomNeighbour.IsImpassable)
-                //&& point.IsHighGround == diagonalNeighbour.IsHighGround) // TODO not tested
             {
                 DijkstraMapBySizeByTeam[team][size].RemoveConnection(
                     point.Id,
                     diagonalNeighbour.Id);
             }
+
+            if (PointsShouldBeDiagonallyConnected(
+                    rightNeighbour, bottomNeighbour,
+                    point, diagonalNeighbour,
+                    team, size))
+            {
+                ConnectPoints(rightNeighbour, bottomNeighbour, team, size);
+            }
             else
             {
-                ConnectPoints(point, diagonalNeighbour, team, size);
+                DijkstraMapBySizeByTeam[team][size].RemoveConnection(
+                    rightNeighbour.Id,
+                    bottomNeighbour.Id);
             }
+        }
+
+        /// <summary>
+        /// Returns true if <see cref="pointA"/> and <see cref="pointB"/> should be diagonally connected, when checked
+        /// against the cross points, in a pattern like so (. - point, x - cross point):
+        /// <code>
+        /// .x
+        /// x.
+        /// </code>
+        /// Note: this method assumes that all given points and cross points are the highest possible points (high
+        /// ground, if possible). 
+        /// </summary>
+        private bool PointsShouldBeDiagonallyConnected(Point pointA, Point pointB, 
+            Point crossPointA, Point crossPointB, Team team, PathfindingSize size)
+        {
+            if (crossPointA.IsImpassable && crossPointB.IsImpassable)
+                return false;
+
+            if (pointA.IsHighGround && pointB.IsHighGround)
+            {
+                if (crossPointA.IsHighGround is false 
+                    && crossPointB.IsHighGround is false
+                    && HighGroundPointHasLowGroundConnections(pointA, team, size) is false
+                    && HighGroundPointHasLowGroundConnections(pointB, team, size) is false)
+                    return false;
+            }
+
+            return true; 
+        }
+
+        private bool HighGroundPointHasLowGroundConnections(Point point, Team team, PathfindingSize size)
+        {
+            if (point.IsHighGround is false)
+                return false;
+
+            var result = point.Position.AdjacentPositions()
+                .Where(adjacentPosition => ContainsPoint(adjacentPosition, team, size, false))
+                .Select(adjacentPosition => GetPoint(adjacentPosition, team, size, false))
+                .Any(adjacentPoint => HasConnection(point, adjacentPoint, team, size));
+            
+            return result;
         }
 
         #endregion

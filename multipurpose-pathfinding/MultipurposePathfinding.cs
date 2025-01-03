@@ -121,30 +121,28 @@ namespace multipurpose_pathfinding
 
         /// <summary>
         /// Adds or updates an existing entity which helps to keep track of all the different pathfinding elements
-        /// like occupation and high-ground.
+        /// like occupation and high-ground. Should be used to also add or update occupation (data within
+        /// <see cref="PathfindingEntity"/> is used to determine occupation). <see cref="UpdateAround"/> should be
+        /// called to update the pathfinding graph.
         /// </summary>
         void AddOrUpdateEntity(PathfindingEntity entity);
 
         /// <summary>
-        /// Removes entity from the pathfinding, then updates the pathfinding graph.
+        /// Removes entity from the pathfinding. <see cref="UpdateAround"/> cannot be called after the entity is
+        /// removed. This method automatically calls all the necessary methods to clean up the entity occupation
+        /// and high ground points, then updates the pathfinding graph.
         /// </summary>
         void RemoveEntity(Guid entityId);
 
         /// <summary>
-        /// Adds <see cref="PathfindingEntity"/> <see cref="PathfindingEntity.Bounds"/> to the pathfinding
-        /// calculations, then updates the pathfinding graph.
-        /// </summary>
-        void AddOccupation(Guid entityId);
-
-        /// <summary>
-        /// Removes <see cref="PathfindingEntity"/> <see cref="PathfindingEntity.Bounds"/> from the pathfinding
-        /// calculations, then updates the pathfinding graph.
+        /// Removes <see cref="PathfindingEntity"/> occupation from the pathfinding calculations.
+        /// <see cref="UpdateAround"/> should be called to update the pathfinding graph.
         /// </summary>
         void RemoveOccupation(Guid entityId);
 
         /// <summary>
-        /// Adds a path of ascendable high-ground to the pathfinding calculations for the given entity, then
-        /// updates the pathfinding graph.
+        /// Adds a path of ascendable high-ground to the pathfinding calculations for the given entity.
+        /// <see cref="UpdateAround"/> should be called to update the pathfinding graph.
         /// </summary>
         /// <param name="entityId">Reference to the entity for which the ascendable high ground is added.</param>
         /// <param name="path">A list of ascendable steps (from lowest to highest): each step is a collection of
@@ -152,22 +150,32 @@ namespace multipurpose_pathfinding
         void AddAscendableHighGround(Guid entityId, IList<IEnumerable<Vector2<int>>> path);
 
         /// <summary>
-        /// Removes the path of ascendable high-ground from the pathfinding calculations for the given entity, then
-        /// updates the pathfinding graph.
+        /// Removes the path of ascendable high-ground from the pathfinding calculations for the given entity.
+        /// <see cref="UpdateAround"/> should be called to update the pathfinding graph.
         /// </summary>
         void RemoveAscendableHighGround(Guid entityId);
 
         /// <summary>
-        /// Adds the positions of high-ground to the pathfinding calculations for the given entity, then
-        /// updates the pathfinding graph.
+        /// Adds the positions of high-ground to the pathfinding calculations for the given entity.
+        /// <see cref="UpdateAround"/> should be called to update the pathfinding graph.
         /// </summary>
         void AddHighGround(Guid entityId, IEnumerable<Vector2<int>> positions);
 
         /// <summary>
-        /// Removes the positions of high-ground from the pathfinding calculations for the given entity, then
-        /// updates the pathfinding graph.
+        /// Removes the positions of high-ground from the pathfinding calculations for the given entity.
+        /// <see cref="UpdateAround"/> should be called to update the pathfinding graph.
         /// </summary>
         void RemoveHighGround(Guid entityId);
+
+        /// <summary>
+        /// Updates the pathfinding graph around the given <see cref="entityId"/>. <see cref="PathfindingEntity"/> must
+        /// have been registered using <see cref="AddOrUpdateEntity"/>. Depending on the changes done using
+        /// <see cref="AddAscendableHighGround"/>, <see cref="RemoveAscendableHighGround"/>,
+        /// <see cref="AddHighGround"/>, <see cref="RemoveHighGround"/> this method also publishes
+        /// <see cref="PointAdded"/> and <see cref="PointRemoved"/> events for this given
+        /// <see cref="PathfindingEntity"/>.
+        /// </summary>
+        void UpdateAround(Guid entityId);
     }
     
     #endregion Interface
@@ -440,6 +448,11 @@ namespace multipurpose_pathfinding
         }
 
         public IEnumerable<Point> GetTerrainPoints() => Graph.GetTerrainPoints();
+        
+        internal Point GetPointAt(Vector2<int> position, bool isHighGround, PathfindingSize size, Team? team = null) 
+            => Graph.ContainsPoint(position, team ?? Team.Default, size, isHighGround) 
+                ? Graph.GetPoint(position, team ?? Team.Default, size, isHighGround)
+                : null;
 
         #endregion Getters
 
@@ -460,8 +473,32 @@ namespace multipurpose_pathfinding
             public PathfindingEntity OccupyingEntity { get; set; }
         }
         
+        private interface IPathfindingChangeEvent { }
+
+        private class AscendableAdded : IPathfindingChangeEvent
+        {
+            public IList<IEnumerable<Vector2<int>>> AddedPath { get; set; }
+        }
+
+        private class AscendableRemoved : IPathfindingChangeEvent
+        {
+            public IEnumerable<Point> RemovedPoints { get; set; }
+        }
+
+        private class HighGroundAdded : IPathfindingChangeEvent
+        {
+            public IEnumerable<Vector2<int>> AddedPositions { get; set; }
+        }
+
+        private class HighGroundRemoved : IPathfindingChangeEvent
+        {
+            public IEnumerable<Point> RemovedPoints { get; set; }
+        }
+        
         private Dictionary<Guid, PipelineItem> PipelineItemsByEntityId { get; } = new Dictionary<Guid, PipelineItem>();
         private Quadtree<PathfindingEntity> EntitiesSpatialMap { get; } = new Quadtree<PathfindingEntity>();
+        private Dictionary<Guid, ICollection<IPathfindingChangeEvent>> EventsByEntity { get; } =
+            new Dictionary<Guid, ICollection<IPathfindingChangeEvent>>();
 
         public void AddOrUpdateEntity(PathfindingEntity entity)
         {
@@ -479,24 +516,26 @@ namespace multipurpose_pathfinding
             pipelineItem.OccupyingEntity = entity;
             PipelineItemsByEntityId[entity.Id] = pipelineItem;
             EntitiesSpatialMap.Insert(entity.Bounds, entity);
+            EventsByEntity[entity.Id] = new List<IPathfindingChangeEvent>();
         }
 
         public void RemoveEntity(Guid entityId)
         {
             if (PipelineItemsByEntityId.TryGetValue(entityId, out var item) is false)
                 return;
-
+            
+            if (item.HasAscendableHighGround)
+                RemoveAscendableHighGround(entityId);
+            if (item.HasHighGround)
+                RemoveHighGround(entityId);
+            if (item.HasOccupation)
+                RemoveOccupation(entityId);
+            UpdateAround(entityId);
+            
             var entity = item.OccupyingEntity;
-            EntitiesSpatialMap.Remove(entity.Bounds, entity);
             PipelineItemsByEntityId.Remove(entityId);
-        }
-
-        public void AddOccupation(Guid entityId)
-        {
-            if (PipelineItemsByEntityId.TryGetValue(entityId, out var item) is false)
-                return;
-
-            RunPathfindingPipeline(item);
+            EntitiesSpatialMap.Remove(entity.Bounds, entity);
+            EventsByEntity.Remove(entityId);
         }
 
         public void RemoveOccupation(Guid entityId)
@@ -507,8 +546,6 @@ namespace multipurpose_pathfinding
             var entity = item.OccupyingEntity;
             var updatedEntity = PathfindingEntity.WithoutOccupation(entity);
             AddOrUpdateEntity(updatedEntity);
-
-            RunPathfindingPipeline(item);
         }
 
         public void AddAscendableHighGround(Guid entityId, IList<IEnumerable<Vector2<int>>> path)
@@ -517,17 +554,11 @@ namespace multipurpose_pathfinding
                 return;
 
             item.AscendablePath = path;
-
-            RunPathfindingPipeline(item);
-
-            foreach (var section in path)
+            
+            EventsByEntity[entityId].Add(new AscendableAdded
             {
-                foreach (var coordinates in section)
-                {
-                    var point = Graph.GetMainPoint(coordinates, true);
-                    PointAdded(point);
-                }
-            }
+                AddedPath = path
+            });
         }
 
         public void RemoveAscendableHighGround(Guid entityId)
@@ -540,12 +571,10 @@ namespace multipurpose_pathfinding
                 (entry, pos) => Graph.GetMainPoint(pos, true));
             item.RemoveAscendablePath();
 
-            RunPathfindingPipeline(item);
-
-            foreach (var point in points)
+            EventsByEntity[entityId].Add(new AscendableRemoved
             {
-                PointRemoved(point);
-            }
+                RemovedPoints = points
+            });
         }
 
         public void AddHighGround(Guid entityId, IEnumerable<Vector2<int>> positions)
@@ -556,13 +585,10 @@ namespace multipurpose_pathfinding
             var positionsList = positions.ToList();
             item.HighGroundPositions = positionsList;
 
-            RunPathfindingPipeline(item);
-
-            foreach (var position in positionsList)
+            EventsByEntity[entityId].Add(new HighGroundAdded
             {
-                var point = Graph.GetMainPoint(position, true);
-                PointAdded(point);
-            }
+                AddedPositions = positionsList
+            });
         }
 
         public void RemoveHighGround(Guid entityId)
@@ -574,11 +600,62 @@ namespace multipurpose_pathfinding
                 .Select(pos => Graph.GetMainPoint(pos, true));
             item.RemoveHighGroundPositions();
 
+            EventsByEntity[entityId].Add(new HighGroundRemoved
+            {
+                RemovedPoints = points
+            });
+        }
+
+        public void UpdateAround(Guid entityId)
+        {
+            if (PipelineItemsByEntityId.TryGetValue(entityId, out var item) is false)
+                return;
+            
             RunPathfindingPipeline(item);
 
-            foreach (var point in points)
+            foreach (var @event in EventsByEntity[entityId])
             {
-                PointRemoved(point);
+                HandlePathfindingChangeEvent(@event);
+            }
+        }
+
+        private void HandlePathfindingChangeEvent(IPathfindingChangeEvent @event)
+        {
+            switch (@event)
+            {
+                case AscendableAdded ascendableAdded:
+                    foreach (var section in ascendableAdded.AddedPath)
+                    {
+                        foreach (var coordinates in section)
+                        {
+                            var point = Graph.GetMainPoint(coordinates, true);
+                            PointAdded(point);
+                        }
+                    }
+                    break;
+                case AscendableRemoved ascendableRemoved:
+                    foreach (var point in ascendableRemoved.RemovedPoints)
+                    {
+                        PointRemoved(point);
+                    }
+                    break;
+                case HighGroundAdded highGroundAdded:
+                    foreach (var position in highGroundAdded.AddedPositions)
+                    {
+                        var point = Graph.GetMainPoint(position, true);
+                        PointAdded(point);
+                    }
+                    break;
+                case HighGroundRemoved highGroundRemoved:
+                    foreach (var point in highGroundRemoved.RemovedPoints)
+                    {
+                        PointRemoved(point);
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"{nameof(@event)} type is not implemented in " +
+                                                          $"{nameof(MultipurposePathfinding)}." +
+                                                          $"{nameof(HandlePathfindingChangeEvent)}");
             }
         }
 
@@ -589,12 +666,6 @@ namespace multipurpose_pathfinding
 
             // TODO rethink high ground and ascendable algorithm so that points and connections are always created for
             // all sizes and teams, and control the pathfinding through occupation logic
-            
-            // TODO transfer unit tests
-            
-            // TODO add occupation calculation
-            
-            // TODO add diagonals calculation
             
             // TODO connect with Pathfinding.cs
             
@@ -771,19 +842,26 @@ namespace multipurpose_pathfinding
 
             Graph.SetPointsImpassable(true, foundPoints);
 
+            var offset = Vector2Int.One * maxSizeForPathfinding;
+            var positionsForDiagonalUpdate = new HashSet<Vector2<int>>();
             foreach (var foundPosition in foundPoints
                          .Where(x => x.IsHighGround is false)
                          .Select(x => x.Position))
             {
                 foreach (var position in IterateVector2Int.Positions(
-                             foundPosition - Vector2Int.One * maxSizeForPathfinding, 
-                             foundPosition + Vector2Int.One * maxSizeForPathfinding))
+                             foundPosition - offset, foundPosition + offset))
                 {
                     if (Graph.ContainsPoint(position, team, size) is false)
                         continue;
-
-                    Graph.UpdateDiagonalConnection(position);
+                    
+                    positionsForDiagonalUpdate.Add(position);
                 }
+            }
+
+            foreach (var position in positionsForDiagonalUpdate)
+            {
+                Graph.UpdateDiagonalConnection(position);
+
             }
         }
 
@@ -914,6 +992,7 @@ namespace multipurpose_pathfinding
             => IterateVector2Int.Positions(at, at + Vector2Int.One * size.Value)
                 .All(position => Graph.ContainsMainPoint(position, true));
 
+        // TODO same method exists in Graph.cs?
         private bool MainPointHasAdjacentLowGroundConnections(Point point)
             => point.Position.AdjacentPositions()
                 .Where(adjacentPosition => Graph.ContainsMainPoint(adjacentPosition, false))
@@ -923,12 +1002,11 @@ namespace multipurpose_pathfinding
         public IList<Point> GetPointsProjectedDownFromEntity(PathfindingEntity entity)
         {
             const int pathfindingSize = 1;
-            var team = 1; // TODO add team
 
             var points = IterateVector2Int
                 .Positions(entity.Position, entity.Position + entity.Size)
                 .Select(position => 
-                    Graph.GetHighestPoint(position, team, pathfindingSize, entity.IsOnHighGround))
+                    Graph.GetHighestPoint(position, entity.Team, pathfindingSize, entity.IsOnHighGround))
                 .Where(point => point != null)
                 .Select(point => point)
                 .ToList();

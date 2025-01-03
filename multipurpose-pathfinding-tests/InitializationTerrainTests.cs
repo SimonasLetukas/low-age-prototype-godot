@@ -59,8 +59,8 @@ public class InitializationTerrainTests
             new[]
             {
                 new Vector2<int>(3, 2), new Vector2<int>(4, 2), new Vector2<int>(5, 2),
-                new Vector2<int>(3, 3), new Vector2<int>(4, 3), new Vector2<int>(5, 3),
-            }
+                new Vector2<int>(3, 3), new Vector2<int>(4, 3), new Vector2<int>(5, 3), 
+            }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray()
         ];
 
         yield return
@@ -77,7 +77,7 @@ public class InitializationTerrainTests
                 new Vector2<int>(3, 2), new Vector2<int>(4, 2),
                 new Vector2<int>(3, 3), new Vector2<int>(4, 3),
                 new Vector2<int>(3, 4), new Vector2<int>(4, 4),
-            }
+            }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray()
         ];
 
         yield return
@@ -93,7 +93,7 @@ public class InitializationTerrainTests
                 new Vector2<int>(2, 1), new Vector2<int>(3, 1), new Vector2<int>(4, 1), new Vector2<int>(5, 1),
                 new Vector2<int>(2, 2), new Vector2<int>(3, 2), new Vector2<int>(4, 2), new Vector2<int>(5, 2),
                 new Vector2<int>(2, 3), new Vector2<int>(3, 3), new Vector2<int>(4, 3), new Vector2<int>(5, 3),
-            }
+            }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray()
         ];
 
         yield return
@@ -111,7 +111,7 @@ public class InitializationTerrainTests
                 new Vector2<int>(2, 2), new Vector2<int>(3, 2), new Vector2<int>(4, 2),
                 new Vector2<int>(2, 3), new Vector2<int>(3, 3), new Vector2<int>(4, 3),
                 new Vector2<int>(2, 4), new Vector2<int>(3, 4), new Vector2<int>(4, 4),
-            }
+            }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray()
         ];
     }
 

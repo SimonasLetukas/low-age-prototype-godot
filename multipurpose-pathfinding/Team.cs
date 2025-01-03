@@ -17,6 +17,8 @@ namespace multipurpose_pathfinding
         {
             Value = value;
         }
+        
+        public override string ToString() => Value.ToString();
 
         public bool Equals(Team other) => Value == other.Value;
 

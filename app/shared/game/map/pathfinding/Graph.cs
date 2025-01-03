@@ -140,8 +140,8 @@ public class Graph
 			_terrainWeights.Add(tile.Terrain.ToIndex(), tile.MovementCost);
 		}
 
-		_terrainWeights.Add(ImpassableIndex, float.PositiveInfinity);
-		_terrainWeights.Add(HighGroundIndex, 1.0f);
+		_terrainWeights[ImpassableIndex] = float.PositiveInfinity;
+		_terrainWeights[HighGroundIndex] = 1.0f;
 	}
 	
 	/// <summary>
@@ -424,15 +424,10 @@ public class Graph
 	{
 		id = -1;
 		
-		var result = PointIdByPositionBySizeByTeam.TryGetValue(team, out _);
-		if (result is false)
-			return false;
-
-		result = PointIdByPositionBySizeByTeam[team].TryGetValue(size, out _);
-		if (result is false)
+		if (SupportedTeams.Contains(team) is false || SupportedSizes.Contains(size) is false)
 			return false;
 		
-		result = PointIdByPositionBySizeByTeam[team][size].TryGetValue((position, isHighGround), out var idResult);
+		var result = PointIdByPositionBySizeByTeam[team][size].TryGetValue((position, isHighGround), out var idResult);
 		
 		id = idResult;
 		return result;
