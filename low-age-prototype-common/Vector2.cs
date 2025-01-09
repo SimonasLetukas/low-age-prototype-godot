@@ -2,6 +2,25 @@
 
 namespace low_age_prototype_common
 {
+    public static class Vector2IntExtensions
+    {
+        public static bool IsInBoundsOf(this Vector2<int> vector2, Vector2<int> lowerBounds, Vector2<int> upperBounds) 
+            => vector2.X >= lowerBounds.X
+               && vector2.Y >= lowerBounds.Y
+               && vector2.X < upperBounds.X
+               && vector2.Y < upperBounds.Y;
+        
+        public static bool IsInBoundsOf(this Vector2<int> vector2, Vector2<int> upperBounds) 
+            => vector2.X >= 0
+               && vector2.Y >= 0
+               && vector2.X < upperBounds.X
+               && vector2.Y < upperBounds.Y;
+        
+        public static bool IsDiagonalTo(this Vector2<int> vector2, Vector2<int> point) 
+            => vector2.X - vector2.Y == point.X - point.Y 
+               || vector2.X + vector2.Y == point.X + point.Y;
+    }
+    
     public struct Vector2Int
     {
         public static Vector2<int> One => new Vector2<int>(1, 1);
@@ -24,23 +43,7 @@ namespace low_age_prototype_common
 
         public T X { get; private set; }
         public T Y { get; private set; }
-
-        public bool IsInBoundsOf(Vector2<T> lowerBounds, Vector2<T> upperBounds)
-            => Convert.ToSingle(X) >= Convert.ToSingle(lowerBounds.X)
-               && Convert.ToSingle(Y) >= Convert.ToSingle(lowerBounds.Y)
-               && Convert.ToSingle(X) < Convert.ToSingle(upperBounds.X)
-               && Convert.ToSingle(Y) < Convert.ToSingle(upperBounds.Y);
-
-        public bool IsInBoundsOf(Vector2<T> upperBounds)
-            => Convert.ToSingle(X) >= 0
-               && Convert.ToSingle(Y) >= 0
-               && Convert.ToSingle(X) < Convert.ToSingle(upperBounds.X)
-               && Convert.ToSingle(Y) < Convert.ToSingle(upperBounds.Y);
         
-        public bool IsDiagonalTo(Vector2<T> point) 
-            => Convert.ToInt32(X) - Convert.ToInt32(Y) == Convert.ToInt32(point.X) - Convert.ToInt32(point.Y) 
-               || Convert.ToInt32(X) + Convert.ToInt32(Y) == Convert.ToInt32(point.X) + Convert.ToInt32(point.Y);
-
         public override string ToString()
         {
             return $"({(object)X}, {(object)Y})";

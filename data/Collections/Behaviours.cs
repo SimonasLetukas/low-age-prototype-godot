@@ -921,13 +921,13 @@ namespace low_age_data.Collections
                     path: new List<HighGroundArea>
                     {
                         new HighGroundArea(area: new Area(
-                                start: new Vector2<int>(x: 1, y: 0), 
-                                size: new Vector2<int>(x: 1, y: 1)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 6)),
-                        new HighGroundArea(area: new Area(
                                 start: new Vector2<int>(x: 0, y: 0), 
                                 size: new Vector2<int>(x: 1, y: 1)),
                             spriteOffset: new Vector2<int>(x: 0, y: 13)), 
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 1, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 6)),
                     },
                     closingEnabled: false),
                 

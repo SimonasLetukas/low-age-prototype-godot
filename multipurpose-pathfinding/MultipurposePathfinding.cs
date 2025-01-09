@@ -135,12 +135,6 @@ namespace multipurpose_pathfinding
         void RemoveEntity(Guid entityId);
 
         /// <summary>
-        /// Removes <see cref="PathfindingEntity"/> occupation from the pathfinding calculations.
-        /// <see cref="UpdateAround"/> should be called to update the pathfinding graph.
-        /// </summary>
-        void RemoveOccupation(Guid entityId);
-
-        /// <summary>
         /// Adds a path of ascendable high-ground to the pathfinding calculations for the given entity.
         /// <see cref="UpdateAround"/> should be called to update the pathfinding graph.
         /// </summary>
@@ -289,7 +283,7 @@ namespace multipurpose_pathfinding
 
             if (terrain.Equals(_terrainWithSmallestMovementCost))
             {
-                Graph.SetTerrainForPoint(coordinates, terrain);
+                Graph.SetTerrainForPoint(coordinates, terrain, Vector2Int.Zero, Config.MapSize);
                 var point = Graph.GetMainPoint(coordinates);
                 PointAdded(point);
                 return;
@@ -318,7 +312,7 @@ namespace multipurpose_pathfinding
             _positionsByTerrainForFurtherInitialization[terrain.Value].RemoveAt(0);
             TrimEmptyTerrainsForFurtherInitialization();
 
-            Graph.SetTerrainForPoint(coordinates, terrain.Value);
+            Graph.SetTerrainForPoint(coordinates, terrain.Value, Vector2Int.Zero, Config.MapSize);
             var point = Graph.GetMainPoint(coordinates);
             PointAdded(point);
         }
@@ -528,24 +522,15 @@ namespace multipurpose_pathfinding
                 RemoveAscendableHighGround(entityId);
             if (item.HasHighGround)
                 RemoveHighGround(entityId);
-            if (item.HasOccupation)
-                RemoveOccupation(entityId);
-            UpdateAround(entityId);
-            
+
             var entity = item.OccupyingEntity;
-            PipelineItemsByEntityId.Remove(entityId);
             EntitiesSpatialMap.Remove(entity.Bounds, entity);
+            
+            RunPathfindingPipeline(entity.Position, entity.UpperBounds);
+            HandlePathfindingChangeEvents(entityId);
+            
+            PipelineItemsByEntityId.Remove(entityId);
             EventsByEntity.Remove(entityId);
-        }
-
-        public void RemoveOccupation(Guid entityId)
-        {
-            if (PipelineItemsByEntityId.TryGetValue(entityId, out var item) is false)
-                return;
-
-            var entity = item.OccupyingEntity;
-            var updatedEntity = PathfindingEntity.WithoutOccupation(entity);
-            AddOrUpdateEntity(updatedEntity);
         }
 
         public void AddAscendableHighGround(Guid entityId, IList<IEnumerable<Vector2<int>>> path)
@@ -568,7 +553,7 @@ namespace multipurpose_pathfinding
 
             var path = item.AscendablePath;
             var points = path.SelectMany(section => section,
-                (entry, pos) => Graph.GetMainPoint(pos, true));
+                (entry, pos) => Graph.GetMainPoint(pos, true)).ToList();
             item.RemoveAscendablePath();
 
             EventsByEntity[entityId].Add(new AscendableRemoved
@@ -597,7 +582,7 @@ namespace multipurpose_pathfinding
                 return;
 
             var points = item.HighGroundPositions
-                .Select(pos => Graph.GetMainPoint(pos, true));
+                .Select(pos => Graph.GetMainPoint(pos, true)).ToList();
             item.RemoveHighGroundPositions();
 
             EventsByEntity[entityId].Add(new HighGroundRemoved
@@ -610,9 +595,15 @@ namespace multipurpose_pathfinding
         {
             if (PipelineItemsByEntityId.TryGetValue(entityId, out var item) is false)
                 return;
-            
-            RunPathfindingPipeline(item);
 
+            var entity = item.OccupyingEntity;
+            RunPathfindingPipeline(entity.Position, entity.UpperBounds);
+
+            HandlePathfindingChangeEvents(entityId);
+        }
+
+        private void HandlePathfindingChangeEvents(Guid entityId)
+        {
             foreach (var @event in EventsByEntity[entityId])
             {
                 HandlePathfindingChangeEvent(@event);
@@ -628,6 +619,9 @@ namespace multipurpose_pathfinding
                     {
                         foreach (var coordinates in section)
                         {
+                            if (Graph.ContainsMainPoint(coordinates, true) is false)
+                                continue;
+                            
                             var point = Graph.GetMainPoint(coordinates, true);
                             PointAdded(point);
                         }
@@ -642,6 +636,9 @@ namespace multipurpose_pathfinding
                 case HighGroundAdded highGroundAdded:
                     foreach (var position in highGroundAdded.AddedPositions)
                     {
+                        if (Graph.ContainsMainPoint(position, true) is false)
+                            continue;
+                        
                         var point = Graph.GetMainPoint(position, true);
                         PointAdded(point);
                     }
@@ -659,56 +656,38 @@ namespace multipurpose_pathfinding
             }
         }
 
-        private void RunPathfindingPipeline(PipelineItem mainItem)
+        private void RunPathfindingPipeline(Vector2<int> from, Vector2<int> to)
         {
-            // TODO there's a chance that a recursive check of all the entities would be needed to collect all
-            // affected positions instead of relying on a simple area
-
-            // TODO rethink high ground and ascendable algorithm so that points and connections are always created for
-            // all sizes and teams, and control the pathfinding through occupation logic
-            
             // TODO connect with Pathfinding.cs
+            // TODO write tests for simulating units walking on top of high ground and graph updating
             
-            // Find all nearby entities
-            var mainEntity = mainItem.OccupyingEntity;
             var boundsOffset = Vector2Int.One * Config.MaxSizeForPathfinding.Value;
-            var lowerBounds = mainEntity.Position - boundsOffset;
-            var upperBounds = mainEntity.Position + mainEntity.Size + boundsOffset;
+            var lowerBounds = from - boundsOffset;
+            var upperBounds = to + boundsOffset;
             var foundItems = GetEntitiesIntersectingWith(lowerBounds, upperBounds)
                 .Select(e => PipelineItemsByEntityId[e.Id])
                 .ToList();
 
             Graph.ResetToTerrainPoints(lowerBounds, upperBounds);
 
-            // For each found entity: run high ground calculations
             foreach (var item in foundItems)
             {
                 RunHighGroundCalculation(item.HighGroundPositions);
             }
             
-            // For each found entity: run ascendable high ground calculations
             foreach (var item in foundItems)
             {
-                // TODO probably needs to take into account teams too
-                RunAscendableCalculation(item.AscendablePath);
+                RunAscendableCalculation(item.AscendablePath, item.OccupyingEntity);
             }
-
+            
+            var occupationPositions = new HashSet<Vector2<int>>();
             foreach (var item in foundItems)
             {
-                // TODO probably needs to take into account teams too
-                RunOccupationCalculation(item.OccupyingEntity);
+                var foundOccupationPositions = RunOccupationCalculation(item.OccupyingEntity);
+                occupationPositions.UnionWith(foundOccupationPositions);
             }
-
-            // For each pathfinding size and team:
-            foreach (var team in Graph.SupportedTeams)
-            {
-                foreach (var pathfindingSize in Graph.SupportedSizes)
-                {
-                    // For each found entity: run occupation calculations
-
-                    // For each found entity: run diagonal calculations
-                }
-            }
+            
+            RunDiagonalConnectionCalculation(occupationPositions);
         }
 
         private IEnumerable<PathfindingEntity> GetEntitiesIntersectingWith(Vector2<int> lowerBounds,
@@ -740,132 +719,229 @@ namespace multipurpose_pathfinding
                 foreach (var offset in IterateVector2Int.Positions(
                              new Vector2<int>(-1, -1), new Vector2<int>(2, 2)))
                 {
-                    var otherPoint = GetAdjacentConnectablePoint(point, offset, true);
-                    if (otherPoint is null)
-                        continue;
-
-                    Graph.ConnectPoints(point, (Point)otherPoint);
-
-                    if (Config.DebugEnabled)
-                        Console.WriteLine($"5. Connecting {JsonConvert.SerializeObject(point)} to adjacent high " +
-                                          $"ground point {JsonConvert.SerializeObject(otherPoint)}. ");
+                    TryConnectingToAdjacentHighGroundPoint(point, offset);
                 }
-
-                UpdateHighGroundForNon1XPathfinding(point);
             }
         }
 
-        private void RunAscendableCalculation(IList<IEnumerable<Vector2<int>>> path)
+        private void RunAscendableCalculation(IList<IEnumerable<Vector2<int>>> path, 
+            PathfindingEntity ascendableEntity)
         {
-            if (path.IsEmpty())
+            if (path.IsEmpty() || path.Any(x => x is null))
                 return;
 
-            var currentAscensionLevel = 0;
+            var currentAscensionLevel = 100;
             var ascensionGain = (int)(100f / path.Count);
-            for (var i = 0; i < path.Count; i++)
+            for (var currentStep = 0; currentStep < path.Count; currentStep++)
             {
-                currentAscensionLevel += ascensionGain;
-                foreach (var pos in path[i])
+                foreach (var pos in path[currentStep])
                 {
                     if (pos.IsInBoundsOf(Config.MapSize) is false)
                         continue;
 
-                    Point point;
-                    if (Graph.ContainsMainPoint(pos, true))
-                    {
-                        point = Graph.GetMainPoint(pos, true);
-                        if (Config.DebugEnabled)
-                            Console.WriteLine($"1. Found existing point {JsonConvert.SerializeObject(point)}");
-                    }
-                    else
-                    {
-                        point = Graph.AddPoint(pos, true, currentAscensionLevel);
-                        if (Config.DebugEnabled)
-                            Console.WriteLine($"2. Creating point {JsonConvert.SerializeObject(point)}");
-                    }
+                    var point = GetExistingOrAddNewHighGroundPoint(pos, currentAscensionLevel);
 
                     foreach (var offset in IterateVector2Int.Positions(
                                  new Vector2<int>(-1, -1), new Vector2<int>(2, 2)))
                     {
-                        var lowGroundPoint = GetAdjacentConnectablePoint(point, offset, false);
-                        if (i == 0 && lowGroundPoint != null)
-                        {
-                            Graph.ConnectPoints(point, (Point)lowGroundPoint);
-                            if (Config.DebugEnabled)
-                                Console.WriteLine($"3. Connecting {JsonConvert.SerializeObject(point)} to low ground " +
-                                                  $"point {JsonConvert.SerializeObject(lowGroundPoint)}. ");
-                        }
+                        TryConnectingToAdjacentHighGroundPoint(point, offset);
 
-                        if (path.Count > 1 && i != 0)
-                        {
-                            var offsetPosition = point.Position + offset;
-                            var previousStepPositionExists = path[i - 1].Any(x =>
-                                x.Equals(offsetPosition));
-                            if (previousStepPositionExists)
-                            {
-                                var previousStepPosition = path[i - 1].FirstOrDefault(x =>
-                                    x.Equals(offsetPosition));
-                                var previousStepPoint = Graph.GetMainPoint(previousStepPosition, true);
-                                Graph.ConnectPoints(point, previousStepPoint);
-                                if (Config.DebugEnabled)
-                                    Console.WriteLine($"4. Connecting {JsonConvert.SerializeObject(point)} to previous " +
-                                                      $"step point {JsonConvert.SerializeObject(previousStepPoint)}. ");
-                            }
-                        }
+                        TryConnectingToAdjacentLowGroundPoint(point, offset, currentStep, 
+                            path.Count, ascendableEntity);
 
-                        var highGroundPoint = GetAdjacentConnectablePoint(point, offset, true);
-                        if (highGroundPoint is null)
-                            continue;
-
-                        Graph.ConnectPoints(point, (Point)highGroundPoint);
-                        if (Config.DebugEnabled)
-                            Console.WriteLine($"5. Connecting {JsonConvert.SerializeObject(point)} to adjacent high " +
-                                              $"ground point {JsonConvert.SerializeObject(highGroundPoint)}. ");
+                        TryConnectingToAdjacentPreviousStepPoint(point, offset, currentStep, path);
                     }
-
-                    UpdateHighGroundForNon1XPathfinding(point);
                 }
+                
+                currentAscensionLevel -= ascensionGain;
+                currentAscensionLevel = currentAscensionLevel < 0 ? 0 : currentAscensionLevel;
             }
         }
         
-        public void RunOccupationCalculation(PathfindingEntity entity)
+        private IEnumerable<Vector2<int>> RunOccupationCalculation(PathfindingEntity entity)
         {
-            var team = 1; // TODO add team
-            var size = 1; // TODO move AddOccupation to Graph and automatically handle adding
-            // occupation for all graph sizes
-
-            var maxSizeForPathfinding = Config.MaxSizeForPathfinding.Value;
-
-            var foundPoints = GetPointsProjectedDownFromEntity(entity)
-                .Where(point => entity.CanBeMovedThroughAt(point, team) is false)
+            var offset = Vector2Int.One * Config.MaxSizeForPathfinding.Value;
+            var entityPositions = IterateVector2Int
+                .Positions(entity.Position - offset, entity.UpperBounds + offset, true)
+                .Where(position => position.IsInBoundsOf(Config.MapSize))
                 .ToList();
 
-            Graph.SetPointsImpassable(true, foundPoints);
+            var highGroundPoints = entityPositions
+                .Where(position => Graph.ContainsMainPoint(position, true))
+                .Select(position => Graph.GetMainPoint(position, true))
+                .ToList();
 
-            var offset = Vector2Int.One * maxSizeForPathfinding;
-            var positionsForDiagonalUpdate = new HashSet<Vector2<int>>();
-            foreach (var foundPosition in foundPoints
-                         .Where(x => x.IsHighGround is false)
-                         .Select(x => x.Position))
+            var lowGroundPoints = entityPositions
+                .Where(position => Graph.ContainsMainPoint(position, false))
+                .Select(position => Graph.GetMainPoint(position, false))
+                .ToList();
+            
+            lowGroundPoints.AddRange(highGroundPoints);
+
+            foreach (var mainPoint in lowGroundPoints)
             {
-                foreach (var position in IterateVector2Int.Positions(
-                             foundPosition - offset, foundPosition + offset))
+                foreach (var team in Graph.SupportedTeams)
                 {
-                    if (Graph.ContainsPoint(position, team, size) is false)
-                        continue;
-                    
-                    positionsForDiagonalUpdate.Add(position);
+                    foreach (var pathfindingSize in Graph.SupportedSizes)
+                    {
+                        var isImpassable = PointShouldBeImpassable(mainPoint, entity, team, pathfindingSize);
+                        Graph.SetPointImpassable(isImpassable, mainPoint.Id, team, pathfindingSize);
+                    }
                 }
             }
-
-            foreach (var position in positionsForDiagonalUpdate)
+            
+            return entityPositions;
+        }
+        
+        private void RunDiagonalConnectionCalculation(IEnumerable<Vector2<int>> positions)
+        {
+            foreach (var position in positions)
             {
                 Graph.UpdateDiagonalConnection(position);
-
             }
         }
 
-        private Point GetAdjacentConnectablePoint(Point point, Vector2<int> offset, bool isHighGround)
+        private bool PointShouldBeImpassable(Point mainPoint, PathfindingEntity entity, Team team, PathfindingSize size)
+        {
+            if (Graph.GetPoint(mainPoint.Id, team, size).IsImpassable)
+                return true;
+            
+            if (mainPoint.IsLowGround 
+                && Graph.ContainsMainPoint(mainPoint.Position, true))
+                return true;
+
+            var lowerBounds = mainPoint.Position;
+            var upperBounds = mainPoint.Position + Vector2Int.One * size.Value;
+            var positionsToCheck = IterateVector2Int
+                .Positions(lowerBounds, upperBounds)
+                .ToList();
+
+            if (positionsToCheck.Any(x => x.IsInBoundsOf(Config.MapSize) is false))
+                return true;
+
+            var footprintPoints = positionsToCheck
+                .Select(x => Graph.GetHighestPoint(x, team, size))
+                .ToList();
+            
+            if (AllPointsWithinEntityCanBeUsedToMoveThrough(footprintPoints, entity, team)
+                && AllPointsHaveSmoothGradient(footprintPoints, team, size, lowerBounds, upperBounds))
+                return false;
+            
+            return true;
+        }
+
+        private static bool AllPointsWithinEntityCanBeUsedToMoveThrough(IEnumerable<Point> points, 
+            PathfindingEntity entity, Team forTeam) 
+            => points
+                .Where(point => point.Position.IsInBoundsOf(entity.Position, entity.UpperBounds))
+                .All(point => entity.CanBeMovedThroughAt(point, forTeam));
+
+        private bool AllPointsHaveSmoothGradient(List<Point> points, Team team, PathfindingSize size, 
+            Vector2<int> lowerBounds, Vector2<int> upperBounds)
+        {
+            if (points.Count <= 1)
+                return true;
+
+            foreach (var point in points)
+            {
+                if (point.IsHighGround)
+                    continue;
+                
+                foreach (var adjacentPosition in point.Position
+                             .AdjacentPositions(true, lowerBounds, upperBounds))
+                {
+                    // Checking that adjacentPoint is within MapSize bounds is not needed because it is assumed
+                    // that lowerBounds and upperBounds were checked to be valid before calling this method.
+                    var adjacentPoint = Graph.GetHighestPoint(adjacentPosition, team, size);
+
+                    if (adjacentPoint.IsHighGround
+                        && Graph.HighGroundPointHasLowGroundConnections(adjacentPoint, team, size) is false) 
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        private Point GetExistingOrAddNewHighGroundPoint(Vector2<int> at, int currentAscensionLevel)
+        {
+            Point point;
+            if (Graph.ContainsMainPoint(at, true))
+            {
+                point = Graph.GetMainPoint(at, true);
+                if (Config.DebugEnabled)
+                    Console.WriteLine($"1. Found existing point {JsonConvert.SerializeObject(point)}");
+            }
+            else
+            {
+                point = Graph.AddPoint(at, true, currentAscensionLevel);
+                if (Config.DebugEnabled)
+                    Console.WriteLine($"2. Creating point {JsonConvert.SerializeObject(point)}");
+            }
+
+            return point;
+        }
+
+        private void TryConnectingToAdjacentHighGroundPoint(Point point, Vector2<int> offset)
+        {
+            var highGroundPoint = GetAdjacentConnectableMainPoint(point, offset, true);
+            if (highGroundPoint == null) 
+                return;
+            
+            Graph.ConnectPoints(point, highGroundPoint);
+            if (Config.DebugEnabled)
+                Console.WriteLine($"3. Connecting {JsonConvert.SerializeObject(point)} to high ground " +
+                                  $"point {JsonConvert.SerializeObject(highGroundPoint)}. ");
+        }
+
+        private void TryConnectingToAdjacentLowGroundPoint(Point point, Vector2<int> offset, int currentStep, 
+            int pathCount, PathfindingEntity ascendableEntity)
+        {
+            var isLastStep = currentStep == pathCount - 1;
+            if (isLastStep is false) 
+                return;
+            
+            var lowGroundPoint = GetAdjacentConnectableMainPoint(point, offset, false);
+            if (lowGroundPoint is null)
+                return;
+
+            foreach (var team in Graph.SupportedTeams)
+            {
+                if (ascendableEntity.AllowsConnectionBetweenPoints(lowGroundPoint, point, team) is false)
+                    continue;
+            
+                Graph.ConnectPoints(point, lowGroundPoint, team);
+                if (Config.DebugEnabled)
+                    Console.WriteLine($"3. Connecting {JsonConvert.SerializeObject(point)} to low ground " +
+                                      $"point {JsonConvert.SerializeObject(lowGroundPoint)} for team {team}. ");
+            }
+        }
+
+        private void TryConnectingToAdjacentPreviousStepPoint(Point point, Vector2<int> offset, int currentStep, 
+            IList<IEnumerable<Vector2<int>>> path)
+        {
+            if (path.Count <= 1 || currentStep == 0) 
+                return;
+            
+            var offsetPosition = point.Position + offset;
+            var previousStepPositionExists = path[currentStep - 1].Any(x =>
+                x.Equals(offsetPosition));
+            if (previousStepPositionExists is false) 
+                return;
+            
+            var previousStepPosition = path[currentStep - 1]
+                .FirstOrDefault(x => x.Equals(offsetPosition));
+            var previousStepPoint = Graph.GetMainPoint(previousStepPosition, true);
+            if (previousStepPoint is null)
+                return;
+            
+            Graph.ConnectPoints(point, previousStepPoint);
+            if (Config.DebugEnabled)
+                Console.WriteLine($"4. Connecting {JsonConvert.SerializeObject(point)} to previous " +
+                                  $"step point {JsonConvert.SerializeObject(previousStepPoint)}. ");
+        }
+
+        private Point GetAdjacentConnectableMainPoint(Point point, Vector2<int> offset, bool isHighGround)
         {
             var otherPosition = point.Position + offset;
             if (otherPosition.IsInBoundsOf(Config.MapSize) is false)
@@ -879,140 +955,15 @@ namespace multipurpose_pathfinding
 
             var otherPoint = Graph.GetMainPoint(otherPosition, isHighGround);
 
-            if (isHighGround && PointAscensionLevelsAreWithinTolerance(point, otherPoint) is false)
+            if (isHighGround && AscensionLevelsAreWithinTolerance(point, otherPoint) is false)
                 return null;
 
             return otherPoint;
         }
 
-        private bool PointAscensionLevelsAreWithinTolerance(Point point, Point otherPoint)
+        private bool AscensionLevelsAreWithinTolerance(Point point, Point otherPoint)
             => Math.Abs(otherPoint.HighGroundAscensionLevel - point.HighGroundAscensionLevel)
                <= Config.HighGroundTolerance;
-
-
-        private void UpdateHighGroundForNon1XPathfinding(Point main1XPoint)
-        {
-            if (Config.DebugEnabled)
-                Console.WriteLine($"6. Updating non 1x high ground for main point " +
-                                  $"{JsonConvert.SerializeObject(main1XPoint)}.");
-
-            foreach (var currentPosition in IterateVector2Int.Positions(
-                         main1XPoint.Position - Vector2Int.One * Config.MaxSizeForPathfinding.Value,
-                         main1XPoint.Position + Vector2Int.One * Config.MaxSizeForPathfinding.Value + Vector2Int.One))
-            {
-                if (Config.DebugEnabled)
-                    Console.WriteLine($"6.1. Looking at {JsonConvert.SerializeObject(currentPosition)}.");
-
-                if (Graph.ContainsMainPoint(currentPosition, true) is false)
-                {
-                    if (Config.DebugEnabled)
-                        Console.WriteLine($"6.2. High ground position {JsonConvert.SerializeObject(currentPosition)} " +
-                                          $"does not exist.");
-                    continue;
-                }
-
-                var point = Graph.GetMainPoint(currentPosition, true);
-
-                foreach (var size in Graph.SupportedSizes.Except(new[] { PathfindingSize.Default }))
-                {
-                    if (Config.DebugEnabled)
-                        Console.WriteLine(
-                            $"6.3. Looking at size {size} with {nameof(AllMainHighGroundPointsExistForSize)}: " +
-                            $"{AllMainHighGroundPointsExistForSize(size, currentPosition)}, " +
-                            $"{nameof(MainPointHasAdjacentLowGroundConnections)}: " +
-                            $"{MainPointHasAdjacentLowGroundConnections(point)}.");
-
-                    if (AllMainHighGroundPointsExistForSize(size, currentPosition) is false
-                        && MainPointHasAdjacentLowGroundConnections(point) is false)
-                    {
-                        if (Config.DebugEnabled)
-                            Console.WriteLine($"6.4. Returning {JsonConvert.SerializeObject(currentPosition)}.");
-                        continue;
-                    }
-
-                    foreach (var adjacentPosition in currentPosition.AdjacentPositions(false))
-                    {
-                        if (Config.DebugEnabled)
-                            Console.WriteLine($"7. Looking at adjacent position " +
-                                              $"{JsonConvert.SerializeObject(adjacentPosition)}.");
-
-                        if (Graph.ContainsMainPoint(adjacentPosition, false))
-                        {
-                            if (Config.DebugEnabled)
-                                Console.WriteLine($"8.1. Adjacent point exists on low ground.");
-
-                            var adjacentLowGroundPoint = Graph.GetMainPoint(adjacentPosition, false);
-                            if (Graph.HasMainConnection(point, adjacentLowGroundPoint))
-                            {
-                                Graph.ConnectPoints(point, adjacentLowGroundPoint, size);
-                                if (Config.DebugEnabled)
-                                    Console.WriteLine($"8.2. Connecting {size}X pathfinding point " +
-                                                      $"{JsonConvert.SerializeObject(point)} with low ground point " +
-                                                      $"{JsonConvert.SerializeObject(adjacentLowGroundPoint)}.");
-                            }
-                        }
-
-                        if (Graph.ContainsMainPoint(adjacentPosition, true))
-                        {
-                            if (Config.DebugEnabled)
-                                Console.WriteLine($"9.1. Adjacent point exists on high ground.");
-
-                            var adjacentHighGroundPoint = Graph.GetMainPoint(adjacentPosition, true);
-                            if (Graph.HasMainConnection(point, adjacentHighGroundPoint))
-                            {
-                                Graph.ConnectPoints(point, adjacentHighGroundPoint, size);
-                                if (Config.DebugEnabled)
-                                    Console.WriteLine($"9.2. Connecting {size}X pathfinding point " +
-                                                      $"{JsonConvert.SerializeObject(point)} with high ground point " +
-                                                      $"{JsonConvert.SerializeObject(adjacentHighGroundPoint)}.");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns true if the main points (size 1, team 1) all exist for a given size at given coordinate.
-        /// Example that would return true (X - point exists):
-        /// <code>
-        /// Size: 2
-        /// X X
-        /// X X
-        /// </code>
-        /// Example that would return false:
-        /// <code>
-        /// Size: 3
-        /// X X O
-        /// X X X
-        /// X X X
-        /// </code>
-        /// </summary>
-        private bool AllMainHighGroundPointsExistForSize(PathfindingSize size, Vector2<int> at)
-            => IterateVector2Int.Positions(at, at + Vector2Int.One * size.Value)
-                .All(position => Graph.ContainsMainPoint(position, true));
-
-        // TODO same method exists in Graph.cs?
-        private bool MainPointHasAdjacentLowGroundConnections(Point point)
-            => point.Position.AdjacentPositions()
-                .Where(adjacentPosition => Graph.ContainsMainPoint(adjacentPosition, false))
-                .Select(adjacentPosition => Graph.GetMainPoint(adjacentPosition, false))
-                .Any(adjacentLowGroundPoint => Graph.HasMainConnection(point, adjacentLowGroundPoint));
-        
-        public IList<Point> GetPointsProjectedDownFromEntity(PathfindingEntity entity)
-        {
-            const int pathfindingSize = 1;
-
-            var points = IterateVector2Int
-                .Positions(entity.Position, entity.Position + entity.Size)
-                .Select(position => 
-                    Graph.GetHighestPoint(position, entity.Team, pathfindingSize, entity.IsOnHighGround))
-                .Where(point => point != null)
-                .Select(point => point)
-                .ToList();
-
-            return points;
-        }
 
         #endregion Setters
     }

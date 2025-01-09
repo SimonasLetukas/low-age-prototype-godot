@@ -9,6 +9,7 @@ namespace multipurpose_pathfinding
         public Vector2<int> Position { get; set; }
         public int HighGroundAscensionLevel { get; set; }
         public bool IsHighGround { get; set; }
+        public bool IsLowGround => IsHighGround is false;
         private bool _isImpassable;
 
         public bool IsImpassable

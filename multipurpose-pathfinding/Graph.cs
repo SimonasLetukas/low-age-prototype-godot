@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using low_age_dijkstra;
 using low_age_dijkstra.Methods;
 using low_age_prototype_common;
@@ -147,7 +146,8 @@ namespace multipurpose_pathfinding
 
         #region Terrain
 
-        public void SetTerrainForPoint(Vector2<int> coordinates, Terrain terrainIndex)
+        public void SetTerrainForPoint(Vector2<int> coordinates, Terrain terrainIndex, 
+            Vector2<int> lowerBounds, Vector2<int> upperBounds, bool resetImpassable = false)
         {
             if (TryGetPointId(coordinates, 1, 1, out _) is false)
                 return;
@@ -156,20 +156,32 @@ namespace multipurpose_pathfinding
             {
                 foreach (var size in SupportedSizes)
                 {
+                    var from = coordinates - Vector2Int.One * size.Value + Vector2Int.One;
+                    var to = coordinates + Vector2Int.One;
                     var dilatedPositions = IterateVector2Int.Positions(
-                        coordinates - Vector2Int.One * size.Value + Vector2Int.One,
-                        coordinates + Vector2Int.One);
+                        from.IsInBoundsOf(lowerBounds, upperBounds) 
+                            ? from 
+                            : lowerBounds,
+                        to.IsInBoundsOf(lowerBounds, upperBounds) 
+                            ? to 
+                            : upperBounds);
+                    
                     foreach (var position in dilatedPositions)
                     {
                         if (TryGetPointId(position, team, size, out var pointId) is false)
                             continue;
 
                         var point = GetPoint(pointId, team, size);
+                        
                         var isOnBoundary = position.X == Config.MapSize.X - size.Value + 1
                                            || position.Y == Config.MapSize.Y - size.Value + 1;
                         point.OriginalTerrainIndex = isOnBoundary 
                             ? Config.ImpassableIndex 
                             : terrainIndex.Value;
+                        
+                        if (resetImpassable)
+                            point.IsImpassable = false;
+                        
                         DijkstraMapBySizeByTeam[team][size].SetTerrainForPoint(
                             point.Id, point.OriginalTerrainIndex);
                     }
@@ -198,15 +210,16 @@ namespace multipurpose_pathfinding
                                 continue;
 
                             var point = GetPoint(pointId, team, size);
-                            SetPointImpassable(to, point, team, size);
+                            SetPointImpassable(to, pointId, team, size);
                         }
                     }
                 }
             }
         }
 
-        public void SetPointImpassable(bool to, Point point, Team team, PathfindingSize size)
+        public void SetPointImpassable(bool to, int pointId, Team team, PathfindingSize size)
         {
+            var point = GetPoint(pointId, team, size);
             point.IsImpassable = to;
             DijkstraMapBySizeByTeam[team][size].SetTerrainForPoint(point.Id, point.CalculatedTerrainIndex);
         }
@@ -219,23 +232,15 @@ namespace multipurpose_pathfinding
 
             var rightPosition = position + Vector2Int.Right;
             var bottomPosition = position + Vector2Int.Down;
-
+            
             foreach (var team in SupportedTeams)
             {
                 foreach (var size in SupportedSizes)
                 {
-                    if (TryGetHighestPoint(position, team, size, true, 
-                            out var point) is false)
-                        continue;
-                    if (TryGetHighestPoint(rightPosition, team, size, true,
-                            out var rightNeighbour) is false)
-                        continue;
-                    if (TryGetHighestPoint(bottomPosition, team, size, true,
-                            out var bottomNeighbour) is false)
-                        continue;
-                    if (TryGetHighestPoint(diagonalPosition, team, size, true,
-                            out var diagonalNeighbour) is false)
-                        continue;
+                    var point = GetHighestPoint(position, team, size);
+                    var rightNeighbour = GetHighestPoint(rightPosition, team, size);
+                    var bottomNeighbour = GetHighestPoint(bottomPosition, team, size);
+                    var diagonalNeighbour = GetHighestPoint(diagonalPosition, team, size);
 
                     ApplyDiagonalConnectionsForPoints(
                         point,
@@ -299,19 +304,31 @@ namespace multipurpose_pathfinding
 
             if (pointA.IsHighGround && pointB.IsHighGround)
             {
-                if (crossPointA.IsHighGround is false 
-                    && crossPointB.IsHighGround is false
+                if (crossPointA.IsLowGround
+                    && crossPointB.IsLowGround
                     && HighGroundPointHasLowGroundConnections(pointA, team, size) is false
                     && HighGroundPointHasLowGroundConnections(pointB, team, size) is false)
+                    return false;
+            }
+
+            if (pointA.IsHighGround && pointB.IsLowGround)
+            {
+                if (HighGroundPointHasLowGroundConnections(pointA, team, size) is false)
+                    return false;
+            }
+
+            if (pointA.IsLowGround && pointB.IsHighGround)
+            {
+                if (HighGroundPointHasLowGroundConnections(pointB, team, size) is false)
                     return false;
             }
 
             return true; 
         }
 
-        private bool HighGroundPointHasLowGroundConnections(Point point, Team team, PathfindingSize size)
+        public bool HighGroundPointHasLowGroundConnections(Point point, Team team, PathfindingSize size)
         {
-            if (point.IsHighGround is false)
+            if (point.IsLowGround)
                 return false;
 
             var result = point.Position.AdjacentPositions()
@@ -331,7 +348,7 @@ namespace multipurpose_pathfinding
         /// Terrain is the same for all teams.
         /// </summary>
         public IEnumerable<Point> GetTerrainPoints() => PointByIdBySizeByTeam[1][1].Values.Where(x =>
-            x.IsHighGround is false);
+            x.IsLowGround);
 
         /// <summary>
         /// Returned <see cref="Point"/> can be null.
@@ -387,7 +404,8 @@ namespace multipurpose_pathfinding
             {
                 foreach (var position in positionsByTerrain[terrain])
                 {
-                    SetTerrainForPoint(position, terrain);
+                    SetTerrainForPoint(position, terrain, 
+                        lowerBounds, upperBounds, true);
                 }
             }
         }
@@ -402,35 +420,18 @@ namespace multipurpose_pathfinding
 
         public Point GetMainPoint(int id, Team? team = null) => GetPoint(id, team ?? new Team(1), 1);
 
-        public bool TryGetHighestPoint(Vector2<int> position, Team team, PathfindingSize size,
-            bool lookingFromHighGround,
-            out Point point)
-        {
-            point = new Point();
-            var result = GetHighestPoint(position, team, size, lookingFromHighGround);
-            if (result is null)
-                return false;
-
-            point = result;
-            return true;
-        }
-
         /// <summary>
-        /// Returned <see cref="Point"/> can be null.
+        /// Will throw exception if invalid position, team or size is inputted, these should be validated
+        /// before calling this endpoint.
         /// </summary>
-        public Point GetHighestPoint(Vector2<int> position, Team team, PathfindingSize size,
-            bool lookingFromHighGround)
+        public Point GetHighestPoint(Vector2<int> position, Team team, PathfindingSize size)
         {
-            var highGroundPointFound = TryGetPointId(position, team, size, out var highGroundPointId, true);
-            var lowGroundPointFound = TryGetPointId(position, team, size, out var lowGroundPointId);
+            if (ContainsPoint(position, team, size, true))
+            {
+                return GetPoint(position, team, size, true);
+            }
 
-            if (highGroundPointFound && lookingFromHighGround)
-                return GetPoint(highGroundPointId, team, size);
-
-            if (lowGroundPointFound is false)
-                return null;
-
-            return GetPoint(lowGroundPointId, team, size);
+            return GetPoint(position, team, size, false);
         }
 
         public bool ContainsMainPoint(Vector2<int> position, bool isHighGround = false, Team? team = null)
@@ -444,15 +445,10 @@ namespace multipurpose_pathfinding
         {
             id = -1;
 
-            var result = PointIdByPositionBySizeByTeam.TryGetValue(team, out _);
-            if (result is false)
+            if (SupportedTeams.Contains(team) is false || SupportedSizes.Contains(size) is false)
                 return false;
 
-            result = PointIdByPositionBySizeByTeam[team].TryGetValue(size, out _);
-            if (result is false)
-                return false;
-
-            result = PointIdByPositionBySizeByTeam[team][size].TryGetValue((position, isHighGround), out var idResult);
+            var result = PointIdByPositionBySizeByTeam[team][size].TryGetValue((position, isHighGround), out var idResult);
 
             id = idResult;
             return result;
@@ -470,26 +466,24 @@ namespace multipurpose_pathfinding
         public Point AddPoint(Vector2<int> position, bool isHighGround, int highGroundAscensionLevel,
             int? terrainIndex = null)
         {
-            var originalTerrainIndex = terrainIndex is null
-                ? Config.ImpassableIndex
-                : isHighGround
-                    ? Config.HighGroundIndex
-                    : terrainIndex.Value;
-            var point = new Point
-            {
-                Id = GetPointId(position.X, position.Y, isHighGround),
-                Position = position,
-                IsHighGround = isHighGround,
-                HighGroundAscensionLevel = highGroundAscensionLevel,
-                OriginalTerrainIndex = originalTerrainIndex,
-                IsImpassable = false,
-                Configuration = Config
-            };
-            
             foreach (var team in SupportedTeams)
             {
                 foreach (var size in SupportedSizes)
                 {
+                    var originalTerrainIndex = isHighGround 
+                        ? Config.HighGroundIndex 
+                        : terrainIndex ?? Config.ImpassableIndex;
+                    var point = new Point
+                    {
+                        Id = GetNewPointId(position.X, position.Y, isHighGround),
+                        Position = position,
+                        IsHighGround = isHighGround,
+                        HighGroundAscensionLevel = highGroundAscensionLevel,
+                        OriginalTerrainIndex = originalTerrainIndex,
+                        IsImpassable = false,
+                        Configuration = Config
+                    };
+                    
                     PointByIdBySizeByTeam[team][size][point.Id] = point;
                     PointIdByPositionBySizeByTeam[team][size][(point.Position, point.IsHighGround)] = point.Id;
 
@@ -497,10 +491,10 @@ namespace multipurpose_pathfinding
                 }
             }
 
-            return point;
+            return GetMainPoint(position, isHighGround);
         }
 
-        private int GetPointId(int x, int y, bool isHighGround)
+        private int GetNewPointId(int x, int y, bool isHighGround)
         {
             var offset = isHighGround 
                 ? Config.MapSize.X * Config.MapSize.Y 
@@ -589,16 +583,26 @@ namespace multipurpose_pathfinding
 
         public bool HasMainConnection(Point pointA, Point pointB, Team? team = null)
             => HasConnection(pointA, pointB, team ?? new Team(1), 1);
-
+        
         /// <summary>
         /// Connects points for all <see cref="SupportedSizes"/> and <see cref="SupportedTeams"/>.
         /// </summary>
         public void ConnectPoints(Point pointA, Point pointB)
         {
-            var isDiagonallyAdjacent = pointA.Position.IsDiagonalTo(pointB.Position);
             foreach (var size in SupportedSizes)
             {
                 ConnectPoints(pointA, pointB, size);
+            }
+        }
+        
+        /// <summary>
+        /// Connects points for all <see cref="SupportedSizes"/> and given <see cref="Team"/>.
+        /// </summary>
+        public void ConnectPoints(Point pointA, Point pointB, Team team)
+        {
+            foreach (var size in SupportedSizes)
+            {
+                ConnectPoints(pointA, pointB, team, size);
             }
         }
         

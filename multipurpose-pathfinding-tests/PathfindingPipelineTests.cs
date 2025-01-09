@@ -8,6 +8,8 @@ using multipurpose_pathfinding;
 
 namespace multipurpose_pathfinding_tests;
 
+// TODO add a scenario for handling units standing on top of high ground
+
 [SuppressMessage("Usage", "xUnit1026:Theory methods should use all of their parameters")]
 public class PathfindingPipelineTests
 {
@@ -203,7 +205,7 @@ public class PathfindingPipelineTests
                 new(4, 7), new(5, 7), new(6, 7),
             }
         ];
-
+        
         yield return
         [
             "N2", // Scenario
@@ -300,7 +302,7 @@ public class PathfindingPipelineTests
                 new(3, 5), new(4, 5), new(5, 5), new(6, 5), new(7, 5),
             }
         ];
-
+        
         yield return
         [
             "B14", // Scenario
@@ -1966,7 +1968,7 @@ public class PathfindingPipelineTests
                 ((new Vector2<int>(1, 4), false), (new Vector2<int>(2, 5), true)), 
             },
         ];
-        
+
         yield return
         [
             "B158", // Scenario
@@ -2109,10 +2111,9 @@ public class PathfindingPipelineTests
                 new(5, 2), 
                 new(4, 3), new(5, 3), new(6, 3), 
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4), 
-                new(2, 5), new(3, 5), new(4, 5), new(5, 5), new(6, 5), new(7, 5), new(8, 5), 
+                new(2, 5), new(3, 5), new(4, 5), new(5, 5), new(6, 5), new(7, 5), 
                 new(3, 6), new(4, 6), new(5, 6), new(6, 6), new(7, 6), 
                 new(4, 7), new(5, 7), new(6, 7), 
-                new(5, 8), 
             },
             Array.Empty<((Vector2<int>, bool), (Vector2<int>, bool))>(), // Non connected position pairs,
             new[] // Connected position pairs
@@ -2162,7 +2163,7 @@ public class PathfindingPipelineTests
                 ),
                 (
                     new Vector2<int>(2, 4),
-                    new Vector2<int>(6, 1),
+                    new Vector2<int>(5, 1),
                     Team.Default, [], []
                 ),
                 (
@@ -2176,8 +2177,8 @@ public class PathfindingPipelineTests
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(7, 4),
-                    new Vector2<int>(1, 5),
+                    new Vector2<int>(7, 7),
+                    new Vector2<int>(1, 2),
                     Team.Default, [], []
                 ),
             },
@@ -2268,7 +2269,7 @@ public class PathfindingPipelineTests
                 ),
                 (
                     new Vector2<int>(2, 4),
-                    new Vector2<int>(6, 1),
+                    new Vector2<int>(5, 1),
                     Team.Default, [], []
                 ),
                 (
@@ -2282,8 +2283,8 @@ public class PathfindingPipelineTests
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(7, 4),
-                    new Vector2<int>(1, 5),
+                    new Vector2<int>(7, 7),
+                    new Vector2<int>(1, 2),
                     Team.Default, [], []
                 ),
             },
@@ -2354,8 +2355,8 @@ public class PathfindingPipelineTests
                     ]
                 ),
                 (
-                    new Vector2<int>(5, 3),
-                    new Vector2<int>(3, 1),
+                    new Vector2<int>(6, 3),
+                    new Vector2<int>(2, 1),
                     Team.Default, [], []
                 ),
                 (
@@ -2364,8 +2365,8 @@ public class PathfindingPipelineTests
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(3, 1),
+                    new Vector2<int>(6, 6),
+                    new Vector2<int>(2, 1),
                     Team.Default, [], []
                 ),
             },
@@ -3162,8 +3163,8 @@ public class PathfindingPipelineTests
                         new(7, 1), new(7, 2), new(7, 3), new(7, 4), 
                         new(9, 3), new(9, 4),
                         
-                        new(0, 6), new(1, 6), new(1, 6), 
-                        new(0, 7), new(1, 7), new(1, 7), 
+                        new(0, 6), new(1, 6), new(2, 6), 
+                        new(0, 7), new(1, 7), new(2, 7), 
                         new(2, 8), new(2, 9), 
                         
                         new(7, 5), 
@@ -3209,8 +3210,8 @@ public class PathfindingPipelineTests
                         new(7, 1), new(7, 2), new(7, 3), new(7, 4), 
                         new(9, 3), new(9, 4),
                         
-                        new(0, 6), new(1, 6), new(1, 6), 
-                        new(0, 7), new(1, 7), new(1, 7), 
+                        new(0, 6), new(1, 6), new(2, 6), 
+                        new(0, 7), new(1, 7), new(2, 7), 
                         new(2, 8), new(2, 9), 
                         
                         new(7, 5), 
@@ -3250,8 +3251,8 @@ public class PathfindingPipelineTests
                         new(7, 1), new(7, 2), new(7, 3), new(7, 4), 
                         new(9, 3), new(9, 4),
                         
-                        new(0, 6), new(1, 6), new(1, 6), 
-                        new(0, 7), new(1, 7), new(1, 7), 
+                        new(0, 6), new(1, 6), new(2, 6), 
+                        new(0, 7), new(1, 7), new(2, 7), 
                         new(2, 8), new(2, 9), 
                         
                         new(7, 5), 
@@ -3283,8 +3284,8 @@ public class PathfindingPipelineTests
                         new(7, 1), new(7, 2), new(7, 3), new(7, 4), 
                         new(9, 3), new(9, 4),
                         
-                        new(0, 6), new(1, 6), new(1, 6), 
-                        new(0, 7), new(1, 7), new(1, 7), 
+                        new(0, 6), new(1, 6), new(2, 6), 
+                        new(0, 7), new(1, 7), new(2, 7), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
                     ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
@@ -3773,6 +3774,7 @@ public class PathfindingPipelineTests
                 }, 
             }
         ];
+    
         
         yield return
         [
@@ -3893,8 +3895,8 @@ public class PathfindingPipelineTests
                         new(7, 1), new(7, 2), new(7, 3), new(7, 4), 
                         new(9, 3), new(9, 4),
                         
-                        new(0, 6), new(1, 6), new(1, 6), 
-                        new(0, 7), new(1, 7), new(1, 7), 
+                        new(0, 6), new(1, 6), new(2, 6), 
+                        new(0, 7), new(1, 7), new(2, 7), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
                     ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
@@ -3926,8 +3928,8 @@ public class PathfindingPipelineTests
                         new(7, 1), new(7, 2), new(7, 3), new(7, 4), 
                         new(9, 3), new(9, 4),
                         
-                        new(0, 6), new(1, 6), new(1, 6), 
-                        new(0, 7), new(1, 7), new(1, 7), 
+                        new(0, 6), new(1, 6), new(2, 6), 
+                        new(0, 7), new(1, 7), new(2, 7), 
                         new(2, 8), new(2, 9), 
                         
                         new(7, 5), 
@@ -3968,8 +3970,8 @@ public class PathfindingPipelineTests
                         new(7, 1), new(7, 2), new(7, 3), new(7, 4), 
                         new(9, 3), new(9, 4),
                         
-                        new(0, 6), new(1, 6), new(1, 6), 
-                        new(0, 7), new(1, 7), new(1, 7), 
+                        new(0, 6), new(1, 6), new(2, 6), 
+                        new(0, 7), new(1, 7), new(2, 7), 
                         new(2, 8), new(2, 9), 
                         
                         new(7, 5), 
@@ -4017,8 +4019,8 @@ public class PathfindingPipelineTests
                         new(7, 1), new(7, 2), new(7, 3), new(7, 4), 
                         new(9, 3), new(9, 4),
                         
-                        new(0, 6), new(1, 6), new(1, 6), 
-                        new(0, 7), new(1, 7), new(1, 7), 
+                        new(0, 6), new(1, 6), new(2, 6), 
+                        new(0, 7), new(1, 7), new(2, 7), 
                         new(2, 8), new(2, 9), 
                         
                         new(7, 5), 
@@ -4057,6 +4059,8 @@ public class PathfindingPipelineTests
 
             var rng = new Random();
             var randomizedIds = entitiesInScene.Keys.ToList().OrderBy(_ => rng.Next()).ToList();
+            /*if (changeStep.Scenario.Equals("Z206")) 
+                randomizedIds = [78, 93, 64, 28];*/
             foreach (var id in randomizedIds)
             {
                 var guid = entitiesInScene[id];
@@ -4072,17 +4076,17 @@ public class PathfindingPipelineTests
 
                 ExpectedPositionsShouldNotBeContainedIn(availablePoints,
                     changeStep.ExpectedOccupiedLowGroundPositions, CheckElevation.LowGround, 
-                    $"{scenario}-{changeStep}");
+                    $"{scenario}-{changeStep.Scenario}");
 
                 ExpectedPositionsShouldNotBeContainedIn(availablePoints,
                     changeStep.ExpectedOccupiedHighGroundPositions, CheckElevation.HighGround,
-                    $"{scenario}-{changeStep}");
+                    $"{scenario}-{changeStep.Scenario}");
                 
                 ExpectedHighGroundPositionsShouldBeAccessibleIn(availablePoints, 
-                    changeStep.ExpectedFreeHighGroundPositions, $"{scenario}-{changeStep}");
+                    changeStep.ExpectedFreeHighGroundPositions, $"{scenario}-{changeStep.Scenario}");
 
                 ExpectedPositionsShouldBeConnected(pathfindingSize, changeStep.ExpectedNonConnectedPositionPairs, 
-                    [], $"{scenario}-{changeStep}");
+                    [], $"{scenario}-{changeStep.Scenario}");
             }
         }
     }
@@ -4143,7 +4147,7 @@ public class PathfindingPipelineTests
         CheckElevation checkElevation,
         string scenario)
     {
-        var foundExpectedPositions = new HashSet<Vector2<int>>();
+        var foundUnfulfilledExpectedPositions = new HashSet<Vector2<int>>();
 
         foreach (var position in IterateVector2Int.Positions(_config.MapSize))
         {
@@ -4156,7 +4160,7 @@ public class PathfindingPipelineTests
                         .Select(x => x.Position);
                     foreach (var pos in foundPositions)
                     {
-                        foundExpectedPositions.Add(pos);
+                        foundUnfulfilledExpectedPositions.Add(pos);
                     }
 
                     continue;
@@ -4165,11 +4169,11 @@ public class PathfindingPipelineTests
                 if (checkElevation is CheckElevation.LowGround)
                 {
                     var foundPositions = availablePoints
-                        .Where(x => x.Position.Equals(position) && x.IsHighGround is false)
+                        .Where(x => x.Position.Equals(position) && x.IsLowGround)
                         .Select(x => x.Position);
                     foreach (var pos in foundPositions)
                     {
-                        foundExpectedPositions.Add(pos);
+                        foundUnfulfilledExpectedPositions.Add(pos);
                     }
 
                     continue;
@@ -4180,20 +4184,20 @@ public class PathfindingPipelineTests
                     .Select(x => x.Position);
                 foreach (var pos in foundPos)
                 {
-                    foundExpectedPositions.Add(pos);
+                    foundUnfulfilledExpectedPositions.Add(pos);
                 }
             }
             else if (checkElevation is CheckElevation.LowGround)
             {
                 availablePoints
-                    .Where(x => x.IsHighGround is false && x.Position == position)
+                    .Where(x => x.IsLowGround && x.Position == position)
                     .Should()
-                    .NotBeEmpty($"Remaining low ground at {position} has to be unoccupied at {checkElevation}" +
+                    .NotBeEmpty($"Remaining low ground at {position} has to be unoccupied at {checkElevation} " +
                                 $"for scenario {scenario}");
             }
         }
 
-        foundExpectedPositions.Should().BeSubsetOf(Array.Empty<Vector2<int>>(), 
+        foundUnfulfilledExpectedPositions.Should().BeSubsetOf(Array.Empty<Vector2<int>>(), 
             $"Found positions should be occupied or inaccessible at {checkElevation} for scenario {scenario}");
     }
 
@@ -4228,7 +4232,8 @@ public class PathfindingPipelineTests
     {
         var entityId = Guid.NewGuid();
         var entity = new PathfindingEntity(entityId, entityPrimaryPosition, entitySize, team ?? Team.Default,
-            isOnHighGround ?? false, (p, t) => CanBeMovedThroughAt(p, t, entityId));
+            isOnHighGround ?? false, (p, t) => CanBeMovedThroughAt(p, t, entityId),
+            (fp, tp, t) => AllowsConnectionBetweenPoints(fp, tp, t, entityId));
 
         _entities[entityId] = entity;
         _walkablePositionsByEntityId[entityId] = walkablePositions ?? new List<Vector2<int>>();
@@ -4246,6 +4251,18 @@ public class PathfindingPipelineTests
         return entityId;
     }
 
+    private bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam, Guid entityId)
+    {
+        var isSameTeam = _entities[entityId].Team.Equals(forTeam);
+
+        var ascendablePositions = _ascendablesByEntityId[entityId]
+            .SelectMany(inner => inner)
+            .ToHashSet();
+        
+        return ascendablePositions.Contains(toPoint.Position) 
+               && ((isSameTeam && fromPoint.IsLowGround) || fromPoint.IsHighGround);
+    }
+
     private bool CanBeMovedThroughAt(Point point, Team forTeam, Guid entityId)
     {
         if (_walkablePositionsByEntityId[entityId].Any(point.Position.Equals))
@@ -4256,7 +4273,7 @@ public class PathfindingPipelineTests
 
         if (point.Position.IsInBoundsOf(
                 _entities[entityId].Position,
-                _entities[entityId].Position + _entities[entityId].Size))
+                _entities[entityId].UpperBounds))
             return false;
 
         return true;
@@ -4264,29 +4281,26 @@ public class PathfindingPipelineTests
 
     private bool HasHighGroundAt(Point point, Team forTeam, Guid entityId)
     {
-        if (point.IsHighGround is false)
+        if (point.IsLowGround)
             return false;
 
         var position = point.Position;
 
         if (position.IsInBoundsOf(
                 _entities[entityId].Position,
-                _entities[entityId].Position + _entities[entityId].Size)
+                _entities[entityId].UpperBounds)
             is false)
             return false;
 
-        if (CanBeMovedOnAtAscendable(position, forTeam, entityId)
-            && CanBeMovedOnAtHighGround(position, entityId))
+        if (CanBeMovedOnAtAscendable(position, entityId)
+            || CanBeMovedOnAtHighGround(position, entityId))
             return true;
 
         return false;
     }
 
-    private bool CanBeMovedOnAtAscendable(Vector2<int> position, Team forTeam, Guid entityId)
+    private bool CanBeMovedOnAtAscendable(Vector2<int> position, Guid entityId)
     {
-        if (_entities[entityId].Team.Equals(forTeam) is false)
-            return false;
-
         var ascendablePositions = _ascendablesByEntityId[entityId]
             .SelectMany(inner => inner)
             .ToHashSet();

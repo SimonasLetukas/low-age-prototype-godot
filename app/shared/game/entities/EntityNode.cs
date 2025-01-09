@@ -219,7 +219,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         if (pathfindingUpdatableBehaviours.IsEmpty())
             return false;
 
-        var result = pathfindingUpdatableBehaviours.All(x => x.CanBeMovedOnAt(position, forTeam));
+        var result = pathfindingUpdatableBehaviours.Any(x => x.CanBeMovedOnAt(position, forTeam));
         
         return result;
     }
