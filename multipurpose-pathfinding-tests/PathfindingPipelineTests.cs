@@ -4118,6 +4118,1106 @@ public class PathfindingPipelineTests
     }
     
     #endregion Complex Scenarios: 6. Changes Over Time
+    
+    #region Complex Scenarios: 7. Entities on High Ground
+    
+    public static IEnumerable<object[]> GetExpectedOccupationAndHighGroundForEntitiesOnHighGround()
+    {
+        yield return
+        [
+            "B218", // Scenario
+            new PathfindingSize(1),
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            {
+                (
+                    new Vector2<int>(2, 2),
+                    new Vector2<int>(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 7),
+                    new Vector2<int>(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                    ],
+                    []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                    ]
+                ),
+                
+                (
+                    new Vector2<int>(3, 5),
+                    new Vector2<int>(2, 2),
+                    true,
+                    Team.Default, [], []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(1, 1),
+                    true,
+                    new Team(2), [], []
+                ),
+            },
+
+            // Expected:
+            new Vector2<int>[] // Occupation: low ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            },
+            new Vector2<int>[] // Occupation: high ground
+            {
+                new(5, 6), 
+            },
+            new Vector2<int>[] // Free high ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6),            new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            },
+        ];
+        
+        yield return
+        [
+            "N218", // Scenario
+            new PathfindingSize(1),
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            {
+                (
+                    new Vector2<int>(2, 2),
+                    new Vector2<int>(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 7),
+                    new Vector2<int>(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                    ],
+                    []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                    ]
+                ),
+                
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(2, 2),
+                    true,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(1, 1),
+                    true,
+                    new Team(2), [], []
+                ),
+            },
+
+            // Expected:
+            new Vector2<int>[] // Occupation: low ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            },
+            new Vector2<int>[] // Occupation: high ground
+            {
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                                                            new(6, 7),
+            },
+            new Vector2<int>[] // Free high ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                
+                                                                       
+                new(2, 7), new(3, 7),                                  new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            },
+        ];
+
+        yield return
+        [
+            "Z218", // Scenario
+            new PathfindingSize(1),
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            {
+                (
+                    new Vector2<int>(2, 2),
+                    new Vector2<int>(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 7),
+                    new Vector2<int>(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                    ],
+                    []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                    ]
+                ),
+                
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(2, 2),
+                    true,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(7, 6),
+                    new Vector2<int>(2, 2),
+                    true,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(1, 7),
+                    new Vector2<int>(1, 1),
+                    false,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(7, 8),
+                    new Vector2<int>(1, 1),
+                    false,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(8, 8),
+                    new Vector2<int>(1, 1),
+                    false,
+                    new Team(2), [], []
+                ),
+            },
+
+            // Expected:
+            new Vector2<int>[] // Occupation: low ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+                
+                new(7, 6), new(8, 6), 
+                
+                new(1, 7), 
+                
+                new(7, 8), new(8, 8), 
+            },
+            new Vector2<int>[] // Occupation: high ground
+            {
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                                                            new(6, 7), new(7, 7), new(8, 7), new(9, 7),
+            },
+            new Vector2<int>[] // Free high ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                
+                                                                       
+                new(2, 7), new(3, 7), 
+                new(2, 8), new(3, 8), 
+            },
+        ];
+        
+        
+        yield return
+        [
+            "B230", // Scenario
+            new PathfindingSize(2),
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            {
+                (
+                    new Vector2<int>(2, 2),
+                    new Vector2<int>(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 7),
+                    new Vector2<int>(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                    ],
+                    []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                    ]
+                ),
+                
+                (
+                    new Vector2<int>(3, 5),
+                    new Vector2<int>(2, 2),
+                    true,
+                    Team.Default, [], []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(1, 1),
+                    true,
+                    new Team(2), [], []
+                ),
+            },
+
+            // Expected:
+            new Vector2<int>[] // Occupation: low ground
+            {
+                new(1, 2), new(1, 3), new(1, 4), new(1, 5), new(1, 6), new(1, 7), 
+                new(4, 4), new(5, 5), new(6, 5), new(8, 6), new(5, 7), 
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+            new Vector2<int>[] // Occupation: high ground
+            {
+                new(3, 2), 
+                new(3, 3), 
+                new(3, 4), 
+                new(4, 5), 
+                new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(3, 7), new(6, 7), new(8, 7), new(9, 7), 
+            },
+            new Vector2<int>[] // Free high ground
+            {
+                new(2, 2),  
+                new(2, 3), 
+                new(2, 4), 
+                new(2, 5), new(3, 5), 
+                new(2, 6), 
+                new(2, 7), new(7, 7),
+                new(2, 8), new(3, 8), 
+            },
+        ];
+        
+        yield return
+        [
+            "N230", // Scenario
+            new PathfindingSize(2),
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            {
+                (
+                    new Vector2<int>(2, 2),
+                    new Vector2<int>(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 7),
+                    new Vector2<int>(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                    ],
+                    []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                    ]
+                ),
+                
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(2, 2),
+                    true,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(1, 1),
+                    true,
+                    new Team(2), [], []
+                ),
+            },
+
+            // Expected:
+            new Vector2<int>[] // Occupation: low ground
+            {
+                new(1, 2), new(1, 3), new(1, 4), new(1, 5), new(1, 6), new(1, 7), 
+                new(4, 4), new(5, 5), new(6, 5), new(8, 6), new(5, 7), 
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+            new Vector2<int>[] // Occupation: high ground
+            {
+                new(3, 2), 
+                new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(3, 7), new(6, 7), new(8, 7), new(9, 7), 
+            },
+            new Vector2<int>[] // Free high ground
+            {
+                new(2, 2),  
+                new(2, 3), 
+                new(2, 7), new(7, 7),
+                new(2, 8), new(3, 8), 
+            },
+        ];
+
+        yield return
+        [
+            "Z230", // Scenario
+            new PathfindingSize(2),
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            {
+                (
+                    new Vector2<int>(2, 2),
+                    new Vector2<int>(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 7),
+                    new Vector2<int>(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                    ],
+                    []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                    ]
+                ),
+                
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(2, 2),
+                    true,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(7, 6),
+                    new Vector2<int>(2, 2),
+                    true,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(1, 7),
+                    new Vector2<int>(1, 1),
+                    false,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(7, 8),
+                    new Vector2<int>(1, 1),
+                    false,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(8, 8),
+                    new Vector2<int>(1, 1),
+                    false,
+                    new Team(2), [], []
+                ),
+            },
+
+            // Expected:
+            new Vector2<int>[] // Occupation: low ground
+            {
+                new(1, 2), new(1, 3), new(1, 4), new(1, 5), new(1, 6), new(1, 7), 
+                new(4, 4), new(5, 5), new(6, 5), new(8, 6), new(5, 7), 
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+                
+                new(7, 5), new(8, 5), 
+                new(7, 6), new(8, 6), 
+                
+                new(0, 6), new(0, 7), 
+                new(1, 7), 
+                
+                new(6, 8), 
+                new(7, 8), new(8, 8), 
+                
+                new(4, 7), new(0, 8), new(1, 8), new(4, 8), new(5, 8), 
+            }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+            new Vector2<int>[] // Occupation: high ground
+            {
+                new(3, 2), 
+                new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7), new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            },
+            new Vector2<int>[] // Free high ground
+            {
+                new(2, 2),  
+                new(2, 3), 
+            },
+        ];
+        
+        
+        yield return
+        [
+            "B242", // Scenario
+            new PathfindingSize(3),
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            {
+                (
+                    new Vector2<int>(2, 2),
+                    new Vector2<int>(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 7),
+                    new Vector2<int>(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                    ],
+                    []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                    ]
+                ),
+                
+                (
+                    new Vector2<int>(3, 5),
+                    new Vector2<int>(2, 2),
+                    true,
+                    Team.Default, [], []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(1, 1),
+                    true,
+                    new Team(2), [], []
+                ),
+            },
+
+            // Expected:
+            new Vector2<int>[] // Occupation: low ground
+            {
+                new(0, 1), new(1, 1), new(2, 1), new(3, 1), 
+                new(0, 2), new(1, 2), 
+                new(0, 3), new(1, 3), new(4, 3), 
+                new(0, 4), new(1, 4), new(4, 4), new(5, 4), new(6, 4), 
+                new(0, 5), new(1, 5), new(5, 5), new(6, 5), new(7, 5), 
+                new(0, 6), new(1, 6), new(7, 6), 
+                new(0, 7), new(1, 7), new(4, 7), new(5, 7), 
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
+            new Vector2<int>[] // Occupation: high ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            },
+            new Vector2<int>[] // Free high ground
+            {
+            },
+        ];
+        
+        yield return
+        [
+            "N242", // Scenario
+            new PathfindingSize(3),
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            {
+                (
+                    new Vector2<int>(2, 2),
+                    new Vector2<int>(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 7),
+                    new Vector2<int>(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                    ],
+                    []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                    ]
+                ),
+                
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(2, 2),
+                    true,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(1, 1),
+                    true,
+                    new Team(2), [], []
+                ),
+            },
+
+            // Expected:
+            new Vector2<int>[] // Occupation: low ground
+            {
+                new(0, 1), new(1, 1), new(2, 1), new(3, 1), 
+                new(0, 2), new(1, 2), 
+                new(0, 3), new(1, 3), new(4, 3), 
+                new(0, 4), new(1, 4), new(4, 4), new(5, 4), new(6, 4), 
+                new(0, 5), new(1, 5), new(5, 5), new(6, 5), new(7, 5), 
+                new(0, 6), new(1, 6), new(7, 6), 
+                new(0, 7), new(1, 7), new(4, 7), new(5, 7), 
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
+            new Vector2<int>[] // Occupation: high ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            },
+            new Vector2<int>[] // Free high ground
+            {
+            },
+        ];
+
+        yield return
+        [
+            "Z242", // Scenario
+            new PathfindingSize(3),
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            {
+                (
+                    new Vector2<int>(2, 2),
+                    new Vector2<int>(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(2, 7),
+                    new Vector2<int>(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                    ],
+                    []
+                ),
+                (
+                    new Vector2<int>(5, 6),
+                    new Vector2<int>(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                    ]
+                ),
+                (
+                    new Vector2<int>(6, 7),
+                    new Vector2<int>(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                    ]
+                ),
+                
+                (
+                    new Vector2<int>(2, 5),
+                    new Vector2<int>(2, 2),
+                    true,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(7, 6),
+                    new Vector2<int>(2, 2),
+                    true,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(1, 7),
+                    new Vector2<int>(1, 1),
+                    false,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(7, 8),
+                    new Vector2<int>(1, 1),
+                    false,
+                    new Team(2), [], []
+                ),
+                (
+                    new Vector2<int>(8, 8),
+                    new Vector2<int>(1, 1),
+                    false,
+                    new Team(2), [], []
+                ),
+            },
+
+            // Expected:
+            new Vector2<int>[] // Occupation: low ground
+            {
+                new(0, 1), new(1, 1), new(2, 1), new(3, 1), 
+                new(0, 2), new(1, 2), 
+                new(0, 3), new(1, 3), new(4, 3), 
+                new(0, 4), new(1, 4), new(4, 4), new(5, 4), new(6, 4), 
+                new(0, 5), new(1, 5), new(5, 5), new(6, 5), new(7, 5), 
+                new(0, 6), new(1, 6), new(7, 6), 
+                new(0, 7), new(1, 7), new(4, 7), new(5, 7), 
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+                
+                new(7, 4), 
+                new(7, 6), new(8, 6), 
+                
+                new(1, 7), 
+                
+                new(7, 8), new(8, 8), 
+            }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
+            new Vector2<int>[] // Occupation: high ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            },
+            new Vector2<int>[] // Free high ground
+            {
+            },
+        ];
+    }
+
+    [Theory]
+    [MemberData(nameof(GetExpectedOccupationAndHighGroundForEntitiesOnHighGround))]
+    public void Pathfinding_ShouldCalculateHighGroundAndOccupation_ForEntitiesOnHighGround(
+        string scenario,
+        PathfindingSize pathfindingSize,
+        (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] entities, 
+        Vector2<int>[] expectedOccupiedLowGroundPositions,
+        Vector2<int>[] expectedOccupiedHighGroundPositions,
+        Vector2<int>[] expectedFreeHighGroundPositions)
+    {
+        foreach (var (pos, size, isOnHighGround, team, ascendables, 
+                     highGrounds) in entities)
+        {
+            SetupAddingEntityInstance(pos, size, team, isOnHighGround, null,
+                ascendables.Select(x => x.ToVectors()).ToList(),
+                highGrounds.SelectMany(x => x.ToVectors()).ToHashSet());
+        }
+
+        var availablePoints = GetAvailablePointsFor(pathfindingSize);
+
+        ExpectedPositionsShouldNotBeContainedIn(availablePoints,
+            expectedOccupiedLowGroundPositions, CheckElevation.LowGround,
+            scenario);
+
+        ExpectedPositionsShouldNotBeContainedIn(availablePoints,
+            expectedOccupiedHighGroundPositions, CheckElevation.HighGround,
+            scenario);
+        
+        ExpectedHighGroundPositionsShouldBeAccessibleIn(availablePoints, 
+            expectedFreeHighGroundPositions, scenario);
+    }
+    
+    #endregion Complex Scenarios: 7. Entities on High Ground
 
     #region Helpers
 
@@ -4265,6 +5365,10 @@ public class PathfindingPipelineTests
 
     private bool CanBeMovedThroughAt(Point point, Team forTeam, Guid entityId)
     {
+        var entity = _entities[entityId];
+        if (entity.IsOnHighGround && entity.Team.Equals(forTeam)) // means it's a unit
+            return true;
+        
         if (_walkablePositionsByEntityId[entityId].Any(point.Position.Equals))
             return true;
 

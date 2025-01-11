@@ -309,6 +309,10 @@ namespace multipurpose_pathfinding
                     && HighGroundPointHasLowGroundConnections(pointA, team, size) is false
                     && HighGroundPointHasLowGroundConnections(pointB, team, size) is false)
                     return false;
+
+                if ((crossPointA.IsLowGround && crossPointB.IsHighGround && crossPointB.IsImpassable)
+                    || (crossPointB.IsLowGround && crossPointA.IsHighGround && crossPointA.IsImpassable))
+                    return false;
             }
 
             if (pointA.IsHighGround && pointB.IsLowGround)

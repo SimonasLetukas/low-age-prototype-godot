@@ -6,6 +6,7 @@ using low_age_dijkstra;
 using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
 using NetTopologySuite.Geometries;
+using NetTopologySuite.Index.HPRtree;
 using NetTopologySuite.Index.Quadtree;
 using Newtonsoft.Json;
 
@@ -683,7 +684,7 @@ namespace multipurpose_pathfinding
             var occupationPositions = new HashSet<Vector2<int>>();
             foreach (var item in foundItems)
             {
-                var foundOccupationPositions = RunOccupationCalculation(item.OccupyingEntity);
+                var foundOccupationPositions = RunOccupationCalculation(item);
                 occupationPositions.UnionWith(foundOccupationPositions);
             }
             
@@ -758,18 +759,21 @@ namespace multipurpose_pathfinding
             }
         }
         
-        private IEnumerable<Vector2<int>> RunOccupationCalculation(PathfindingEntity entity)
+        private IEnumerable<Vector2<int>> RunOccupationCalculation(PipelineItem item)
         {
+            var entity = item.OccupyingEntity;
             var offset = Vector2Int.One * Config.MaxSizeForPathfinding.Value;
             var entityPositions = IterateVector2Int
                 .Positions(entity.Position - offset, entity.UpperBounds + offset, true)
                 .Where(position => position.IsInBoundsOf(Config.MapSize))
                 .ToList();
 
-            var highGroundPoints = entityPositions
-                .Where(position => Graph.ContainsMainPoint(position, true))
-                .Select(position => Graph.GetMainPoint(position, true))
-                .ToList();
+            var highGroundPoints = new List<Point>();
+            if (entity.IsOnHighGround || item.HasHighGround || item.HasAscendableHighGround)
+                highGroundPoints = entityPositions
+                    .Where(position => Graph.ContainsMainPoint(position, true))
+                    .Select(position => Graph.GetMainPoint(position, true))
+                    .ToList();
 
             var lowGroundPoints = entityPositions
                 .Where(position => Graph.ContainsMainPoint(position, false))
