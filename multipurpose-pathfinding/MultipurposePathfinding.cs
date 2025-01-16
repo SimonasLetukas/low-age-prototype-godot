@@ -6,7 +6,6 @@ using low_age_dijkstra;
 using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
 using NetTopologySuite.Geometries;
-using NetTopologySuite.Index.HPRtree;
 using NetTopologySuite.Index.Quadtree;
 using Newtonsoft.Json;
 
@@ -284,7 +283,8 @@ namespace multipurpose_pathfinding
 
             if (terrain.Equals(_terrainWithSmallestMovementCost))
             {
-                Graph.SetTerrainForPoint(coordinates, terrain, Vector2Int.Zero, Config.MapSize);
+                Graph.SetTerrainForPoint(coordinates, terrain, Vector2Int.Zero, 
+                    Config.MapSize + Vector2Int.One);
                 var point = Graph.GetMainPoint(coordinates);
                 PointAdded(point);
                 return;
@@ -313,7 +313,8 @@ namespace multipurpose_pathfinding
             _positionsByTerrainForFurtherInitialization[terrain.Value].RemoveAt(0);
             TrimEmptyTerrainsForFurtherInitialization();
 
-            Graph.SetTerrainForPoint(coordinates, terrain.Value, Vector2Int.Zero, Config.MapSize);
+            Graph.SetTerrainForPoint(coordinates, terrain.Value, Vector2Int.Zero, 
+                Config.MapSize + Vector2Int.One);
             var point = Graph.GetMainPoint(coordinates);
             PointAdded(point);
         }

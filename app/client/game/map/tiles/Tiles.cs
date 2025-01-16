@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.Linq;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Tiles;
+using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
+using multipurpose_pathfinding;
 
 /// <summary>
 /// Responsible for: <para />
@@ -20,15 +22,13 @@ public class Tiles : Node2D
     /// </summary>
     public class TileInstance
     {
-        public Vector2 Position { get; set; }
+        public Vector2<int> Position { get; set; }
         public TileId Blueprint { get; set; }
         public Terrain Terrain { get; set; }
         public bool IsTarget { get; set; }
         public IList<EntityNode> Occupants { get; set; }
         public Point Point { get; set; }
         public int YSpriteOffset { get; set; }
-
-        public bool IsInBoundsOf(Vector2 bounds) => Position.IsInBoundsOf(bounds);
     }
     
     public event Action FinishedInitialInitializing = delegate { };
@@ -37,9 +37,9 @@ public class Tiles : Node2D
     public StructureFoundations StructureFoundations { get; private set; }
     public ElevatableTiles Elevatable { get; private set; }
     
-    private readonly Dictionary<(Vector2, bool), TileInstance> _tiles = new Dictionary<(Vector2, bool), TileInstance>();
+    private readonly Dictionary<(Vector2<int>, bool), TileInstance> _tiles = new Dictionary<(Vector2<int>, bool), TileInstance>();
     private IList<Tile> _tilesBlueprint;
-    private Vector2 _mapSize;
+    private Vector2<int> _mapSize;
     private Vector2 _tilemapOffset;
     private Vector2 _tileOffset;
     private int _mountainsFillOffset;
@@ -64,9 +64,9 @@ public class Tiles : Node2D
     };
 
     private bool _dataInitialized = false;
-    private IList<(Vector2, TileId)> _tilesForDataInitialization;
+    private IList<(Vector2<int>, TileId)> _tilesForDataInitialization;
     private bool _visualsInitialized = false;
-    private IList<(Vector2, TileId)> _tilesForVisualsInitialization;
+    private IList<(Vector2<int>, TileId)> _tilesForVisualsInitialization;
     private bool _initialInitializationDone = false;
     private IList<Point> _pointsForInitialization;
     private bool _pointsStartedInitializing = false;
@@ -86,6 +86,7 @@ public class Tiles : Node2D
         StructureFoundations = GetNode<StructureFoundations>($"{nameof(StructureFoundations)}");
         Elevatable = GetNode<ElevatableTiles>($"{nameof(ElevatableTiles)}");
 
+        EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
         EventBus.Instance.HighGroundPointCreated += OnHighGroundPointCreated;
         EventBus.Instance.HighGroundPointRemoved += OnHighGroundPointRemoved;
     }
@@ -94,14 +95,15 @@ public class Tiles : Node2D
     {
         base._ExitTree();
 
+        EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
         EventBus.Instance.HighGroundPointCreated -= OnHighGroundPointCreated;
         EventBus.Instance.HighGroundPointRemoved -= OnHighGroundPointRemoved;
     }
 
-    public void Initialize(Vector2 mapSize, ICollection<(Vector2, TileId)> tiles)
+    public void Initialize(Vector2 mapSize, ICollection<(Vector2<int>, TileId)> tiles)
     {
         _tilesBlueprint = Data.Instance.Blueprint.Tiles;
-        _mapSize = mapSize;
+        _mapSize = new Vector2<int>((int)mapSize.x, (int)mapSize.y);
         _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
         _mountainsFillOffset = (int)Mathf.Max(mapSize.x, mapSize.y);
         _tileOffset = new Vector2(1, (float)Constants.TileHeight / 2);
@@ -198,11 +200,12 @@ public class Tiles : Node2D
 
         var (position, blueprintId) = _tilesForVisualsInitialization[0];
         _tilesForVisualsInitialization.RemoveAt(0);
-        
-        _grass.SetCellv(position, TileMapGrassIndex); // needed to fill up gaps
-        SetCell(position, GetTerrain(position));
 
-        Elevatable.SetMapWideTargetTiles(position);
+        var godotPosition = position.ToGodotVector2();
+        _grass.SetCellv(godotPosition, TileMapGrassIndex); // needed to fill up gaps
+        SetCell(godotPosition, GetTerrain(position));
+
+        Elevatable.SetMapWideTargetTiles(godotPosition);
     }
 
     public void AddPoints(IEnumerable<Point> points)
@@ -228,11 +231,11 @@ public class Tiles : Node2D
         tile.Point = point;
     }
 
-    public Vector2 GetMapPositionFromGlobalPosition(Vector2 globalPosition) 
-        => _grass.WorldToMap(globalPosition) - _tilemapOffset;
+    public Vector2<int> GetMapPositionFromGlobalPosition(Vector2 globalPosition) 
+        => (_grass.WorldToMap(globalPosition) - _tilemapOffset).ToVector2();
     
-    public Vector2 GetGlobalPositionFromMapPosition(Vector2 mapPosition) 
-        => _grass.MapToWorld(mapPosition + _tilemapOffset, true) + _tileOffset;
+    public Vector2 GetGlobalPositionFromMapPosition(Vector2<int> mapPosition) 
+        => _grass.MapToWorld(mapPosition.ToGodotVector2() + _tilemapOffset, true) + _tileOffset;
 
     public IEnumerable<Vector2> GetGlobalPositionsFromMapPoints(IEnumerable<Point> points) => points
         .Select(x => GetTile(x.Position, x.IsHighGround))
@@ -245,7 +248,7 @@ public class Tiles : Node2D
         ? Terrain.Mountains 
         : GetTerrain(tile.Position, tile.Point.IsHighGround);
     
-    public Terrain GetTerrain(Vector2 at, bool isHighGround = false) => at.IsInBoundsOf(_mapSize)
+    public Terrain GetTerrain(Vector2<int> at, bool isHighGround = false) => at.IsInBoundsOf(_mapSize)
         ? GetTile(at, isHighGround).Terrain
         : Terrain.Mountains;
 
@@ -254,11 +257,11 @@ public class Tiles : Node2D
             ? GetHighestTile(position) 
             : GetTile(position, false)).ToList();
 
-    public IList<TileInstance> GetHighestTiles(IList<Vector2> at) => at.Select(GetHighestTile).ToList();
+    public IList<TileInstance> GetHighestTiles(IList<Vector2<int>> at) => at.Select(GetHighestTile).ToList();
 
-    public TileInstance GetHighestTile(Vector2 at) => GetTile(at, true) ?? GetTile(at);
+    public TileInstance GetHighestTile(Vector2<int> at) => GetTile(at, true) ?? GetTile(at);
 
-    public TileInstance GetTile(Vector2 at, bool isHighGround = false) => at.IsInBoundsOf(_mapSize) 
+    public TileInstance GetTile(Vector2<int> at, bool isHighGround = false) => at.IsInBoundsOf(_mapSize) 
         ? _tiles.ContainsKey((at, isHighGround)) 
             ? _tiles[(at, isHighGround)] 
             : null 
@@ -299,32 +302,32 @@ public class Tiles : Node2D
 
     public void FillMapOutsideWithMountains()
     {
-        for (var y = _mountainsFillOffset * -1; y < _mapSize.y + _mountainsFillOffset; y++) 
-        for (var x = _mountainsFillOffset * -1; x < _mapSize.x + _mountainsFillOffset; x++) 
-            if (x < 0 || x >= _mapSize.x || y < 0 || y >= _mapSize.y)
+        for (var y = _mountainsFillOffset * -1; y < _mapSize.Y + _mountainsFillOffset; y++) 
+        for (var x = _mountainsFillOffset * -1; x < _mapSize.X + _mountainsFillOffset; x++) 
+            if (x < 0 || x >= _mapSize.X || y < 0 || y >= _mapSize.Y)
                 _mountains.SetCell(x, y, TileMapMountainsIndex);
     }
 
     public void UpdateALlBitmaps()
     {
-        _grass.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.x, _mapSize.y));
-        _scraps.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.x, _mapSize.y));
-        _marsh.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.x, _mapSize.y));
+        _grass.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.X, _mapSize.Y));
+        _scraps.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.X, _mapSize.Y));
+        _marsh.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.X, _mapSize.Y));
         _mountains.UpdateBitmaskRegion(
             new Vector2(_mountainsFillOffset * -1, _mountainsFillOffset * -1), 
-            new Vector2(_mapSize.x + _mountainsFillOffset, _mapSize.y + _mountainsFillOffset));
+            new Vector2(_mapSize.X + _mountainsFillOffset, _mapSize.Y + _mountainsFillOffset));
     }
     
     public IEnumerable<TileInstance> GetDilated(IEnumerable<Point> points, int size)
     {
-        var tileSearchSet = new HashSet<(Vector2, bool)>();
+        var tileSearchSet = new HashSet<(Vector2<int>, bool)>();
         foreach (var point in points)
         {
             for (var xOffset = 0; xOffset < size; xOffset++)
             {
                 for (var yOffset = 0; yOffset < size; yOffset++)
                 {
-                    var resultingCoordinates = point.Position + new Vector2(xOffset, yOffset);
+                    var resultingCoordinates = point.Position + new Vector2<int>(xOffset, yOffset);
                     
                     if (resultingCoordinates.IsInBoundsOf(_mapSize))
                         tileSearchSet.Add((resultingCoordinates, point.IsHighGround));
@@ -376,19 +379,56 @@ public class Tiles : Node2D
         _mountains.Clear();
     }
 
-    private void OnHighGroundPointCreated(Point point, int ySpriteOffset)
+    private void OnPathfindingUpdating(IPathfindingUpdatable data, bool isAdded)
     {
-        var tile = new TileInstance
+        if (isAdded is false)
+            return;
+
+        foreach (var (position, ySpriteOffset) in data.FlattenedPositions)
         {
-            Position = point.Position,
-            Blueprint = TileId.HighGround,
-            Terrain = Terrain.HighGround,
-            IsTarget = false,
-            Occupants = new List<EntityNode>(),
-            Point = point,
-            YSpriteOffset = ySpriteOffset
-        };
-        _tiles[(point.Position, true)] = tile;
+            var tile = GetTile(position, true);
+            if (tile is null)
+            {
+                tile = new TileInstance
+                {
+                    Position = position,
+                    Blueprint = TileId.HighGround,
+                    Terrain = Terrain.HighGround,
+                    IsTarget = false,
+                    Occupants = new List<EntityNode>(),
+                    Point = null,
+                    YSpriteOffset = ySpriteOffset
+                };
+                _tiles[(position, true)] = tile;
+                
+                continue;
+            }
+            
+            tile.YSpriteOffset = ySpriteOffset;
+        }
+    }
+
+    private void OnHighGroundPointCreated(Point point)
+    {
+        var tile = GetTile(point.Position, true);
+        if (tile is null)
+        {
+            tile = new TileInstance
+            {
+                Position = point.Position,
+                Blueprint = TileId.HighGround,
+                Terrain = Terrain.HighGround,
+                IsTarget = false,
+                Occupants = new List<EntityNode>(),
+                Point = point,
+                YSpriteOffset = 0
+            };
+            _tiles[(point.Position, true)] = tile;
+
+            return;
+        }
+
+        tile.Point = point;
     }
 
     private void OnHighGroundPointRemoved(Point point) => _tiles.Remove((point.Position, true));

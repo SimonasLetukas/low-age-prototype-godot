@@ -4,7 +4,6 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.IO;
-using low_age_data.Shared;
 
 namespace low_age_data
 {

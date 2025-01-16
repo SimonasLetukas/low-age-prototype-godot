@@ -5,7 +5,6 @@ using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Common.Shape;
 using low_age_data.Domain.Entities;
-using low_age_data.Shared;
 using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
 
@@ -47,7 +46,7 @@ public class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelectable
     public bool CanBePlacedOnTheWholeMap() => PlacementArea is low_age_data.Domain.Common.Shape.Map 
                                              && Blueprint.UseWalkableTilesAsPlacementArea is false;
 
-    public IEnumerable<Vector2> GetPlacementPositions(EntityNode caster, Vector2 mapSize)
+    public IEnumerable<Vector2<int>> GetPlacementPositions(EntityNode caster, Vector2<int> mapSize)
     {
         if (Blueprint.UseWalkableTilesAsPlacementArea && caster is StructureNode structure)
         {

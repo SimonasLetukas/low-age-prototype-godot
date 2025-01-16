@@ -16,7 +16,7 @@ using low_age_data.Domain.Entities.Doodads;
 using low_age_data.Domain.Logic;
 using Newtonsoft.Json.Serialization;
 
-namespace low_age_data.Shared
+namespace low_age_data
 {
     public class KnownTypesBinder : ISerializationBinder
     {

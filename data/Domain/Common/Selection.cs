@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using low_age_data.Domain.Entities;
-using low_age_data.Shared;
 using low_age_prototype_common;
 
 namespace low_age_data.Domain.Common

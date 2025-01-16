@@ -27,6 +27,10 @@ namespace multipurpose_pathfinding
         public override int GetHashCode() => Value.GetHashCode();
 
         public static implicit operator Team(int team) => new Team(team);
+        
+        public static bool operator ==(Team left, Team right) => left.Equals(right);
+
+        public static bool operator !=(Team left, Team right) => !left.Equals(right);
 
         public int Compare(Team x, Team y)
         {

@@ -1,5 +1,4 @@
-﻿using low_age_data.Shared;
-using low_age_prototype_common;
+﻿using low_age_prototype_common;
 
 /// <summary>
 /// Identifies abilities that should open a selection menu when pressed.

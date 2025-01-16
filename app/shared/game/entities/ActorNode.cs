@@ -106,13 +106,13 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     protected void UpdateVitalsPosition()
     {
         var spriteSize = Renderer.SpriteSize;
-        var offsetFromX = (int)(RelativeSize.Size.x - 1) *
+        var offsetFromX = (int)(RelativeSize.Size.X - 1) *
                           new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 2)) +
-                          (int)RelativeSize.Position.x *
+                          (int)RelativeSize.Start.X *
                           new Vector2((int)(Constants.TileWidth / 2), (int)(Constants.TileHeight / 2));
-        var offsetFromY = (int)(RelativeSize.Size.y - 1) *
+        var offsetFromY = (int)(RelativeSize.Size.Y - 1) *
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 2)) +
-                          (int)RelativeSize.Position.y *
+                          (int)RelativeSize.Start.Y *
                           new Vector2((int)(Constants.TileWidth / 2) * -1, (int)(Constants.TileHeight / 2));
         _health.RectPosition = new Vector2(_startingHealthPosition.x,
             (spriteSize.y * -1) - 2 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;

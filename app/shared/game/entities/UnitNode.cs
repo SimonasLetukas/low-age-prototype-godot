@@ -3,6 +3,8 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities.Actors.Units;
+using low_age_prototype_common;
+using multipurpose_pathfinding;
 
 public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 {
@@ -25,7 +27,7 @@ public class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
-        EntitySize = Vector2.One * Blueprint.Size;
+        EntitySize = Vector2Int.One * Blueprint.Size;
         Movement = CurrentStats.First(x => 
                 x.Blueprint is CombatStat combatStat
                 && combatStat.CombatType.Equals(StatType.Movement))

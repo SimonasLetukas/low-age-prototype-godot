@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public class NavigationBoxPanel : TextureRect // TODO extract base class for all buttons (there's a lot of duplication)
 {

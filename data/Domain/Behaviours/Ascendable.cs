@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Common.Filters;
 using low_age_data.Domain.Entities.Actors;
 using low_age_data.Domain.Tiles;
 

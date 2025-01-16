@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Entities;
-using low_age_data.Shared;
 using low_age_prototype_common;
 
 public class SelectionPanel : Control

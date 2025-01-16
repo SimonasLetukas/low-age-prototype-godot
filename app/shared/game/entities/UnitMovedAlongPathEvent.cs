@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using multipurpose_pathfinding;
 
 public class UnitMovedAlongPathEvent : IGameEvent
 {

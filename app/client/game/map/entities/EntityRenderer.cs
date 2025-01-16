@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using low_age_prototype_common;
+using Area = low_age_prototype_common.Area;
 
 public class EntityRenderer : Node2D
 {
@@ -26,7 +28,7 @@ public class EntityRenderer : Node2D
     public readonly List<EntityRenderer> DynamicDependencies = new List<EntityRenderer>();
     
     private EntityNode _parentEntity;
-    private Rect2 _entityRelativeSize;
+    private Area _entityRelativeSize;
     
     private Vector2 _topOrigin;
     private Vector2 _bottomOrigin;
@@ -86,7 +88,7 @@ public class EntityRenderer : Node2D
         IsDynamic = isDynamic;
 
         var entityRelativeSize = parentEntity.RelativeSize;
-        SortType = (int)entityRelativeSize.Size.x == (int)entityRelativeSize.Size.y ? SortTypes.Point : SortTypes.Line;
+        SortType = entityRelativeSize.Size.X == entityRelativeSize.Size.Y ? SortTypes.Point : SortTypes.Line;
         
         AdjustToRelativeSize(entityRelativeSize);
         SetSpriteVisibility(true);
@@ -127,11 +129,11 @@ public class EntityRenderer : Node2D
         UpdateSpriteBounds();
     }
 
-    public void UpdateSpriteOffset(Vector2 entitySize, Vector2 centerOffset)
+    public void UpdateSpriteOffset(Vector2<int> entitySize, Vector2 centerOffset)
     {
-        var offsetFromX = (int)(entitySize.x - 1) * 
+        var offsetFromX = (int)(entitySize.X - 1) * 
                         new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
-        var offsetFromY = (int)(entitySize.y - 1) *
+        var offsetFromY = (int)(entitySize.Y - 1) *
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
         _sprite.Offset = (centerOffset * -1) + offsetFromX + offsetFromY;
         UpdateSpriteBounds();
@@ -154,7 +156,7 @@ public class EntityRenderer : Node2D
         UpdateSpriteBounds();
     }
 
-    public void AdjustToRelativeSize(Rect2 entityRelativeSize)
+    public void AdjustToRelativeSize(Area entityRelativeSize)
     {
         _entityRelativeSize = entityRelativeSize;
         UpdateOrigins();
@@ -162,20 +164,20 @@ public class EntityRenderer : Node2D
 
     public void UpdateOrigins()
     {
-        var position = _entityRelativeSize.Position;
+        var position = _entityRelativeSize.Start;
         var entitySize = _entityRelativeSize.Size;
-        var xBiggerThanY = entitySize.x > entitySize.y;
+        var xBiggerThanY = entitySize.X > entitySize.Y;
 
-        var px = position.x;
-        var py = position.y;
-        var sx = entitySize.x;
-        var sy = entitySize.y;
+        var px = position.X;
+        var py = position.Y;
+        var sx = entitySize.X;
+        var sy = entitySize.Y;
         
         const int widthStep = Constants.TileWidth / 2;
         const int heightStep = Constants.TileHeight / 2;
         
         _topOrigin = GlobalPosition + (SortType is SortTypes.Point
-            ? entitySize.x > 1 ? new Vector2(0, (entitySize.x - 1) * heightStep) : Vector2.Zero
+            ? entitySize.X > 1 ? new Vector2(0, (entitySize.X - 1) * heightStep) : Vector2.Zero
             : new Vector2(
                 (xBiggerThanY ? (sy - px) * -1 : sx - py) * widthStep, 
                 ((xBiggerThanY ? sy + px : sx + py) - 1) * heightStep));

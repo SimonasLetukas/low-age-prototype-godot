@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
+using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
 
 public class HoveringPanel : Control
@@ -29,13 +30,13 @@ public class HoveringPanel : Control
         _mapSize = mapSize;
     }
     
-    private void OnNewTileFocused(Vector2 tileHovered, Terrain terrain, IList<EntityNode> occupants)
+    private void OnNewTileFocused(Vector2<int> tileHovered, Terrain terrain, IList<EntityNode> occupants)
     {
         string coordinatesText;
         string terrainText;
         var occupantsText = string.Empty;
 
-        if (tileHovered.IsInBoundsOf(_mapSize) is false)
+        if (tileHovered.IsInBoundsOf(_mapSize.ToVector2()) is false)
         {
             coordinatesText = "-, -";
             terrainText = "Mountains";
@@ -43,7 +44,7 @@ public class HoveringPanel : Control
         }
         else
         {
-            coordinatesText = $"{tileHovered.x}, {tileHovered.y}";
+            coordinatesText = $"{tileHovered.X}, {tileHovered.Y}";
             terrainText = terrain.ToDisplayValue().Capitalize();
             
             if (occupants is null || occupants.IsEmpty())

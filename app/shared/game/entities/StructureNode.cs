@@ -2,7 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Entities.Actors.Structures;
+using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
+using multipurpose_pathfinding;
+using Area = low_age_prototype_common.Area;
 
 public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {
@@ -16,18 +19,18 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         return structure;
     }
     
-    public override Rect2 RelativeSize => EntitySize.Except(WalkablePositionsBlueprint);
+    public override Area RelativeSize => EntitySize.Except(WalkablePositionsBlueprint);
     public string FlattenedSprite { get; private set; }
     public Vector2? FlattenedCenterOffset { get; private set; }
-    public Vector2 CenterPoint { get; protected set; }
-    public IList<Rect2> WalkableAreasBlueprint { get; protected set; }
-    public IEnumerable<Rect2> WalkableAreas => WalkableAreasBlueprint.Select(x => 
-        new Rect2(x.Position + EntityPrimaryPosition, x.Size)).ToList();
-    public IEnumerable<Vector2> WalkablePositionsBlueprint => WalkableAreasBlueprint.Select(walkableArea =>
+    public Vector2<int> CenterPoint { get; protected set; }
+    public IList<Area> WalkableAreasBlueprint { get; protected set; }
+    public IEnumerable<Area> WalkableAreas => WalkableAreasBlueprint.Select(x => 
+        new Area(x.Start + EntityPrimaryPosition, x.Size)).ToList();
+    public IEnumerable<Vector2<int>> WalkablePositionsBlueprint => WalkableAreasBlueprint.Select(walkableArea =>
         walkableArea.ToList()).SelectMany(walkablePositions => walkablePositions).ToHashSet();
-    public IEnumerable<Vector2> WalkablePositions => WalkableAreas.Select(walkableArea => walkableArea.ToList())
+    public IEnumerable<Vector2<int>> WalkablePositions => WalkableAreas.Select(walkableArea => walkableArea.ToList())
         .SelectMany(walkablePositions => walkablePositions).ToHashSet();
-    public IEnumerable<Vector2> NonWalkablePositions => EntityOccupyingPositions.Except(WalkablePositions);
+    public IEnumerable<Vector2<int>> NonWalkablePositions => EntityOccupyingPositions.Except(WalkablePositions);
     
     private Structure Blueprint { get; set; }
     
@@ -35,11 +38,11 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
-        EntitySize = blueprint.Size.ToGodotVector2();
+        EntitySize = blueprint.Size;
         FlattenedSprite = blueprint.FlattenedSprite;
         FlattenedCenterOffset = Blueprint.FlattenedCenterOffset?.ToGodotVector2();
-        CenterPoint = blueprint.CenterPoint.ToGodotVector2();
-        WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(EntitySize)).ToList();
+        CenterPoint = blueprint.CenterPoint;
+        WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.TrimTo(EntitySize)).ToList();
         
         Renderer.Initialize(this, false);
         UpdateSprite();
@@ -50,36 +53,36 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
     {
         var centerPointAssigned = false;
         
-        for (var x = 0; x < EntitySize.x; x++)
+        for (var x = 0; x < EntitySize.X; x++)
         {
             if (centerPointAssigned)
                 break;
             
-            for (var y = 0; y < EntitySize.y; y++)
+            for (var y = 0; y < EntitySize.Y; y++)
             {
                 if (centerPointAssigned)
                     break;
                 
-                var currentPoint = new Vector2(x, y);
-                var newX = EntitySize.y - 1 - y;
+                var currentPoint = new Vector2<int>(x, y);
+                var newX = EntitySize.Y - 1 - y;
                 var newY = x;
 
-                if (CenterPoint.IsEqualApprox(currentPoint) is false)
+                if (CenterPoint.Equals(currentPoint) is false)
                     continue;
                 
-                CenterPoint = new Vector2(newX, newY);
+                CenterPoint = new Vector2<int>(newX, newY);
                 centerPointAssigned = true;
             }
         }
 
         WalkableAreasBlueprint = WalkableAreasBlueprint.RotateClockwiseInside(EntitySize);
-        EntitySize = new Vector2(EntitySize.y, EntitySize.x);
+        EntitySize = new Vector2<int>(EntitySize.Y, EntitySize.X);
         Renderer.AdjustToRelativeSize(RelativeSize);
         
         base.Rotate();
     }
 
-    public override bool CanBeMovedOnAt(Point point, int forTeam)
+    public override bool CanBeMovedOnAt(Point point, Team forTeam)
     {
         if (WalkablePositions.Any(point.Position.Equals))
             return true;
@@ -87,7 +90,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         return base.CanBeMovedOnAt(point, forTeam);
     }
 
-    public override bool CanBeMovedThroughAt(Point point, int forTeam) => CanBeMovedOnAt(point, forTeam);
+    public override bool CanBeMovedThroughAt(Point point, Team forTeam) => CanBeMovedOnAt(point, forTeam);
     
     protected override void UpdateVisuals()
     {

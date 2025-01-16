@@ -154,7 +154,7 @@ public class InitializationTerrainTests
     }
     
     public static IEnumerable<object[]> GetExpectedDiagonals()
-    {
+    { 
         yield return
         [
             new Vector2<int>(0, 0),

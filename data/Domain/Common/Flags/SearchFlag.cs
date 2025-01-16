@@ -1,7 +1,6 @@
 ﻿using System;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Entities;
-using low_age_data.Shared;
 using low_age_prototype_common;
 using Newtonsoft.Json;
 

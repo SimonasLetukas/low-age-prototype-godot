@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using low_age_prototype_common;
 
 public class FocusedTile : AnimatedSprite
 {
@@ -13,7 +13,7 @@ public class FocusedTile : AnimatedSprite
 
     private Tiles _tiles;
     private EntityNode _focusedEntity = null;
-    private Vector2 _previousPosition = Vector2.Zero;
+    private Vector2<int> _previousPosition = Vector2Int.Zero;
     private bool _stateChanged = false;
 
     private RichTextLabel _zIndexText;
@@ -98,7 +98,7 @@ public class FocusedTile : AnimatedSprite
     public void Enable() => Visible = true;
     public void Disable() => Visible = false;
     
-    private void MoveTo(Vector2 position, int height, int zIndex)
+    private void MoveTo(Vector2<int> position, int height, int zIndex)
     {
         GlobalPosition = _tiles.GetGlobalPositionFromMapPosition(position) + Vector2.Up * height;
         ZIndex = zIndex;

@@ -4,7 +4,6 @@ using Godot;
 using low_age_data;
 using low_age_data.Domain.Entities;
 using low_age_data.Domain.Factions;
-using low_age_data.Shared;
 using Newtonsoft.Json;
 
 /// <summary>

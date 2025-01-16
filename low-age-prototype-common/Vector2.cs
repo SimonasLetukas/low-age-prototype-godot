@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using low_age_prototype_common.Extensions;
 
 namespace low_age_prototype_common
 {
@@ -19,6 +22,90 @@ namespace low_age_prototype_common
         public static bool IsDiagonalTo(this Vector2<int> vector2, Vector2<int> point) 
             => vector2.X - vector2.Y == point.X - point.Y 
                || vector2.X + vector2.Y == point.X + point.Y;
+        
+        public static Area Except(this Vector2<int> size, IEnumerable<Vector2<int>> points)
+        {
+            var allPoints = new Area(Vector2Int.Zero, size).ToList();
+            var remainingPoints = allPoints.Except(points).ToList();
+            if (remainingPoints.IsEmpty())
+                return new Area(0, 0, 0, 0);
+        
+            var smallestX = int.MaxValue;
+            var smallestY = int.MaxValue;
+            var highestX = int.MinValue;
+            var highestY = int.MinValue;
+            foreach (var point in remainingPoints)
+            {
+                if (point.X < smallestX)
+                    smallestX = point.X;
+                if (point.Y < smallestY)
+                    smallestY = point.Y;
+                if (point.X > highestX)
+                    highestX = point.X;
+                if (point.Y > highestY)
+                    highestY = point.Y;
+            }
+
+            return new Area(smallestX, smallestY, highestX - smallestX + 1, highestY - smallestY + 1);
+        }
+        
+        public static IList<Area> ToSquareRects(this IList<Vector2<int>> points)
+        {
+            var rects = new List<Area>();
+            var checkedPoints = points.ToDictionary(point => point, point => false);
+
+            foreach (var point in points)
+            {
+                if (checkedPoints[point])
+                    continue;
+
+                checkedPoints[point] = true;
+                var startPoint = new Vector2<int>(point.X, point.Y);
+                var size = 1;
+                while (NextExtensionExists(checkedPoints, startPoint, size))
+                    size++;
+            
+                rects.Add(new Area(startPoint, new Vector2<int>(size, size)));
+            }
+
+            return rects;
+        }
+        
+        private static bool NextExtensionExists(IDictionary<Vector2<int>, bool> points, Vector2<int> startPoint, int depth)
+        {
+            var validPoints = new List<Vector2<int>>();
+            var verticallyValid = true;
+            for (var y = 0; y < depth; y++)
+            {
+                var point = new Vector2<int>(startPoint.X + depth, startPoint.Y + y);
+                if (points.ContainsKey(point) && points[point] is false)
+                    validPoints.Add(point);
+                else
+                    verticallyValid = false;
+            }
+            var horizontallyValid = true;
+            for (var x = 0; x < depth; x++)
+            {
+                var point = new Vector2<int>(startPoint.X + x, startPoint.Y + depth);
+                if (points.ContainsKey(point) && points[point] is false)
+                    validPoints.Add(point);
+                else
+                    horizontallyValid = false;
+            }
+
+            var finalPoint = new Vector2<int>(startPoint.X + depth, startPoint.Y + depth);
+            if (verticallyValid && horizontallyValid && points.ContainsKey(finalPoint) && points[finalPoint] is false)
+            {
+                validPoints.Add(finalPoint);
+                foreach (var point in validPoints)
+                {
+                    points[point] = true;
+                }
+                return true;
+            }
+
+            return false;
+        }
     }
     
     public struct Vector2Int

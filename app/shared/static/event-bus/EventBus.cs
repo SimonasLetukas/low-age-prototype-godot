@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Godot;
 using low_age_data.Domain.Common;
+using low_age_prototype_common;
+using multipurpose_pathfinding;
 
 /// <summary>
 /// Used to pass around events globally when wiring them directly is not an option
@@ -26,8 +28,8 @@ public class EventBus : Node
 
     #region Events
 
-    public event Action<Vector2, Terrain, IList<EntityNode>> NewTileFocused = delegate { };
-    public void RaiseNewTileFocused(Vector2 mapPosition, Terrain terrain, IList<EntityNode> occupants)
+    public event Action<Vector2<int>, Terrain, IList<EntityNode>> NewTileFocused = delegate { };
+    public void RaiseNewTileFocused(Vector2<int> mapPosition, Terrain terrain, IList<EntityNode> occupants)
         => NewTileFocused(mapPosition, terrain, occupants);
     
     public event Action<EntityNode> EntityPlaced = delegate { };
@@ -39,9 +41,9 @@ public class EventBus : Node
     public event Action<IPathfindingUpdatable, bool> PathfindingUpdating = delegate { };
     public void RaisePathfindingUpdating(IPathfindingUpdatable data, bool isAdded) => PathfindingUpdating(data, isAdded);
 
-    public event Action<Point, int> HighGroundPointCreated = delegate { };
-    public void RaiseHighGroundPointCreated(Point point, int ySpriteOffset) 
-        => HighGroundPointCreated(point, ySpriteOffset);
+    public event Action<Point> HighGroundPointCreated = delegate { };
+    public void RaiseHighGroundPointCreated(Point point) 
+        => HighGroundPointCreated(point);
     
     public event Action<Point> HighGroundPointRemoved = delegate { };
     public void RaiseHighGroundPointRemoved(Point point) => HighGroundPointRemoved(point);

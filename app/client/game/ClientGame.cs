@@ -107,8 +107,8 @@ public class ClientGame : Game
         switch (gameEvent)
         {
             case MapCreatedEvent mapCreatedEvent:
-                _camera.SetMapSize(mapCreatedEvent.MapSize);
-                _interface.SetMapSize(mapCreatedEvent.MapSize);
+                _camera.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
+                _interface.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
                 _map.Initialize(mapCreatedEvent);
                 break;
             case InitializationCompletedEvent initializationCompletedEvent:

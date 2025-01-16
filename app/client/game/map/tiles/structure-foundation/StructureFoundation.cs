@@ -25,8 +25,9 @@ public class StructureFoundation : TileMap
     {
         foreach (var walkablePosition in structure.WalkablePositions)
         {
-            SetCellv(walkablePosition, WalkableTileIndex);
-            UpdateBitmaskRegion(walkablePosition);
+            var godotWalkablePosition = walkablePosition.ToGodotVector2();
+            SetCellv(godotWalkablePosition, WalkableTileIndex);
+            UpdateBitmaskRegion(godotWalkablePosition);
         }
         
         if (structure.FlattenedSprite != null && structure.FlattenedCenterOffset != null)
@@ -36,8 +37,9 @@ public class StructureFoundation : TileMap
 
         foreach (var position in structure.NonWalkablePositions)
         {
-            SetCellv(position, StructureTileIndex);
-            UpdateBitmaskRegion(position);
+            var godotPosition = position.ToGodotVector2();
+            SetCellv(godotPosition, StructureTileIndex);
+            UpdateBitmaskRegion(godotPosition);
         }
     }
 }

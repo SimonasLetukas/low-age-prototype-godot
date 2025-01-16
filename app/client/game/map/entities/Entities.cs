@@ -6,6 +6,8 @@ using low_age_data.Domain.Entities;
 using low_age_data.Domain.Entities.Actors.Structures;
 using low_age_data.Domain.Entities.Actors.Units;
 using low_age_data.Domain.Factions;
+using low_age_prototype_common;
+using multipurpose_pathfinding;
 
 /// <summary>
 /// Parent of all entities (units & structures) and their rendering on the map.
@@ -27,8 +29,8 @@ public class Entities : Node2D
     private EntityRenderers _renderers;
     private Node2D _units;
     private Node2D _structures;
-    private Func<IList<Vector2>, IList<Tiles.TileInstance>> _getHighestTiles;
-    private Func<Vector2, bool, Tiles.TileInstance> _getTile;
+    private Func<IList<Vector2<int>>, IList<Tiles.TileInstance>> _getHighestTiles;
+    private Func<Vector2<int>, bool, Tiles.TileInstance> _getTile;
 
     private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new Dictionary<Guid, EntityNode>();
 
@@ -41,14 +43,14 @@ public class Entities : Node2D
         NewPositionOccupied += _renderers.UpdateSorting;
     }
     
-    public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getHighestTiles, 
-        Func<Vector2, bool, Tiles.TileInstance> getTile)
+    public void Initialize(Func<IList<Vector2<int>>, IList<Tiles.TileInstance>> getHighestTiles, 
+        Func<Vector2<int>, bool, Tiles.TileInstance> getTile)
     {
         _getHighestTiles = getHighestTiles;
         _getTile = getTile;
     }
 
-    public void SetupStartingEntities(IList<Vector2> startingPositions, FactionId factionId)
+    public void SetupStartingEntities(IList<Vector2<int>> startingPositions, FactionId factionId)
     {
         var startingEntities = Data.Instance.Blueprint.Factions.First(x => x.Id.Equals(factionId))
             .StartingEntities;
@@ -202,7 +204,7 @@ public class Entities : Node2D
         return newEntity;
     }
 
-    public void UpdateEntityInPlacement(Vector2 mapPosition, Vector2 globalPosition)
+    public void UpdateEntityInPlacement(Vector2<int> mapPosition, Vector2 globalPosition)
     {
         EntityInPlacement.EntityPrimaryPosition = mapPosition;
         EntityInPlacement.SnapTo(globalPosition);
@@ -246,7 +248,7 @@ public class Entities : Node2D
         return PlaceEntity(entity, false);
     }
     
-    private EntityNode PlaceEntity(Entity entityBlueprint, Vector2 mapPosition)
+    private EntityNode PlaceEntity(Entity entityBlueprint, Vector2<int> mapPosition)
     {
         var entity = InstantiateEntity(entityBlueprint);
         entity.EntityPrimaryPosition = mapPosition;

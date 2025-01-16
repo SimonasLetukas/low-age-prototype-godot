@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data.Domain.Entities;
+using low_age_prototype_common;
 using low_age_prototype_common.Extensions;
+using multipurpose_pathfinding;
+using Area = low_age_prototype_common.Area;
 
 /// <summary>
 /// Selectable object that has a presence and is interactable on the map: <see cref="ActorNode"/>
@@ -22,20 +25,20 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public Guid InstanceId { get; set; } = Guid.NewGuid();
 
-    public int Team { get; set; } = 1;
+    public Team Team { get; set; } = 1;
     public EntityRenderer Renderer { get; private set; }
-    public Vector2 EntityPrimaryPosition { get; set; }
-    public Vector2 EntitySize { get; protected set; } = Vector2.One;
-    public virtual Rect2 RelativeSize => new Rect2(Vector2.Zero, EntitySize);
-    public IList<Vector2> EntityOccupyingPositions => new Rect2(EntityPrimaryPosition, EntitySize).ToList();
-    public Dictionary<Vector2, int> ProvidedHighGroundHeightByOccupyingPosition =>
+    public Vector2<int> EntityPrimaryPosition { get; set; }
+    public Vector2<int> EntitySize { get; protected set; } = Vector2Int.One;
+    public virtual Area RelativeSize => new Area(Vector2Int.Zero, EntitySize);
+    public IList<Vector2<int>> EntityOccupyingPositions => new Area(EntityPrimaryPosition, EntitySize).ToList();
+    public Dictionary<Vector2<int>, int> ProvidedHighGroundHeightByOccupyingPosition =>
         _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
             pair => pair.Value);
     public string DisplayName { get; protected set; }
     public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; }
-    public Func<IList<Vector2>, IList<Tiles.TileInstance>> GetHighestTiles { protected get; set; }
-    public Func<Vector2, bool, Tiles.TileInstance> GetTile { protected get; set; }
+    public Func<IList<Vector2<int>>, IList<Tiles.TileInstance>> GetHighestTiles { protected get; set; }
+    public Func<Vector2<int>, bool, Tiles.TileInstance> GetTile { protected get; set; }
     
     protected bool Selected { get; private set; } = false;
     protected bool Hovered { get; private set; } = false;
@@ -52,7 +55,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     private IList<Vector2> _movePath = new List<Vector2>();
 
-    private Dictionary<Vector2, int> _providingHighGroundHeightByLocalEntityPosition = new Dictionary<Vector2, int>();
+    private readonly Dictionary<Vector2<int>, int> _providingHighGroundHeightByLocalEntityPosition = new Dictionary<Vector2<int>, int>();
     private float _movementDuration;
     private Tween _movement;
     private bool _canBePlacedOnTheWholeMap = false;
@@ -192,7 +195,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         MoveToNextTarget();
     }
 
-    public virtual bool CanBeMovedOnAt(Point point, int forTeam)
+    public virtual bool CanBeMovedOnAt(Point point, Team forTeam)
     {
         if (HasHighGroundAt(point, forTeam))
             return true;
@@ -203,9 +206,9 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         return true;
     }
 
-    public virtual bool CanBeMovedThroughAt(Point point, int forTeam) => true;
+    public virtual bool CanBeMovedThroughAt(Point point, Team forTeam) => true;
 
-    public bool HasHighGroundAt(Point point, int forTeam)
+    public bool HasHighGroundAt(Point point, Team forTeam)
     {
         if (point.IsHighGround is false)
             return false;
@@ -219,8 +222,21 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         if (pathfindingUpdatableBehaviours.IsEmpty())
             return false;
 
-        var result = pathfindingUpdatableBehaviours.Any(x => x.CanBeMovedOnAt(position, forTeam));
+        var result = pathfindingUpdatableBehaviours.Any(x => 
+            x.CanBeMovedOnAt(position, forTeam));
         
+        return result;
+    }
+
+    public bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam)
+    {
+        var pathfindingUpdatableBehaviours = Behaviours.GetPathfindingUpdatables;
+        if (pathfindingUpdatableBehaviours.IsEmpty())
+            return true;
+        
+        var result = pathfindingUpdatableBehaviours.All(x => 
+            x.AllowsConnectionBetweenPoints(fromPoint, toPoint, forTeam));
+
         return result;
     }
     
