@@ -9,7 +9,7 @@ using low_age_data.Domain.Entities;
 /// (<see cref="StructureNode"/> or <see cref="UnitNode"/>) with abilities and stats, or a simple
 /// <see cref="DoodadNode"/>.
 /// </summary>
-public class EntityNode : Node2D, INodeFromBlueprint<Entity>
+public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 {
     [Export] public Color PlacementColorSuccess { get; set; } = Colors.Green;
     [Export] public Color PlacementColorInvalid { get; set; } = Colors.Red;
@@ -67,7 +67,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         _movementDuration = GetDurationFromAnimationSpeed();
         _movement = GetNode<Tween>("Movement");
 
-        _movement.Connect("tween_all_completed", this, nameof(OnMovementTweenAllCompleted));
+        _movement.Connect("tween_all_completed", new Callable(this, nameof(OnMovementTweenAllCompleted)));
     }
     
     public void SetBlueprint(Entity blueprint)
@@ -84,7 +84,7 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
         shape.Extents = new Vector2(spriteSize.x / 2, spriteSize.y / 2);
 
         var collision = new CollisionShape2D();
-        collision.Shape = shape;
+        collision.Shape3D = shape;
         
         area.AddChild(collision);
         area.Position = new Vector2(Position.x, Position.y - spriteSize.y / 2);
@@ -228,8 +228,8 @@ public class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     protected virtual void UpdateSprite()
     {
-        if (Blueprint.Sprite != null)
-            Renderer.SetSpriteTexture(Blueprint.Sprite);
+        if (Blueprint.Sprite2D != null)
+            Renderer.SetSpriteTexture(Blueprint.Sprite2D);
         
         AdjustSpriteOffset();
     }

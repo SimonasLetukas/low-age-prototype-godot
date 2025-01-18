@@ -1,10 +1,10 @@
 using Godot;
 using System;
 
-public class AttackTypePanel : TextureRect
+public partial class AttackTypePanel : TextureRect
 {
-    [Export] public Texture TextureNormal { get; set; }
-    [Export] public Texture TextureClicked { get; set; }
+    [Export] public Texture2D TextureNormal { get; set; }
+    [Export] public Texture2D TextureClicked { get; set; }
 
     private TextureRect _attackTypeIcon;
     
@@ -20,11 +20,11 @@ public class AttackTypePanel : TextureRect
         switch (to)
         {
             case true:
-                Texture = TextureClicked;
+                Texture2D = TextureClicked;
                 _attackTypeIcon.Modulate = new Color(_attackTypeIcon.Modulate, 0.7f);
                 break;
             case false:
-                Texture = TextureNormal;
+                Texture2D = TextureNormal;
                 _attackTypeIcon.Modulate = new Color(_attackTypeIcon.Modulate, 1f);
                 break;
         }

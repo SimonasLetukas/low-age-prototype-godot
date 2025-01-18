@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using low_age_data.Domain.Common;
 
-public class InfoDisplay : MarginContainer
+public partial class InfoDisplay : MarginContainer
 {
     [Signal] public delegate void AbilitiesClosed();
     [Signal] public delegate void AbilityTextResized();
@@ -92,12 +92,12 @@ public class InfoDisplay : MarginContainer
         _abilityDescription = GetNode<Control>($"{nameof(VBoxContainer)}/AbilityDescription");
         _actorAttributes = GetNode<ActorAttributes>($"{nameof(VBoxContainer)}/{nameof(ActorAttributes)}");
 
-        _rightSideMeleeAttack.Connect(nameof(AttackTypeBox.Clicked), this, nameof(OnMeleeClicked));
-        _rightSideRangedAttack.Connect(nameof(AttackTypeBox.Clicked), this, nameof(OnRangedClicked));
-        _rightSideMeleeAttack.Connect(nameof(AttackTypeBox.Hovering), this, nameof(OnMeleeHovering));
-        _rightSideRangedAttack.Connect(nameof(AttackTypeBox.Hovering), this, nameof(OnRangedHovering));
-        _navigationBack.Connect(nameof(NavigationBox.Clicked), this, nameof(OnNavigationBoxClicked));
-        _abilityDescription.GetNode<RichTextLabel>("Text").Connect("resized", this, nameof(OnTextResized));
+        _rightSideMeleeAttack.Connect(nameof(AttackTypeBox.Clicked), new Callable(this, nameof(OnMeleeClicked)));
+        _rightSideRangedAttack.Connect(nameof(AttackTypeBox.Clicked), new Callable(this, nameof(OnRangedClicked)));
+        _rightSideMeleeAttack.Connect(nameof(AttackTypeBox.Hovering), new Callable(this, nameof(OnMeleeHovering)));
+        _rightSideRangedAttack.Connect(nameof(AttackTypeBox.Hovering), new Callable(this, nameof(OnRangedHovering)));
+        _navigationBack.Connect(nameof(NavigationBox.Clicked), new Callable(this, nameof(OnNavigationBoxClicked)));
+        _abilityDescription.GetNode<RichTextLabel>("Text").Connect("resized", new Callable(this, nameof(OnTextResized)));
         
         _leftSideBottomEmptyBlock.SetEmpty();
         ShowView(View.UnitStats);
@@ -390,7 +390,7 @@ public class InfoDisplay : MarginContainer
         _researchText.SetResearch(_valueResearchText);
         GetNode<AbilitySubtitle>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(AbilitySubtitle)}")
             .SetAbilitySubtitle(_valueAbilityTurnPhase, _valueAbilityCooldown);
-        _abilityDescription.GetNode<RichTextLabel>("Text").BbcodeText = _valueAbilityText;
+        _abilityDescription.GetNode<RichTextLabel>("Text").Text = _valueAbilityText;
 
         _abilityTitle.Visible = true;
         _researchText.Visible = _valueResearchText.Empty() is false;

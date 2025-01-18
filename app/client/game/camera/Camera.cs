@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class Camera : Camera2D
+public partial class Camera3D : Camera2D
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     [Export(PropertyHint.Range, "-200,100,5")] public int HorizontalLimitMargin { get; set; } = 30;
@@ -35,9 +35,9 @@ public class Camera : Camera2D
         
         if (DebugEnabled)
         {
-            GD.Print($"{nameof(Camera)}: map width '{_mapWidthPixels}'");
-            GD.Print($"{nameof(Camera)}: map height '{_mapHeightPixels}'");
-            GD.Print($"{nameof(Camera)}: camera position '{Position}'");
+            GD.Print($"{nameof(Camera3D)}: map width '{_mapWidthPixels}'");
+            GD.Print($"{nameof(Camera3D)}: map height '{_mapHeightPixels}'");
+            GD.Print($"{nameof(Camera3D)}: camera position '{Position}'");
         }
 
         SetLimits();
@@ -111,10 +111,10 @@ public class Camera : Camera2D
         var position = GetGlobalMousePosition();
         _currentZoomLevel++;
         UpdateZoom();
-        SmoothingEnabled = false;
+        PositionSmoothingEnabled = false;
         Position = position;
         ResetSmoothing();
-        SmoothingEnabled = true;
+        PositionSmoothingEnabled = true;
     }
 
     private void ZoomOut(float delta)
@@ -126,7 +126,7 @@ public class Camera : Camera2D
 
     private void UpdateZoom()
     {
-        var amount = Mathf.Stepify(1f / _timesPerZoomLevel[_currentZoomLevel], 0.1f);
+        var amount = Mathf.Snapped(1f / _timesPerZoomLevel[_currentZoomLevel], 0.1f);
         Zoom = new Vector2(amount, amount);
         _viewportSize = GetViewport().Size;
     }

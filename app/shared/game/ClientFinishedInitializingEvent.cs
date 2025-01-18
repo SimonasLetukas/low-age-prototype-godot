@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-public class ClientFinishedInitializingEvent : IGameEvent
+public partial class ClientFinishedInitializingEvent : IGameEvent
 {
     public ClientFinishedInitializingEvent(int playerId)
     {

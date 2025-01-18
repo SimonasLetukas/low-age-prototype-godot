@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Godot;
@@ -6,7 +6,7 @@ using Xunit;
 
 namespace low_age_tests
 {
-    public class Vector2ExtensionsTests
+    public partial class Vector2ExtensionsTests
     {
         public static IEnumerable<object[]> GetExpectedRectsByListOfVector2()
         {

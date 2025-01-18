@@ -2,7 +2,7 @@ using System;
 using Godot;
 using low_age_data.Domain.Factions;
 
-public class Settings : Control
+public partial class Settings : Control
 {
     public const string ScenePath = @"res://app/client/settings/Settings.tscn";
     public static Settings Instance() => (Settings) GD.Load<PackedScene>(ScenePath).Instance();
@@ -24,10 +24,10 @@ public class Settings : Control
         _backButton = FindNode("Back") as Button;
 
         _factionSelection.FactionSelected += OnFactionSelected;
-        _animationSelection?.Connect("item_selected", this, nameof(OnAnimationSpeedSelected));
-        _researchToggle?.Connect(nameof(_researchToggle.Pressed).ToLower(), this, nameof(OnResearchToggled));
-        _bigCursorToggle?.Connect(nameof(_bigCursorToggle.Pressed).ToLower(), this, nameof(OnCursorSizeToggled));
-        _backButton?.Connect(nameof(_backButton.Pressed).ToLower(), this, nameof(OnBackPressed));
+        _animationSelection?.Connect("item_selected", new Callable(this, nameof(OnAnimationSpeedSelected)));
+        _researchToggle?.Connect(nameof(_researchToggle.Pressed).ToLower(), new Callable(this, nameof(OnResearchToggled)));
+        _bigCursorToggle?.Connect(nameof(_bigCursorToggle.Pressed).ToLower(), new Callable(this, nameof(OnCursorSizeToggled)));
+        _backButton?.Connect(nameof(_backButton.Pressed).ToLower(), new Callable(this, nameof(OnBackPressed)));
         
         _factionSelection.SetSelectedFaction(Config.Instance.StartingFaction);
         if (_animationSelection != null) _animationSelection.Selected = (int)Config.Instance.AnimationSpeed;

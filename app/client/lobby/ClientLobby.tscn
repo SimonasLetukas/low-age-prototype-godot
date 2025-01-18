@@ -7,11 +7,11 @@
 script = ExtResource( 2 )
 
 [node name="StartGame" type="Button" parent="." index="2"]
-margin_left = 600.0
-margin_top = 119.0
-margin_right = 680.0
-margin_bottom = 159.0
-rect_min_size = Vector2( 80, 40 )
+offset_left = 600.0
+offset_top = 119.0
+offset_right = 680.0
+offset_bottom = 159.0
+custom_minimum_size = Vector2( 80, 40 )
 size_flags_horizontal = 4
 disabled = true
 text = "Start"

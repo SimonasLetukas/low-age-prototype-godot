@@ -6,7 +6,7 @@ using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Common.Durations;
 
-public class AbilityNode : Node2D, INodeFromBlueprint<Ability>
+public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
 {
     public event Action<AbilityNode> Activated = delegate { };
     public event Action<AbilityNode> CooldownEnded = delegate { };

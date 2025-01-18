@@ -8,7 +8,7 @@ using low_age_data.Domain.Common;
 using low_age_data.Domain.Tiles;
 using Object = Godot.Object;
 
-public class Pathfinding : Node
+public partial class Pathfinding : Node
 {
 	public event Action FinishedInitializing = delegate { };
 
@@ -55,7 +55,7 @@ public class Pathfinding : Node
     
     public override void _Ready()
     {
-	    PauseMode = PauseModeEnum.Process;
+	    ProcessMode = PauseModeEnum.Process;
     }
 
     #region Initialization
@@ -536,7 +536,7 @@ public class Pathfinding : Node
     }
 }
 
-public class DijkstraMap : Node
+public partial class DijkstraMap : Node
 {
 	private Object _dijkstraMap; 
 

@@ -9,7 +9,7 @@ using Godot;
 /// 5. EXAMINE / ALT-SELECT (statistics, area) - RIGHT-DOWN (initiates) -> 
 ///    RIGHT-HOLD (disables EXECUTE) or CTRL-HOLD
 /// </summary>
-public class Mouse : Node2D
+public partial class Mouse : Node2D
 {
     [Export(PropertyHint.File, "*.png")] public string ArrowCursorFileLocation { get; set; }
     [Export(PropertyHint.File, "*.png")] public string ArrowCursorSmallFileLocation { get; set; }

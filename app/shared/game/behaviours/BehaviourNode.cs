@@ -3,7 +3,7 @@ using System;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Common;
 
-public class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
+public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
 {
     public event Action<BehaviourNode> Ended = delegate { };
     

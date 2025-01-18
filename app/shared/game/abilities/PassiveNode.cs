@@ -2,7 +2,7 @@ using Godot;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Behaviours;
 
-public class PassiveNode : AbilityNode, INodeFromBlueprint<Passive>
+public partial class PassiveNode : AbilityNode, INodeFromBlueprint<Passive>
 {
     public const string ScenePath = @"res://app/shared/game/abilities/PassiveNode.tscn";
     public static PassiveNode Instance() => (PassiveNode) GD.Load<PackedScene>(ScenePath).Instance();

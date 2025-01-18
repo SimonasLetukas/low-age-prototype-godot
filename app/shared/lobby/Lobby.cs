@@ -2,7 +2,7 @@ using Godot;
 using System.Linq;
 using low_age_data.Domain.Factions;
 
-public class Lobby : VBoxContainer
+public partial class Lobby : VBoxContainer
 {
     private VBoxContainer _playersList;
     
@@ -10,8 +10,8 @@ public class Lobby : VBoxContainer
     {
         _playersList = GetNode<VBoxContainer>("Players");
         
-        Client.Instance.Connect(nameof(Client.PlayerAdded), this, nameof(OnPlayerAdded));
-        Client.Instance.Connect(nameof(Network.PlayerRemoved), this, nameof(OnPlayerRemoved));
+        Client.Instance.Connect(nameof(Client.PlayerAdded), new Callable(this, nameof(OnPlayerAdded)));
+        Client.Instance.Connect(nameof(Network.PlayerRemoved), new Callable(this, nameof(OnPlayerRemoved)));
     }
 
     protected virtual void OnPlayerAdded(int playerId)
@@ -57,7 +57,7 @@ public class Lobby : VBoxContainer
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedFaction)} called with " +
                  $"{nameof(playerId)} '{playerId}', {nameof(newFactionId)} '{newFactionId}'.");
 
-        if (GetTree().IsNetworkServer()) 
+        if (GetTree().IsServer()) 
             return;
         
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedFaction)}: calling " +
@@ -71,7 +71,7 @@ public class Lobby : VBoxContainer
     /// </summary>
     /// <param name="playerId"></param>
     /// <param name="factionId"></param>
-    [RemoteSync]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
     protected virtual void ChangeSelectedFactionForPlayer(int playerId, string factionId)
     {
         GD.Print($"{nameof(Lobby)}.{nameof(ChangeSelectedFactionForPlayer)}: trying to change player " +
@@ -100,7 +100,7 @@ public class Lobby : VBoxContainer
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedReadyStatus)} called with " +
                  $"{nameof(playerId)} '{playerId}', {nameof(newReadyStatus)} '{newReadyStatus}'.");
 
-        if (GetTree().IsNetworkServer()) 
+        if (GetTree().IsServer()) 
             return;
         
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedReadyStatus)}: calling " +
@@ -113,7 +113,7 @@ public class Lobby : VBoxContainer
     /// </summary>
     /// <param name="playerId"></param>
     /// <param name="newReadyStatus"></param>
-    [RemoteSync]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
     protected virtual void ChangeReadyStatusForPlayer(int playerId, bool newReadyStatus)
     {
         GD.Print($"{nameof(Lobby)}.{nameof(ChangeReadyStatusForPlayer)}: trying to change player " +

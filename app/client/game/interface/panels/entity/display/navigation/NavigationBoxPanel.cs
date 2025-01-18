@@ -1,10 +1,10 @@
 using Godot;
 using System;
 
-public class NavigationBoxPanel : TextureRect // TODO extract base class for all buttons (there's a lot of duplication)
+public partial class NavigationBoxPanel : TextureRect // TODO extract base class for all buttons (there's a lot of duplication)
 {
-    [Export] public Texture TextureNormal { get; set; }
-    [Export] public Texture TextureClicked { get; set; }
+    [Export] public Texture2D TextureNormal { get; set; }
+    [Export] public Texture2D TextureClicked { get; set; }
 
     private TextureRect _navigationBoxIcon;
     
@@ -20,11 +20,11 @@ public class NavigationBoxPanel : TextureRect // TODO extract base class for all
         switch (to)
         {
             case true:
-                Texture = TextureClicked;
+                Texture2D = TextureClicked;
                 _navigationBoxIcon.Modulate = new Color(_navigationBoxIcon.Modulate, 0.7f);
                 break;
             case false:
-                Texture = TextureNormal;
+                Texture2D = TextureNormal;
                 _navigationBoxIcon.Modulate = new Color(_navigationBoxIcon.Modulate, 1f);
                 break;
         }

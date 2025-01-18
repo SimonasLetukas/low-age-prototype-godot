@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Godot;
 
-public class EntityRenderer : Node2D
+public partial class EntityRenderer : Node2D
 {
     [Export]
     public bool DebugEnabled { get; set; } = false;
@@ -19,7 +19,7 @@ public class EntityRenderer : Node2D
     public bool IsDynamic { get; private set; } = false;
     public Rect2 SpriteBounds { get; private set; }
     public SortTypes SortType { get; private set; } = SortTypes.Point;
-    public Vector2 SpriteSize => _sprite.Texture.GetSize();
+    public Vector2 SpriteSize => _sprite.Texture2D.GetSize();
     public Rect2 EntityRelativeSize { get; private set; }
 
     public readonly List<EntityRenderer> StaticDependencies = new List<EntityRenderer>();
@@ -29,12 +29,12 @@ public class EntityRenderer : Node2D
     private Vector2 _bottomOrigin;
 
     private Node2D _debugVisuals;
-    private Sprite _topOriginSprite;
-    private Sprite _bottomOriginSprite;
+    private Sprite2D _topOriginSprite;
+    private Sprite2D _bottomOriginSprite;
     private RichTextLabel _zIndexText;
 
     private Node2D _spriteContainer;
-    private Sprite _sprite;
+    private Sprite2D _sprite;
 
     public Vector2 AsPoint => SortType is SortTypes.Point 
         ? _topOrigin 
@@ -47,11 +47,11 @@ public class EntityRenderer : Node2D
     public override void _Ready()
     {
         _debugVisuals = GetNode<Node2D>($"Debug");
-        _topOriginSprite = GetNode<Sprite>("Debug/OriginTop");
-        _bottomOriginSprite = GetNode<Sprite>("Debug/OriginBottom");
+        _topOriginSprite = GetNode<Sprite2D>("Debug/OriginTop");
+        _bottomOriginSprite = GetNode<Sprite2D>("Debug/OriginBottom");
         _zIndexText = GetNode<RichTextLabel>($"Debug/{nameof(RichTextLabel)}");
         _spriteContainer = GetNode<Node2D>($"SpriteContainer");
-        _sprite = GetNode<Sprite>($"SpriteContainer/{nameof(Sprite)}");
+        _sprite = GetNode<Sprite2D>($"SpriteContainer/{nameof(Sprite2D)}");
 
         _debugVisuals.Visible = DebugEnabled;
     }
@@ -73,26 +73,26 @@ public class EntityRenderer : Node2D
     public void SetOutline(bool to)
     {
         if (_sprite.Material is ShaderMaterial shaderMaterial) 
-            shaderMaterial.SetShaderParam("draw_outline", to);
+            shaderMaterial.SetShaderParameter("draw_outline", to);
     }
 
     public void SetTintColor(Color color)
     {
         if (_sprite.Material is ShaderMaterial shaderMaterial)
-            shaderMaterial.SetShaderParam("tint_color", color);
+            shaderMaterial.SetShaderParameter("tint_color", color);
     }
 
     public void SetTintAmount(float amount)
     {
         if (_sprite.Material is ShaderMaterial shaderMaterial)
-            shaderMaterial.SetShaderParam("tint_effect_factor", amount);
+            shaderMaterial.SetShaderParameter("tint_effect_factor", amount);
     }
 
     public void SetAlphaAmount(float amount) => _sprite.Modulate = new Color(Colors.White, amount);
 
     public void SetSpriteTexture(string location)
     {
-        _sprite.Texture = GD.Load<Texture>(location);
+        _sprite.Texture2D = GD.Load<Texture2D>(location);
         
         UpdateSpriteBounds();
     }

@@ -1,7 +1,7 @@
 using Godot;
 using low_age_data.Domain.Common;
 
-public class AbilitySubtitle : MarginContainer
+public partial class AbilitySubtitle : MarginContainer
 {
     public void SetAbilitySubtitle(TurnPhase abilityType, EndsAtNode cooldown)
     {

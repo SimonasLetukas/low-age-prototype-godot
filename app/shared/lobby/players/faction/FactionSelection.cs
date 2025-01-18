@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using low_age_data.Domain.Factions;
 
-public class FactionSelection : OptionButton
+public partial class FactionSelection : OptionButton
 {
     public event Action<FactionId> FactionSelected = delegate { };
     
@@ -14,7 +14,7 @@ public class FactionSelection : OptionButton
     {
         PopulateFactions();
 
-        Connect("item_selected", this, nameof(OnItemSelected));
+        Connect("item_selected", new Callable(this, nameof(OnItemSelected)));
     }
 
     public FactionId GetSelectedFaction() => _factionIdsByOptionButtonIndex[Selected];

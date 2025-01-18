@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class ServerLobby : Lobby
+public partial class ServerLobby : Lobby
 {
     public const string ScenePath = @"res://app/server/lobby/ServerLobby.tscn";
     
@@ -15,10 +15,10 @@ public class ServerLobby : Lobby
             GetTree().Quit();
         }
 
-        Client.Instance.Connect(nameof(Client.GameStarted), this, nameof(OnGameStarted));
+        Client.Instance.Connect(nameof(Client.GameStarted), new Callable(this, nameof(OnGameStarted)));
     }
     
-    [Remote]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
     public void UpdateSelectedPlayerFaction(int playerId, string factionId)
     {
         GD.Print($"{nameof(ServerLobby)}.{nameof(UpdateSelectedPlayerFaction)}: called with " +
@@ -27,7 +27,7 @@ public class ServerLobby : Lobby
         Rpc(nameof(ChangeSelectedFactionForPlayer), playerId, factionId);
     }
     
-    [Remote]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
     public void UpdatePlayerReadyStatus(int playerId, bool newReadyStatus)
     {
         GD.Print($"{nameof(ServerLobby)}.{nameof(UpdatePlayerReadyStatus)}: called with " +
@@ -39,6 +39,6 @@ public class ServerLobby : Lobby
     private void OnGameStarted()
     {
         GD.Print("Game starting for server...");
-        GetTree().ChangeScene(ServerGame.ScenePath);
+        GetTree().ChangeSceneToFile(ServerGame.ScenePath);
     }
 }

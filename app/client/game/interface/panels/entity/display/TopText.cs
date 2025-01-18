@@ -1,6 +1,6 @@
 using Godot;
 
-public class TopText : VBoxContainer
+public partial class TopText : VBoxContainer
 {
     private Label _name;
     private Label _subtitle;

@@ -14,7 +14,7 @@ using low_age_data.Domain.Tiles;
 /// The output of this map generation is an event once it is created.
 /// </para>
 /// </summary>
-public class Creator : Node2D
+public partial class Creator : Node2D
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     [Export(PropertyHint.File, "*.png")] public string MapFileLocation { get; set; }

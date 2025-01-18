@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Abilities;
 
-public class Abilities : Node2D
+public partial class Abilities : Node2D
 {
     public IList<PassiveNode> GetPassives() => GetChildren().OfType<PassiveNode>().ToList();
     

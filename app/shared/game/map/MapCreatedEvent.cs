@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Godot;
 using low_age_data.Domain.Tiles;
 
-public class MapCreatedEvent : IGameEvent
+public partial class MapCreatedEvent : IGameEvent
 {
     public MapCreatedEvent(Vector2 mapSize, Dictionary<int, IList<Rect2>> startingPositions, 
         ICollection<(Vector2, TileId)> tiles)

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using low_age_data;
@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// Handles game data for players, tiles, units & structures.
 /// </summary>
-public class Data : Node
+public partial class Data : Node
 {
     public static Data Instance = null;
     
@@ -83,7 +83,7 @@ public class Data : Node
     }
 }
 
-public class Player
+public partial class Player
 {
     public int Id { get; set; }
     public string Name { get; set; }

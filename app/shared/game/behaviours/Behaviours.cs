@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Behaviours;
 
-public class Behaviours : Node2D
+public partial class Behaviours : Node2D
 {
     public IList<BehaviourNode> GetAll() => GetChildren().OfType<BehaviourNode>().ToList();
     public IList<BuildableNode> GetBuildables() => GetChildren().OfType<BuildableNode>().ToList();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -6,7 +6,7 @@ using AutoFixture.Kernel;
 
 namespace TestProject1.Helpers
 {
-    public class OverridePropertyBuilder<T, TProp> : ISpecimenBuilder
+    public partial class OverridePropertyBuilder<T, TProp> : ISpecimenBuilder
     {
         private readonly PropertyInfo _propertyInfo;
         private readonly TProp _value;

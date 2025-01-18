@@ -8,7 +8,7 @@ using low_age_data.Domain.Entities.Actors;
 /// <summary>
 /// <see cref="StructureNode"/> or <see cref="UnitNode"/> with abilities and stats.
 /// </summary>
-public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
+public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 {
     public IList<StatNode> CurrentStats { get; protected set; }
     public IList<ActorAttribute> Attributes { get; protected set; }
@@ -16,8 +16,8 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public Abilities Abilities { get; protected set; }
     
     private Actor Blueprint { get; set; }
-    private TextureProgress _health;
-    private TextureProgress _shields;
+    private TextureProgressBar _health;
+    private TextureProgressBar _shields;
     private Vector2 _startingHealthPosition;
     private Vector2 _startingShieldsPosition;
     
@@ -27,11 +27,11 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         
         Abilities = GetNode<Abilities>(nameof(Abilities));
 
-        _health = GetNode<TextureProgress>($"Vitals/Health");
-        _shields = GetNode<TextureProgress>($"Vitals/Shields");
+        _health = GetNode<TextureProgressBar>($"Vitals/Health");
+        _shields = GetNode<TextureProgressBar>($"Vitals/Shields");
 
-        _startingHealthPosition = _health.RectPosition;
-        _startingShieldsPosition = _shields.RectPosition;
+        _startingHealthPosition = _health.Position;
+        _startingShieldsPosition = _shields.Position;
         
         _health.Visible = false;
         _shields.Visible = false;
@@ -108,9 +108,9 @@ public class ActorNode : EntityNode, INodeFromBlueprint<Actor>
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 2)) +
                           (int)RelativeSize.Position.y * 
                           new Vector2((int)(Constants.TileWidth / 2) * -1, (int)(Constants.TileHeight / 2));
-        _health.RectPosition = 
+        _health.Position = 
             new Vector2(_startingHealthPosition.x, (spriteSize.y * -1) - 2) + offsetFromX + offsetFromY;
-        _shields.RectPosition = 
+        _shields.Position = 
             new Vector2(_startingShieldsPosition.x, (spriteSize.y * -1) - 3) + offsetFromX + offsetFromY;
     }
 }

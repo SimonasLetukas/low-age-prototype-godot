@@ -3,10 +3,10 @@
 [ext_resource path="res://app/shared/lobby/players/faction/FactionSelection.cs" type="Script" id=1]
 
 [node name="Faction" type="OptionButton"]
-margin_left = 587.0
-margin_right = 887.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 300, 40 )
+offset_left = 587.0
+offset_right = 887.0
+offset_bottom = 40.0
+custom_minimum_size = Vector2( 300, 40 )
 size_flags_vertical = 4
 text = "Revelators"
 script = ExtResource( 1 )

@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Common;
 
-public class HoveringPanel : Control
+public partial class HoveringPanel : Control
 {
     private Vector2 _mapSize;
 

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-public class InformationalText : Control
+public partial class InformationalText : Control
 {
     public enum InfoTextType
     {
@@ -28,7 +28,7 @@ public class InformationalText : Control
         if (_enabled is false)
             return;
 
-        RectPosition = GetGlobalMousePosition();
+        Position = GetGlobalMousePosition();
     }
 
     public void Enable(InfoTextType type)
@@ -73,12 +73,12 @@ public class InformationalText : Control
             child.QueueFree();
     }
     
-    private static string GetInput(string id) => InputMap.GetActionList(id).Cast<InputEvent>().First().AsText();
+    private static string GetInput(string id) => InputMap.ActionGetEvents(id).Cast<InputEvent>().First().AsText();
 
     private void AddText(string text)
     {
         var row = InfoTextRow.Instance();
-        row.BbcodeText = $"[center]{text}";
+        row.Text = $"[center]{text}";
         _vBoxContainer.AddChild(row);
     }
 }

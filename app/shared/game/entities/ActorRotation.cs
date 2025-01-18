@@ -1,4 +1,4 @@
-﻿public enum ActorRotation
+public enum ActorRotation
 {
     BottomRight, // x++
     BottomLeft,  // y++

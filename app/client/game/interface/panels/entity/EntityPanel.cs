@@ -5,7 +5,7 @@ using System.Linq;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Common;
 
-public class EntityPanel : Control
+public partial class EntityPanel : Control
 {
     public event Action<AbilityButton> AbilityViewOpened = delegate { };
     public event Action AbilityViewClosed = delegate { };
@@ -36,9 +36,9 @@ public class EntityPanel : Control
         _abilityTextBox = GetNode<RichTextLabel>($"{nameof(Panel)}/{nameof(InfoDisplay)}/{nameof(VBoxContainer)}/AbilityDescription/Text");
         _tween = GetNode<Tween>($"{nameof(Tween)}");
 
-        _abilityButtons.Connect(nameof(AbilityButtons.AbilitiesPopulated), this, nameof(OnAbilityButtonsPopulated));
-        _display.Connect(nameof(InfoDisplay.AbilitiesClosed), this, nameof(OnInfoDisplayAbilitiesClosed));
-        _display.Connect(nameof(InfoDisplay.AbilityTextResized), this, nameof(OnInfoDisplayTextResized));
+        _abilityButtons.Connect(nameof(AbilityButtons.AbilitiesPopulated), new Callable(this, nameof(OnAbilityButtonsPopulated)));
+        _display.Connect(nameof(InfoDisplay.AbilitiesClosed), new Callable(this, nameof(OnInfoDisplayAbilitiesClosed)));
+        _display.Connect(nameof(InfoDisplay.AbilityTextResized), new Callable(this, nameof(OnInfoDisplayTextResized)));
         
         HidePanel();
     }
@@ -136,28 +136,28 @@ public class EntityPanel : Control
         Vector2 newSize;
         if (_isShowingAbility)
         {
-            var abilityTextBoxSizeY = CalculateBiggestPreviousSize((int)_abilityTextBox.RectSize.y);
+            var abilityTextBoxSizeY = CalculateBiggestPreviousSize((int)_abilityTextBox.Size.y);
             
             var newY = YSizeForAbility - abilityTextBoxSizeY;
             if (newY > YSizeForUnit) // TODO change check here if structure is selected
                 newY = YSizeForUnit;
 
-            newSize = new Vector2(RectSize.x, newY);
+            newSize = new Vector2(Size.x, newY);
         }
         else // TODO change for structures and other selectables
         {
-            newSize = new Vector2(RectSize.x, YSizeForUnit);
+            newSize = new Vector2(Size.x, YSizeForUnit);
         }
 
-        _tween.InterpolateProperty(this, "rect_size", RectSize, newSize, 
+        _tween.InterpolateProperty(this, "rect_size", Size, newSize, 
             PanelMoveDuration, Tween.TransitionType.Quad);
         _tween.Start();
     }
     
     private void HidePanel()
     {
-        _tween.InterpolateProperty(this, "rect_size", RectSize, 
-            new Vector2(RectSize.x, YSizeForHiding), PanelMoveDuration, Tween.TransitionType.Quad);
+        _tween.InterpolateProperty(this, "rect_size", Size, 
+            new Vector2(Size.x, YSizeForHiding), PanelMoveDuration, Tween.TransitionType.Quad);
         _tween.Start();
     }
 

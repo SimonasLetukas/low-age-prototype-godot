@@ -4,16 +4,16 @@
 [ext_resource path="res://app/client/game/interface/panels/entity/EntityName.tscn" type="PackedScene" id=2]
 [ext_resource path="res://app/client/game/interface/panels/entity/abilities/AbilityButtons.cs" type="Script" id=3]
 [ext_resource path="res://app/client/game/interface/panels/entity/abilities/AbilityButton.tscn" type="PackedScene" id=8]
-[ext_resource path="res://assets/sprites/interface/panel.png" type="Texture" id=9]
+[ext_resource path="res://assets/sprites/interface/panel.png" type="Texture2D" id=9]
 [ext_resource path="res://app/client/game/interface/panels/entity/display/InfoDisplay.tscn" type="PackedScene" id=10]
-[ext_resource path="res://assets/sprites/interface/stats-panel.png" type="Texture" id=13]
+[ext_resource path="res://assets/sprites/interface/stats-panel.png" type="Texture2D" id=13]
 [ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=14]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
 render_mode unshaded;
 
-uniform vec4 outline_color : hint_color;
+uniform vec4 outline_color : source_color;
 uniform bool enabled;
 
 const int intensity = 250;
@@ -86,9 +86,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -272.0
-margin_top = -719.0
-margin_bottom = 39.0
+offset_left = -272.0
+offset_top = -719.0
+offset_bottom = 39.0
 mouse_filter = 2
 theme = ExtResource( 14 )
 script = ExtResource( 1 )
@@ -101,9 +101,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -272.0
-margin_top = -257.0
-margin_bottom = 91.0
+offset_left = -272.0
+offset_top = -257.0
+offset_bottom = 91.0
 texture = ExtResource( 13 )
 expand = true
 stretch_mode = 5
@@ -113,11 +113,11 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -268.0
-margin_top = -264.0
-margin_right = -202.0
-margin_bottom = -205.0
-rect_scale = Vector2( 4, 4 )
+offset_left = -268.0
+offset_top = -264.0
+offset_right = -202.0
+offset_bottom = -205.0
+scale = Vector2( 4, 4 )
 texture = ExtResource( 9 )
 patch_margin_left = 32
 patch_margin_top = 18
@@ -129,15 +129,15 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -136.0
-margin_top = -281.0
-margin_right = 6.10352e-05
-margin_bottom = -257.0
+offset_left = -136.0
+offset_top = -281.0
+offset_right = 6.10352e-05
+offset_bottom = -257.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_vertical = 0
-custom_constants/vseparation = 4
-custom_constants/hseparation = 4
+theme_override_constants/v_separation = 4
+theme_override_constants/h_separation = 4
 columns = 5
 
 [node name="EntityName" parent="." instance=ExtResource( 2 )]
@@ -147,21 +147,21 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -268.0
-margin_top = -213.0
-margin_right = -12.0
-margin_bottom = 59.0
+offset_left = -268.0
+offset_top = -213.0
+offset_right = -12.0
+offset_bottom = 59.0
 grow_horizontal = 0
 size_flags_horizontal = 3
 size_flags_vertical = 2
-custom_constants/separation = 4
+theme_override_constants/separation = 4
 
 [node name="AbilityButtons" type="HBoxContainer" parent="Panel"]
-margin_right = 256.0
-margin_bottom = 40.0
+offset_right = 256.0
+offset_bottom = 40.0
 grow_horizontal = 0
-rect_min_size = Vector2( 0, 40 )
-custom_constants/separation = 4
+custom_minimum_size = Vector2( 0, 40 )
+theme_override_constants/separation = 4
 alignment = 2
 script = ExtResource( 3 )
 AbilityIconPaths = {
@@ -172,13 +172,13 @@ AbilityIconPaths = {
 
 [node name="AbilityButton" parent="Panel/AbilityButtons" instance=ExtResource( 8 )]
 material = SubResource( 3 )
-margin_left = 216.0
-margin_right = 256.0
-margin_bottom = 40.0
+offset_left = 216.0
+offset_right = 256.0
+offset_bottom = 40.0
 
 [node name="InfoDisplay" parent="Panel" instance=ExtResource( 10 )]
-margin_top = 44.0
-margin_right = 256.0
-margin_bottom = 272.0
+offset_top = 44.0
+offset_right = 256.0
+offset_bottom = 272.0
 
 [node name="Tween" type="Tween" parent="."]

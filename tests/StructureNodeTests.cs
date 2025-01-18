@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using AutoFixture;
 using AutoFixture.AutoMoq;
@@ -8,12 +8,12 @@ using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities.Actors.Structures;
 using TestProject1.Helpers;
 using Xunit;
-using Area = low_age_data.Domain.Common.Area;
+using Area3D = low_age_data.Domain.Common.Area3D;
 using Array = System.Array;
 
 namespace low_age_tests
 {
-    public class StructureNodeTests
+    public partial class StructureNodeTests
     {
         private readonly IFixture _fixture = new Fixture()
             .Customize(new AutoMoqCustomization
@@ -29,7 +29,7 @@ namespace low_age_tests
             Data.Instance.ReadBlueprint();
             _blueprint = _fixture
                 .For<Structure>()
-                .With(x => x.Sprite, "res://assets/sprites/structures/revs/boss post front indexed 2x3.png")
+                .With(x => x.Sprite2D, "res://assets/sprites/structures/revs/boss post front indexed 2x3.png")
                 .With(x => x.BackSideSprite, "res://assets/sprites/structures/revs/boss post back indexed 2x3.png");
             _structure = StructureNode.Instance();
             _structure._Ready();
@@ -51,7 +51,7 @@ o center:   | 0,0		| 0,0       | 0,0       | 0,0 */
             yield return new object[]
             {
                 // Initial values from blueprint:
-                (new Vector2<int>(1, 1), new Vector2<int>(0, 0), Array.Empty<Area>()),
+                (new Vector2<int>(1, 1), new Vector2<int>(0, 0), Array.Empty<Area3D>()),
                 
                 // Expected after 1 rotation:
                 (new Vector2(1, 1), new Vector2(0, 0), Array.Empty<Rect2>()),
@@ -74,7 +74,7 @@ o center:   | 0,0		| 2,0       | 0,2       | 0,0 */
             yield return new object[]
             {
                 // Initial values from blueprint:
-                (new Vector2<int>(1, 3), new Vector2<int>(0, 0), Array.Empty<Area>()),
+                (new Vector2<int>(1, 3), new Vector2<int>(0, 0), Array.Empty<Area3D>()),
                 
                 // Expected after 1 rotation:
                 (new Vector2(3, 1), new Vector2(2, 0), Array.Empty<Rect2>()),
@@ -100,7 +100,7 @@ o center:   | 1,1		| 0,1       | 0,0       | 1,0
                 // Initial values from blueprint:
                 (new Vector2<int>(2, 2), new Vector2<int>(1, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(1, 3))
+                    new Area3D(new Vector2<int>(0, 0), new Vector2<int>(1, 3))
                 }),
 
                 // Expected after 1 rotation:
@@ -136,7 +136,7 @@ o center:   | 1,0		| 1,1       | 1,1       | 0,1
                 // Initial values from blueprint:
                 (new Vector2<int>(3, 2), new Vector2<int>(1, 0), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(1, 2))
+                    new Area3D(new Vector2<int>(0, 0), new Vector2<int>(1, 2))
                 }),
 
                 // Expected after 1 rotation:
@@ -173,8 +173,8 @@ o center:   | 2,1		| 1,2       | 0,1       | 1,0
                 // Initial values from blueprint:
                 (new Vector2<int>(3, 3), new Vector2<int>(2, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(1, 2)),
-                    new Area(new Vector2<int>(2, 2), new Vector2<int>(1, 1)),
+                    new Area3D(new Vector2<int>(0, 0), new Vector2<int>(1, 2)),
+                    new Area3D(new Vector2<int>(2, 2), new Vector2<int>(1, 1)),
                 }),
                 
                 // Expected after 1 rotation:
@@ -213,7 +213,7 @@ o center:   | 1,1		| 1,1       | 1,1       | 1,1
                 // Initial values from blueprint:
                 (new Vector2<int>(3, 3), new Vector2<int>(1, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(3, 2)),
+                    new Area3D(new Vector2<int>(0, 0), new Vector2<int>(3, 2)),
                 }),
                 
                 // Expected after 1 rotation:
@@ -237,7 +237,7 @@ o center:   | 1,1		| 1,1       | 1,1       | 1,1
         [Theory]
         [MemberData(nameof(GetExpectedRotationResultsByInitialStructureConfiguration))]
         public void Rotate_ShouldHaveExpectedConfiguration_AfterEachRotation(
-            (Vector2<int> Size, Vector2<int> CenterPoint, Area[] WalkableAreas) initialValues,
+            (Vector2<int> Size, Vector2<int> CenterPoint, Area3D[] WalkableAreas) initialValues,
             (Vector2 Size, Vector2 CenterPoint, Rect2[] WalkableAreas) expectedAfter1Rotation,
             (Vector2 Size, Vector2 CenterPoint, Rect2[] WalkableAreas) expectedAfter2Rotations,
             (Vector2 Size, Vector2 CenterPoint, Rect2[] WalkableAreas) expectedAfter3Rotations)

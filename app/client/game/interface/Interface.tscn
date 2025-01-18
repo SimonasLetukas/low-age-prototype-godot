@@ -12,13 +12,13 @@ script = ExtResource( 2 )
 [node name="InformationalText" parent="." instance=ExtResource( 4 )]
 
 [node name="EntityPanel" parent="." instance=ExtResource( 1 )]
-margin_top = -720.0
-margin_bottom = 38.0
+offset_top = -720.0
+offset_bottom = 38.0
 
 [node name="SelectionPanel" parent="." instance=ExtResource( 3 )]
 
 [node name="HoveringPanel" parent="." instance=ExtResource( 7 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -220.0
-margin_bottom = -220.0
+offset_top = -220.0
+offset_bottom = -220.0

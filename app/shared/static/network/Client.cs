@@ -1,7 +1,7 @@
-﻿using Godot;
+using Godot;
 using low_age_data.Domain.Factions;
 
-public class Client : Network
+public partial class Client : Network
 {
     public static Client Instance = null;
     
@@ -29,8 +29,8 @@ public class Client : Network
         LocalPlayerFaction = playerFaction;
         LocalPlayerReady = false;
         
-        GetTree().Connect(Constants.ENet.ConnectedToServerEvent, this, nameof(OnConnectedToServer));
-        var peer = new NetworkedMultiplayerENet();
+        GetTree().Connect(Constants.ENet.ConnectedToServerEvent, new Callable(this, nameof(OnConnectedToServer)));
+        var peer = new ENetMultiplayerPeer();
         var result = peer.CreateClient(Constants.ServerIp, Constants.ServerPort);
 
         if (result != Error.Ok)
@@ -57,7 +57,7 @@ public class Client : Network
             playerFaction.ToString());
     }
 
-    [Remote]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
     public void OnRegisterPlayer(int playerId, string playerName, bool playerReady, string playerFactionId)
     {
         GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerReady}, {playerFactionId}");
@@ -73,7 +73,7 @@ public class Client : Network
         Rpc(nameof(OnStartGame));
     }
 
-    [RemoteSync]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
     public void OnStartGame()
     {
         GD.Print($"{nameof(Client)}: {nameof(OnStartGame)} called for {LocalPlayerName}.");

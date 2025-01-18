@@ -4,7 +4,7 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Entities.Actors.Structures;
 
-public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
+public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {
     public const string ScenePath = @"res://app/shared/game/entities/StructureNode.tscn";
     public static StructureNode Instance() => (StructureNode) GD.Load<PackedScene>(ScenePath).Instance();
@@ -92,7 +92,7 @@ public class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         var needsBackSprite = ActorRotation == ActorRotation.TopLeft || ActorRotation == ActorRotation.TopRight;
         var needsFlipping = ActorRotation == ActorRotation.BottomLeft || ActorRotation == ActorRotation.TopRight;
         
-        var spriteLocation = needsBackSprite ? Blueprint.BackSideSprite : Blueprint.Sprite;
+        var spriteLocation = needsBackSprite ? Blueprint.BackSideSprite : Blueprint.Sprite2D;
         if (spriteLocation.IsNotNullOrEmpty())
             Renderer.SetSpriteTexture(spriteLocation);
 

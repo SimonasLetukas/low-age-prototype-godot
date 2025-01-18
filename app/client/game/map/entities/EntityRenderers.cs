@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Godot;
 
-public class EntityRenderers : Node2D
+public partial class EntityRenderers : Node2D
 {
     private static readonly List<EntityRenderer> StaticRenderers = new List<EntityRenderer>();
     private static readonly List<EntityRenderer> DynamicRenderers = new List<EntityRenderer>();

@@ -1,6 +1,6 @@
-﻿using Godot;
+using Godot;
 
-public class Network : Node
+public partial class Network : Node
 {
     [Signal]
     public delegate void PlayerRemoved(int playerId);
@@ -9,7 +9,7 @@ public class Network : Node
     {
 	    ResetNetwork();
 	    
-        GetTree().Connect(Constants.ENet.NetworkPeerDisconnectedEvent, this, nameof(OnPlayerDisconnected));
+        GetTree().Connect(Constants.ENet.NetworkPeerDisconnectedEvent, new Callable(this, nameof(OnPlayerDisconnected)));
     }
 
     /// <summary>
@@ -17,14 +17,14 @@ public class Network : Node
     /// </summary>
     public void ResetNetwork()
     {
-	    var peer = GetTree().NetworkPeer as NetworkedMultiplayerENet;
+	    var peer = GetTree().NetworkPeer as ENetMultiplayerPeer;
 	    peer?.CloseConnection();
     }
 
     protected void SetPeerTimeout()
     {
-	    var peer = GetTree().NetworkPeer as NetworkedMultiplayerENet;
-	    peer?.SetPeerTimeout(GetTree().GetNetworkUniqueId(), Constants.TimeoutLimitMs, 
+	    var peer = GetTree().NetworkPeer as ENetMultiplayerPeer;
+	    peer?.SetPeerTimeout(GetTree().GetUniqueId(), Constants.TimeoutLimitMs, 
 		    Constants.TimeoutMinimumMs, Constants.TimeoutMaximumMs);
     }
 

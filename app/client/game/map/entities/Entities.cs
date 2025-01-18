@@ -11,7 +11,7 @@ using Array = Godot.Collections.Array;
 /// <summary>
 /// Parent of all entities (units & structures) and their rendering on the map.
 /// </summary>
-public class Entities : Node2D
+public partial class Entities : Node2D
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using low_age_data.Domain.Common.Flags;
 using low_age_data.Domain.Logic;
 
-public class ValidationHandler
+public partial class ValidationHandler
 {
     public static ValidationHandler Validate(IList<Validator> validators) => new ValidationHandler(validators);
     

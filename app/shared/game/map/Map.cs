@@ -6,7 +6,7 @@ using Godot;
 /// Master node for all map-related object management: instances, visuals and pathfinding of entities, tiles and
 /// fx (e.g. particles, name pending).
 /// </summary>
-public class Map : Node2D
+public partial class Map : Node2D
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     

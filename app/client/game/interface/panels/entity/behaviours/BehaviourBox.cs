@@ -1,7 +1,7 @@
 using Godot;
 using low_age_data.Domain.Common;
 
-public class BehaviourBox : NinePatchRect
+public partial class BehaviourBox : NinePatchRect
 {
     public const string ScenePath = "res://app/client/game/interface/panels/entity/behaviours/BehaviourBox.tscn";
     public static BehaviourBox Instance() => (BehaviourBox) GD.Load<PackedScene>(ScenePath).Instance();
@@ -25,7 +25,7 @@ public class BehaviourBox : NinePatchRect
     {
         // TODO also change icon
         
-        HintTooltip = behaviour.Description.WrapToLines(Constants.MaxTooltipCharCount);
+        TooltipText = behaviour.Description.WrapToLines(Constants.MaxTooltipCharCount);
         // TODO tooltip should probably also include the name of the behaviour (and remove the behaviour type from the name)
 
         if (behaviour.Alignment.Equals(Alignment.Negative))

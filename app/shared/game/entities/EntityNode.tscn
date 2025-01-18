@@ -2,9 +2,9 @@
 
 [ext_resource path="res://app/shared/game/entities/EntityNode.cs" type="Script" id=1]
 [ext_resource path="res://app/shared/shaders/EntitiesMaterial.tres" type="Material" id=2]
-[ext_resource path="res://assets/sprites/units/revs/slave indexed 1x1.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/units/revs/slave indexed 1x1.png" type="Texture2D" id=3]
 [ext_resource path="res://app/shared/game/behaviours/Behaviours.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/sprites/debug-dot.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/debug-dot.png" type="Texture2D" id=5]
 [ext_resource path="res://app/client/game/map/entities/EntityRenderer.cs" type="Script" id=6]
 
 [node name="EntityNode" type="Node2D"]
@@ -23,7 +23,7 @@ script = ExtResource( 6 )
 
 [node name="SpriteContainer" type="Node2D" parent="EntityRenderer"]
 
-[node name="Sprite" type="Sprite" parent="EntityRenderer/SpriteContainer"]
+[node name="Sprite2D" type="Sprite2D" parent="EntityRenderer/SpriteContainer"]
 material = ExtResource( 2 )
 texture = ExtResource( 3 )
 centered = false
@@ -31,18 +31,18 @@ offset = Vector2( -3, -14 )
 
 [node name="Debug" type="Node2D" parent="EntityRenderer"]
 
-[node name="OriginBottom" type="Sprite" parent="EntityRenderer/Debug"]
+[node name="OriginBottom" type="Sprite2D" parent="EntityRenderer/Debug"]
 texture = ExtResource( 5 )
 
-[node name="OriginTop" type="Sprite" parent="EntityRenderer/Debug"]
+[node name="OriginTop" type="Sprite2D" parent="EntityRenderer/Debug"]
 modulate = Color( 0.392157, 0.392157, 0.392157, 1 )
 texture = ExtResource( 5 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="EntityRenderer/Debug"]
 modulate = Color( 0, 1, 0.0627451, 1 )
-margin_left = -2.0
-margin_top = -5.0
-margin_right = 18.0
-margin_bottom = 15.0
-rect_scale = Vector2( 0.5, 0.5 )
+offset_left = -2.0
+offset_top = -5.0
+offset_right = 18.0
+offset_bottom = 15.0
+scale = Vector2( 0.5, 0.5 )
 text = "1"

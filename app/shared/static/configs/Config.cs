@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using Godot;
 using low_age_data.Domain.Factions;
 using Newtonsoft.Json;
 
-public class Config : Node
+public partial class Config : Node
 {
     public const string SavePath = @"res://data/config.json";
     public static Config Instance = null;

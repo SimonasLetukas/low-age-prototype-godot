@@ -1,4 +1,4 @@
-﻿public enum View
+public enum View
 {
     UnitStats,
     StructureStats,

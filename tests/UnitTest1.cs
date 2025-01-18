@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 
 namespace low_age_tests
 {
-    public class MyTest
+    public partial class MyTest
     {
         private readonly ITestOutputHelper _testOutputHelper;
 

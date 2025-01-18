@@ -5,7 +5,7 @@ using System.Linq;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
 
-public class ClientMap : Map
+public partial class ClientMap : Map
 {
     public event Action FinishedInitializing = delegate { };
     public event Action<Vector2, Terrain, IList<EntityNode>> NewTileHovered = delegate { };
@@ -54,7 +54,7 @@ public class ClientMap : Map
     {
         if (DebugEnabled) GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} {nameof(ClientMap)}.{nameof(Initialize)}");
 
-        _currentPlayer = Data.Instance.Players.Single(x => x.Id.Equals(GetTree().GetNetworkUniqueId()));
+        _currentPlayer = Data.Instance.Players.Single(x => x.Id.Equals(GetTree().GetUniqueId()));
         _mapSize = @event.MapSize;
         _startingPositions = @event.StartingPositions[_currentPlayer.Id];
         
@@ -169,7 +169,7 @@ public class ClientMap : Map
     {
         var selectedEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
         RemoveOccupation(selectedEntity);
-        Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
+        Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path3D.ToList());
     }
     
     private void HandleLeftClick()

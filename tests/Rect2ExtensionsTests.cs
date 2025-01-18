@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FluentAssertions;
 using Godot;
 using Xunit;
 
 namespace low_age_tests
 {
-    public class Rect2ExtensionsTests
+    public partial class Rect2ExtensionsTests
     {
         public static IEnumerable<object[]> GetExpectedRectsByRectsToTrimToVector2()
         {

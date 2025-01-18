@@ -1,8 +1,8 @@
 using Godot;
 
-public class AttackTypeBox : MarginContainer
+public partial class AttackTypeBox : MarginContainer
 {
-    [Export] public Texture Icon { get; set; }
+    [Export] public Texture2D Icon { get; set; }
     
     [Signal] public delegate void Hovering(bool started);
     [Signal] public delegate void Clicked();
@@ -14,17 +14,17 @@ public class AttackTypeBox : MarginContainer
     public override void _Ready()
     {
         _attackTypePanel = GetNode<AttackTypePanel>(nameof(AttackTypePanel));
-        _attackTypePanel.Connect("mouse_entered", this, nameof(OnAttackTypePanelMouseEntered));
-        _attackTypePanel.Connect("mouse_exited", this, nameof(OnAttackTypePanelMouseExited));
-        _attackTypePanel.Connect("gui_input", this, nameof(OnAttackTypePanelGuiInput));
+        _attackTypePanel.Connect("mouse_entered", new Callable(this, nameof(OnAttackTypePanelMouseEntered)));
+        _attackTypePanel.Connect("mouse_exited", new Callable(this, nameof(OnAttackTypePanelMouseExited)));
+        _attackTypePanel.Connect("gui_input", new Callable(this, nameof(OnAttackTypePanelGuiInput)));
         
         SetIcon(Icon);
     }
 
-    public void SetIcon(Texture icon)
+    public void SetIcon(Texture2D icon)
     {
-        GetNode<TextureRect>($"{nameof(AttackTypePanel)}/AttackTypeIcon").Texture = icon;
-        GetNode<TextureRect>($"{nameof(AttackTypePanel)}/AttackTypeIcon/Shadow").Texture = icon;
+        GetNode<TextureRect>($"{nameof(AttackTypePanel)}/AttackTypeIcon").Texture2D = icon;
+        GetNode<TextureRect>($"{nameof(AttackTypePanel)}/AttackTypeIcon/Shadow").Texture2D = icon;
     }
     
     public void SetSelected(bool to)
@@ -36,7 +36,7 @@ public class AttackTypeBox : MarginContainer
     private void Highlight(bool to)
     {
         if (_attackTypePanel.Material is ShaderMaterial shaderMaterial) 
-            shaderMaterial.SetShaderParam("draw_outline", to);
+            shaderMaterial.SetShaderParameter("draw_outline", to);
     }
     
     private void OnAttackTypePanelMouseEntered()

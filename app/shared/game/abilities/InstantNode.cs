@@ -1,6 +1,6 @@
 using low_age_data.Domain.Abilities;
 
-public class InstantNode : AbilityNode, INodeFromBlueprint<Instant>
+public partial class InstantNode : AbilityNode, INodeFromBlueprint<Instant>
 {
     private Instant Blueprint { get; set; }
     

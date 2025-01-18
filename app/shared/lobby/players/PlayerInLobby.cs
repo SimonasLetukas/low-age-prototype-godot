@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Factions;
 
-public class PlayerInLobby : HBoxContainer
+public partial class PlayerInLobby : HBoxContainer
 {
     public const string ScenePath = @"res://app/shared/lobby/players/PlayerInLobby.tscn";
 
@@ -26,7 +26,7 @@ public class PlayerInLobby : HBoxContainer
         _nameLabel = GetNode<Label>("Name");
 
         _readyStatus = GetNode<CheckBox>("Ready");
-        _readyStatus.Connect("toggled", this, nameof(OnReadyStatusToggled));
+        _readyStatus.Connect("toggled", new Callable(this, nameof(OnReadyStatusToggled)));
     }
 
     public override void _ExitTree()
@@ -37,8 +37,8 @@ public class PlayerInLobby : HBoxContainer
 
     public Player SetupPlayer(int playerId)
     {
-        SetNetworkMaster(playerId);
-        if (GetTree().GetNetworkUniqueId() != playerId)
+        SetMultiplayerAuthority(playerId);
+        if (GetTree().GetUniqueId() != playerId)
         {
             _factionSelection.Disabled = true;
             _readyStatus.Disabled = true;

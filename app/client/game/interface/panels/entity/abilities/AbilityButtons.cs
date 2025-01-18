@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using low_age_data.Domain.Abilities;
 
-public class AbilityButtons : HBoxContainer
+public partial class AbilityButtons : HBoxContainer
 {
     [Export] public Dictionary<string, string> AbilityIconPaths { get; set; } // TODO have paths to icons on blueprint level instead
     
     [Signal] public delegate void AbilitiesPopulated();
 
-    private readonly Dictionary<AbilityId, Texture> _abilityIcons = new Dictionary<AbilityId, Texture>();
+    private readonly Dictionary<AbilityId, Texture2D> _abilityIcons = new Dictionary<AbilityId, Texture2D>();
 
     public override void _Ready()
     {
         Reset();
         foreach (var iconId in AbilityIconPaths.Keys)
         {
-            _abilityIcons[new AbilityId(iconId)] = GD.Load<Texture>(AbilityIconPaths[iconId]);
+            _abilityIcons[new AbilityId(iconId)] = GD.Load<Texture2D>(AbilityIconPaths[iconId]);
         }
     }
 

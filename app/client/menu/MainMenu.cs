@@ -1,7 +1,7 @@
 using Godot;
 using low_age_data.Domain.Factions;
 
-public class MainMenu : Control
+public partial class MainMenu : Control
 {
     public const string ScenePath = @"res://app/client/menu/MainMenu.tscn";
 
@@ -50,10 +50,10 @@ public class MainMenu : Control
         
         _currentlySelectedFaction = _factionSelection.GetSelectedFaction();
 
-        GetTree().Connect(Constants.ENet.ConnectedToServerEvent, this, nameof(OnConnectedToServer));
-        _settingsButton?.Connect(nameof(_settingsButton.Pressed).ToLower(), this, nameof(OnSettingsPressed));
-        _connectButton?.Connect(nameof(_connectButton.Pressed).ToLower(), this, nameof(OnConnectPressed));
-        _playLocallyButton?.Connect(nameof(_playLocallyButton.Pressed).ToLower(), this, nameof(OnPlayLocallyPressed));
+        GetTree().Connect(Constants.ENet.ConnectedToServerEvent, new Callable(this, nameof(OnConnectedToServer)));
+        _settingsButton?.Connect(nameof(_settingsButton.Pressed).ToLower(), new Callable(this, nameof(OnSettingsPressed)));
+        _connectButton?.Connect(nameof(_connectButton.Pressed).ToLower(), new Callable(this, nameof(OnConnectPressed)));
+        _playLocallyButton?.Connect(nameof(_playLocallyButton.Pressed).ToLower(), new Callable(this, nameof(OnPlayLocallyPressed)));
         if (_factionSelection is null is false) 
             _factionSelection.FactionSelected += OnFactionSelectionSelected;
     }
@@ -87,7 +87,7 @@ public class MainMenu : Control
 
     private void OnSettingsPressed() => _settings.Visible = !_settings.Visible;
 
-    private void OnConnectedToServer() => GetTree().ChangeScene(ClientLobby.ScenePath);
+    private void OnConnectedToServer() => GetTree().ChangeSceneToFile(ClientLobby.ScenePath);
 
     private void OnConnectPressed()
     {

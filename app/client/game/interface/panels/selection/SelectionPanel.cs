@@ -5,7 +5,7 @@ using Godot;
 using low_age_data.Domain.Entities;
 using low_age_data.Shared;
 
-public class SelectionPanel : Control
+public partial class SelectionPanel : Control
 {
     public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
     
@@ -58,7 +58,7 @@ public class SelectionPanel : Control
         var buildableBehaviours = entity.Behaviours.GetBuildables();
         var text = buildableBehaviours.Aggregate(string.Empty, (current, behaviour) => 
             current + behaviour.Description + "\n\n");
-        _text.BbcodeText = text;
+        _text.Text = text;
         
         _text.Visible = true;
         _gridContainer.Visible = false;
@@ -94,7 +94,7 @@ public class SelectionPanel : Control
 
     private void HidePanel()
     {
-        _tween.InterpolateProperty(this, "margin_top", MarginTop, 
+        _tween.InterpolateProperty(this, "margin_top", OffsetTop, 
             0, PanelMoveDuration, Tween.TransitionType.Quad);
         _tween.Start();
     }
@@ -102,12 +102,12 @@ public class SelectionPanel : Control
     private void ShowPanel()
     {
         var additionalRows = (int)Mathf.Ceil((float)_selectionAmount / Columns) - 1;
-        RectSize = new Vector2(RectSize.x, RectSize.y + additionalRows * NewLineHeight);
-        _background.RectSize = new Vector2(_background.RectSize.x,
-            _background.RectSize.y + additionalRows * (NewLineHeight / _background.RectScale.y));
-        var newMarginTop = RectSize.y * -1;
+        Size = new Vector2(Size.x, Size.y + additionalRows * NewLineHeight);
+        _background.Size = new Vector2(_background.Size.x,
+            _background.Size.y + additionalRows * (NewLineHeight / _background.Scale.y));
+        var newMarginTop = Size.y * -1;
         Visible = true;
-        _tween.InterpolateProperty(this, "margin_top", MarginTop, newMarginTop, 
+        _tween.InterpolateProperty(this, "margin_top", OffsetTop, newMarginTop, 
             PanelMoveDuration, Tween.TransitionType.Quad);
         _tween.Start();
     }
@@ -125,8 +125,8 @@ public class SelectionPanel : Control
         _text.Visible = false;
         _gridContainer.Visible = true;
         
-        RectSize = new Vector2(RectSize.x, OneLineSize);
-        MarginTop = 0;
-        _background.RectSize = new Vector2(_background.RectSize.x, OneLineSize / _background.RectScale.y);
+        Size = new Vector2(Size.x, OneLineSize);
+        OffsetTop = 0;
+        _background.Size = new Vector2(_background.Size.x, OneLineSize / _background.Scale.y);
     }
 }

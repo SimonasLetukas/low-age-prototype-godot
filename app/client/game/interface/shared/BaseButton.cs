@@ -1,11 +1,11 @@
 using System;
 using Godot;
 
-public class BaseButton : NinePatchRect
+public partial class BaseButton : NinePatchRect
 {
-    [Export] public Texture Icon { get; set; }
-    [Export] public Texture TextureNormal { get; set; }
-    [Export] public Texture TextureClicked { get; set; }
+    [Export] public Texture2D Icon { get; set; }
+    [Export] public Texture2D TextureNormal { get; set; }
+    [Export] public Texture2D TextureClicked { get; set; }
     
     public event Action<bool> Hovering = delegate { };
     public event Action Clicked = delegate { };
@@ -17,9 +17,9 @@ public class BaseButton : NinePatchRect
     {
         SetIcon(Icon);
 
-        Connect("mouse_entered", this, nameof(OnBaseButtonMouseEntered));
-        Connect("mouse_exited", this, nameof(OnBaseButtonMouseExited));
-        Connect("gui_input", this, nameof(OnBaseButtonGuiInput));
+        Connect("mouse_entered", new Callable(this, nameof(OnBaseButtonMouseEntered)));
+        Connect("mouse_exited", new Callable(this, nameof(OnBaseButtonMouseExited)));
+        Connect("gui_input", new Callable(this, nameof(OnBaseButtonGuiInput)));
     }
 
     public void SetDisabled(bool to)
@@ -34,11 +34,11 @@ public class BaseButton : NinePatchRect
         Highlight(IsSelected);
     }
 
-    public void SetIcon(Texture icon)
+    public void SetIcon(Texture2D icon)
     {
         Icon = icon;
-        GetNode<TextureRect>(nameof(TextureRect)).Texture = icon;
-        GetNode<TextureRect>($"{nameof(TextureRect)}/Shadow").Texture = icon;
+        GetNode<TextureRect>(nameof(TextureRect)).Texture2D = icon;
+        GetNode<TextureRect>($"{nameof(TextureRect)}/Shadow").Texture2D = icon;
     }
     
     protected void SetClicked(bool to)
@@ -46,10 +46,10 @@ public class BaseButton : NinePatchRect
         switch (to)
         {
             case true:
-                Texture = TextureClicked;
+                Texture2D = TextureClicked;
                 break;
             case false:
-                Texture = TextureNormal;
+                Texture2D = TextureNormal;
                 break;
         }
     }
@@ -57,13 +57,13 @@ public class BaseButton : NinePatchRect
     protected void Highlight(bool to)
     {
         if (Material is ShaderMaterial shaderMaterial) 
-            shaderMaterial.SetShaderParam("draw_outline", to);
+            shaderMaterial.SetShaderParameter("draw_outline", to);
     }
     
     protected void Disable(bool to)
     {
         if (Material is ShaderMaterial shaderMaterial) 
-            shaderMaterial.SetShaderParam("disabled", to);
+            shaderMaterial.SetShaderParameter("disabled", to);
 
         var icon = GetNode<TextureRect>(nameof(TextureRect));
         icon.Modulate = new Color(Colors.White, to ? 0.5f : 1);

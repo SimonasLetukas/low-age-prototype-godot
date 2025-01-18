@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using Godot;
 using low_age_data.Domain.Entities;
 
-public class EntityPlacedEvent : IGameEvent
+public partial class EntityPlacedEvent : IGameEvent
 {
     public EntityPlacedEvent(EntityId blueprintId, Vector2 mapPosition, Guid instanceId, ActorRotation actorRotation)
     {

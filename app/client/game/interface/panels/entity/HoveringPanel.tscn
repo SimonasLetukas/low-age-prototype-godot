@@ -2,51 +2,51 @@
 
 [ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=1]
 [ext_resource path="res://app/client/game/interface/panels/entity/display/InfoDisplay.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/sprites/interface/panel.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/interface/panel.png" type="Texture2D" id=3]
 [ext_resource path="res://app/client/game/interface/panels/entity/HoveringPanel.cs" type="Script" id=4]
-[ext_resource path="res://assets/sprites/interface/bottom left debug panel.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/interface/bottom left debug panel.png" type="Texture2D" id=5]
 
 [node name="HoveringPanel" type="Control"]
 theme = ExtResource( 1 )
 script = ExtResource( 4 )
 
 [node name="DebugPanel" type="TextureRect" parent="."]
-margin_right = 268.0
-margin_bottom = 320.0
+offset_right = 268.0
+offset_bottom = 320.0
 texture = ExtResource( 5 )
 expand = true
 stretch_mode = 5
 
 [node name="TerrainType" type="Label" parent="DebugPanel"]
-margin_left = 27.0
-margin_top = 48.0
-margin_right = 167.0
-margin_bottom = 68.0
+offset_left = 27.0
+offset_top = 48.0
+offset_right = 167.0
+offset_bottom = 68.0
 text = "Mountains"
 valign = 2
 
 [node name="Coordinates" type="Label" parent="DebugPanel"]
-margin_left = 155.0
-margin_top = 48.0
-margin_right = 270.0
-margin_bottom = 68.0
+offset_left = 155.0
+offset_top = 48.0
+offset_right = 270.0
+offset_bottom = 68.0
 text = "(-100, -100)"
 valign = 2
 
 [node name="EntityName" type="Label" parent="DebugPanel"]
-margin_left = 27.0
-margin_top = 72.0
-margin_right = 232.0
-margin_bottom = 92.0
+offset_left = 27.0
+offset_top = 72.0
+offset_right = 232.0
+offset_bottom = 92.0
 text = "Big Bad Bull"
 valign = 2
 
 [node name="Background" type="NinePatchRect" parent="."]
-margin_left = -4.0
-margin_top = 92.0
-margin_right = 62.0
-margin_bottom = 128.0
-rect_scale = Vector2( 4, 4 )
+offset_left = -4.0
+offset_top = 92.0
+offset_right = 62.0
+offset_bottom = 128.0
+scale = Vector2( 4, 4 )
 texture = ExtResource( 3 )
 patch_margin_left = 32
 patch_margin_top = 18
@@ -56,6 +56,6 @@ patch_margin_bottom = 18
 [node name="InfoDisplay" parent="." instance=ExtResource( 2 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = 96.0
-margin_right = 256.0
-margin_bottom = 226.0
+offset_top = 96.0
+offset_right = 256.0
+offset_bottom = 226.0

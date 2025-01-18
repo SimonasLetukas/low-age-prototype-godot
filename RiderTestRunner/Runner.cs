@@ -8,7 +8,7 @@ using Thread = System.Threading.Thread;
 namespace RiderTestRunner
 {
     // ReSharper disable once UnusedType.Global
-    public class Runner : Node
+    public partial class Runner : Node
     {
         public override void _Ready()
         {

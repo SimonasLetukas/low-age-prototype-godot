@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public class StatBlock : MarginContainer
+public partial class StatBlock : MarginContainer
 {
-    [Export] public Texture Icon { get; set; }
+    [Export] public Texture2D Icon { get; set; }
     [Export] public float CurrentValue { get; set; } = 999f;
     [Export] public int MaxValue { get; set; } = 999;
     [Export] public bool ShowCurrentValue { get; set; } = false;
@@ -14,15 +14,15 @@ public class StatBlock : MarginContainer
         SetValue(MaxValue, ShowCurrentValue, CurrentValue);
     }
     
-    public void SetIcon(Texture icon)
+    public void SetIcon(Texture2D icon)
     {
-        GetNode<TextureRect>($"{nameof(HBoxContainer)}/{nameof(Icon)}").Texture = icon;
-        GetNode<TextureRect>($"{nameof(HBoxContainer)}/{nameof(Icon)}/Shadow").Texture = icon;
+        GetNode<TextureRect>($"{nameof(HBoxContainer)}/{nameof(Icon)}").Texture2D = icon;
+        GetNode<TextureRect>($"{nameof(HBoxContainer)}/{nameof(Icon)}/Shadow").Texture2D = icon;
     }
 
     public void SetValue(int maxValue, bool showCurrentValue = false, float currentValue = -1f)
     {
-        CurrentValue = Mathf.Stepify(currentValue, 0.1f);
+        CurrentValue = Mathf.Snapped(currentValue, 0.1f);
         MaxValue = maxValue;
         ShowCurrentValue = showCurrentValue;
 

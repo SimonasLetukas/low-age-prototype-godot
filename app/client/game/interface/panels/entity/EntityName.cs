@@ -1,6 +1,6 @@
 using Godot;
 
-public class EntityName : MarginContainer
+public partial class EntityName : MarginContainer
 {
     public void SetValue(string value)
     {

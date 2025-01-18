@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-public class InitializationCompletedEvent : IGameEvent
+public partial class InitializationCompletedEvent : IGameEvent
 {
     public InitializationCompletedEvent()
     {

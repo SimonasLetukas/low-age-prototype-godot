@@ -1,7 +1,7 @@
 /// <summary>
 /// Quick-starts the game locally. Should only be accessible when debugging.
 /// </summary>
-public class DebugQuickStart : MainMenu
+public partial class DebugQuickStart : MainMenu
 {
     public const string ScenePath = @"res://app/client/menu/DebugQuickStart.tscn";
     

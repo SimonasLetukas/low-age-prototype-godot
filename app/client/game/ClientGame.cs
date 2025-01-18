@@ -1,12 +1,12 @@
 using Godot;
 using System.Linq;
 
-public class ClientGame : Game
+public partial class ClientGame : Game
 {
     public const string ScenePath = @"res://app/client/game/ClientGame.tscn";
     
     private ClientMap _map;
-    private Camera _camera;
+    private Camera3D _camera;
     private Mouse _mouse;
     private Interface _interface;
     
@@ -15,7 +15,7 @@ public class ClientGame : Game
         base._Ready();
         
         _map = GetNode<ClientMap>($"{nameof(Map)}");
-        _camera = GetNode<Camera>($"{nameof(Camera)}");
+        _camera = GetNode<Camera3D>($"{nameof(Camera3D)}");
         _mouse = GetNode<Mouse>($"{nameof(Mouse)}");
         _interface = GetNode<Interface>($"{nameof(Interface)}");
         
@@ -40,11 +40,11 @@ public class ClientGame : Game
     {
         GD.Print($"{nameof(ClientGame)}.{nameof(ConnectSignals)}: connecting signals.");
         
-        _mouse.Connect(nameof(Mouse.LeftReleasedWithoutDrag), _map, nameof(ClientMap.OnMouseLeftReleasedWithoutDrag));
-        _mouse.Connect(nameof(Mouse.RightReleasedWithoutExamine), _map, nameof(ClientMap.OnMouseRightReleasedWithoutExamine));
+        _mouse.Connect(nameof(Mouse.LeftReleasedWithoutDrag), new Callable(_map, nameof(ClientMap.OnMouseLeftReleasedWithoutDrag)));
+        _mouse.Connect(nameof(Mouse.RightReleasedWithoutExamine), new Callable(_map, nameof(ClientMap.OnMouseRightReleasedWithoutExamine)));
 
-        _mouse.Connect(nameof(Mouse.MouseDragged), _camera, nameof(Camera.OnMouseDragged));
-        _mouse.Connect(nameof(Mouse.TakingControl), _camera, nameof(Camera.OnMouseTakingControl));
+        _mouse.Connect(nameof(Mouse.MouseDragged), new Callable(_camera, nameof(Camera3D.OnMouseDragged)));
+        _mouse.Connect(nameof(Mouse.TakingControl), new Callable(_camera, nameof(Camera3D.OnMouseTakingControl)));
         
         _interface.MouseEntered += _mouse.OnInterfaceMouseEntered;
         _interface.MouseExited += _mouse.OnInterfaceMouseExited;
@@ -76,18 +76,18 @@ public class ClientGame : Game
         _map.Entities.EntityPlaced -= RegisterNewGameEvent;
     }
 
-    [RemoteSync]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
     protected override void GameEnded()
     {
         GD.Print($"{nameof(ClientGame)}.{nameof(GameEnded)}: returning to main menu.");
         Client.Instance.ResetNetwork();
-        GetTree().ChangeScene(MainMenu.ScenePath);
+        GetTree().ChangeSceneToFile(MainMenu.ScenePath);
     }
     
-    [RemoteSync]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
     protected override void OnNewGameEventRegistered(string eventBody)
     {
-        var playerId = GetTree().GetNetworkUniqueId();
+        var playerId = GetTree().GetUniqueId();
         GD.Print($"{nameof(ClientGame)}.{nameof(OnNewGameEventRegistered)}: event '{eventBody.TrimForLogs()}' " +
                  $"received for player {playerId} '{Data.Instance.GetPlayerName(playerId)}'");
 
@@ -131,7 +131,7 @@ public class ClientGame : Game
     private void OnMapFinishedInitializing()
     {
         GD.Print($"{nameof(ClientGame)}.{nameof(OnMapFinishedInitializing)}");
-        RegisterNewGameEvent(new ClientFinishedInitializingEvent(GetTree().GetNetworkUniqueId()));
+        RegisterNewGameEvent(new ClientFinishedInitializingEvent(GetTree().GetUniqueId()));
     }
 
     private void OnEveryoneFinishedInitializing()

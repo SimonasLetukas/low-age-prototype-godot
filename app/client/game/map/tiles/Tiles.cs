@@ -12,9 +12,9 @@ using low_age_data.Domain.Tiles;
 /// - Handling all tile-map related visuals <para />
 /// - Conversions between global and map positions
 /// </summary>
-public class Tiles : Node2D
+public partial class Tiles : Node2D
 {
-    public class TileInstance
+    public partial class TileInstance
     {
         public Vector2 Position { get; set; }
         public TileId Blueprint { get; set; }
@@ -75,7 +75,7 @@ public class Tiles : Node2D
 
     public override void _Ready()
     {
-        PauseMode = PauseModeEnum.Process;
+        ProcessMode = PauseModeEnum.Process;
         
         _grass = GetNode<TileMap>("Grass");
         _scraps = GetNode<TileMap>("Scraps");
@@ -90,7 +90,7 @@ public class Tiles : Node2D
         _targetMapNegativeTiles = GetNode<TileMap>("Alpha/TargetMapNegative");
         _targetMapNegativeTiles.Visible = false;
         
-        _path = GetNode<TileMap>("Path");
+        _path = GetNode<TileMap>("Path3D");
         
         _focusedTile = GetNode<FocusedTile>("FocusedTile");
         _focusedTile.Disable();
@@ -188,7 +188,7 @@ public class Tiles : Node2D
     }
 
     public Vector2 GetMapPositionFromGlobalPosition(Vector2 globalPosition) 
-        => _grass.WorldToMap(globalPosition) - _tilemapOffset;
+        => _grass.LocalToMap(globalPosition) - _tilemapOffset;
     
     public Vector2 GetGlobalPositionFromMapPosition(Vector2 mapPosition) 
         => _grass.MapToWorld(mapPosition + _tilemapOffset, true) + _tileOffset;

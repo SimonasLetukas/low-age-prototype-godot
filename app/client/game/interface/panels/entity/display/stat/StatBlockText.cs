@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public class StatBlockText : MarginContainer
+public partial class StatBlockText : MarginContainer
 {
-    [Export] public Texture Icon { get; set; }
+    [Export] public Texture2D Icon { get; set; }
     [Export] public int Value { get; set; } = 999;
     [Export] public string Text { get; set; } = "Biological";
 
@@ -18,7 +18,7 @@ public class StatBlockText : MarginContainer
         SetText(Text);
     }
     
-    public void SetIcon(Texture icon)
+    public void SetIcon(Texture2D icon)
     {
         _statBlock.SetIcon(icon);
     }

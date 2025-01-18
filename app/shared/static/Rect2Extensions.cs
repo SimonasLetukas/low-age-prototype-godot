@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Godot;
-using Area = low_age_data.Domain.Common.Area;
+using Area3D = low_age_data.Domain.Common.Area3D;
 
 public static class Rect2Extensions
 {
-    public static Rect2 ToGodotRect2(this Area area) 
+    public static Rect2 ToGodotRect2(this Area3D area) 
         => new Rect2(area.Start.ToGodotVector2(), area.Size.ToGodotVector2());
 
     public static Rect2 TrimTo(this Rect2 rectToTrim, Vector2 boundarySize) 

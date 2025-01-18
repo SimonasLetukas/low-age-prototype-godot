@@ -6,7 +6,7 @@ using low_age_data.Domain.Common;
 using low_age_data.Domain.Entities;
 using Array = Godot.Collections.Array;
 
-public class Interface : CanvasLayer
+public partial class Interface : CanvasLayer
 {
     [Export] public bool DebugEnabled { get; set; } = false;
     
@@ -33,8 +33,8 @@ public class Interface : CanvasLayer
             foreach (var control in firstLevel.GetChildren().OfType<Control>())
             {
                 if (DebugEnabled) GD.Print(control.Name);
-                control.Connect("mouse_entered", this, nameof(OnControlMouseEntered), new Array { control });
-                control.Connect("mouse_exited", this, nameof(OnControlMouseExited), new Array { control });
+                control.Connect("mouse_entered", new Callable(this, nameof(OnControlMouseEntered)), new Array { control });
+                control.Connect("mouse_exited", new Callable(this, nameof(OnControlMouseExited)), new Array { control });
             }
         }
 

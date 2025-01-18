@@ -1,4 +1,4 @@
-﻿public static class StringExtensions
+public static class StringExtensions
 {
     public static string TrimForLogs(this string input) => input.Length < 2000 
         ? input

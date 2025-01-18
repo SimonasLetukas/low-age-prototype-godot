@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FluentAssertions;
-using low_age_data.Domain.Common.Shape;
+using low_age_data.Domain.Common.Shape3D;
 using Xunit;
 using Vector2 = Godot.Vector2;
 
 namespace low_age_tests
 {
-    public class IShapeExtensionsTests
+    public partial class IShapeExtensionsTests
     {
         public static IEnumerable<object[]> GetExpectedPositionsByMapShape()
         {
             yield return new object[]
             {
-                new low_age_data.Domain.Common.Shape.Map(), 
+                new low_age_data.Domain.Common.Shape3D.Map(), 
                 new Vector2(0, 0),
                 new Vector2(1, 1),
                 
@@ -25,7 +25,7 @@ namespace low_age_tests
             
             yield return new object[]
             {
-                new low_age_data.Domain.Common.Shape.Map(), 
+                new low_age_data.Domain.Common.Shape3D.Map(), 
                 new Vector2(0, 0),
                 new Vector2(4, 2),
                 
@@ -40,7 +40,7 @@ namespace low_age_tests
 
         [Theory]
         [MemberData(nameof(GetExpectedPositionsByMapShape))]
-        public void ToPositions_ShouldReturnExpectedPositions_WhenShapeIsMap(low_age_data.Domain.Common.Shape.Map map,
+        public void ToPositions_ShouldReturnExpectedPositions_WhenShapeIsMap(low_age_data.Domain.Common.Shape3D.Map map,
             Vector2 centerPoint, Vector2 mapSize, Vector2[] expectedPositions)
         {
             map.ToPositions(centerPoint, mapSize).Should().BeEquivalentTo(expectedPositions);

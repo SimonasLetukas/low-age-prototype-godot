@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using System.Linq;
 
-public class ServerGame : Game
+public partial class ServerGame : Game
 {
     public const string ScenePath = @"res://app/server/game/ServerGame.tscn";
 
@@ -18,7 +18,7 @@ public class ServerGame : Game
         
         _creator.MapCreated += OnRegisterServerEvent;
         
-        Server.Instance.Connect(nameof(Network.PlayerRemoved), this, nameof(OnPlayerRemoved));
+        Server.Instance.Connect(nameof(Network.PlayerRemoved), new Callable(this, nameof(OnPlayerRemoved)));
 
         // Wait until the parent scene is fully loaded
         await ToSignal(GetTree().Root.GetChild(GetTree().Root.GetChildCount() - 1), "ready");
@@ -37,7 +37,7 @@ public class ServerGame : Game
         _creator.MapCreated -= OnRegisterServerEvent;
     }
 
-    [Remote]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
     public void OnClientLoaded(int playerId)
     {
         GD.Print($"{nameof(ServerGame)}.{nameof(OnClientLoaded)}: '{playerId}' client loaded");
@@ -55,7 +55,7 @@ public class ServerGame : Game
                  $"{_notLoadedPlayers.Count} players to load");
     }
     
-    [Remote]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
     public void OnRegisterNewGameEvent(string eventBody)
     {
         GD.Print($"{nameof(ServerGame)}.{nameof(OnRegisterNewGameEvent)}: registering new game event " +
@@ -123,7 +123,7 @@ public class ServerGame : Game
             
             // Tell everyone that the game has ended
             Rpc(nameof(GameEnded));
-            GetTree().ChangeScene(ServerLobby.ScenePath);
+            GetTree().ChangeSceneToFile(ServerLobby.ScenePath);
         }
         
         GD.Print($"{nameof(ServerGame)}.{nameof(OnPlayerRemoved)}: '{Data.Instance.Players.Count}' players remaining");

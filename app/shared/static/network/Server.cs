@@ -1,7 +1,7 @@
-﻿using Godot;
+using Godot;
 using low_age_data.Domain.Factions;
 
-public class Server : Network
+public partial class Server : Network
 {
     public static Server Instance = null;
 
@@ -24,7 +24,7 @@ public class Server : Network
             playerFaction.ToString());
     }
 
-    [Remote]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
     public void OnRegisterSelf(int playerId, string playerName, bool playerReady, string playerFactionId)
     {
         // Register this client with the server
@@ -67,7 +67,7 @@ public class Server : Network
             return false;
 
         var connectionStatus = networkPeer.GetConnectionStatus();
-        if (connectionStatus is NetworkedMultiplayerPeer.ConnectionStatus.Disconnected) 
+        if (connectionStatus is MultiplayerPeer.ConnectionStatus.Disconnected) 
             return false;
 
         return true;
@@ -78,7 +78,7 @@ public class Server : Network
         ResetNetwork();
         Data.Instance.Reset();
 
-        var peer = new NetworkedMultiplayerENet();
+        var peer = new ENetMultiplayerPeer();
         var result = peer.CreateServer(Constants.ServerPort, Constants.MaxPlayers);
         if (result != Error.Ok)
         {
@@ -87,7 +87,7 @@ public class Server : Network
         }
 
         GetTree().NetworkPeer = peer;
-        GetTree().Connect(Constants.ENet.NetworkPeerConnectedEvent, this, nameof(OnPlayerConnected));
+        GetTree().Connect(Constants.ENet.NetworkPeerConnectedEvent, new Callable(this, nameof(OnPlayerConnected)));
         SetPeerTimeout();
         
         Data.Instance.ReadBlueprint();

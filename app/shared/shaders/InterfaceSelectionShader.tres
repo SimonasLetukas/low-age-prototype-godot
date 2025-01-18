@@ -4,14 +4,14 @@
 code = "shader_type canvas_item;
 render_mode unshaded;
 
-uniform vec4 outline_color : hint_color;
+uniform vec4 outline_color : source_color;
 uniform bool draw_outline;
 uniform int intensity = 250;
 
 uniform bool disabled = false;
 uniform float disabled_saturation = 0.2;
 
-uniform vec4 tint_color : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec4 tint_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform float tint_effect_factor : hint_range(0, 1) = 0.0;
 
 const float precision = 0.0065;

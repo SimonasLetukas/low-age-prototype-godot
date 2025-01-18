@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://assets/sprites/tiles/focused_tile.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/tiles/focused_tile.png" type="Texture2D" id=1]
 [ext_resource path="res://app/client/game/map/tiles/focused/FocusedTile.cs" type="Script" id=2]
 
 
@@ -28,7 +28,7 @@ animations = [ {
 "speed": 13.0
 } ]
 
-[node name="SelectedTile" type="AnimatedSprite"]
+[node name="SelectedTile" type="AnimatedSprite2D"]
 frames = SubResource( 5 )
 playing = true
 centered = false

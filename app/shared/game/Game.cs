@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// Used for changing and synchronizing game state through <see cref="IGameEvent"/>s.
 /// </summary>
-public class Game : Node2D
+public partial class Game : Node2D
 {
     // In case of out-of-sync, this could be used to get the difference: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/how-to-find-the-set-difference-between-two-lists-linq
     protected List<IGameEvent> Events { get; set; } = new List<IGameEvent>();
@@ -24,11 +24,11 @@ public class Game : Node2D
     {
         GD.Print($"{nameof(Game)}.{nameof(MarkAsLoaded)}");
         
-        if (GetTree().IsNetworkServer()) 
+        if (GetTree().IsServer()) 
             return;
         
         GD.Print($"{nameof(Game)}: calling {nameof(ServerGame.OnClientLoaded)} as RPC.");
-        RpcId(Constants.ServerId, nameof(ServerGame.OnClientLoaded), GetTree().GetNetworkUniqueId());
+        RpcId(Constants.ServerId, nameof(ServerGame.OnClientLoaded), GetTree().GetUniqueId());
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public class Game : Node2D
         GD.Print($"{nameof(Game)}.{nameof(RegisterNewGameEvent)}: called with {gameEvent.GetType()} " +
                  $"and properties '{JsonConvert.SerializeObject(gameEvent).TrimForLogs()}'.");
 
-        if (GetTree().IsNetworkServer())
+        if (GetTree().IsServer())
             return;
         
         RpcId(Constants.ServerId, nameof(ServerGame.OnRegisterNewGameEvent), EventToString(gameEvent));
@@ -50,12 +50,12 @@ public class Game : Node2D
 
     #region Callbacks from the server
 
-    [RemoteSync]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
     protected virtual void GameEnded()
     {
     }
     
-    [RemoteSync]
+    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
     protected virtual void OnNewGameEventRegistered(string eventBody)
     {
         GD.Print($"{nameof(Game)}.{nameof(OnNewGameEventRegistered)}");

@@ -4,7 +4,7 @@ using low_age_data.Domain.Common;
 using low_age_data.Domain.Common.Durations;
 
 // TODO unit tests
-public class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
+public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
 {
     public const string ScenePath = @"res://app/shared/game/misc/EndsAtNode.tscn";
     public static EndsAtNode Instance() => (EndsAtNode) GD.Load<PackedScene>(ScenePath).Instance();

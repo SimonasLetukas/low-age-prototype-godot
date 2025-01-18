@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Linq.Expressions;
 using AutoFixture;
 
 namespace TestProject1.Helpers
 {
-    public class FixtureCustomization<T>
+    public partial class FixtureCustomization<T>
     {
         public IFixture Fixture { get; }
 

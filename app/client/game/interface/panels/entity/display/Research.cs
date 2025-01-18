@@ -1,6 +1,6 @@
 using Godot;
 
-public class Research : MarginContainer
+public partial class Research : MarginContainer
 {
     [Export] public string HintTemplate { get; set; } = "Research Needed: ";
     [Export] public string ResearchTemplate { get; set; } = "[R]";
@@ -14,6 +14,6 @@ public class Research : MarginContainer
 
     public void SetResearch(string name)
     {
-        HintTooltip = HintTemplate + name + ".";
+        TooltipText = HintTemplate + name + ".";
     }
 }
