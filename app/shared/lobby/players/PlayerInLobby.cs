@@ -10,7 +10,7 @@ public partial class PlayerInLobby : HBoxContainer
     public event Action<PlayerInLobby, FactionId> PlayerSelectedFaction = delegate { };
     public event Action<PlayerInLobby, bool> PlayerChangedReadyStatus = delegate { };
 
-    public static PlayerInLobby Instance() => (PlayerInLobby) GD.Load<PackedScene>(ScenePath).Instance();
+    public static PlayerInLobby Instance() => (PlayerInLobby) GD.Load<PackedScene>(ScenePath).Instantiate();
     
     public Player Player { get; private set; }
     
@@ -38,7 +38,7 @@ public partial class PlayerInLobby : HBoxContainer
     public Player SetupPlayer(int playerId)
     {
         SetMultiplayerAuthority(playerId);
-        if (GetTree().GetUniqueId() != playerId)
+        if (Multiplayer.GetUniqueId() != playerId)
         {
             _factionSelection.Disabled = true;
             _readyStatus.Disabled = true;
@@ -62,7 +62,7 @@ public partial class PlayerInLobby : HBoxContainer
 
     public void SetReadyStatus(bool to)
     {
-        _readyStatus.Pressed = to;
+        _readyStatus.ButtonPressed = to;
         Player.Ready = to;
     }
 

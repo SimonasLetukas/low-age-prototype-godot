@@ -3,14 +3,14 @@ using System.Linq;
 using Godot;
 using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Shape3D;
+using low_age_data.Domain.Common.Shape;
 using low_age_data.Domain.Entities;
 using low_age_data.Shared;
 
 public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelectable
 {
     public const string ScenePath = @"res://app/shared/game/abilities/BuildNode.tscn";
-    public static BuildNode Instance() => (BuildNode) GD.Load<PackedScene>(ScenePath).Instance();
+    public static BuildNode Instance() => (BuildNode) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static BuildNode InstantiateAsChild(Build blueprint, Node parentNode)
     {
         var ability = Instance();
@@ -42,8 +42,8 @@ public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelect
         Selection = Blueprint.Selection;
     }
 
-    public bool CanBePlacedOnTheWholeMap() => PlacementArea is low_age_data.Domain.Common.Shape3D.Map 
-                                             && Blueprint.UseWalkableTilesAsPlacementArea is false;
+    public bool CanBePlacedOnTheWholeMap() => PlacementArea is low_age_data.Domain.Common.Shape.Map 
+                                              && Blueprint.UseWalkableTilesAsPlacementArea is false;
 
     public IEnumerable<Vector2> GetPlacementPositions(EntityNode caster, Vector2 mapSize)
     {

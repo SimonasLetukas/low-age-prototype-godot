@@ -9,7 +9,7 @@ public partial class DebugQuickStart : MainMenu
     {
         base._Ready();
         
-        QuickStartCheckBox.Pressed = true;
+        QuickStartCheckBox.ButtonPressed = true;
         
         OnPlayLocallyPressed();
     }

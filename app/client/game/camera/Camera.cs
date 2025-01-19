@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Camera3D : Camera2D
+public partial class Camera : Camera2D
 {
     [Export] public bool DebugEnabled { get; set; } = true;
     [Export(PropertyHint.Range, "-200,100,5")] public int HorizontalLimitMargin { get; set; } = 30;
@@ -28,7 +28,7 @@ public partial class Camera3D : Camera2D
     
     public override void _Ready()
     {
-        _viewportSize = GetViewport().Size;
+        _viewportSize = DisplayServer.WindowGetSize();
 
         Position = new Vector2((float)_mapWidthPixels / 2, (float)_mapHeightPixels / 2);
         UpdateZoom();
@@ -44,34 +44,35 @@ public partial class Camera3D : Camera2D
     }
 
     // TODO force camera / map / unit positions into discrete values so that weird artifacts are avoided
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
+        var deltaF = (float)delta;
         if (ZoomedIn()) ZoomIn();
-        if (ZoomedOut()) ZoomOut(delta);
+        if (ZoomedOut()) ZoomOut(deltaF);
 
         if (_cameraIsMoving)
         {
             return;
         }
         
-        ClampPositionToBoundaries(delta);
+        ClampPositionToBoundaries(deltaF);
         
         var moveVector = Vector2.Zero;
         var mousePos = GetViewport().GetMousePosition();
         
-        if (MovedLeft(mousePos)) moveVector.x -= 1;
-        if (MovedRight(mousePos)) moveVector.x += 1;
-        if (MovedUp(mousePos)) moveVector.y -= 1;
-        if (MovedDown(mousePos)) moveVector.y += 1;
+        if (MovedLeft(mousePos)) moveVector.X -= 1;
+        if (MovedRight(mousePos)) moveVector.X += 1;
+        if (MovedUp(mousePos)) moveVector.Y -= 1;
+        if (MovedDown(mousePos)) moveVector.Y += 1;
             
         if (mousePos.Length() > 0) 
-            GlobalTranslate(moveVector.Normalized() * delta * Zoom.x * MapScrollSpeed);
+            GlobalTranslate(moveVector.Normalized() * deltaF * Zoom.X * MapScrollSpeed);
     }
 
     public void SetMapSize(Vector2 mapSize)
     {
-        _mapWidthPixels = Mathf.Max((int)mapSize.x, (int)mapSize.y) * Constants.TileWidth;
-        _mapHeightPixels = Mathf.Max((int)mapSize.x, (int)mapSize.y) * Constants.TileHeight;
+        _mapWidthPixels = Mathf.Max((int)mapSize.X, (int)mapSize.Y) * Constants.TileWidth;
+        _mapHeightPixels = Mathf.Max((int)mapSize.X, (int)mapSize.Y) * Constants.TileHeight;
         Position = new Vector2((float)_mapWidthPixels / 2, (float)_mapHeightPixels / 2);
         SetLimits();
     }
@@ -128,59 +129,59 @@ public partial class Camera3D : Camera2D
     {
         var amount = Mathf.Snapped(1f / _timesPerZoomLevel[_currentZoomLevel], 0.1f);
         Zoom = new Vector2(amount, amount);
-        _viewportSize = GetViewport().Size;
+        _viewportSize = DisplayServer.WindowGetSize();
     }
 
     private void ClampPositionToBoundaries(float delta)
     {
-        var newPosition = new Vector2(Position.x, Position.y);
+        var newPosition = new Vector2(Position.X, Position.Y);
         
         if (GetCurrentLeftBoundary() < _limitLeft) 
-            newPosition.x += (_limitLeft - GetCurrentLeftBoundary()) * delta * MapLimitElasticity;
+            newPosition.X += (_limitLeft - GetCurrentLeftBoundary()) * delta * MapLimitElasticity;
         else if (GetCurrentRightBoundary() > _limitRight)
-            newPosition.x -= (GetCurrentRightBoundary() - _limitRight) * delta * MapLimitElasticity;
+            newPosition.X -= (GetCurrentRightBoundary() - _limitRight) * delta * MapLimitElasticity;
         
         if (GetCurrentTopBoundary() < _limitTop)
-            newPosition.y += (_limitTop - GetCurrentTopBoundary()) * delta * MapLimitElasticity;
+            newPosition.Y += (_limitTop - GetCurrentTopBoundary()) * delta * MapLimitElasticity;
         else if (GetCurrentBottomBoundary() > _limitBottom)
-            newPosition.y -= (GetCurrentBottomBoundary() - _limitBottom) * delta * MapLimitElasticity;
+            newPosition.Y -= (GetCurrentBottomBoundary() - _limitBottom) * delta * MapLimitElasticity;
 
         Position = newPosition;
     }
 
-    private float GetCurrentLeftBoundary() => Position.x - ((_viewportSize.x / 2) * Zoom.x);
+    private float GetCurrentLeftBoundary() => Position.X - ((_viewportSize.X / 2) * Zoom.X);
 
-    private float GetCurrentRightBoundary() => Position.x + ((_viewportSize.x / 2) * Zoom.x);
+    private float GetCurrentRightBoundary() => Position.X + ((_viewportSize.X / 2) * Zoom.X);
 
-    private float GetCurrentTopBoundary() => Position.y - ((_viewportSize.y / 2) * Zoom.y);
+    private float GetCurrentTopBoundary() => Position.Y - ((_viewportSize.Y / 2) * Zoom.Y);
 
-    private float GetCurrentBottomBoundary() => Position.y + ((_viewportSize.y / 2) * Zoom.y);
+    private float GetCurrentBottomBoundary() => Position.Y + ((_viewportSize.Y / 2) * Zoom.Y);
 
     private bool MovedLeft(Vector2 mousePos)
     {
         if (GetCurrentLeftBoundary() >= _limitLeft) return false;
-        if (mousePos.x < MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
+        if (mousePos.X < MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
         return false;
     }
     
     private bool MovedRight(Vector2 mousePos)
     {
         if (GetCurrentRightBoundary() >= _limitRight) return false;
-        if (mousePos.x > _viewportSize.x - MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
+        if (mousePos.X > _viewportSize.X - MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
         return false;
     }
     
     private bool MovedUp(Vector2 mousePos)
     {
         if (GetCurrentTopBoundary() >= _limitTop) return false;
-        if (mousePos.y < MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
+        if (mousePos.Y < MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
         return false;
     }
     
     private bool MovedDown(Vector2 mousePos)
     {
         if (GetCurrentBottomBoundary() >= _limitBottom) return false;
-        if (mousePos.y > _viewportSize.y - MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
+        if (mousePos.Y > _viewportSize.Y - MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
         return false;
     }
 

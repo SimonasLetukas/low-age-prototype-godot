@@ -16,8 +16,8 @@ public partial class StatBlock : MarginContainer
     
     public void SetIcon(Texture2D icon)
     {
-        GetNode<TextureRect>($"{nameof(HBoxContainer)}/{nameof(Icon)}").Texture2D = icon;
-        GetNode<TextureRect>($"{nameof(HBoxContainer)}/{nameof(Icon)}/Shadow").Texture2D = icon;
+        GetNode<TextureRect>($"{nameof(HBoxContainer)}/{nameof(Icon)}").Texture = icon;
+        GetNode<TextureRect>($"{nameof(HBoxContainer)}/{nameof(Icon)}/Shadow").Texture = icon;
     }
 
     public void SetValue(int maxValue, bool showCurrentValue = false, float currentValue = -1f)

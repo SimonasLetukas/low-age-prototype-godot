@@ -6,7 +6,7 @@ using Godot;
 using low_age_data;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Tiles;
-using Object = Godot.Object;
+using Object = Godot.GodotObject;
 
 public partial class Pathfinding : Node
 {
@@ -55,7 +55,7 @@ public partial class Pathfinding : Node
     
     public override void _Ready()
     {
-	    ProcessMode = PauseModeEnum.Process;
+	    ProcessMode = ProcessModeEnum.Always;
     }
 
     #region Initialization
@@ -77,7 +77,7 @@ public partial class Pathfinding : Node
 	    _initialized = false;
     }
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
 	    base._Process(delta);
 	    if (_initialized)
@@ -128,7 +128,7 @@ public partial class Pathfinding : Node
 	    _pathfinding3X = Blueprint.Entities.Units.Any(u => u.Size == 3) ? new DijkstraMap() : null;
 	    
 	    PointIdsByPositions = _pathfinding.AddSquareGrid(
-		    new Rect2(0, 0, MapSize.x, MapSize.y),
+		    new Rect2(0, 0, MapSize.X, MapSize.Y),
 		    Terrain.Grass.ToIndex(),
 		    1.0f,
 		    DiagonalCost);
@@ -349,7 +349,7 @@ public partial class Pathfinding : Node
 	    {
 		    pathfinding.Recalculate(
 			    PointIdsByPositions[from],
-			    new Godot.Collections.Dictionary<string, object>
+			    new Godot.Collections.Dictionary<string, Variant>
 			    {
 				    { "maximum_cost", range },
 				    { "terrain_weights", _terrainWeights }
@@ -367,7 +367,7 @@ public partial class Pathfinding : Node
 	    {
 		    pathfinding.Recalculate(
 			    previousPointId,
-			    new Godot.Collections.Dictionary<string, object>
+			    new Godot.Collections.Dictionary<string, Variant>
 			    {
 				    { "maximum_cost", _previousRange },
 				    { "terrain_weights", _terrainWeights }
@@ -403,12 +403,12 @@ public partial class Pathfinding : Node
 	    const int offset = 3;
 	    var foundPoints = new List<Vector2>();
 	    
-	    for (var x = (int)entity.EntityPrimaryPosition.x - offset; 
-	         x < entity.EntityPrimaryPosition.x + entity.EntitySize.x + offset; 
+	    for (var x = (int)entity.EntityPrimaryPosition.X - offset; 
+	         x < entity.EntityPrimaryPosition.X + entity.EntitySize.X + offset; 
 	         x++)
 	    {
-		    for (var y = (int)entity.EntityPrimaryPosition.y - offset;
-		         y < entity.EntityPrimaryPosition.y + entity.EntitySize.y + offset;
+		    for (var y = (int)entity.EntityPrimaryPosition.Y - offset;
+		         y < entity.EntityPrimaryPosition.Y + entity.EntitySize.Y + offset;
 		         y++)
 		    {
 			    var position = new Vector2(x, y);
@@ -424,9 +424,9 @@ public partial class Pathfinding : Node
 
 	    foreach (var point in foundPoints)
 	    {
-		    for (var x = (int)point.x - offset; x <= (int)point.x + offset; x++)
+		    for (var x = (int)point.X - offset; x <= (int)point.X + offset; x++)
 		    {
-			    for (var y = (int)point.y - offset; y <= (int)point.y + offset; y++)
+			    for (var y = (int)point.Y - offset; y <= (int)point.Y + offset; y++)
 			    {
 				    var position = new Vector2(x, y);
 				    if (PointIdsByPositions.ContainsKey(position) is false)
@@ -450,9 +450,9 @@ public partial class Pathfinding : Node
 		    .ToDictionary<KeyValuePair<int, float>, int, IList<Vector2>>(terrainWeight => 
 			    terrainWeight.Key, terrainWeight => new List<Vector2>());
 
-	    for (var x = (int)start.x; x < (int)end.x; x++)
+	    for (var x = (int)start.X; x < (int)end.X; x++)
 	    {
-		    for (var y = (int)start.y; y < (int)end.y; y++)
+		    for (var y = (int)start.Y; y < (int)end.Y; y++)
 		    {
 			    var position = new Vector2(x, y);
 			    if (Tiles.ContainsKey(position) is false)
@@ -470,9 +470,9 @@ public partial class Pathfinding : Node
 	    foreach (var pair in coordinatesByTerrain) 
 		    IterateTerrainDilationUpdate(pair);
 	    
-	    for (var x = (int)start.x; x < (int)end.x; x++)
+	    for (var x = (int)start.X; x < (int)end.X; x++)
 	    {
-		    for (var y = (int)start.y; y < (int)end.y; y++)
+		    for (var y = (int)start.Y; y < (int)end.Y; y++)
 		    {
 			    var position = new Vector2(x, y);
 			    if (PointIdsByPositions.ContainsKey(position) is false)
@@ -542,17 +542,16 @@ public partial class DijkstraMap : Node
 
 	public DijkstraMap()
 	{
-		var dijkstraMapScript = GD.Load("res://addons/dijkstra-map/Dijkstra_map_library/nativescript.gdns") as NativeScript;
-		_dijkstraMap = dijkstraMapScript?.New() as Object;
+		_dijkstraMap = GD.Load("res://addons/dijkstra-map/Dijkstra_map_library/nativescript.gdns") as Script;
+		//_dijkstraMap = dijkstraMapScript?.New() as Object;
 		if (_dijkstraMap is null) throw new ArgumentNullException($"{nameof(_dijkstraMap)} cannot be null.");
 	}
 	
 	public Godot.Collections.Dictionary<Vector2, int> AddSquareGrid(Rect2 bounds, int terrain, float orthCost,
 		float diagCost)
 	{
-		var dictionary = _dijkstraMap.Call("add_square_grid", bounds, terrain, orthCost, diagCost) 
-			as Godot.Collections.Dictionary;
-		return new Godot.Collections.Dictionary<Vector2, int>(dictionary);
+		var dictionary = _dijkstraMap.Call("add_square_grid", bounds, terrain, orthCost, diagCost);
+		return new Godot.Collections.Dictionary<Vector2, int>();
 	}
 
 	public void SetTerrainForPoint(int pointId, int terrain)
@@ -565,21 +564,19 @@ public partial class DijkstraMap : Node
 		return (int)_dijkstraMap.Call("get_terrain_for_point", pointId);
 	}
 
-	public void Recalculate(int pointId, Godot.Collections.Dictionary<string, object> options)
+	public void Recalculate(int pointId, Godot.Collections.Dictionary<string, Variant> options)
 	{
 		_dijkstraMap.Call("recalculate", pointId, options);
 	}
 
 	public int[] GetAllPointsWithCostBetween(float min, float max)
 	{
-		return _dijkstraMap.Call("get_all_points_with_cost_between", min, max)
-			as int[];
+		return new[] { 0 }; _dijkstraMap.Call("get_all_points_with_cost_between", min, max);
 	}
 
 	public int[] GetShortestPathFromPoint(int pointId)
 	{
-		return _dijkstraMap.Call("get_shortest_path_from_point", pointId)
-			as int[];
+		return new[] { 0 }; _dijkstraMap.Call("get_shortest_path_from_point", pointId);
 	}
 
 	public void Clear()
@@ -589,7 +586,7 @@ public partial class DijkstraMap : Node
 
     public Error DuplicateGraphFrom(DijkstraMap sourceInstance)
     {
-        return (Error)_dijkstraMap.Call("duplicate_graph_from", sourceInstance._dijkstraMap);
+	    return Error.Ok; _dijkstraMap.Call("duplicate_graph_from", sourceInstance._dijkstraMap);
     }
 
     public int GetAvailablePointId()
@@ -599,12 +596,12 @@ public partial class DijkstraMap : Node
 
     public Error AddPoint(int pointId, int terrainType = -1)
     {
-        return (Error)_dijkstraMap.Call("add_point", pointId, terrainType);
+        return Error.Ok; _dijkstraMap.Call("add_point", pointId, terrainType);
     }
 
     public Error RemovePoint(int pointId)
     {
-        return (Error)_dijkstraMap.Call("remove_point", pointId);
+        return Error.Ok; _dijkstraMap.Call("remove_point", pointId);
     }
 
     public bool HasPoint(int pointId)
@@ -614,12 +611,12 @@ public partial class DijkstraMap : Node
     
     public Error DisablePoint(int pointId)
     {
-        return (Error)_dijkstraMap.Call("disable_point", pointId);
+        return Error.Ok; _dijkstraMap.Call("disable_point", pointId);
     }
     
     public Error EnablePoint(int pointId)
     {
-        return (Error)_dijkstraMap.Call("enable_point", pointId);
+        return Error.Ok; _dijkstraMap.Call("enable_point", pointId);
     }
     
     public bool IsPointDisabled(int pointId)
@@ -629,12 +626,12 @@ public partial class DijkstraMap : Node
     
     public Error ConnectPoints(int source, int target, float weight = 1f, bool bidirectional = true)
     {
-        return (Error)_dijkstraMap.Call("connect_points", source, target, weight, bidirectional);
+        return Error.Ok; _dijkstraMap.Call("connect_points", source, target, weight, bidirectional);
     }
     
     public Error RemoveConnection(int source, int target, bool bidirectional = true)
     {
-        return (Error)_dijkstraMap.Call("remove_connection", source, target, bidirectional);
+        return Error.Ok; _dijkstraMap.Call("remove_connection", source, target, bidirectional);
     }
     
     public bool HasConnection(int source, int target)

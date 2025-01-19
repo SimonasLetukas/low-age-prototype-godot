@@ -7,7 +7,7 @@ using low_age_data.Domain.Entities.Actors.Structures;
 public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {
     public const string ScenePath = @"res://app/shared/game/entities/StructureNode.tscn";
-    public static StructureNode Instance() => (StructureNode) GD.Load<PackedScene>(ScenePath).Instance();
+    public static StructureNode Instance() => (StructureNode) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static StructureNode InstantiateAsChild(Structure blueprint, Node parentNode)
     {
         var structure = Instance();
@@ -47,12 +47,12 @@ public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         var centerPointAssigned = false;
         var newWalkableAreas = new List<Rect2>();
         
-        for (var x = 0; x < EntitySize.x; x++)
+        for (var x = 0; x < EntitySize.X; x++)
         {
-            for (var y = 0; y < EntitySize.y; y++)
+            for (var y = 0; y < EntitySize.Y; y++)
             {
                 var currentPoint = new Vector2(x, y);
-                var newX = EntitySize.y - 1 - y;
+                var newX = EntitySize.Y - 1 - y;
                 var newY = x;
                 
                 if (CenterPoint.IsEqualApprox(currentPoint) 
@@ -65,13 +65,13 @@ public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
                 newWalkableAreas.AddRange(WalkableAreasBlueprint
                     .Where(walkableArea => walkableArea.Position.IsEqualApprox(currentPoint))
                     .Select(walkableArea => new Rect2(
-                        new Vector2((newX - walkableArea.Size.y) + 1, newY),
-                        new Vector2(walkableArea.Size.y, walkableArea.Size.x))));
+                        new Vector2((newX - walkableArea.Size.Y) + 1, newY),
+                        new Vector2(walkableArea.Size.Y, walkableArea.Size.X))));
             }
         }
 
         WalkableAreasBlueprint = newWalkableAreas;
-        EntitySize = new Vector2(EntitySize.y, EntitySize.x);
+        EntitySize = new Vector2(EntitySize.Y, EntitySize.X);
         Renderer.AdjustToRelativeSize(RelativeSize);
         
         base.Rotate();
@@ -92,7 +92,7 @@ public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         var needsBackSprite = ActorRotation == ActorRotation.TopLeft || ActorRotation == ActorRotation.TopRight;
         var needsFlipping = ActorRotation == ActorRotation.BottomLeft || ActorRotation == ActorRotation.TopRight;
         
-        var spriteLocation = needsBackSprite ? Blueprint.BackSideSprite : Blueprint.Sprite2D;
+        var spriteLocation = needsBackSprite ? Blueprint.BackSideSprite : Blueprint.Sprite;
         if (spriteLocation.IsNotNullOrEmpty())
             Renderer.SetSpriteTexture(spriteLocation);
 
@@ -100,7 +100,7 @@ public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
             ? Blueprint.BackSideCenterOffset.ToGodotVector2()
             : Blueprint.CenterOffset.ToGodotVector2();
         AdjustSpriteOffset(needsFlipping 
-            ? new Vector2(Renderer.SpriteSize.x - offset.x, offset.y)
+            ? new Vector2(Renderer.SpriteSize.X - offset.X, offset.Y)
             : offset);
         
         Renderer.FlipSprite(needsFlipping);

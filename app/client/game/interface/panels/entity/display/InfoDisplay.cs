@@ -5,8 +5,8 @@ using low_age_data.Domain.Common;
 
 public partial class InfoDisplay : MarginContainer
 {
-    [Signal] public delegate void AbilitiesClosed();
-    [Signal] public delegate void AbilityTextResized();
+    [Signal] public delegate void AbilitiesClosedEventHandler();
+    [Signal] public delegate void AbilityTextResizedEventHandler();
 
     public View CurrentView { get; private set; } = View.UnitStats;
     private View _previousView = View.UnitStats;
@@ -393,7 +393,7 @@ public partial class InfoDisplay : MarginContainer
         _abilityDescription.GetNode<RichTextLabel>("Text").Text = _valueAbilityText;
 
         _abilityTitle.Visible = true;
-        _researchText.Visible = _valueResearchText.Empty() is false;
+        _researchText.Visible = string.IsNullOrEmpty(_valueResearchText) is false;
         _navigationBack.Visible = true;
         _abilityDescription.Visible = true;
         

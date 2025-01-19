@@ -6,7 +6,7 @@ public partial class ClientGame : Game
     public const string ScenePath = @"res://app/client/game/ClientGame.tscn";
     
     private ClientMap _map;
-    private Camera3D _camera;
+    private Camera _camera;
     private Mouse _mouse;
     private Interface _interface;
     
@@ -15,7 +15,7 @@ public partial class ClientGame : Game
         base._Ready();
         
         _map = GetNode<ClientMap>($"{nameof(Map)}");
-        _camera = GetNode<Camera3D>($"{nameof(Camera3D)}");
+        _camera = GetNode<Camera>($"{nameof(Camera)}");
         _mouse = GetNode<Mouse>($"{nameof(Mouse)}");
         _interface = GetNode<Interface>($"{nameof(Interface)}");
         
@@ -43,8 +43,8 @@ public partial class ClientGame : Game
         _mouse.Connect(nameof(Mouse.LeftReleasedWithoutDrag), new Callable(_map, nameof(ClientMap.OnMouseLeftReleasedWithoutDrag)));
         _mouse.Connect(nameof(Mouse.RightReleasedWithoutExamine), new Callable(_map, nameof(ClientMap.OnMouseRightReleasedWithoutExamine)));
 
-        _mouse.Connect(nameof(Mouse.MouseDragged), new Callable(_camera, nameof(Camera3D.OnMouseDragged)));
-        _mouse.Connect(nameof(Mouse.TakingControl), new Callable(_camera, nameof(Camera3D.OnMouseTakingControl)));
+        _mouse.Connect(nameof(Mouse.MouseDragged), new Callable(_camera, nameof(Camera.OnMouseDragged)));
+        _mouse.Connect(nameof(Mouse.TakingControl), new Callable(_camera, nameof(Camera.OnMouseTakingControl)));
         
         _interface.MouseEntered += _mouse.OnInterfaceMouseEntered;
         _interface.MouseExited += _mouse.OnInterfaceMouseExited;
@@ -76,18 +76,18 @@ public partial class ClientGame : Game
         _map.Entities.EntityPlaced -= RegisterNewGameEvent;
     }
 
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected override void GameEnded()
     {
         GD.Print($"{nameof(ClientGame)}.{nameof(GameEnded)}: returning to main menu.");
         Client.Instance.ResetNetwork();
-        GetTree().ChangeSceneToFile(MainMenu.ScenePath);
+        Callable.From(() => GetTree().ChangeSceneToFile(MainMenu.ScenePath)).CallDeferred();
     }
     
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected override void OnNewGameEventRegistered(string eventBody)
     {
-        var playerId = GetTree().GetUniqueId();
+        var playerId = Multiplayer.GetUniqueId();
         GD.Print($"{nameof(ClientGame)}.{nameof(OnNewGameEventRegistered)}: event '{eventBody.TrimForLogs()}' " +
                  $"received for player {playerId} '{Data.Instance.GetPlayerName(playerId)}'");
 
@@ -131,7 +131,7 @@ public partial class ClientGame : Game
     private void OnMapFinishedInitializing()
     {
         GD.Print($"{nameof(ClientGame)}.{nameof(OnMapFinishedInitializing)}");
-        RegisterNewGameEvent(new ClientFinishedInitializingEvent(GetTree().GetUniqueId()));
+        RegisterNewGameEvent(new ClientFinishedInitializingEvent(Multiplayer.GetUniqueId()));
     }
 
     private void OnEveryoneFinishedInitializing()

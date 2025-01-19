@@ -36,7 +36,7 @@ public partial class StatBlockText : MarginContainer
     public void SetEmpty()
     {
         _statBlock.Visible = false;
-        if (FindNode("TextVs") is Label vs) vs.Visible = false;
-        if (FindNode("TextType") is Label type) type.Visible = false;
+        if (FindChild("TextVs") is Label vs) vs.Visible = false;
+        if (FindChild("TextType") is Label type) type.Visible = false;
     }
 }

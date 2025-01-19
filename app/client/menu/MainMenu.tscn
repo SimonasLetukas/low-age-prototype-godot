@@ -1,75 +1,71 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://x8mx3r2yg7u7"]
 
-[ext_resource path="res://app/client/menu/MainMenu.cs" type="Script" id=1]
-[ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=2]
-[ext_resource path="res://assets/fonts/Karla-Regular.ttf" type="FontFile" id=3]
-[ext_resource path="res://app/shared/lobby/players/faction/FactionSelection.tscn" type="PackedScene" id=4]
+[ext_resource type="Script" path="res://app/client/menu/MainMenu.cs" id="1"]
+[ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="2"]
+[ext_resource type="FontFile" uid="uid://d0w7npripgnag" path="res://assets/fonts/Karla-Regular.ttf" id="3"]
+[ext_resource type="PackedScene" path="res://app/shared/lobby/players/faction/FactionSelection.tscn" id="4"]
 
-[sub_resource type="FontFile" id=1]
-size = 32
-font_data = ExtResource( 3 )
+[sub_resource type="FontFile" id="1"]
+fallbacks = Array[Font]([ExtResource("3")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
-[sub_resource type="FontFile" id=2]
-size = 26
-font_data = ExtResource( 3 )
+[sub_resource type="FontFile" id="2"]
+fallbacks = Array[Font]([ExtResource("3")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
 [node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 2 )
-script = ExtResource( 1 )
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+script = ExtResource("1")
 
 [node name="Items" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_top = 140.0
 offset_right = 1280.0
 offset_bottom = 579.0
-theme = ExtResource( 2 )
+theme = ExtResource("2")
 theme_override_constants/separation = 40
 alignment = 1
-__meta__ = {
-"_editor_description_": ""
-}
 
 [node name="Title" type="Label" parent="Items"]
-offset_right = 1280.0
-offset_bottom = 39.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_colors/font_shadow_color = Color( 0, 0, 0, 1 )
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
-theme_override_fonts/font = SubResource( 1 )
+theme_override_fonts/font = SubResource("1")
 text = "Main Menu"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+horizontal_alignment = 1
 
 [node name="Name" type="HBoxContainer" parent="Items"]
-offset_top = 79.0
-offset_right = 1280.0
-offset_bottom = 119.0
+layout_mode = 2
 theme_override_constants/separation = 65
 alignment = 1
 
 [node name="Title" type="Label" parent="Items/Name"]
-offset_left = 420.0
-offset_top = 4.0
-offset_right = 495.0
-offset_bottom = 35.0
-theme_override_colors/font_shadow_color = Color( 0, 0, 0, 1 )
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
-theme_override_fonts/font = SubResource( 2 )
+theme_override_fonts/font = SubResource("2")
 text = "Name:"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+horizontal_alignment = 1
 
 [node name="Input" type="LineEdit" parent="Items/Name"]
-offset_left = 560.0
-offset_right = 860.0
-offset_bottom = 40.0
-custom_minimum_size = Vector2( 300, 40 )
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
 size_flags_vertical = 4
 text = "Username"
 max_length = 20
@@ -79,104 +75,82 @@ caret_blink = true
 caret_blink_interval = 0.5
 
 [node name="Faction" type="HBoxContainer" parent="Items"]
-offset_top = 159.0
-offset_right = 1280.0
-offset_bottom = 199.0
+layout_mode = 2
 theme_override_constants/separation = 46
 alignment = 1
 
 [node name="Title" type="Label" parent="Items/Faction"]
-offset_left = 419.0
-offset_top = 4.0
-offset_right = 514.0
-offset_bottom = 35.0
-theme_override_colors/font_shadow_color = Color( 0, 0, 0, 1 )
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
-theme_override_fonts/font = SubResource( 2 )
+theme_override_fonts/font = SubResource("2")
 text = "Faction:"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+horizontal_alignment = 1
 
-[node name="Faction" parent="Items/Faction" instance=ExtResource( 4 )]
-offset_left = 560.0
-offset_right = 860.0
+[node name="Faction" parent="Items/Faction" instance=ExtResource("4")]
+layout_mode = 2
 
 [node name="Connect" type="Button" parent="Items"]
-offset_left = 560.0
-offset_top = 239.0
-offset_right = 720.0
-offset_bottom = 279.0
-custom_minimum_size = Vector2( 160, 40 )
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Connect"
 
 [node name="ErrorMessage" type="Label" parent="Items/Connect"]
-self_modulate = Color( 1, 1, 1, 0 )
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 10.0
-theme_override_colors/font_shadow_color = Color( 0, 0, 0, 1 )
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 text = "Error message"
-align = 1
+horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Items"]
-offset_top = 319.0
-offset_right = 1280.0
-offset_bottom = 439.0
+layout_mode = 2
 theme_override_constants/margin_top = 80
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Items/MarginContainer"]
-offset_top = 80.0
-offset_right = 1280.0
-offset_bottom = 120.0
+layout_mode = 2
 theme_override_constants/separation = 46
 alignment = 1
 
 [node name="QuickStart" type="CheckBox" parent="Items/MarginContainer/HBoxContainer"]
-offset_left = 411.0
-offset_right = 514.0
-offset_bottom = 40.0
-pressed = true
+layout_mode = 2
 text = "Quick Start"
 
 [node name="PlayLocally" type="Button" parent="Items/MarginContainer/HBoxContainer"]
-offset_left = 560.0
-offset_right = 720.0
-offset_bottom = 40.0
-custom_minimum_size = Vector2( 160, 40 )
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
 size_flags_vertical = 4
 text = "Play Locally"
 
 [node name="ErrorMessage" type="Label" parent="Items/MarginContainer/HBoxContainer/PlayLocally"]
-self_modulate = Color( 1, 1, 1, 0 )
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 10.0
-theme_override_colors/font_shadow_color = Color( 0, 0, 0, 1 )
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 text = "Error message"
-align = 1
+horizontal_alignment = 1
 
 [node name="EmptySpace" type="Control" parent="Items/MarginContainer/HBoxContainer"]
-offset_left = 766.0
-offset_right = 868.0
-offset_bottom = 40.0
-custom_minimum_size = Vector2( 102, 0 )
+custom_minimum_size = Vector2(102, 0)
+layout_mode = 2
 
 [node name="SettingsButton" type="Button" parent="."]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -200.0
 offset_top = 40.0
 offset_right = -40.0
 offset_bottom = 80.0
-custom_minimum_size = Vector2( 160, 40 )
 text = "Settings"
-
-[node name="Tween" type="Tween" parent="."]

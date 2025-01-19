@@ -24,11 +24,11 @@ public partial class Game : Node2D
     {
         GD.Print($"{nameof(Game)}.{nameof(MarkAsLoaded)}");
         
-        if (GetTree().IsServer()) 
+        if (Multiplayer.IsServer()) 
             return;
         
-        GD.Print($"{nameof(Game)}: calling {nameof(ServerGame.OnClientLoaded)} as RPC.");
-        RpcId(Constants.ServerId, nameof(ServerGame.OnClientLoaded), GetTree().GetUniqueId());
+        GD.Print($"{nameof(Game)}: calling {nameof(ServerGame.OnClientLoaded)} as Rpc.");
+        RpcId(Constants.ServerId, nameof(ServerGame.OnClientLoaded), Multiplayer.GetUniqueId());
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public partial class Game : Node2D
         GD.Print($"{nameof(Game)}.{nameof(RegisterNewGameEvent)}: called with {gameEvent.GetType()} " +
                  $"and properties '{JsonConvert.SerializeObject(gameEvent).TrimForLogs()}'.");
 
-        if (GetTree().IsServer())
+        if (Multiplayer.IsServer())
             return;
         
         RpcId(Constants.ServerId, nameof(ServerGame.OnRegisterNewGameEvent), EventToString(gameEvent));
@@ -50,12 +50,12 @@ public partial class Game : Node2D
 
     #region Callbacks from the server
 
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void GameEnded()
     {
     }
     
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void OnNewGameEventRegistered(string eventBody)
     {
         GD.Print($"{nameof(Game)}.{nameof(OnNewGameEventRegistered)}");

@@ -15,18 +15,18 @@ public partial class Startup : Node
         if (OS.HasFeature(Client))
         {
             GD.Print($"Starting as {Client}.");
-            GetTree().ChangeSceneToFile(ClientStartup.ScenePath);
+            Callable.From(() => GetTree().ChangeSceneToFile(ClientStartup.ScenePath)).CallDeferred();
             return;
         }
 
         if (OS.HasFeature(Server))
         {
             GD.Print($"Starting as {Server}.");
-            GetTree().ChangeSceneToFile(ServerStartup.ScenePath);
+            Callable.From(() => GetTree().ChangeSceneToFile(ServerStartup.ScenePath)).CallDeferred();
             return;
         }
         
         GD.Print($"Unidentified startup, starting as {nameof(DebugQuickStart)}.");
-        var result = GetTree().ChangeSceneToFile(DebugQuickStart.ScenePath);
+        Callable.From(() => GetTree().ChangeSceneToFile(DebugQuickStart.ScenePath)).CallDeferred();
     }
 }

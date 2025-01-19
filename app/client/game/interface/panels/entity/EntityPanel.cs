@@ -15,7 +15,6 @@ public partial class EntityPanel : Control
     private AbilityButtons _abilityButtons;
     private InfoDisplay _display;
     private RichTextLabel _abilityTextBox;
-    private Tween _tween;
     private bool _isShowingAbility;
     private bool _isSwitchingBetweenAbilities;
     private EntityNode _selectedEntity;
@@ -34,7 +33,6 @@ public partial class EntityPanel : Control
         _abilityButtons = GetNode<AbilityButtons>($"{nameof(Panel)}/{nameof(AbilityButtons)}");
         _display = GetNode<InfoDisplay>($"{nameof(Panel)}/{nameof(InfoDisplay)}");
         _abilityTextBox = GetNode<RichTextLabel>($"{nameof(Panel)}/{nameof(InfoDisplay)}/{nameof(VBoxContainer)}/AbilityDescription/Text");
-        _tween = GetNode<Tween>($"{nameof(Tween)}");
 
         _abilityButtons.Connect(nameof(AbilityButtons.AbilitiesPopulated), new Callable(this, nameof(OnAbilityButtonsPopulated)));
         _display.Connect(nameof(InfoDisplay.AbilitiesClosed), new Callable(this, nameof(OnInfoDisplayAbilitiesClosed)));
@@ -136,29 +134,31 @@ public partial class EntityPanel : Control
         Vector2 newSize;
         if (_isShowingAbility)
         {
-            var abilityTextBoxSizeY = CalculateBiggestPreviousSize((int)_abilityTextBox.Size.y);
+            var abilityTextBoxSizeY = CalculateBiggestPreviousSize((int)_abilityTextBox.Size.Y);
             
             var newY = YSizeForAbility - abilityTextBoxSizeY;
             if (newY > YSizeForUnit) // TODO change check here if structure is selected
                 newY = YSizeForUnit;
 
-            newSize = new Vector2(Size.x, newY);
+            newSize = new Vector2(Size.X, newY);
         }
         else // TODO change for structures and other selectables
         {
-            newSize = new Vector2(Size.x, YSizeForUnit);
+            newSize = new Vector2(Size.X, YSizeForUnit);
         }
-
-        _tween.InterpolateProperty(this, "rect_size", Size, newSize, 
-            PanelMoveDuration, Tween.TransitionType.Quad);
-        _tween.Start();
+        
+        var tween = CreateTween();
+        tween.TweenProperty(this, "size", newSize, PanelMoveDuration)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad);
     }
     
     private void HidePanel()
     {
-        _tween.InterpolateProperty(this, "rect_size", Size, 
-            new Vector2(Size.x, YSizeForHiding), PanelMoveDuration, Tween.TransitionType.Quad);
-        _tween.Start();
+        var tween = CreateTween();
+        tween.TweenProperty(this, "size", new Vector2(Size.X, YSizeForHiding), PanelMoveDuration)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad);
     }
 
     private int CalculateBiggestPreviousSize(int currentSizeY = 0)

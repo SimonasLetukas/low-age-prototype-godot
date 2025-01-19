@@ -5,8 +5,8 @@ public partial class Client : Network
 {
     public static Client Instance = null;
     
-    [Signal] public delegate void PlayerAdded(int playerId);
-    [Signal] public delegate void GameStarted();
+    [Signal] public delegate void PlayerAddedEventHandler(int playerId);
+    [Signal] public delegate void GameStartedEventHandler();
     
     public string LocalPlayerName { get; private set; }
     public FactionId LocalPlayerFaction { get; private set; }
@@ -28,8 +28,8 @@ public partial class Client : Network
         LocalPlayerName = playerName;
         LocalPlayerFaction = playerFaction;
         LocalPlayerReady = false;
-        
-        GetTree().Connect(Constants.ENet.ConnectedToServerEvent, new Callable(this, nameof(OnConnectedToServer)));
+
+        Multiplayer.ConnectedToServer += OnConnectedToServer;
         var peer = new ENetMultiplayerPeer();
         var result = peer.CreateClient(Constants.ServerIp, Constants.ServerPort);
 
@@ -38,8 +38,7 @@ public partial class Client : Network
             return false;
         }
         
-        GetTree().NetworkPeer = peer;
-        SetPeerTimeout();
+        Multiplayer.MultiplayerPeer = peer;
         GD.Print("Connecting to server...");
         return true;
     }
@@ -57,13 +56,13 @@ public partial class Client : Network
             playerFaction.ToString());
     }
 
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     public void OnRegisterPlayer(int playerId, string playerName, bool playerReady, string playerFactionId)
     {
         GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerReady}, {playerFactionId}");
         Data.Instance.AddPlayer(playerId, playerName, playerReady, new FactionId(playerFactionId));
         
-        EmitSignal(nameof(PlayerAdded), playerId);
+        EmitSignal(SignalName.PlayerAdded, playerId);
         GD.Print($"Total players: {Data.Instance.Players.Count}");
     }
 
@@ -73,7 +72,7 @@ public partial class Client : Network
         Rpc(nameof(OnStartGame));
     }
 
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     public void OnStartGame()
     {
         GD.Print($"{nameof(Client)}: {nameof(OnStartGame)} called for {LocalPlayerName}.");

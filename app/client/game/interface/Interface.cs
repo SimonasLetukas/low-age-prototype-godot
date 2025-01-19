@@ -33,8 +33,8 @@ public partial class Interface : CanvasLayer
             foreach (var control in firstLevel.GetChildren().OfType<Control>())
             {
                 if (DebugEnabled) GD.Print(control.Name);
-                control.Connect("mouse_entered", new Callable(this, nameof(OnControlMouseEntered)), new Array { control });
-                control.Connect("mouse_exited", new Callable(this, nameof(OnControlMouseExited)), new Array { control });
+                control.MouseEntered += () => OnControlMouseEntered(control);
+                control.MouseExited += () => OnControlMouseExited(control);
             }
         }
 

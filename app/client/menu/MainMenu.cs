@@ -14,7 +14,6 @@ public partial class MainMenu : Control
     private Button _connectButton;
     private Button _playLocallyButton;
     private Label _errorMessage;
-    private Tween _tween;
 
     private FactionId _currentlySelectedFaction;
 
@@ -22,15 +21,14 @@ public partial class MainMenu : Control
     {
         Data.Instance.ReadBlueprint();  // TODO perhaps fetch from server instead
                                         // TODO this should happen before (and instead of) the read in FactionSelection.cs
-
-        _settingsButton = FindNode("SettingsButton") as Button;
+                                        
+        _settingsButton = FindChild("SettingsButton") as Button;
         _nameInput = GetNode<LineEdit>("Items/Name/Input");
         _factionSelection = GetNode<FactionSelection>("Items/Faction/Faction");
-        _connectButton = FindNode("Connect") as Button;
-        _playLocallyButton = FindNode("PlayLocally") as Button;
-        QuickStartCheckBox = FindNode("QuickStart") as CheckBox;
+        _connectButton = FindChild("Connect") as Button;
+        _playLocallyButton = FindChild("PlayLocally") as Button;
+        QuickStartCheckBox = FindChild("QuickStart") as CheckBox;
         _errorMessage = GetNode<Label>("Items/Connect/ErrorMessage"); // TODO consolidate all error messages in scene under one 
-        _tween = GetNode<Tween>("Tween");
 
         if (OS.HasEnvironment(Constants.Os.Username))
         {
@@ -50,7 +48,7 @@ public partial class MainMenu : Control
         
         _currentlySelectedFaction = _factionSelection.GetSelectedFaction();
 
-        GetTree().Connect(Constants.ENet.ConnectedToServerEvent, new Callable(this, nameof(OnConnectedToServer)));
+        Multiplayer.ConnectedToServer += OnConnectedToServer;
         _settingsButton?.Connect(nameof(_settingsButton.Pressed).ToLower(), new Callable(this, nameof(OnSettingsPressed)));
         _connectButton?.Connect(nameof(_connectButton.Pressed).ToLower(), new Callable(this, nameof(OnConnectPressed)));
         _playLocallyButton?.Connect(nameof(_playLocallyButton.Pressed).ToLower(), new Callable(this, nameof(OnPlayLocallyPressed)));
@@ -80,14 +78,17 @@ public partial class MainMenu : Control
     private void PutConnectionMessage(string message)
     {
         _errorMessage.Text = message;
-        _tween.InterpolateProperty(_errorMessage, "self_modulate", new Color(1, 1, 1, 1), 
-            new Color(1, 1, 1, 0), 2, Tween.TransitionType.Linear, Tween.EaseType.Out);
-        _tween.Start();
+        var tween = CreateTween();
+        tween.TweenProperty(_errorMessage, "self_modulate", new Color(1, 1, 1, 0), 2)
+            .From(new Color(1, 1, 1, 1))
+            .SetTrans(Tween.TransitionType.Linear)
+            .SetEase(Tween.EaseType.Out);
     }
 
     private void OnSettingsPressed() => _settings.Visible = !_settings.Visible;
 
-    private void OnConnectedToServer() => GetTree().ChangeSceneToFile(ClientLobby.ScenePath);
+    private void OnConnectedToServer() => Callable.From(() 
+        => GetTree().ChangeSceneToFile(ClientLobby.ScenePath)).CallDeferred();
 
     private void OnConnectPressed()
     {
@@ -97,8 +98,9 @@ public partial class MainMenu : Control
 
     protected void OnPlayLocallyPressed()
     {
-        Server.Instance.RunLocalServerInstance();
-        Client.Instance.QuickStartEnabled = QuickStartCheckBox.Pressed;
+        var thread = new GodotThread();
+        thread.Start(new Callable(Server.Instance, nameof(Server.Instance.RunLocalServerInstance)));
+        Client.Instance.QuickStartEnabled = QuickStartCheckBox.IsPressed();
         Constants.SetLocalServer();
         ConnectToServer();
     }

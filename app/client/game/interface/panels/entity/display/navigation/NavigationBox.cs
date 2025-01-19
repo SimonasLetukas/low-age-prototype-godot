@@ -5,7 +5,7 @@ public partial class NavigationBox : MarginContainer
 {
     [Export] public Texture2D Icon { get; set; }
     
-    [Signal] public delegate void Clicked();
+    [Signal] public delegate void ClickedEventHandler();
 
     private NavigationBoxPanel _navigationBoxPanel;
 
@@ -21,8 +21,8 @@ public partial class NavigationBox : MarginContainer
 
     public void SetIcon(Texture2D icon)
     {
-        GetNode<TextureRect>($"{nameof(NavigationBoxPanel)}/NavigationBoxIcon").Texture2D = icon;
-        GetNode<TextureRect>($"{nameof(NavigationBoxPanel)}/NavigationBoxIcon/Shadow").Texture2D = icon;
+        GetNode<TextureRect>($"{nameof(NavigationBoxPanel)}/NavigationBoxIcon").Texture = icon;
+        GetNode<TextureRect>($"{nameof(NavigationBoxPanel)}/NavigationBoxIcon/Shadow").Texture = icon;
     }
 
     private void Highlight(bool to)

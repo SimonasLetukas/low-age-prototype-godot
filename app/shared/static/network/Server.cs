@@ -24,7 +24,7 @@ public partial class Server : Network
             playerFaction.ToString());
     }
 
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     public void OnRegisterSelf(int playerId, string playerName, bool playerReady, string playerFactionId)
     {
         // Register this client with the server
@@ -57,12 +57,12 @@ public partial class Server : Network
         {
             "/c", "tasklist /fi \"imagename eq server.exe\" | findstr /B /I /C:\"server.exe \" >NUL " +
                   "& IF ERRORLEVEL 1 start /min \"server\" server.exe"
-        }, false);
+        });
     }
 
     public bool IsHosting()
     {
-        var networkPeer = GetTree().NetworkPeer;
+        var networkPeer = Multiplayer.MultiplayerPeer;
         if (networkPeer is null) 
             return false;
 
@@ -86,9 +86,8 @@ public partial class Server : Network
             return false;
         }
 
-        GetTree().NetworkPeer = peer;
-        GetTree().Connect(Constants.ENet.NetworkPeerConnectedEvent, new Callable(this, nameof(OnPlayerConnected)));
-        SetPeerTimeout();
+        Multiplayer.MultiplayerPeer = peer;
+        Multiplayer.PeerConnected += OnPlayerConnected;
         
         Data.Instance.ReadBlueprint();
         
@@ -96,7 +95,7 @@ public partial class Server : Network
         return true;
     }
 
-    private void OnPlayerConnected(int playerId)
+    private void OnPlayerConnected(long playerId)
     {
         GD.Print($"Player connected: {playerId}");
     }

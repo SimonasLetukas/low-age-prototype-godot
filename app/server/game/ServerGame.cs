@@ -37,7 +37,7 @@ public partial class ServerGame : Game
         _creator.MapCreated -= OnRegisterServerEvent;
     }
 
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     public void OnClientLoaded(int playerId)
     {
         GD.Print($"{nameof(ServerGame)}.{nameof(OnClientLoaded)}: '{playerId}' client loaded");
@@ -55,7 +55,7 @@ public partial class ServerGame : Game
                  $"{_notLoadedPlayers.Count} players to load");
     }
     
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     public void OnRegisterNewGameEvent(string eventBody)
     {
         GD.Print($"{nameof(ServerGame)}.{nameof(OnRegisterNewGameEvent)}: registering new game event " +
@@ -123,7 +123,7 @@ public partial class ServerGame : Game
             
             // Tell everyone that the game has ended
             Rpc(nameof(GameEnded));
-            GetTree().ChangeSceneToFile(ServerLobby.ScenePath);
+            Callable.From(() => GetTree().ChangeSceneToFile(ServerLobby.ScenePath)).CallDeferred();
         }
         
         GD.Print($"{nameof(ServerGame)}.{nameof(OnPlayerRemoved)}: '{Data.Instance.Players.Count}' players remaining");

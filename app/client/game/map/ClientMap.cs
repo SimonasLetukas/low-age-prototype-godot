@@ -54,11 +54,11 @@ public partial class ClientMap : Map
     {
         if (DebugEnabled) GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} {nameof(ClientMap)}.{nameof(Initialize)}");
 
-        _currentPlayer = Data.Instance.Players.Single(x => x.Id.Equals(GetTree().GetUniqueId()));
+        _currentPlayer = Data.Instance.Players.Single(x => x.Id.Equals(Multiplayer.GetUniqueId()));
         _mapSize = @event.MapSize;
         _startingPositions = @event.StartingPositions[_currentPlayer.Id];
         
-        Position = new Vector2((Mathf.Max(_mapSize.x, _mapSize.y) * Constants.TileWidth) / 2, Position.y);
+        Position = new Vector2((Mathf.Max(_mapSize.X, _mapSize.Y) * Constants.TileWidth) / 2, Position.Y);
         _tileMap.Initialize(_mapSize, @event.Tiles);
         Pathfinding.Initialize(_mapSize, @event.Tiles);
     }
@@ -92,7 +92,7 @@ public partial class ClientMap : Map
         FinishedInitializing();
     }
     
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         base._Process(delta);
         var mousePosition = GetGlobalMousePosition();
@@ -111,7 +111,7 @@ public partial class ClientMap : Map
             // TODO optimization: only if hovered tile changed from above, display path
             if (_hoveredTile != null)
             {
-                var size = (int)Entities.SelectedEntity.EntitySize.x;
+                var size = (int)Entities.SelectedEntity.EntitySize.X;
                 var path = Pathfinding.FindPath(
                     _hoveredTile.Position, 
                     size);
@@ -213,7 +213,7 @@ public partial class ClientMap : Map
         
         if (entity is UnitNode unit)
         {
-            var size = (int)unit.EntitySize.x;
+            var size = (int)unit.EntitySize.X;
             var availableTiles = Pathfinding.GetAvailablePositions(
                 entity.EntityPrimaryPosition, 
                 unit.Movement, 
@@ -268,7 +268,7 @@ public partial class ClientMap : Map
         // TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
         
         var selectedEntity = Entities.SelectedEntity;
-        var path = Pathfinding.FindPath(_hoveredTile.Position, (int)selectedEntity.EntitySize.x).ToList();
+        var path = Pathfinding.FindPath(_hoveredTile.Position, (int)selectedEntity.EntitySize.X).ToList();
         var globalPath = _tileMap.GetGlobalPositionsFromMapPositions(path);
         UnitMovementIssued(new UnitMovedAlongPathEvent(selectedEntity.InstanceId, globalPath, path));
         HandleDeselecting();
@@ -311,9 +311,9 @@ public partial class ClientMap : Map
             _tileMap.SetAvailableTiles(unit, Pathfinding.GetAvailablePositions(
                     unit.EntityPrimaryPosition,
                     unit.GetReach(),
-                    (int)unit.EntitySize.x,
+                    (int)unit.EntitySize.X,
                     true),
-                (int)unit.EntitySize.x,
+                (int)unit.EntitySize.X,
                 true);
         }
         else

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Common.Shape3D;
+using low_age_data.Domain.Common.Shape;
 
 public static class IShapeExtensions
 {
@@ -39,14 +39,14 @@ public static class IShapeExtensions
             case Line line:
                 positions = GetPositionsForLine(line, centerPoint, actorSize, actorRotation);
                 break;
-            case low_age_data.Domain.Common.Shape3D.Map _:
+            case low_age_data.Domain.Common.Shape.Map _:
                 return GetPositionsForMap(mapSize);
             default:
                 throw new ArgumentOutOfRangeException(nameof(shape), shape, 
                     $"The type '{shape.GetType().Name}' of provided shape is not supported.");
         }
 
-        positions.RemoveAll(p => p.x < 0 || p.y < 0 || p.x >= mapSize.x || p.y >= mapSize.y);
+        positions.RemoveAll(p => p.X < 0 || p.Y < 0 || p.X >= mapSize.X || p.Y >= mapSize.Y);
         return positions;
     }
 
@@ -58,12 +58,12 @@ public static class IShapeExtensions
         var includedRadiusSquared = circle.Radius * circle.Radius;
         var excludedRadiusSquared = circle.IgnoreRadius * circle.IgnoreRadius;
         
-        for (var sizeOffsetX = 0; sizeOffsetX < size.x; sizeOffsetX++)
+        for (var sizeOffsetX = 0; sizeOffsetX < size.X; sizeOffsetX++)
         {
-            for (var sizeOffsetY = 0; sizeOffsetY < size.y; sizeOffsetY++)
+            for (var sizeOffsetY = 0; sizeOffsetY < size.Y; sizeOffsetY++)
             {
-                var centerX = centerPoint.x + sizeOffsetX;
-                var centerY = centerPoint.y + sizeOffsetY;
+                var centerX = centerPoint.X + sizeOffsetX;
+                var centerY = centerPoint.Y + sizeOffsetY;
                 includedPositions = DrawCircle(circle.Radius, (int)centerX, (int)centerY, 
                     includedRadiusSquared, includedPositions);
                 includedPositions.Add(new Vector2(centerX, centerY));
@@ -113,7 +113,7 @@ public static class IShapeExtensions
             {
                 for (var y = area.Start.Y; y < area.Size.Y + area.Start.Y; y++)
                 {
-                    positions.Add(new Vector2(centerPoint.x + x, centerPoint.y + y));
+                    positions.Add(new Vector2(centerPoint.X + x, centerPoint.Y + y));
                 }
             }
         }
@@ -132,8 +132,8 @@ public static class IShapeExtensions
                              || actorRotation is ActorRotation.BottomLeft;
         var offset = positiveGrowth
             ? xAxis 
-                ? size.x 
-                : size.y
+                ? size.X 
+                : size.Y
             : 1;
 
         for (var length = (int)offset; length < line.Length + offset; length++)
@@ -141,12 +141,12 @@ public static class IShapeExtensions
             if (line.IgnoreLength >= 0 && length < line.IgnoreLength + offset)
                 continue;
 
-            for (var width = 0; width < (xAxis ? size.y : size.x); width++)
+            for (var width = 0; width < (xAxis ? size.Y : size.X); width++)
             {
-                var x = centerPoint.x + (xAxis 
+                var x = centerPoint.X + (xAxis 
                     ? length * (positiveGrowth ? 1 : -1)
                     : width);
-                var y = centerPoint.y + (xAxis 
+                var y = centerPoint.Y + (xAxis 
                     ? width 
                     : length * (positiveGrowth ? 1 : -1));
                 
@@ -156,11 +156,11 @@ public static class IShapeExtensions
 
         if (line.IgnoreLength == -1 && line.Length > 0)
         {
-            for (var x = 0; x < size.x; x++)
+            for (var x = 0; x < size.X; x++)
             {
-                for (var y = 0; y < size.y; y++)
+                for (var y = 0; y < size.Y; y++)
                 {
-                    positions.Add(new Vector2(centerPoint.x + x, centerPoint.y + y));
+                    positions.Add(new Vector2(centerPoint.X + x, centerPoint.Y + y));
                 }
             }
         }
@@ -171,9 +171,9 @@ public static class IShapeExtensions
     private static IEnumerable<Vector2> GetPositionsForMap(Vector2 mapSize)
     {
         var positions = new List<Vector2>();
-        for (var x = 0; x < mapSize.x; x++)
+        for (var x = 0; x < mapSize.X; x++)
         {
-            for (var y = 0; y < mapSize.y; y++)
+            for (var y = 0; y < mapSize.Y; y++)
             {
                 positions.Add(new Vector2(x, y));
             }

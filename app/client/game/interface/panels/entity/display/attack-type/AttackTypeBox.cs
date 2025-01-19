@@ -4,8 +4,8 @@ public partial class AttackTypeBox : MarginContainer
 {
     [Export] public Texture2D Icon { get; set; }
     
-    [Signal] public delegate void Hovering(bool started);
-    [Signal] public delegate void Clicked();
+    [Signal] public delegate void HoveringEventHandler(bool started);
+    [Signal] public delegate void ClickedEventHandler();
 
     public bool IsSelected { get; private set; } = false;
     
@@ -23,8 +23,8 @@ public partial class AttackTypeBox : MarginContainer
 
     public void SetIcon(Texture2D icon)
     {
-        GetNode<TextureRect>($"{nameof(AttackTypePanel)}/AttackTypeIcon").Texture2D = icon;
-        GetNode<TextureRect>($"{nameof(AttackTypePanel)}/AttackTypeIcon/Shadow").Texture2D = icon;
+        GetNode<TextureRect>($"{nameof(AttackTypePanel)}/AttackTypeIcon").Texture = icon;
+        GetNode<TextureRect>($"{nameof(AttackTypePanel)}/AttackTypeIcon/Shadow").Texture = icon;
     }
     
     public void SetSelected(bool to)

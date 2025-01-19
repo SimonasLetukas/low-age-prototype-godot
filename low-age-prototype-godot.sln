@@ -1,10 +1,8 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-prototype-godot", "low-age-prototype-godot.csproj", "{671E3AF7-3C8A-489A-BCD6-F4150249150E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-prototype-godot", "low-age-prototype-godot.csproj", "{E7144659-67BE-4F9A-B70B-880C95AC2A4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-data", "data\low-age-data.csproj", "{294BFFF7-DC43-4523-A97E-57C255D8C71F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-tests", "tests\low-age-tests.csproj", "{682A1EF3-202C-4540-89BE-B57ED24898D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-data", "data\low-age-data.csproj", "{98573C6D-6D35-42B9-9030-08AEB7B62FF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,23 +11,17 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
-		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
-		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
-		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
-		{682A1EF3-202C-4540-89BE-B57ED24898D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{682A1EF3-202C-4540-89BE-B57ED24898D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
-		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
-		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{E7144659-67BE-4F9A-B70B-880C95AC2A4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7144659-67BE-4F9A-B70B-880C95AC2A4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7144659-67BE-4F9A-B70B-880C95AC2A4B}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{E7144659-67BE-4F9A-B70B-880C95AC2A4B}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{E7144659-67BE-4F9A-B70B-880C95AC2A4B}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{E7144659-67BE-4F9A-B70B-880C95AC2A4B}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{98573C6D-6D35-42B9-9030-08AEB7B62FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98573C6D-6D35-42B9-9030-08AEB7B62FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98573C6D-6D35-42B9-9030-08AEB7B62FF7}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98573C6D-6D35-42B9-9030-08AEB7B62FF7}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{98573C6D-6D35-42B9-9030-08AEB7B62FF7}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{98573C6D-6D35-42B9-9030-08AEB7B62FF7}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

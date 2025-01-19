@@ -10,7 +10,6 @@ public partial class SelectionPanel : Control
     public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
     
     private NinePatchRect _background;
-    private Tween _tween;
     private GridContainer _gridContainer;
     private RichTextLabel _text;
     private int _selectionAmount = 0;
@@ -24,7 +23,6 @@ public partial class SelectionPanel : Control
         base._Ready();
 
         _background = GetNode<NinePatchRect>("Background");
-        _tween = GetNode<Tween>(nameof(Tween));
         _gridContainer = GetNode<GridContainer>(nameof(GridContainer));
         _gridContainer.Columns = Columns;
         _text = GetNode<RichTextLabel>(nameof(RichTextLabel));
@@ -94,22 +92,25 @@ public partial class SelectionPanel : Control
 
     private void HidePanel()
     {
-        _tween.InterpolateProperty(this, "margin_top", OffsetTop, 
-            0, PanelMoveDuration, Tween.TransitionType.Quad);
-        _tween.Start();
+        var tween = CreateTween();
+        tween.TweenProperty(this, "offset_top", 0, PanelMoveDuration)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad);
     }
 
     private void ShowPanel()
     {
         var additionalRows = (int)Mathf.Ceil((float)_selectionAmount / Columns) - 1;
-        Size = new Vector2(Size.x, Size.y + additionalRows * NewLineHeight);
-        _background.Size = new Vector2(_background.Size.x,
-            _background.Size.y + additionalRows * (NewLineHeight / _background.Scale.y));
-        var newMarginTop = Size.y * -1;
+        Size = new Vector2(Size.X, Size.Y + additionalRows * NewLineHeight);
+        _background.Size = new Vector2(_background.Size.X,
+            _background.Size.Y + additionalRows * (NewLineHeight / _background.Scale.Y));
+        var newMarginTop = Size.Y * -1;
         Visible = true;
-        _tween.InterpolateProperty(this, "margin_top", OffsetTop, newMarginTop, 
-            PanelMoveDuration, Tween.TransitionType.Quad);
-        _tween.Start();
+        
+        var tween = CreateTween();
+        tween.TweenProperty(this, "offset_top", newMarginTop, PanelMoveDuration)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad);
     }
 
     private void Reset()
@@ -125,8 +126,8 @@ public partial class SelectionPanel : Control
         _text.Visible = false;
         _gridContainer.Visible = true;
         
-        Size = new Vector2(Size.x, OneLineSize);
+        Size = new Vector2(Size.X, OneLineSize);
         OffsetTop = 0;
-        _background.Size = new Vector2(_background.Size.x, OneLineSize / _background.Scale.y);
+        _background.Size = new Vector2(_background.Size.X, OneLineSize / _background.Scale.Y);
     }
 }

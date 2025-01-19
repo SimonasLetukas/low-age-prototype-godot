@@ -37,8 +37,8 @@ public partial class BaseButton : NinePatchRect
     public void SetIcon(Texture2D icon)
     {
         Icon = icon;
-        GetNode<TextureRect>(nameof(TextureRect)).Texture2D = icon;
-        GetNode<TextureRect>($"{nameof(TextureRect)}/Shadow").Texture2D = icon;
+        GetNode<TextureRect>(nameof(TextureRect)).Texture = icon;
+        GetNode<TextureRect>($"{nameof(TextureRect)}/Shadow").Texture = icon;
     }
     
     protected void SetClicked(bool to)
@@ -46,10 +46,10 @@ public partial class BaseButton : NinePatchRect
         switch (to)
         {
             case true:
-                Texture2D = TextureClicked;
+                Texture = TextureClicked;
                 break;
             case false:
-                Texture2D = TextureNormal;
+                Texture = TextureNormal;
                 break;
         }
     }

@@ -23,7 +23,7 @@ public partial class InformationalText : Control
         Reset();
     }
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         if (_enabled is false)
             return;

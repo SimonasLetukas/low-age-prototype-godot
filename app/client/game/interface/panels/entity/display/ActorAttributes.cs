@@ -1,12 +1,12 @@
-using Godot;
 using System.Collections.Generic;
+using Godot;
 using low_age_data.Domain.Common;
 
 public partial class ActorAttributes : MarginContainer
 {
-    [Export] public ActorAttribute[] Attributes { get; set; } =
+    private ActorAttribute[] Attributes { get; set; } =
     {
-        ActorAttribute.Light3D, 
+        ActorAttribute.Light, 
         ActorAttribute.Biological
     };
 

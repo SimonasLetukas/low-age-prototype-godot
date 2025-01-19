@@ -6,6 +6,7 @@ using low_age_data.Domain.Entities;
 using low_age_data.Domain.Factions;
 using low_age_data.Shared;
 using Newtonsoft.Json;
+using FileAccess = Godot.FileAccess;
 
 /// <summary>
 /// Handles game data for players, tiles, units & structures.
@@ -40,8 +41,7 @@ public partial class Data : Node
         // TODO to save resources currently both server and client read from their local files,
         // it should be transferred by server instead to have one source of truth.
     {
-        var dataFile = new File();
-        dataFile.Open(DataBlueprintLocation, File.ModeFlags.Read);
+        var dataFile = FileAccess.Open(DataBlueprintLocation, FileAccess.ModeFlags.Read);
         var dataJson = dataFile.GetAsText(); 
         dataFile.Close();
 

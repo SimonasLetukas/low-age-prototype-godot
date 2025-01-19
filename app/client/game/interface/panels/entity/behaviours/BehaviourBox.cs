@@ -4,7 +4,7 @@ using low_age_data.Domain.Common;
 public partial class BehaviourBox : NinePatchRect
 {
     public const string ScenePath = "res://app/client/game/interface/panels/entity/behaviours/BehaviourBox.tscn";
-    public static BehaviourBox Instance() => (BehaviourBox) GD.Load<PackedScene>(ScenePath).Instance();
+    public static BehaviourBox Instance() => (BehaviourBox) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static BehaviourBox InstantiateAsChild(BehaviourNode behaviour, Node parentNode)
     {
         var behaviourBox = Instance();

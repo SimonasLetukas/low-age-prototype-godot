@@ -9,6 +9,6 @@ public partial class ClientStartup : Node2D
     
     public override void _Ready()
     {
-        GetTree().ChangeSceneToFile(MainMenu.ScenePath);
+        Callable.From(() => GetTree().ChangeSceneToFile(MainMenu.ScenePath)).CallDeferred();
     }
 }

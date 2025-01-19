@@ -54,7 +54,6 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     private IList<Vector2> _movePath;
     private bool _selected;
     private float _movementDuration;
-    private Tween _movement;
     private bool _canBePlacedOnTheWholeMap = false;
     
     public override void _Ready()
@@ -65,9 +64,6 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         _movePath = new List<Vector2>();
         _selected = false;
         _movementDuration = GetDurationFromAnimationSpeed();
-        _movement = GetNode<Tween>("Movement");
-
-        _movement.Connect("tween_all_completed", new Callable(this, nameof(OnMovementTweenAllCompleted)));
     }
     
     public void SetBlueprint(Entity blueprint)
@@ -81,13 +77,13 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         var area = GetNode<Area2D>(nameof(Area2D));
         
         var shape = new RectangleShape2D();
-        shape.Extents = new Vector2(spriteSize.x / 2, spriteSize.y / 2);
+        shape.Size = spriteSize;
 
         var collision = new CollisionShape2D();
-        collision.Shape3D = shape;
+        collision.Shape = shape;
         
         area.AddChild(collision);
-        area.Position = new Vector2(Position.x, Position.y - spriteSize.y / 2);
+        area.Position = new Vector2(Position.X, Position.Y - spriteSize.Y / 2);
     }
     
     public void SetTileHovered(bool to)
@@ -228,8 +224,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     protected virtual void UpdateSprite()
     {
-        if (Blueprint.Sprite2D != null)
-            Renderer.SetSpriteTexture(Blueprint.Sprite2D);
+        if (Blueprint.Sprite != null)
+            Renderer.SetSpriteTexture(Blueprint.Sprite);
         
         AdjustSpriteOffset();
     }
@@ -269,9 +265,12 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
         Renderer.AimSprite(nextMoveTarget);
 
-        _movement.InterpolateProperty(this, "global_position", GlobalPosition, 
-            nextMoveTarget, _movementDuration, Tween.TransitionType.Quad, Tween.EaseType.InOut);
-        _movement.Start();
+        var tween = CreateTween();
+        tween.TweenProperty(this, "global_position", nextMoveTarget, _movementDuration)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad)
+            .SetEase(Tween.EaseType.InOut);
+        tween.TweenCallback(Callable.From(OnMovementTweenAllCompleted));
     }
     
     private static float GetDurationFromAnimationSpeed()

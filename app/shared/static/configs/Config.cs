@@ -2,6 +2,7 @@ using System;
 using Godot;
 using low_age_data.Domain.Factions;
 using Newtonsoft.Json;
+using FileAccess = Godot.FileAccess;
 
 public partial class Config : Node
 {
@@ -10,18 +11,18 @@ public partial class Config : Node
 
     public void Save()
     {
-        var file = new File();
-        file.Open(SavePath, File.ModeFlags.Write);
+        var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
         file.StoreString(ToString());
         file.Close();
     }
 
     public void Load()
     {
-        var file = new File();
-        var result = file.FileExists(SavePath) ? file.Open(SavePath, File.ModeFlags.Read) : Error.DoesNotExist;
-        if (result is Error.Ok) 
-            FromString(file.GetAsText());
+        if (FileAccess.FileExists(SavePath) is false)
+            return;
+
+        var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Read);
+        FromString(file.GetAsText());
         file.Close();
     }
 

@@ -33,7 +33,7 @@ public partial class AbilityButton : BaseButton
         Ability = ability;
         if (Ability is PassiveNode)
         {
-            Texture2D = TextureNormal = TexturePassiveNormal;
+            Texture = TextureNormal = TexturePassiveNormal;
             TextureClicked = TexturePassiveClicked;
         }
     }

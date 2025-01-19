@@ -19,7 +19,7 @@ public partial class EntityRenderer : Node2D
     public bool IsDynamic { get; private set; } = false;
     public Rect2 SpriteBounds { get; private set; }
     public SortTypes SortType { get; private set; } = SortTypes.Point;
-    public Vector2 SpriteSize => _sprite.Texture2D.GetSize();
+    public Vector2 SpriteSize => _sprite.Texture.GetSize();
     public Rect2 EntityRelativeSize { get; private set; }
 
     public readonly List<EntityRenderer> StaticDependencies = new List<EntityRenderer>();
@@ -41,8 +41,8 @@ public partial class EntityRenderer : Node2D
         : (_topOrigin + _bottomOrigin) / 2;
 
     private float SortingLineCenterHeight => SortType is SortTypes.Point
-        ? _topOrigin.y
-        : (_topOrigin.y + _bottomOrigin.y) / 2;
+        ? _topOrigin.Y
+        : (_topOrigin.Y + _bottomOrigin.Y) / 2;
 
     public override void _Ready()
     {
@@ -62,7 +62,7 @@ public partial class EntityRenderer : Node2D
         EntityName = name;
         ZIndex = 0;
         IsDynamic = isDynamic;
-        SortType = (int)entityRelativeSize.Size.x == (int)entityRelativeSize.Size.y ? SortTypes.Point : SortTypes.Line;
+        SortType = (int)entityRelativeSize.Size.X == (int)entityRelativeSize.Size.Y ? SortTypes.Point : SortTypes.Line;
         
         AdjustToRelativeSize(entityRelativeSize);
     }
@@ -92,16 +92,16 @@ public partial class EntityRenderer : Node2D
 
     public void SetSpriteTexture(string location)
     {
-        _sprite.Texture2D = GD.Load<Texture2D>(location);
+        _sprite.Texture = GD.Load<Texture2D>(location);
         
         UpdateSpriteBounds();
     }
 
     public void UpdateSpriteOffset(Vector2 entitySize, Vector2 centerOffset)
     {
-        var offsetFromX = (int)(entitySize.x - 1) * 
+        var offsetFromX = (int)(entitySize.X - 1) * 
                         new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
-        var offsetFromY = (int)(entitySize.y - 1) *
+        var offsetFromY = (int)(entitySize.Y - 1) *
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
         _sprite.Offset = (centerOffset * -1) + offsetFromX + offsetFromY;
         
@@ -117,9 +117,9 @@ public partial class EntityRenderer : Node2D
 
     public void AimSprite(Vector2 target)
     {
-        _spriteContainer.Scale = GlobalPosition.x > target.x
-            ? new Vector2(-1, _spriteContainer.Scale.y)
-            : new Vector2(1, _spriteContainer.Scale.y);
+        _spriteContainer.Scale = GlobalPosition.X > target.X
+            ? new Vector2(-1, _spriteContainer.Scale.Y)
+            : new Vector2(1, _spriteContainer.Scale.Y);
         
         UpdateSpriteBounds();
     }
@@ -134,18 +134,18 @@ public partial class EntityRenderer : Node2D
     {
         var position = EntityRelativeSize.Position;
         var entitySize = EntityRelativeSize.Size;
-        var xBiggerThanY = entitySize.x > entitySize.y;
+        var xBiggerThanY = entitySize.X > entitySize.Y;
 
-        var px = position.x;
-        var py = position.y;
-        var sx = entitySize.x;
-        var sy = entitySize.y;
+        var px = position.X;
+        var py = position.Y;
+        var sx = entitySize.X;
+        var sy = entitySize.Y;
         
         const int widthStep = Constants.TileWidth / 2;
         const int heightStep = Constants.TileHeight / 2;
         
         _topOrigin = GlobalPosition + (SortType is SortTypes.Point
-            ? entitySize.x > 1 ? new Vector2(0, (entitySize.x - 1) * heightStep) : Vector2.Zero
+            ? entitySize.X > 1 ? new Vector2(0, (entitySize.X - 1) * heightStep) : Vector2.Zero
             : new Vector2(
                 (xBiggerThanY ? (sy - px) * -1 : sx - py) * widthStep, 
                 ((xBiggerThanY ? sy + px : sx + py) - 1) * heightStep));
@@ -161,9 +161,9 @@ public partial class EntityRenderer : Node2D
 
     public void UpdateSpriteBounds()
     {
-        var top = _spriteContainer.Scale.x > 0 
+        var top = _spriteContainer.Scale.X > 0 
             ? _sprite.GlobalPosition + _sprite.Offset 
-            : _sprite.GlobalPosition + new Vector2(-_sprite.Offset.x - SpriteSize.x, _sprite.Offset.y);
+            : _sprite.GlobalPosition + new Vector2(-_sprite.Offset.X - SpriteSize.X, _sprite.Offset.Y);
         var bottom = top + SpriteSize;
         SpriteBounds = new Rect2(top, SpriteSize);
         
@@ -191,7 +191,7 @@ public partial class EntityRenderer : Node2D
                 if (DebugEnabled)
                     GD.Print($"'{renderer1.EntityName}' topOrigin: '{renderer1._topOrigin}', " +
                              $"'{renderer2.EntityName}' topOrigin: '{renderer2._topOrigin}'.");
-                result = renderer2._topOrigin.y.CompareTo(renderer1._topOrigin.y);
+                result = renderer2._topOrigin.Y.CompareTo(renderer1._topOrigin.Y);
                 break;
             case SortTypes.Line when renderer2.SortType == SortTypes.Line:
                 result = CompareLineAndLine(renderer1, renderer2);
@@ -279,20 +279,20 @@ public partial class EntityRenderer : Node2D
 
     private static int ComparePointAndLine(Vector2 point, EntityRenderer line)
     {
-        var pointY = point.y;
-        if (pointY > line._topOrigin.y && pointY > line._bottomOrigin.y)
+        var pointY = point.Y;
+        if (pointY > line._topOrigin.Y && pointY > line._bottomOrigin.Y)
         {
             return -1;
         }
 
-        if (pointY < line._topOrigin.y && pointY < line._bottomOrigin.y)
+        if (pointY < line._topOrigin.Y && pointY < line._bottomOrigin.Y)
         {
             return 1;
         }
 
-        var slope = (line._bottomOrigin.y - line._topOrigin.y) / (line._bottomOrigin.x - line._topOrigin.x);
-        var intercept = line._topOrigin.y - (slope * line._topOrigin.x);
-        var yOnLineForPoint = (slope * point.x) + intercept;
-        return yOnLineForPoint > point.y ? 1 : -1;
+        var slope = (line._bottomOrigin.Y - line._topOrigin.Y) / (line._bottomOrigin.X - line._topOrigin.X);
+        var intercept = line._topOrigin.Y - (slope * line._topOrigin.X);
+        var yOnLineForPoint = (slope * point.X) + intercept;
+        return yOnLineForPoint > point.Y ? 1 : -1;
     }
 }

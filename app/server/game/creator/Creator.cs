@@ -54,15 +54,13 @@ public partial class Creator : Node2D
         var startingPositions = new List<Vector2>();
         var tiles = new List<(Vector2, TileId)>();
         
-        image.Lock();
-
-        for (var y = 0; y < mapSize.y; y++)
+        for (var y = 0; y < mapSize.Y; y++)
         {
-            for (var x = 0; x < mapSize.x; x++)
+            for (var x = 0; x < mapSize.X; x++)
             {
                 var pixel = image.GetPixel(x, y);
                 
-                // By default all (unknown & starting) tiles are grass
+                // By default, all (unknown & starting) tiles are grass
                 var tile = TileId.Grass;
                 
                 if (pixel == ColorGrass) tile = TileId.Grass;
@@ -75,8 +73,6 @@ public partial class Creator : Node2D
                 tiles.Add((new Vector2(x, y), tile));
             }
         }
-        
-        image.Unlock();
         
         MapCreated(new MapCreatedEvent(mapSize, AssignStartingPositions(startingPositions.ToSquareRects()), tiles));
     }

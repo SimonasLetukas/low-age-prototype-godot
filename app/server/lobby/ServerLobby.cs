@@ -18,7 +18,7 @@ public partial class ServerLobby : Lobby
         Client.Instance.Connect(nameof(Client.GameStarted), new Callable(this, nameof(OnGameStarted)));
     }
     
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     public void UpdateSelectedPlayerFaction(int playerId, string factionId)
     {
         GD.Print($"{nameof(ServerLobby)}.{nameof(UpdateSelectedPlayerFaction)}: called with " +
@@ -27,7 +27,7 @@ public partial class ServerLobby : Lobby
         Rpc(nameof(ChangeSelectedFactionForPlayer), playerId, factionId);
     }
     
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     public void UpdatePlayerReadyStatus(int playerId, bool newReadyStatus)
     {
         GD.Print($"{nameof(ServerLobby)}.{nameof(UpdatePlayerReadyStatus)}: called with " +
@@ -39,6 +39,6 @@ public partial class ServerLobby : Lobby
     private void OnGameStarted()
     {
         GD.Print("Game starting for server...");
-        GetTree().ChangeSceneToFile(ServerGame.ScenePath);
+        Callable.From(() => GetTree().ChangeSceneToFile(ServerGame.ScenePath)).CallDeferred();
     }
 }

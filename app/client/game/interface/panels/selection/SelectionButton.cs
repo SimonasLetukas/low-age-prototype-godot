@@ -6,7 +6,7 @@ using low_age_data.Shared;
 public partial class SelectionButton : BaseButton
 {
     public const string ScenePath = @"res://app/client/game/interface/panels/selection/SelectionButton.tscn";
-    public static SelectionButton Instance() => (SelectionButton) GD.Load<PackedScene>(ScenePath).Instance();
+    public static SelectionButton Instance() => (SelectionButton) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static SelectionButton InstantiateAsChild(ISelectable abilityNode, Id selectionId, Node parentNode)
     {
         var selectionButton = Instance();
@@ -41,8 +41,8 @@ public partial class SelectionButton : BaseButton
         TooltipText = ability.GetSelectableItemText(selectionId);
 
         var entity = Data.Instance.GetEntityBlueprintById((EntityId)selectionId);
-        if (entity?.Sprite2D != null)
-            SetIcon(GD.Load<Texture2D>(entity.Sprite2D));
+        if (entity?.Sprite != null)
+            SetIcon(GD.Load<Texture2D>(entity.Sprite));
         
         if (Config.Instance.ResearchEnabled)
             SetDisabled(ability.IsSelectableItemDisabled(selectionId));

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using low_age_data.Domain.Abilities;
+﻿using low_age_data.Domain.Abilities;
 using low_age_data.Domain.Behaviours;
 using low_age_data.Domain.Common;
 using low_age_data.Domain.Common.Durations;

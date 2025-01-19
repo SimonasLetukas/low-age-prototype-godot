@@ -1,15 +1,15 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=11 format=3 uid="uid://cai8kctsxyqal"]
 
-[ext_resource path="res://app/client/game/interface/panels/entity/EntityPanel.cs" type="Script" id=1]
-[ext_resource path="res://app/client/game/interface/panels/entity/EntityName.tscn" type="PackedScene" id=2]
-[ext_resource path="res://app/client/game/interface/panels/entity/abilities/AbilityButtons.cs" type="Script" id=3]
-[ext_resource path="res://app/client/game/interface/panels/entity/abilities/AbilityButton.tscn" type="PackedScene" id=8]
-[ext_resource path="res://assets/sprites/interface/panel.png" type="Texture2D" id=9]
-[ext_resource path="res://app/client/game/interface/panels/entity/display/InfoDisplay.tscn" type="PackedScene" id=10]
-[ext_resource path="res://assets/sprites/interface/stats-panel.png" type="Texture2D" id=13]
-[ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=14]
+[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/EntityPanel.cs" id="1"]
+[ext_resource type="PackedScene" path="res://app/client/game/interface/panels/entity/EntityName.tscn" id="2"]
+[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/abilities/AbilityButtons.cs" id="3"]
+[ext_resource type="PackedScene" path="res://app/client/game/interface/panels/entity/abilities/AbilityButton.tscn" id="8"]
+[ext_resource type="Texture2D" uid="uid://c8yg71tnayeuw" path="res://assets/sprites/interface/panel.png" id="9"]
+[ext_resource type="PackedScene" path="res://app/client/game/interface/panels/entity/display/InfoDisplay.tscn" id="10"]
+[ext_resource type="Texture2D" uid="uid://bftermtjj8sep" path="res://assets/sprites/interface/stats-panel.png" id="13"]
+[ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="14"]
 
-[sub_resource type="Shader" id=2]
+[sub_resource type="Shader" id="2"]
 code = "shader_type canvas_item;
 render_mode unshaded;
 
@@ -75,13 +75,15 @@ void fragment()
 	COLOR = final_color; 
 }"
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="ShaderMaterial" id="3"]
 resource_local_to_scene = true
-shader = SubResource( 2 )
-shader_param/outline_color = Color( 0, 0, 0, 1 )
-shader_param/enabled = false
+shader = SubResource("2")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/enabled = false
 
 [node name="EntityPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -89,14 +91,14 @@ anchor_bottom = 1.0
 offset_left = -272.0
 offset_top = -719.0
 offset_bottom = 39.0
+grow_horizontal = 0
+grow_vertical = 0
 mouse_filter = 2
-theme = ExtResource( 14 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_horizontal_guides_": [ 500.0 ]
-}
+theme = ExtResource("14")
+script = ExtResource("1")
 
 [node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -104,11 +106,12 @@ anchor_bottom = 1.0
 offset_left = -272.0
 offset_top = -257.0
 offset_bottom = 91.0
-texture = ExtResource( 13 )
-expand = true
+texture = ExtResource("13")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="InfoDisplayBackground" type="NinePatchRect" parent="Background"]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -117,14 +120,15 @@ offset_left = -268.0
 offset_top = -264.0
 offset_right = -202.0
 offset_bottom = -205.0
-scale = Vector2( 4, 4 )
-texture = ExtResource( 9 )
+scale = Vector2(4, 4)
+texture = ExtResource("9")
 patch_margin_left = 32
 patch_margin_top = 18
 patch_margin_right = 32
 patch_margin_bottom = 18
 
 [node name="Behaviours" type="GridContainer" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -136,13 +140,23 @@ offset_bottom = -257.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_vertical = 0
-theme_override_constants/v_separation = 4
 theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
 columns = 5
 
-[node name="EntityName" parent="." instance=ExtResource( 2 )]
+[node name="EntityName" parent="." instance=ExtResource("2")]
+layout_mode = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 252.0
+offset_bottom = 34.0
 
 [node name="Panel" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -157,28 +171,20 @@ size_flags_vertical = 2
 theme_override_constants/separation = 4
 
 [node name="AbilityButtons" type="HBoxContainer" parent="Panel"]
-offset_right = 256.0
-offset_bottom = 40.0
-grow_horizontal = 0
-custom_minimum_size = Vector2( 0, 40 )
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
 theme_override_constants/separation = 4
 alignment = 2
-script = ExtResource( 3 )
+script = ExtResource("3")
 AbilityIconPaths = {
 "rev_slave_build": "res://assets/icons/icon_ability_build.png",
 "slave_build": "res://assets/icons/icon_ability_build.png",
 "slave_manual_labour": "res://assets/icons/icon_ability_build.png"
 }
 
-[node name="AbilityButton" parent="Panel/AbilityButtons" instance=ExtResource( 8 )]
-material = SubResource( 3 )
-offset_left = 216.0
-offset_right = 256.0
-offset_bottom = 40.0
+[node name="AbilityButton" parent="Panel/AbilityButtons" instance=ExtResource("8")]
+material = SubResource("3")
+layout_mode = 2
 
-[node name="InfoDisplay" parent="Panel" instance=ExtResource( 10 )]
-offset_top = 44.0
-offset_right = 256.0
-offset_bottom = 272.0
-
-[node name="Tween" type="Tween" parent="."]
+[node name="InfoDisplay" parent="Panel" instance=ExtResource("10")]
+layout_mode = 2

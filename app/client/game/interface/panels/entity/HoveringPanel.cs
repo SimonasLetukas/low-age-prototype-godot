@@ -34,7 +34,7 @@ public partial class HoveringPanel : Control
         }
         else
         {
-            coordinatesText = $"{tileHovered.x}, {tileHovered.y}";
+            coordinatesText = $"{tileHovered.X}, {tileHovered.Y}";
             terrainText = terrain.ToDisplayValue().Capitalize();
             
             if (occupants.IsEmpty())

@@ -20,11 +20,11 @@ public partial class NavigationBoxPanel : TextureRect // TODO extract base class
         switch (to)
         {
             case true:
-                Texture2D = TextureClicked;
+                Texture = TextureClicked;
                 _navigationBoxIcon.Modulate = new Color(_navigationBoxIcon.Modulate, 0.7f);
                 break;
             case false:
-                Texture2D = TextureNormal;
+                Texture = TextureNormal;
                 _navigationBoxIcon.Modulate = new Color(_navigationBoxIcon.Modulate, 1f);
                 break;
         }

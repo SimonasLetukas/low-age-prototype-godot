@@ -1,11 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://bxsjphsp1duj6"]
 
-[ext_resource path="res://app/client/game/camera/Camera3D.cs" type="Script" id=1]
+[ext_resource type="Script" path="res://app/client/game/camera/Camera.cs" id="1"]
 
-[node name="Camera3D" type="Camera2D"]
-position = Vector2( 448, 196 )
-current = true
+[node name="Camera" type="Camera2D"]
+position = Vector2(448, 196)
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 20.0
-script = ExtResource( 1 )
+script = ExtResource("1")

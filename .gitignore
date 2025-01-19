@@ -24,6 +24,7 @@ nupkg/
 
 # Rider
 .idea
+.idea/
 
 # User-specific files
 *.suo
@@ -54,10 +55,13 @@ msbuild.wrn
 /.vscode
 /addons
 /client.exe
+/client.console.exe
 /client.pck
 /dijkstra_map_gd.dll
 /server.exe
+/server.console.exe
 /server.pck
 /low-age-prototype-godot.zip
 *.TMP
 /data/config.json
+/.idea/.idea.low-age-prototype-godot/.idea/.gitignore

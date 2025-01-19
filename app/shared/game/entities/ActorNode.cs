@@ -100,17 +100,17 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     protected void UpdateVitalsPosition()
     {
         var spriteSize = Renderer.SpriteSize;
-        var offsetFromX = (int)(RelativeSize.Size.x - 1) * 
+        var offsetFromX = (int)(RelativeSize.Size.X - 1) * 
                           new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 2)) +
-                          (int)RelativeSize.Position.x * 
+                          (int)RelativeSize.Position.X * 
                           new Vector2((int)(Constants.TileWidth / 2), (int)(Constants.TileHeight / 2));
-        var offsetFromY = (int)(RelativeSize.Size.y - 1) *
+        var offsetFromY = (int)(RelativeSize.Size.Y - 1) *
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 2)) +
-                          (int)RelativeSize.Position.y * 
+                          (int)RelativeSize.Position.Y * 
                           new Vector2((int)(Constants.TileWidth / 2) * -1, (int)(Constants.TileHeight / 2));
         _health.Position = 
-            new Vector2(_startingHealthPosition.x, (spriteSize.y * -1) - 2) + offsetFromX + offsetFromY;
+            new Vector2(_startingHealthPosition.X, (spriteSize.Y * -1) - 2) + offsetFromX + offsetFromY;
         _shields.Position = 
-            new Vector2(_startingShieldsPosition.x, (spriteSize.y * -1) - 3) + offsetFromX + offsetFromY;
+            new Vector2(_startingShieldsPosition.X, (spriteSize.Y * -1) - 3) + offsetFromX + offsetFromY;
     }
 }

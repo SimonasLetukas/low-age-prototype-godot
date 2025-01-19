@@ -17,10 +17,10 @@ public partial class Mouse : Node2D
     [Export(PropertyHint.File, "*.png")] public string GrabCursorSmallFileLocation { get; set; }
     [Export(PropertyHint.Range, "0.01,15")] public float MinimumMouseDistanceToStartDrag { get; set; } = 8f;
     
-    [Signal] public delegate void MouseDragged(Vector2 by);
-    [Signal] public delegate void TakingControl(bool flag);
-    [Signal] public delegate void LeftReleasedWithoutDrag();
-    [Signal] public delegate void RightReleasedWithoutExamine();
+    [Signal] public delegate void MouseDraggedEventHandler(Vector2 by);
+    [Signal] public delegate void TakingControlEventHandler(bool flag);
+    [Signal] public delegate void LeftReleasedWithoutDragEventHandler();
+    [Signal] public delegate void RightReleasedWithoutExamineEventHandler();
 
     private Resource _arrowCursor;
     private Resource _arrowSmallCursor;
@@ -41,7 +41,7 @@ public partial class Mouse : Node2D
         SetCursorToArrow();
     }
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         var mousePos = GetViewport().GetMousePosition();
 

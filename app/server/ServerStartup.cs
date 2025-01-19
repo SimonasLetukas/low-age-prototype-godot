@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 /// <summary>
@@ -9,6 +10,6 @@ public partial class ServerStartup : Node
 
     public override void _Ready()
     {
-        GetTree().ChangeSceneToFile(ServerLobby.ScenePath);
+        Callable.From(() => GetTree().ChangeSceneToFile(ServerLobby.ScenePath)).CallDeferred();
     }
 }

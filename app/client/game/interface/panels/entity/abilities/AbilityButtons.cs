@@ -1,13 +1,14 @@
-using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 using low_age_data.Domain.Abilities;
 
 public partial class AbilityButtons : HBoxContainer
 {
-    [Export] public Dictionary<string, string> AbilityIconPaths { get; set; } // TODO have paths to icons on blueprint level instead
+    [Export] public Godot.Collections.Dictionary<string, string> AbilityIconPaths { get; set; } 
+    // TODO have paths to icons on blueprint level instead
     
-    [Signal] public delegate void AbilitiesPopulated();
+    [Signal] public delegate void AbilitiesPopulatedEventHandler();
 
     private readonly Dictionary<AbilityId, Texture2D> _abilityIcons = new Dictionary<AbilityId, Texture2D>();
 
@@ -30,7 +31,7 @@ public partial class AbilityButtons : HBoxContainer
                 continue;
             
             var abilityButtonScene = GD.Load<PackedScene>(AbilityButton.ScenePath);
-            var abilityButton = abilityButtonScene.Instance<AbilityButton>();
+            var abilityButton = abilityButtonScene.Instantiate<AbilityButton>();
             if (_abilityIcons.TryGetValue(ability.Id, out var icon) is false)
             {
                 icon = _abilityIcons.Values.First();

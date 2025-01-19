@@ -29,7 +29,7 @@ public partial class Lobby : VBoxContainer
                  "successfully added to lobby.");
     }
 
-    private void OnPlayerRemoved(int playerId)
+    private void OnPlayerRemoved(long playerId)
     {
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerRemoved)}: removing player {playerId} from lobby.");
         
@@ -57,7 +57,7 @@ public partial class Lobby : VBoxContainer
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedFaction)} called with " +
                  $"{nameof(playerId)} '{playerId}', {nameof(newFactionId)} '{newFactionId}'.");
 
-        if (GetTree().IsServer()) 
+        if (Multiplayer.IsServer()) 
             return;
         
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedFaction)}: calling " +
@@ -71,7 +71,7 @@ public partial class Lobby : VBoxContainer
     /// </summary>
     /// <param name="playerId"></param>
     /// <param name="factionId"></param>
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void ChangeSelectedFactionForPlayer(int playerId, string factionId)
     {
         GD.Print($"{nameof(Lobby)}.{nameof(ChangeSelectedFactionForPlayer)}: trying to change player " +
@@ -100,7 +100,7 @@ public partial class Lobby : VBoxContainer
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedReadyStatus)} called with " +
                  $"{nameof(playerId)} '{playerId}', {nameof(newReadyStatus)} '{newReadyStatus}'.");
 
-        if (GetTree().IsServer()) 
+        if (Multiplayer.IsServer()) 
             return;
         
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedReadyStatus)}: calling " +
@@ -113,7 +113,7 @@ public partial class Lobby : VBoxContainer
     /// </summary>
     /// <param name="playerId"></param>
     /// <param name="newReadyStatus"></param>
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void ChangeReadyStatusForPlayer(int playerId, bool newReadyStatus)
     {
         GD.Print($"{nameof(Lobby)}.{nameof(ChangeReadyStatusForPlayer)}: trying to change player " +

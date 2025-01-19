@@ -124,7 +124,7 @@ public static class TopologicalSort
                 || sorter2A.SortType != EntityRenderer.SortTypes.Point) 
                 continue;
             
-            var dist = Mathf.Abs(sorter1A.AsPoint.x - sorter2A.AsPoint.x);
+            var dist = Mathf.Abs(sorter1A.AsPoint.X - sorter2A.AsPoint.X);
             if (dist > longestDistance)
             {
                 weakestDepIndex = i;
@@ -138,7 +138,7 @@ public static class TopologicalSort
             {
                 var sorter1A = CircularDepStack[i];
                 var sorter2A = CircularDepStack[i + 1];
-                var dist = Mathf.Abs(sorter1A.AsPoint.x - sorter2A.AsPoint.x);
+                var dist = Mathf.Abs(sorter1A.AsPoint.X - sorter2A.AsPoint.X);
                 if (dist > longestDistance)
                 {
                     weakestDepIndex = i;

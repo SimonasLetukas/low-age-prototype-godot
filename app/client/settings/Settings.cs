@@ -5,7 +5,7 @@ using low_age_data.Domain.Factions;
 public partial class Settings : Control
 {
     public const string ScenePath = @"res://app/client/settings/Settings.tscn";
-    public static Settings Instance() => (Settings) GD.Load<PackedScene>(ScenePath).Instance();
+    public static Settings Instance() => (Settings) GD.Load<PackedScene>(ScenePath).Instantiate();
     
     public event Action<FactionId> FactionSelected = delegate { };
     
@@ -18,10 +18,10 @@ public partial class Settings : Control
     public override void _Ready()
     {
         _factionSelection = GetNode<FactionSelection>("Items/StartingFaction/Faction");
-        _animationSelection = FindNode("Animation") as OptionButton;
-        _researchToggle = FindNode("Research") as CheckBox;
-        _bigCursorToggle = FindNode("BigCursor") as CheckBox;
-        _backButton = FindNode("Back") as Button;
+        _animationSelection = FindChild("Animation") as OptionButton;
+        _researchToggle = FindChild("Research") as CheckBox;
+        _bigCursorToggle = FindChild("BigCursor") as CheckBox;
+        _backButton = FindChild("Back") as Button;
 
         _factionSelection.FactionSelected += OnFactionSelected;
         _animationSelection?.Connect("item_selected", new Callable(this, nameof(OnAnimationSpeedSelected)));
@@ -31,8 +31,8 @@ public partial class Settings : Control
         
         _factionSelection.SetSelectedFaction(Config.Instance.StartingFaction);
         if (_animationSelection != null) _animationSelection.Selected = (int)Config.Instance.AnimationSpeed;
-        if (_researchToggle != null) _researchToggle.Pressed = Config.Instance.ResearchEnabled;
-        if (_bigCursorToggle != null) _bigCursorToggle.Pressed = Config.Instance.LargeCursor;
+        if (_researchToggle != null) _researchToggle.ButtonPressed = Config.Instance.ResearchEnabled;
+        if (_bigCursorToggle != null) _bigCursorToggle.ButtonPressed = Config.Instance.LargeCursor;
     }
 
     public override void _ExitTree()
@@ -42,9 +42,9 @@ public partial class Settings : Control
 
     private void OnAnimationSpeedSelected(int index) => Config.Instance.AnimationSpeed = (Config.AnimationSpeeds)index;
     
-    private void OnResearchToggled() => Config.Instance.ResearchEnabled = _researchToggle.Pressed;
+    private void OnResearchToggled() => Config.Instance.ResearchEnabled = _researchToggle.IsPressed();
 
-    private void OnCursorSizeToggled() => Config.Instance.LargeCursor = _bigCursorToggle.Pressed;
+    private void OnCursorSizeToggled() => Config.Instance.LargeCursor = _bigCursorToggle.IsPressed();
 
     private void OnBackPressed()
     {

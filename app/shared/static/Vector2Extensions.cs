@@ -10,10 +10,10 @@ public static class Vector2Extensions
         => point.IsInBoundsOf(Vector2.Zero, upperBounds);
     
     public static bool IsInBoundsOf(this Vector2 point, Vector2 lowerBounds, Vector2 upperBounds) 
-        => point.x >= lowerBounds.x 
-           && point.y >= lowerBounds.y 
-           && point.x < upperBounds.x 
-           && point.y < upperBounds.y;
+        => point.X >= lowerBounds.X 
+           && point.Y >= lowerBounds.Y 
+           && point.X < upperBounds.X 
+           && point.Y < upperBounds.Y;
 
     public static Rect2 Except(this Vector2 size, IEnumerable<Vector2> points)
     {
@@ -28,14 +28,14 @@ public static class Vector2Extensions
         var highestY = float.MinValue;
         foreach (var point in remainingPoints)
         {
-            if (point.x < smallestX)
-                smallestX = point.x;
-            if (point.y < smallestY)
-                smallestY = point.y;
-            if (point.x > highestX)
-                highestX = point.x;
-            if (point.y > highestY)
-                highestY = point.y;
+            if (point.X < smallestX)
+                smallestX = point.X;
+            if (point.Y < smallestY)
+                smallestY = point.Y;
+            if (point.X > highestX)
+                highestX = point.X;
+            if (point.Y > highestY)
+                highestY = point.Y;
         }
 
         return new Rect2(smallestX, smallestY, highestX - smallestX + 1, highestY - smallestY + 1);
@@ -55,7 +55,7 @@ public static class Vector2Extensions
                 continue;
 
             checkedPoints[point] = true;
-            var startPoint = new Vector2(point.x, point.y);
+            var startPoint = new Vector2(point.X, point.Y);
             var size = 1;
             while (NextExtensionExists(checkedPoints, startPoint, size))
                 size++;
@@ -72,7 +72,7 @@ public static class Vector2Extensions
         var verticallyValid = true;
         for (var y = 0; y < depth; y++)
         {
-            var point = new Vector2(startPoint.x + depth, startPoint.y + y);
+            var point = new Vector2(startPoint.X + depth, startPoint.Y + y);
             if (points.ContainsKey(point) && points[point] is false)
                 validPoints.Add(point);
             else
@@ -81,14 +81,14 @@ public static class Vector2Extensions
         var horizontallyValid = true;
         for (var x = 0; x < depth; x++)
         {
-            var point = new Vector2(startPoint.x + x, startPoint.y + depth);
+            var point = new Vector2(startPoint.X + x, startPoint.Y + depth);
             if (points.ContainsKey(point) && points[point] is false)
                 validPoints.Add(point);
             else
                 horizontallyValid = false;
         }
 
-        var finalPoint = new Vector2(startPoint.x + depth, startPoint.y + depth);
+        var finalPoint = new Vector2(startPoint.X + depth, startPoint.Y + depth);
         if (verticallyValid && horizontallyValid && points.ContainsKey(finalPoint) && points[finalPoint] is false)
         {
             validPoints.Add(finalPoint);

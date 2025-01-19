@@ -75,7 +75,7 @@ public partial class Tiles : Node2D
 
     public override void _Ready()
     {
-        ProcessMode = PauseModeEnum.Process;
+        ProcessMode = ProcessModeEnum.Always;
         
         _grass = GetNode<TileMap>("Grass");
         _scraps = GetNode<TileMap>("Scraps");
@@ -100,8 +100,8 @@ public partial class Tiles : Node2D
     {
         _tilesBlueprint = Data.Instance.Blueprint.Tiles;
         _mapSize = mapSize;
-        _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
-        _mountainsFillOffset = (int)Mathf.Max(mapSize.x, mapSize.y);
+        _tilemapOffset = new Vector2(mapSize.X / 2, (mapSize.Y / 2) * -1);
+        _mountainsFillOffset = (int)Mathf.Max(mapSize.X, mapSize.Y);
         _tileOffset = new Vector2(1, (float)Constants.TileHeight / 2);
         ClearTilemaps();
         _tilesForDataInitialization = tiles.ToList();
@@ -110,7 +110,7 @@ public partial class Tiles : Node2D
         _initialized = false;
     }
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         base._Process(delta);
         if (_initialized)
@@ -179,19 +179,28 @@ public partial class Tiles : Node2D
 
         var (position, blueprintId) = _tilesForVisualsInitialization[0];
         _tilesForVisualsInitialization.RemoveAt(0);
-        
-        _grass.SetCellv(position, TileMapGrassIndex); // needed to fill up gaps
-        SetCell(position, GetTerrain(position));
 
-        _targetMapPositiveTiles.SetCellv(position, TileMapPositiveTargetTileIndex);
-        _targetMapNegativeTiles.SetCellv(position, TileMapNegativeTargetTileIndex);
+        var positionI = new Vector2I((int)position.X, (int)position.Y);
+        _grass.SetCell(0, positionI, TileMapGrassIndex); // needed to fill up gaps
+        SetCell(positionI, GetTerrain(position));
+
+        _targetMapPositiveTiles.SetCell(0, positionI, TileMapPositiveTargetTileIndex);
+        _targetMapNegativeTiles.SetCell(0, positionI, TileMapNegativeTargetTileIndex);
     }
 
     public Vector2 GetMapPositionFromGlobalPosition(Vector2 globalPosition) 
         => _grass.LocalToMap(globalPosition) - _tilemapOffset;
     
-    public Vector2 GetGlobalPositionFromMapPosition(Vector2 mapPosition) 
-        => _grass.MapToWorld(mapPosition + _tilemapOffset, true) + _tileOffset;
+    public Vector2 GetGlobalPositionFromMapPosition(Vector2 mapPosition)
+    {
+        var adjustedMapPosition = new Vector2I(
+            (int)(mapPosition.X + _tilemapOffset.X), 
+            (int)(mapPosition.Y + _tilemapOffset.Y));
+    
+        var localPosition = _grass.MapToLocal(adjustedMapPosition);
+    
+        return _grass.ToGlobal(localPosition) + _tileOffset;
+    }
 
     public Vector2[] GetGlobalPositionsFromMapPositions(IEnumerable<Vector2> mapPositions) 
         => mapPositions.Select(GetGlobalPositionFromMapPosition).ToArray();
@@ -262,18 +271,25 @@ public partial class Tiles : Node2D
             _availableTilesSource = availableTilesSource;
 
         var dilatedPositions = GetDilated(availableTilesSource, size);
+        var availableHoveringPositions = new Godot.Collections.Array<Vector2I>();
+        var availableVisualPositions = new Godot.Collections.Array<Vector2I>();
         foreach (var availablePosition in dilatedPositions)
         {
+            var availablePositionI = new Vector2I((int)availablePosition.X, (int)availablePosition.Y);
+            
             if (hovering)
             {
-                _availableTilesHovering.SetCellv(availablePosition, TileMapAvailableTileIndex);
-                _availableTilesHovering.UpdateBitmaskRegion(availablePosition);
+                availableHoveringPositions.Add(availablePositionI);
                 continue;
             }
             
-            _availableTilesVisual.SetCellv(availablePosition, TileMapAvailableTileIndex);
-            _availableTilesVisual.UpdateBitmaskRegion(availablePosition);
+            availableVisualPositions.Add(availablePositionI);
         }
+        
+        _availableTilesHovering.SetCellsTerrainConnect(0, availableHoveringPositions, 
+            0, TileMapAvailableTileIndex);
+        _availableTilesVisual.SetCellsTerrainConnect(0, availableVisualPositions, 
+            0, TileMapAvailableTileIndex);
     }
 
     private bool CanTileBeMovedOn(EntityNode entity, Vector2 tileSource, int size)
@@ -313,7 +329,8 @@ public partial class Tiles : Node2D
 
         foreach (var target in targets)
         {
-            _targetTiles.SetCellv(target, isTargetPositive 
+            var targetI = new Vector2I((int)target.X, (int)target.Y);
+            _targetTiles.SetCell(0, targetI, isTargetPositive 
                 ? TileMapPositiveTargetTileIndex 
                 : TileMapNegativeTargetTileIndex);
             
@@ -323,9 +340,12 @@ public partial class Tiles : Node2D
         }
     }
 
-    public bool IsCurrentlyTarget(Vector2 mapPosition) 
-        => _targetTiles.GetCellv(mapPosition) == TileMapNegativeTargetTileIndex 
-           || _targetTiles.GetCellv(mapPosition) == TileMapPositiveTargetTileIndex;
+    public bool IsCurrentlyTarget(Vector2 mapPosition)
+    {
+        var mapPositionI = new Vector2I((int)mapPosition.X, (int)mapPosition.Y);
+        return _targetTiles.GetCellSourceId(0, mapPositionI) == TileMapNegativeTargetTileIndex
+               || _targetTiles.GetCellSourceId(0, mapPositionI) == TileMapPositiveTargetTileIndex;
+    }
 
     public void SetPathTiles(IEnumerable<Vector2> pathPositions, int size)
     {
@@ -334,26 +354,32 @@ public partial class Tiles : Node2D
         var positions = GetDilated(pathPositions, size);
         foreach (var pathPosition in positions)
         {
-            _path.SetCellv(pathPosition, TileMapPathTileIndex);
+            var pathPositionI = new Vector2I((int)pathPosition.X, (int)pathPosition.Y);
+            _path.SetCell(0, pathPositionI, TileMapPathTileIndex);
         }
     }
 
     public void FillMapOutsideWithMountains()
     {
-        for (var y = _mountainsFillOffset * -1; y < _mapSize.y + _mountainsFillOffset; y++) 
-        for (var x = _mountainsFillOffset * -1; x < _mapSize.x + _mountainsFillOffset; x++) 
-            if (x < 0 || x >= _mapSize.x || y < 0 || y >= _mapSize.y)
-                _mountains.SetCell(x, y, TileMapMountainsIndex);
+        var positions = new Godot.Collections.Array<Vector2I>();
+        for (var y = _mountainsFillOffset * -1; y < _mapSize.Y + _mountainsFillOffset; y++) 
+        for (var x = _mountainsFillOffset * -1; x < _mapSize.X + _mountainsFillOffset; x++) 
+            if (x < 0 || x >= _mapSize.X || y < 0 || y >= _mapSize.Y)
+                positions.Add(new Vector2I(x, y));
+        
+        _mountains.SetCellsTerrainConnect(0, positions, 0, TileMapMountainsIndex);
     }
 
     public void UpdateALlBitmaps()
     {
-        _grass.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.x, _mapSize.y));
-        _scraps.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.x, _mapSize.y));
-        _marsh.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.x, _mapSize.y));
+        /*
+        _grass.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.X, _mapSize.Y));
+        _scraps.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.X, _mapSize.Y));
+        _marsh.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.X, _mapSize.Y));
         _mountains.UpdateBitmaskRegion(
             new Vector2(_mountainsFillOffset * -1, _mountainsFillOffset * -1), 
-            new Vector2(_mapSize.x + _mountainsFillOffset, _mapSize.y + _mountainsFillOffset));
+            new Vector2(_mapSize.X + _mountainsFillOffset, _mapSize.Y + _mountainsFillOffset));
+            */
     }
 
     public void ClearPath() => _path.Clear();
@@ -380,27 +406,27 @@ public partial class Tiles : Node2D
         _targetTileInstances.Clear();
     }
 
-    private void SetCell(Vector2 at, Terrain terrain)
+    private void SetCell(Vector2I at, Terrain terrain)
     {
         var tilemapIndex = GetTilemapIndexFrom(terrain);
         
         switch (tilemapIndex)
         {
             case TileMapMountainsIndex:
-                _mountains.SetCellv(at, TileMapMountainsIndex);
+                _mountains.SetCell(0, at, TileMapMountainsIndex);
                 break;
             case TileMapMarshIndex:
-                _marsh.SetCellv(at, TileMapMarshIndex);
+                _marsh.SetCell(0, at, TileMapMarshIndex);
                 break;
             case TileMapScrapsIndex:
-                _scraps.SetCellv(at, TileMapScrapsIndex);
+                _scraps.SetCell(0, at, TileMapScrapsIndex);
                 break;
             case TileMapCelestiumIndex:
-                _grass.SetCellv(at, TileMapCelestiumIndex);
+                _grass.SetCell(0, at, TileMapCelestiumIndex);
                 break;
             case TileMapGrassIndex:
             default:
-                _grass.SetCellv(at, TileMapGrassIndex);
+                _grass.SetCell(0, at, TileMapGrassIndex);
                 break;
         }
     }

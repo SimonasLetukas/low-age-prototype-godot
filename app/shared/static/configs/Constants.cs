@@ -6,13 +6,6 @@ public static class Constants
         public const string MouseRight = "mouse_right";
         public const string Rotate = "rotate";
     }
-    
-    public static class ENet
-    {
-        public const string ConnectedToServerEvent = "connected_to_server";
-        public const string NetworkPeerConnectedEvent = "network_peer_connected";
-        public const string NetworkPeerDisconnectedEvent = "network_peer_disconnected";
-    }
 
     public static class Os
     {

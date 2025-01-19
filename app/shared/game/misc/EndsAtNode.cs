@@ -7,7 +7,7 @@ using low_age_data.Domain.Common.Durations;
 public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
 {
     public const string ScenePath = @"res://app/shared/game/misc/EndsAtNode.tscn";
-    public static EndsAtNode Instance() => (EndsAtNode) GD.Load<PackedScene>(ScenePath).Instance();
+    public static EndsAtNode Instance() => (EndsAtNode) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static EndsAtNode InstantiateAsChild(EndsAt blueprint, Node parentNode)
     {
         var endsAt = Instance();

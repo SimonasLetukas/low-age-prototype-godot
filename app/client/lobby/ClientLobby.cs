@@ -18,7 +18,7 @@ public partial class ClientLobby : Lobby
 
         // Tell the server about you (client)
         Server.Instance.RegisterSelf(
-            GetTree().GetUniqueId(), 
+            Multiplayer.GetUniqueId(), 
             Client.Instance.LocalPlayerName, 
             Client.Instance.LocalPlayerReady,
             Client.Instance.LocalPlayerFaction);
@@ -42,7 +42,7 @@ public partial class ClientLobby : Lobby
     /// </summary>
     /// <param name="playerId"></param>
     /// <param name="newReadyStatus"></param>
-    [RPC(MultiplayerAPI.RPCMode.AnyPeer, CallLocal = true)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected override void ChangeReadyStatusForPlayer(int playerId, bool newReadyStatus)
     {
         base.ChangeReadyStatusForPlayer(playerId, newReadyStatus);
@@ -54,7 +54,7 @@ public partial class ClientLobby : Lobby
     private void OnGameStarted()
     {
         GD.Print($"{nameof(ClientLobby)}: game starting for client...");
-        GetTree().ChangeSceneToFile(ClientGame.ScenePath);
+        Callable.From(() => GetTree().ChangeSceneToFile(ClientGame.ScenePath)).CallDeferred();
     }
 
     private void OnStartGamePressed()

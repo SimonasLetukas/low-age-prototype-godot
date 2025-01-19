@@ -72,7 +72,7 @@ public partial class Entities : Node2D
         base._ExitTree();
     }
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         if (Input.IsActionJustPressed(Constants.Input.Rotate) && EntityInPlacement is ActorNode actor) 
             actor.Rotate();
@@ -142,16 +142,23 @@ public partial class Entities : Node2D
     // with high-ground entities
     public EntityNode GetTopEntity(Vector2 globalPosition)
     {
+        return null;
         var topZ = float.NegativeInfinity;
         EntityNode topEntity = null;
         
-        var intersections = GetWorld2d().DirectSpaceState.IntersectPoint(globalPosition, 32, 
-            new Array(), 0x7FFFFFFF, true, true);
+        var intersections = GetViewport().GetWorld2D().DirectSpaceState.IntersectPoint(new PhysicsPointQueryParameters2D
+            {
+                Position = globalPosition,
+                CollisionMask = 0x7FFFFFFF,
+                Exclude = new Godot.Collections.Array<Rid>(),
+                CollideWithBodies = true,
+                CollideWithAreas = true
+            }, 32);
 
-        foreach (var node in intersections.OfType<KinematicCollision2D>())
+        /*
+        foreach (var result in intersections)
         {
-            if ((node.Collider is Area2D area) is false 
-                || (area.GetParent() is EntityNode entity) is false)
+            if (result["collider"] is not Area2D area || area.GetParent() is not EntityNode entity)
                 continue;
 
             if (entity.ZIndex <= topZ) 
@@ -160,6 +167,7 @@ public partial class Entities : Node2D
             topZ = entity.ZIndex;
             topEntity = entity;
         }
+        */
 
         return topEntity;
     }
