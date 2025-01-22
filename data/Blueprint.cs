@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Entities.Actors.Units;
-using low_age_data.Domain.Entities.Doodads;
-using low_age_data.Domain.Factions;
-using low_age_data.Domain.Masks;
-using low_age_data.Domain.Resources;
-using low_age_data.Domain.Tiles;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities.Actors.Structures;
+using LowAgeData.Domain.Entities.Actors.Units;
+using LowAgeData.Domain.Entities.Doodads;
+using LowAgeData.Domain.Factions;
+using LowAgeData.Domain.Masks;
+using LowAgeData.Domain.Resources;
+using LowAgeData.Domain.Tiles;
 
-namespace low_age_data
+namespace LowAgeData
 {
     public class Blueprint
     {

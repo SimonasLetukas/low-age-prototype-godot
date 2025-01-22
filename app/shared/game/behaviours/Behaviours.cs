@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Behaviours;
+using LowAgeData.Domain.Behaviours;
 
 public partial class Behaviours : Node2D
 {

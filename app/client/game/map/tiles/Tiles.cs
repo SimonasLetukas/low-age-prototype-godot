@@ -3,8 +3,8 @@ using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Tiles;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Tiles;
 
 /// <summary>
 /// Responsible for: <para />

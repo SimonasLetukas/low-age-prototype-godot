@@ -1,12 +1,12 @@
-﻿using low_age_data.Domain.Logic;
+﻿using LowAgeData.Domain.Logic;
 using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Filters;
-using low_age_data.Domain.Common.Flags;
-using low_age_data.Domain.Common.Shape;
-using low_age_data.Domain.Entities;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Filters;
+using LowAgeData.Domain.Common.Flags;
+using LowAgeData.Domain.Common.Shape;
+using LowAgeData.Domain.Entities;
 
-namespace low_age_data.Domain.Effects
+namespace LowAgeData.Domain.Effects
 {
     public class Search : Effect
     {

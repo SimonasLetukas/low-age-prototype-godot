@@ -1,7 +1,7 @@
-﻿using low_age_data.Domain.Entities;
-using low_age_data.Domain.Factions;
+﻿using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Factions;
 
-namespace low_age_data.Domain.Common.Filters
+namespace LowAgeData.Domain.Common.Filters
 {
     /// <summary>
     /// <see cref="Entity"/> should be from a specific <see cref="Faction"/>.

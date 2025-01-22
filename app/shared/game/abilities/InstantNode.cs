@@ -1,4 +1,4 @@
-using low_age_data.Domain.Abilities;
+using LowAgeData.Domain.Abilities;
 
 public partial class InstantNode : AbilityNode, INodeFromBlueprint<Instant>
 {

@@ -1,4 +1,4 @@
-﻿namespace low_age_data.Domain.Common.Filters
+﻿namespace LowAgeData.Domain.Common.Filters
 {
     public interface IFilterItem
     {

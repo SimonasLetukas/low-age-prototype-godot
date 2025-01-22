@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Logic;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Entities.Actors;
+using LowAgeData.Domain.Logic;
 
-namespace low_age_data.Domain.Behaviours
+namespace LowAgeData.Domain.Behaviours
 {
     /// <summary>
     /// Can be added to a buildable <see cref="Actor"/> so that further building options could be configured. This

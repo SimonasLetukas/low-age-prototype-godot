@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Common;
+using LowAgeData.Domain.Common;
 
-namespace low_age_data.Domain.Abilities
+namespace LowAgeData.Domain.Abilities
 {
     /// <summary>
     /// Used for opening a selection of <see cref="ResearchId"/> to be researched by paying the <see cref="Payment"/>.

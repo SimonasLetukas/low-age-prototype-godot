@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Entities.Actors.Structures;
+using LowAgeData.Domain.Entities.Actors.Structures;
 
 public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {

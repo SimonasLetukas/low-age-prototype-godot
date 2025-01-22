@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Common.Shape;
+using LowAgeData.Domain.Common.Shape;
 
 public static class IShapeExtensions
 {
@@ -39,7 +39,7 @@ public static class IShapeExtensions
             case Line line:
                 positions = GetPositionsForLine(line, centerPoint, actorSize, actorRotation);
                 break;
-            case low_age_data.Domain.Common.Shape.Map _:
+            case LowAgeData.Domain.Common.Shape.Map _:
                 return GetPositionsForMap(mapSize);
             default:
                 throw new ArgumentOutOfRangeException(nameof(shape), shape, 

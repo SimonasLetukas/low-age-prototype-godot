@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Common.Filters;
-using low_age_data.Domain.Common.Flags;
-using low_age_data.Domain.Common.Modifications;
-using low_age_data.Domain.Common.Shape;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Entities.Actors.Units;
-using low_age_data.Domain.Entities.Doodads;
-using low_age_data.Domain.Logic;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Common.Filters;
+using LowAgeData.Domain.Common.Flags;
+using LowAgeData.Domain.Common.Modifications;
+using LowAgeData.Domain.Common.Shape;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities.Actors.Structures;
+using LowAgeData.Domain.Entities.Actors.Units;
+using LowAgeData.Domain.Entities.Doodads;
+using LowAgeData.Domain.Logic;
 using Newtonsoft.Json.Serialization;
 
-namespace low_age_data.Shared
+namespace LowAgeData.Shared
 {
     public class KnownTypesBinder : ISerializationBinder
     {

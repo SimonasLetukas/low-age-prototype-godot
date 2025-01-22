@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Common.Modifications;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities;
-using low_age_data.Domain.Logic;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Common.Modifications;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Logic;
 
-namespace low_age_data.Domain.Behaviours
+namespace LowAgeData.Domain.Behaviours
 {
     /// <summary>
     /// Added to <see cref="Entity"/> to provide continuous income. 

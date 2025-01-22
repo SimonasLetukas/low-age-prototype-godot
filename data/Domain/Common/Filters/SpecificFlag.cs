@@ -1,7 +1,7 @@
-﻿using low_age_data.Domain.Common.Flags;
-using low_age_data.Domain.Entities;
+﻿using LowAgeData.Domain.Common.Flags;
+using LowAgeData.Domain.Entities;
 
-namespace low_age_data.Domain.Common.Filters
+namespace LowAgeData.Domain.Common.Filters
 {
     /// <summary>
     /// <see cref="Entity"/> should adhere to a specific <see cref="FilterFlag"/>.

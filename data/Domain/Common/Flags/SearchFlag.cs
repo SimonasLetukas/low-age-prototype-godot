@@ -1,10 +1,10 @@
 ﻿using System;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Entities;
-using low_age_data.Shared;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common.Flags
+namespace LowAgeData.Domain.Common.Flags
 {
     /// <summary>
     /// Used to control events when the effects should be applied or removed when <see cref="SearchFlag"/> is

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Entities.Actors.Units;
-using low_age_data.Domain.Factions;
-using low_age_data.Shared;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Entities.Actors.Units;
+using LowAgeData.Domain.Factions;
+using LowAgeData.Shared;
 
-namespace low_age_data.Collections
+namespace LowAgeData.Collections
 {
     public static class UnitsCollection
     {

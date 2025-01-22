@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Logic;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Logic;
 
-namespace low_age_data.Domain.Effects
+namespace LowAgeData.Domain.Effects
 {
     /// <summary>
     /// Moves target in a line extrapolated from source location and current location

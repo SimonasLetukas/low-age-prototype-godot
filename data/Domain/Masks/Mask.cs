@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities;
-using low_age_data.Domain.Logic;
+using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Logic;
 
-namespace low_age_data.Domain.Masks
+namespace LowAgeData.Domain.Masks
 {
     /// <summary>
     /// <see cref="Mask"/> is a bridge between logic components and an area in which they should be applied. It can

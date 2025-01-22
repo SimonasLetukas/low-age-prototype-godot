@@ -1,7 +1,7 @@
-﻿using low_age_data.Domain.Common.Flags;
-using low_age_data.Domain.Entities;
+﻿using LowAgeData.Domain.Common.Flags;
+using LowAgeData.Domain.Entities;
 
-namespace low_age_data.Domain.Logic
+namespace LowAgeData.Domain.Logic
 {
     /// <summary>
     /// <see cref="Condition"/> to target specific <see cref="Entity"/>s.

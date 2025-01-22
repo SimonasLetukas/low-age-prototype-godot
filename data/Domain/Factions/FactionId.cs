@@ -1,8 +1,8 @@
 ﻿using System;
-using low_age_data.Shared;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Factions
+namespace LowAgeData.Domain.Factions
 {
     [JsonConverter(typeof(FactionIdJsonConverter))]
     public class FactionId : Id

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Common.Shape;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Logic;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Common.Shape;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities.Actors;
+using LowAgeData.Domain.Logic;
 
-namespace low_age_data.Domain.Abilities
+namespace LowAgeData.Domain.Abilities
 {
     public class Target : Ability
     {

@@ -1,8 +1,8 @@
 ﻿using System;
-using low_age_data.Shared;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Entities.Actors.Units
+namespace LowAgeData.Domain.Entities.Actors.Units
 {
     [JsonConverter(typeof(UnitIdJsonConverter))]
     public class UnitId : EntityId

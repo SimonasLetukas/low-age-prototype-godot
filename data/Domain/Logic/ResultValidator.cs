@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Effects;
+using LowAgeData.Domain.Effects;
 
-namespace low_age_data.Domain.Logic
+namespace LowAgeData.Domain.Logic
 {
     /// <summary>
     /// Used to check a searched area for a condition on found targets.

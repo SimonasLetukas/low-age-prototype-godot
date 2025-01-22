@@ -1,11 +1,11 @@
 ﻿using System;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Entities;
-using low_age_data.Domain.Masks;
-using low_age_data.Shared;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Masks;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Logic
+namespace LowAgeData.Domain.Logic
 {
     /// <summary>
     /// An <see cref="Event"/> describes WHEN, while a <see cref="Validator"/> could afterwards describe IF. The event

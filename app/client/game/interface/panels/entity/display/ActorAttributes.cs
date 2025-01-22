@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Godot;
-using low_age_data.Domain.Common;
+using LowAgeData.Domain.Common;
 
 public partial class ActorAttributes : MarginContainer
 {

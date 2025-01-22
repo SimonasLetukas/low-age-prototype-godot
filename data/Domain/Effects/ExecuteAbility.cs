@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Logic;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Logic;
 
-namespace low_age_data.Domain.Effects
+namespace LowAgeData.Domain.Effects
 {
     public class ExecuteAbility : Effect
     {

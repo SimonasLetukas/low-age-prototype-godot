@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Masks;
+using LowAgeData.Domain.Masks;
 
-namespace low_age_data.Collections
+namespace LowAgeData.Collections
 {
     public static class MasksCollection
     {

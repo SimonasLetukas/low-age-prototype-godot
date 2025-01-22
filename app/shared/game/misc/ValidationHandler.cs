@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using low_age_data.Domain.Common.Flags;
-using low_age_data.Domain.Logic;
+using LowAgeData.Domain.Common.Flags;
+using LowAgeData.Domain.Logic;
 
 public partial class ValidationHandler
 {

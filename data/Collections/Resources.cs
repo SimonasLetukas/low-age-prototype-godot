@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Resources;
-using low_age_data.Shared;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Resources;
+using LowAgeData.Shared;
 
-namespace low_age_data.Collections
+namespace LowAgeData.Collections
 {
     public static class ResourcesCollection
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Entities;
-using low_age_data.Shared;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Shared;
 
-namespace low_age_data.Domain.Common
+namespace LowAgeData.Domain.Common
 {
     public class Selection<T> where T : Id
     {

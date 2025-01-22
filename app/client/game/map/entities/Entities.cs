@@ -2,10 +2,10 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using low_age_data.Domain.Entities;
-using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Entities.Actors.Units;
-using low_age_data.Domain.Factions;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Entities.Actors.Structures;
+using LowAgeData.Domain.Entities.Actors.Units;
+using LowAgeData.Domain.Factions;
 using Array = Godot.Collections.Array;
 
 /// <summary>

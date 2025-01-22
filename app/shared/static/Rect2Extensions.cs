@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Godot;
-using Area3D = low_age_data.Domain.Common.Area;
+using Area3D = LowAgeData.Domain.Common.Area;
 
 public static class Rect2Extensions
 {

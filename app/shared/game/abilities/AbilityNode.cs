@@ -2,9 +2,9 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
 
 public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
 {

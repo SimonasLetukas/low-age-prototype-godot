@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Entities.Actors;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Entities.Actors;
 
 /// <summary>
 /// <see cref="StructureNode"/> or <see cref="UnitNode"/> with abilities and stats.

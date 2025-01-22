@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common
+namespace LowAgeData.Domain.Common
 {
     [Serializable]
     public struct Area

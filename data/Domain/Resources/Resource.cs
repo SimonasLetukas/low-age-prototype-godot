@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities.Actors;
+using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities.Actors;
 
-namespace low_age_data.Domain.Resources
+namespace LowAgeData.Domain.Resources
 {
     public class Resource : IDisplayable
     {

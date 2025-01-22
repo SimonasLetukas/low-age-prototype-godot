@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Filters;
-using low_age_data.Domain.Common.Modifications;
-using low_age_data.Domain.Logic;
+using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Filters;
+using LowAgeData.Domain.Common.Modifications;
+using LowAgeData.Domain.Logic;
 
-namespace low_age_data.Domain.Effects
+namespace LowAgeData.Domain.Effects
 {
     public class ModifyCounter : Effect
     {

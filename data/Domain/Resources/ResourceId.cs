@@ -1,8 +1,8 @@
 ﻿using System;
-using low_age_data.Shared;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Resources
+namespace LowAgeData.Domain.Resources
 {
     [JsonConverter(typeof(ResourceIdJsonConverter))]
     public class ResourceId : Id

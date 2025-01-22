@@ -1,6 +1,6 @@
-﻿using low_age_data.Domain.Behaviours;
+﻿using LowAgeData.Domain.Behaviours;
 
-namespace low_age_data.Domain.Common.Modifications
+namespace LowAgeData.Domain.Common.Modifications
 {
     public class DurationModification : Modification
     {

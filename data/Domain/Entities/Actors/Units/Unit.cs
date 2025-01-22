@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Factions;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Factions;
 
-namespace low_age_data.Domain.Entities.Actors.Units
+namespace LowAgeData.Domain.Entities.Actors.Units
 {
     public class Unit : Actor
     {

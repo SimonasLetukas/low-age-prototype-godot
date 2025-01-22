@@ -1,8 +1,8 @@
 ﻿using System;
-using low_age_data.Shared;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common
+namespace LowAgeData.Domain.Common
 {
     [JsonConverter(typeof(StatTypeJsonConverter))]
     public class StatType : EnumValueObject<StatType, StatType.StatTypeEnum>

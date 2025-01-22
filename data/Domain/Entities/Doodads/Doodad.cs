@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Filters;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Entities.Actors.Units;
-using low_age_data.Domain.Tiles;
+using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Filters;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities.Actors;
+using LowAgeData.Domain.Entities.Actors.Units;
+using LowAgeData.Domain.Tiles;
 
-namespace low_age_data.Domain.Entities.Doodads
+namespace LowAgeData.Domain.Entities.Doodads
 {
     public class Doodad : Entity
     { 

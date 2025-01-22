@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Entities;
+using LowAgeData.Domain.Entities;
 
 /// <summary>
 /// Selectable object that has a presence and is interactable on the map: <see cref="ActorNode"/>

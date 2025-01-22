@@ -1,12 +1,12 @@
-﻿using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities.Doodads;
+﻿using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities.Doodads;
 using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Filters;
-using low_age_data.Domain.Common.Flags;
-using low_age_data.Shared;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Filters;
+using LowAgeData.Domain.Common.Flags;
+using LowAgeData.Shared;
 
-namespace low_age_data.Collections
+namespace LowAgeData.Collections
 {
     public static class DoodadsCollection
     {

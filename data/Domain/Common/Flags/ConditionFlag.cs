@@ -1,9 +1,9 @@
 ﻿using System;
-using low_age_data.Domain.Logic;
-using low_age_data.Shared;
+using LowAgeData.Domain.Logic;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common.Flags
+namespace LowAgeData.Domain.Common.Flags
 {
     [JsonConverter(typeof(ConditionFlagJsonConverter))]
     public class ConditionFlag : EnumValueObject<ConditionFlag, ConditionFlag.ConditionFlags>

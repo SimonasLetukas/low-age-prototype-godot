@@ -1,9 +1,9 @@
-﻿using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Common.Shape;
-using low_age_data.Domain.Masks;
+﻿using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Common.Shape;
+using LowAgeData.Domain.Masks;
 
-namespace low_age_data.Domain.Behaviours
+namespace LowAgeData.Domain.Behaviours
 {
     /// <summary>
     /// <see cref="Behaviour"/> that creates a <see cref="Mask"/> in a certain <see cref="IShape"/>.

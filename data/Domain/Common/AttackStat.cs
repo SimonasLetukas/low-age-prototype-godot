@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common
+namespace LowAgeData.Domain.Common
 {
     public class AttackStat : Stat
     {

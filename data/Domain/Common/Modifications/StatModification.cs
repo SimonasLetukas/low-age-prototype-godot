@@ -1,4 +1,4 @@
-﻿namespace low_age_data.Domain.Common.Modifications
+﻿namespace LowAgeData.Domain.Common.Modifications
 {
     public class StatModification : Modification
     {

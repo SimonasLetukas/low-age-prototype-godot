@@ -1,10 +1,10 @@
 ﻿using System;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities;
-using low_age_data.Shared;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common.Flags
+namespace LowAgeData.Domain.Common.Flags
 {
     [JsonConverter(typeof(FilterFlagJsonConverter))]
     public class FilterFlag : EnumValueObject<FilterFlag, FilterFlag.FilterFlags>

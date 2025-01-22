@@ -1,7 +1,7 @@
 using Godot;
 using System;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
 
 // TODO unit tests
 public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>

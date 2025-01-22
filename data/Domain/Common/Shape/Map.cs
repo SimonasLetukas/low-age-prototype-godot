@@ -1,4 +1,4 @@
-﻿namespace low_age_data.Domain.Common.Shape
+﻿namespace LowAgeData.Domain.Common.Shape
 {
     /// <summary>
     /// <see cref="IShape"/> of the whole map.

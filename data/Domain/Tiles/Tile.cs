@@ -1,7 +1,7 @@
-﻿using low_age_data.Domain.Common;
+﻿using LowAgeData.Domain.Common;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Tiles
+namespace LowAgeData.Domain.Tiles
 {
     public class Tile
     {

@@ -1,8 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using low_age_data;
-using low_age_data.Collections;
-using low_age_data.Shared;
+using LowAgeData;
+using LowAgeData.Collections;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;

@@ -1,6 +1,6 @@
-﻿using low_age_data.Domain.Common.Flags;
+﻿using LowAgeData.Domain.Common.Flags;
 
-namespace low_age_data.Domain.Logic
+namespace LowAgeData.Domain.Logic
 {
     /// <summary>
     /// Base condition for a target.

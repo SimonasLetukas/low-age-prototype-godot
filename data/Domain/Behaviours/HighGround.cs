@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Entities.Actors.Units;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities.Actors;
+using LowAgeData.Domain.Entities.Actors.Units;
 
-namespace low_age_data.Domain.Behaviours
+namespace LowAgeData.Domain.Behaviours
 {
     /// <summary>
     /// Can be added to an <see cref="Actor"/> to make part of its size host high ground for other <see cref="Unit"/>s

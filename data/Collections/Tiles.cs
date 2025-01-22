@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Tiles;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Tiles;
 
-namespace low_age_data.Collections
+namespace LowAgeData.Collections
 {
     public static class TilesCollection
     {

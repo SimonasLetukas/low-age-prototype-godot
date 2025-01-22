@@ -1,8 +1,8 @@
 ﻿using System;
-using low_age_data.Shared;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Effects
+namespace LowAgeData.Domain.Effects
 {
     [JsonConverter(typeof(EffectIdJsonConverter))]
     public class EffectId : Id

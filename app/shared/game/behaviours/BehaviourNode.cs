@@ -1,7 +1,7 @@
 using Godot;
 using System;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Common;
+using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Common;
 
 public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
 {

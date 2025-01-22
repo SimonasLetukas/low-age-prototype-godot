@@ -1,5 +1,5 @@
 using Godot;
-using low_age_data.Domain.Common;
+using LowAgeData.Domain.Common;
 
 public partial class AbilitySubtitle : MarginContainer
 {

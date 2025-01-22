@@ -1,20 +1,20 @@
-﻿using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Logic;
+﻿using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Logic;
 using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Common.Filters;
-using low_age_data.Domain.Common.Flags;
-using low_age_data.Domain.Common.Modifications;
-using low_age_data.Domain.Common.Shape;
-using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Masks;
-using low_age_data.Domain.Resources;
-using low_age_data.Domain.Tiles;
-using low_age_data.Shared;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Common.Filters;
+using LowAgeData.Domain.Common.Flags;
+using LowAgeData.Domain.Common.Modifications;
+using LowAgeData.Domain.Common.Shape;
+using LowAgeData.Domain.Entities.Actors.Structures;
+using LowAgeData.Domain.Masks;
+using LowAgeData.Domain.Resources;
+using LowAgeData.Domain.Tiles;
+using LowAgeData.Shared;
 
-namespace low_age_data.Collections
+namespace LowAgeData.Collections
 {
     public static class BehavioursCollection
     {

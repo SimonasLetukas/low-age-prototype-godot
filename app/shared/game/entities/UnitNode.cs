@@ -1,7 +1,7 @@
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Entities.Actors.Units;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Entities.Actors.Units;
 
 public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Tiles;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Entities.Actors;
+using LowAgeData.Domain.Tiles;
 
-namespace low_age_data.Domain.Behaviours
+namespace LowAgeData.Domain.Behaviours
 {
     /// <summary>
     /// Can be added to an <see cref="Actor"/> to create and specify an entry point of going up to the <see cref="HighGround"/>.

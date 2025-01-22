@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace low_age_data.Domain.Common.Shape
+namespace LowAgeData.Domain.Common.Shape
 {
     /// <summary>
     /// <see cref="IShape"/> composed of a collection of custom <see cref="Area"/>s.

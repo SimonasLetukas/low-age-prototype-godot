@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Effects;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Effects;
 
-namespace low_age_data.Domain.Abilities
+namespace LowAgeData.Domain.Abilities
 {
     /// <summary>
     /// Used when the <see cref="Ability"/> should have two modes: activated and deactivated (default).

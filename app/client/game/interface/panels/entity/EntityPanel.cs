@@ -2,8 +2,8 @@ using System;
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Common;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
 
 public partial class EntityPanel : Control
 {

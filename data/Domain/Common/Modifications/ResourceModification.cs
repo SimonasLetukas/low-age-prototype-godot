@@ -1,6 +1,6 @@
-﻿using low_age_data.Domain.Resources;
+﻿using LowAgeData.Domain.Resources;
 
-namespace low_age_data.Domain.Common.Modifications
+namespace LowAgeData.Domain.Common.Modifications
 {
     public class ResourceModification : Modification
     {

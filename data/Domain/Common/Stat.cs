@@ -1,4 +1,4 @@
-﻿namespace low_age_data.Domain.Common
+﻿namespace LowAgeData.Domain.Common
 {
     public abstract class Stat
     {

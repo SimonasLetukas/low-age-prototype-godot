@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Entities.Actors;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Entities.Actors;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Abilities
+namespace LowAgeData.Domain.Abilities
 {
     public class Ability : IDisplayable
     {

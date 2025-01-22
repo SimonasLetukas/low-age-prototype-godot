@@ -1,6 +1,6 @@
 using Godot;
 using System.Linq;
-using low_age_data.Domain.Factions;
+using LowAgeData.Domain.Factions;
 
 public partial class Lobby : VBoxContainer
 {

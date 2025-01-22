@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Godot;
-using low_age_data.Domain.Behaviours;
+using LowAgeData.Domain.Behaviours;
 
 public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable>
 {

@@ -1,20 +1,20 @@
-﻿using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Logic;
+﻿using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Logic;
 using System.Collections.Generic;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Filters;
-using low_age_data.Domain.Common.Flags;
-using low_age_data.Domain.Common.Modifications;
-using low_age_data.Domain.Common.Shape;
-using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Entities.Actors.Units;
-using low_age_data.Domain.Entities.Doodads;
-using low_age_data.Domain.Factions;
-using low_age_data.Domain.Resources;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Filters;
+using LowAgeData.Domain.Common.Flags;
+using LowAgeData.Domain.Common.Modifications;
+using LowAgeData.Domain.Common.Shape;
+using LowAgeData.Domain.Entities.Actors.Structures;
+using LowAgeData.Domain.Entities.Actors.Units;
+using LowAgeData.Domain.Entities.Doodads;
+using LowAgeData.Domain.Factions;
+using LowAgeData.Domain.Resources;
 
-namespace low_age_data.Collections
+namespace LowAgeData.Collections
 {
     public static class EffectsCollection
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace low_age_data.Domain.Common
+namespace LowAgeData.Domain.Common
 {
     [Serializable]
     public struct Vector2<T> : IEquatable<Vector2<T>> where T : struct

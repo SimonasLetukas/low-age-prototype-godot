@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using low_age_data.Domain.Entities;
+using LowAgeData.Domain.Entities;
 
 public partial class EntityPlacedEvent : IGameEvent
 {

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities.Actors;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities.Actors;
 
-namespace low_age_data.Domain.Behaviours
+namespace LowAgeData.Domain.Behaviours
 {
     /// <summary>
     /// A <see cref="Behaviour"/> that intercepts incoming <see cref="Damage"/> and acts on it in various ways. 

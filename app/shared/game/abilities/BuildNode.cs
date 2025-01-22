@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Shape;
-using low_age_data.Domain.Entities;
-using low_age_data.Shared;
+using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Shape;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Shared;
 
 public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelectable
 {
@@ -42,7 +42,7 @@ public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelect
         Selection = Blueprint.Selection;
     }
 
-    public bool CanBePlacedOnTheWholeMap() => PlacementArea is low_age_data.Domain.Common.Shape.Map 
+    public bool CanBePlacedOnTheWholeMap() => PlacementArea is LowAgeData.Domain.Common.Shape.Map 
                                               && Blueprint.UseWalkableTilesAsPlacementArea is false;
 
     public IEnumerable<Vector2> GetPlacementPositions(EntityNode caster, Vector2 mapSize)

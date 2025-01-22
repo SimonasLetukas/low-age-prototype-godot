@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Common.Filters;
-using low_age_data.Domain.Entities;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Common.Filters;
+using LowAgeData.Domain.Entities;
 
-namespace low_age_data.Domain.Behaviours
+namespace LowAgeData.Domain.Behaviours
 {
     /// <summary>
     /// Used to specify <see cref="BlockedAreas"/> for certain filtered <see cref="Entity"/>s. Relevant for calculating

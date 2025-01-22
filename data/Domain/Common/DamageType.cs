@@ -1,9 +1,9 @@
 ﻿using System;
-using low_age_data.Domain.Entities.Actors;
-using low_age_data.Shared;
+using LowAgeData.Domain.Entities.Actors;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common
+namespace LowAgeData.Domain.Common
 {
     [JsonConverter(typeof(DamageTypeJsonConverter))]
     public class DamageType : EnumValueObject<DamageType, DamageType.DamageTypes>

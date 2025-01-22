@@ -2,8 +2,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Entities;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Entities;
 
 public partial class ClientMap : Map
 {

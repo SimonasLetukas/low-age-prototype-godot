@@ -1,6 +1,6 @@
-﻿using low_age_data.Domain.Entities;
+﻿using LowAgeData.Domain.Entities;
 
-namespace low_age_data.Domain.Common.Filters
+namespace LowAgeData.Domain.Common.Filters
 {
     /// <summary>
     /// Should be a specific <see cref="Entity"/>.

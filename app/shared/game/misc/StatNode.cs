@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using low_age_data.Domain.Common;
+using LowAgeData.Domain.Common;
 
 public partial class StatNode : Node2D, INodeFromBlueprint<Stat>
 {

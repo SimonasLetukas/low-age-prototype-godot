@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Common.Filters;
+using LowAgeData.Domain.Common.Filters;
 
-namespace low_age_data.Domain.Logic
+namespace LowAgeData.Domain.Logic
 {
     /// <summary>
     /// Used in logic operations to validate if <b>any</b> items from the list of <see cref="Conditions"/> are true.

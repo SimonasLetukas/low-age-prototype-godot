@@ -1,8 +1,8 @@
 ﻿using System;
-using low_age_data.Shared;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common.Modifications
+namespace LowAgeData.Domain.Common.Modifications
 {
     [JsonConverter(typeof(AttackAttributeJsonConverter))]
     public class AttackAttribute : EnumValueObject<AttackAttribute, AttackAttribute.AttackAttributes>

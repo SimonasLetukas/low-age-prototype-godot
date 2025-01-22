@@ -3,22 +3,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net7.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'ios' ">net8.0</TargetFramework>
-    <!--
-    <GodotUseNETFrameworkRefAssemblies>true</GodotUseNETFrameworkRefAssemblies>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute> 
-    -->
     <EnableDynamicLoading>true</EnableDynamicLoading>
-    <!--<RootNamespace>lowageprototypegodot</RootNamespace>-->
-    <Nullable>enable</Nullable>
-    <!--<PublishAOT>true</PublishAOT>
-    <TrimMode>partial</TrimMode>-->
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="data\low-age-data.csproj" />
+    <ProjectReference Include="data\LowAgeData.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="data\**" />
@@ -28,9 +19,4 @@
     <EmbeddedResource Remove="data\**" />
     <EmbeddedResource Remove="tests\**" />
   </ItemGroup>
-  <!--<ItemGroup>
-    &lt;!&ndash; Root the assemblies to avoid trimming. &ndash;&gt;
-    <TrimmerRootAssembly Include="GodotSharp" />
-    <TrimmerRootAssembly Include="$(TargetName)" />
-  </ItemGroup>-->
 </Project>

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data;
-using low_age_data.Domain.Entities;
-using low_age_data.Domain.Factions;
-using low_age_data.Shared;
+using LowAgeData;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Factions;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 using FileAccess = Godot.FileAccess;
 

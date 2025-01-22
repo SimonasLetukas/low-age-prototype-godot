@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using low_age_data.Domain.Effects;
+using LowAgeData.Domain.Effects;
 
 public partial class EffectNode : Node2D, INodeFromBlueprint<Effect>
 {

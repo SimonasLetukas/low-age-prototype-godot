@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Entities;
-using low_age_data.Domain.Entities.Actors.Structures;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Entities.Actors.Structures;
 
-namespace low_age_data.Domain.Abilities
+namespace LowAgeData.Domain.Abilities
 {
     /// <summary>
     /// Used for making a new <see cref="Entity"/> out of an existing <see cref="Entity"/>.

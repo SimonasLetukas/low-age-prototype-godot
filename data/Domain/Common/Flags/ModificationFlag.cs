@@ -1,8 +1,8 @@
 ﻿using System;
-using low_age_data.Shared;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common.Flags
+namespace LowAgeData.Domain.Common.Flags
 {
     [JsonConverter(typeof(ModificationFlagJsonConverter))]
     public class ModificationFlag : EnumValueObject<ModificationFlag, ModificationFlag.ModificationFlags>

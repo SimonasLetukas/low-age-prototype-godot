@@ -1,11 +1,11 @@
 ﻿using System;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Entities.Actors;
-using low_age_data.Domain.Entities.Doodads;
-using low_age_data.Shared;
+using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Entities.Actors;
+using LowAgeData.Domain.Entities.Doodads;
+using LowAgeData.Shared;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Common.Durations
+namespace LowAgeData.Domain.Common.Durations
 {
     /// <summary>
     /// Used to calculate duration. Calculation is done on the last <see cref="Actor"/> in the chain (e.g. when

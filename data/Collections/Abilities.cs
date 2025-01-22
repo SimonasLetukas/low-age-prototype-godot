@@ -1,16 +1,16 @@
-﻿using low_age_data.Domain.Abilities;
-using low_age_data.Domain.Behaviours;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Common.Durations;
-using low_age_data.Domain.Common.Shape;
-using low_age_data.Domain.Effects;
-using low_age_data.Domain.Entities;
-using low_age_data.Domain.Entities.Actors.Structures;
-using low_age_data.Domain.Entities.Actors.Units;
-using low_age_data.Domain.Resources;
-using low_age_data.Shared;
+﻿using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Common.Shape;
+using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Entities.Actors.Structures;
+using LowAgeData.Domain.Entities.Actors.Units;
+using LowAgeData.Domain.Resources;
+using LowAgeData.Shared;
 
-namespace low_age_data.Collections
+namespace LowAgeData.Collections
 {
     public static class AbilitiesCollection
     {

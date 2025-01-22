@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Godot;
-using low_age_data;
-using low_age_data.Domain.Common;
-using low_age_data.Domain.Tiles;
+using LowAgeData;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Tiles;
 using Object = Godot.GodotObject;
 
 public partial class Pathfinding : Node

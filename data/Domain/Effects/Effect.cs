@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using low_age_data.Domain.Logic;
+using LowAgeData.Domain.Logic;
 using Newtonsoft.Json;
 
-namespace low_age_data.Domain.Effects
+namespace LowAgeData.Domain.Effects
 {
     public class Effect
     {
