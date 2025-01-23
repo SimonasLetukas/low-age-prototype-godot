@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors.Units;
+using low_age_prototype_common;
+using multipurpose_pathfinding;
 
 public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 {
@@ -15,6 +18,7 @@ public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         return unit;
     }
     
+    public bool IsOnHighGround { get; protected set; } = false;
     public float Movement { get; protected set; }
     
     private Unit Blueprint { get; set; }
@@ -23,7 +27,7 @@ public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
-        EntitySize = Vector2.One * Blueprint.Size;
+        EntitySize = Vector2Int.One * Blueprint.Size;
         Movement = CurrentStats.First(x => 
                 x.Blueprint is CombatStat combatStat
                 && combatStat.CombatType.Equals(StatType.Movement))
@@ -32,8 +36,7 @@ public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
                                   // more cost effective, which is not intuitive for the player. This bonus could be
                                   // added for units with 1 movement only.
                                   
-        Renderer.Initialize(InstanceId, Blueprint.DisplayName, true, 
-            new Rect2(Vector2.Zero, EntitySize));
+        Renderer.Initialize(this, true);
         UpdateSprite();
         UpdateVitalsPosition();
     }
@@ -63,5 +66,43 @@ public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         // TODO logic (outside of this method too) needs to be made more intelligent, because right now this doesn't
         // take into account targeting logic (however complex it would be) and everything gets calculated through
         // pathfinding.
+    }
+
+    protected override void UpdateVisuals()
+    {
+        base.UpdateVisuals();
+
+        if (Selected || Hovered)
+            return;
+        
+        if (EntityState is State.Completed && ClientState.Instance.Flattened)
+            SetTransparency(true);
+    }
+
+    public override void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
+    {
+        IsOnHighGround = resultingPoint.IsHighGround;
+        UpdateVitalsPosition();
+        
+        base.MoveUntilFinished(globalPositionPath, resultingPoint);
+        
+        Renderer.UpdateElevation(
+            IsOnHighGround, 
+            GetTile(resultingPoint.Position, resultingPoint.IsHighGround).YSpriteOffset, 
+            GetEntitiesBelow().OrderByDescending(x => x.Renderer.ZIndex).FirstOrDefault());
+    }
+
+    private IList<EntityNode> GetEntitiesBelow()
+    {
+        var entities = new List<EntityNode>();
+        foreach (var position in EntityOccupyingPositions)
+        {
+            var lowGroundTile = GetTile(position, false);
+            var entity = lowGroundTile.Occupants.FirstOrDefault();
+            if (entity != null && entities.Any(x => x.InstanceId.Equals(entity.InstanceId)) is false)
+                entities.Add(entity);
+        }
+
+        return entities;
     }
 }

@@ -1,0 +1,49 @@
+using Godot;
+
+public partial class Network : Node
+{
+    [Signal]
+    public delegate void PlayerRemovedEventHandler(int playerId);
+
+    public override void _Ready()
+    {
+	    ResetNetwork();
+
+	    Multiplayer.PeerDisconnected += OnPlayerDisconnected;
+    }
+
+    /// <summary>
+    /// Completely reset the game state and clear the network.
+    /// </summary>
+    public void ResetNetwork()
+    {
+<<<<<<< HEAD
+	    var peer = Multiplayer.MultiplayerPeer as ENetMultiplayerPeer;
+	    peer?.Close();
+=======
+	    var peer = GetTree().NetworkPeer as NetworkedMultiplayerENet;
+	    peer?.CloseConnection();
+    }
+
+    protected void SetPeerTimeout()
+    {
+	    var peer = GetTree().NetworkPeer as NetworkedMultiplayerENet;
+	    peer?.SetPeerTimeout(GetTree().GetNetworkUniqueId(), Constants.ENet.TimeoutLimitMs, 
+		    Constants.ENet.TimeoutMinimumMs, Constants.ENet.TimeoutMaximumMs);
+>>>>>>> feature/high-ground
+    }
+
+    /// <summary>
+    /// Every network peer needs to clean up the disconnected client.
+    /// </summary>
+    private void OnPlayerDisconnected(long playerIdL)
+    {
+	    var playerId = (int)playerIdL;
+	    GD.Print("Player disconnected: " + playerId);
+	    Data.Instance.RemovePlayer(playerId);
+	    
+	    EmitSignal(nameof(PlayerRemoved), playerId);
+
+	    GD.Print($"Total players: {Data.Instance.Players.Count}");
+    }
+}

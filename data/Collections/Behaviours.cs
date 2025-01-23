@@ -12,7 +12,7 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Masks;
 using LowAgeData.Domain.Resources;
 using LowAgeData.Domain.Tiles;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 
 namespace LowAgeData.Collections
 {
@@ -101,7 +101,7 @@ namespace LowAgeData.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                     }),
                 
@@ -119,11 +119,15 @@ namespace LowAgeData.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Marsh, 3)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Marsh, amountOfTilesRequired: 3)
                         }),
                     }),
 
@@ -152,11 +156,15 @@ namespace LowAgeData.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Marsh)
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Marsh)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -327,11 +335,14 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Citadel.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    path: new List<Area>
+                    path: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 1, y: 1),
-                            size: new Vector2<int>(x: 1, y: 1))
-                    }),
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 1, y: 1), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 9)),
+                    },
+                    closingEnabled: false),
 
                 new HighGround(
                     id: BehaviourId.Citadel.HighGroundHighGround,
@@ -339,10 +350,12 @@ namespace LowAgeData.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    highGroundAreas: new List<Area>
+                    highGroundAreas: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 3, y: 2))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 2, y: 3)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 9)),
                     }),
 
                 new Buff(
@@ -495,11 +508,14 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Outpost.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    path: new List<Area>
+                    path: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 1, y: 1))
-                    }),
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 12)),
+                    },
+                    closingEnabled: true),
 
                 new HighGround(
                     id: BehaviourId.Outpost.HighGroundHighGround,
@@ -507,10 +523,12 @@ namespace LowAgeData.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    highGroundAreas: new List<Area>
+                    highGroundAreas: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 1, y: 1))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 12)),
                     }),
                 
                 new Buff(
@@ -569,7 +587,11 @@ namespace LowAgeData.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -593,7 +615,11 @@ namespace LowAgeData.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -617,7 +643,11 @@ namespace LowAgeData.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -874,10 +904,12 @@ namespace LowAgeData.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    highGroundAreas: new List<Area>
+                    highGroundAreas: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 1, y: 1))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 16)),
                     }),
                 
                 new Ascendable(
@@ -885,13 +917,18 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Stairs.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    path: new List<Area>
+                    path: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 1, y: 1)),
-                        new Area(start: new Vector2<int>(x: 0, y: 1),
-                            size: new Vector2<int>(x: 1, y: 1))
-                    }),
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 13)), 
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 1, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 1)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 6)),
+                    },
+                    closingEnabled: false),
                 
                 new HighGround(
                     id: BehaviourId.Gate.HighGroundHighGround,
@@ -899,10 +936,12 @@ namespace LowAgeData.Collections
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
                                  "+1 Attack Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    highGroundAreas: new List<Area>
+                    highGroundAreas: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 0),
-                            size: new Vector2<int>(x: 1, y: 4))
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 0), 
+                                size: new Vector2<int>(x: 1, y: 4)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 16)),
                     }),
                 
                 new Ascendable(
@@ -910,11 +949,14 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Gate.AscendableAscendable).CamelCaseToWords(),
                     description: "Can be navigated through to go up to high ground.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    path: new List<Area>
+                    path: new List<HighGroundArea>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 1),
-                            size: new Vector2<int>(x: 1, y: 2)),
-                    }),
+                        new HighGroundArea(area: new Area(
+                                start: new Vector2<int>(x: 0, y: 1), 
+                                size: new Vector2<int>(x: 1, y: 2)),
+                            spriteOffset: new Vector2<int>(x: 0, y: 16)),
+                    },
+                    closingEnabled: true),
                 
                 new MovementBlock(
                     id: BehaviourId.Gate.EntranceMovementBlock,
@@ -932,14 +974,80 @@ namespace LowAgeData.Collections
                         new SpecificFlag(value: FilterFlag.Unit)
                     }),
                 
+                new HighGround(
+                    id: BehaviourId.Watchtower.VantagePointHighGround,
+                    displayName: nameof(BehaviourId.Watchtower.VantagePointHighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +2 vision range, " +
+                                 "+1 Attack Distance and +1 Range Damage for their ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    highGroundAreas: new List<HighGroundArea>
+                    {
+                        new HighGroundArea(
+                            area: new Area(size: new Vector2<int>(x: 1, y: 1)), 
+                            spriteOffset: new Vector2<int>(x: 0, y: 22))
+                    },
+                    onCollisionEffects: new List<EffectId>
+                    {
+                        EffectId.Watchtower.VantagePointSearch
+                    }),
+                
                 new Buff(
                     id: BehaviourId.Watchtower.VantagePointBuff,
                     displayName: nameof(BehaviourId.Watchtower.VantagePointBuff).CamelCaseToWords(),
-                    description: "Unit is on a Watchtower and has +1 vision range and +1 Range Damage for ranged " +
-                                 "attacks.",
+                    description: "Unit is on a Watchtower and has +2 vision range, +1 Attack Distance and +1 Range " +
+                                 "Damage for ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
+                        new AttackModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            attackType: Attacks.Ranged,
+                            attribute: AttackAttribute.MaxAmount),
+                        new AttackModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            attackType: Attacks.Ranged,
+                            attribute: AttackAttribute.MaxDistance),
+                        new StatModification(
+                            change: Change.AddMax,
+                            amount: 2,
+                            statType: StatType.Vision)
+                    },
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Positive,
+                    restoreChangesOnEnd: true),
+                
+                new HighGround(
+                    id: BehaviourId.Bastion.BattlementHighGround,
+                    displayName: nameof(BehaviourId.Bastion.BattlementHighGround).CamelCaseToWords(),
+                    description: "Provides an area of high ground to other units, who all gain +1 Range Armour, " +
+                                 "+1 vision range and +1 Attack Distance for their ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    highGroundAreas: new List<HighGroundArea>
+                    {
+                        new HighGroundArea(
+                            area: new Area(size: new Vector2<int>(x: 2, y: 2)), 
+                            spriteOffset: new Vector2<int>(x: 0, y: 15))
+                    },
+                    onCollisionEffects: new List<EffectId>
+                    {
+                        EffectId.Bastion.BattlementSearch
+                    }),
+                
+                new Buff(
+                    id: BehaviourId.Bastion.BattlementBuff,
+                    displayName: nameof(BehaviourId.Bastion.BattlementBuff).CamelCaseToWords(),
+                    description: "Unit is on a Bastion and has +1 Range Armour in addition to the default high " +
+                                 "ground bonus: +1 vision range and +1 Attack Distance for the ranged attacks.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.AddMax,
+                            amount: 1,
+                            statType: StatType.RangedArmour),
                         new AttackModification(
                             change: Change.AddMax,
                             amount: 1,
@@ -949,23 +1057,6 @@ namespace LowAgeData.Collections
                             change: Change.AddMax,
                             amount: 1,
                             statType: StatType.Vision)
-                    },
-                    canStack: false,
-                    canResetDuration: false,
-                    alignment: Alignment.Positive,
-                    restoreChangesOnEnd: true),
-                
-                new Buff(
-                    id: BehaviourId.Bastion.BattlementBuff,
-                    displayName: nameof(BehaviourId.Bastion.BattlementBuff).CamelCaseToWords(),
-                    description: "Unit is on a Bastion and has +1 Range Armour.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    initialModifications: new List<Modification>
-                    {
-                        new StatModification(
-                            change: Change.AddMax,
-                            amount: 1,
-                            statType: StatType.RangedArmour)
                     },
                     canStack: false,
                     canResetDuration: false,
@@ -1064,7 +1155,11 @@ namespace LowAgeData.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -1089,7 +1184,11 @@ namespace LowAgeData.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                         new Validator(conditions: new List<Condition>
                         {
@@ -1665,7 +1764,8 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Mortar.DeadlyAmmunitionAmmunition,
                     displayName: nameof(BehaviourId.Mortar.DeadlyAmmunitionAmmunition).CamelCaseToWords(),
                     description: "Each ranged attack consumes 1 ammo out of 2 total. Cannot range attack when out " +
-                                 "of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
+                                 "of ammo. Each ranged attack deals full Ranged Damage to all adjacent units around " +
+                                 "the target.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maxAmmunitionAmount: 2,
                     ammunitionAttackTypes: new List<Attacks>
@@ -1833,7 +1933,11 @@ namespace LowAgeData.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                     },
                     maximumHelpers: 3),
@@ -1875,7 +1979,11 @@ namespace LowAgeData.Collections
                         }),
                         new Validator(conditions: new List<Condition>
                         {
-                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, TileId.Mountains)
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
                     },
                     maximumHelpers: 1),
@@ -2450,7 +2558,7 @@ namespace LowAgeData.Collections
                     conditionalEffects: null,
                     restoreChangesOnEnd: true)
                 
-                #endregion
+                #endregion Units
             };
         }
     }

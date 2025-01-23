@@ -20,7 +20,7 @@ public partial class Server : Network
     /// </summary>
     public void RegisterSelf(int playerId, string playerName, bool playerReady, FactionId playerFaction)
     {
-        RpcId(Constants.ServerId, nameof(OnRegisterSelf), playerId, playerName, playerReady, 
+        RpcId(Constants.ENet.ServerId, nameof(OnRegisterSelf), playerId, playerName, playerReady, 
             playerFaction.ToString());
     }
 
@@ -79,7 +79,7 @@ public partial class Server : Network
         Data.Instance.Reset();
 
         var peer = new ENetMultiplayerPeer();
-        var result = peer.CreateServer(Constants.ServerPort, Constants.MaxPlayers);
+        var result = peer.CreateServer(Constants.ENet.ServerPort, Constants.ENet.MaxPlayers);
         if (result != Error.Ok)
         {
             GD.Print($"Failed to host game: {result}");

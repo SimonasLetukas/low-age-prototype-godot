@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.tscn" type="PackedScene" id=1]
+[ext_resource path="res://app/client/game/map/tiles/elevatable/AvailableHoveringTiles.cs" type="Script" id=2]
+[ext_resource path="res://assets/sprites/tiles/available.png" type="Texture" id=3]
+
+[node name="AvailableHoveringTiles" instance=ExtResource( 1 )]
+modulate = Color( 1, 0.623529, 0.623529, 1 )
+tile_data = PoolIntArray( 196623, 8, 0, 196624, 8, 1, 196625, 8, 2, 262157, 8, 0, 262158, 8, 1, 262159, 8, 4, 262160, 8, 4, 262161, 8, 4, 262162, 8, 2, 327693, 8, 131072, 327694, 8, 4, 327695, 8, 4, 327696, 8, 4, 327697, 8, 4, 327698, 8, 4, 327699, 8, 2, 393230, 8, 65536, 393231, 8, 4, 393232, 8, 4, 393233, 8, 4, 393234, 8, 4, 393235, 8, 4, 393236, 8, 196610, 458766, 8, 131072, 458767, 8, 4, 458768, 8, 4, 458769, 8, 4, 458770, 8, 131073, 458771, 8, 131074, 524303, 8, 131072, 524304, 8, 131073, 524305, 8, 131074 )
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+ElevatedSpriteTexture = ExtResource( 3 )

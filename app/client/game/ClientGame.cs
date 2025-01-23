@@ -1,5 +1,6 @@
 using Godot;
 using System.Linq;
+using low_age_prototype_common.Extensions;
 
 public partial class ClientGame : Game
 {
@@ -51,7 +52,6 @@ public partial class ClientGame : Game
         _interface.SelectedToBuild += _map.OnSelectedToBuild;
 
         _map.FinishedInitializing += OnMapFinishedInitializing;
-        _map.NewTileHovered += _interface.OnMapNewTileHovered;
         _map.EntityIsBeingPlaced += _interface.OnEntityIsBeingPlaced;
         _map.Entities.EntitySelected += _interface.OnEntitySelected;
         _map.Entities.EntityDeselected += _interface.OnEntityDeselected;
@@ -67,7 +67,6 @@ public partial class ClientGame : Game
         _interface.SelectedToBuild -= _map.OnSelectedToBuild;
         
         _map.FinishedInitializing -= OnMapFinishedInitializing;
-        _map.NewTileHovered -= _interface.OnMapNewTileHovered;
         _map.EntityIsBeingPlaced -= _interface.OnEntityIsBeingPlaced;
         _map.Entities.EntitySelected -= _interface.OnEntitySelected;
         _map.Entities.EntityDeselected -= _interface.OnEntityDeselected;
@@ -108,8 +107,8 @@ public partial class ClientGame : Game
         switch (gameEvent)
         {
             case MapCreatedEvent mapCreatedEvent:
-                _camera.SetMapSize(mapCreatedEvent.MapSize);
-                _interface.SetMapSize(mapCreatedEvent.MapSize);
+                _camera.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
+                _interface.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
                 _map.Initialize(mapCreatedEvent);
                 break;
             case InitializationCompletedEvent initializationCompletedEvent:
@@ -120,6 +119,7 @@ public partial class ClientGame : Game
                 break;
             case EntityPlacedEvent entityPlacedEvent:
                 _map.Entities.PlaceEntity(entityPlacedEvent);
+                _map.OnEntityPlaced();
                 break;
             default:
                 GD.PrintErr($"{nameof(ClientGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +

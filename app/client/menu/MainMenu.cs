@@ -92,7 +92,7 @@ public partial class MainMenu : Control
 
     private void OnConnectPressed()
     {
-        Constants.SetRemoteServer();
+        Constants.ENet.SetRemoteServer();
         ConnectToServer();
     }
 
@@ -101,7 +101,7 @@ public partial class MainMenu : Control
         var thread = new GodotThread();
         thread.Start(new Callable(Server.Instance, nameof(Server.Instance.RunLocalServerInstance)));
         Client.Instance.QuickStartEnabled = QuickStartCheckBox.IsPressed();
-        Constants.SetLocalServer();
+        Constants.ENet.SetLocalServer();
         ConnectToServer();
     }
 

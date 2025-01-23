@@ -22,6 +22,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_vertical_guides_": [ 357.0 ]
+}
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
@@ -51,13 +54,13 @@ __meta__ = {
 offset_top = 79.0
 offset_right = 1280.0
 offset_bottom = 119.0
-theme_override_constants/separation = 66
+theme_override_constants/separation = 70
 alignment = 1
 
 [node name="Title" type="Label" parent="Items/StartingFaction"]
-offset_left = 357.0
+offset_left = 355.0
 offset_top = 4.0
-offset_right = 556.0
+offset_right = 554.0
 offset_bottom = 35.0
 tooltip_text = "Preferred starting faction."
 mouse_filter = 1
@@ -71,21 +74,21 @@ __meta__ = {
 }
 
 [node name="Faction" parent="Items/StartingFaction" instance=ExtResource( 3 )]
-offset_left = 622.0
-offset_right = 922.0
+offset_left = 624.0
+offset_right = 924.0
 text = ""
 
 [node name="AnimationSpeed" type="HBoxContainer" parent="Items"]
 offset_top = 159.0
 offset_right = 1280.0
 offset_bottom = 199.0
-theme_override_constants/separation = 56
+theme_override_constants/separation = 58
 alignment = 1
 
 [node name="Title" type="Label" parent="Items/AnimationSpeed"]
-offset_left = 357.0
+offset_left = 356.0
 offset_top = 4.0
-offset_right = 566.0
+offset_right = 565.0
 offset_bottom = 35.0
 tooltip_text = "Determines how fast all
 animations play out."
@@ -100,8 +103,8 @@ __meta__ = {
 }
 
 [node name="Animation" type="OptionButton" parent="Items/AnimationSpeed"]
-offset_left = 622.0
-offset_right = 922.0
+offset_left = 623.0
+offset_right = 923.0
 offset_bottom = 40.0
 custom_minimum_size = Vector2( 300, 40 )
 size_flags_vertical = 4
@@ -116,13 +119,13 @@ __meta__ = {
 offset_top = 239.0
 offset_right = 1280.0
 offset_bottom = 279.0
-theme_override_constants/separation = 56
+theme_override_constants/separation = 54
 alignment = 1
 
 [node name="Title" type="Label" parent="Items/ResearchEnabled"]
-offset_left = 354.0
+offset_left = 355.0
 offset_top = 4.0
-offset_right = 569.0
+offset_right = 570.0
 offset_bottom = 35.0
 tooltip_text = "If checked, research becomes
 required to unlock various
@@ -139,8 +142,8 @@ __meta__ = {
 }
 
 [node name="Research" type="CheckBox" parent="Items/ResearchEnabled"]
-offset_left = 625.0
-offset_right = 925.0
+offset_left = 624.0
+offset_right = 924.0
 offset_bottom = 40.0
 custom_minimum_size = Vector2( 300, 40 )
 size_flags_vertical = 4
@@ -152,13 +155,13 @@ __meta__ = {
 offset_top = 319.0
 offset_right = 1280.0
 offset_bottom = 359.0
-theme_override_constants/separation = 118
+theme_override_constants/separation = 116
 alignment = 1
 
 [node name="Title" type="Label" parent="Items/CursorSize"]
-offset_left = 354.0
+offset_left = 355.0
 offset_top = 4.0
-offset_right = 507.0
+offset_right = 508.0
 offset_bottom = 35.0
 tooltip_text = "If checked, cursor becomes
 larger in-game. This is useful
@@ -174,10 +177,39 @@ __meta__ = {
 }
 
 [node name="BigCursor" type="CheckBox" parent="Items/CursorSize"]
-offset_left = 625.0
-offset_right = 925.0
+offset_left = 624.0
+offset_right = 924.0
 offset_bottom = 40.0
 custom_minimum_size = Vector2( 300, 40 )
+size_flags_vertical = 4
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Hints" type="HBoxContainer" parent="Items"]
+offset_top = 399.0
+offset_right = 1280.0
+offset_bottom = 439.0
+theme_override_constants/separation = 128
+alignment = 1
+
+[node name="Title" type="Label" parent="Items/Hints"]
+offset_left = 355.0
+offset_top = 4.0
+offset_right = 497.0
+offset_bottom = 35.0
+hint_tooltip = "If checked, hints about possible input is shown below the cursor at all times."
+mouse_filter = 1
+theme_override_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/font = SubResource( 2 )
+text = "Show Hints:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShowHints" type="CheckBox" parent="Items/Hints"]
 size_flags_vertical = 4
 __meta__ = {
 "_editor_description_": ""
@@ -219,9 +251,9 @@ caret_blink = true
 caret_blink_interval = 0.5
 
 [node name="MarginContainer" type="MarginContainer" parent="Items"]
-offset_top = 399.0
+offset_top = 479.0
 offset_right = 1280.0
-offset_bottom = 519.0
+offset_bottom = 599.0
 theme_override_constants/margin_top = 80
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Items/MarginContainer"]

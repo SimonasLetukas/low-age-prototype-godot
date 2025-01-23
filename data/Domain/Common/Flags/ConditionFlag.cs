@@ -1,6 +1,6 @@
 ﻿using System;
 using LowAgeData.Domain.Logic;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Common.Flags

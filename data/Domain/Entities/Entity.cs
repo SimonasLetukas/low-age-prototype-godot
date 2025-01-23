@@ -1,4 +1,5 @@
 ﻿using LowAgeData.Domain.Common;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Entities

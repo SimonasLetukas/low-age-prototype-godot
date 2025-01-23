@@ -1,8 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Entities.Actors.Structures;
+using low_age_prototype_common;
+using low_age_prototype_common.Extensions;
+using multipurpose_pathfinding;
+using Area = low_age_prototype_common.Area;
 
 public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {
@@ -16,28 +19,32 @@ public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
         return structure;
     }
     
-    public Vector2 CenterPoint { get; protected set; }
-    public IList<Rect2> WalkableAreasBlueprint { get; protected set; }
-    public IEnumerable<Rect2> WalkableAreas => WalkableAreasBlueprint.Select(x => 
-        new Rect2(x.Position + EntityPrimaryPosition, x.Size)).ToList();
-    public IEnumerable<Vector2> WalkablePositions => WalkableAreas.Select(walkableArea => walkableArea.ToList())
-        .SelectMany(walkablePositions => walkablePositions).ToHashSet();
-    public IEnumerable<Vector2> WalkablePositionsBlueprint => WalkableAreasBlueprint.Select(walkableArea =>
+    public override Area RelativeSize => EntitySize.Except(WalkablePositionsBlueprint);
+    public string FlattenedSprite { get; private set; }
+    public Vector2? FlattenedCenterOffset { get; private set; }
+    public Vector2<int> CenterPoint { get; protected set; }
+    public IList<Area> WalkableAreasBlueprint { get; protected set; }
+    public IEnumerable<Area> WalkableAreas => WalkableAreasBlueprint.Select(x => 
+        new Area(x.Start + EntityPrimaryPosition, x.Size)).ToList();
+    public IEnumerable<Vector2<int>> WalkablePositionsBlueprint => WalkableAreasBlueprint.Select(walkableArea =>
         walkableArea.ToList()).SelectMany(walkablePositions => walkablePositions).ToHashSet();
-    
-    protected override Rect2 RelativeSize => EntitySize.Except(WalkablePositionsBlueprint);
+    public IEnumerable<Vector2<int>> WalkablePositions => WalkableAreas.Select(walkableArea => walkableArea.ToList())
+        .SelectMany(walkablePositions => walkablePositions).ToHashSet();
+    public IEnumerable<Vector2<int>> NonWalkablePositions => EntityOccupyingPositions.Except(WalkablePositions);
     
     private Structure Blueprint { get; set; }
-
+    
     public void SetBlueprint(Structure blueprint)
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
-        EntitySize = blueprint.Size.ToGodotVector2();
-        CenterPoint = blueprint.CenterPoint.ToGodotVector2();
-        WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.ToGodotRect2().TrimTo(EntitySize)).ToList();
+        EntitySize = blueprint.Size;
+        FlattenedSprite = blueprint.FlattenedSprite;
+        FlattenedCenterOffset = Blueprint.FlattenedCenterOffset?.ToGodotVector2();
+        CenterPoint = blueprint.CenterPoint;
+        WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.TrimTo(EntitySize)).ToList();
         
-        Renderer.Initialize(InstanceId, Blueprint.DisplayName, false, RelativeSize);
+        Renderer.Initialize(this, false);
         UpdateSprite();
         UpdateVitalsPosition();
     }
@@ -45,47 +52,65 @@ public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
     public override void Rotate()
     {
         var centerPointAssigned = false;
-        var newWalkableAreas = new List<Rect2>();
         
         for (var x = 0; x < EntitySize.X; x++)
         {
+            if (centerPointAssigned)
+                break;
+            
             for (var y = 0; y < EntitySize.Y; y++)
             {
-                var currentPoint = new Vector2(x, y);
+                if (centerPointAssigned)
+                    break;
+                
+                var currentPoint = new Vector2<int>(x, y);
                 var newX = EntitySize.Y - 1 - y;
                 var newY = x;
-                
-                if (CenterPoint.IsEqualApprox(currentPoint) 
-                    && centerPointAssigned is false)
-                {
-                    CenterPoint = new Vector2(newX, newY);
-                    centerPointAssigned = true;
-                }
 
-                newWalkableAreas.AddRange(WalkableAreasBlueprint
-                    .Where(walkableArea => walkableArea.Position.IsEqualApprox(currentPoint))
-                    .Select(walkableArea => new Rect2(
-                        new Vector2((newX - walkableArea.Size.Y) + 1, newY),
-                        new Vector2(walkableArea.Size.Y, walkableArea.Size.X))));
+                if (CenterPoint.Equals(currentPoint) is false)
+                    continue;
+                
+                CenterPoint = new Vector2<int>(newX, newY);
+                centerPointAssigned = true;
             }
         }
 
-        WalkableAreasBlueprint = newWalkableAreas;
-        EntitySize = new Vector2(EntitySize.Y, EntitySize.X);
+        WalkableAreasBlueprint = WalkableAreasBlueprint.RotateClockwiseInside(EntitySize);
+        EntitySize = new Vector2<int>(EntitySize.Y, EntitySize.X);
         Renderer.AdjustToRelativeSize(RelativeSize);
         
         base.Rotate();
     }
 
-    public override bool CanBeMovedOnAt(Vector2 position)
+    public override bool CanBeMovedOnAt(Point point, Team forTeam)
     {
-        if (WalkablePositions.Any(position.Equals))
+        if (WalkablePositions.Any(point.Position.Equals))
             return true;
 
-        return base.CanBeMovedOnAt(position);
+        return base.CanBeMovedOnAt(point, forTeam);
     }
 
-    public override bool CanBeMovedThroughAt(Vector2 position) => CanBeMovedOnAt(position);
+    public override bool CanBeMovedThroughAt(Point point, Team forTeam) => CanBeMovedOnAt(point, forTeam);
+    
+    protected override void UpdateVisuals()
+    {
+        base.UpdateVisuals();
+        Renderer.SetSpriteVisibility(true);
+        UpdateSprite();
+        
+        if (EntityState != State.Completed || ClientState.Instance.Flattened is false) 
+            return;
+        
+        if (FlattenedSprite is null || FlattenedCenterOffset is null)
+        {
+            Renderer.SetSpriteVisibility(false); 
+            Renderer.SetIconVisibility(true);
+            return;
+        }
+
+        Renderer.SetSpriteTexture(FlattenedSprite);
+        AdjustSpriteOffset(FlattenedCenterOffset);
+    }
 
     protected override void UpdateSprite()
     {

@@ -3,7 +3,7 @@ using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 
 namespace LowAgeData.Collections
 {

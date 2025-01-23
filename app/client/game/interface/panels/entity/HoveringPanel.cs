@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
+using low_age_prototype_common;
+using low_age_prototype_common.Extensions;
 
 public partial class HoveringPanel : Control
 {
@@ -13,6 +15,14 @@ public partial class HoveringPanel : Control
     {
         _infoDisplay = GetNode<InfoDisplay>($"{nameof(InfoDisplay)}");
         _infoDisplay.Reset();
+        
+        EventBus.Instance.NewTileFocused += OnNewTileFocused;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus.Instance.NewTileFocused -= OnNewTileFocused;
+        base._ExitTree();
     }
 
     public void SetMapSize(Vector2 mapSize)
@@ -20,13 +30,13 @@ public partial class HoveringPanel : Control
         _mapSize = mapSize;
     }
     
-    public void OnMapNewTileHovered(Vector2 tileHovered, Terrain terrain, IList<EntityNode> occupants)
+    private void OnNewTileFocused(Vector2<int> tileHovered, Terrain terrain, IList<EntityNode> occupants)
     {
         string coordinatesText;
         string terrainText;
         var occupantsText = string.Empty;
 
-        if (tileHovered.IsInBoundsOf(_mapSize) is false)
+        if (tileHovered.IsInBoundsOf(_mapSize.ToVector2()) is false)
         {
             coordinatesText = "-, -";
             terrainText = "Mountains";
@@ -37,7 +47,7 @@ public partial class HoveringPanel : Control
             coordinatesText = $"{tileHovered.X}, {tileHovered.Y}";
             terrainText = terrain.ToDisplayValue().Capitalize();
             
-            if (occupants.IsEmpty())
+            if (occupants is null || occupants.IsEmpty())
             {
                 _infoDisplay.Reset();
             }

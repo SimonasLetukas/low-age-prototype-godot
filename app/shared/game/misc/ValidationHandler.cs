@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Logic;
+using low_age_prototype_common.Extensions;
 
 public partial class ValidationHandler
 {
     public static ValidationHandler Validate(IList<Validator> validators) => new ValidationHandler(validators);
     
-    private IList<Validator> _validators;
+    private readonly IList<Validator> _validators;
     private IList<Tiles.TileInstance> _tileSource = new List<Tiles.TileInstance>();
 
     private ValidationHandler(IList<Validator> validators)
@@ -58,10 +59,7 @@ public partial class ValidationHandler
         switch (conditionFlag)
         {
             case var _ when conditionFlag.Equals(ConditionFlag.TargetIsLowGround):
-                return _tileSource.All(t => t.Occupants.IsEmpty() 
-                                            || (t.IsTarget && t.Occupants.All(o => 
-                                                o is StructureNode structure 
-                                                && structure.WalkablePositions.Contains(t.Position))));
+                return _tileSource.All(t => t.Point.IsHighGround is false);
             case var _ when conditionFlag.Equals(ConditionFlag.TargetIsUnoccupied):
                 return _tileSource.All(x => x.Occupants.IsEmpty());
             

@@ -6,65 +6,68 @@ public partial class InformationalText : Control
 {
     public enum InfoTextType
     {
+        Default,
         Placing,
         PlacingRotatable,
         Selected,
         SelectedMovement
     }
     
-    private bool _enabled = false;
     private VBoxContainer _vBoxContainer;
     
     public override void _Ready()
     {
         _vBoxContainer = GetNode<VBoxContainer>(nameof(VBoxContainer));
-        
-        Disable();
-        Reset();
+
+        Visible = Config.Instance.ShowHints;
+        SwitchToDefault();
     }
 
     public override void _Process(double delta)
     {
-        if (_enabled is false)
-            return;
-
         Position = GetGlobalMousePosition();
     }
 
-    public void Enable(InfoTextType type)
+    public void SwitchTo(InfoTextType type)
     {
         Reset();
         
         switch (type)
         {
+            case InfoTextType.Default:
+                AddText($"Left-click: select");
+                AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
+                break;
             case InfoTextType.PlacingRotatable:
                 AddText($"{GetInput(Constants.Input.Rotate)}: rotate clockwise");
                 AddText($"Left-click: place");
                 AddText($"Right-click: cancel");
+                AddText($"{GetInput(Constants.Input.RepeatPlacement)}: repeated placement");
                 break;
             case InfoTextType.Placing:
                 AddText($"Left-click: place");
                 AddText($"Right-click: cancel");
+                AddText($"{GetInput(Constants.Input.RepeatPlacement)}: repeated placement");
                 break;
             case InfoTextType.Selected:
                 AddText($"Left-click: select");
+                AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
                 break;
             case InfoTextType.SelectedMovement:
                 AddText($"Left-click: select");
                 AddText($"Right-click: move");
+                AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
-
-        _enabled = true;
-        Visible = true;
+        
+        AddText($"{GetInput(Constants.Input.Flatten)}: flat mode");
     }
     
-    public void Disable()
+    public void SwitchToDefault()
     {
-        _enabled = false;
-        Visible = false;
+        SwitchTo(InfoTextType.Default);
     }
 
     private void Reset()

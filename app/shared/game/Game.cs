@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+using low_age_prototype_common.Extensions;
 using Newtonsoft.Json;
 
 /// <summary>
@@ -28,7 +29,7 @@ public partial class Game : Node2D
             return;
         
         GD.Print($"{nameof(Game)}: calling {nameof(ServerGame.OnClientLoaded)} as Rpc.");
-        RpcId(Constants.ServerId, nameof(ServerGame.OnClientLoaded), Multiplayer.GetUniqueId());
+        RpcId(Constants.ENet.ServerId, nameof(ServerGame.OnClientLoaded), Multiplayer.GetUniqueId());
     }
 
     /// <summary>
@@ -43,7 +44,7 @@ public partial class Game : Node2D
         if (Multiplayer.IsServer())
             return;
         
-        RpcId(Constants.ServerId, nameof(ServerGame.OnRegisterNewGameEvent), EventToString(gameEvent));
+        RpcId(Constants.ENet.ServerId, nameof(ServerGame.OnRegisterNewGameEvent), EventToString(gameEvent));
     }
 
     #endregion

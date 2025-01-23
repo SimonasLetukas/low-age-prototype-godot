@@ -1874,6 +1874,11 @@
           "x": 14,
           "y": 14
         },
+        "flattenedSprite": "res://assets/sprites/structures/revs/boss post bottom indexed 2x3.png",
+        "flattenedCenterOffset": {
+          "x": 28,
+          "y": 15
+        },
         "statistics": [
           {
             "$type": "CombatStat",
@@ -1927,6 +1932,8 @@
           "x": 15,
           "y": 14
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -1998,6 +2005,8 @@
           "x": 8,
           "y": 29
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2070,6 +2079,8 @@
           "x": 7,
           "y": 11
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2141,6 +2152,8 @@
           "x": 12,
           "y": 10
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2212,6 +2225,8 @@
           "x": 15,
           "y": 14
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2283,6 +2298,8 @@
           "x": 16,
           "y": 17
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2354,6 +2371,8 @@
           "x": 14,
           "y": 20
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2425,6 +2444,8 @@
           "x": 11,
           "y": 18
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2495,6 +2516,11 @@
         "backSideCenterOffset": {
           "x": 8,
           "y": 17
+        },
+        "flattenedSprite": "res://assets/sprites/structures/revs/outpost bottom indexed 1x1.png",
+        "flattenedCenterOffset": {
+          "x": 6,
+          "y": 6
         },
         "statistics": [
           {
@@ -2568,6 +2594,8 @@
           "x": 15,
           "y": 11
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2641,6 +2669,8 @@
           "x": 19,
           "y": 10
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2721,6 +2751,8 @@
           "x": 17,
           "y": 13
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2802,6 +2834,8 @@
           "x": 15,
           "y": 19
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2883,6 +2917,8 @@
           "x": 9,
           "y": 15
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -2961,6 +2997,8 @@
           "x": 11,
           "y": 17
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3039,6 +3077,8 @@
           "x": 4,
           "y": 17
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3119,6 +3159,8 @@
           "x": 9,
           "y": 19
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3197,6 +3239,8 @@
           "x": 5,
           "y": 7
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3275,6 +3319,8 @@
           "x": 8,
           "y": 14
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3353,6 +3399,8 @@
           "x": 22,
           "y": 25
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3431,6 +3479,8 @@
           "x": 11,
           "y": 8
         },
+        "flattenedSprite": null,
+        "flattenedCenterOffset": null,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3508,6 +3558,11 @@
         "backSideCenterOffset": {
           "x": 8,
           "y": 20
+        },
+        "flattenedSprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+        "flattenedCenterOffset": {
+          "x": 8,
+          "y": 6
         },
         "statistics": [
           {
@@ -3587,6 +3642,11 @@
           "x": 9,
           "y": 15
         },
+        "flattenedSprite": "res://assets/sprites/structures/uee/stairs bottom indexed 2x1.png",
+        "flattenedCenterOffset": {
+          "x": 10,
+          "y": 5
+        },
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3664,6 +3724,11 @@
         "backSideCenterOffset": {
           "x": 20,
           "y": 26
+        },
+        "flattenedSprite": "res://assets/sprites/structures/uee/gate bottom indexed 1x4.png",
+        "flattenedCenterOffset": {
+          "x": 20,
+          "y": 12
         },
         "statistics": [
           {
@@ -3745,6 +3810,11 @@
           "x": 8,
           "y": 27
         },
+        "flattenedSprite": "res://assets/sprites/structures/uee/watchtower bottom indexed 1x1.png",
+        "flattenedCenterOffset": {
+          "x": 8,
+          "y": 8
+        },
         "statistics": [
           {
             "$type": "CombatStat",
@@ -3822,6 +3892,11 @@
         "backSideCenterOffset": {
           "x": 16,
           "y": 23
+        },
+        "flattenedSprite": "res://assets/sprites/structures/uee/tower bottom indexed 2x2.png",
+        "flattenedCenterOffset": {
+          "x": 12,
+          "y": 10
         },
         "statistics": [
           {
@@ -4045,40 +4120,42 @@
       "displayName": "Grass",
       "description": "",
       "terrain": "Terrain.Grass",
-      "movementCost": 1.0,
-      "allowsBuilding": true
+      "movementCost": 1.0
     },
     {
       "id": "tile-mountains",
       "displayName": "Mountains",
       "description": "",
       "terrain": "Terrain.Mountains",
-      "movementCost": "Infinity",
-      "allowsBuilding": false
+      "movementCost": "Infinity"
     },
     {
       "id": "tile-marsh",
       "displayName": "Marsh",
       "description": "",
       "terrain": "Terrain.Marsh",
-      "movementCost": 2.0,
-      "allowsBuilding": false
+      "movementCost": 2.0
     },
     {
       "id": "tile-scraps",
       "displayName": "Scraps",
       "description": "",
       "terrain": "Terrain.Scraps",
-      "movementCost": 1.0,
-      "allowsBuilding": true
+      "movementCost": 1.0
     },
     {
       "id": "tile-celestium",
       "displayName": "Celestium",
       "description": "",
       "terrain": "Terrain.Celestium",
-      "movementCost": 1.0,
-      "allowsBuilding": true
+      "movementCost": 1.0
+    },
+    {
+      "id": "tile-highground",
+      "displayName": "High Ground",
+      "description": "",
+      "terrain": "Terrain.HighGround",
+      "movementCost": 1.0
     }
   ],
   "abilities": [
@@ -6040,16 +6117,18 @@
       "id": "ability-watchtower-vantage-point",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-watchtower-vantage-point-search",
+      "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffects": [],
+      "onBirthEffects": [
+        "effect-watchtower-vantage-point-apply-behaviour-high-ground"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Vantage Point",
-      "description": "Provides additional +1 vision range and +1 Range Damage to ranged units.",
+      "description": "Provides +2 vision range, +1 Attack Distance and +1 Range Damage to ranged units on top.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6061,16 +6140,18 @@
       "id": "ability-bastion-battlement",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-bastion-battlement-search",
+      "periodicEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
-      "onBirthEffects": [],
+      "onBirthEffects": [
+        "effect-bastion-battlement-apply-behaviour-high-ground"
+      ],
       "onBuildBehaviour": null,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Battlement",
-      "description": "Provides additional +1 Range Armour to all units on top.",
+      "description": "Provides +1 Range Armour, +1 vision range and +1 Attack Distance to all units on top.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6909,8 +6990,7 @@
       "periodicEffect": null,
       "onHitEffects": [
         "effect-parasite-paralysing-grasp-apply-tether-behaviour",
-        "effect-parasite-paralysing-grasp-apply-attack-behaviour",
-        "effect-parasite-paralysing-grasp-apply-self-behaviour"
+        "effect-parasite-paralysing-grasp-apply-attack-behaviour"
       ],
       "onHitAttackTypes": [
         "Attacks.Melee"
@@ -8886,6 +8966,18 @@
       "validators": []
     },
     {
+      "$type": "ApplyBehaviour",
+      "id": "effect-watchtower-vantage-point-apply-behaviour-high-ground",
+      "behavioursToApply": [
+        "behaviour-watchtower-vantage-point-high-ground"
+      ],
+      "target": "Location.Self",
+      "filters": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
       "$type": "Search",
       "id": "effect-watchtower-vantage-point-search",
       "shape": {
@@ -8923,7 +9015,7 @@
         }
       ],
       "effects": [
-        "effect-watchtower-vantage-point-apply-behaviour"
+        "effect-watchtower-vantage-point-apply-behaviour-buff"
       ],
       "location": "Location.Self",
       "usedForValidator": false,
@@ -8931,11 +9023,23 @@
     },
     {
       "$type": "ApplyBehaviour",
-      "id": "effect-watchtower-vantage-point-apply-behaviour",
+      "id": "effect-watchtower-vantage-point-apply-behaviour-buff",
       "behavioursToApply": [
         "behaviour-watchtower-vantage-point-buff"
       ],
       "target": "Location.Inherited",
+      "filters": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "$type": "ApplyBehaviour",
+      "id": "effect-bastion-battlement-apply-behaviour-high-ground",
+      "behavioursToApply": [
+        "behaviour-bastion-battlement-high-ground"
+      ],
+      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
@@ -8979,7 +9083,7 @@
         }
       ],
       "effects": [
-        "effect-bastion-battlement-apply-behaviour"
+        "effect-bastion-battlement-apply-behaviour-buff"
       ],
       "location": "Location.Self",
       "usedForValidator": false,
@@ -8987,7 +9091,7 @@
     },
     {
       "$type": "ApplyBehaviour",
-      "id": "effect-bastion-battlement-apply-behaviour",
+      "id": "effect-bastion-battlement-apply-behaviour-buff",
       "behavioursToApply": [
         "behaviour-bastion-battlement-buff"
       ],
@@ -11613,6 +11717,14 @@
         {
           "conditions": [
             {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
               "amountOfTilesRequired": 1,
@@ -11693,6 +11805,14 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
             }
           ],
           "filters": []
@@ -12009,16 +12129,23 @@
       "id": "behaviour-citadel-ascendable-ascendable",
       "path": [
         {
-          "start": {
-            "x": 1,
-            "y": 1
+          "area": {
+            "start": {
+              "x": 1,
+              "y": 1
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 9
           }
         }
       ],
+      "closingEnabled": false,
       "displayName": "Ascendable Ascendable",
       "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",
@@ -12041,13 +12168,19 @@
       "id": "behaviour-citadel-high-ground-high-ground",
       "highGroundAreas": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 2,
+              "y": 3
+            }
           },
-          "size": {
-            "x": 3,
-            "y": 2
+          "spriteOffset": {
+            "x": 0,
+            "y": 9
           }
         }
       ],
@@ -12354,16 +12487,23 @@
       "id": "behaviour-outpost-ascendable-ascendable",
       "path": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 12
           }
         }
       ],
+      "closingEnabled": true,
       "displayName": "Ascendable Ascendable",
       "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",
@@ -12386,13 +12526,19 @@
       "id": "behaviour-outpost-high-ground-high-ground",
       "highGroundAreas": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 12
           }
         }
       ],
@@ -12519,6 +12665,14 @@
         {
           "conditions": [
             {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
               "amountOfTilesRequired": 1,
@@ -12573,6 +12727,14 @@
         {
           "conditions": [
             {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
               "amountOfTilesRequired": 1,
@@ -12620,6 +12782,14 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
             }
           ],
           "filters": []
@@ -13127,13 +13297,19 @@
       "id": "behaviour-wall-high-ground-high-ground",
       "highGroundAreas": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 16
           }
         }
       ],
@@ -13162,26 +13338,39 @@
       "id": "behaviour-stairs-ascendable-ascendable",
       "path": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 13
           }
         },
         {
-          "start": {
-            "x": 0,
-            "y": 1
+          "area": {
+            "start": {
+              "x": 1,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 1
+          "spriteOffset": {
+            "x": 0,
+            "y": 6
           }
         }
       ],
+      "closingEnabled": false,
       "displayName": "Ascendable Ascendable",
       "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",
@@ -13204,13 +13393,19 @@
       "id": "behaviour-gate-high-ground-high-ground",
       "highGroundAreas": [
         {
-          "start": {
-            "x": 0,
-            "y": 0
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 4
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 4
+          "spriteOffset": {
+            "x": 0,
+            "y": 16
           }
         }
       ],
@@ -13239,16 +13434,23 @@
       "id": "behaviour-gate-ascendable-ascendable",
       "path": [
         {
-          "start": {
-            "x": 0,
-            "y": 1
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 1
+            },
+            "size": {
+              "x": 1,
+              "y": 2
+            }
           },
-          "size": {
-            "x": 1,
-            "y": 2
+          "spriteOffset": {
+            "x": 0,
+            "y": 16
           }
         }
       ],
+      "closingEnabled": true,
       "displayName": "Ascendable Ascendable",
       "description": "Can be navigated through to go up to high ground.",
       "endsAt": "EndsAt.Death",
@@ -13309,6 +13511,47 @@
       }
     },
     {
+      "$type": "HighGround",
+      "id": "behaviour-watchtower-vantage-point-high-ground",
+      "highGroundAreas": [
+        {
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 1,
+              "y": 1
+            }
+          },
+          "spriteOffset": {
+            "x": 0,
+            "y": 22
+          }
+        }
+      ],
+      "onCollisionEffects": [
+        "effect-watchtower-vantage-point-search"
+      ],
+      "displayName": "Vantage Point High Ground",
+      "description": "Provides an area of high ground to other units, who all gain +2 vision range, +1 Attack Distance and +1 Range Damage for their ranged attacks.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
       "$type": "Buff",
       "id": "behaviour-watchtower-vantage-point-buff",
       "modificationFlags": [],
@@ -13322,10 +13565,18 @@
           "amount": 1.0
         },
         {
+          "$type": "AttackModification",
+          "attackType": "Attacks.Ranged",
+          "attribute": "AttackAttribute.MaxDistance",
+          "modificationFlags": [],
+          "change": "Change.AddMax",
+          "amount": 1.0
+        },
+        {
           "$type": "StatModification",
           "statType": "StatType.Vision",
           "change": "Change.AddMax",
-          "amount": 1.0
+          "amount": 2.0
         }
       ],
       "initialEffects": [],
@@ -13333,9 +13584,50 @@
       "finalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Vantage Point Buff",
-      "description": "Unit is on a Watchtower and has +1 vision range and +1 Range Damage for ranged attacks.",
+      "description": "Unit is on a Watchtower and has +2 vision range, +1 Attack Distance and +1 Range Damage for ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "$type": "HighGround",
+      "id": "behaviour-bastion-battlement-high-ground",
+      "highGroundAreas": [
+        {
+          "area": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "spriteOffset": {
+            "x": 0,
+            "y": 15
+          }
+        }
+      ],
+      "onCollisionEffects": [
+        "effect-bastion-battlement-search"
+      ],
+      "displayName": "Battlement High Ground",
+      "description": "Provides an area of high ground to other units, who all gain +1 Range Armour, +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
       "canStack": false,
       "canResetDuration": false,
       "triggers": [],
@@ -13359,6 +13651,20 @@
           "statType": "StatType.RangedArmour",
           "change": "Change.AddMax",
           "amount": 1.0
+        },
+        {
+          "$type": "AttackModification",
+          "attackType": "Attacks.Ranged",
+          "attribute": "AttackAttribute.MaxAmount",
+          "modificationFlags": [],
+          "change": "Change.AddMax",
+          "amount": 1.0
+        },
+        {
+          "$type": "StatModification",
+          "statType": "StatType.Vision",
+          "change": "Change.AddMax",
+          "amount": 1.0
         }
       ],
       "initialEffects": [],
@@ -13366,7 +13672,7 @@
       "finalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Battlement Buff",
-      "description": "Unit is on a Bastion and has +1 Range Armour.",
+      "description": "Unit is on a Bastion and has +1 Range Armour in addition to the default high ground bonus: +1 vision range and +1 Attack Distance for the ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Positive",
       "canStack": false,
@@ -13529,6 +13835,14 @@
         {
           "conditions": [
             {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
               "amountOfTilesRequired": 1,
@@ -13576,6 +13890,14 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
             }
           ],
           "filters": []
@@ -14732,6 +15054,14 @@
         {
           "conditions": [
             {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
               "$type": "TileCondition",
               "conditionedTile": "tile-mountains",
               "amountOfTilesRequired": 1,
@@ -14809,6 +15139,14 @@
           "conditions": [
             {
               "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
             }
           ],
           "filters": []

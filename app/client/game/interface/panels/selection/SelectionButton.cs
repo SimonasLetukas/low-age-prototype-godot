@@ -1,7 +1,7 @@
 using System;
 using Godot;
 using LowAgeData.Domain.Entities;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 
 public partial class SelectionButton : BaseButton
 {

@@ -17,7 +17,8 @@ namespace LowAgeData.Domain.Behaviours
             string displayName, 
             string description,
             string sprite,
-            IList<Area> path) 
+            IList<HighGroundArea> path,
+            bool closingEnabled) 
             : base(
                 id, 
                 displayName, 
@@ -30,15 +31,28 @@ namespace LowAgeData.Domain.Behaviours
                 ? throw new ArgumentOutOfRangeException(nameof(path), 
                     $"Must contain at least one {nameof(path)} element")
                 : path;
+            ClosingEnabled = closingEnabled;
         }
         
         /// <summary>
         /// Configures a path from low to high ground, this path has to be inside the area (size) of the
         /// <see cref="Actor"/>. The first path element connects to all adjacent high ground <see cref="Tile"/>s;
         /// the last element in the list connects to all adjacent low ground <see cref="Tile"/>s; the path elements
-        /// between the first and the last connect to each other in sequence. Only the first element can also be layered
-        /// with a <see cref="HighGround"/>'s <see cref="HighGround.HighGroundAreas"/>. 
+        /// between the first and the last connect to each other in sequence, and also to any adjacent high-ground
+        /// within ascension tolerance. 
         /// </summary>
-        public IList<Area> Path { get; }
+        public IList<HighGroundArea> Path { get; }
+        
+        /// <summary>
+        /// If true, when allies occupy the <see cref="HighGroundArea"/>s in <see cref="Path"/>, the
+        /// <see cref="Ascendable"/> is considered 'closed' for enemies. When enemies occupy that area, the
+        /// <see cref="Ascendable"/> is considered 'opened' for allies and enemies. The 'closed' and 'opened' states
+        /// define what is allowed to pass through the last element of <see cref="Path"/> and the low ground that it
+        /// connects to.
+        /// <p></p>
+        /// If false, the <see cref="Ascendable"/> has constant 'opened' state and is accessible the same way for
+        /// both allies and enemies.
+        /// </summary>
+        public bool ClosingEnabled { get; }
     }
 }

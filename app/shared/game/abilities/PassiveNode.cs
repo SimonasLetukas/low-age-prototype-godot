@@ -1,6 +1,7 @@
 using Godot;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Behaviours;
+using low_age_prototype_common.Extensions;
 
 public partial class PassiveNode : AbilityNode, INodeFromBlueprint<Passive>
 {
@@ -25,5 +26,19 @@ public partial class PassiveNode : AbilityNode, INodeFromBlueprint<Passive>
     public BehaviourId GetOnBuildBehaviourOrDefault()
     {
         return Blueprint.OnBuildBehaviour;
+    }
+
+    public void OnActorBirth(EntityNode actor)
+    {
+        var onBirthEffects = Blueprint.OnBirthEffects;
+        if (onBirthEffects.IsEmpty())
+            return;
+
+        foreach (var effectId in onBirthEffects)
+        {
+            var effects = new Effects(effectId, actor);
+            if (effects.ValidateLast())
+                effects.ExecuteLast();
+        }
     }
 }

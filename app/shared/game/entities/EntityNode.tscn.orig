@@ -1,0 +1,74 @@
+<<<<<<< HEAD
+[gd_scene load_steps=7 format=3 uid="uid://p1we4fggrwh4"]
+=======
+[gd_scene load_steps=8 format=2]
+>>>>>>> feature/high-ground
+
+[ext_resource type="Script" path="res://app/shared/game/entities/EntityNode.cs" id="1"]
+[ext_resource type="Material" path="res://app/shared/shaders/EntitiesMaterial.tres" id="2"]
+[ext_resource type="Texture2D" uid="uid://cgjqqyu7bukhv" path="res://assets/sprites/units/revs/slave indexed 1x1.png" id="3"]
+[ext_resource type="PackedScene" path="res://app/shared/game/behaviours/Behaviours.tscn" id="4"]
+[ext_resource type="Texture2D" uid="uid://bw5j24ahxgdpc" path="res://assets/sprites/debug-dot.png" id="5"]
+[ext_resource type="Script" path="res://app/client/game/map/entities/EntityRenderer.cs" id="6"]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 2.5, 7.5 )
+
+[node name="EntityNode" type="Node2D"]
+script = ExtResource("1")
+PlacementColorSuccess = Color(0.482353, 1, 0.482353, 1)
+PlacementColorInvalid = Color(1, 0.482353, 0.482353, 1)
+
+<<<<<<< HEAD
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="Behaviours" parent="." instance=ExtResource("4")]
+=======
+[node name="Movement" type="Tween" parent="."]
+
+[node name="Behaviours" parent="." instance=ExtResource( 4 )]
+>>>>>>> feature/high-ground
+
+[node name="EntityRenderer" type="Node2D" parent="."]
+script = ExtResource("6")
+
+[node name="SpriteContainer" type="Node2D" parent="EntityRenderer"]
+
+[node name="Sprite2D" type="Sprite2D" parent="EntityRenderer/SpriteContainer"]
+material = ExtResource("2")
+texture = ExtResource("3")
+centered = false
+offset = Vector2(-3, -14)
+
+[node name="Icon" type="TextureRect" parent="EntityRenderer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 3.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="Debug" type="Node2D" parent="EntityRenderer"]
+visible = false
+
+[node name="OriginBottom" type="Sprite2D" parent="EntityRenderer/Debug"]
+texture = ExtResource("5")
+
+[node name="OriginTop" type="Sprite2D" parent="EntityRenderer/Debug"]
+modulate = Color(0.392157, 0.392157, 0.392157, 1)
+texture = ExtResource("5")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EntityRenderer/Debug"]
+modulate = Color(0, 1, 0.0627451, 1)
+offset_left = -2.0
+offset_top = -5.0
+offset_right = 18.0
+offset_bottom = 15.0
+scale = Vector2(0.5, 0.5)
+text = "1"
+
+[node name="Area2D" type="Area2D" parent="EntityRenderer"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EntityRenderer/Area2D"]
+shape = SubResource( 1 )

@@ -10,15 +10,13 @@ namespace LowAgeData.Domain.Tiles
             string displayName, 
             string description, 
             Terrain terrain, 
-            float movementCost, 
-            bool allowsBuilding)
+            float movementCost)
         {
             Id = id;
             DisplayName = displayName;
             Description = description;
             Terrain = terrain;
             MovementCost = movementCost;
-            AllowsBuilding = allowsBuilding;
         }
 
         [JsonProperty(Order = -3)]
@@ -27,6 +25,5 @@ namespace LowAgeData.Domain.Tiles
         public string Description { get; }
         public Terrain Terrain { get; }
         public float MovementCost { get; }
-        public bool AllowsBuilding { get; }
     }
 }

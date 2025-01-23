@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using LowAgeData.Domain.Common;
+using low_age_prototype_common;
+using low_age_prototype_common.Extensions;
 
 public static class Vector2Extensions
 {
@@ -41,6 +42,9 @@ public static class Vector2Extensions
         return new Rect2(smallestX, smallestY, highestX - smallestX + 1, highestY - smallestY + 1);
     }
 
+    public static Vector2<int> ToVector2(this Vector2 godotVector2) 
+        => new Vector2<int>((int)godotVector2.x, (int)godotVector2.y);
+    
     public static Vector2 ToGodotVector2<T>(this Vector2<T> domainVector2) where T : struct, IEquatable<T> 
         => new Vector2(Convert.ToSingle(domainVector2.X), Convert.ToSingle(domainVector2.Y));
 
@@ -101,4 +105,8 @@ public static class Vector2Extensions
 
         return false;
     }
+
+    public static bool IsDiagonalTo(this Vector2 source, Vector2 point) =>
+        (int)source.x - (int)source.y == (int)point.x - (int)point.y 
+        || (int)source.x + (int)source.y == (int)point.x + (int)point.y;
 }

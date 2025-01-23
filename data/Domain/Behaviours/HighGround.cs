@@ -20,7 +20,7 @@ namespace LowAgeData.Domain.Behaviours
             string displayName, 
             string description,
             string sprite,
-            IList<Area> highGroundAreas,
+            IList<HighGroundArea> highGroundAreas,
             IList<EffectId>? onCollisionEffects = null) 
             : base(
                 id, 
@@ -44,7 +44,7 @@ namespace LowAgeData.Domain.Behaviours
         /// Specifies the areas inside the <see cref="Actor"/>'s size to become high ground. Multiple
         /// <see cref="HighGroundAreas"/> can intersect on the same tile.
         /// </summary>
-        public IList<Area> HighGroundAreas { get; }
+        public IList<HighGroundArea> HighGroundAreas { get; }
         
         /// <summary>
         /// By default, all units gain +1 Ranged Attack Distance when on high ground, but

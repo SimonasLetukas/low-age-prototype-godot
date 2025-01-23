@@ -1,5 +1,5 @@
 ﻿using System;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Abilities

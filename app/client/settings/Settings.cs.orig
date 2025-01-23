@@ -1,0 +1,84 @@
+using System;
+using Godot;
+using LowAgeData.Domain.Factions;
+
+public partial class Settings : Control
+{
+    public const string ScenePath = @"res://app/client/settings/Settings.tscn";
+    public static Settings Instance() => (Settings) GD.Load<PackedScene>(ScenePath).Instantiate();
+    
+    public event Action<FactionId> FactionSelected = delegate { };
+    
+    private FactionSelection _factionSelection;
+    private OptionButton _animationSelection;
+    private CheckBox _researchToggle;
+    private CheckBox _bigCursorToggle;
+    private CheckBox _showHintsToggle;
+    private Button _backButton;
+    
+    public override void _Ready()
+    {
+        _factionSelection = GetNode<FactionSelection>("Items/StartingFaction/Faction");
+<<<<<<< HEAD
+        _animationSelection = FindChild("Animation") as OptionButton;
+        _researchToggle = FindChild("Research") as CheckBox;
+        _bigCursorToggle = FindChild("BigCursor") as CheckBox;
+        _backButton = FindChild("Back") as Button;
+
+        _factionSelection.FactionSelected += OnFactionSelected;
+        _animationSelection?.Connect("item_selected", new Callable(this, nameof(OnAnimationSpeedSelected)));
+        _researchToggle?.Connect(nameof(_researchToggle.Pressed).ToLower(), new Callable(this, nameof(OnResearchToggled)));
+        _bigCursorToggle?.Connect(nameof(_bigCursorToggle.Pressed).ToLower(), new Callable(this, nameof(OnCursorSizeToggled)));
+        _backButton?.Connect(nameof(_backButton.Pressed).ToLower(), new Callable(this, nameof(OnBackPressed)));
+        
+        _factionSelection.SetSelectedFaction(Config.Instance.StartingFaction);
+        if (_animationSelection != null) _animationSelection.Selected = (int)Config.Instance.AnimationSpeed;
+        if (_researchToggle != null) _researchToggle.ButtonPressed = Config.Instance.ResearchEnabled;
+        if (_bigCursorToggle != null) _bigCursorToggle.ButtonPressed = Config.Instance.LargeCursor;
+=======
+        _animationSelection = FindNode("Animation") as OptionButton;
+        _researchToggle = FindNode("Research") as CheckBox;
+        _bigCursorToggle = FindNode("BigCursor") as CheckBox;
+        _showHintsToggle = FindNode("ShowHints") as CheckBox;
+        _backButton = FindNode("Back") as Button;
+
+        _factionSelection.FactionSelected += OnFactionSelected;
+        _animationSelection?.Connect("item_selected", this, nameof(OnAnimationSpeedSelected));
+        _researchToggle?.Connect(nameof(_researchToggle.Pressed).ToLower(), this, nameof(OnResearchToggled));
+        _bigCursorToggle?.Connect(nameof(_bigCursorToggle.Pressed).ToLower(), this, nameof(OnCursorSizeToggled));
+        _showHintsToggle?.Connect(nameof(_showHintsToggle.Pressed).ToLower(), this, nameof(OnShowHintsToggled));
+        _backButton?.Connect(nameof(_backButton.Pressed).ToLower(), this, nameof(OnBackPressed));
+        
+        _factionSelection.SetSelectedFaction(Config.Instance.StartingFaction);
+        if (_animationSelection != null) _animationSelection.Selected = (int)Config.Instance.AnimationSpeed;
+        if (_researchToggle != null) _researchToggle.Pressed = Config.Instance.ResearchEnabled;
+        if (_bigCursorToggle != null) _bigCursorToggle.Pressed = Config.Instance.LargeCursor;
+        if (_showHintsToggle != null) _showHintsToggle.Pressed = Config.Instance.ShowHints;
+>>>>>>> feature/high-ground
+    }
+
+    public override void _ExitTree()
+    {
+        _factionSelection.FactionSelected -= OnFactionSelected;
+    }
+
+    private void OnAnimationSpeedSelected(int index) => Config.Instance.AnimationSpeed = (Config.AnimationSpeeds)index;
+    
+    private void OnResearchToggled() => Config.Instance.ResearchEnabled = _researchToggle.IsPressed();
+
+<<<<<<< HEAD
+    private void OnCursorSizeToggled() => Config.Instance.LargeCursor = _bigCursorToggle.IsPressed();
+=======
+    private void OnCursorSizeToggled() => Config.Instance.LargeCursor = _bigCursorToggle.Pressed;
+    
+    private void OnShowHintsToggled() => Config.Instance.ShowHints = _showHintsToggle.Pressed;
+>>>>>>> feature/high-ground
+
+    private void OnBackPressed()
+    {
+        Config.Instance.Save();
+        Visible = false;
+    }
+
+    private void OnFactionSelected(FactionId faction) => FactionSelected(faction);
+}

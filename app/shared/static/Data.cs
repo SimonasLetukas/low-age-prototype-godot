@@ -4,7 +4,6 @@ using Godot;
 using LowAgeData;
 using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Factions;
-using LowAgeData.Shared;
 using Newtonsoft.Json;
 using FileAccess = Godot.FileAccess;
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Tiles
@@ -17,6 +17,7 @@ namespace LowAgeData.Domain.Tiles
         public static TileId Marsh => new TileId(nameof(Marsh).ToLower(), true);
         public static TileId Scraps => new TileId(nameof(Scraps).ToLower(), true);
         public static TileId Celestium => new TileId(nameof(Celestium).ToLower(), true);
+        public static TileId HighGround => new TileId(nameof(HighGround).ToLower(), true);
         
         private class TileIdJsonConverter : JsonConverter
         {

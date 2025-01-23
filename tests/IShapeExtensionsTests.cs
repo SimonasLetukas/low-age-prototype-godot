@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using LowAgeData.Domain.Common.Shape;
+using low_age_prototype_common;
 using Xunit;
 using Vector2 = Godot.Vector2;
 
@@ -13,27 +14,27 @@ namespace low_age_tests
             yield return new object[]
             {
                 new LowAgeData.Domain.Common.Shape.Map(), 
-                new Vector2(0, 0),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(1, 1),
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0)
+                    new Vector2<int>(0, 0)
                 }
             };
             
             yield return new object[]
             {
                 new LowAgeData.Domain.Common.Shape.Map(), 
-                new Vector2(0, 0),
-                new Vector2(4, 2),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 2),
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(3, 0),
-                    new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1), new Vector2(3, 1)
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), new Vector2<int>(3, 0),
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), new Vector2<int>(2, 1), new Vector2<int>(3, 1)
                 }
             };
         }
@@ -41,7 +42,7 @@ namespace low_age_tests
         [Theory]
         [MemberData(nameof(GetExpectedPositionsByMapShape))]
         public void ToPositions_ShouldReturnExpectedPositions_WhenShapeIsMap(LowAgeData.Domain.Common.Shape.Map map,
-            Vector2 centerPoint, Vector2 mapSize, Vector2[] expectedPositions)
+            Vector2<int> centerPoint, Vector2<int> mapSize, Vector2<int>[] expectedPositions)
         {
             map.ToPositions(centerPoint, mapSize).Should().BeEquivalentTo(expectedPositions);
         }
@@ -62,15 +63,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
                 }
             };
             
@@ -82,17 +83,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), 
-                    new Vector2(0, 1), 
-                    new Vector2(0, 2), 
+                    new Vector2<int>(0, 0), 
+                    new Vector2<int>(0, 1), 
+                    new Vector2<int>(0, 2), 
                 }
             };
             
@@ -102,15 +103,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2), 
-                new Vector2(2, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(2, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
                 }
             };
             
@@ -122,17 +123,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2), 
-                new Vector2(0, 2),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 2),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), 
-                    new Vector2(0, 1), 
-                    new Vector2(0, 2), 
+                    new Vector2<int>(0, 0), 
+                    new Vector2<int>(0, 1), 
+                    new Vector2<int>(0, 2), 
                 }
             };
             
@@ -142,15 +143,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 0), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(1, 0), new Vector2(2, 0), 
+                    new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
                 }
             };
             
@@ -162,16 +163,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 0), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 1), 
-                    new Vector2(0, 2), 
+                    new Vector2<int>(0, 1), 
+                    new Vector2<int>(0, 2), 
                 }
             };
             
@@ -181,15 +182,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 0), 
-                new Vector2(2, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(2, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0),
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0),
                 }
             };
             
@@ -201,16 +202,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 0), 
-                new Vector2(0, 2),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 2),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), 
-                    new Vector2(0, 1), 
+                    new Vector2<int>(0, 0), 
+                    new Vector2<int>(0, 1), 
                 }
             };
             
@@ -220,15 +221,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(2, 0), 
+                    new Vector2<int>(2, 0), 
                 }
             };
             
@@ -240,15 +241,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 2), 
+                    new Vector2<int>(0, 2), 
                 }
             };
             
@@ -258,15 +259,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(2, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(2, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0),
+                    new Vector2<int>(0, 0),
                 }
             };
             
@@ -278,15 +279,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(0, 2),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 2),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), 
+                    new Vector2<int>(0, 0), 
                 }
             };
             
@@ -296,15 +297,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
                 }
             };
             
@@ -316,17 +317,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), 
-                    new Vector2(0, 1), 
-                    new Vector2(0, 2), 
+                    new Vector2<int>(0, 0), 
+                    new Vector2<int>(0, 1), 
+                    new Vector2<int>(0, 2), 
                 }
             };
             
@@ -336,15 +337,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1), 
-                new Vector2(1, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(1, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
                 }
             };
             
@@ -356,17 +357,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1), 
-                new Vector2(0, 1),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(0, 1),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), 
-                    new Vector2(0, 1), 
-                    new Vector2(0, 2), 
+                    new Vector2<int>(0, 0), 
+                    new Vector2<int>(0, 1), 
+                    new Vector2<int>(0, 2), 
                 }
             };
             
@@ -376,15 +377,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1, 0), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(2, 0), 
+                    new Vector2<int>(2, 0), 
                 }
             };
             
@@ -396,15 +397,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1, 0), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 2), 
+                    new Vector2<int>(0, 2), 
                 }
             };
             
@@ -414,15 +415,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1, 0), 
-                new Vector2(1, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(1, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0),
+                    new Vector2<int>(0, 0),
                 }
             };
             
@@ -434,15 +435,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1, 0), 
-                new Vector2(0, 1),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(0, 1),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), 
+                    new Vector2<int>(0, 0), 
                 }
             };
             
@@ -452,15 +453,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(3, 0), 
+                    new Vector2<int>(3, 0), 
                 }
             };
             
@@ -473,15 +474,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 3), 
+                    new Vector2<int>(0, 3), 
                 }
             };
             
@@ -491,15 +492,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(2, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(2, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0),
+                    new Vector2<int>(0, 0),
                 }
             };
             
@@ -512,15 +513,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(0, 2),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(0, 2),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), 
+                    new Vector2<int>(0, 0), 
                 }
             };
             
@@ -531,16 +532,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), new Vector2<int>(2, 1), 
                 }
             };
             
@@ -552,17 +553,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), 
-                    new Vector2(0, 2), new Vector2(1, 2), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2), 
                 }
             };
             
@@ -573,16 +574,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2), 
-                new Vector2(2, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(2, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), new Vector2<int>(2, 1), 
                 }
             };
             
@@ -594,17 +595,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2), 
-                new Vector2(0, 2),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(0, 2),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), 
-                    new Vector2(0, 2), new Vector2(1, 2), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2), 
                 }
             };
             
@@ -615,16 +616,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 0), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(1, 0), new Vector2(2, 0), 
-                    new Vector2(1, 1), new Vector2(2, 1), 
+                    new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
+                    new Vector2<int>(1, 1), new Vector2<int>(2, 1), 
                 }
             };
             
@@ -636,16 +637,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 0), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 1), new Vector2(1, 1), 
-                    new Vector2(0, 2), new Vector2(1, 2), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2), 
                 }
             };
             
@@ -656,16 +657,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 0), 
-                new Vector2(2, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(2, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0),
-                    new Vector2(0, 1), new Vector2(1, 1),
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0),
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1),
                 }
             };
             
@@ -677,16 +678,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 0), 
-                new Vector2(0, 2),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(0, 2),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), 
                 }
             };
             
@@ -697,16 +698,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(2, 0), 
-                    new Vector2(2, 1), 
+                    new Vector2<int>(2, 0), 
+                    new Vector2<int>(2, 1), 
                 }
             };
             
@@ -718,15 +719,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 2), new Vector2(1, 2), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2), 
                 }
             };
             
@@ -737,16 +738,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(2, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 2),
+                new Vector2<int>(2, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 2),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0),
-                    new Vector2(0, 1),
+                    new Vector2<int>(0, 0),
+                    new Vector2<int>(0, 1),
                 }
             };
             
@@ -758,15 +759,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(2, 1), 
-                new Vector2(0, 2),
-                new Vector2(4, 5),
-                new Vector2(2, 1),
+                new Vector2<int>(0, 2),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 1),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0),
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0),
                 }
             };
             
@@ -778,17 +779,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 3),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 3),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1), 
-                    new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), new Vector2<int>(2, 1), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2), new Vector2<int>(2, 2), 
                 }
             };
             
@@ -800,17 +801,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(3, 2),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(3, 2),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1), 
-                    new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), new Vector2<int>(2, 1), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2), new Vector2<int>(2, 2), 
                 }
             };
             
@@ -822,17 +823,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1), 
-                new Vector2(1, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 3),
+                new Vector2<int>(1, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 3),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1), 
-                    new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), new Vector2<int>(2, 1), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2), new Vector2<int>(2, 2), 
                 }
             };
             
@@ -844,17 +845,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1), 
-                new Vector2(0, 1),
-                new Vector2(4, 5),
-                new Vector2(3, 2),
+                new Vector2<int>(0, 1),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(3, 2),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1), 
-                    new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), new Vector2<int>(2, 1), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2), new Vector2<int>(2, 2), 
                 }
             };
             
@@ -866,17 +867,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1, 0), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 3),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 3),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(2, 0), 
-                    new Vector2(2, 1), 
-                    new Vector2(2, 2), 
+                    new Vector2<int>(2, 0), 
+                    new Vector2<int>(2, 1), 
+                    new Vector2<int>(2, 2), 
                 }
             };
             
@@ -888,15 +889,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1, 0), 
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(3, 2),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(3, 2),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2), new Vector2<int>(2, 2), 
                 }
             };
             
@@ -908,17 +909,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1, 0), 
-                new Vector2(1, 0),
-                new Vector2(4, 5),
-                new Vector2(2, 3),
+                new Vector2<int>(1, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(2, 3),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0),
-                    new Vector2(0, 1), 
-                    new Vector2(0, 2), 
+                    new Vector2<int>(0, 0),
+                    new Vector2<int>(0, 1), 
+                    new Vector2<int>(0, 2), 
                 }
             };
             
@@ -930,15 +931,15 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(1, 0), 
-                new Vector2(0, 1),
-                new Vector2(4, 5),
-                new Vector2(3, 2),
+                new Vector2<int>(0, 1),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(3, 2),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
                 }
             };
             
@@ -950,17 +951,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(3, 1), 
-                new Vector2(0, 0),
-                new Vector2(5, 5),
-                new Vector2(2, 3),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(5, 5),
+                new Vector2<int>(2, 3),
                 ActorRotation.BottomRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(3, 0), new Vector2(4, 0), 
-                    new Vector2(3, 1), new Vector2(4, 1), 
-                    new Vector2(3, 2), new Vector2(4, 2), 
+                    new Vector2<int>(3, 0), new Vector2<int>(4, 0), 
+                    new Vector2<int>(3, 1), new Vector2<int>(4, 1), 
+                    new Vector2<int>(3, 2), new Vector2<int>(4, 2), 
                 }
             };
             
@@ -974,16 +975,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(3, 1), 
-                new Vector2(0, 0),
-                new Vector2(5, 5),
-                new Vector2(3, 2),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(5, 5),
+                new Vector2<int>(3, 2),
                 ActorRotation.BottomLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 3), new Vector2(1, 3), new Vector2(2, 3), 
-                    new Vector2(0, 4), new Vector2(1, 4), new Vector2(2, 4), 
+                    new Vector2<int>(0, 3), new Vector2<int>(1, 3), new Vector2<int>(2, 3), 
+                    new Vector2<int>(0, 4), new Vector2<int>(1, 4), new Vector2<int>(2, 4), 
                 }
             };
             
@@ -995,17 +996,17 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(3, 1), 
-                new Vector2(3, 0),
-                new Vector2(5, 5),
-                new Vector2(2, 3),
+                new Vector2<int>(3, 0),
+                new Vector2<int>(5, 5),
+                new Vector2<int>(2, 3),
                 ActorRotation.TopLeft,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), 
-                    new Vector2(0, 2), new Vector2(1, 2), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2), 
                 }
             };
             
@@ -1019,24 +1020,25 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Line(3, 1), 
-                new Vector2(0, 3),
-                new Vector2(5, 5),
-                new Vector2(3, 2),
+                new Vector2<int>(0, 3),
+                new Vector2<int>(5, 5),
+                new Vector2<int>(3, 2),
                 ActorRotation.TopRight,
                 
                 // Expected:
                 new []
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1), new Vector2<int>(2, 1), 
                 }
             };
         }
 
         [Theory]
         [MemberData(nameof(GetExpectedPositionsByLineShape))]
-        public void ToPositions_ShouldReturnExpectedPositions_WhenShapeIsLine(Line line, Vector2 centerPoint, 
-            Vector2 mapSize, Vector2 actorSize, ActorRotation actorRotation, Vector2[] expectedPositions)
+        public void ToPositions_ShouldReturnExpectedPositions_WhenShapeIsLine(Line line, Vector2<int> centerPoint, 
+            Vector2<int> mapSize, Vector2<int> actorSize, ActorRotation actorRotation, 
+            Vector2<int>[] expectedPositions)
         {
             line.ToPositions(centerPoint, mapSize, actorSize, actorRotation).Should().BeEquivalentTo(expectedPositions);
         }
@@ -1057,14 +1059,14 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Circle(0, -1),
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
 
                 // Expected:
                 new[]
                 {
-                    new Vector2(0, 0)
+                    new Vector2<int>(0, 0)
                 }
             };
             
@@ -1074,12 +1076,12 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Circle(0, 0),
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
 
                 // Expected:
-                new Vector2[]{}
+                new Vector2<int>[]{}
             };
 
             #region BubblyCircle
@@ -1092,16 +1094,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Circle(2, 1),
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
 
                 // Expected:
                 new[]
                 {
-                    new Vector2(2, 0), 
-                    new Vector2(2, 1), 
-                    new Vector2(0, 2), new Vector2(1, 2),
+                    new Vector2<int>(2, 0), 
+                    new Vector2<int>(2, 1), 
+                    new Vector2<int>(0, 2), new Vector2<int>(1, 2),
                 }
             };
             
@@ -1115,18 +1117,18 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Circle(3, 2),
-                new Vector2(4, 4),
-                new Vector2(5, 6),
-                new Vector2(1, 1),
+                new Vector2<int>(4, 4),
+                new Vector2<int>(5, 6),
+                new Vector2<int>(1, 1),
 
                 // Expected:
                 new[]
                 {
-                    new Vector2(3, 1), new Vector2(4, 1), 
-                    new Vector2(2, 2),
-                    new Vector2(1, 3),
-                    new Vector2(1, 4),
-                    new Vector2(1, 5),
+                    new Vector2<int>(3, 1), new Vector2<int>(4, 1), 
+                    new Vector2<int>(2, 2),
+                    new Vector2<int>(1, 3),
+                    new Vector2<int>(1, 4),
+                    new Vector2<int>(1, 5),
                 }
             };
             
@@ -1143,21 +1145,21 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Circle(5, 3),
-                new Vector2(0, 5),
-                new Vector2(7, 8),
-                new Vector2(2, 3),
+                new Vector2<int>(0, 5),
+                new Vector2<int>(7, 8),
+                new Vector2<int>(2, 3),
 
                 // Expected:
                 new[]
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(3, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1),  new Vector2(2, 1),  new Vector2(3, 1),  new Vector2(4, 1), 
-                    new Vector2(3, 2), new Vector2(4, 2), new Vector2(5, 2), 
-                    new Vector2(4, 3), new Vector2(5, 3), new Vector2(6, 3), 
-                    new Vector2(5, 4), new Vector2(6, 4), 
-                    new Vector2(5, 5), new Vector2(6, 5), 
-                    new Vector2(5, 6), new Vector2(6, 6), 
-                    new Vector2(5, 7), new Vector2(6, 7), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), new Vector2<int>(2, 0), new Vector2<int>(3, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1),  new Vector2<int>(2, 1),  new Vector2<int>(3, 1),  new Vector2<int>(4, 1), 
+                    new Vector2<int>(3, 2), new Vector2<int>(4, 2), new Vector2<int>(5, 2), 
+                    new Vector2<int>(4, 3), new Vector2<int>(5, 3), new Vector2<int>(6, 3), 
+                    new Vector2<int>(5, 4), new Vector2<int>(6, 4), 
+                    new Vector2<int>(5, 5), new Vector2<int>(6, 5), 
+                    new Vector2<int>(5, 6), new Vector2<int>(6, 6), 
+                    new Vector2<int>(5, 7), new Vector2<int>(6, 7), 
                 }
             };
 
@@ -1174,16 +1176,16 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Circle(2, 1),
-                new Vector2(0, 0),
-                new Vector2(4, 5),
-                new Vector2(1, 1),
+                new Vector2<int>(0, 0),
+                new Vector2<int>(4, 5),
+                new Vector2<int>(1, 1),
 
                 // Expected:
                 new[]
                 {
-                    new Vector2(2, 0), 
-                    new Vector2(1, 1), 
-                    new Vector2(0, 2),
+                    new Vector2<int>(2, 0), 
+                    new Vector2<int>(1, 1), 
+                    new Vector2<int>(0, 2),
                 }
             };
             
@@ -1197,18 +1199,18 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Circle(3, 2),
-                new Vector2(4, 4),
-                new Vector2(5, 6),
-                new Vector2(1, 1),
+                new Vector2<int>(4, 4),
+                new Vector2<int>(5, 6),
+                new Vector2<int>(1, 1),
 
                 // Expected:
                 new[]
                 {
-                    new Vector2(4, 1), 
-                    new Vector2(2, 2), new Vector2(3, 2), 
-                    new Vector2(2, 3),
-                    new Vector2(1, 4),
-                    new Vector2(2, 5),
+                    new Vector2<int>(4, 1), 
+                    new Vector2<int>(2, 2), new Vector2<int>(3, 2), 
+                    new Vector2<int>(2, 3),
+                    new Vector2<int>(1, 4),
+                    new Vector2<int>(2, 5),
                 }
             };
             
@@ -1225,21 +1227,21 @@ namespace low_age_tests
             yield return new object[]
             {
                 new Circle(5, 3),
-                new Vector2(0, 5),
-                new Vector2(7, 8),
-                new Vector2(2, 3),
+                new Vector2<int>(0, 5),
+                new Vector2<int>(7, 8),
+                new Vector2<int>(2, 3),
 
                 // Expected:
                 new[]
                 {
-                    new Vector2(0, 0), new Vector2(1, 0), 
-                    new Vector2(0, 1), new Vector2(1, 1),  new Vector2(2, 1),  new Vector2(3, 1),  new Vector2(4, 1), 
-                    new Vector2(2, 2),  new Vector2(3, 2),  new Vector2(4, 2), new Vector2(5, 2), 
-                    new Vector2(4, 3), new Vector2(5, 3), 
-                    new Vector2(4, 4), new Vector2(5, 4), 
-                    new Vector2(5, 5), new Vector2(6, 5), 
-                    new Vector2(5, 6), new Vector2(6, 6), 
-                    new Vector2(5, 7), new Vector2(6, 7), 
+                    new Vector2<int>(0, 0), new Vector2<int>(1, 0), 
+                    new Vector2<int>(0, 1), new Vector2<int>(1, 1),  new Vector2<int>(2, 1),  new Vector2<int>(3, 1),  new Vector2<int>(4, 1), 
+                    new Vector2<int>(2, 2),  new Vector2<int>(3, 2),  new Vector2<int>(4, 2), new Vector2<int>(5, 2), 
+                    new Vector2<int>(4, 3), new Vector2<int>(5, 3), 
+                    new Vector2<int>(4, 4), new Vector2<int>(5, 4), 
+                    new Vector2<int>(5, 5), new Vector2<int>(6, 5), 
+                    new Vector2<int>(5, 6), new Vector2<int>(6, 6), 
+                    new Vector2<int>(5, 7), new Vector2<int>(6, 7), 
                 }
             };
             */
@@ -1249,8 +1251,9 @@ namespace low_age_tests
         
         [Theory]
         [MemberData(nameof(GetExpectedPositionsByCircleShape))]
-        public void ToPositions_ShouldReturnExpectedPositions_WhenShapeIsCircle(Circle circle, Vector2 centerPoint, 
-            Vector2 mapSize, Vector2 actorSize , Vector2[] expectedPositions)
+        public void ToPositions_ShouldReturnExpectedPositions_WhenShapeIsCircle(Circle circle, 
+            Vector2<int> centerPoint, Vector2<int> mapSize, Vector2<int> actorSize, 
+            Vector2<int>[] expectedPositions)
         {
             circle.ToPositions(centerPoint, mapSize, actorSize).Should().BeEquivalentTo(expectedPositions);
         }

@@ -8,7 +8,7 @@ public partial class Config : Node
 {
     public const string SavePath = @"res://data/config.json";
     public static Config Instance = null;
-
+    
     public void Save()
     {
         var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
@@ -69,6 +69,12 @@ public partial class Config : Node
         set => _data.LargeCursor = value;
     }
 
+    public bool ShowHints
+    {
+        get => _data.ShowHints;
+        set => _data.ShowHints = value;
+    }
+
     private ConfigData _data = new ConfigData();
     
     public override void _Ready()
@@ -81,6 +87,7 @@ public partial class Config : Node
         }
         
         Load();
+        Save();
     }
 
     private class ConfigData
@@ -89,6 +96,7 @@ public partial class Config : Node
         public bool ResearchEnabled { get; set; } = false;
         public FactionId StartingFaction { get; set; } = FactionId.Uee;
         public bool LargeCursor { get; set; } = false;
+        public bool ShowHints { get; set; } = true;
     }
 
     public enum AnimationSpeeds

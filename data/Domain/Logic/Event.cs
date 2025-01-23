@@ -2,7 +2,7 @@
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Masks;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Logic

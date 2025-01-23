@@ -65,3 +65,5 @@ msbuild.wrn
 *.TMP
 /data/config.json
 /.idea/.idea.low-age-prototype-godot/.idea/.gitignore
+/packages/
+

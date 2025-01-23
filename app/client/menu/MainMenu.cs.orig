@@ -1,0 +1,119 @@
+using Godot;
+using LowAgeData.Domain.Factions;
+
+public partial class MainMenu : Control
+{
+    public const string ScenePath = @"res://app/client/menu/MainMenu.tscn";
+
+    protected CheckBox QuickStartCheckBox { get; set; }
+
+    private Button _settingsButton;
+    private Settings _settings;
+    private LineEdit _nameInput;
+    private FactionSelection _factionSelection;
+    private Button _connectButton;
+    private Button _playLocallyButton;
+    private Label _errorMessage;
+
+    private FactionId _currentlySelectedFaction;
+
+    public override void _Ready()
+    {
+        Data.Instance.ReadBlueprint();  // TODO perhaps fetch from server instead
+                                        // TODO this should happen before (and instead of) the read in FactionSelection.cs
+                                        
+        _settingsButton = FindChild("SettingsButton") as Button;
+        _nameInput = GetNode<LineEdit>("Items/Name/Input");
+        _factionSelection = GetNode<FactionSelection>("Items/Faction/Faction");
+        _connectButton = FindChild("Connect") as Button;
+        _playLocallyButton = FindChild("PlayLocally") as Button;
+        QuickStartCheckBox = FindChild("QuickStart") as CheckBox;
+        _errorMessage = GetNode<Label>("Items/Connect/ErrorMessage"); // TODO consolidate all error messages in scene under one 
+
+        if (OS.HasEnvironment(Constants.Os.Username))
+        {
+            _nameInput.Text = OS.GetEnvironment(Constants.Os.Username);
+        }
+        else
+        {
+            // TODO refactor desktopPath so that it's unit testable
+            var desktopPath = OS.GetSystemDir(0).Replace("\\", "/").Split("/");
+            _nameInput.Text = desktopPath[desktopPath.Length - 2];
+        }
+        
+        _settings = Settings.Instance();
+        AddChild(_settings);
+        _settings.FactionSelected += OnFactionSelectionSelected;
+        _settings.Visible = false;
+        
+        _currentlySelectedFaction = _factionSelection.GetSelectedFaction();
+
+        Multiplayer.ConnectedToServer += OnConnectedToServer;
+        _settingsButton?.Connect(nameof(_settingsButton.Pressed).ToLower(), new Callable(this, nameof(OnSettingsPressed)));
+        _connectButton?.Connect(nameof(_connectButton.Pressed).ToLower(), new Callable(this, nameof(OnConnectPressed)));
+        _playLocallyButton?.Connect(nameof(_playLocallyButton.Pressed).ToLower(), new Callable(this, nameof(OnPlayLocallyPressed)));
+        if (_factionSelection is null is false) 
+            _factionSelection.FactionSelected += OnFactionSelectionSelected;
+    }
+
+    public override void _ExitTree()
+    {
+        _factionSelection.FactionSelected -= OnFactionSelectionSelected;
+        _settings.FactionSelected -= OnFactionSelectionSelected;
+    }
+
+    protected void ConnectToServer()
+    {
+        PutConnectionMessage("Connecting to server");
+        _connectButton.Disabled = true;
+        
+        if (Client.Instance.JoinGame(_nameInput.Text, _currentlySelectedFaction) is false)
+        {
+            PutConnectionMessage("Failed to connect");
+        }
+        
+        _connectButton.Disabled = false;
+    }
+
+    private void PutConnectionMessage(string message)
+    {
+        _errorMessage.Text = message;
+        var tween = CreateTween();
+        tween.TweenProperty(_errorMessage, "self_modulate", new Color(1, 1, 1, 0), 2)
+            .From(new Color(1, 1, 1, 1))
+            .SetTrans(Tween.TransitionType.Linear)
+            .SetEase(Tween.EaseType.Out);
+    }
+
+    private void OnSettingsPressed() => _settings.Visible = !_settings.Visible;
+
+    private void OnConnectedToServer() => Callable.From(() 
+        => GetTree().ChangeSceneToFile(ClientLobby.ScenePath)).CallDeferred();
+
+    private void OnConnectPressed()
+    {
+        Constants.ENet.SetRemoteServer();
+        ConnectToServer();
+    }
+
+    protected void OnPlayLocallyPressed()
+    {
+<<<<<<< HEAD
+        var thread = new GodotThread();
+        thread.Start(new Callable(Server.Instance, nameof(Server.Instance.RunLocalServerInstance)));
+        Client.Instance.QuickStartEnabled = QuickStartCheckBox.IsPressed();
+        Constants.SetLocalServer();
+=======
+        Server.Instance.RunLocalServerInstance();
+        Client.Instance.QuickStartEnabled = QuickStartCheckBox.Pressed;
+        Constants.ENet.SetLocalServer();
+>>>>>>> feature/high-ground
+        ConnectToServer();
+    }
+
+    private void OnFactionSelectionSelected(FactionId factionId)
+    {
+        _currentlySelectedFaction = factionId;
+        _factionSelection.SetSelectedFaction(factionId);
+    }
+}

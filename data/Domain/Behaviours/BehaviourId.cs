@@ -1,5 +1,5 @@
 ﻿using System;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Behaviours
@@ -162,11 +162,13 @@ namespace LowAgeData.Domain.Behaviours
 
         public static class Watchtower
         {
+            public static BehaviourId VantagePointHighGround => new BehaviourId($"{nameof(Watchtower)}{nameof(VantagePointHighGround)}".ToKebabCase(), true);
             public static BehaviourId VantagePointBuff => new BehaviourId($"{nameof(Watchtower)}{nameof(VantagePointBuff)}".ToKebabCase(), true);
         }
 
         public static class Bastion
         {
+            public static BehaviourId BattlementHighGround => new BehaviourId($"{nameof(Bastion)}{nameof(BattlementHighGround)}".ToKebabCase(), true);
             public static BehaviourId BattlementBuff => new BehaviourId($"{nameof(Bastion)}{nameof(BattlementBuff)}".ToKebabCase(), true);
         }
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Effects
@@ -196,14 +196,16 @@ namespace LowAgeData.Domain.Effects
         
         public static class Watchtower
         {
+            public static EffectId VantagePointApplyBehaviourHighGround => new EffectId($"{nameof(Watchtower)}{nameof(VantagePointApplyBehaviourHighGround)}".ToKebabCase(), true);
             public static EffectId VantagePointSearch => new EffectId($"{nameof(Watchtower)}{nameof(VantagePointSearch)}".ToKebabCase(), true);
-            public static EffectId VantagePointApplyBehaviour => new EffectId($"{nameof(Watchtower)}{nameof(VantagePointApplyBehaviour)}".ToKebabCase(), true);
+            public static EffectId VantagePointApplyBehaviourBuff => new EffectId($"{nameof(Watchtower)}{nameof(VantagePointApplyBehaviourBuff)}".ToKebabCase(), true);
         }
         
         public static class Bastion
         {
+            public static EffectId BattlementApplyBehaviourHighGround => new EffectId($"{nameof(Bastion)}{nameof(BattlementApplyBehaviourHighGround)}".ToKebabCase(), true);
             public static EffectId BattlementSearch => new EffectId($"{nameof(Bastion)}{nameof(BattlementSearch)}".ToKebabCase(), true);
-            public static EffectId BattlementApplyBehaviour => new EffectId($"{nameof(Bastion)}{nameof(BattlementApplyBehaviour)}".ToKebabCase(), true);
+            public static EffectId BattlementApplyBehaviourBuff => new EffectId($"{nameof(Bastion)}{nameof(BattlementApplyBehaviourBuff)}".ToKebabCase(), true);
         }
 
         public static class Leader

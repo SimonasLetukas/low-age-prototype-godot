@@ -1,5 +1,6 @@
 ﻿using System;
-using LowAgeData.Shared;
+using low_age_data.Domain.Effects;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Common
@@ -8,7 +9,9 @@ namespace LowAgeData.Domain.Common
     public class Location : EnumValueObject<Location, Location.Locations>
     {
         /// <summary>
-        /// Applies the same location that was set before in the chain
+        /// Allows a default <see cref="Location"/> to be set by the caller (e.g. <see cref="Search"/> sets
+        /// <see cref="Location.Actor"/> by default). Otherwise applies the same location that was set before in the
+        /// chain. Default = <see cref="Location.Self"/>.
         /// </summary>
         public static Location Inherited => new Location(Locations.Inherited);
 

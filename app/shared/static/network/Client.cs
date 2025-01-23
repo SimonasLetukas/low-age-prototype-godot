@@ -31,7 +31,7 @@ public partial class Client : Network
 
         Multiplayer.ConnectedToServer += OnConnectedToServer;
         var peer = new ENetMultiplayerPeer();
-        var result = peer.CreateClient(Constants.ServerIp, Constants.ServerPort);
+        var result = peer.CreateClient(Constants.ENet.ServerIp, Constants.ENet.ServerPort);
 
         if (result != Error.Ok)
         {

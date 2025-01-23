@@ -4,6 +4,7 @@ using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Durations;
 using LowAgeData.Domain.Common.Filters;
 using LowAgeData.Domain.Entities;
+using low_age_prototype_common;
 
 namespace LowAgeData.Domain.Behaviours
 {

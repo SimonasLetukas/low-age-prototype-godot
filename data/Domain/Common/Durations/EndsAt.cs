@@ -2,7 +2,7 @@
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeData.Domain.Entities.Doodads;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Common.Durations

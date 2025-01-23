@@ -1,0 +1,403 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Godot;
+<<<<<<< HEAD
+using LowAgeData.Domain.Entities;
+=======
+using low_age_data.Domain.Entities;
+using low_age_prototype_common;
+using low_age_prototype_common.Extensions;
+using multipurpose_pathfinding;
+using Area = low_age_prototype_common.Area;
+>>>>>>> feature/high-ground
+
+/// <summary>
+/// Selectable object that has a presence and is interactable on the map: <see cref="ActorNode"/>
+/// (<see cref="StructureNode"/> or <see cref="UnitNode"/>) with abilities and stats, or a simple
+/// <see cref="DoodadNode"/>.
+/// </summary>
+public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
+{
+    [Export] public Color PlacementColorSuccess { get; set; } = Colors.Green;
+    [Export] public Color PlacementColorInvalid { get; set; } = Colors.Red;
+
+    public event Action<EntityNode> Destroyed = delegate { };
+    public event Action<EntityNode> FinishedMoving = delegate { };
+    
+    public EntityId BlueprintId { get; set; }
+
+    public Guid InstanceId { get; set; } = Guid.NewGuid();
+
+    public Team Team { get; set; } = 1;
+    public EntityRenderer Renderer { get; private set; }
+    public Vector2<int> EntityPrimaryPosition { get; set; }
+    public Vector2<int> EntitySize { get; protected set; } = Vector2Int.One;
+    public virtual Area RelativeSize => new Area(Vector2Int.Zero, EntitySize);
+    public IList<Vector2<int>> EntityOccupyingPositions => new Area(EntityPrimaryPosition, EntitySize).ToList();
+    public Dictionary<Vector2<int>, int> ProvidedHighGroundHeightByOccupyingPosition =>
+        _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
+            pair => pair.Value);
+    public string DisplayName { get; protected set; }
+    public bool CanBePlaced { get; protected set; } = false;
+    public Behaviours Behaviours { get; protected set; }
+    public Func<IList<Vector2<int>>, IList<Tiles.TileInstance>> GetHighestTiles { protected get; set; }
+    public Func<Vector2<int>, bool, Tiles.TileInstance> GetTile { protected get; set; }
+    
+    protected bool Selected { get; private set; } = false;
+    protected bool Hovered { get; private set; } = false;
+    protected State EntityState { get; private set; }
+    protected enum State
+    { // Flow (one-way): InPlacement -> Candidate -> Placed -> Completed
+        InPlacement, // transient and local to client, available while selecting a valid placement location
+        Candidate, // transient and local to client, to wait for the server until planning phase ends 
+        Placed, // visible for all clients, in process of being paid for so cannot use abilities, but can be attacked
+        Completed // visible for all clients and fully functional
+    }
+    
+    private Entity Blueprint { get; set; }
+
+    private IList<Vector2> _movePath = new List<Vector2>();
+
+    private readonly Dictionary<Vector2<int>, int> _providingHighGroundHeightByLocalEntityPosition = new Dictionary<Vector2<int>, int>();
+    private float _movementDuration;
+    private bool _canBePlacedOnTheWholeMap = false;
+    
+    public override void _Ready()
+    {
+        Renderer = GetNode<EntityRenderer>($"{nameof(EntityRenderer)}");
+        Behaviours = GetNode<Behaviours>(nameof(Behaviours));
+        
+        _movementDuration = GetDurationFromAnimationSpeed();
+<<<<<<< HEAD
+=======
+        _movement = GetNode<Tween>("Movement");
+
+        _movement.Connect("tween_all_completed", this, nameof(OnMovementTweenAllCompleted));
+        EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
+        EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
+>>>>>>> feature/high-ground
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
+        EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
+    }
+
+    public void SetBlueprint(Entity blueprint)
+    {
+        Blueprint = blueprint;
+        BlueprintId = Blueprint.Id;
+        DisplayName = blueprint.DisplayName;
+<<<<<<< HEAD
+        
+        // TODO not sure why the below is needed... perhaps should be removed? (also from scene)
+        var spriteSize = Renderer.SpriteSize;
+        var area = GetNode<Area2D>(nameof(Area2D));
+        
+        var shape = new RectangleShape2D();
+        shape.Size = spriteSize;
+
+        var collision = new CollisionShape2D();
+        collision.Shape = shape;
+        
+        area.AddChild(collision);
+        area.Position = new Vector2(Position.X, Position.Y - spriteSize.Y / 2);
+=======
+>>>>>>> feature/high-ground
+    }
+    
+    public void SetTileHovered(bool to)
+    {
+        Hovered = to;
+        if (Selected) 
+            return;
+        SetOutline(to);
+        UpdateVisuals();
+    }
+    
+    public void SetSelected(bool to)
+    {
+        Selected = to;
+        SetOutline(to);
+        UpdateVisuals();
+    }
+
+    public virtual void SetOutline(bool to) => Renderer.SetOutline(to);
+
+    public virtual void SnapTo(Vector2 globalPosition)
+    {
+        GlobalPosition = globalPosition;
+        Renderer.AdjustElevationOffset();
+        Renderer.AdjustToRelativeSize(RelativeSize);
+        Renderer.UpdateSpriteBounds();
+    }
+
+    public void SetForPlacement(bool canBePlacedOnTheWholeMap)
+    {
+        EntityState = State.InPlacement;
+        
+        CanBePlaced = false;
+        _canBePlacedOnTheWholeMap = canBePlacedOnTheWholeMap;
+        Renderer.MakeDynamic();
+        
+        UpdateVisuals();
+    }
+
+    public void OverridePlacementValidity() => CanBePlaced = true;
+
+    public bool DeterminePlacementValidity(bool requiresTargetTiles)
+    {
+        requiresTargetTiles = requiresTargetTiles && _canBePlacedOnTheWholeMap is false;
+        var tiles = GetHighestTiles(EntityOccupyingPositions);
+        CanBePlaced = IsPlacementGenerallyValid(tiles, requiresTargetTiles)
+                      && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles));
+        
+        // TODO check for masks
+        
+        UpdateVisuals();
+        return CanBePlaced;
+    }
+    
+    public bool SetAsCandidate()
+    {
+        if (EntityState != State.InPlacement)
+            return false;
+        
+        if (CanBePlaced is false)
+        {
+            Destroy();
+            return false;
+        }
+
+        EntityState = State.Candidate;
+        CanBePlaced = true;
+        UpdateVisuals();
+        
+        return true;
+    }
+
+    public bool Place()
+    {
+        if (EntityState != State.Candidate && CanBePlaced is false)
+        {
+            Destroy();
+            return false;
+        }
+        
+        EntityState = State.Placed;
+        EventBus.Instance.RaiseEntityPlaced(this);
+        UpdateVisuals();
+        
+        Complete(); // TODO should be called outside of this class when e.g. building is finished (payment is completed)
+        return true;
+    }
+
+    public virtual void Complete()
+    {
+        if (EntityState != State.Placed)
+            return;
+
+        EntityState = State.Completed;
+        UpdateVisuals();
+        
+        Behaviours.RemoveAll<BuildableNode>();
+    }
+    
+    public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
+    {
+        EntityPrimaryPosition = resultingPoint.Position;
+        Renderer.ResetElevationOffset();
+        
+        globalPositionPath.Remove(globalPositionPath.First());
+        _movePath = globalPositionPath;
+        MoveToNextTarget();
+    }
+
+    public virtual bool CanBeMovedOnAt(Point point, Team forTeam)
+    {
+        if (HasHighGroundAt(point, forTeam))
+            return true;
+
+        if (point.Position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize))
+            return false;
+        
+        return true;
+    }
+
+    public virtual bool CanBeMovedThroughAt(Point point, Team forTeam) => true;
+
+    public bool HasHighGroundAt(Point point, Team forTeam)
+    {
+        if (point.IsHighGround is false)
+            return false;
+
+        var position = point.Position;
+        
+        if (position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize) is false)
+            return false;
+        
+        var pathfindingUpdatableBehaviours = Behaviours.GetPathfindingUpdatables;
+        if (pathfindingUpdatableBehaviours.IsEmpty())
+            return false;
+
+        var result = pathfindingUpdatableBehaviours.Any(x => 
+            x.CanBeMovedOnAt(position, forTeam));
+        
+        return result;
+    }
+
+    public bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam)
+    {
+        var pathfindingUpdatableBehaviours = Behaviours.GetPathfindingUpdatables;
+        if (pathfindingUpdatableBehaviours.IsEmpty())
+            return true;
+        
+        var result = pathfindingUpdatableBehaviours.All(x => 
+            x.AllowsConnectionBetweenPoints(fromPoint, toPoint, forTeam));
+
+        return result;
+    }
+    
+    public void Destroy()
+    {
+        Destroyed(this);
+        QueueFree();
+    }
+
+    protected virtual void UpdateVisuals()
+    {
+        switch (EntityState)
+        {
+            case State.InPlacement:
+                SetTint(true);
+                SetTransparency(true);
+                SetPlacementValidityColor(CanBePlaced);
+                break;
+            case State.Candidate:
+                SetTint(true);
+                SetTransparency(true);
+                SetPlacementValidityColor(CanBePlaced);
+                break;
+            case State.Placed:
+                SetTint(false);
+                SetTransparency(true);
+                break;
+            case State.Completed:
+                SetTransparency(false);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+        Renderer.SetIconVisibility(false);
+    }
+    
+    protected virtual void UpdateSprite() // TODO fuse with UpdateVisuals?
+    {
+        if (Blueprint.Sprite != null)
+            Renderer.SetSpriteTexture(Blueprint.Sprite);
+        
+        AdjustSpriteOffset();
+    }
+
+    protected void SetPlacementValidityColor(bool to) 
+        => Renderer.SetTintColor(to ? PlacementColorSuccess : PlacementColorInvalid);
+
+    protected void SetTint(bool to) => Renderer.SetTintAmount(to ? 1 : 0);
+
+    protected void SetTransparency(bool to) => Renderer.SetAlphaAmount(to ? 0.5f : 1);
+
+    protected void AdjustSpriteOffset(Vector2? centerOffset = null)
+    {
+        if (centerOffset is null)
+            centerOffset = Blueprint.CenterOffset.ToGodotVector2();
+        
+        Renderer.UpdateSpriteOffset(EntitySize, (Vector2)centerOffset);
+    }
+    
+    private bool IsPlacementGenerallyValid(IList<Tiles.TileInstance> tiles, bool requiresTargetTiles)
+    {
+        if (tiles.Any(x => x is null))
+            return false;
+
+        if (requiresTargetTiles && tiles.All(x => x.IsTarget is false))
+            return false;
+        
+        if (tiles.Any(x => x.Occupants.Any(y => y is UnitNode)))
+            return false;
+
+        return true;
+    }
+    
+    private void OnMovementTweenAllCompleted()
+    {
+        Renderer.UpdateOrigins();
+        Renderer.UpdateSpriteBounds();
+        
+        if (_movePath.IsEmpty())
+        {
+            FinishedMoving(this);
+            return;
+        }
+
+        MoveToNextTarget();
+    }
+    
+    private void MoveToNextTarget()
+    {
+        var nextMoveTarget = _movePath.First();
+        _movePath.Remove(nextMoveTarget);
+
+        Renderer.AimSprite(nextMoveTarget);
+
+        var tween = CreateTween();
+        tween.TweenProperty(this, "global_position", nextMoveTarget, _movementDuration)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad)
+            .SetEase(Tween.EaseType.InOut);
+        tween.TweenCallback(Callable.From(OnMovementTweenAllCompleted));
+    }
+    
+    private static float GetDurationFromAnimationSpeed()
+    {
+        switch (Config.Instance.AnimationSpeed)
+        {
+            case Config.AnimationSpeeds.Fast:
+                return 0.1f;
+            case Config.AnimationSpeeds.Medium:
+                return 0.25f;
+            case Config.AnimationSpeeds.Slow:
+                return 0.5f;
+            default:
+                return 0.25f;
+        }
+    }
+    
+    private void OnWhenFlattenedChanged(bool to) => UpdateVisuals();
+    
+    private void OnPathfindingUpdating(IPathfindingUpdatable data, bool isAdded)
+    {
+        if (isAdded is false || data.IsParentEntity(this) is false)
+            return;
+
+        foreach (var pair in data.FlattenedLocalPositions) 
+            _providingHighGroundHeightByLocalEntityPosition[pair.Key] = pair.Value;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType()) return false;
+        return InstanceId == ((EntityNode)obj).InstanceId;
+    }
+
+    public override int GetHashCode()
+    {
+        // Instance ID might be set after instance is created to sync IDs between multiplayer clients.
+        // ReSharper disable once NonReadonlyMemberInGetHashCode
+        return InstanceId.GetHashCode();
+    }
+}

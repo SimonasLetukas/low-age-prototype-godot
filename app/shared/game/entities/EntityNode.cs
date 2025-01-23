@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Entities;
+using low_age_prototype_common;
+using low_age_prototype_common.Extensions;
+using multipurpose_pathfinding;
+using Area = low_age_prototype_common.Area;
 
 /// <summary>
 /// Selectable object that has a presence and is interactable on the map: <see cref="ActorNode"/>
@@ -19,27 +23,25 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public EntityId BlueprintId { get; set; }
 
-    private Guid _instanceId = Guid.NewGuid();
-    public Guid InstanceId
-    {
-        get => _instanceId;
-        set
-        {
-            _instanceId = value;
-            Renderer.InstanceId = value;
-        }
-    }
+    public Guid InstanceId { get; set; } = Guid.NewGuid();
 
+    public Team Team { get; set; } = 1;
     public EntityRenderer Renderer { get; private set; }
-    public Vector2 EntityPrimaryPosition { get; set; }
-    public Vector2 EntitySize { get; protected set; } = Vector2.One;
-    public IList<Vector2> EntityOccupyingPositions => new Rect2(EntityPrimaryPosition, EntitySize).ToList();
+    public Vector2<int> EntityPrimaryPosition { get; set; }
+    public Vector2<int> EntitySize { get; protected set; } = Vector2Int.One;
+    public virtual Area RelativeSize => new Area(Vector2Int.Zero, EntitySize);
+    public IList<Vector2<int>> EntityOccupyingPositions => new Area(EntityPrimaryPosition, EntitySize).ToList();
+    public Dictionary<Vector2<int>, int> ProvidedHighGroundHeightByOccupyingPosition =>
+        _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
+            pair => pair.Value);
     public string DisplayName { get; protected set; }
     public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; }
-    public Func<IList<Vector2>, IList<Tiles.TileInstance>> GetTiles { protected get; set; }
+    public Func<IList<Vector2<int>>, IList<Tiles.TileInstance>> GetHighestTiles { protected get; set; }
+    public Func<Vector2<int>, bool, Tiles.TileInstance> GetTile { protected get; set; }
     
-    protected virtual Rect2 RelativeSize => new Rect2(Vector2.Zero, EntitySize);
+    protected bool Selected { get; private set; } = false;
+    protected bool Hovered { get; private set; } = false;
     protected State EntityState { get; private set; }
     protected enum State
     { // Flow (one-way): InPlacement -> Candidate -> Placed -> Completed
@@ -50,9 +52,10 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     }
     
     private Entity Blueprint { get; set; }
-    
-    private IList<Vector2> _movePath;
-    private bool _selected;
+
+    private IList<Vector2> _movePath = new List<Vector2>();
+
+    private readonly Dictionary<Vector2<int>, int> _providingHighGroundHeightByLocalEntityPosition = new Dictionary<Vector2<int>, int>();
     private float _movementDuration;
     private bool _canBePlacedOnTheWholeMap = false;
     
@@ -61,42 +64,40 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Renderer = GetNode<EntityRenderer>($"{nameof(EntityRenderer)}");
         Behaviours = GetNode<Behaviours>(nameof(Behaviours));
         
-        _movePath = new List<Vector2>();
-        _selected = false;
         _movementDuration = GetDurationFromAnimationSpeed();
+        EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
+        EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
     }
-    
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
+        EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
+    }
+
     public void SetBlueprint(Entity blueprint)
     {
         Blueprint = blueprint;
         BlueprintId = Blueprint.Id;
         DisplayName = blueprint.DisplayName;
-        
-        // TODO not sure why the below is needed... perhaps should be removed? (also from scene)
-        var spriteSize = Renderer.SpriteSize;
-        var area = GetNode<Area2D>(nameof(Area2D));
-        
-        var shape = new RectangleShape2D();
-        shape.Size = spriteSize;
-
-        var collision = new CollisionShape2D();
-        collision.Shape = shape;
-        
-        area.AddChild(collision);
-        area.Position = new Vector2(Position.X, Position.Y - spriteSize.Y / 2);
     }
     
     public void SetTileHovered(bool to)
     {
-        if (_selected) 
+        Hovered = to;
+        if (Selected) 
             return;
         SetOutline(to);
+        UpdateVisuals();
     }
     
     public void SetSelected(bool to)
     {
-        _selected = to;
+        Selected = to;
         SetOutline(to);
+        UpdateVisuals();
     }
 
     public virtual void SetOutline(bool to) => Renderer.SetOutline(to);
@@ -104,6 +105,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public virtual void SnapTo(Vector2 globalPosition)
     {
         GlobalPosition = globalPosition;
+        Renderer.AdjustElevationOffset();
         Renderer.AdjustToRelativeSize(RelativeSize);
         Renderer.UpdateSpriteBounds();
     }
@@ -111,13 +113,12 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public void SetForPlacement(bool canBePlacedOnTheWholeMap)
     {
         EntityState = State.InPlacement;
-        SetTint(true);
-        SetTransparency(true);
         
         CanBePlaced = false;
-        SetPlacementValidityColor(CanBePlaced);
         _canBePlacedOnTheWholeMap = canBePlacedOnTheWholeMap;
         Renderer.MakeDynamic();
+        
+        UpdateVisuals();
     }
 
     public void OverridePlacementValidity() => CanBePlaced = true;
@@ -125,13 +126,13 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public bool DeterminePlacementValidity(bool requiresTargetTiles)
     {
         requiresTargetTiles = requiresTargetTiles && _canBePlacedOnTheWholeMap is false;
-        var tiles = GetTiles(EntityOccupyingPositions);
+        var tiles = GetHighestTiles(EntityOccupyingPositions);
         CanBePlaced = IsPlacementGenerallyValid(tiles, requiresTargetTiles)
                       && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles));
         
         // TODO check for masks
         
-        SetPlacementValidityColor(CanBePlaced);
+        UpdateVisuals();
         return CanBePlaced;
     }
     
@@ -147,11 +148,9 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         }
 
         EntityState = State.Candidate;
-        SetTint(true);
-        SetTransparency(true);
-        
         CanBePlaced = true;
-        SetPlacementValidityColor(CanBePlaced);
+        UpdateVisuals();
+        
         return true;
     }
 
@@ -164,47 +163,119 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         }
         
         EntityState = State.Placed;
-        SetTint(false);
-        SetTransparency(true);
+        EventBus.Instance.RaiseEntityPlaced(this);
+        UpdateVisuals();
         
         Complete(); // TODO should be called outside of this class when e.g. building is finished (payment is completed)
         return true;
     }
 
-    public void Complete()
+    public virtual void Complete()
     {
         if (EntityState != State.Placed)
             return;
 
         EntityState = State.Completed;
-        SetTransparency(false);
+        UpdateVisuals();
         
         Behaviours.RemoveAll<BuildableNode>();
     }
     
-    public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Vector2 resultingPosition)
+    public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
     {
-        EntityPrimaryPosition = resultingPosition;
+        EntityPrimaryPosition = resultingPoint.Position;
+        Renderer.ResetElevationOffset();
         
         globalPositionPath.Remove(globalPositionPath.First());
         _movePath = globalPositionPath;
         MoveToNextTarget();
     }
 
-    public virtual bool CanBeMovedOnAt(Vector2 position)
+    public virtual bool CanBeMovedOnAt(Point point, Team forTeam)
     {
-        if (position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize))
+        if (HasHighGroundAt(point, forTeam))
+            return true;
+
+        if (point.Position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize))
             return false;
         
         return true;
     }
 
-    public virtual bool CanBeMovedThroughAt(Vector2 position) => true;
+    public virtual bool CanBeMovedThroughAt(Point point, Team forTeam) => true;
+
+    public bool HasHighGroundAt(Point point, Team forTeam)
+    {
+        if (point.IsHighGround is false)
+            return false;
+
+        var position = point.Position;
+        
+        if (position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize) is false)
+            return false;
+        
+        var pathfindingUpdatableBehaviours = Behaviours.GetPathfindingUpdatables;
+        if (pathfindingUpdatableBehaviours.IsEmpty())
+            return false;
+
+        var result = pathfindingUpdatableBehaviours.Any(x => 
+            x.CanBeMovedOnAt(position, forTeam));
+        
+        return result;
+    }
+
+    public bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam)
+    {
+        var pathfindingUpdatableBehaviours = Behaviours.GetPathfindingUpdatables;
+        if (pathfindingUpdatableBehaviours.IsEmpty())
+            return true;
+        
+        var result = pathfindingUpdatableBehaviours.All(x => 
+            x.AllowsConnectionBetweenPoints(fromPoint, toPoint, forTeam));
+
+        return result;
+    }
     
     public void Destroy()
     {
         Destroyed(this);
         QueueFree();
+    }
+
+    protected virtual void UpdateVisuals()
+    {
+        switch (EntityState)
+        {
+            case State.InPlacement:
+                SetTint(true);
+                SetTransparency(true);
+                SetPlacementValidityColor(CanBePlaced);
+                break;
+            case State.Candidate:
+                SetTint(true);
+                SetTransparency(true);
+                SetPlacementValidityColor(CanBePlaced);
+                break;
+            case State.Placed:
+                SetTint(false);
+                SetTransparency(true);
+                break;
+            case State.Completed:
+                SetTransparency(false);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+        Renderer.SetIconVisibility(false);
+    }
+    
+    protected virtual void UpdateSprite() // TODO fuse with UpdateVisuals?
+    {
+        if (Blueprint.Sprite != null)
+            Renderer.SetSpriteTexture(Blueprint.Sprite);
+        
+        AdjustSpriteOffset();
     }
 
     protected void SetPlacementValidityColor(bool to) 
@@ -220,14 +291,6 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
             centerOffset = Blueprint.CenterOffset.ToGodotVector2();
         
         Renderer.UpdateSpriteOffset(EntitySize, (Vector2)centerOffset);
-    }
-
-    protected virtual void UpdateSprite()
-    {
-        if (Blueprint.Sprite != null)
-            Renderer.SetSpriteTexture(Blueprint.Sprite);
-        
-        AdjustSpriteOffset();
     }
     
     private bool IsPlacementGenerallyValid(IList<Tiles.TileInstance> tiles, bool requiresTargetTiles)
@@ -286,6 +349,17 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
             default:
                 return 0.25f;
         }
+    }
+    
+    private void OnWhenFlattenedChanged(bool to) => UpdateVisuals();
+    
+    private void OnPathfindingUpdating(IPathfindingUpdatable data, bool isAdded)
+    {
+        if (isAdded is false || data.IsParentEntity(this) is false)
+            return;
+
+        foreach (var pair in data.FlattenedLocalPositions) 
+            _providingHighGroundHeightByLocalEntityPosition[pair.Key] = pair.Value;
     }
 
     public override bool Equals(object obj)

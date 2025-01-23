@@ -1,5 +1,5 @@
 ﻿using System;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Common
@@ -12,6 +12,7 @@ namespace LowAgeData.Domain.Common
         public static Terrain Marsh => new Terrain(TerrainsEnum.Marsh);
         public static Terrain Scraps => new Terrain(TerrainsEnum.Scraps);
         public static Terrain Celestium => new Terrain(TerrainsEnum.Celestium);
+        public static Terrain HighGround => new Terrain(TerrainsEnum.HighGround);
         public static Terrain FromIndex(int index) => new Terrain((TerrainsEnum)index);
 
         public int ToIndex() => (int)Value;
@@ -28,6 +29,7 @@ namespace LowAgeData.Domain.Common
             Marsh = 2,
             Scraps = 3,
             Celestium = 4,
+            HighGround = -2,
         }
         
         private class TerrainJsonConverter : JsonConverter

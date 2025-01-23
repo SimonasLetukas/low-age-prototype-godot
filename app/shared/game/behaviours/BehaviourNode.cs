@@ -3,7 +3,7 @@ using System;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
 
-public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
+public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBehaviour
 {
     public event Action<BehaviourNode> Ended = delegate { };
     
@@ -12,6 +12,9 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
     public Alignment Alignment { get; protected set; }
     public Guid? OwnerActorId { get; protected set; }
     public EndsAtNode CurrentDuration { get; protected set; }
+    
+    protected EntityNode Parent { get; set; }
+    protected Effects History { get; set; }
     
     private Behaviour Blueprint { get; set; }
     
@@ -29,7 +32,11 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>
         CurrentDuration.Completed -= OnDurationEnded;
         base._ExitTree();
     }
+    
+    public EntityNode GetParentEntity() => Parent;
 
+    public bool IsParentEntity(EntityNode entity) => Parent.InstanceId.Equals(entity.InstanceId);
+    
     protected virtual void OnDurationEnded()
     {
         Ended(this);

@@ -6,6 +6,7 @@ using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Tiles;
+using low_age_prototype_common;
 
 namespace LowAgeData.Domain.Entities.Doodads
 {

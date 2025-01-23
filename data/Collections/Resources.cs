@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Resources;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 
 namespace LowAgeData.Collections
 {

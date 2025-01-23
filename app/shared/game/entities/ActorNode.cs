@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors;
+using low_age_prototype_common.Extensions;
 
 /// <summary>
 /// <see cref="StructureNode"/> or <see cref="UnitNode"/> with abilities and stats.
@@ -14,17 +15,17 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public IList<ActorAttribute> Attributes { get; protected set; }
     public ActorRotation ActorRotation { get; protected set; }
     public Abilities Abilities { get; protected set; }
-    
+
     private Actor Blueprint { get; set; }
     private TextureProgressBar _health;
     private TextureProgressBar _shields;
     private Vector2 _startingHealthPosition;
     private Vector2 _startingShieldsPosition;
-    
+
     public override void _Ready()
     {
         base._Ready();
-        
+
         Abilities = GetNode<Abilities>(nameof(Abilities));
 
         _health = GetNode<TextureProgressBar>($"Vitals/Health");
@@ -32,11 +33,11 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
         _startingHealthPosition = _health.Position;
         _startingShieldsPosition = _shields.Position;
-        
+
         _health.Visible = false;
         _shields.Visible = false;
     }
-    
+
     public void SetBlueprint(Actor blueprint)
     {
         base.SetBlueprint(blueprint);
@@ -53,6 +54,12 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         base.SetOutline(to);
         _health.Visible = to && HasHealth;
         _shields.Visible = to && HasShields;
+    }
+
+    public override void Complete()
+    {
+        base.Complete();
+        Abilities.OnActorBirth(this);
     }
 
     public virtual void Rotate()
@@ -74,25 +81,24 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        
+
         UpdateSprite();
         UpdateVitalsPosition();
     }
 
-    public void SetActorRotation(ActorRotation to)
+    public void SetActorRotation(ActorRotation targetRotation)
     {
-        var delta = to - ActorRotation;
-        delta = delta < 0 ? delta + 4 : delta;
-        for (var r = 0; r < delta; r++) 
+        var startingRotation = ActorRotation;
+        for (var r = 0; r < startingRotation.CountTo(targetRotation); r++)
             Rotate();
     }
 
     public bool HasHealth => CurrentStats.Any(x =>
         x.Blueprint is CombatStat combatStat
         && combatStat.CombatType.Equals(StatType.Health));
-    
-    public bool HasShields => CurrentStats.Any(x => 
-        x.Blueprint is CombatStat combatStat 
+
+    public bool HasShields => CurrentStats.Any(x =>
+        x.Blueprint is CombatStat combatStat
         && combatStat.CombatType.Equals(StatType.Shields));
 
     protected Actor GetActorBlueprint() => Blueprint;
@@ -108,9 +114,9 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 2)) +
                           (int)RelativeSize.Position.Y * 
                           new Vector2((int)(Constants.TileWidth / 2) * -1, (int)(Constants.TileHeight / 2));
-        _health.Position = 
-            new Vector2(_startingHealthPosition.X, (spriteSize.Y * -1) - 2) + offsetFromX + offsetFromY;
-        _shields.Position = 
-            new Vector2(_startingShieldsPosition.X, (spriteSize.Y * -1) - 3) + offsetFromX + offsetFromY;
+        _health.Position = new Vector2(_startingHealthPosition.x,
+            (spriteSize.y * -1) - 2 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
+        _shields.Position = new Vector2(_startingShieldsPosition.x,
+            (spriteSize.y * -1) - 3 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
     }
 }

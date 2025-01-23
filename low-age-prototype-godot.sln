@@ -1,0 +1,69 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-prototype-godot", "low-age-prototype-godot.csproj", "{671E3AF7-3C8A-489A-BCD6-F4150249150E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-data", "data\low-age-data.csproj", "{294BFFF7-DC43-4523-A97E-57C255D8C71F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-tests", "tests\low-age-tests.csproj", "{682A1EF3-202C-4540-89BE-B57ED24898D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-dijkstra", "low-age-dijkstra\low-age-dijkstra.csproj", "{18695F17-7A39-4932-BE4E-D32919BD8E52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-prototype-common", "low-age-prototype-common\low-age-prototype-common.csproj", "{E5FE1653-A76B-44FD-84FC-3080356AEFD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "low-age-dijkstra-tests", "low-age-dijkstra-tests\low-age-dijkstra-tests.csproj", "{3DA43151-AC3D-4937-B061-D40CD0E68784}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "multipurpose-pathfinding", "multipurpose-pathfinding\multipurpose-pathfinding.csproj", "{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "multipurpose-pathfinding-tests", "multipurpose-pathfinding-tests\multipurpose-pathfinding-tests.csproj", "{A130B8FD-EE79-4A28-BB69-41586584EEF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{671E3AF7-3C8A-489A-BCD6-F4150249150E}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{294BFFF7-DC43-4523-A97E-57C255D8C71F}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{682A1EF3-202C-4540-89BE-B57ED24898D6}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{18695F17-7A39-4932-BE4E-D32919BD8E52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18695F17-7A39-4932-BE4E-D32919BD8E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18695F17-7A39-4932-BE4E-D32919BD8E52}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18695F17-7A39-4932-BE4E-D32919BD8E52}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{18695F17-7A39-4932-BE4E-D32919BD8E52}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{18695F17-7A39-4932-BE4E-D32919BD8E52}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{E5FE1653-A76B-44FD-84FC-3080356AEFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5FE1653-A76B-44FD-84FC-3080356AEFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5FE1653-A76B-44FD-84FC-3080356AEFD6}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5FE1653-A76B-44FD-84FC-3080356AEFD6}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{E5FE1653-A76B-44FD-84FC-3080356AEFD6}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5FE1653-A76B-44FD-84FC-3080356AEFD6}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{3DA43151-AC3D-4937-B061-D40CD0E68784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA43151-AC3D-4937-B061-D40CD0E68784}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA43151-AC3D-4937-B061-D40CD0E68784}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BA6AEF-6FAA-4F06-9CE5-BA63391A8322}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{A130B8FD-EE79-4A28-BB69-41586584EEF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A130B8FD-EE79-4A28-BB69-41586584EEF2}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A130B8FD-EE79-4A28-BB69-41586584EEF2}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+	EndGlobalSection
+EndGlobal

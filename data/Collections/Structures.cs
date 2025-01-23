@@ -3,7 +3,7 @@ using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Factions;
-using LowAgeData.Shared;
+using low_age_prototype_common;
 
 namespace LowAgeData.Collections
 {
@@ -21,6 +21,8 @@ namespace LowAgeData.Collections
                     centerOffset: new Vector2<int>(30, 22),
                     backSideSprite: "res://assets/sprites/structures/revs/boss post back indexed 2x3.png",
                     backSideCenterOffset: new Vector2<int>(14, 14),
+                    flattenedSprite: "res://assets/sprites/structures/revs/boss post bottom indexed 2x3.png",
+                    flattenedCenterOffset: new Vector2<int>(28, 15),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision)
@@ -264,6 +266,8 @@ namespace LowAgeData.Collections
                     description: $"{nameof(StructureId.Outpost).CamelCaseToWords()} can be climbed and used as a tower.",
                     sprite: "res://assets/sprites/structures/revs/outpost indexed 1x1.png",
                     centerOffset: new Vector2<int>(8, 17),
+                    flattenedSprite: "res://assets/sprites/structures/revs/outpost bottom indexed 1x1.png",
+                    flattenedCenterOffset: new Vector2<int>(6, 6),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 90, hasCurrent: true, combatType: StatType.Health),
@@ -663,6 +667,8 @@ namespace LowAgeData.Collections
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/wall indexed 1x1.png",
                     centerOffset: new Vector2<int>(8, 20),
+                    flattenedSprite: "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
+                    flattenedCenterOffset: new Vector2<int>(8, 6),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 100, hasCurrent: true, combatType: StatType.Health),
@@ -693,6 +699,8 @@ namespace LowAgeData.Collections
                     centerOffset: new Vector2<int>(10, 21),
                     backSideSprite: "res://assets/sprites/structures/uee/stairs back indexed 2x1.png",
                     backSideCenterOffset: new Vector2<int>(9, 15),
+                    flattenedSprite: "res://assets/sprites/structures/uee/stairs bottom indexed 2x1.png",
+                    flattenedCenterOffset: new Vector2<int>(10, 5),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 60, hasCurrent: true, combatType: StatType.Health),
@@ -721,6 +729,8 @@ namespace LowAgeData.Collections
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/gate 0 indexed 1x4.png",
                     centerOffset: new Vector2<int>(20, 26),
+                    flattenedSprite: "res://assets/sprites/structures/uee/gate bottom indexed 1x4.png",
+                    flattenedCenterOffset: new Vector2<int>(20, 12),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 300, hasCurrent: true, combatType: StatType.Health),
@@ -751,6 +761,8 @@ namespace LowAgeData.Collections
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/watchtower indexed 1x1.png",
                     centerOffset: new Vector2<int>(8, 27),
+                    flattenedSprite: "res://assets/sprites/structures/uee/watchtower bottom indexed 1x1.png",
+                    flattenedCenterOffset: new Vector2<int>(8, 8),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 95, hasCurrent: true, combatType: StatType.Health),
@@ -769,7 +781,7 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Watchtower.VantagePoint
+                        AbilityId.Watchtower.VantagePoint,
                     },
                     size: new Vector2<int>(x: 1, y: 1)),
                 
@@ -779,6 +791,8 @@ namespace LowAgeData.Collections
                     description: "",
                     sprite: "res://assets/sprites/structures/uee/tower indexed 2x2.png",
                     centerOffset: new Vector2<int>(16, 23),
+                    flattenedSprite: "res://assets/sprites/structures/uee/tower bottom indexed 2x2.png",
+                    flattenedCenterOffset: new Vector2<int>(12, 10),
                     statistics: new List<Stat>
                     {
                         new CombatStat(maxAmount: 550, hasCurrent: true, combatType: StatType.Health),
@@ -797,7 +811,7 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
                         AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Bastion.Battlement
+                        AbilityId.Bastion.Battlement,
                     },
                     size: new Vector2<int>(x: 2, y: 2)), 
             };

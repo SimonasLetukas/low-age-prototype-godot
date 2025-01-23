@@ -6,14 +6,15 @@ using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
-using Array = Godot.Collections.Array;
+using low_age_prototype_common;
+using multipurpose_pathfinding;
 
 /// <summary>
 /// Parent of all entities (units & structures) and their rendering on the map.
 /// </summary>
 public partial class Entities : Node2D
 {
-    [Export] public bool DebugEnabled { get; set; } = true;
+    [Export] public bool DebugEnabled { get; set; } = false;
     
     public event Action<EntityPlacedEvent> EntityPlaced = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
@@ -28,7 +29,8 @@ public partial class Entities : Node2D
     private EntityRenderers _renderers;
     private Node2D _units;
     private Node2D _structures;
-    private Func<IList<Vector2>, IList<Tiles.TileInstance>> _getTiles;
+    private Func<IList<Vector2<int>>, IList<Tiles.TileInstance>> _getHighestTiles;
+    private Func<Vector2<int>, bool, Tiles.TileInstance> _getTile;
 
     private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new Dictionary<Guid, EntityNode>();
 
@@ -41,12 +43,14 @@ public partial class Entities : Node2D
         NewPositionOccupied += _renderers.UpdateSorting;
     }
     
-    public void Initialize(Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles)
+    public void Initialize(Func<IList<Vector2<int>>, IList<Tiles.TileInstance>> getHighestTiles, 
+        Func<Vector2<int>, bool, Tiles.TileInstance> getTile)
     {
-        _getTiles = getTiles;
+        _getHighestTiles = getHighestTiles;
+        _getTile = getTile;
     }
 
-    public void SetupStartingEntities(IList<Vector2> startingPositions, FactionId factionId)
+    public void SetupStartingEntities(IList<Vector2<int>> startingPositions, FactionId factionId)
     {
         var startingEntities = Data.Instance.Blueprint.Factions.First(x => x.Id.Equals(factionId))
             .StartingEntities;
@@ -112,6 +116,14 @@ public partial class Entities : Node2D
 
     public bool IsEntitySelected() => SelectedEntity != null;
 
+    public bool IsEntitySelected(EntityNode entity) => IsEntitySelected() 
+                                                       && SelectedEntity.InstanceId == entity?.InstanceId;
+
+    public bool IsEntityHovered() => HoveredEntity != null;
+
+    public bool IsEntityHovered(EntityNode entity) => IsEntityHovered() 
+                                                      && HoveredEntity.InstanceId == entity?.InstanceId;
+
     public bool TryHoveringEntityOn(Tiles.TileInstance tile)
     {
         if (EntityMoving)
@@ -120,7 +132,7 @@ public partial class Entities : Node2D
         var occupationExists = tile.Occupants.Any();
         var occupantEntity = tile.Occupants.LastOrDefault(); // TODO handle high-ground
         
-        if (occupationExists && HoveredEntity != null && HoveredEntity.InstanceId.Equals(occupantEntity?.InstanceId))
+        if (occupationExists && IsEntityHovered(occupantEntity))
             return true;
 
         HoveredEntity?.SetTileHovered(false);
@@ -136,64 +148,40 @@ public partial class Entities : Node2D
         return false;
     }
     
-    // TODO: seems like each entity has z_index of 0 and so this method doesn't work
-    // This method is supposed to return the entity that has its sprite visible where the mouse is hovering at,
-    // could be considered not required and annoying in the future -- need to make it work and test it out UX
-    // with high-ground entities
     public EntityNode GetTopEntity(Vector2 globalPosition)
     {
-        return null;
         var topZ = float.NegativeInfinity;
         EntityNode topEntity = null;
-        
-        var intersections = GetViewport().GetWorld2D().DirectSpaceState.IntersectPoint(new PhysicsPointQueryParameters2D
-            {
-                Position = globalPosition,
-                CollisionMask = 0x7FFFFFFF,
-                Exclude = new Godot.Collections.Array<Rid>(),
-                CollideWithBodies = true,
-                CollideWithAreas = true
-            }, 32);
 
-        /*
-        foreach (var result in intersections)
+        var colliders = Colliders.GetAt(globalPosition, GetWorld2d());
+        
+        foreach (var collider in colliders)
         {
-            if (result["collider"] is not Area2D area || area.GetParent() is not EntityNode entity)
+            if ((collider.GetParent().GetParent() is EntityNode entity) is false)
                 continue;
 
-            if (entity.ZIndex <= topZ) 
+            if (entity.Renderer.ContainsSpriteAt(globalPosition) is false)
+                continue;
+
+            if (entity.Renderer.ZIndex <= topZ) 
                 continue;
             
-            topZ = entity.ZIndex;
+            topZ = entity.Renderer.ZIndex;
             topEntity = entity;
         }
-        */
+        
+        if (DebugEnabled && topEntity != null)
+            GD.Print($"{nameof(Entities)}.{nameof(GetTopEntity)}: entity found '{topEntity.DisplayName}'");
 
         return topEntity;
     }
-
-    public static int GetAbsoluteZIndex(Node target)
-    {
-        var node = target as Node2D;
-        var zIndex = 0;
-        while (node != null && node.IsClass(nameof(Node2D)))
-        {
-            zIndex += node.ZIndex;
-            if (node.ZAsRelative is false)
-                break;
-
-            node = node.GetParent() as Node2D;
-        }
-
-        return zIndex;
-    }
     
-    public void MoveEntity(EntityNode entity, IEnumerable<Vector2> globalPath, ICollection<Vector2> path)
+    public void MoveEntity(EntityNode entity, IEnumerable<Vector2> globalPath, ICollection<Point> path)
     {
-        var targetPosition = path.Last();
-        var startPosition = path.First();
+        var targetPoint = path.Last();
+        var startPoint = path.First();
         EntityMoving = true;
-        entity.MoveUntilFinished(globalPath.ToList(), targetPosition);
+        entity.MoveUntilFinished(globalPath.ToList(), targetPoint);
     }
     
     public void RegisterRenderer(EntityNode entity)
@@ -216,8 +204,7 @@ public partial class Entities : Node2D
         return newEntity;
     }
 
-    public void UpdateEntityInPlacement(Vector2 mapPosition, Vector2 globalPosition, 
-        Func<IList<Vector2>, IList<Tiles.TileInstance>> getTiles)
+    public void UpdateEntityInPlacement(Vector2<int> mapPosition, Vector2 globalPosition)
     {
         EntityInPlacement.EntityPrimaryPosition = mapPosition;
         EntityInPlacement.SnapTo(globalPosition);
@@ -249,8 +236,7 @@ public partial class Entities : Node2D
         if (entity is null)
         {
             var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
-            entity = InstantiateEntity(entityBlueprint);
-            entity.InstanceId = @event.InstanceId;
+            entity = InstantiateEntity(entityBlueprint, @event.InstanceId);
             entity.EntityPrimaryPosition = @event.MapPosition;
             entity.OverridePlacementValidity();
             if (entity is ActorNode actor)
@@ -262,7 +248,7 @@ public partial class Entities : Node2D
         return PlaceEntity(entity, false);
     }
     
-    private EntityNode PlaceEntity(Entity entityBlueprint, Vector2 mapPosition)
+    private EntityNode PlaceEntity(Entity entityBlueprint, Vector2<int> mapPosition)
     {
         var entity = InstantiateEntity(entityBlueprint);
         entity.EntityPrimaryPosition = mapPosition;
@@ -284,7 +270,6 @@ public partial class Entities : Node2D
             EntityPlaced(new EntityPlacedEvent(entity.BlueprintId, entity.EntityPrimaryPosition, instanceId, 
                 entity is ActorNode actor ? actor.ActorRotation : ActorRotation.BottomRight));
         
-        _entitiesByIds[instanceId] = entity;
         NewPositionOccupied(entity);
         
         return entity;
@@ -299,7 +284,7 @@ public partial class Entities : Node2D
         return placedSuccessfully;
     }
 
-    private EntityNode InstantiateEntity(Entity entityBlueprint)
+    private EntityNode InstantiateEntity(Entity entityBlueprint, Guid? instanceId = null)
     {
         EntityNode entity;
         switch (entityBlueprint)
@@ -316,6 +301,10 @@ public partial class Entities : Node2D
         }
 
         entity.Destroyed += OnEntityDestroyed;
+
+        if (instanceId != null)
+            entity.InstanceId = (Guid)instanceId;
+        _entitiesByIds[entity.InstanceId] = entity;
         
         return entity;
     }
@@ -323,7 +312,8 @@ public partial class Entities : Node2D
     private StructureNode InstantiateStructure(Structure structureBlueprint)
     {
         var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures);
-        structure.GetTiles = _getTiles;
+        structure.GetHighestTiles = _getHighestTiles;
+        structure.GetTile = _getTile;
 
         return structure;
     }
@@ -332,7 +322,8 @@ public partial class Entities : Node2D
     {
         var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units);
 
-        unit.GetTiles = _getTiles;
+        unit.GetHighestTiles = _getHighestTiles;
+        unit.GetTile = _getTile;
         unit.FinishedMoving += OnEntityFinishedMoving;
 
         return unit;
@@ -350,5 +341,8 @@ public partial class Entities : Node2D
         
         entity.FinishedMoving -= OnEntityFinishedMoving;
         entity.Destroyed -= OnEntityDestroyed;
+
+        if (_entitiesByIds.ContainsKey(entity.InstanceId))
+            _entitiesByIds.Remove(entity.InstanceId);
     }
 }

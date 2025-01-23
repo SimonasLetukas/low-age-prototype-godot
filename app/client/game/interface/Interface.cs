@@ -59,7 +59,7 @@ public partial class Interface : CanvasLayer
     public void OnEntityIsBeingPlaced(EntityNode entity)
     {
         _selectionPanel.OnEntityIsBeingPlaced(entity);
-        _informationalText.Enable(entity is StructureNode
+        _informationalText.SwitchTo(entity is StructureNode
             ? InformationalText.InfoTextType.PlacingRotatable 
             : InformationalText.InfoTextType.Placing);
     }
@@ -83,7 +83,7 @@ public partial class Interface : CanvasLayer
     internal void OnEntitySelected(EntityNode entity)
     {
         _entityPanel.OnEntitySelected(entity);
-        _informationalText.Enable(entity is StructureNode 
+        _informationalText.SwitchTo(entity is StructureNode 
             ? InformationalText.InfoTextType.Selected 
             : InformationalText.InfoTextType.SelectedMovement);
     }
@@ -91,12 +91,7 @@ public partial class Interface : CanvasLayer
     internal void OnEntityDeselected()
     {
         _entityPanel.OnEntityDeselected();
-        _informationalText.Disable();
-    }
-
-    internal void OnMapNewTileHovered(Vector2 tileHovered, Terrain terrain, IList<EntityNode> occupants)
-    {
-        _hoveringPanel.OnMapNewTileHovered(tileHovered, terrain, occupants);
+        _informationalText.SwitchToDefault();
     }
 
     private void OnSelectionPanelSelectedToBuild(BuildNode buildAbility, EntityId entityId)

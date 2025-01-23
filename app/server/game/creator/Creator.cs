@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Tiles;
+using low_age_prototype_common;
+using Area = low_age_prototype_common.Area;
 
 /// <summary>
 /// <para>
@@ -50,9 +51,9 @@ public partial class Creator : Node2D
             return;
         }
 
-        var mapSize = new Vector2(image.GetWidth(), image.GetHeight());
-        var startingPositions = new List<Vector2>();
-        var tiles = new List<(Vector2, TileId)>();
+        var mapSize = new Vector2<int>(image.GetWidth(), image.GetHeight());
+        var startingPositions = new List<Vector2<int>>();
+        var tiles = new List<(Vector2<int>, TileId)>();
         
         for (var y = 0; y < mapSize.Y; y++)
         {
@@ -68,21 +69,21 @@ public partial class Creator : Node2D
                 if (pixel == ColorMarsh) tile = TileId.Marsh;
                 if (pixel == ColorScraps) tile = TileId.Scraps;
                 if (pixel == ColorCelestium) tile = TileId.Celestium;
-                if (pixel == ColorStart) startingPositions.Add(new Vector2(x, y));
+                if (pixel == ColorStart) startingPositions.Add(new Vector2<int>(x, y));
                 
-                tiles.Add((new Vector2(x, y), tile));
+                tiles.Add((new Vector2<int>(x, y), tile));
             }
         }
         
         MapCreated(new MapCreatedEvent(mapSize, AssignStartingPositions(startingPositions.ToSquareRects()), tiles));
     }
 
-    private static Dictionary<int, IList<Rect2>> AssignStartingPositions(IList<Rect2> positions)
+    private static Dictionary<int, IList<Area>> AssignStartingPositions(IList<Area> positions)
     {
-        var assigned = new Dictionary<int, IList<Rect2>>();
+        var assigned = new Dictionary<int, IList<Area>>();
         foreach (var player in Data.Instance.Players)
         {
-            assigned[player.Id] = new List<Rect2> { positions.First() };
+            assigned[player.Id] = new List<Area> { positions.First() };
             positions.RemoveAt(0);
         }
 
