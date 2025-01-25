@@ -1,5 +1,6 @@
-﻿using low_age_prototype_common;
+﻿using LowAgeCommon;
 
+namespace LowAgeData.Domain.Common
 {
     /// <summary>
     /// <see cref="IDisplayable.Sprite"/> and <see cref="IDisplayable.CenterOffset"/> refer to the front side of the

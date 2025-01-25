@@ -1,6 +1,6 @@
 ﻿using System;
 using LowAgeData.Domain.Entities.Actors;
-using low_age_prototype_common;
+using LowAgeCommon;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Common

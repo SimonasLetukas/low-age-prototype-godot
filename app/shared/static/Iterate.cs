@@ -7,7 +7,7 @@ public static class Iterate
     /// Helper to return iterated <see cref="Vector2"/>s.
     /// </summary>
     /// <param name="to">Iterate until (exclusive)</param>
-    public static IEnumerable<Vector2> Positions(Vector2 to) => Positions((int)to.x, (int)to.y);
+    public static IEnumerable<Vector2> Positions(Vector2 to) => Positions((int)to.X, (int)to.Y);
     
     /// <summary>
     /// Helper to return iterated <see cref="Vector2"/>s.
@@ -15,7 +15,7 @@ public static class Iterate
     /// <param name="from">Iterate from (inclusive)</param>
     /// <param name="to">Iterate until (exclusive)</param>
     public static IEnumerable<Vector2> Positions(Vector2 from, Vector2 to) 
-        => Positions((int)from.x, (int)from.y, (int)to.x, (int)to.y);
+        => Positions((int)from.X, (int)from.Y, (int)to.X, (int)to.Y);
     
     /// <summary>
     /// Helper to return iterated <see cref="Vector2"/>s.
@@ -45,7 +45,7 @@ public static class Iterate
     }
 
     public static IEnumerable<Vector2> AdjacentPositions(Vector2 center, bool excludeCenter = true)
-        => AdjacentPositions((int)center.x, (int)center.y, excludeCenter);
+        => AdjacentPositions((int)center.X, (int)center.Y, excludeCenter);
     
     public static IEnumerable<Vector2> AdjacentPositions(int centerX, int centerY, bool excludeCenter = true)
     {

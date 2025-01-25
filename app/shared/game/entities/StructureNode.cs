@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Entities.Actors.Structures;
-using low_age_prototype_common;
-using low_age_prototype_common.Extensions;
-using multipurpose_pathfinding;
-using Area = low_age_prototype_common.Area;
+using LowAgeCommon;
+using LowAgeCommon.Extensions;
+using MultipurposePathfinding;
+using Area = LowAgeCommon.Area;
 
 public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {

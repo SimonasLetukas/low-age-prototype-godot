@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Tiles;
-using low_age_prototype_common;
-using Area = low_age_prototype_common.Area;
+using LowAgeCommon;
+using Area = LowAgeCommon.Area;
 
 /// <summary>
 /// <para>

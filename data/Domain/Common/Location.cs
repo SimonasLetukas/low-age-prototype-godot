@@ -1,6 +1,6 @@
 ﻿using System;
-using low_age_data.Domain.Effects;
-using low_age_prototype_common;
+using LowAgeData.Domain.Effects;
+using LowAgeCommon;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Common

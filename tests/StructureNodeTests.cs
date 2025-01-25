@@ -6,13 +6,13 @@ using FluentAssertions;
 using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors.Structures;
-using low_age_prototype_common;
+using LowAgeCommon;
 using TestProject1.Helpers;
 using Xunit;
-using Area = low_age_prototype_common.Area;
+using Area = LowAgeCommon.Area;
 using Array = System.Array;
 
-namespace low_age_tests
+namespace LowAgeTests
 {
     public partial class StructureNodeTests
     {

@@ -8,8 +8,8 @@ using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Resources;
-using LowAgeData.Shared;
-using low_age_prototype_common;
+using LowAgeCommon;
+using LowAgeCommon;
 
 namespace LowAgeData.Collections
 {

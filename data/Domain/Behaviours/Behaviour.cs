@@ -4,7 +4,7 @@ using LowAgeData.Domain.Common.Durations;
 using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeData.Domain.Logic;
-using low_age_prototype_common;
+using LowAgeCommon;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Behaviours

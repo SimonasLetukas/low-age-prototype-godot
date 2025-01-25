@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_prototype_common;
-using Area = low_age_prototype_common.Area;
+using LowAgeCommon;
+using Area = LowAgeCommon.Area;
 
 public partial class EntityRenderer : Node2D
 {
@@ -124,7 +124,7 @@ public partial class EntityRenderer : Node2D
     public void SetSpriteTexture(string location)
     {
         _sprite.Texture = GD.Load<Texture2D>(location);
-        _icon.Texture = GD.Load<Texture>(location);
+        _icon.Texture = GD.Load<Texture2D>(location);
         
         UpdateSpriteBounds();
     }
@@ -197,7 +197,7 @@ public partial class EntityRenderer : Node2D
                           (int)(sx - 1) * new Vector2((int)(widthHalfStep), (int)(heightHalfStep));
         var offsetFromY = (int)py * new Vector2((int)(widthStep) * -1, (int)(heightHalfStep)) + 
                           (int)(sy - 1) * new Vector2((int)(widthHalfStep) * -1, (int)(heightHalfStep));
-        _icon.RectPosition = offsetFromX + offsetFromY + _iconOffset + (SortType is SortTypes.Point 
+        _icon.Position = offsetFromX + offsetFromY + _iconOffset + (SortType is SortTypes.Point 
             ? Vector2.Zero 
             : (xBiggerThanY ? px * Vector2.Down : py * Vector2.Down) * heightHalfStep);
     }
@@ -391,13 +391,13 @@ public partial class EntityRenderer : Node2D
             node.QueueFree();
         
         var shape = new RectangleShape2D();
-        shape.Extents = SpriteBounds.Size / 2;
+        shape.Size = SpriteBounds.Size;
 
         var collision = new CollisionShape2D();
         collision.Shape = shape;
         
         _area.AddChild(collision);
-        _area.GlobalPosition = SpriteBounds.Position + shape.Extents;
+        _area.GlobalPosition = SpriteBounds.Position + (shape.Size / 2);
     }
 
     private void OnWhenFlattenedChanged(bool to) => AdjustElevationOffset();

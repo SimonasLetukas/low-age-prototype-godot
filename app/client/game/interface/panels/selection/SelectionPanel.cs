@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Entities;
-using low_age_prototype_common;
+using LowAgeCommon;
 
 public partial class SelectionPanel : Control
 {

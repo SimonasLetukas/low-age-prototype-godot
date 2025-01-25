@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Behaviours;
-using low_age_prototype_common;
-using low_age_prototype_common.Extensions;
-using multipurpose_pathfinding;
+using LowAgeData.Domain.Behaviours;
+using LowAgeCommon;
+using LowAgeCommon.Extensions;
+using MultipurposePathfinding;
 
-public class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendable>, IPathfindingUpdatable
+public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendable>, IPathfindingUpdatable
 {
     public const string ScenePath = @"res://app/shared/game/behaviours/AscendableNode.tscn";
-    public static AscendableNode Instance() => (AscendableNode) GD.Load<PackedScene>(ScenePath).Instance();
+    public static AscendableNode Instance() => (AscendableNode) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static AscendableNode InstantiateAsChild(Ascendable blueprint, Node parentNode, Effects history, 
         EntityNode parentEntity)
     {

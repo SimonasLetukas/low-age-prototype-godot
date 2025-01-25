@@ -12,7 +12,7 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Masks;
 using LowAgeData.Domain.Resources;
 using LowAgeData.Domain.Tiles;
-using low_age_prototype_common;
+using LowAgeCommon;
 
 namespace LowAgeData.Collections
 {

@@ -1,6 +1,6 @@
 using System;
 using LowAgeData.Domain.Entities;
-using low_age_prototype_common;
+using LowAgeCommon;
 
 public partial class EntityPlacedEvent : IGameEvent
 {

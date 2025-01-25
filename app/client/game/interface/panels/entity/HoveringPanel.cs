@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
-using low_age_prototype_common;
-using low_age_prototype_common.Extensions;
+using LowAgeCommon;
+using LowAgeCommon.Extensions;
 
 public partial class HoveringPanel : Control
 {

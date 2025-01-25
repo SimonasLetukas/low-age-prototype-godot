@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Filters;
 using LowAgeData.Domain.Common.Flags;
-using low_age_prototype_common;
+using LowAgeCommon;
 
 namespace LowAgeData.Collections
 {

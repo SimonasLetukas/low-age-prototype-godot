@@ -1,7 +1,7 @@
 using Godot;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Behaviours;
-using low_age_prototype_common.Extensions;
+using LowAgeCommon.Extensions;
 
 public partial class PassiveNode : AbilityNode, INodeFromBlueprint<Passive>
 {

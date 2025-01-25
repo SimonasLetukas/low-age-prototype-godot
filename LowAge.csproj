@@ -10,13 +10,19 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="data\LowAgeData.csproj" />
+    <ProjectReference Include="pathfinding\dijkstra\DijkstraMap\DijkstraMap.csproj" />
+    <ProjectReference Include="pathfinding\multipurpose\MultipurposePathfinding\MultipurposePathfinding.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="data\**" />
     <Compile Remove="tests\**" />
+    <Compile Remove="common\**" />
+    <Compile Remove="pathfinding\**" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="data\**" />
     <EmbeddedResource Remove="tests\**" />
+    <EmbeddedResource Remove="common\**" />
+    <EmbeddedResource Remove="pathfinding\**" />
   </ItemGroup>
 </Project>

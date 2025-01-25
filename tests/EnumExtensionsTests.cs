@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
-using low_age_prototype_common.Extensions;
+using LowAgeCommon.Extensions;
 using Xunit;
 
-namespace low_age_tests
+namespace LowAgeTests
 {
     public class EnumExtensionsTests
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Tiles;
-using low_age_prototype_common;
+using LowAgeCommon;
 
 namespace LowAgeData.Collections
 {

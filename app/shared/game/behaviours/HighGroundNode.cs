@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_data.Domain.Behaviours;
-using low_age_prototype_common;
-using low_age_prototype_common.Extensions;
-using multipurpose_pathfinding;
+using LowAgeData.Domain.Behaviours;
+using LowAgeCommon;
+using LowAgeCommon.Extensions;
+using MultipurposePathfinding;
 
-public class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGround>, IPathfindingUpdatable
+public partial class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGround>, IPathfindingUpdatable
 {
     public const string ScenePath = @"res://app/shared/game/behaviours/HighGroundNode.tscn";
-    public static HighGroundNode Instance() => (HighGroundNode) GD.Load<PackedScene>(ScenePath).Instance();
+    public static HighGroundNode Instance() => (HighGroundNode) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static HighGroundNode InstantiateAsChild(HighGround blueprint, Node parentNode, Effects history, 
         EntityNode parentEntity)
     {

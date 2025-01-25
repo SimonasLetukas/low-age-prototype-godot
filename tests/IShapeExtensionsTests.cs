@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using LowAgeData.Domain.Common.Shape;
-using low_age_prototype_common;
+using LowAgeCommon;
 using Xunit;
 using Vector2 = Godot.Vector2;
 
-namespace low_age_tests
+namespace LowAgeTests
 {
     public partial class IShapeExtensionsTests
     {

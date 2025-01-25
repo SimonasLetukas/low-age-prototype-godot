@@ -1,5 +1,6 @@
-﻿using low_age_prototype_common;
+﻿using LowAgeCommon;
 
+namespace LowAgeData.Domain.Common
 {
     public interface IDisplayable
     {

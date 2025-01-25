@@ -1,4 +1,4 @@
-﻿using low_age_data.Domain.Effects;
+﻿using LowAgeData.Domain.Effects;
 
 public class ApplyBehaviourNode : EffectNode, INodeFromBlueprint<ApplyBehaviour>
 {

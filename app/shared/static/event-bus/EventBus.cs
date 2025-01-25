@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Godot;
-using low_age_data.Domain.Common;
-using low_age_prototype_common;
-using multipurpose_pathfinding;
+using LowAgeData.Domain.Common;
+using LowAgeCommon;
+using MultipurposePathfinding;
 
 /// <summary>
 /// Used to pass around events globally when wiring them directly is not an option
 /// </summary>
-public class EventBus : Node
+public partial class EventBus : Node
 {
     #region Singleton
 

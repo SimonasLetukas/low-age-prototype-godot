@@ -1,4 +1,4 @@
-using low_age_prototype_common;
+using LowAgeCommon;
 
 /// <summary>
 /// Identifies abilities that should open a selection menu when pressed.

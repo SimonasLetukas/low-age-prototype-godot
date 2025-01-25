@@ -5,8 +5,8 @@ using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Shape;
 using LowAgeData.Domain.Entities;
-using low_age_prototype_common;
-using low_age_prototype_common.Extensions;
+using LowAgeCommon;
+using LowAgeCommon.Extensions;
 
 public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelectable
 {

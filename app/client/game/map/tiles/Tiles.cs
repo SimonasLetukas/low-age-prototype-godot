@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.Linq;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Tiles;
-using low_age_prototype_common;
-using low_age_prototype_common.Extensions;
-using multipurpose_pathfinding;
+using LowAgeCommon;
+using LowAgeCommon.Extensions;
+using MultipurposePathfinding;
 
 /// <summary>
 /// Responsible for: <para />
@@ -103,7 +103,7 @@ public partial class Tiles : Node2D
     public void Initialize(Vector2 mapSize, ICollection<(Vector2<int>, TileId)> tiles)
     {
         _tilesBlueprint = Data.Instance.Blueprint.Tiles;
-        _mapSize = new Vector2<int>((int)mapSize.x, (int)mapSize.y);
+        _mapSize = new Vector2<int>((int)mapSize.X, (int)mapSize.Y);
         _tilemapOffset = new Vector2(mapSize.X / 2, (mapSize.Y / 2) * -1);
         _mountainsFillOffset = (int)Mathf.Max(mapSize.X, mapSize.Y);
         _tileOffset = new Vector2(1, (float)Constants.TileHeight / 2);
@@ -201,11 +201,11 @@ public partial class Tiles : Node2D
         var (position, blueprintId) = _tilesForVisualsInitialization[0];
         _tilesForVisualsInitialization.RemoveAt(0);
 
-        var positionI = new Vector2I((int)position.X, (int)position.Y);
+        var positionI = new Vector2I(position.X, position.Y);
         _grass.SetCell(0, positionI, TileMapGrassIndex); // needed to fill up gaps
         SetCell(positionI, GetTerrain(position));
 
-        Elevatable.SetMapWideTargetTiles(godotPosition);
+        Elevatable.SetMapWideTargetTiles(positionI);
     }
 
     public void AddPoints(IEnumerable<Point> points)
@@ -232,7 +232,7 @@ public partial class Tiles : Node2D
     }
 
     public Vector2<int> GetMapPositionFromGlobalPosition(Vector2 globalPosition) 
-        => _grass.LocalToMap(globalPosition) - _tilemapOffset;
+        => (_grass.LocalToMap(globalPosition) - _tilemapOffset).ToVector2();
     
     public Vector2 GetGlobalPositionFromMapPosition(Vector2<int> mapPosition) 
     {
@@ -313,17 +313,19 @@ public partial class Tiles : Node2D
         for (var y = _mountainsFillOffset * -1; y < _mapSize.Y + _mountainsFillOffset; y++) 
         for (var x = _mountainsFillOffset * -1; x < _mapSize.X + _mountainsFillOffset; x++) 
             if (x < 0 || x >= _mapSize.X || y < 0 || y >= _mapSize.Y)
-                _mountains.SetCell(x, y, TileMapMountainsIndex);
+                _mountains.SetCell(0, new Vector2I(x, y), TileMapMountainsIndex);
     }
 
     public void UpdateALlBitmaps()
     {
+        /*
         _grass.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.X, _mapSize.Y));
         _scraps.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.X, _mapSize.Y));
         _marsh.UpdateBitmaskRegion(Vector2.Zero, new Vector2(_mapSize.X, _mapSize.Y));
         _mountains.UpdateBitmaskRegion(
             new Vector2(_mountainsFillOffset * -1, _mountainsFillOffset * -1), 
             new Vector2(_mapSize.X + _mountainsFillOffset, _mapSize.Y + _mountainsFillOffset));
+            */
     }
     
     public IEnumerable<TileInstance> GetDilated(IEnumerable<Point> points, int size)

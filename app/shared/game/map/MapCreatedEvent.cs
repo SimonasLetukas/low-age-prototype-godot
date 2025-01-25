@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using LowAgeData.Domain.Tiles;
-using low_age_prototype_common;
-using Area = low_age_prototype_common.Area;
+using LowAgeCommon;
+using Area = LowAgeCommon.Area;
 
 public partial class MapCreatedEvent : IGameEvent
 {

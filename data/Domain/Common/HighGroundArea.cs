@@ -1,6 +1,6 @@
-﻿using low_age_prototype_common;
+﻿using LowAgeCommon;
 
-namespace low_age_data.Domain.Common
+namespace LowAgeData.Domain.Common
 {
     public struct HighGroundArea
     {

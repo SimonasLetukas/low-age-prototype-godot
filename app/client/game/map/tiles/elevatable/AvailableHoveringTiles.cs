@@ -1,9 +1,9 @@
 using Godot;
 
-public class AvailableHoveringTiles : ElevatableTileMap
+public partial class AvailableHoveringTiles : ElevatableTileMap
 {
     public const string ScenePath = @"res://app/client/game/map/tiles/elevatable/AvailableHoveringTiles.tscn";
-    public static AvailableHoveringTiles Instance() => (AvailableHoveringTiles) GD.Load<PackedScene>(ScenePath).Instance();
+    public static AvailableHoveringTiles Instance() => (AvailableHoveringTiles) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static AvailableHoveringTiles InstantiateAsChild(Node parentNode)
     {
         var instance = Instance();

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Entities;
-using low_age_prototype_common;
-using low_age_prototype_common.Extensions;
-using multipurpose_pathfinding;
-using Area = low_age_prototype_common.Area;
+using LowAgeCommon;
+using LowAgeCommon.Extensions;
+using MultipurposePathfinding;
+using Area = LowAgeCommon.Area;
 
 /// <summary>
 /// Selectable object that has a presence and is interactable on the map: <see cref="ActorNode"/>

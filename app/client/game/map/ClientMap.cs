@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;
-using low_age_data.Domain.Tiles;
-using low_age_prototype_common;
-using low_age_prototype_common.Extensions;
-using multipurpose_pathfinding;
-using Area = low_age_prototype_common.Area;
+using LowAgeData.Domain.Tiles;
+using LowAgeCommon;
+using LowAgeCommon.Extensions;
+using MultipurposePathfinding;
+using Area = LowAgeCommon.Area;
 
 public partial class ClientMap : Map
 {
@@ -19,7 +19,7 @@ public partial class ClientMap : Map
 	public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
 
 	public Entities Entities { get; private set; }
-	private IMultipurposePathfinding Pathfinding { get; set; } = new MultipurposePathfinding();
+	private IPathfinding Pathfinding { get; set; } = new Pathfinding();
 
 	private Player _currentPlayer;
 	private IList<Area> _startingPositions = new List<Area>();
@@ -83,7 +83,7 @@ public partial class ClientMap : Map
 		_mapSize = @event.MapSize;
 		_startingPositions = @event.StartingPositions[_currentPlayer.Id];
 
-		Position = new Vector2(((float)Mathf.Max(_mapSize.X, _mapSize.Y) * Constants.TileWidth) / 2, Position.y);
+		Position = new Vector2(((float)Mathf.Max(_mapSize.X, _mapSize.Y) * Constants.TileWidth) / 2, Position.Y);
 		_tileMap.Initialize(_mapSize.ToGodotVector2(), @event.Tiles);
 
 		InitializePathfinding(@event.Tiles);
@@ -98,7 +98,7 @@ public partial class ClientMap : Map
 	{
 		var blueprint = Data.Instance.Blueprint;
 		var initialPositionsAndTerrainIndexes = tiles
-			.Select(x => (x.Item1, new low_age_dijkstra.Terrain(blueprint.Tiles
+			.Select(x => (x.Item1, new DijkstraMap.Terrain(blueprint.Tiles
 				.First(y => y.Id.Equals(x.Item2)).Terrain.ToIndex())))
 			.ToList();
 		Pathfinding.Initialize(initialPositionsAndTerrainIndexes, new Configuration

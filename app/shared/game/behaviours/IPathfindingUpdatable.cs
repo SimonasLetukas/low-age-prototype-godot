@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using low_age_prototype_common;
-using multipurpose_pathfinding;
+using LowAgeCommon;
+using MultipurposePathfinding;
 
 public interface IPathfindingUpdatable : IBehaviour
 {

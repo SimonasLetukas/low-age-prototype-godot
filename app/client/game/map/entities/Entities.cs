@@ -6,8 +6,8 @@ using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
-using low_age_prototype_common;
-using multipurpose_pathfinding;
+using LowAgeCommon;
+using MultipurposePathfinding;
 
 /// <summary>
 /// Parent of all entities (units & structures) and their rendering on the map.
@@ -153,7 +153,7 @@ public partial class Entities : Node2D
         var topZ = float.NegativeInfinity;
         EntityNode topEntity = null;
 
-        var colliders = Colliders.GetAt(globalPosition, GetWorld2d());
+        var colliders = Colliders.GetAt(globalPosition, GetWorld2D());
         
         foreach (var collider in colliders)
         {

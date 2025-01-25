@@ -4,7 +4,7 @@ using System.Linq;
 using Godot;
 
 // TODO: Probably needs to be moved under Entities.cs instead of Tiles.cs
-public class StructureFoundations : Node2D
+public partial class StructureFoundations : Node2D
 {
     private readonly Dictionary<Guid, StructureFoundation> _foundationsByInstanceId =
         new Dictionary<Guid, StructureFoundation>();

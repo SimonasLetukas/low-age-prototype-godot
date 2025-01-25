@@ -1,5 +1,5 @@
 ﻿using System;
-using low_age_prototype_common;
+using LowAgeCommon;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Entities.Actors.Units

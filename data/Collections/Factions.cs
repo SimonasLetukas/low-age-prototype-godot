@@ -5,7 +5,7 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
 using LowAgeData.Domain.Resources;
-using low_age_prototype_common;
+using LowAgeCommon;
 
 namespace LowAgeData.Collections
 {

@@ -3,8 +3,8 @@ using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors.Units;
-using low_age_prototype_common;
-using multipurpose_pathfinding;
+using LowAgeCommon;
+using MultipurposePathfinding;
 
 public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 {

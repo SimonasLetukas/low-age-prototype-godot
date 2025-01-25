@@ -1,7 +1,7 @@
 ﻿using System;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Entities;
-using low_age_prototype_common;
+using LowAgeCommon;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Common.Flags

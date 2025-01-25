@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_prototype_common;
-using multipurpose_pathfinding;
+using LowAgeCommon;
+using MultipurposePathfinding;
 
-public class ElevatableTiles : Node2D
+public partial class ElevatableTiles : Node2D
 {
     public FocusedTile Focused { get; private set; }
     
@@ -71,13 +71,13 @@ public class ElevatableTiles : Node2D
     {
         _tiles = parent;
         Focused.Initialize(parent);
-        _tilemapOffset = new Vector2(mapSize.x / 2, (mapSize.y / 2) * -1);
+        _tilemapOffset = new Vector2(mapSize.X / 2, (mapSize.Y / 2) * -1);
     }
 
-    public void SetMapWideTargetTiles(Vector2 at)
+    public void SetMapWideTargetTiles(Vector2I at)
     {
-        _targetMapPositiveTiles.SetCellv(at, TargetTiles.TileMapPositiveTargetTileIndex);
-        _targetMapNegativeTiles.SetCellv(at, TargetTiles.TileMapNegativeTargetTileIndex);
+        _targetMapPositiveTiles.SetCell(0, at, TargetTiles.TileMapPositiveTargetTileIndex);
+        _targetMapNegativeTiles.SetCell(0, at, TargetTiles.TileMapNegativeTargetTileIndex);
     }
 
     public void SetAvailableTiles(EntityNode entity, IEnumerable<Point> availablePoints, int size, bool hovering)
@@ -109,18 +109,18 @@ public class ElevatableTiles : Node2D
                          .Where(x => x.Key == tileMapsByElevationEntry.Key)
                          .SelectMany(x => x.Value, (_, point) => point.Position))
             {
-                var godotAvailablePosition = availablePosition.ToGodotVector2();
+                var godotAvailablePosition = availablePosition.ToGodotVector2I<int>();
                 if (hovering)
                 {
                     availableHoveringTiles.SetTile(godotAvailablePosition, TileMapAvailableTileIndex, 
                         GetZIndexAt(availablePosition, tileMapsByElevationEntry.Key));
-                    availableHoveringTiles.UpdateBitmaskRegion(godotAvailablePosition);
+                    //availableHoveringTiles.UpdateBitmaskRegion(godotAvailablePosition);
                     continue;
                 }
         
                 availableTiles.SetTile(godotAvailablePosition, TileMapAvailableTileIndex, 
                     GetZIndexAt(availablePosition, tileMapsByElevationEntry.Key));
-                availableTiles.UpdateBitmaskRegion(godotAvailablePosition);
+                //availableTiles.UpdateBitmaskRegion(godotAvailablePosition);
             }
         }
 
@@ -139,7 +139,7 @@ public class ElevatableTiles : Node2D
         Tiles.TileInstance result = null;
         foreach (var availableTiles in _availableTilesVisual)
         {
-            var position = availableTiles.Value.WorldToMap(mousePosition 
+            var position = availableTiles.Value.LocalToMap(mousePosition 
                                                            - availableTiles.Value.Position) - _tilemapOffset;
             var tileExists = _availableTilesCache.Any(x => x.Position.ToGodotVector2().Equals(position) 
                                                            && x.YSpriteOffset.Equals(availableTiles.Key));
@@ -186,7 +186,7 @@ public class ElevatableTiles : Node2D
                          .Where(x => x.Key == entry.Key)
                          .SelectMany(x => x.Value, (_, point) => point.Position))
             {
-                entry.Value.SetTile(targetPosition.ToGodotVector2(), isTargetPositive, 
+                entry.Value.SetTile(targetPosition.ToGodotVector2I<int>(), isTargetPositive, 
                     GetZIndexAt(targetPosition, entry.Key));
             }
         }
@@ -206,7 +206,7 @@ public class ElevatableTiles : Node2D
                          .Where(x => x.Key == entry.Key)
                          .SelectMany(x => x.Value, (_, point) => point.Position))
             {
-                entry.Value.SetTile(pathPosition.ToGodotVector2(), TileMapPathTileIndex, 
+                entry.Value.SetTile(pathPosition.ToGodotVector2I<int>(), TileMapPathTileIndex, 
                     GetZIndexAt(pathPosition, entry.Key));
             }
         }

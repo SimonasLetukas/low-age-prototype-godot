@@ -1,12 +1,12 @@
 using Godot;
 
-public class TargetTiles : ElevatableTileMap
+public partial class TargetTiles : ElevatableTileMap
 {
     [Export]
-    public Texture ElevatedNegativeSpriteTexture { get; set; }
+    public Texture2D ElevatedNegativeSpriteTexture { get; set; }
     
     public const string ScenePath = @"res://app/client/game/map/tiles/elevatable/TargetTiles.tscn";
-    public static TargetTiles Instance() => (TargetTiles) GD.Load<PackedScene>(ScenePath).Instance();
+    public static TargetTiles Instance() => (TargetTiles) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static TargetTiles InstantiateAsChild(Node parentNode)
     {
         var instance = Instance();
@@ -18,7 +18,7 @@ public class TargetTiles : ElevatableTileMap
     public const int TileMapNegativeTargetTileIndex = 11;
     public const int TileMapPositiveTargetTileIndex = 12;
     
-    public void SetTile(Vector2 position, bool isPositive, int zIndex)
+    public void SetTile(Vector2I position, bool isPositive, int zIndex)
     {
         SetTile(position, 
             isPositive ? TileMapPositiveTargetTileIndex : TileMapNegativeTargetTileIndex, 

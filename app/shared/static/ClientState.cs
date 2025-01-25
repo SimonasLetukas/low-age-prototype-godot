@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-public class ClientState : Node
+public partial class ClientState : Node
 {
     public static ClientState Instance = null;
 

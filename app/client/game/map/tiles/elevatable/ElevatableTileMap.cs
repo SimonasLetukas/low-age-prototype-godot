@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-public class ElevatableTileMap : TileMap
+public partial class ElevatableTileMap : TileMap
 {
     [Export]
-    public Texture ElevatedSpriteTexture { get; set; }
+    public Texture2D ElevatedSpriteTexture { get; set; }
     
     protected int Height { get; set; } = 0;
-    protected Dictionary<Vector2, Sprite> SpritesByPosition { get; set; } = new Dictionary<Vector2, Sprite>();
+    protected Dictionary<Vector2, Sprite2D> SpritesByPosition { get; set; } = new Dictionary<Vector2, Sprite2D>();
     
     public override void _Ready()
     {
@@ -24,20 +24,22 @@ public class ElevatableTileMap : TileMap
         EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
     }
 
-    public void SetTile(Vector2 position, int index, int zIndex)
+    public void SetTile(Vector2I position, int index, int zIndex)
     {
         if (Height is 0)
         {
-            SetCellv(position, index);
+            SetCell(0, position, index);
             return;
         }
 
         if (SpritesByPosition.ContainsKey(position))
             return;
 
-        var sprite = new Sprite();
+        var sprite = new Sprite2D();
         sprite.Texture = ElevatedSpriteTexture;
-        sprite.Position = MapToWorld(position) + Vector2.Down * Constants.TileHeight / 2;
+        var localPosition = MapToLocal(position);
+        var worldPosition = ToGlobal(localPosition);
+        sprite.Position = worldPosition + Vector2.Down * Constants.TileHeight / 2;
         sprite.ZIndex = zIndex + 1;
         AddChild(sprite);
         SpritesByPosition[position] = sprite;
@@ -51,7 +53,7 @@ public class ElevatableTileMap : TileMap
             return;
         }
 
-        foreach (var sprite in GetChildren().OfType<Sprite>()) 
+        foreach (var sprite in GetChildren().OfType<Sprite2D>()) 
             sprite.QueueFree();
         SpritesByPosition.Clear();
     }

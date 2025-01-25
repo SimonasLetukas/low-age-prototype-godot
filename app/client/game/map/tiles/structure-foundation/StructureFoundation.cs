@@ -1,10 +1,10 @@
 using Godot;
 
 // TODO: Should indicate somehow when the structure is selected / hovered
-public class StructureFoundation : TileMap
+public partial class StructureFoundation : TileMap
 {
     public const string ScenePath = @"res://app/client/game/map/tiles/structure-foundation/StructureFoundation.tscn";
-    public static StructureFoundation Instance() => (StructureFoundation) GD.Load<PackedScene>(ScenePath).Instance();
+    public static StructureFoundation Instance() => (StructureFoundation) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static StructureFoundation InstantiateAsChild(Node parentNode)
     {
         var instance = Instance();
@@ -25,9 +25,9 @@ public class StructureFoundation : TileMap
     {
         foreach (var walkablePosition in structure.WalkablePositions)
         {
-            var godotWalkablePosition = walkablePosition.ToGodotVector2();
-            SetCellv(godotWalkablePosition, WalkableTileIndex);
-            UpdateBitmaskRegion(godotWalkablePosition);
+            var godotWalkablePosition = walkablePosition.ToGodotVector2I<int>();
+            SetCell(0, godotWalkablePosition, WalkableTileIndex);
+            //UpdateBitmaskRegion(godotWalkablePosition);
         }
         
         if (structure.FlattenedSprite != null && structure.FlattenedCenterOffset != null)
@@ -37,9 +37,9 @@ public class StructureFoundation : TileMap
 
         foreach (var position in structure.NonWalkablePositions)
         {
-            var godotPosition = position.ToGodotVector2();
-            SetCellv(godotPosition, StructureTileIndex);
-            UpdateBitmaskRegion(godotPosition);
+            var godotPosition = position.ToGodotVector2I<int>();
+            SetCell(0, godotPosition, StructureTileIndex);
+            //UpdateBitmaskRegion(godotPosition);
         }
     }
 }

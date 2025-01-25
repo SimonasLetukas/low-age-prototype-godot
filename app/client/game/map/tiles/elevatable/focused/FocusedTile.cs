@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using low_age_prototype_common;
+using LowAgeCommon;
 
-public class FocusedTile : AnimatedSprite
+public partial class FocusedTile : AnimatedSprite2D
 {
     [Export]
     public bool DebugEnabled { get; set; } = false;
@@ -37,7 +37,7 @@ public class FocusedTile : AnimatedSprite
         EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
     }
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         base._Process(delta);
         

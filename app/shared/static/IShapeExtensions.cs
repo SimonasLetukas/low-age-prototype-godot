@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common.Shape;
-using low_age_prototype_common;
+using LowAgeCommon;
 
 public static class IShapeExtensions
 {

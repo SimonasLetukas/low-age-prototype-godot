@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
-using low_age_prototype_common.Extensions;
+using LowAgeCommon.Extensions;
 
 public partial class ServerGame : Game
 {

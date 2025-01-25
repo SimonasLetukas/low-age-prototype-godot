@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Godot;
-using Area = low_age_prototype_common.Area;
+using Area = LowAgeCommon.Area;
 
 public static class Rect2Extensions
 {
@@ -28,7 +28,7 @@ public static class Rect2Extensions
         for (var i = 0; i < iterations; i++)
         {
             rects = RotateClockwiseInside(rects, bounds);
-            bounds = new Vector2(bounds.y, bounds.x);
+            bounds = new Vector2(bounds.Y, bounds.X);
         }
 
         return rects;
@@ -38,12 +38,12 @@ public static class Rect2Extensions
     {
         var positionMap = new Dictionary<Vector2, Vector2>();
 
-        for (var x = 0; x < bounds.x; x++)
+        for (var x = 0; x < bounds.X; x++)
         {
-            for (var y = 0; y < bounds.y; y++)
+            for (var y = 0; y < bounds.Y; y++)
             {
                 var currentPoint = new Vector2(x, y);
-                var newX = (int)bounds.y - 1 - y;
+                var newX = (int)bounds.Y - 1 - y;
                 var newY = x;
                 var rotatedPoint = new Vector2(newX, newY);
 
@@ -59,8 +59,8 @@ public static class Rect2Extensions
                 continue;
             
             var newRect = new Rect2(
-                new Vector2((newPosition.x - rect.Size.y) + 1, newPosition.y),
-                new Vector2(rect.Size.y, rect.Size.x));
+                new Vector2((newPosition.X - rect.Size.Y) + 1, newPosition.Y),
+                new Vector2(rect.Size.Y, rect.Size.X));
             
             newRects.Add(newRect);
         }

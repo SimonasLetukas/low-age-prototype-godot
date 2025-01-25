@@ -2,7 +2,7 @@
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Factions;
-using low_age_prototype_common;
+using LowAgeCommon;
 
 namespace LowAgeData.Domain.Entities.Actors.Structures
 {

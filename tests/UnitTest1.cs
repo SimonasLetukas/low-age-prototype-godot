@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using Godot;
-using low_age_data.Domain.Common;
+using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace low_age_tests
+namespace LowAgeTests
 {
     public partial class MyTest
     {

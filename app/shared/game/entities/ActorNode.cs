@@ -4,7 +4,7 @@ using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors;
-using low_age_prototype_common.Extensions;
+using LowAgeCommon.Extensions;
 
 /// <summary>
 /// <see cref="StructureNode"/> or <see cref="UnitNode"/> with abilities and stats.
@@ -108,15 +108,15 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         var spriteSize = Renderer.SpriteSize;
         var offsetFromX = (int)(RelativeSize.Size.X - 1) * 
                           new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 2)) +
-                          (int)RelativeSize.Position.X * 
+                          (int)RelativeSize.Start.X * 
                           new Vector2((int)(Constants.TileWidth / 2), (int)(Constants.TileHeight / 2));
         var offsetFromY = (int)(RelativeSize.Size.Y - 1) *
                           new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 2)) +
-                          (int)RelativeSize.Position.Y * 
+                          (int)RelativeSize.Start.Y * 
                           new Vector2((int)(Constants.TileWidth / 2) * -1, (int)(Constants.TileHeight / 2));
-        _health.Position = new Vector2(_startingHealthPosition.x,
-            (spriteSize.y * -1) - 2 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
-        _shields.Position = new Vector2(_startingShieldsPosition.x,
-            (spriteSize.y * -1) - 3 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
+        _health.Position = new Vector2(_startingHealthPosition.X,
+            (spriteSize.Y * -1) - 2 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
+        _shields.Position = new Vector2(_startingShieldsPosition.X,
+            (spriteSize.Y * -1) - 3 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
     }
 }

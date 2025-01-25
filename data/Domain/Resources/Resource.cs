@@ -3,7 +3,7 @@ using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Entities.Actors;
-using low_age_prototype_common;
+using LowAgeCommon;
 
 namespace LowAgeData.Domain.Resources
 {
