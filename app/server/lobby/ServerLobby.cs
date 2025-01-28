@@ -18,7 +18,7 @@ public partial class ServerLobby : Lobby
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void UpdateSelectedPlayerFaction(int playerId, string factionId)
+    protected override void UpdateSelectedPlayerFaction(int playerId, string factionId)
     {
         GD.Print($"{nameof(ServerLobby)}.{nameof(UpdateSelectedPlayerFaction)}: called with " +
                  $"{nameof(playerId)} '{playerId}', {nameof(factionId)} '{factionId}'.");
@@ -27,7 +27,7 @@ public partial class ServerLobby : Lobby
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void UpdatePlayerReadyStatus(int playerId, bool newReadyStatus)
+    protected override void UpdatePlayerReadyStatus(int playerId, bool newReadyStatus)
     {
         GD.Print($"{nameof(ServerLobby)}.{nameof(UpdatePlayerReadyStatus)}: called with " +
                  $"{nameof(playerId)} '{playerId}', {nameof(newReadyStatus)} '{newReadyStatus}'.");

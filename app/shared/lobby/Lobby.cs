@@ -20,6 +20,7 @@ public partial class Lobby : VBoxContainer
 
         var playerInfo = PlayerInLobby.Instance();
         _playersList.AddChild(playerInfo);
+        playerInfo.GetTree().SetMultiplayer(Multiplayer);
         
         var player = playerInfo.SetupPlayer(playerId);
         playerInfo.PlayerSelectedFaction += OnPlayerChangedSelectedFaction;
@@ -61,9 +62,16 @@ public partial class Lobby : VBoxContainer
             return;
         
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedFaction)}: calling " +
-                 $"{nameof(ServerLobby.UpdateSelectedPlayerFaction)}.");
-        RpcId(Constants.ENet.ServerId, nameof(ServerLobby.UpdateSelectedPlayerFaction), playerId, 
+                 $"{nameof(UpdateSelectedPlayerFaction)}.");
+        RpcId(Constants.ENet.ServerId, nameof(UpdateSelectedPlayerFaction), playerId, 
             newFactionId.ToString());
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    protected virtual void UpdateSelectedPlayerFaction(int playerId, string factionId)
+    {
+        GD.Print($"{nameof(Lobby)}.{nameof(UpdateSelectedPlayerFaction)}: called with " +
+                 $"{nameof(playerId)} '{playerId}', {nameof(factionId)} '{factionId}'.");
     }
     
     /// <summary>
@@ -104,8 +112,15 @@ public partial class Lobby : VBoxContainer
             return;
         
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedReadyStatus)}: calling " +
-                 $"{nameof(ServerLobby.UpdatePlayerReadyStatus)}.");
-        RpcId(Constants.ENet.ServerId, nameof(ServerLobby.UpdatePlayerReadyStatus), playerId, newReadyStatus);
+                 $"{nameof(UpdatePlayerReadyStatus)}.");
+        RpcId(Constants.ENet.ServerId, nameof(UpdatePlayerReadyStatus), playerId, newReadyStatus);
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    protected virtual void UpdatePlayerReadyStatus(int playerId, bool newReadyStatus)
+    {
+        GD.Print($"{nameof(ServerLobby)}.{nameof(UpdatePlayerReadyStatus)}: called with " +
+                 $"{nameof(playerId)} '{playerId}', {nameof(newReadyStatus)} '{newReadyStatus}'.");
     }
     
     /// <summary>

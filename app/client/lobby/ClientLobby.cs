@@ -31,6 +31,7 @@ public partial class ClientLobby : Lobby
     protected override void OnPlayerAdded(int playerId)
     {
         base.OnPlayerAdded(playerId);
+        
         GD.Print($"{nameof(ClientLobby)}.{nameof(OnPlayerAdded)}");
 
         _startGameButton.Disabled = IsStartGameButtonDisabled();

@@ -39,7 +39,7 @@ public partial class ServerGame : Game
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void OnClientLoaded(int playerId)
+    protected override void OnClientLoaded(int playerId)
     {
         GD.Print($"{nameof(ServerGame)}.{nameof(OnClientLoaded)}: '{playerId}' client loaded");
         _notLoadedPlayers.Remove(playerId);
@@ -57,7 +57,7 @@ public partial class ServerGame : Game
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void OnRegisterNewGameEvent(string eventBody)
+    protected override void OnRegisterNewGameEvent(string eventBody)
     {
         GD.Print($"{nameof(ServerGame)}.{nameof(OnRegisterNewGameEvent)}: registering new game event " +
                  $"'{eventBody.TrimForLogs()}'");

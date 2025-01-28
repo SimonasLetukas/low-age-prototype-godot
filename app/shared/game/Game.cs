@@ -28,8 +28,8 @@ public partial class Game : Node2D
         if (Multiplayer.IsServer()) 
             return;
         
-        GD.Print($"{nameof(Game)}: calling {nameof(ServerGame.OnClientLoaded)} as Rpc.");
-        RpcId(Constants.ENet.ServerId, nameof(ServerGame.OnClientLoaded), Multiplayer.GetUniqueId());
+        GD.Print($"{nameof(Game)}: calling {nameof(OnClientLoaded)} as Rpc.");
+        RpcId(Constants.ENet.ServerId, nameof(OnClientLoaded), Multiplayer.GetUniqueId());
     }
 
     /// <summary>
@@ -44,7 +44,20 @@ public partial class Game : Node2D
         if (Multiplayer.IsServer())
             return;
         
-        RpcId(Constants.ENet.ServerId, nameof(ServerGame.OnRegisterNewGameEvent), EventToString(gameEvent));
+        RpcId(Constants.ENet.ServerId, nameof(OnRegisterNewGameEvent), EventToString(gameEvent));
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    protected virtual void OnClientLoaded(int playerId)
+    {
+        GD.Print($"{nameof(Game)}.{nameof(OnClientLoaded)}: '{playerId}' client loaded");
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    protected virtual void OnRegisterNewGameEvent(string eventBody)
+    {
+        GD.Print($"{nameof(Game)}.{nameof(OnRegisterNewGameEvent)}: registering new game event " +
+                 $"'{eventBody.TrimForLogs()}'");
     }
 
     #endregion
@@ -54,6 +67,7 @@ public partial class Game : Node2D
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void GameEnded()
     {
+        GD.Print($"{nameof(Game)}.{nameof(GameEnded)}");
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]

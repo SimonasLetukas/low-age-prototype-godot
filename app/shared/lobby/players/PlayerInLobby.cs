@@ -3,6 +3,11 @@ using System.Linq;
 using Godot;
 using LowAgeData.Domain.Factions;
 
+public partial class YourCustomClass : MultiMeshInstance3D
+{
+    
+}
+
 public partial class PlayerInLobby : HBoxContainer
 {
     public const string ScenePath = @"res://app/shared/lobby/players/PlayerInLobby.tscn";
@@ -17,7 +22,7 @@ public partial class PlayerInLobby : HBoxContainer
     private FactionSelection _factionSelection;
     private CheckBox _readyStatus;
     private Label _nameLabel;
-    
+
     public override void _Ready()
     {
         _factionSelection = GetNode<FactionSelection>("Faction");
