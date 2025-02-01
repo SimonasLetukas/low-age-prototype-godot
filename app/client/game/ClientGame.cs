@@ -21,7 +21,7 @@ public partial class ClientGame : Game
         _interface = GetNode<Interface>($"{nameof(Interface)}");
         
         GD.Print($"{nameof(ClientGame)}: entering.");
-        GetTree().Paused = true;
+        SetPaused(true);
         
         // Wait until the parent scene is fully loaded
         await ToSignal(GetTree().Root.GetChild(GetTree().Root.GetChildCount() - 1), "ready");
@@ -122,8 +122,8 @@ public partial class ClientGame : Game
                 _map.OnEntityPlaced();
                 break;
             default:
-                GD.PrintErr($"{nameof(ClientGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
-                            $"'{EventToString(gameEvent)}'. Type not implemented or not relevant for client.");
+                GD.Print($"{nameof(ClientGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
+                         $"'{EventToString(gameEvent)}'. Type not implemented or not relevant for client.");
                 break;
         }
     }
@@ -137,6 +137,12 @@ public partial class ClientGame : Game
     private void OnEveryoneFinishedInitializing()
     {
         _map.SetupFactionStart();
-        GetTree().Paused = false;
+        SetPaused(false);
+    }
+
+    private void SetPaused(bool to)
+    {
+        GetTree().Paused = to;
+        _map.SetPaused(to);
     }
 }

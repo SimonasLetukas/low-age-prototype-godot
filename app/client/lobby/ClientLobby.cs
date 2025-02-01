@@ -21,11 +21,6 @@ public partial class ClientLobby : Lobby
             Client.Instance.LocalPlayerName, 
             Client.Instance.LocalPlayerReady,
             Client.Instance.LocalPlayerFaction);
-
-        if (Client.Instance.QuickStartEnabled)
-        {
-            Client.Instance.StartGame();
-        }
     }
 
     protected override void OnPlayerAdded(int playerId)
@@ -35,6 +30,11 @@ public partial class ClientLobby : Lobby
         GD.Print($"{nameof(ClientLobby)}.{nameof(OnPlayerAdded)}");
 
         _startGameButton.Disabled = IsStartGameButtonDisabled();
+        
+        if (Client.Instance.QuickStartEnabled) // TODO also check for player count when quick launching multiple clients
+        {
+            Client.Instance.StartGame();
+        }
     }
     
     /// <summary>

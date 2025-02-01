@@ -44,9 +44,13 @@ public partial class ClientMap : Map
 	private bool _tileMapPointsStartedInitialization = false;
 	private bool _tileMapPointsInitialized = false;
 
+	private bool _paused = true;
+
 	public override void _Ready()
 	{
 		base._Ready();
+		ProcessMode = ProcessModeEnum.Always;
+		
 		_tileMap = GetNode<Tiles>($"{nameof(Tiles)}");
 		Entities = GetNode<Entities>($"{nameof(Entities)}");
 		_lines = GetNode<Node2D>($"Lines");
@@ -110,7 +114,7 @@ public partial class ClientMap : Map
 			MaxSizeForPathfinding = blueprint.Entities.Units.Max(x => x.Size),
 			MaxNumberOfTeams = 2, // TODO
 			DiagonalCost = Mathf.Sqrt2,
-			DebugEnabled = false
+			DebugEnabled = true
 		});
 	}
 
@@ -163,8 +167,8 @@ public partial class ClientMap : Map
 
 		FinishedInitializing();
 	}
-
-    public override void _Process(double delta)
+	
+	public override void _Process(double delta)
 	{
 		base._Process(delta);
 
@@ -173,6 +177,9 @@ public partial class ClientMap : Map
 			Pathfinding.IterateInitialization(delta);
 			return;
 		}
+
+		if (_paused)
+			return;
 
 		var mousePosition = GetGlobalMousePosition();
 
@@ -210,6 +217,11 @@ public partial class ClientMap : Map
 	public void SetupFactionStart()
 	{
 		Entities.SetupStartingEntities(_startingPositions.First().ToList(), _currentPlayer.Faction);
+	}
+
+	public void SetPaused(bool to)
+	{
+		_paused = to;
 	}
 
 	public void HandleDeselecting()

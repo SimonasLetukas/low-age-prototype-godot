@@ -91,8 +91,9 @@ public partial class ServerGame : Game
                 HandleEvent(clientFinishedInitializingEvent);
                 break;
             default:
-                GD.PrintErr($"{nameof(ServerGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
-                            $"'{EventToString(gameEvent)}'. Type not implemented or not relevant for server.");
+                GD.Print($"{nameof(ServerGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
+                         $"'{EventToString(gameEvent).TrimForLogs()}'. Type not implemented or not relevant " +
+                         $"for server.");
                 break;
         }
     }

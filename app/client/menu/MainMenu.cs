@@ -102,7 +102,7 @@ public partial class MainMenu : Control
         thread.Start(new Callable(Server.Instance, nameof(Server.Instance.RunLocalServerInstance)));
         Client.Instance.QuickStartEnabled = QuickStartCheckBox.IsPressed();
         Constants.ENet.SetLocalServer();
-        ConnectToServer();
+        Callable.From(ConnectToServer).CallDeferred();
     }
 
     private void OnFactionSelectionSelected(FactionId factionId)

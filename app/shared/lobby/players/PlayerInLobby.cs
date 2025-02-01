@@ -3,11 +3,6 @@ using System.Linq;
 using Godot;
 using LowAgeData.Domain.Factions;
 
-public partial class YourCustomClass : MultiMeshInstance3D
-{
-    
-}
-
 public partial class PlayerInLobby : HBoxContainer
 {
     public const string ScenePath = @"res://app/shared/lobby/players/PlayerInLobby.tscn";
