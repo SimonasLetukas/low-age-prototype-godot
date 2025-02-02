@@ -1,82 +1,67 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://cptni40atmafw"]
 
-[ext_resource path="res://assets/icons/icon_health_big.png" type="Texture2D" id=1]
-[ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=2]
-[ext_resource path="res://assets/sprites/interface/horizontal_gradient.png" type="Texture2D" id=3]
-[ext_resource path="res://app/shared/shaders/OffsetShadow.tres" type="Material" id=4]
-[ext_resource path="res://app/client/game/interface/panels/entity/display/stat/StatBlock.cs" type="Script" id=5]
+[ext_resource type="Texture2D" uid="uid://blt1s54vx3rim" path="res://assets/icons/icon_health_big.png" id="1"]
+[ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="2"]
+[ext_resource type="Texture2D" uid="uid://bffqjqh3owpyh" path="res://assets/sprites/interface/horizontal_gradient.png" id="3"]
+[ext_resource type="Material" path="res://app/shared/shaders/OffsetShadow.tres" id="4"]
+[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/stat/StatBlock.cs" id="5"]
 
 [node name="StatBlock" type="MarginContainer"]
+custom_minimum_size = Vector2(100, 32)
 offset_right = 25.0
 offset_bottom = 8.0
-custom_minimum_size = Vector2( 100, 32 )
-mouse_filter = 1
 size_flags_horizontal = 3
-theme_override_constants/margin_top = 4
 theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
 theme_override_constants/margin_bottom = 4
-script = ExtResource( 5 )
-Icon = ExtResource( 1 )
+script = ExtResource("5")
+Icon = ExtResource("1")
 CurrentValue = 1.231
 ShowCurrentValue = true
 
 [node name="BackgroundMargin" type="MarginContainer" parent="."]
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 100.0
-offset_bottom = 28.0
-mouse_filter = 1
+layout_mode = 2
 theme_override_constants/margin_right = 4
 
 [node name="Background" type="TextureRect" parent="BackgroundMargin"]
-modulate = Color( 0.572549, 0.572549, 0.572549, 0.117647 )
-offset_right = 92.0
-offset_bottom = 24.0
-custom_minimum_size = Vector2( 92, 24 )
-texture = ExtResource( 3 )
-expand = true
-stretch_mode = 1
+modulate = Color(0.572549, 0.572549, 0.572549, 0.117647)
+custom_minimum_size = Vector2(92, 24)
+layout_mode = 2
+texture = ExtResource("3")
+expand_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-material = ExtResource( 4 )
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 100.0
-offset_bottom = 28.0
+material = ExtResource("4")
+layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="Icon" type="TextureRect" parent="HBoxContainer"]
-self_modulate = Color( 0.756863, 0.843137, 0.87451, 1 )
-offset_right = 24.0
-offset_bottom = 24.0
-custom_minimum_size = Vector2( 24, 24 )
-texture = ExtResource( 1 )
-expand = true
+self_modulate = Color(0.756863, 0.843137, 0.87451, 1)
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("1")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="Shadow" type="TextureRect" parent="HBoxContainer/Icon"]
-self_modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color(0, 0, 0, 1)
 show_behind_parent = true
+custom_minimum_size = Vector2(6, 6)
+layout_mode = 0
 offset_left = 3.0
 offset_right = 27.0
 offset_bottom = 24.0
-custom_minimum_size = Vector2( 6, 6 )
-texture = ExtResource( 1 )
-expand = true
+texture = ExtResource("1")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
-offset_left = 28.0
-offset_right = 88.0
-offset_bottom = 24.0
-mouse_filter = 1
+layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/MarginContainer"]
-offset_top = 3.0
-offset_right = 60.0
-offset_bottom = 21.0
-custom_minimum_size = Vector2( 56, 0 )
+custom_minimum_size = Vector2(56, 0)
+layout_mode = 2
 mouse_filter = 1
-theme = ExtResource( 2 )
+theme = ExtResource("2")
 text = "999/999"
-align = 1
+horizontal_alignment = 1

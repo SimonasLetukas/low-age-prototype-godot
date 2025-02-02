@@ -9,8 +9,8 @@ public partial class DebugQuickStart : MainMenu
     {
         base._Ready();
         
-        //QuickStartCheckBox.ButtonPressed = true;
+        QuickStartCheckBox.ButtonPressed = true;
         
-        //OnPlayLocallyPressed();
+        OnPlayLocallyPressed();
     }
 }

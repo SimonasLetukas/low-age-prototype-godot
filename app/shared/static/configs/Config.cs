@@ -51,6 +51,12 @@ public partial class Config : Node
         set => _data.AnimationSpeed = value;
     }
 
+    public bool ConnectTerrain
+    {
+        get => _data.ConnectTerrain;
+        set => _data.ConnectTerrain = value;
+    }
+
     public bool ResearchEnabled
     {
         get => _data.ResearchEnabled;
@@ -93,6 +99,7 @@ public partial class Config : Node
     private class ConfigData
     {
         public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Fast;
+        public bool ConnectTerrain { get; set; } = false;
         public bool ResearchEnabled { get; set; } = false;
         public FactionId StartingFaction { get; set; } = FactionId.Uee;
         public bool LargeCursor { get; set; } = false;

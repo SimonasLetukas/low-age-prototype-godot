@@ -1,17 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://cr8pw04hfs0qq"]
 
-[ext_resource path="res://app/shared/lobby/Lobby.tscn" type="PackedScene" id=1]
-[ext_resource path="res://app/client/lobby/ClientLobby.cs" type="Script" id=2]
+[ext_resource type="PackedScene" uid="uid://dbtqyiouwicb4" path="res://app/shared/lobby/Lobby.tscn" id="1"]
+[ext_resource type="Script" path="res://app/client/lobby/ClientLobby.cs" id="2"]
 
-[node name="Lobby" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
+[node name="Lobby" instance=ExtResource("1")]
+script = ExtResource("2")
 
 [node name="StartGame" type="Button" parent="." index="2"]
-offset_left = 600.0
-offset_top = 119.0
-offset_right = 680.0
-offset_bottom = 159.0
-custom_minimum_size = Vector2( 80, 40 )
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
 size_flags_horizontal = 4
 disabled = true
 text = "Start"

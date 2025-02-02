@@ -161,10 +161,7 @@ public partial class ClientMap : Map
 			return;
 
 		Entities.Initialize(_tileMap.GetHighestTiles, _tileMap.GetTile);
-
-		_tileMap.FillMapOutsideWithMountains();
-		_tileMap.UpdateALlBitmaps();
-
+		
 		FinishedInitializing();
 	}
 	

@@ -1,56 +1,49 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://bfuikrbrpk82v"]
 
-[ext_resource path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypeBox.cs" type="Script" id=1]
-[ext_resource path="res://assets/icons/icon_melee_attack.png" type="Texture2D" id=2]
-[ext_resource path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypePanel.cs" type="Script" id=3]
-[ext_resource path="res://app/shared/shaders/InterfaceMaterial.tres" type="Material" id=4]
-[ext_resource path="res://assets/sprites/interface/panel-40x40.png" type="Texture2D" id=5]
-[ext_resource path="res://assets/sprites/interface/panel-clicked-40x40.png" type="Texture2D" id=6]
+[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypeBox.cs" id="1"]
+[ext_resource type="Texture2D" uid="uid://cywki6wytl5nr" path="res://assets/icons/icon_melee_attack.png" id="2"]
+[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypePanel.cs" id="3"]
+[ext_resource type="Material" path="res://app/shared/shaders/InterfaceMaterial.tres" id="4"]
+[ext_resource type="Texture2D" uid="uid://baqmoc5ryxara" path="res://assets/sprites/interface/panel-40x40.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://cpci4byytqrqu" path="res://assets/sprites/interface/panel-clicked-40x40.png" id="6"]
 
 [node name="AttackTypeBox" type="MarginContainer"]
 offset_right = 40.0
 offset_bottom = 44.0
-mouse_filter = 1
 theme_override_constants/margin_top = 4
-script = ExtResource( 1 )
-Icon = ExtResource( 2 )
+script = ExtResource("1")
+Icon = ExtResource("2")
 
 [node name="AttackTypePanel" type="TextureRect" parent="."]
-material = ExtResource( 4 )
-offset_top = 4.0
-offset_right = 40.0
-offset_bottom = 44.0
-custom_minimum_size = Vector2( 40, 40 )
-texture = ExtResource( 5 )
-script = ExtResource( 3 )
-TextureNormal = ExtResource( 5 )
-TextureClicked = ExtResource( 6 )
+material = ExtResource("4")
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("5")
+script = ExtResource("3")
+TextureNormal = ExtResource("5")
+TextureClicked = ExtResource("6")
 
 [node name="AttackTypeIcon" type="TextureRect" parent="AttackTypePanel"]
-self_modulate = Color( 0.756863, 0.843137, 0.87451, 1 )
+self_modulate = Color(0.756863, 0.843137, 0.87451, 1)
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
 offset_right = -4.0
 offset_bottom = -4.0
-texture = ExtResource( 2 )
-expand = true
+texture = ExtResource("2")
+expand_mode = 1
 stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Shadow" type="TextureRect" parent="AttackTypePanel/AttackTypeIcon"]
-self_modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color(0, 0, 0, 1)
 show_behind_parent = true
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 1.0
 offset_right = 1.0
-texture = ExtResource( 2 )
-expand = true
+texture = ExtResource("2")
+expand_mode = 1
 stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}

@@ -11,9 +11,9 @@ public partial class Camera : Camera2D
     [Export(PropertyHint.Range, "100,3000,100")] public int MapScrollSpeed { get; set; } = 1800;
     [Export(PropertyHint.Range, "1,10,1")] public int MapLimitElasticity { get; set; } = 6;
 
-    private readonly Dictionary<ZoomLevel, int> _timesPerZoomLevel = new Dictionary<ZoomLevel, int>
+    private readonly Dictionary<ZoomLevel, int> _timesPerZoomLevel = new()
     {
-        { ZoomLevel.Close, 5 }, { ZoomLevel.Medium, 2 }, { ZoomLevel.Far, 1 }
+        { ZoomLevel.Close, 4 }, { ZoomLevel.Medium, 2 }, { ZoomLevel.Far, 1 }
     };
     private ZoomLevel _currentZoomLevel = ZoomLevel.Medium;
     private int _mapWidthPixels = 1;
@@ -65,7 +65,7 @@ public partial class Camera : Camera2D
         if (MovedDown(mousePos)) moveVector.Y += 1;
             
         if (mousePos.Length() > 0) 
-            GlobalTranslate(moveVector.Normalized() * deltaF * Zoom.X * MapScrollSpeed);
+            GlobalTranslate((moveVector.Normalized() * deltaF * MapScrollSpeed) / Zoom.X);
     }
 
     public void SetMapSize(Vector2 mapSize)
@@ -76,7 +76,7 @@ public partial class Camera : Camera2D
         SetLimits();
     }
 
-    internal void OnMouseDragged(Vector2 by) => Position += by * Zoom;
+    internal void OnMouseDragged(Vector2 by) => Position += by / Zoom;
 
     internal void OnMouseTakingControl(bool flag) => _cameraIsMoving = flag;
 
@@ -126,7 +126,8 @@ public partial class Camera : Camera2D
 
     private void UpdateZoom()
     {
-        var amount = Mathf.Snapped(1f / _timesPerZoomLevel[_currentZoomLevel], 0.1f);
+        var amount = _timesPerZoomLevel[_currentZoomLevel];
+
         Zoom = new Vector2(amount, amount);
         _viewportSize = DisplayServer.WindowGetSize();
     }
@@ -148,13 +149,13 @@ public partial class Camera : Camera2D
         Position = newPosition;
     }
 
-    private float GetCurrentLeftBoundary() => Position.X - ((_viewportSize.X / 2) * Zoom.X);
+    private float GetCurrentLeftBoundary() => Position.X - ((_viewportSize.X / 2) / Zoom.X);
 
-    private float GetCurrentRightBoundary() => Position.X + ((_viewportSize.X / 2) * Zoom.X);
+    private float GetCurrentRightBoundary() => Position.X + ((_viewportSize.X / 2) / Zoom.X);
 
-    private float GetCurrentTopBoundary() => Position.Y - ((_viewportSize.Y / 2) * Zoom.Y);
+    private float GetCurrentTopBoundary() => Position.Y - ((_viewportSize.Y / 2) / Zoom.Y);
 
-    private float GetCurrentBottomBoundary() => Position.Y + ((_viewportSize.Y / 2) * Zoom.Y);
+    private float GetCurrentBottomBoundary() => Position.Y + ((_viewportSize.Y / 2) / Zoom.Y);
 
     private bool MovedLeft(Vector2 mousePos)
     {

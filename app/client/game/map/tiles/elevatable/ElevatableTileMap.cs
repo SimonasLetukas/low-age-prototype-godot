@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-public partial class ElevatableTileMap : TileMap
+public partial class ElevatableTileMap : TileMapLayer
 {
     [Export]
     public Texture2D ElevatedSpriteTexture { get; set; }
     
     protected int Height { get; set; } = 0;
-    protected Dictionary<Vector2, Sprite2D> SpritesByPosition { get; set; } = new Dictionary<Vector2, Sprite2D>();
+    protected Dictionary<Vector2, Sprite2D> SpritesByPosition { get; set; } = new();
     
     public override void _Ready()
     {
@@ -24,25 +24,28 @@ public partial class ElevatableTileMap : TileMap
         EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
     }
 
-    public void SetTile(Vector2I position, int index, int zIndex)
+    public void SetTiles(IEnumerable<(Vector2I, int)> positionsAndZIndexes, int terrainSet, int terrain)
     {
         if (Height is 0)
         {
-            SetCell(0, position, index);
+            SetCellsTerrainConnect(positionsAndZIndexes.Select(x => x.Item1).ToGodotArray(), 
+                terrainSet, terrain);
             return;
         }
 
-        if (SpritesByPosition.ContainsKey(position))
-            return;
+        foreach (var (position, zIndex) in positionsAndZIndexes)
+        {
+            if (SpritesByPosition.ContainsKey(position))
+                continue;
 
-        var sprite = new Sprite2D();
-        sprite.Texture = ElevatedSpriteTexture;
-        var localPosition = MapToLocal(position);
-        var worldPosition = ToGlobal(localPosition);
-        sprite.Position = worldPosition + Vector2.Down * Constants.TileHeight / 2;
-        sprite.ZIndex = zIndex + 1;
-        AddChild(sprite);
-        SpritesByPosition[position] = sprite;
+            var sprite = new Sprite2D();
+            sprite.Texture = ElevatedSpriteTexture;
+            var localPosition = MapToLocal(position);
+            sprite.Position = localPosition + Vector2.Down * Constants.TileHeight / 2;
+            sprite.ZIndex = zIndex + 1;
+            AddChild(sprite);
+            SpritesByPosition[position] = sprite;
+        }
     }
 
     public new void Clear()

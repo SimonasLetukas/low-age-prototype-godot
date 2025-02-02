@@ -1,7 +1,8 @@
+using System.Linq;
 using Godot;
 
 // TODO: Should indicate somehow when the structure is selected / hovered
-public partial class StructureFoundation : TileMap
+public partial class StructureFoundation : TileMapLayer
 {
     public const string ScenePath = @"res://app/client/game/map/tiles/structure-foundation/StructureFoundation.tscn";
     public static StructureFoundation Instance() => (StructureFoundation) GD.Load<PackedScene>(ScenePath).Instantiate();
@@ -11,9 +12,12 @@ public partial class StructureFoundation : TileMap
         parentNode.AddChild(instance);
         return instance;
     }
+
+    private const int FoundationTerrainSetIndex = 0;
+    private const int FoundationTerrainIndex = 6;
     
-    private const int StructureTileIndex = 13;
-    private const int WalkableTileIndex = 14;
+    private const int WalkableFoundationTerrainSetIndex = 1;
+    private const int WalkableFoundationTerrainIndex = 0;
 
     public override void _Ready()
     {
@@ -23,23 +27,21 @@ public partial class StructureFoundation : TileMap
 
     public void Initialize(StructureNode structure)
     {
-        foreach (var walkablePosition in structure.WalkablePositions)
-        {
-            var godotWalkablePosition = walkablePosition.ToGodotVector2I<int>();
-            SetCell(0, godotWalkablePosition, WalkableTileIndex);
-            //UpdateBitmaskRegion(godotWalkablePosition);
-        }
+        SetCellsTerrainConnect(structure.WalkablePositions
+                .Select(x => x.ToGodotVector2I<int>())
+                .ToGodotArray(), 
+            WalkableFoundationTerrainSetIndex, 
+            WalkableFoundationTerrainIndex);
         
         if (structure.FlattenedSprite != null && structure.FlattenedCenterOffset != null)
         {
             return;
         }
-
-        foreach (var position in structure.NonWalkablePositions)
-        {
-            var godotPosition = position.ToGodotVector2I<int>();
-            SetCell(0, godotPosition, StructureTileIndex);
-            //UpdateBitmaskRegion(godotPosition);
-        }
+        
+        SetCellsTerrainConnect(structure.NonWalkablePositions
+                .Select(x => x.ToGodotVector2I<int>())
+                .ToGodotArray(), 
+            FoundationTerrainSetIndex, 
+            FoundationTerrainIndex);
     }
 }

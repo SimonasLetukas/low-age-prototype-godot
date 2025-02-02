@@ -1,31 +1,34 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://dc2s7724e4wr2"]
 
-[ext_resource path="res://app/shared/game/entities/EntityNode.tscn" type="PackedScene" id=1]
-[ext_resource path="res://app/shared/game/entities/ActorNode.cs" type="Script" id=2]
-[ext_resource path="res://assets/sprites/interface/healthbar.png" type="Texture2D" id=3]
-[ext_resource path="res://app/shared/game/abilities/Abilities.tscn" type="PackedScene" id=4]
-[ext_resource path="res://app/shared/shaders/SelectionShader.tres" type="Shader" id=5]
+[ext_resource type="PackedScene" uid="uid://p1we4fggrwh4" path="res://app/shared/game/entities/EntityNode.tscn" id="1"]
+[ext_resource type="Script" path="res://app/shared/game/entities/ActorNode.cs" id="2"]
+[ext_resource type="Texture2D" uid="uid://cc0awruluni7j" path="res://assets/sprites/interface/healthbar.png" id="3"]
+[ext_resource type="PackedScene" uid="uid://bubmbcvt25sxr" path="res://app/shared/game/abilities/Abilities.tscn" id="4"]
+[ext_resource type="Shader" uid="uid://452tnk66kfbl" path="res://app/shared/shaders/SelectionShader.tres" id="5"]
 
-[sub_resource type="ShaderMaterial" id=1]
+[sub_resource type="ShaderMaterial" id="1"]
 resource_local_to_scene = true
-shader = ExtResource( 5 )
-shader_param/outline_color = null
-shader_param/draw_outline = null
-shader_param/intensity = 50
-shader_param/disabled = false
-shader_param/disabled_saturation = 0.2
-shader_param/tint_color = Color( 1, 1, 1, 1 )
-shader_param/tint_effect_factor = 0.0
+shader = ExtResource("5")
+shader_parameter/outline_color = null
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 50
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
 
-[node name="ActorNode" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
-
-[node name="Abilities" parent="." index="3" instance=ExtResource( 4 )]
+[node name="ActorNode" instance=ExtResource("1")]
+script = ExtResource("2")
 
 [node name="Sprite2D" parent="EntityRenderer/SpriteContainer" index="0"]
-material = SubResource( 1 )
+material = SubResource("1")
 
-[node name="Vitals" type="Node2D" parent="." index="5"]
+[node name="Icon" parent="EntityRenderer" index="1"]
+expand_mode = 1
+
+[node name="Abilities" parent="." index="2" instance=ExtResource("4")]
+
+[node name="Vitals" type="Node2D" parent="." index="3"]
 z_index = 4096
 
 [node name="Health" type="TextureProgressBar" parent="Vitals" index="0"]
@@ -33,20 +36,20 @@ offset_left = -4.0
 offset_right = 4.0
 offset_bottom = 1.0
 value = 100.0
-texture_under = ExtResource( 3 )
-texture_over = ExtResource( 3 )
-texture_progress = ExtResource( 3 )
-tint_under = Color( 0, 0, 0, 1 )
-tint_over = Color( 1, 1, 1, 0 )
-tint_progress = Color( 0.384314, 0.815686, 0.384314, 1 )
+texture_under = ExtResource("3")
+texture_over = ExtResource("3")
+texture_progress = ExtResource("3")
+tint_under = Color(0, 0, 0, 1)
+tint_over = Color(1, 1, 1, 0)
+tint_progress = Color(0.384314, 0.815686, 0.384314, 1)
 
 [node name="Shields" type="TextureProgressBar" parent="Vitals" index="1"]
 offset_left = -4.0
 offset_top = -1.0
 offset_right = 4.0
 value = 100.0
-texture_under = ExtResource( 3 )
-texture_over = ExtResource( 3 )
-texture_progress = ExtResource( 3 )
-tint_under = Color( 0, 0, 0, 1 )
-tint_over = Color( 1, 1, 1, 0 )
+texture_under = ExtResource("3")
+texture_over = ExtResource("3")
+texture_progress = ExtResource("3")
+tint_under = Color(0, 0, 0, 1)
+tint_over = Color(1, 1, 1, 0)

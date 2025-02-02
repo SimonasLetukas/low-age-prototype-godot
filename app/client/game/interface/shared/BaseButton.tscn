@@ -1,46 +1,48 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://b2me7lpqetnom"]
 
-[ext_resource path="res://app/client/game/interface/shared/BaseButton.cs" type="Script" id=1]
-[ext_resource path="res://app/shared/shaders/InterfaceMaterial.tres" type="Material" id=2]
-[ext_resource path="res://assets/sprites/interface/small-panel-x4.png" type="Texture2D" id=3]
-[ext_resource path="res://assets/sprites/interface/small-panel-smaller-inverted-x4.png" type="Texture2D" id=4]
-[ext_resource path="res://assets/icons/icon_ability_build.png" type="Texture2D" id=5]
+[ext_resource type="Script" path="res://app/client/game/interface/shared/BaseButton.cs" id="1"]
+[ext_resource type="Material" path="res://app/shared/shaders/InterfaceMaterial.tres" id="2"]
+[ext_resource type="Texture2D" uid="uid://dy5m8n2l4paaa" path="res://assets/sprites/interface/small-panel-x4.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://dhlym7w4676g2" path="res://assets/sprites/interface/small-panel-smaller-inverted-x4.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://cowuxof271j4d" path="res://assets/icons/icon_ability_build.png" id="5"]
 
 [node name="BaseButton" type="NinePatchRect"]
-material = ExtResource( 2 )
+material = ExtResource("2")
+custom_minimum_size = Vector2(40, 40)
 offset_right = 30.0
 offset_bottom = 30.0
-custom_minimum_size = Vector2( 40, 40 )
 mouse_filter = 1
-texture = ExtResource( 3 )
+texture = ExtResource("3")
 patch_margin_left = 20
 patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
-script = ExtResource( 1 )
-TextureNormal = ExtResource( 3 )
-TextureClicked = ExtResource( 4 )
+script = ExtResource("1")
+TextureNormal = ExtResource("3")
+TextureClicked = ExtResource("4")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-self_modulate = Color( 0.878431, 0.819608, 0.74902, 1 )
+self_modulate = Color(0.878431, 0.819608, 0.74902, 1)
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 0
 offset_left = 6.0
 offset_top = 6.0
 offset_right = 34.0
 offset_bottom = 34.0
-custom_minimum_size = Vector2( 28, 28 )
-texture = ExtResource( 5 )
-expand = true
+texture = ExtResource("5")
+expand_mode = 1
 stretch_mode = 6
 
 [node name="Shadow" type="TextureRect" parent="TextureRect"]
-self_modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color(0, 0, 0, 1)
 show_behind_parent = true
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 0
 offset_left = 2.0
 offset_right = 30.0
 offset_bottom = 28.0
-custom_minimum_size = Vector2( 28, 28 )
-texture = ExtResource( 5 )
-expand = true
+texture = ExtResource("5")
+expand_mode = 1
 stretch_mode = 6

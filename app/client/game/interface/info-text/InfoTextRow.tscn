@@ -1,23 +1,22 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://ced87lbx7ngv0"]
 
-[ext_resource path="res://app/shared/theme/Theme.tres" type="Theme" id=1]
-[ext_resource path="res://app/client/game/interface/info-text/InfoTextRow.cs" type="Script" id=2]
+[ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1"]
+[ext_resource type="Script" path="res://app/client/game/interface/info-text/InfoTextRow.cs" id="2"]
 
 [node name="RichTextLabel" type="RichTextLabel"]
-self_modulate = Color( 0.878431, 0.819608, 0.74902, 1 )
+self_modulate = Color(0.878431, 0.819608, 0.74902, 1)
+clip_contents = false
+custom_minimum_size = Vector2(300, 20)
 offset_right = 300.0
 offset_bottom = 20.0
-custom_minimum_size = Vector2( 300, 20 )
-clip_contents = false
-mouse_filter = 2
 size_flags_horizontal = 0
-theme = ExtResource( 1 )
-theme_override_colors/font_shadow_color = Color( 0, 0, 0, 1 )
-theme_override_constants/shadow_offset_x = 2
+mouse_filter = 2
+theme = ExtResource("1")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_offset_x = 2
 theme_override_constants/line_separation = -4
 bbcode_enabled = true
-text = "[center]R: rotate clockwise"
 text = "R: rotate clockwise"
 scroll_active = false
-script = ExtResource( 2 )
+script = ExtResource("2")

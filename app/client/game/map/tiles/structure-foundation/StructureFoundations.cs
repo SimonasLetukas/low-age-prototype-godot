@@ -6,14 +6,13 @@ using Godot;
 // TODO: Probably needs to be moved under Entities.cs instead of Tiles.cs
 public partial class StructureFoundations : Node2D
 {
-    private readonly Dictionary<Guid, StructureFoundation> _foundationsByInstanceId =
-        new Dictionary<Guid, StructureFoundation>();
+    private readonly Dictionary<Guid, StructureFoundation> _foundationsByInstanceId = new();
 
     public override void _Ready()
     {
         base._Ready();
         Visible = false;
-        foreach (var child in GetChildren().OfType<Node>()) 
+        foreach (var child in GetChildren()) 
             child.QueueFree();
 
         EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;

@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://cgrs2s023nfmc"]
 
-[ext_resource path="res://app/shared/lobby/Lobby.tscn" type="PackedScene" id=1]
-[ext_resource path="res://app/server/lobby/ServerLobby.cs" type="Script" id=2]
+[ext_resource type="PackedScene" uid="uid://dbtqyiouwicb4" path="res://app/shared/lobby/Lobby.tscn" id="1"]
+[ext_resource type="Script" path="res://app/server/lobby/ServerLobby.cs" id="2"]
 
-[node name="Lobby" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
+[node name="Lobby" instance=ExtResource("1")]
+script = ExtResource("2")

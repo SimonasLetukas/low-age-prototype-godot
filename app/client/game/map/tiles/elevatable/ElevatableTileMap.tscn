@@ -1,11 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://dcf0dncb4sc76"]
 
-[ext_resource path="res://app/client/game/map/tiles/IsometricTiles.tres" type="TileSet" id=1]
-[ext_resource path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.cs" type="Script" id=2]
+[ext_resource type="TileSet" uid="uid://c2mts8v0fly0n" path="res://app/client/game/map/tiles/Tiles.tres" id="1_e48t1"]
+[ext_resource type="Script" path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.cs" id="2"]
 
-[node name="ElevatableTileMap" type="TileMap"]
-mode = 1
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 16, 8 )
-format = 1
-script = ExtResource( 2 )
+[node name="ElevatableTileMap" type="TileMapLayer"]
+tile_set = ExtResource("1_e48t1")
+collision_enabled = false
+navigation_enabled = false
+script = ExtResource("2")

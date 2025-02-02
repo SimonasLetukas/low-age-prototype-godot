@@ -1,15 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://b2njs71bqtlfm"]
 
-[ext_resource path="res://app/shared/lobby/players/faction/FactionSelection.cs" type="Script" id=1]
+[ext_resource type="Script" path="res://app/shared/lobby/players/faction/FactionSelection.cs" id="1"]
 
 [node name="Faction" type="OptionButton"]
+custom_minimum_size = Vector2(300, 40)
 offset_left = 587.0
 offset_right = 887.0
 offset_bottom = 40.0
-custom_minimum_size = Vector2( 300, 40 )
 size_flags_vertical = 4
-text = "Revelators"
-script = ExtResource( 1 )
-__meta__ = {
-"_editor_description_": ""
-}
+script = ExtResource("1")

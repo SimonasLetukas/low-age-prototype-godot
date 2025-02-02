@@ -1,7 +1,28 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://d1dteoubhi8yx"]
 
-[ext_resource path="res://app/client/game/interface/shared/BaseButton.tscn" type="PackedScene" id=1]
-[ext_resource path="res://app/client/game/interface/panels/selection/SelectionButton.cs" type="Script" id=2]
+[ext_resource type="PackedScene" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1"]
+[ext_resource type="Script" path="res://app/client/game/interface/panels/selection/SelectionButton.cs" id="2"]
+[ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="2_m57bl"]
 
-[node name="SelectionButton" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jbkl5"]
+resource_local_to_scene = true
+shader = ExtResource("2_m57bl")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[node name="SelectionButton" instance=ExtResource("1")]
+material = SubResource("ShaderMaterial_jbkl5")
+script = ExtResource("2")
+
+[node name="TextureRect" parent="." index="0"]
+layout_mode = 0
+expand_mode = 1
+
+[node name="Shadow" parent="TextureRect" index="0"]
+layout_mode = 0
+expand_mode = 1

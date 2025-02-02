@@ -1,12 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://cxoakp5h8ow56"]
 
-[ext_resource path="res://app/client/game/map/tiles/IsometricTiles.tres" type="TileSet" id=1]
-[ext_resource path="res://app/client/game/map/tiles/structure-foundation/StructureFoundation.cs" type="Script" id=2]
+[ext_resource type="TileSet" uid="uid://c2mts8v0fly0n" path="res://app/client/game/map/tiles/Tiles.tres" id="1_p0ujo"]
+[ext_resource type="Script" path="res://app/client/game/map/tiles/structure-foundation/StructureFoundation.cs" id="2"]
 
-[node name="StructureFoundation" type="TileMap"]
-mode = 1
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 16, 8 )
-format = 1
-tile_data = PoolIntArray( -720876, 13, 0, -720875, 13, 1, -720874, 13, 1, -720873, 13, 1, -720872, 13, 2, -655340, 13, 65536, -655339, 13, 65540, -655338, 13, 65540, -655337, 13, 65540, -655336, 13, 65538, -589804, 13, 65536, -589803, 13, 65540, -589802, 13, 65540, -589801, 13, 65540, -589800, 13, 65538, -524268, 13, 65536, -524267, 13, 65540, -524266, 13, 65540, -524265, 13, 65540, -524264, 13, 65538, -458732, 13, 131072, -458731, 13, 131073, -458730, 13, 131073, -458729, 13, 131073, -458728, 13, 131074, -327660, 13, 0, -327659, 13, 2, -327657, 13, 196608, -327656, 13, 196609, -327655, 13, 196610, -262124, 13, 65536, -262123, 13, 65538, -196588, 13, 131072, -196587, 13, 131074, -196585, 13, 0, -196584, 13, 2, -196582, 13, 65537, -131049, 13, 131072, -131048, 13, 131074, 21, 13, 0, 22, 13, 1, 23, 13, 2, 24, 14, 131072, 25, 14, 131072, 65557, 13, 65536, 65558, 13, 4, 65559, 13, 65538, 65560, 14, 131072, 65561, 14, 131072, 131093, 13, 131072, 131094, 13, 131073, 131095, 13, 131074, 131096, 14, 131072, 131097, 14, 131072, 262180, 0, 8 )
-script = ExtResource( 2 )
+[node name="StructureFoundation" type="TileMapLayer"]
+tile_set = ExtResource("1_p0ujo")
+collision_enabled = false
+navigation_enabled = false
+script = ExtResource("2")

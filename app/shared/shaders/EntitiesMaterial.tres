@@ -1,14 +1,14 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bq1v62bbv2o0r"]
 
-[ext_resource path="res://app/shared/shaders/SelectionShader.tres" type="Shader" id=1]
+[ext_resource type="Shader" uid="uid://452tnk66kfbl" path="res://app/shared/shaders/SelectionShader.tres" id="1"]
 
 [resource]
 resource_local_to_scene = true
-shader = ExtResource( 1 )
-shader_param/outline_color = null
-shader_param/draw_outline = false
-shader_param/intensity = 50
-shader_param/disabled = false
-shader_param/disabled_saturation = 0.2
-shader_param/tint_color = Color( 1, 1, 1, 1 )
-shader_param/tint_effect_factor = 0.0
+shader = ExtResource("1")
+shader_parameter/outline_color = null
+shader_parameter/draw_outline = false
+shader_parameter/intensity = 50
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0

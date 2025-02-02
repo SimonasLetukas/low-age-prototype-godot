@@ -20,6 +20,9 @@ public partial class FocusedTile : AnimatedSprite2D
 
     public override void _Ready()
     {
+        ProcessMode = ProcessModeEnum.Pausable;
+        Play();
+        
         base._Ready();
 
         _zIndexText = GetNode<RichTextLabel>($"{nameof(RichTextLabel)}");
@@ -65,7 +68,7 @@ public partial class FocusedTile : AnimatedSprite2D
             return;
 
         var tile = availableTileAtMousePosition 
-                   ?? _tiles.GetTile(mapPosition, _focusedEntity is UnitNode unit && unit.IsOnHighGround);
+                   ?? _tiles.GetTile(mapPosition, _focusedEntity is UnitNode { IsOnHighGround: true });
         
         var hoveredTerrain = _tiles.GetTerrain(tile);
         EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.Occupants ?? new List<EntityNode>());

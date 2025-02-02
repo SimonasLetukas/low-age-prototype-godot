@@ -1,9 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://d0rwuiknh1tww"]
 
-[ext_resource path="res://app/client/game/mouse/Mouse.cs" type="Script" id=1]
+[ext_resource type="Script" path="res://app/client/game/mouse/Mouse.cs" id="1"]
 
 [node name="Mouse" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource("1")
 ArrowCursorFileLocation = "res://assets/cursors/cursor.png"
 ArrowCursorSmallFileLocation = "res://assets/cursors/cursor small.png"
 GrabCursorFileLocation = "res://assets/cursors/cursor grab.png"

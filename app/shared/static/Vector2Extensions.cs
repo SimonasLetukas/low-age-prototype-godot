@@ -42,11 +42,12 @@ public static class Vector2Extensions
         return new Rect2(smallestX, smallestY, highestX - smallestX + 1, highestY - smallestY + 1);
     }
 
-    public static Vector2<int> ToVector2(this Vector2 godotVector2) 
-        => new Vector2<int>((int)godotVector2.X, (int)godotVector2.Y);
+    public static Vector2<int> ToVector2(this Vector2 godotVector2) => new((int)godotVector2.X, (int)godotVector2.Y);
     
-    public static Vector2 ToGodotVector2<T>(this Vector2<T> domainVector2) where T : struct, IEquatable<T> 
-        => new Vector2(Convert.ToSingle(domainVector2.X), Convert.ToSingle(domainVector2.Y));
+    public static Vector2<int> ToVector2(this Vector2I godotVector2) => new(godotVector2.X, godotVector2.Y);
+    
+    public static Vector2 ToGodotVector2<T>(this Vector2<T> domainVector2) where T : struct, IEquatable<T> =>
+        new(Convert.ToSingle(domainVector2.X), Convert.ToSingle(domainVector2.Y));
     
     public static Vector2I ToGodotVector2I<T>(this Vector2<int> domainVector2) where T : struct, IEquatable<T> 
         => new (domainVector2.X, domainVector2.Y);

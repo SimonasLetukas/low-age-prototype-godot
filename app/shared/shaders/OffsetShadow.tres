@@ -1,8 +1,8 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d3svarnqweyvn"]
 
-[ext_resource path="res://app/shared/shaders/OffsetShadowShader.tres" type="Shader" id=1]
+[ext_resource type="Shader" uid="uid://cv5mxpk5xynmm" path="res://app/shared/shaders/OffsetShadowShader.tres" id="1"]
 
 [resource]
-shader = ExtResource( 1 )
-shader_param/offset = Vector2( 8, 0 )
-shader_param/modulate = null
+shader = ExtResource("1")
+shader_parameter/offset = Vector2(8, 0)
+shader_parameter/modulate = null

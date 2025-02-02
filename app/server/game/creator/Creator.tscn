@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://crw0c3kscrpqa"]
 
-[ext_resource path="res://app/server/game/creator/Creator.cs" type="Script" id=1]
+[ext_resource type="Script" path="res://app/server/game/creator/Creator.cs" id="1"]
 
 [node name="MapCreator" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource("1")
 MapFileLocation = "res://assets/maps/Twister.png"
