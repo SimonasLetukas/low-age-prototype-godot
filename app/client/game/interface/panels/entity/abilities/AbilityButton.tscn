@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ba8roqfkqi5rh"]
 
-[ext_resource type="PackedScene" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://cowuxof271j4d" path="res://assets/icons/icon_ability_build.png" id="2"]
 [ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="2_yl2wq"]
 [ext_resource type="Script" path="res://app/client/game/interface/panels/entity/abilities/AbilityButton.cs" id="4"]
@@ -24,17 +24,3 @@ script = ExtResource("4")
 TexturePassiveNormal = ExtResource("5")
 TexturePassiveClicked = ExtResource("6")
 Icon = ExtResource("2")
-
-[node name="TextureRect" parent="." index="0"]
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 28.0
-offset_bottom = 28.0
-expand_mode = 1
-
-[node name="Shadow" parent="TextureRect" index="0"]
-layout_mode = 0
-offset_left = 0.0
-offset_right = 28.0
-expand_mode = 1
