@@ -4,7 +4,7 @@ using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Logic;
 using LowAgeCommon.Extensions;
 
-public partial class ValidationHandler
+public class ValidationHandler
 {
     public static ValidationHandler Validate(IList<Validator> validators) => new ValidationHandler(validators);
     
@@ -28,17 +28,12 @@ public partial class ValidationHandler
 
     private bool Handle(Condition condition)
     {
-        switch (condition)
+        return condition switch
         {
-            case MaskCondition maskCondition:
-                return true; // TODO
-            case TileCondition tileCondition:
-                return Handle(tileCondition);
-                break;
-            default:
-                return Handle(condition.ConditionFlag);
-                break;
-        }
+            MaskCondition maskCondition => true, // TODO
+            TileCondition tileCondition => Handle(tileCondition),
+            _ => Handle(condition.ConditionFlag)
+        };
     }
 
     private bool Handle(TileCondition tileCondition)
@@ -47,7 +42,7 @@ public partial class ValidationHandler
         
         if (tileCondition.ConditionFlag.Equals(ConditionFlag.Exists))
             return counter >= tileCondition.AmountOfTilesRequired;
-        
+
         if (tileCondition.ConditionFlag.Equals(ConditionFlag.DoesNotExist))
             return counter < tileCondition.AmountOfTilesRequired;
 
@@ -56,15 +51,15 @@ public partial class ValidationHandler
 
     private bool Handle(ConditionFlag conditionFlag)
     {
-        switch (conditionFlag)
+        return conditionFlag switch
         {
-            case var _ when conditionFlag.Equals(ConditionFlag.TargetIsLowGround):
-                return _tileSource.All(t => t.Point.IsHighGround is false);
-            case var _ when conditionFlag.Equals(ConditionFlag.TargetIsUnoccupied):
-                return _tileSource.All(x => x.Occupants.IsEmpty());
+            _ when conditionFlag.Equals(ConditionFlag.TargetIsLowGround) => _tileSource.All(t => 
+                t.Point.IsHighGround is false),
             
-            default:
-                return false;
-        }
+            _ when conditionFlag.Equals(ConditionFlag.TargetIsUnoccupied) => _tileSource.All(x => 
+                x.Occupants.IsEmpty()),
+            
+            _ => false
+        };
     }
 }

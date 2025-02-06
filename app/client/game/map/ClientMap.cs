@@ -497,10 +497,20 @@ public partial class ClientMap : Map
 	}
 
 	private static void OnPathfindingPointAdded(Point point)
-		=> EventBus.Instance.RaiseHighGroundPointCreated(point);
+	{
+		if (point.IsLowGround)
+			return;
+		
+		EventBus.Instance.RaiseHighGroundPointCreated(point);
+	}
 
 	private static void OnPathfindingPointRemoved(Point point)
-		=> EventBus.Instance.RaiseHighGroundPointRemoved(point);
+	{
+		if (point.IsLowGround)
+			return;
+		
+		EventBus.Instance.RaiseHighGroundPointRemoved(point);
+	}
 
 	private void OnNewTileFocused(Vector2<int> mapPosition, Terrain terrain, IList<EntityNode> occupants)
 	{
