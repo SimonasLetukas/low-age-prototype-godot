@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 /// <summary>
@@ -41,57 +42,59 @@ public partial class Mouse : Node2D
         SetCursorToArrow();
     }
 
-    public override void _Process(double delta)
+    public override void _Input(InputEvent inputEvent)
     {
-        var mousePos = GetViewport().GetMousePosition();
+	    base._Input(inputEvent);
+	    
+	    var mousePos = GetViewport().GetMousePosition();
 
-        if (Input.IsActionJustPressed(Constants.Input.MouseLeft))
-        {
-	        _startPosition = mousePos;
-        }
+	    if (Input.IsActionJustPressed(Constants.Input.MouseLeft))
+	    {
+		    _startPosition = mousePos;
+	    }
         
-        if (Input.IsActionPressed(Constants.Input.MouseLeft))
-        {
-	        if (_cameraIsMoving)
-	        {
-		        var changeVector = _previousPosition - mousePos;
-			        EmitSignal(nameof(MouseDragged), changeVector);
-			        SetCursorToGrab();
-			        _previousPosition = mousePos;
-	        }
-	        else
-	        {
-		        var initiationVector = mousePos - _startPosition;
-		        if (_mouseIsOnUi is false && initiationVector.Length() > MinimumMouseDistanceToStartDrag)
-		        {
-			        _previousPosition = mousePos;
-			        _cameraIsMoving = true;
-			        EmitSignal(nameof(TakingControl), true);
-		        }
-	        }
-        }
+	    if (Input.IsActionPressed(Constants.Input.MouseLeft))
+	    {
+		    if (_cameraIsMoving)
+		    {
+			    var changeVector = _previousPosition - mousePos;
+			    EmitSignal(nameof(MouseDragged), changeVector);
+			    SetCursorToGrab();
+			    _previousPosition = mousePos;
+		    }
+		    else
+		    {
+			    var initiationVector = mousePos - _startPosition;
+			    if (_mouseIsOnUi is false && initiationVector.Length() > MinimumMouseDistanceToStartDrag)
+			    {
+				    _previousPosition = mousePos;
+				    _cameraIsMoving = true;
+				    EmitSignal(nameof(TakingControl), true);
+			    }
+		    }
+	    }
 
-        if (Input.IsActionJustReleased(Constants.Input.MouseLeft))
-        {
-	        _cameraIsMoving = false;
-	        SetCursorToArrow();
-	        EmitSignal(nameof(TakingControl), false);
-	        var travelVector = mousePos - _startPosition;
-	        if (travelVector.Length() <= MinimumMouseDistanceToStartDrag && _mouseIsOnUi is false) 
-		        EmitSignal(nameof(LeftReleasedWithoutDrag));
-        }
+	    if (Input.IsActionJustReleased(Constants.Input.MouseLeft))
+	    {
+		    _cameraIsMoving = false;
+		    SetCursorToArrow();
+		    EmitSignal(nameof(TakingControl), false);
+		    var travelVector = mousePos - _startPosition;
+		    if (travelVector.Length() <= MinimumMouseDistanceToStartDrag && _mouseIsOnUi is false) 
+			    EmitSignal(nameof(LeftReleasedWithoutDrag));
+	    }
 
-        if (Input.IsActionJustPressed(Constants.Input.MouseRight))
-        {
-	        // TODO examine functionality etc
-	        // Track holding of key
-        }
+	    if (Input.IsActionJustPressed(Constants.Input.MouseRight))
+	    {
+		    // TODO examine functionality etc
+		    // Track holding of key
+	    }
 
-        if (Input.IsActionJustReleased(Constants.Input.MouseRight))
-        {
-	        if (_mouseIsOnUi is false)
-				EmitSignal(nameof(RightReleasedWithoutExamine));
-        }
+	    if (Input.IsActionJustReleased(Constants.Input.MouseRight))
+	    {
+		    if (_mouseIsOnUi is false)
+			    EmitSignal(nameof(RightReleasedWithoutExamine));
+	    }
     }
     
     internal void OnInterfaceMouseEntered() => _mouseIsOnUi = true;

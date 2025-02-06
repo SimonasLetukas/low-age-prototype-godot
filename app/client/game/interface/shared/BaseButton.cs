@@ -19,7 +19,23 @@ public partial class BaseButton : NinePatchRect
 
         Connect("mouse_entered", new Callable(this, nameof(OnBaseButtonMouseEntered)));
         Connect("mouse_exited", new Callable(this, nameof(OnBaseButtonMouseExited)));
-        Connect("gui_input", new Callable(this, nameof(OnBaseButtonGuiInput)));
+    }
+
+    public override void _GuiInput(InputEvent inputEvent)
+    {
+        base._GuiInput(inputEvent);
+        
+        if (IsDisabled)
+            return;
+        
+        if (inputEvent.IsActionPressed(Constants.Input.MouseLeft))
+            SetClicked(true);
+        
+        if (inputEvent.IsActionReleased(Constants.Input.MouseLeft) is false) 
+            return;
+        
+        SetClicked(false);
+        Clicked();
     }
 
     public void SetDisabled(bool to)
@@ -87,20 +103,5 @@ public partial class BaseButton : NinePatchRect
         
         Highlight(false);
         Hovering(false);
-    }
-    
-    private void OnBaseButtonGuiInput(InputEvent inputEvent)
-    {
-        if (IsDisabled)
-            return;
-        
-        if (inputEvent.IsActionPressed(Constants.Input.MouseLeft))
-            SetClicked(true);
-        
-        if (inputEvent.IsActionReleased(Constants.Input.MouseLeft) is false) 
-            return;
-        
-        SetClicked(false);
-        Clicked();
     }
 }
