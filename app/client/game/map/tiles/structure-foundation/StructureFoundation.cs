@@ -17,7 +17,7 @@ public partial class StructureFoundation : TileMapLayer
     private const int FoundationTerrainIndex = 6;
     
     private const int WalkableFoundationTerrainSetIndex = 1;
-    private const int WalkableFoundationTerrainIndex = 0;
+    private const int WalkableFoundationTerrainIndex = 1;
 
     public override void _Ready()
     {
@@ -31,7 +31,8 @@ public partial class StructureFoundation : TileMapLayer
                 .Select(x => x.ToGodotVector2I<int>())
                 .ToGodotArray(), 
             WalkableFoundationTerrainSetIndex, 
-            WalkableFoundationTerrainIndex);
+            WalkableFoundationTerrainIndex,
+            false);
         
         if (structure.FlattenedSprite != null && structure.FlattenedCenterOffset != null)
         {
