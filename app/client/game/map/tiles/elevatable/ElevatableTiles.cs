@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeCommon;
-using LowAgeData.Domain.Resources;
+using LowAgeCommon.Extensions;
 using MultipurposePathfinding;
 
 public partial class ElevatableTiles : Node2D
 {
-    public FocusedTile Focused { get; private set; }
-    
-    private Tiles _tiles;
+    public FocusedTile Focused { get; private set; } = null!;
+
+    private Tiles _tiles = null!;
     private Vector2 _tilemapOffset;
     private readonly HashSet<int> _preparedElevations = [0]; 
-    private Node2D _alpha;
+    private Node2D _alpha = null!;
 
     private readonly Dictionary<(Vector2<int>, int), int> _zIndexesByPositionAndElevation = new();
     private readonly Dictionary<int, AvailableTiles> _availableTilesVisual = new();
     private readonly Dictionary<int, AvailableHoveringTiles> _availableTilesHovering = new();
     private IEnumerable<Tiles.TileInstance> _availableTilesCache = new List<Tiles.TileInstance>();
     private readonly Dictionary<int, TargetTiles> _targetTileMaps = new();
-    private TileMapLayer _targetMapPositiveTiles;
-    private TileMapLayer _targetMapNegativeTiles;
+    private TileMapLayer _targetMapPositiveTiles = null!;
+    private TileMapLayer _targetMapNegativeTiles = null!;
     private readonly List<Tiles.TileInstance> _targetTileInstances = [];
     private readonly Dictionary<int, PathTiles> _pathTileMaps = new();
     
@@ -133,18 +133,19 @@ public partial class ElevatableTiles : Node2D
         }
 
         var availableTileInstances = availablePointsSource
-            .Select(x => _tiles.GetTile(x.Position, x.IsHighGround));
+            .Select(x => _tiles.GetTile(x.Position, x.IsHighGround))
+            .WhereNotNull();
         CacheAvailableTiles(entity, hovering, availableTileInstances);
     }
 
-    public Tiles.TileInstance GetAvailableTileAtMousePosition()
+    public Tiles.TileInstance? GetAvailableTileAtMousePosition()
     {
         if (_availableTilesVisual.Values.Any(x => x.Visible is false))
             return null;
         
         var mousePosition = GetGlobalMousePosition();
         var highestElevation = -1;
-        Tiles.TileInstance result = null;
+        Tiles.TileInstance? result = null;
         foreach (var availableTiles in _availableTilesVisual)
         {
             var position = availableTiles.Value.LocalToMap(mousePosition 
@@ -181,6 +182,9 @@ public partial class ElevatableTiles : Node2D
         foreach (var target in targets)
         {
             var tileInstance = _tiles.GetHighestTile(target);
+            if (tileInstance is null)
+                continue;
+            
             tileInstance.IsTarget = true;
             _targetTileInstances.Add(tileInstance);
         }

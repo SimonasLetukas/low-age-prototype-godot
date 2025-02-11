@@ -5,9 +5,9 @@ using Godot;
 public partial class ElevatableTileMap : TileMapLayer
 {
     [Export]
-    public Texture2D ElevatedSpriteTexture { get; set; }
-    
-    protected int Height { get; set; } = 0;
+    public Texture2D ElevatedSpriteTexture { get; set; } = null!;
+
+    protected int Height { get; private set; } = 0;
     protected Dictionary<Vector2, Sprite2D> SpritesByPosition { get; set; } = new();
     
     public override void _Ready()
@@ -32,7 +32,7 @@ public partial class ElevatableTileMap : TileMapLayer
                 terrainSet, terrain);
             return;
         }
-
+        
         foreach (var (position, zIndex) in positionsAndZIndexes)
         {
             if (SpritesByPosition.ContainsKey(position))
@@ -80,13 +80,15 @@ public partial class ElevatableTileMap : TileMapLayer
     
     private void DeterminePosition(bool flattened)
     {
+        var offset = Height == 0 ? Vector2.Zero : new Vector2(0, -(Constants.TileHeight / 2));
+        
         if (flattened && Height > 0)
         {
-            Position = Vector2.Up * Constants.FlattenedHighGroundHeight;
+            Position = Vector2.Up * Constants.FlattenedHighGroundHeight + offset;
             return;
         }
 
-        Position = Vector2.Up * Height;
+        Position = Vector2.Up * Height + offset;
     }
 
     private void OnWhenFlattenedChanged(bool to) => DeterminePosition(to);

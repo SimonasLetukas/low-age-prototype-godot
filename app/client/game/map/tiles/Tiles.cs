@@ -23,29 +23,33 @@ public partial class Tiles : Node2D
     /// </summary>
     public class TileInstance
     {
-        public Vector2<int> Position { get; set; }
-        public TileId Blueprint { get; set; }
-        public Terrain Terrain { get; set; }
+        public Vector2<int> Position { get; init; }
+        public required TileId Blueprint { get; init; }
+        public required Terrain Terrain { get; init; }
         public bool IsTarget { get; set; }
-        public IList<EntityNode> Occupants { get; set; }
-        public Point Point { get; set; }
+        public required IList<EntityNode> Occupants { get; init; }
+        public Point Point { get; set; } = null!;
         public int YSpriteOffset { get; set; }
+        
+        public bool IsOccupied(EntityNode? by = null) => by is null 
+            ? Occupants.Any() 
+            : Occupants.Contains(by);
     }
     
     public event Action FinishedInitialInitializing = delegate { };
     public event Action FinishedPointInitialization = delegate { };
     
-    public StructureFoundations StructureFoundations { get; private set; }
-    public ElevatableTiles Elevatable { get; private set; }
-    
+    public StructureFoundations StructureFoundations { get; private set; } = null!;
+    public ElevatableTiles Elevatable { get; private set; } = null!;
+
     private readonly System.Collections.Generic.Dictionary<(Vector2<int>, bool), TileInstance> _tiles = new();
-    private IList<Tile> _tilesBlueprint;
+    private IList<Tile> _tilesBlueprint = null!;
     private Vector2<int> _mapSize;
     private int _mountainsFillOffset;
-    private TileMapLayer _grass;
-    private TileMapLayer _scraps;
-    private TileMapLayer _marsh;
-    private TileMapLayer _mountains;
+    private TileMapLayer _grass = null!;
+    private TileMapLayer _scraps = null!;
+    private TileMapLayer _marsh = null!;
+    private TileMapLayer _mountains = null!;
     private bool _connectTerrain = Config.Instance.ConnectTerrain;
 
     private const int SourceId = 0;
@@ -72,13 +76,13 @@ public partial class Tiles : Node2D
 
     private const int InitializationChunk = 2000;
     private bool _dataInitialized = false;
-    private List<(Vector2<int>, TileId)> _tilesForDataInitialization;
+    private List<(Vector2<int>, TileId)> _tilesForDataInitialization = null!;
     private bool _mainVisualsInitialized = false;
-    private List<(Vector2<int>, TileId)> _tilesForMainVisualsInitialization;
+    private List<(Vector2<int>, TileId)> _tilesForMainVisualsInitialization = null!;
     private bool _outsideVisualsInitialized = false;
-    private List<Vector2<int>> _positionsForOutsideVisualsInitialization;
+    private List<Vector2<int>> _positionsForOutsideVisualsInitialization = null!;
     private bool _initialInitializationDone = false;
-    private List<Point> _pointsForInitialization;
+    private List<Point> _pointsForInitialization = null!;
     private bool _pointsStartedInitializing = false;
     private bool _pointsInitialized = false;
     private bool _initialized = true;
@@ -287,8 +291,8 @@ public partial class Tiles : Node2D
         var point = _pointsForInitialization[0];
         _pointsForInitialization.RemoveAt(0);
         
-        var tile = GetTile(point.Position);
-        tile.Point = point;
+        var tile = GetTile(point.Position, false);
+        tile!.Point = point;
     }
 
     public Vector2<int> GetMapPositionFromGlobalPosition(Vector2 globalPosition)
@@ -308,47 +312,43 @@ public partial class Tiles : Node2D
 
     public IEnumerable<Vector2> GetGlobalPositionsFromMapPoints(IEnumerable<Point> points) => points
         .Select(x => GetTile(x.Position, x.IsHighGround))
-        .Select(x => GetGlobalPositionFromMapPosition(x.Position) + Vector2.Up * 
+        .Select(x => GetGlobalPositionFromMapPosition(x!.Position) + Vector2.Up * 
             (x.YSpriteOffset > 0 && ClientState.Instance.Flattened 
                 ? Constants.FlattenedHighGroundHeight 
                 : x.YSpriteOffset));
 
-    public Terrain GetTerrain(TileInstance tile) => tile is null 
+    public Terrain GetTerrain(TileInstance? tile) => tile is null 
         ? Terrain.Mountains 
         : GetTerrain(tile.Position, tile.Point.IsHighGround);
     
-    public Terrain GetTerrain(Vector2<int> at, bool isHighGround = false) => at.IsInBoundsOf(_mapSize)
-        ? GetTile(at, isHighGround).Terrain
-        : Terrain.Mountains;
+    public Terrain GetTerrain(Vector2<int> at, bool isHighGround = false) => (at.IsInBoundsOf(_mapSize)
+        ? GetTile(at, isHighGround)?.Terrain
+        : Terrain.Mountains) ?? Terrain.Mountains;
 
     public IList<TileInstance> GetEntityTiles(EntityNode entity) 
         => entity.EntityOccupyingPositions.Select(position => entity is UnitNode { IsOnHighGround: true }
             ? GetHighestTile(position) 
-            : GetTile(position, false)).ToList();
+            : GetTile(position, false)).WhereNotNull().ToList();
 
-    public IList<TileInstance> GetHighestTiles(IList<Vector2<int>> at) => at.Select(GetHighestTile).ToList();
+    public IList<TileInstance?> GetHighestTiles(IList<Vector2<int>> at) => at.Select(GetHighestTile).ToList();
 
-    public TileInstance GetHighestTile(Vector2<int> at) => GetTile(at, true) ?? GetTile(at);
+    public TileInstance? GetHighestTile(Vector2<int> at) => GetTile(at, true) ?? GetTile(at, false);
 
-    public TileInstance GetTile(Vector2<int> at, bool isHighGround = false) => at.IsInBoundsOf(_mapSize) 
+    public TileInstance? GetTile(Vector2<int> at, bool isHighGround) => at.IsInBoundsOf(_mapSize) 
         ? _tiles.ContainsKey((at, isHighGround)) 
             ? _tiles[(at, isHighGround)] 
             : null 
         : null;
     
-    public TileInstance GetTile(Point point) => GetTile(point.Position, point.IsHighGround);
+    public TileInstance? GetTile(Point point) => GetTile(point.Position, point.IsHighGround);
 
-    public Tile GetBlueprint(TileId of) => _tilesBlueprint.SingleOrDefault(x => x.Id.Equals(of));
-    
-    public bool IsOccupied(TileInstance tile, EntityNode by = null) => by is null 
-        ? tile.Occupants.Any() 
-        : tile.Occupants.Contains(by);
+    public Tile GetBlueprint(TileId of) => _tilesBlueprint.Single(x => x.Id.Equals(of));
 
     public void AddOccupation(EntityNode entity)
     {
         foreach (var tile in GetEntityTiles(entity))
         {
-            if (IsOccupied(tile, entity))
+            if (tile.IsOccupied(entity))
                 continue;
             
             tile.Occupants.Add(entity);
@@ -374,19 +374,18 @@ public partial class Tiles : Node2D
         var tileSearchSet = new HashSet<(Vector2<int>, bool)>();
         foreach (var point in points)
         {
-            for (var xOffset = 0; xOffset < size; xOffset++)
+            foreach (var offset in IterateVector2Int.Positions(Vector2Int.One * size))
             {
-                for (var yOffset = 0; yOffset < size; yOffset++)
-                {
-                    var resultingCoordinates = point.Position + new Vector2<int>(xOffset, yOffset);
+                var resultingCoordinates = point.Position + offset;
                     
-                    if (resultingCoordinates.IsInBoundsOf(_mapSize))
-                        tileSearchSet.Add((resultingCoordinates, point.IsHighGround));
-                }
+                if (resultingCoordinates.IsInBoundsOf(_mapSize))
+                    tileSearchSet.Add((resultingCoordinates, point.IsHighGround));
             }
         }
 
-        return tileSearchSet.Select(x => GetTile(x.Item1, x.Item2) ?? GetHighestTile(x.Item1));
+        return tileSearchSet
+            .Select(x => GetTile(x.Item1, x.Item2) ?? GetHighestTile(x.Item1))
+            .WhereNotNull();
     }
 
     private void SetCells(IList<Vector2I> at, Terrain terrain)
@@ -487,7 +486,7 @@ public partial class Tiles : Node2D
                     Terrain = Terrain.HighGround,
                     IsTarget = false,
                     Occupants = new List<EntityNode>(),
-                    Point = null,
+                    Point = null!,
                     YSpriteOffset = ySpriteOffset
                 };
                 _tiles[(position, true)] = tile;

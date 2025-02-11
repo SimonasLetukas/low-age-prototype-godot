@@ -395,9 +395,10 @@ public partial class ClientMap : Map
 		_tileMap.AddOccupation(entity);
 
 		var pathfindingEntity = new PathfindingEntity(entity.InstanceId, entity.EntityPrimaryPosition,
-			entity.EntitySize, entity.Team, entity is UnitNode unit && unit.IsOnHighGround,
+			entity.EntitySize, entity.Team, entity is UnitNode { IsOnHighGround: true },
 			entity.CanBeMovedThroughAt, entity.AllowsConnectionBetweenPoints);
 		Pathfinding.AddOrUpdateEntity(pathfindingEntity);
+		Pathfinding.UpdateAround(entity.InstanceId);
 	}
 
 	private void RemoveOccupation(EntityNode entity)
@@ -408,7 +409,7 @@ public partial class ClientMap : Map
 
 		foreach (var tile in _tileMap.GetEntityTiles(entity))
 		{
-			if (tile is null || _tileMap.IsOccupied(tile) is false)
+			if (tile.IsOccupied() is false)
 				continue;
 
 			foreach (var occupant in tile.Occupants)
@@ -420,7 +421,7 @@ public partial class ClientMap : Map
 
 	private void ResetLines()
 	{
-		foreach (var node in _lines.GetChildren().OfType<Node>())
+		foreach (var node in _lines.GetChildren())
 			node.QueueFree();
 	}
 
@@ -440,7 +441,7 @@ public partial class ClientMap : Map
 			{
 				var position = new Vector2<int>(x, y);
 				var tile = _tileMap.GetHighestTile(position);
-				if (tile.Point.IsImpassable)
+				if (tile is null || tile.Point.IsImpassable)
 					continue;
 
 				for (var offsetX = -1; offsetX < 2; offsetX++)
@@ -459,11 +460,11 @@ public partial class ClientMap : Map
 						var line = new Line2D();
 						line.Width = 1;
 						line.ZIndex = 4000;
-						line.Points = new[]
-						{
+						line.Points =
+						[
 							_tileMap.GetGlobalPositionFromMapPosition(position) - Position,
 							_tileMap.GetGlobalPositionFromMapPosition(adjacentPosition) - Position
-						};
+						];
 						_lines.AddChild(line);
 					}
 				}
@@ -483,17 +484,17 @@ public partial class ClientMap : Map
 						data.LeveledPositionsWithoutSpriteOffset);
 				else
 					Pathfinding.RemoveAscendableHighGround(entityId);
-				return;
+				break;
 			case HighGroundNode _:
 				if (isAdded)
 					Pathfinding.AddHighGround(entityId,
 						data.FlattenedPositionsWithoutSpriteOffset);
 				else
 					Pathfinding.RemoveHighGround(entityId);
-				return;
-			default:
-				return;
+				break;
 		}
+		
+		Pathfinding.UpdateAround(entityId);
 	}
 
 	private static void OnPathfindingPointAdded(Point point)
@@ -512,18 +513,18 @@ public partial class ClientMap : Map
 		EventBus.Instance.RaiseHighGroundPointRemoved(point);
 	}
 
-	private void OnNewTileFocused(Vector2<int> mapPosition, Terrain terrain, IList<EntityNode> occupants)
+	private void OnNewTileFocused(Vector2<int> mapPosition, Terrain terrain, IList<EntityNode>? occupants)
 	{
 		if (_focusedTile.IsWithinTheMap is false)
 			return;
 
-		if (_focusedTile.CurrentTile.Occupants.IsEmpty())
+		if (occupants is null || occupants.IsEmpty())
 		{
 			_tileMap.Elevatable.ClearAvailableTiles(true);
 			return;
 		}
 
-		if (_focusedTile.CurrentTile.Occupants.Last() is UnitNode unit)
+		if (occupants.Last() is UnitNode unit)
 		{
 			if (Entities.IsEntitySelected(unit))
 				return;
@@ -536,7 +537,7 @@ public partial class ClientMap : Map
 				unit.EntitySize.X,
 				true);
 
-			_tileMap.Elevatable.SetAvailableTiles(unit, temporaryAvailablePoints, (int)unit.EntitySize.X, true);
+			_tileMap.Elevatable.SetAvailableTiles(unit, temporaryAvailablePoints, unit.EntitySize.X, true);
 		}
 		else
 			_tileMap.Elevatable.ClearAvailableTiles(true);

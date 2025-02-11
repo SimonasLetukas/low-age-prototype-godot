@@ -12,12 +12,13 @@ public partial class EventBus : Node
 {
     #region Singleton
 
-    public static EventBus Instance = null;
+    public static EventBus Instance = null!;
     
     public override void _Ready()
     {
         base._Ready();
         
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (Instance is null)
         {
             Instance = this;
@@ -28,8 +29,8 @@ public partial class EventBus : Node
 
     #region Events
 
-    public event Action<Vector2<int>, Terrain, IList<EntityNode>> NewTileFocused = delegate { };
-    public void RaiseNewTileFocused(Vector2<int> mapPosition, Terrain terrain, IList<EntityNode> occupants)
+    public event Action<Vector2<int>, Terrain, IList<EntityNode>?> NewTileFocused = delegate { };
+    public void RaiseNewTileFocused(Vector2<int> mapPosition, Terrain terrain, IList<EntityNode>? occupants)
         => NewTileFocused(mapPosition, terrain, occupants);
     
     public event Action<EntityNode> EntityPlaced = delegate { };

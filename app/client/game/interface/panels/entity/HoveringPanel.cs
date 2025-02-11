@@ -9,7 +9,7 @@ public partial class HoveringPanel : Control
 {
     private Vector2 _mapSize;
 
-    private InfoDisplay _infoDisplay;
+    private InfoDisplay _infoDisplay = null!;
 
     public override void _Ready()
     {
@@ -30,7 +30,7 @@ public partial class HoveringPanel : Control
         _mapSize = mapSize;
     }
     
-    private void OnNewTileFocused(Vector2<int> tileHovered, Terrain terrain, IList<EntityNode> occupants)
+    private void OnNewTileFocused(Vector2<int> tileHovered, Terrain terrain, IList<EntityNode>? occupants)
     {
         string coordinatesText;
         string terrainText;
@@ -54,7 +54,7 @@ public partial class HoveringPanel : Control
             else
             {
                 occupantsText = occupants.Aggregate(string.Empty, (current, occupant) => 
-                    current + $", {occupant.DisplayName}").Substring(2);
+                    current + $", {occupant.DisplayName}")[2..];
                 var entity = occupants.Last();
                 _infoDisplay.SetEntityStats(entity);
                 _infoDisplay.ShowView(entity is StructureNode ? View.StructureStats : View.UnitStats, true);

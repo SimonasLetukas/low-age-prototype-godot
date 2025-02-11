@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeCommon;
@@ -8,15 +7,15 @@ public partial class FocusedTile : AnimatedSprite2D
     [Export]
     public bool DebugEnabled { get; set; } = false;
     
-    public Tiles.TileInstance CurrentTile { get; private set; }
+    public Tiles.TileInstance? CurrentTile { get; private set; }
     public bool IsWithinTheMap => CurrentTile != null;
 
-    private Tiles _tiles;
-    private EntityNode _focusedEntity = null;
+    private Tiles _tiles = null!;
+    private EntityNode? _focusedEntity = null;
     private Vector2<int> _previousPosition = Vector2Int.Zero;
     private bool _stateChanged = false;
 
-    private RichTextLabel _zIndexText;
+    private RichTextLabel _zIndexText = null!;
 
     public override void _Ready()
     {
@@ -71,7 +70,7 @@ public partial class FocusedTile : AnimatedSprite2D
                    ?? _tiles.GetTile(mapPosition, _focusedEntity is UnitNode { IsOnHighGround: true });
         
         var hoveredTerrain = _tiles.GetTerrain(tile);
-        EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.Occupants ?? new List<EntityNode>());
+        EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.Occupants);
         
         MoveTo(mapPosition, GetHeight(tile), GetZIndex(tile));
         _previousPosition = mapPosition;
@@ -108,7 +107,7 @@ public partial class FocusedTile : AnimatedSprite2D
         _zIndexText.Text = ZIndex.ToString();
     }
 
-    private static int GetHeight(Tiles.TileInstance tile)
+    private static int GetHeight(Tiles.TileInstance? tile)
     {
         var height = tile?.YSpriteOffset ?? 0;
         height = height > 0 && ClientState.Instance.Flattened 
@@ -117,9 +116,9 @@ public partial class FocusedTile : AnimatedSprite2D
         return height;
     }
 
-    private int GetZIndex(Tiles.TileInstance tile)
+    private int GetZIndex(Tiles.TileInstance? tile)
     {
-        Tiles.TileInstance tileBelow = null;
+        Tiles.TileInstance? tileBelow = null;
         if (tile != null) 
             tileBelow = _tiles.GetTile(tile.Position, false);
         
