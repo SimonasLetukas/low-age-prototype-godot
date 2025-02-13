@@ -52,14 +52,14 @@ o center:   | 0,0		| 0,0       | 0,0       | 0,0 */
             yield return new object[]
             {
                 // Initial values from blueprint:
-                (new Vector2<int>(1, 1), new Vector2<int>(0, 0), Array.Empty<Area>()),
+                (new Vector2Int(1, 1), new Vector2Int(0, 0), Array.Empty<Area>()),
                 
                 // Expected after 1 rotation:
-                (new Vector2<int>(1, 1), new Vector2<int>(0, 0), Array.Empty<Area>()),
+                (new Vector2Int(1, 1), new Vector2Int(0, 0), Array.Empty<Area>()),
                 // Expected after 2 rotations:
-                (new Vector2<int>(1, 1), new Vector2<int>(0, 0), Array.Empty<Area>()),
+                (new Vector2Int(1, 1), new Vector2Int(0, 0), Array.Empty<Area>()),
                 // Expected after 3 rotations:
-                (new Vector2<int>(1, 1), new Vector2<int>(0, 0), Array.Empty<Area>()),
+                (new Vector2Int(1, 1), new Vector2Int(0, 0), Array.Empty<Area>()),
             };
             
 /*			 x -1 0 1 2  x -1 0 1 2  x -1 0 1 2  x -1 0 1 2 
@@ -75,14 +75,14 @@ o center:   | 0,0		| 2,0       | 0,2       | 0,0 */
             yield return new object[]
             {
                 // Initial values from blueprint:
-                (new Vector2<int>(1, 3), new Vector2<int>(0, 0), Array.Empty<Area>()),
+                (new Vector2Int(1, 3), new Vector2Int(0, 0), Array.Empty<Area>()),
                 
                 // Expected after 1 rotation:
-                (new Vector2<int>(3, 1), new Vector2<int>(2, 0), Array.Empty<Area>()),
+                (new Vector2Int(3, 1), new Vector2Int(2, 0), Array.Empty<Area>()),
                 // Expected after 2 rotations:
-                (new Vector2<int>(1, 3), new Vector2<int>(0, 2), Array.Empty<Area>()),
+                (new Vector2Int(1, 3), new Vector2Int(0, 2), Array.Empty<Area>()),
                 // Expected after 3 rotations:
-                (new Vector2<int>(3, 1), new Vector2<int>(0, 0), Array.Empty<Area>()),
+                (new Vector2Int(3, 1), new Vector2Int(0, 0), Array.Empty<Area>()),
             };
             
 /*			 x -1 0 1 2  x -1 0 1 2  x -1 0 1 2  x -1 0 1 2 	Calculate walkable with negative
@@ -99,25 +99,25 @@ o center:   | 1,1		| 0,1       | 0,0       | 1,0
             yield return new object[]
             {
                 // Initial values from blueprint:
-                (new Vector2<int>(2, 2), new Vector2<int>(1, 1), new[]
+                (new Vector2Int(2, 2), new Vector2Int(1, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(1, 3))
+                    new Area(new Vector2Int(0, 0), new Vector2Int(1, 3))
                 }),
 
                 // Expected after 1 rotation:
-                (new Vector2<int>(2, 2), new Vector2<int>(0, 1), new[]
+                (new Vector2Int(2, 2), new Vector2Int(0, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(2, 1))
+                    new Area(new Vector2Int(0, 0), new Vector2Int(2, 1))
                 }),
                 // Expected after 2 rotations:
-                (new Vector2<int>(2, 2), new Vector2<int>(0, 0), new[]
+                (new Vector2Int(2, 2), new Vector2Int(0, 0), new[]
                 {
-                    new Area(new Vector2<int>(1, 0), new Vector2<int>(1, 2))
+                    new Area(new Vector2Int(1, 0), new Vector2Int(1, 2))
                 }),
                 // Expected after 3 rotations:
-                (new Vector2<int>(2, 2), new Vector2<int>(1, 0), new[]
+                (new Vector2Int(2, 2), new Vector2Int(1, 0), new[]
                 {
-                    new Area(new Vector2<int>(0, 1), new Vector2<int>(2, 1))
+                    new Area(new Vector2Int(0, 1), new Vector2Int(2, 1))
                 }),
             };
             
@@ -135,25 +135,25 @@ o center:   | 1,0		| 1,1       | 1,1       | 0,1
             yield return new object[]
             {
                 // Initial values from blueprint:
-                (new Vector2<int>(3, 2), new Vector2<int>(1, 0), new[]
+                (new Vector2Int(3, 2), new Vector2Int(1, 0), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(1, 2))
+                    new Area(new Vector2Int(0, 0), new Vector2Int(1, 2))
                 }),
 
                 // Expected after 1 rotation:
-                (new Vector2<int>(2, 3), new Vector2<int>(1, 1), new[]
+                (new Vector2Int(2, 3), new Vector2Int(1, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(2, 1))
+                    new Area(new Vector2Int(0, 0), new Vector2Int(2, 1))
                 }),
                 // Expected after 2 rotations:
-                (new Vector2<int>(3, 2), new Vector2<int>(1, 1), new[]
+                (new Vector2Int(3, 2), new Vector2Int(1, 1), new[]
                 {
-                    new Area(new Vector2<int>(2, 0), new Vector2<int>(1, 2))
+                    new Area(new Vector2Int(2, 0), new Vector2Int(1, 2))
                 }),
                 // Expected after 3 rotations:
-                (new Vector2<int>(2, 3), new Vector2<int>(0, 1), new[]
+                (new Vector2Int(2, 3), new Vector2Int(0, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 2), new Vector2<int>(2, 1))
+                    new Area(new Vector2Int(0, 2), new Vector2Int(2, 1))
                 }),
             };
             
@@ -172,29 +172,29 @@ o center:   | 2,1		| 1,2       | 0,1       | 1,0
             yield return new object[]
             {
                 // Initial values from blueprint:
-                (new Vector2<int>(3, 3), new Vector2<int>(2, 1), new[]
+                (new Vector2Int(3, 3), new Vector2Int(2, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(1, 2)),
-                    new Area(new Vector2<int>(2, 2), new Vector2<int>(1, 1)),
+                    new Area(new Vector2Int(0, 0), new Vector2Int(1, 2)),
+                    new Area(new Vector2Int(2, 2), new Vector2Int(1, 1)),
                 }),
                 
                 // Expected after 1 rotation:
-                (new Vector2<int>(3, 3), new Vector2<int>(1, 2), new[]
+                (new Vector2Int(3, 3), new Vector2Int(1, 2), new[]
                 {
-                    new Area(new Vector2<int>(1, 0), new Vector2<int>(2, 1)),
-                    new Area(new Vector2<int>(0, 2), new Vector2<int>(1, 1)),
+                    new Area(new Vector2Int(1, 0), new Vector2Int(2, 1)),
+                    new Area(new Vector2Int(0, 2), new Vector2Int(1, 1)),
                 }),
                 // Expected after 2 rotations:
-                (new Vector2<int>(3, 3), new Vector2<int>(0, 1), new[]
+                (new Vector2Int(3, 3), new Vector2Int(0, 1), new[]
                 {
-                    new Area(new Vector2<int>(2, 1), new Vector2<int>(1, 2)),
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(1, 1)),
+                    new Area(new Vector2Int(2, 1), new Vector2Int(1, 2)),
+                    new Area(new Vector2Int(0, 0), new Vector2Int(1, 1)),
                 }),
                 // Expected after 3 rotations:
-                (new Vector2<int>(3, 3), new Vector2<int>(1, 0), new[]
+                (new Vector2Int(3, 3), new Vector2Int(1, 0), new[]
                 {
-                    new Area(new Vector2<int>(0, 2), new Vector2<int>(2, 1)),
-                    new Area(new Vector2<int>(2, 0), new Vector2<int>(1, 1)),
+                    new Area(new Vector2Int(0, 2), new Vector2Int(2, 1)),
+                    new Area(new Vector2Int(2, 0), new Vector2Int(1, 1)),
                 }),
             };
             
@@ -212,25 +212,25 @@ o center:   | 1,1		| 1,1       | 1,1       | 1,1
             yield return new object[]
             {
                 // Initial values from blueprint:
-                (new Vector2<int>(3, 3), new Vector2<int>(1, 1), new[]
+                (new Vector2Int(3, 3), new Vector2Int(1, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(3, 2)),
+                    new Area(new Vector2Int(0, 0), new Vector2Int(3, 2)),
                 }),
                 
                 // Expected after 1 rotation:
-                (new Vector2<int>(3, 3), new Vector2<int>(1, 1), new[]
+                (new Vector2Int(3, 3), new Vector2Int(1, 1), new[]
                 {
-                    new Area(new Vector2<int>(1, 0), new Vector2<int>(2, 3)),
+                    new Area(new Vector2Int(1, 0), new Vector2Int(2, 3)),
                 }),
                 // Expected after 2 rotations:
-                (new Vector2<int>(3, 3), new Vector2<int>(1, 1), new[]
+                (new Vector2Int(3, 3), new Vector2Int(1, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 1), new Vector2<int>(3, 2)),
+                    new Area(new Vector2Int(0, 1), new Vector2Int(3, 2)),
                 }),
                 // Expected after 3 rotations:
-                (new Vector2<int>(3, 3), new Vector2<int>(1, 1), new[]
+                (new Vector2Int(3, 3), new Vector2Int(1, 1), new[]
                 {
-                    new Area(new Vector2<int>(0, 0), new Vector2<int>(2, 3)),
+                    new Area(new Vector2Int(0, 0), new Vector2Int(2, 3)),
                 }),
             };
         }
@@ -238,10 +238,10 @@ o center:   | 1,1		| 1,1       | 1,1       | 1,1
         [Theory]
         [MemberData(nameof(GetExpectedRotationResultsByInitialStructureConfiguration))]
         public void Rotate_ShouldHaveExpectedConfiguration_AfterEachRotation(
-            (Vector2<int> Size, Vector2<int> CenterPoint, Area[] WalkableAreas) initialValues,
-            (Vector2<int> Size, Vector2<int> CenterPoint, Area[] WalkableAreas) expectedAfter1Rotation,
-            (Vector2<int> Size, Vector2<int> CenterPoint, Area[] WalkableAreas) expectedAfter2Rotations,
-            (Vector2<int> Size, Vector2<int> CenterPoint, Area[] WalkableAreas) expectedAfter3Rotations)
+            (Vector2Int Size, Vector2Int CenterPoint, Area[] WalkableAreas) initialValues,
+            (Vector2Int Size, Vector2Int CenterPoint, Area[] WalkableAreas) expectedAfter1Rotation,
+            (Vector2Int Size, Vector2Int CenterPoint, Area[] WalkableAreas) expectedAfter2Rotations,
+            (Vector2Int Size, Vector2Int CenterPoint, Area[] WalkableAreas) expectedAfter3Rotations)
         {
             var blueprint = _blueprint
                 .With(x => x.Size, initialValues.Size)
@@ -249,7 +249,7 @@ o center:   | 1,1		| 1,1       | 1,1       | 1,1
                 .With(x => x.WalkableAreas, initialValues.WalkableAreas.ToList())
                 .Create();
             _structure.SetBlueprint(blueprint);
-            (Vector2<int> Size, Vector2<int> CenterPoint, IList<Area> WalkableAreas) expectedAfter4Rotations = 
+            (Vector2Int Size, Vector2Int CenterPoint, IList<Area> WalkableAreas) expectedAfter4Rotations = 
                 (_structure.EntitySize, _structure.CenterPoint, _structure.WalkableAreasBlueprint);
 
             _structure.Rotate();

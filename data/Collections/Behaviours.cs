@@ -338,9 +338,9 @@ namespace LowAgeData.Collections
                     path: new List<HighGroundArea>
                     {
                         new HighGroundArea(area: new Area(
-                                start: new Vector2<int>(x: 1, y: 1), 
-                                size: new Vector2<int>(x: 1, y: 1)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 9)),
+                                start: new Vector2Int(x: 1, y: 1), 
+                                size: new Vector2Int(x: 1, y: 1)),
+                            spriteOffset: new Vector2Int(x: 0, y: 9)),
                     },
                     closingEnabled: false),
 
@@ -353,9 +353,9 @@ namespace LowAgeData.Collections
                     highGroundAreas: new List<HighGroundArea>
                     {
                         new HighGroundArea(area: new Area(
-                                start: new Vector2<int>(x: 0, y: 0), 
-                                size: new Vector2<int>(x: 2, y: 3)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 9)),
+                                start: new Vector2Int(x: 0, y: 0), 
+                                size: new Vector2Int(x: 2, y: 3)),
+                            spriteOffset: new Vector2Int(x: 0, y: 9)),
                     }),
 
                 new Buff(
@@ -511,9 +511,9 @@ namespace LowAgeData.Collections
                     path: new List<HighGroundArea>
                     {
                         new HighGroundArea(area: new Area(
-                                start: new Vector2<int>(x: 0, y: 0), 
-                                size: new Vector2<int>(x: 1, y: 1)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 12)),
+                                start: new Vector2Int(x: 0, y: 0), 
+                                size: new Vector2Int(x: 1, y: 1)),
+                            spriteOffset: new Vector2Int(x: 0, y: 12)),
                     },
                     closingEnabled: true),
 
@@ -526,9 +526,9 @@ namespace LowAgeData.Collections
                     highGroundAreas: new List<HighGroundArea>
                     {
                         new HighGroundArea(area: new Area(
-                                start: new Vector2<int>(x: 0, y: 0), 
-                                size: new Vector2<int>(x: 1, y: 1)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 12)),
+                                start: new Vector2Int(x: 0, y: 0), 
+                                size: new Vector2Int(x: 1, y: 1)),
+                            spriteOffset: new Vector2Int(x: 0, y: 12)),
                     }),
                 
                 new Buff(
@@ -907,9 +907,9 @@ namespace LowAgeData.Collections
                     highGroundAreas: new List<HighGroundArea>
                     {
                         new HighGroundArea(area: new Area(
-                                start: new Vector2<int>(x: 0, y: 0), 
-                                size: new Vector2<int>(x: 1, y: 1)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 16)),
+                                start: new Vector2Int(x: 0, y: 0), 
+                                size: new Vector2Int(x: 1, y: 1)),
+                            spriteOffset: new Vector2Int(x: 0, y: 16)),
                     }),
                 
                 new Ascendable(
@@ -920,13 +920,13 @@ namespace LowAgeData.Collections
                     path: new List<HighGroundArea>
                     {
                         new HighGroundArea(area: new Area(
-                                start: new Vector2<int>(x: 0, y: 0), 
-                                size: new Vector2<int>(x: 1, y: 1)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 13)), 
+                                start: new Vector2Int(x: 0, y: 0), 
+                                size: new Vector2Int(x: 1, y: 1)),
+                            spriteOffset: new Vector2Int(x: 0, y: 13)), 
                         new HighGroundArea(area: new Area(
-                                start: new Vector2<int>(x: 1, y: 0), 
-                                size: new Vector2<int>(x: 1, y: 1)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 6)),
+                                start: new Vector2Int(x: 1, y: 0), 
+                                size: new Vector2Int(x: 1, y: 1)),
+                            spriteOffset: new Vector2Int(x: 0, y: 6)),
                     },
                     closingEnabled: false),
                 
@@ -939,9 +939,9 @@ namespace LowAgeData.Collections
                     highGroundAreas: new List<HighGroundArea>
                     {
                         new HighGroundArea(area: new Area(
-                                start: new Vector2<int>(x: 0, y: 0), 
-                                size: new Vector2<int>(x: 1, y: 4)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 16)),
+                                start: new Vector2Int(x: 0, y: 0), 
+                                size: new Vector2Int(x: 1, y: 4)),
+                            spriteOffset: new Vector2Int(x: 0, y: 16)),
                     }),
                 
                 new Ascendable(
@@ -952,9 +952,9 @@ namespace LowAgeData.Collections
                     path: new List<HighGroundArea>
                     {
                         new HighGroundArea(area: new Area(
-                                start: new Vector2<int>(x: 0, y: 1), 
-                                size: new Vector2<int>(x: 1, y: 2)),
-                            spriteOffset: new Vector2<int>(x: 0, y: 16)),
+                                start: new Vector2Int(x: 0, y: 1), 
+                                size: new Vector2Int(x: 1, y: 2)),
+                            spriteOffset: new Vector2Int(x: 0, y: 16)),
                     },
                     closingEnabled: true),
                 
@@ -965,8 +965,8 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     blockedAreas: new List<Area>
                     {
-                        new Area(start: new Vector2<int>(x: 0, y: 1),
-                            size: new Vector2<int>(x: 1, y: 2)),
+                        new Area(start: new Vector2Int(x: 0, y: 1),
+                            size: new Vector2Int(x: 1, y: 2)),
                     },
                     filters: new List<IFilterItem>
                     {
@@ -983,8 +983,8 @@ namespace LowAgeData.Collections
                     highGroundAreas: new List<HighGroundArea>
                     {
                         new HighGroundArea(
-                            area: new Area(size: new Vector2<int>(x: 1, y: 1)), 
-                            spriteOffset: new Vector2<int>(x: 0, y: 22))
+                            area: new Area(size: new Vector2Int(x: 1, y: 1)), 
+                            spriteOffset: new Vector2Int(x: 0, y: 22))
                     },
                     onCollisionEffects: new List<EffectId>
                     {
@@ -1028,8 +1028,8 @@ namespace LowAgeData.Collections
                     highGroundAreas: new List<HighGroundArea>
                     {
                         new HighGroundArea(
-                            area: new Area(size: new Vector2<int>(x: 2, y: 2)), 
-                            spriteOffset: new Vector2<int>(x: 0, y: 15))
+                            area: new Area(size: new Vector2Int(x: 2, y: 2)), 
+                            spriteOffset: new Vector2Int(x: 0, y: 15))
                     },
                     onCollisionEffects: new List<EffectId>
                     {

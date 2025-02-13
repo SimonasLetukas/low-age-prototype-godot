@@ -13,7 +13,7 @@ namespace LowAgeData.Domain.Entities.Actors
             string displayName, 
             string description,
             string sprite,
-            Vector2<int> centerOffset,
+            Vector2Int centerOffset,
             IList<Stat> statistics,
             FactionId originalFaction,
             IList<ActorAttribute> actorAttributes,

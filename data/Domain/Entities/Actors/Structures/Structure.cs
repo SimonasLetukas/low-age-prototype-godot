@@ -13,19 +13,19 @@ namespace LowAgeData.Domain.Entities.Actors.Structures
             string displayName,
             string description,
             string sprite,
-            Vector2<int> centerOffset,
+            Vector2Int centerOffset,
             IList<Stat> statistics,
             FactionId originalFaction,
             IList<ActorAttribute> actorAttributes,
             IList<AbilityId> abilities,
             string? backSideSprite = null,
-            Vector2<int>? backSideCenterOffset = null,
-            Vector2<int>? size = null,
-            Vector2<int>? centerPoint = null,
+            Vector2Int? backSideCenterOffset = null,
+            Vector2Int? size = null,
+            Vector2Int? centerPoint = null,
             bool? destructible = null,
             IList<Area>? walkableAreas = null,
             string? flattenedSprite = null,
-            Vector2<int>? flattenedCenterOffset = null) 
+            Vector2Int? flattenedCenterOffset = null) 
             : base(
                 id, 
                 displayName, 
@@ -37,14 +37,14 @@ namespace LowAgeData.Domain.Entities.Actors.Structures
                 actorAttributes, 
                 abilities)
         {
-            Size = size ?? new Vector2<int>(1, 1);
-            CenterPoint = centerPoint ?? (Size.Equals(new Vector2<int>(1, 1))
-                ? new Vector2<int>(0, 0)
-                : new Vector2<int>(Size.X / 2, Size.Y / 2));
+            Size = size ?? new Vector2Int(1, 1);
+            CenterPoint = centerPoint ?? (Size.Equals(new Vector2Int(1, 1))
+                ? new Vector2Int(0, 0)
+                : new Vector2Int(Size.X / 2, Size.Y / 2));
             Destructible = destructible ?? true;
             WalkableAreas = walkableAreas ?? new List<Area>
             {
-                new Area(new Vector2<int>(0, 0))
+                new Area(new Vector2Int(0, 0))
             };
             BackSideSprite = backSideSprite ?? sprite;
             BackSideCenterOffset = backSideCenterOffset ?? centerOffset;
@@ -55,12 +55,12 @@ namespace LowAgeData.Domain.Entities.Actors.Structures
         /// <summary>
         /// Width and height of the <see cref="Structure"/>. Starts from 1.
         /// </summary>
-        public Vector2<int> Size { get; }
+        public Vector2Int Size { get; }
 
         /// <summary>
         /// Coordinates of the center point, used for rotating and placing purposes. Starts from 0. 
         /// </summary>
-        public Vector2<int> CenterPoint { get; }
+        public Vector2Int CenterPoint { get; }
 
         /// <summary>
         /// If true, this <see cref="Structure"/> can be targeted and attacked, shows health and other statistics. 
@@ -75,13 +75,13 @@ namespace LowAgeData.Domain.Entities.Actors.Structures
         
         public string? BackSideSprite { get; }
         
-        public Vector2<int> BackSideCenterOffset { get; }
+        public Vector2Int BackSideCenterOffset { get; }
         
         /// <summary>
         /// Path to the sprite to be used for showing the <see cref="Structure"/> in a flattened state.
         /// </summary>
         public string? FlattenedSprite { get; }
         
-        public Vector2<int>? FlattenedCenterOffset { get; }
+        public Vector2Int? FlattenedCenterOffset { get; }
     }
 }

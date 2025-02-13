@@ -14,7 +14,7 @@ namespace MultipurposePathfindingTests;
 public class PathfindingPipelineTests
 {
     private readonly Configuration _config = new();
-    private readonly Vector2<int> _startingPoint = new(0, 0);
+    private readonly Vector2Int _startingPoint = new(0, 0);
     private const float SearchRange = 100f;
 
     private readonly IFixture _fixture = new Fixture()
@@ -27,13 +27,13 @@ public class PathfindingPipelineTests
     private bool _pathfindingInitialized = false;
 
     private readonly Dictionary<Guid, PathfindingEntity> _entities = new();
-    private readonly Dictionary<Guid, IEnumerable<Vector2<int>>> _walkablePositionsByEntityId = new();
-    private readonly Dictionary<Guid, IList<IEnumerable<Vector2<int>>>> _ascendablesByEntityId = new();
-    private readonly Dictionary<Guid, IEnumerable<Vector2<int>>> _highGroundsByEntityId = new();
+    private readonly Dictionary<Guid, IEnumerable<Vector2Int>> _walkablePositionsByEntityId = new();
+    private readonly Dictionary<Guid, IList<IEnumerable<Vector2Int>>> _ascendablesByEntityId = new();
+    private readonly Dictionary<Guid, IEnumerable<Vector2Int>> _highGroundsByEntityId = new();
 
     public PathfindingPipelineTests()
     {
-        _config.MapSize = new Vector2<int>(10, 10);
+        _config.MapSize = new Vector2Int(10, 10);
         _config.MaxNumberOfTeams = 2;
         _pathfinding = new Pathfinding();
         var initialPositionsAndTerrainIndexes = IterateVector2Int
@@ -58,11 +58,11 @@ public class PathfindingPipelineTests
         [
             1, // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(4, 3), new Vector2<int>(2, 1),
+            new Vector2Int(4, 3), new Vector2Int(2, 1),
             // Expected:
             new[]
             {
-                new Vector2<int>(4, 3), new Vector2<int>(5, 3),
+                new Vector2Int(4, 3), new Vector2Int(5, 3),
             }
         ];
 
@@ -70,12 +70,12 @@ public class PathfindingPipelineTests
         [
             2, // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(4, 3), new Vector2<int>(1, 2),
+            new Vector2Int(4, 3), new Vector2Int(1, 2),
             // Expected:
             new[]
             {
-                new Vector2<int>(4, 3),
-                new Vector2<int>(4, 4),
+                new Vector2Int(4, 3),
+                new Vector2Int(4, 4),
             }
         ];
 
@@ -83,12 +83,12 @@ public class PathfindingPipelineTests
         [
             3, // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(4, 3), new Vector2<int>(2, 1),
+            new Vector2Int(4, 3), new Vector2Int(2, 1),
             // Expected:
             new[]
             {
-                new Vector2<int>(3, 2), new Vector2<int>(4, 2), new Vector2<int>(5, 2),
-                new Vector2<int>(3, 3), new Vector2<int>(4, 3), new Vector2<int>(5, 3),
+                new Vector2Int(3, 2), new Vector2Int(4, 2), new Vector2Int(5, 2),
+                new Vector2Int(3, 3), new Vector2Int(4, 3), new Vector2Int(5, 3),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray()
         ];
 
@@ -96,13 +96,13 @@ public class PathfindingPipelineTests
         [
             4, // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(4, 3), new Vector2<int>(1, 2),
+            new Vector2Int(4, 3), new Vector2Int(1, 2),
             // Expected:
             new[]
             {
-                new Vector2<int>(3, 2), new Vector2<int>(4, 2),
-                new Vector2<int>(3, 3), new Vector2<int>(4, 3),
-                new Vector2<int>(3, 4), new Vector2<int>(4, 4),
+                new Vector2Int(3, 2), new Vector2Int(4, 2),
+                new Vector2Int(3, 3), new Vector2Int(4, 3),
+                new Vector2Int(3, 4), new Vector2Int(4, 4),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray()
         ];
 
@@ -110,13 +110,13 @@ public class PathfindingPipelineTests
         [
             5, // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(4, 3), new Vector2<int>(2, 1),
+            new Vector2Int(4, 3), new Vector2Int(2, 1),
             // Expected:
             new[]
             {
-                new Vector2<int>(2, 1), new Vector2<int>(3, 1), new Vector2<int>(4, 1), new Vector2<int>(5, 1),
-                new Vector2<int>(2, 2), new Vector2<int>(3, 2), new Vector2<int>(4, 2), new Vector2<int>(5, 2),
-                new Vector2<int>(2, 3), new Vector2<int>(3, 3), new Vector2<int>(4, 3), new Vector2<int>(5, 3),
+                new Vector2Int(2, 1), new Vector2Int(3, 1), new Vector2Int(4, 1), new Vector2Int(5, 1),
+                new Vector2Int(2, 2), new Vector2Int(3, 2), new Vector2Int(4, 2), new Vector2Int(5, 2),
+                new Vector2Int(2, 3), new Vector2Int(3, 3), new Vector2Int(4, 3), new Vector2Int(5, 3),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray()
         ];
 
@@ -124,14 +124,14 @@ public class PathfindingPipelineTests
         [
             5, // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(4, 3), new Vector2<int>(1, 2),
+            new Vector2Int(4, 3), new Vector2Int(1, 2),
             // Expected:
             new[]
             {
-                new Vector2<int>(2, 1), new Vector2<int>(3, 1), new Vector2<int>(4, 1),
-                new Vector2<int>(2, 2), new Vector2<int>(3, 2), new Vector2<int>(4, 2),
-                new Vector2<int>(2, 3), new Vector2<int>(3, 3), new Vector2<int>(4, 3),
-                new Vector2<int>(2, 4), new Vector2<int>(3, 4), new Vector2<int>(4, 4),
+                new Vector2Int(2, 1), new Vector2Int(3, 1), new Vector2Int(4, 1),
+                new Vector2Int(2, 2), new Vector2Int(3, 2), new Vector2Int(4, 2),
+                new Vector2Int(2, 3), new Vector2Int(3, 3), new Vector2Int(4, 3),
+                new Vector2Int(2, 4), new Vector2Int(3, 4), new Vector2Int(4, 4),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray()
         ];
     }
@@ -141,8 +141,8 @@ public class PathfindingPipelineTests
     public void Pathfinding_ShouldCalculateSimpleOccupation_ForPathfindingSizes(
         int scenario,
         PathfindingSize pathfindingSize,
-        Vector2<int> entityPrimaryPosition, Vector2<int> entitySize,
-        Vector2<int>[] expectedOccupiedPositions)
+        Vector2Int entityPrimaryPosition, Vector2Int entitySize,
+        Vector2Int[] expectedOccupiedPositions)
     {
         SetupAddingEntityInstance(entityPrimaryPosition, entitySize);
 
@@ -175,19 +175,19 @@ public class PathfindingPipelineTests
         [
             "B2", // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(4, 3), new Vector2<int>(3, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(3, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 4), new Vector2<int>(3, 1)),
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(4, 4), new Vector2Int(3, 1)),
+                new Area(new Vector2Int(4, 3), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 5), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(4, 5), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -195,8 +195,8 @@ public class PathfindingPipelineTests
                 new(4, 6), new(5, 6), new(6, 6),
                 new(4, 7), new(5, 7), new(6, 7),
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -210,26 +210,26 @@ public class PathfindingPipelineTests
         [
             "N2", // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(3, 3), new Vector2<int>(5, 3), // Position & size
+            new Vector2Int(3, 3), new Vector2Int(5, 3), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(6, 3), new Vector2<int>(1, 3)),
-                new Area(new Vector2<int>(7, 3), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(6, 3), new Vector2Int(1, 3)),
+                new Area(new Vector2Int(7, 3), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(3, 3), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(3, 3), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4),
                 new(3, 5), new(4, 5), new(5, 5), new(6, 5), new(7, 5),
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -241,19 +241,19 @@ public class PathfindingPipelineTests
         [
             "Z2", // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(4, 3), new Vector2<int>(3, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(3, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 6), new Vector2<int>(3, 1)),
-                new Area(new Vector2<int>(4, 7), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(4, 6), new Vector2Int(3, 1)),
+                new Area(new Vector2Int(4, 7), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(4, 3), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -261,8 +261,8 @@ public class PathfindingPipelineTests
                 new(4, 6), new(5, 6), new(6, 6),
                 new(4, 7), new(5, 7), new(6, 7),
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -276,26 +276,26 @@ public class PathfindingPipelineTests
         [
             "AL2", // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(3, 3), new Vector2<int>(5, 3), // Position & size
+            new Vector2Int(3, 3), new Vector2Int(5, 3), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(1, 3)),
-                new Area(new Vector2<int>(3, 3), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(4, 3), new Vector2Int(1, 3)),
+                new Area(new Vector2Int(3, 3), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(5, 3), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(5, 3), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4),
                 new(3, 5), new(4, 5), new(5, 5), new(6, 5), new(7, 5),
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -307,19 +307,19 @@ public class PathfindingPipelineTests
         [
             "B14", // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(4, 3), new Vector2<int>(3, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(3, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 4), new Vector2<int>(3, 1)),
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(4, 4), new Vector2Int(3, 1)),
+                new Area(new Vector2Int(4, 3), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 5), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(4, 5), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -329,7 +329,7 @@ public class PathfindingPipelineTests
 
                 new(3, 3), new(3, 4), new(3, 5), new(3, 6), new(3, 7),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(6, 3),
                 new(6, 4),
@@ -337,7 +337,7 @@ public class PathfindingPipelineTests
                 new(6, 6),
                 new(4, 7), new(5, 7), new(6, 7),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3),
                 new(4, 4), new(5, 4),
@@ -350,19 +350,19 @@ public class PathfindingPipelineTests
         [
             "N14", // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(3, 3), new Vector2<int>(5, 3), // Position & size
+            new Vector2Int(3, 3), new Vector2Int(5, 3), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(6, 3), new Vector2<int>(1, 3)),
-                new Area(new Vector2<int>(7, 3), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(6, 3), new Vector2Int(1, 3)),
+                new Area(new Vector2Int(7, 3), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(3, 3), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(3, 3), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -371,11 +371,11 @@ public class PathfindingPipelineTests
                 new(2, 2), new(3, 2), new(4, 2), new(5, 2), new(6, 2),
                 new(2, 3), new(2, 4), new(2, 5),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(3, 5), new(4, 5), new(5, 5), new(6, 5),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -387,19 +387,19 @@ public class PathfindingPipelineTests
         [
             "Z14", // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(4, 3), new Vector2<int>(3, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(3, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 6), new Vector2<int>(3, 1)),
-                new Area(new Vector2<int>(4, 7), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(4, 6), new Vector2Int(3, 1)),
+                new Area(new Vector2Int(4, 7), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(4, 3), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -410,11 +410,11 @@ public class PathfindingPipelineTests
                 new(3, 2), new(4, 2), new(5, 2), new(6, 2),
                 new(3, 3), new(3, 4), new(3, 5), new(3, 6),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(6, 3), new(6, 4), new(6, 5), new(6, 6),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3),
                 new(4, 4), new(5, 4),
@@ -428,19 +428,19 @@ public class PathfindingPipelineTests
         [
             "AL14", // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(3, 3), new Vector2<int>(5, 3), // Position & size
+            new Vector2Int(3, 3), new Vector2Int(5, 3), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(1, 3)),
-                new Area(new Vector2<int>(3, 3), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(4, 3), new Vector2Int(1, 3)),
+                new Area(new Vector2Int(3, 3), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(5, 3), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(5, 3), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -448,12 +448,12 @@ public class PathfindingPipelineTests
 
                 new(3, 2), new(4, 2), new(5, 2), new(6, 2), new(7, 2),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(7, 3), new(7, 4),
                 new(3, 5), new(4, 5), new(5, 5), new(6, 5), new(7, 5),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4),
@@ -464,19 +464,19 @@ public class PathfindingPipelineTests
         [
             "B26", // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(4, 3), new Vector2<int>(3, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(3, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 4), new Vector2<int>(3, 1)),
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(4, 4), new Vector2Int(3, 1)),
+                new Area(new Vector2Int(4, 3), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 5), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(4, 5), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -491,7 +491,7 @@ public class PathfindingPipelineTests
                 new(2, 6), new(3, 6),
                 new(2, 7), new(3, 7),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(5, 3), new(6, 3),
                 new(5, 4), new(6, 4),
@@ -499,7 +499,7 @@ public class PathfindingPipelineTests
                 new(4, 6), new(5, 6), new(6, 6),
                 new(4, 7), new(5, 7), new(6, 7),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3),
                 new(4, 4),
@@ -511,19 +511,19 @@ public class PathfindingPipelineTests
         [
             "N26", // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(3, 3), new Vector2<int>(5, 3), // Position & size
+            new Vector2Int(3, 3), new Vector2Int(5, 3), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(6, 3), new Vector2<int>(1, 3)),
-                new Area(new Vector2<int>(7, 3), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(6, 3), new Vector2Int(1, 3)),
+                new Area(new Vector2Int(7, 3), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(3, 3), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(3, 3), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -535,12 +535,12 @@ public class PathfindingPipelineTests
                 new(1, 4), new(2, 4),
                 new(1, 5), new(2, 5),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4),
                 new(3, 5), new(4, 5), new(5, 5), new(6, 5),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(7, 4),
@@ -552,19 +552,19 @@ public class PathfindingPipelineTests
         [
             "Z26", // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(4, 3), new Vector2<int>(3, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(3, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 6), new Vector2<int>(3, 1)),
-                new Area(new Vector2<int>(4, 7), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(4, 6), new Vector2Int(3, 1)),
+                new Area(new Vector2Int(4, 7), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(4, 3), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -579,14 +579,14 @@ public class PathfindingPipelineTests
                 new(2, 5), new(3, 5),
                 new(2, 6), new(3, 6),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(5, 3), new(6, 3),
                 new(5, 4), new(6, 4),
                 new(5, 5), new(6, 5),
                 new(5, 6), new(6, 6),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3),
                 new(4, 4),
@@ -600,19 +600,19 @@ public class PathfindingPipelineTests
         [
             "AL26", // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(3, 3), new Vector2<int>(5, 3), // Position & size
+            new Vector2Int(3, 3), new Vector2Int(5, 3), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(1, 3)),
-                new Area(new Vector2<int>(3, 3), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(4, 3), new Vector2Int(1, 3)),
+                new Area(new Vector2Int(3, 3), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(5, 3), new Vector2<int>(3, 3))
+                new Area(new Vector2Int(5, 3), new Vector2Int(3, 3))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -622,13 +622,13 @@ public class PathfindingPipelineTests
                 new(2, 2), new(3, 2), new(4, 2), new(5, 2), new(6, 2), new(7, 2),
                 new(2, 4), new(2, 5),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(6, 3), new(7, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4), new(7, 4),
                 new(3, 5), new(4, 5), new(5, 5), new(6, 5), new(7, 5),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(3, 3), new(4, 3), new(5, 3),
             }
@@ -640,12 +640,12 @@ public class PathfindingPipelineTests
     public void Pathfinding_ShouldCalculateHighGroundAndOccupation_ForLongStairs(
         string scenario,
         PathfindingSize pathfindingSize,
-        Vector2<int> entityPrimaryPosition, Vector2<int> entitySize,
+        Vector2Int entityPrimaryPosition, Vector2Int entitySize,
         Area[] ascendables,
         Area[] highGrounds,
-        Vector2<int>[] expectedOccupiedLowGroundPositions,
-        Vector2<int>[] expectedOccupiedHighGroundPositions,
-        Vector2<int>[] expectedFreeHighGroundPositions)
+        Vector2Int[] expectedOccupiedLowGroundPositions,
+        Vector2Int[] expectedOccupiedHighGroundPositions,
+        Vector2Int[] expectedFreeHighGroundPositions)
     {
         SetupAddingEntityInstance(entityPrimaryPosition, entitySize, Team.Default, false, null,
             ascendables.Select(x => x.ToVectors()).ToList(),
@@ -675,25 +675,25 @@ public class PathfindingPipelineTests
         [
             "B38", // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(4, 3), new Vector2<int>(4, 1), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(4, 1), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(5, 3), new Vector2<int>(2, 1))
+                new Area(new Vector2Int(5, 3), new Vector2Int(2, 1))
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(4, 1))
+                new Area(new Vector2Int(4, 3), new Vector2Int(4, 1))
             },
 
             // Expected:
             new[] // Occupation: low ground
             {
-                new Vector2<int>(4, 3), new Vector2<int>(5, 3), new Vector2<int>(6, 3), new Vector2<int>(7, 3),
+                new Vector2Int(4, 3), new Vector2Int(5, 3), new Vector2Int(6, 3), new Vector2Int(7, 3),
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
             new[] // Free high ground
             {
-                new Vector2<int>(4, 3), new Vector2<int>(5, 3), new Vector2<int>(6, 3), new Vector2<int>(7, 3),
+                new Vector2Int(4, 3), new Vector2Int(5, 3), new Vector2Int(6, 3), new Vector2Int(7, 3),
             }
         ];
 
@@ -701,31 +701,31 @@ public class PathfindingPipelineTests
         [
             "N38", // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(4, 3), new Vector2<int>(1, 4), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(1, 4), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 4), new Vector2<int>(1, 2))
+                new Area(new Vector2Int(4, 4), new Vector2Int(1, 2))
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(1, 4))
+                new Area(new Vector2Int(4, 3), new Vector2Int(1, 4))
             },
 
             // Expected:
             new[] // Occupation: low ground
             {
-                new Vector2<int>(4, 3),
-                new Vector2<int>(4, 4),
-                new Vector2<int>(4, 5),
-                new Vector2<int>(4, 6),
+                new Vector2Int(4, 3),
+                new Vector2Int(4, 4),
+                new Vector2Int(4, 5),
+                new Vector2Int(4, 6),
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
             new[] // Free high ground
             {
-                new Vector2<int>(4, 3),
-                new Vector2<int>(4, 4),
-                new Vector2<int>(4, 5),
-                new Vector2<int>(4, 6),
+                new Vector2Int(4, 3),
+                new Vector2Int(4, 4),
+                new Vector2Int(4, 5),
+                new Vector2Int(4, 6),
             }
         ];
 
@@ -733,27 +733,27 @@ public class PathfindingPipelineTests
         [
             "B50", // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(4, 3), new Vector2<int>(4, 1), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(4, 1), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(5, 3), new Vector2<int>(2, 1))
+                new Area(new Vector2Int(5, 3), new Vector2Int(2, 1))
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(4, 1))
+                new Area(new Vector2Int(4, 3), new Vector2Int(4, 1))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(3, 2), new(4, 2), new(6, 2), new(7, 2),
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(4, 3), new(6, 3), new(7, 3),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(5, 3),
             }
@@ -763,18 +763,18 @@ public class PathfindingPipelineTests
         [
             "N50", // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(4, 3), new Vector2<int>(1, 4), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(1, 4), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 4), new Vector2<int>(1, 2))
+                new Area(new Vector2Int(4, 4), new Vector2Int(1, 2))
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(1, 4))
+                new Area(new Vector2Int(4, 3), new Vector2Int(1, 4))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(3, 2), new(4, 2),
                 new(3, 3), new(4, 3),
@@ -782,13 +782,13 @@ public class PathfindingPipelineTests
                 new(3, 5), new(4, 5),
                 new(3, 6), new(4, 6),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(4, 3),
                 new(4, 5),
                 new(4, 6),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 4),
             }
@@ -798,46 +798,46 @@ public class PathfindingPipelineTests
         [
             "B62", // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(4, 3), new Vector2<int>(4, 1), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(4, 1), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(5, 3), new Vector2<int>(2, 1))
+                new Area(new Vector2Int(5, 3), new Vector2Int(2, 1))
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(4, 1))
+                new Area(new Vector2Int(4, 3), new Vector2Int(4, 1))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(2, 1), new(3, 1), new(4, 1), new(5, 1), new(6, 1), new(7, 1),
                 new(2, 2), new(3, 2), new(4, 2), new(5, 2), new(6, 2), new(7, 2),
                 new(2, 3), new(3, 3), new(4, 3), new(5, 3), new(6, 3), new(7, 3),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3)
             },
-            Array.Empty<Vector2<int>>() // Free high ground
+            Array.Empty<Vector2Int>() // Free high ground
         ];
 
         yield return
         [
             "N62", // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(4, 3), new Vector2<int>(1, 4), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(1, 4), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 4), new Vector2<int>(1, 2))
+                new Area(new Vector2Int(4, 4), new Vector2Int(1, 2))
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(1, 4))
+                new Area(new Vector2Int(4, 3), new Vector2Int(1, 4))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(2, 1), new(3, 1), new(4, 1),
                 new(2, 2), new(3, 2), new(4, 2),
@@ -846,14 +846,14 @@ public class PathfindingPipelineTests
                 new(2, 5), new(3, 5), new(4, 5),
                 new(2, 6), new(3, 6), new(4, 6),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(4, 3),
                 new(4, 4),
                 new(4, 5),
                 new(4, 6),
             },
-            Array.Empty<Vector2<int>>() // Free high ground
+            Array.Empty<Vector2Int>() // Free high ground
         ];
     }
 
@@ -862,12 +862,12 @@ public class PathfindingPipelineTests
     public void Pathfinding_ShouldCalculateHighGroundAndOccupation_ForGates(
         string scenario,
         PathfindingSize pathfindingSize,
-        Vector2<int> entityPrimaryPosition, Vector2<int> entitySize,
+        Vector2Int entityPrimaryPosition, Vector2Int entitySize,
         Area[] ascendables,
         Area[] highGrounds,
-        Vector2<int>[] expectedOccupiedLowGroundPositions,
-        Vector2<int>[] expectedOccupiedHighGroundPositions,
-        Vector2<int>[] expectedFreeHighGroundPositions)
+        Vector2Int[] expectedOccupiedLowGroundPositions,
+        Vector2Int[] expectedOccupiedHighGroundPositions,
+        Vector2Int[] expectedFreeHighGroundPositions)
     {
         SetupAddingEntityInstance(entityPrimaryPosition, entitySize, Team.Default, false, null,
             ascendables.Select(x => x.ToVectors()).ToList(),
@@ -897,26 +897,26 @@ public class PathfindingPipelineTests
         [
             "B74", // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(4, 3), new Vector2<int>(5, 4), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(5, 4), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(5, 3), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(5, 3), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(5, 4))
+                new Area(new Vector2Int(4, 3), new Vector2Int(5, 4))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3), new(8, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4), new(8, 4),
                 new(4, 5), new(5, 5), new(6, 5), new(7, 5), new(8, 5),
                 new(4, 6), new(5, 6), new(6, 6), new(7, 6), new(8, 6),
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3), new(8, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4), new(8, 4),
@@ -929,18 +929,18 @@ public class PathfindingPipelineTests
         [
             "N74", // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(4, 3), new Vector2<int>(4, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(4, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(7, 4), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(7, 4), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(4, 5))
+                new Area(new Vector2Int(4, 3), new Vector2Int(4, 5))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -948,8 +948,8 @@ public class PathfindingPipelineTests
                 new(4, 6), new(5, 6), new(6, 6), new(7, 6),
                 new(4, 7), new(5, 7), new(6, 7), new(7, 7),
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -963,26 +963,26 @@ public class PathfindingPipelineTests
         [
             "Z74", // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(4, 3), new Vector2<int>(5, 4), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(5, 4), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(5, 6), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(5, 6), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(5, 4))
+                new Area(new Vector2Int(4, 3), new Vector2Int(5, 4))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3), new(8, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4), new(8, 4),
                 new(4, 5), new(5, 5), new(6, 5), new(7, 5), new(8, 5),
                 new(4, 6), new(5, 6), new(6, 6), new(7, 6), new(8, 6),
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3), new(8, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4), new(8, 4),
@@ -995,18 +995,18 @@ public class PathfindingPipelineTests
         [
             "AL74", // Scenario
             new PathfindingSize(1),
-            new Vector2<int>(4, 3), new Vector2<int>(4, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(4, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 4), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(4, 4), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(4, 5))
+                new Area(new Vector2Int(4, 3), new Vector2Int(4, 5))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -1014,8 +1014,8 @@ public class PathfindingPipelineTests
                 new(4, 6), new(5, 6), new(6, 6), new(7, 6),
                 new(4, 7), new(5, 7), new(6, 7), new(7, 7),
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -1029,18 +1029,18 @@ public class PathfindingPipelineTests
         [
             "B86", // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(4, 3), new Vector2<int>(5, 4), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(5, 4), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(5, 3), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(5, 3), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(5, 4))
+                new Area(new Vector2Int(4, 3), new Vector2Int(5, 4))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3), new(8, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4), new(8, 4),
@@ -1050,12 +1050,12 @@ public class PathfindingPipelineTests
                 new(3, 2), new(4, 2), new(7, 2), new(8, 2),
                 new(3, 3), new(3, 4), new(3, 5), new(3, 6),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(8, 3), new(8, 4), new(8, 5), new(8, 6),
                 new(4, 6), new(5, 6), new(6, 6), new(7, 6),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -1067,18 +1067,18 @@ public class PathfindingPipelineTests
         [
             "N86", // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(4, 3), new Vector2<int>(4, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(4, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(7, 4), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(7, 4), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(4, 5))
+                new Area(new Vector2Int(4, 3), new Vector2Int(4, 5))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -1089,13 +1089,13 @@ public class PathfindingPipelineTests
                 new(3, 2), new(4, 2), new(5, 2), new(6, 2), new(7, 2),
                 new(3, 3), new(3, 4), new(3, 5), new(3, 6), new(3, 7),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(7, 3),
                 new(7, 6),
                 new(4, 7), new(5, 7), new(6, 7), new(7, 7),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -1108,18 +1108,18 @@ public class PathfindingPipelineTests
         [
             "Z86", // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(4, 3), new Vector2<int>(5, 4), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(5, 4), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(5, 6), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(5, 6), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(5, 4))
+                new Area(new Vector2Int(4, 3), new Vector2Int(5, 4))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3), new(8, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4), new(8, 4),
@@ -1129,12 +1129,12 @@ public class PathfindingPipelineTests
                 new(3, 2), new(4, 2), new(5, 2), new(6, 2), new(7, 2), new(8, 2),
                 new(3, 3), new(3, 4), new(3, 5), new(3, 6),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(8, 3), new(8, 4), new(8, 5),
                 new(4, 6), new(7, 6), new(8, 6),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -1147,18 +1147,18 @@ public class PathfindingPipelineTests
         [
             "AL86", // Scenario
             new PathfindingSize(2),
-            new Vector2<int>(4, 3), new Vector2<int>(4, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(4, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 4), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(4, 4), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(4, 5))
+                new Area(new Vector2Int(4, 3), new Vector2Int(4, 5))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -1169,12 +1169,12 @@ public class PathfindingPipelineTests
                 new(3, 2), new(4, 2), new(5, 2), new(6, 2), new(7, 2),
                 new(3, 3), new(3, 6), new(3, 7),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(7, 3), new(7, 4), new(7, 5), new(7, 6), new(7, 7),
                 new(4, 7), new(5, 7), new(6, 7),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -1187,18 +1187,18 @@ public class PathfindingPipelineTests
         [
             "B98", // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(4, 3), new Vector2<int>(5, 4), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(5, 4), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(5, 3), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(5, 3), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(5, 4))
+                new Area(new Vector2Int(4, 3), new Vector2Int(5, 4))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3), new(8, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4), new(8, 4),
@@ -1212,14 +1212,14 @@ public class PathfindingPipelineTests
                 new(2, 5), new(3, 5),
                 new(2, 6), new(3, 6),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(7, 3), new(8, 3),
                 new(7, 4), new(8, 4),
                 new(4, 5), new(5, 5), new(6, 5), new(7, 5), new(8, 5),
                 new(4, 6), new(5, 6), new(6, 6), new(7, 6), new(8, 6),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -1230,18 +1230,18 @@ public class PathfindingPipelineTests
         [
             "N98", // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(3, 3), new Vector2<int>(4, 5), // Position & size
+            new Vector2Int(3, 3), new Vector2Int(4, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(6, 4), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(6, 4), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(3, 3), new Vector2<int>(4, 5))
+                new Area(new Vector2Int(3, 3), new Vector2Int(4, 5))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(3, 3), new(4, 3), new(5, 3), new(6, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4),
@@ -1257,14 +1257,14 @@ public class PathfindingPipelineTests
                 new(1, 6), new(2, 6),
                 new(1, 7), new(2, 7),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(5, 3), new(6, 3),
                 new(5, 5), new(6, 5),
                 new(3, 6), new(4, 6), new(5, 6), new(6, 6),
                 new(3, 7), new(4, 7), new(5, 7), new(6, 7),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(3, 3), new(4, 3),
                 new(3, 4), new(4, 4), new(5, 4), new(6, 4),
@@ -1276,18 +1276,18 @@ public class PathfindingPipelineTests
         [
             "Z98", // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(4, 3), new Vector2<int>(5, 4), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(5, 4), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(5, 6), new Vector2<int>(3, 1)),
+                new Area(new Vector2Int(5, 6), new Vector2Int(3, 1)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(5, 4))
+                new Area(new Vector2Int(4, 3), new Vector2Int(5, 4))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3), new(8, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4), new(8, 4),
@@ -1301,14 +1301,14 @@ public class PathfindingPipelineTests
                 new(2, 5), new(3, 5),
                 new(2, 6), new(3, 6),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(7, 3), new(8, 3),
                 new(7, 4), new(8, 4),
                 new(4, 5), new(6, 5), new(7, 5), new(8, 5),
                 new(4, 6), new(6, 6), new(7, 6), new(8, 6),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3), new(6, 3),
                 new(4, 4), new(5, 4), new(6, 4),
@@ -1321,18 +1321,18 @@ public class PathfindingPipelineTests
         [
             "AL98", // Scenario
             new PathfindingSize(3),
-            new Vector2<int>(4, 3), new Vector2<int>(4, 5), // Position & size
+            new Vector2Int(4, 3), new Vector2Int(4, 5), // Position & size
             new[] // Ascendable
             {
-                new Area(new Vector2<int>(4, 4), new Vector2<int>(1, 3)),
+                new Area(new Vector2Int(4, 4), new Vector2Int(1, 3)),
             },
             new[] // High ground
             {
-                new Area(new Vector2<int>(4, 3), new Vector2<int>(4, 5))
+                new Area(new Vector2Int(4, 3), new Vector2Int(4, 5))
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 3), new(5, 3), new(6, 3), new(7, 3),
                 new(4, 4), new(5, 4), new(6, 4), new(7, 4),
@@ -1347,7 +1347,7 @@ public class PathfindingPipelineTests
                 new(2, 6), new(3, 6),
                 new(2, 7), new(3, 7),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(6, 3), new(7, 3),
                 new(6, 4), new(7, 4),
@@ -1355,7 +1355,7 @@ public class PathfindingPipelineTests
                 new(4, 6), new(5, 6), new(6, 6), new(7, 6),
                 new(4, 7), new(5, 7), new(6, 7), new(7, 7),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 3), new(5, 3),
                 new(4, 4), new(5, 4),
@@ -1369,12 +1369,12 @@ public class PathfindingPipelineTests
     public void Pathfinding_ShouldCalculateHighGroundAndOccupation_ForEnclosedBase(
         string scenario,
         PathfindingSize pathfindingSize,
-        Vector2<int> entityPrimaryPosition, Vector2<int> entitySize,
+        Vector2Int entityPrimaryPosition, Vector2Int entitySize,
         Area[] ascendables,
         Area[] highGrounds,
-        Vector2<int>[] expectedOccupiedLowGroundPositions,
-        Vector2<int>[] expectedOccupiedHighGroundPositions,
-        Vector2<int>[] expectedFreeHighGroundPositions)
+        Vector2Int[] expectedOccupiedLowGroundPositions,
+        Vector2Int[] expectedOccupiedHighGroundPositions,
+        Vector2Int[] expectedFreeHighGroundPositions)
     {
         SetupAddingEntityInstance(entityPrimaryPosition, entitySize, Team.Default, false, null,
             ascendables.Select(x => x.ToVectors()).ToList(),
@@ -1404,43 +1404,43 @@ public class PathfindingPipelineTests
         [
             "B110", // Scenario
             new PathfindingSize(1),
-            new (Vector2<int>, Vector2<int>, Area[], Area[])[]
+            new (Vector2Int, Vector2Int, Area[], Area[])[]
             {
                 (
-                    new Vector2<int>(7, 2),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(7, 2),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(8, 3),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(8, 3),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(3, 4),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(3, 4),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(4, 5),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(4, 5),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(6, 7),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(5, 8),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(5, 8),
+                    new Vector2Int(1, 1), [], []
                 ),
             },
             // Expected:
             new[] // Non connected diagonal pairs
             {
-                ((new Vector2<int>(8, 2), false), (new Vector2<int>(7, 3), false)), 
-                ((new Vector2<int>(4, 4), false), (new Vector2<int>(3, 5), false)), 
-                ((new Vector2<int>(5, 7), false), (new Vector2<int>(6, 8), false)), 
+                ((new Vector2Int(8, 2), false), (new Vector2Int(7, 3), false)), 
+                ((new Vector2Int(4, 4), false), (new Vector2Int(3, 5), false)), 
+                ((new Vector2Int(5, 7), false), (new Vector2Int(6, 8), false)), 
             },
             new[] // Connected diagonal pairs
             {
-                ((new Vector2<int>(7, 1), false), (new Vector2<int>(6, 2), false)), 
+                ((new Vector2Int(7, 1), false), (new Vector2Int(6, 2), false)), 
             },
         ];
         
@@ -1448,41 +1448,41 @@ public class PathfindingPipelineTests
         [
             "B122", // Scenario
             new PathfindingSize(2),
-            new (Vector2<int>, Vector2<int>, Area[], Area[])[]
+            new (Vector2Int, Vector2Int, Area[], Area[])[]
             {
                 (
-                    new Vector2<int>(7, 2),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(7, 2),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(8, 3),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(8, 3),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(3, 4),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(3, 4),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(4, 5),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(4, 5),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(6, 7),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(5, 8),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(5, 8),
+                    new Vector2Int(1, 1), [], []
                 ),
             },
             // Expected:
             new[] // Non connected diagonal pairs
             {
-                ((new Vector2<int>(5, 5), false), (new Vector2<int>(4, 6), false)), 
+                ((new Vector2Int(5, 5), false), (new Vector2Int(4, 6), false)), 
             },
             new[] // Connected diagonal pairs
             {
-                ((new Vector2<int>(3, 2), false), (new Vector2<int>(4, 3), false)), 
+                ((new Vector2Int(3, 2), false), (new Vector2Int(4, 3), false)), 
             },
         ];
         
@@ -1490,41 +1490,41 @@ public class PathfindingPipelineTests
         [
             "B134", // Scenario
             new PathfindingSize(3),
-            new (Vector2<int>, Vector2<int>, Area[], Area[])[]
+            new (Vector2Int, Vector2Int, Area[], Area[])[]
             {
                 (
-                    new Vector2<int>(7, 2),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(7, 2),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(8, 3),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(8, 3),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(3, 4),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(3, 4),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(4, 5),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(4, 5),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(6, 7),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(5, 8),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(5, 8),
+                    new Vector2Int(1, 1), [], []
                 ),
             },
             // Expected:
             new[] // Non connected diagonal pairs
             {
-                ((new Vector2<int>(4, 2), false), (new Vector2<int>(5, 3), false)), 
+                ((new Vector2Int(4, 2), false), (new Vector2Int(5, 3), false)), 
             },
             new[] // Connected diagonal pairs
             {
-                ((new Vector2<int>(3, 1), false), (new Vector2<int>(4, 2), false)), 
+                ((new Vector2Int(3, 1), false), (new Vector2Int(4, 2), false)), 
             },
         ];
 
@@ -1532,52 +1532,52 @@ public class PathfindingPipelineTests
         [
             "N110", // Scenario
             new PathfindingSize(1),
-            new (Vector2<int>, Vector2<int>, Area[], Area[])[]
+            new (Vector2Int, Vector2Int, Area[], Area[])[]
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(3, 4),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(3, 4),
                     [
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(3, 1))
+                        new Area(new Vector2Int(2, 2), new Vector2Int(3, 1))
                     ],
                     [
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(3, 4))
+                        new Area(new Vector2Int(2, 2), new Vector2Int(3, 4))
                     ]
                 ),
                 (
-                    new Vector2<int>(3, 4),
-                    new Vector2<int>(3, 3),
+                    new Vector2Int(3, 4),
+                    new Vector2Int(3, 3),
                     [],
                     [
-                        new Area(new Vector2<int>(3, 4), new Vector2<int>(3, 3))
+                        new Area(new Vector2Int(3, 4), new Vector2Int(3, 3))
                     ]
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 2),
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 2))
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 2))
                     ]
                 ),
                 (
-                    new Vector2<int>(4, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(4, 8),
+                    new Vector2Int(1, 1),
                     [],
                     [
-                        new Area(new Vector2<int>(4, 8), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(4, 8), new Vector2Int(1, 1))
                     ]
                 ),
             },
             // Expected:
             new[] // Non connected diagonal pairs
             {
-                ((new Vector2<int>(5, 7), true), (new Vector2<int>(4, 8), true)), 
+                ((new Vector2Int(5, 7), true), (new Vector2Int(4, 8), true)), 
             },
             new[] // Connected diagonal pairs
             {
-                ((new Vector2<int>(4, 6), true), (new Vector2<int>(5, 7), true)), 
-                ((new Vector2<int>(1, 1), false), (new Vector2<int>(2, 2), true)), 
+                ((new Vector2Int(4, 6), true), (new Vector2Int(5, 7), true)), 
+                ((new Vector2Int(1, 1), false), (new Vector2Int(2, 2), true)), 
             }
         ];
         
@@ -1585,52 +1585,52 @@ public class PathfindingPipelineTests
         [
             "N122", // Scenario
             new PathfindingSize(2),
-            new (Vector2<int>, Vector2<int>, Area[], Area[])[]
+            new (Vector2Int, Vector2Int, Area[], Area[])[]
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(3, 4),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(3, 4),
                     [
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(3, 1))
+                        new Area(new Vector2Int(2, 2), new Vector2Int(3, 1))
                     ],
                     [
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(3, 4))
+                        new Area(new Vector2Int(2, 2), new Vector2Int(3, 4))
                     ]
                 ),
                 (
-                    new Vector2<int>(3, 4),
-                    new Vector2<int>(3, 3),
+                    new Vector2Int(3, 4),
+                    new Vector2Int(3, 3),
                     [],
                     [
-                        new Area(new Vector2<int>(3, 4), new Vector2<int>(3, 3))
+                        new Area(new Vector2Int(3, 4), new Vector2Int(3, 3))
                     ]
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 2),
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 2))
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 2))
                     ]
                 ),
                 (
-                    new Vector2<int>(4, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(4, 8),
+                    new Vector2Int(1, 1),
                     [],
                     [
-                        new Area(new Vector2<int>(4, 8), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(4, 8), new Vector2Int(1, 1))
                     ]
                 ),
             },
             // Expected:
             new[] // Non connected diagonal pairs
             {
-                ((new Vector2<int>(4, 5), true), (new Vector2<int>(5, 6), true)), 
+                ((new Vector2Int(4, 5), true), (new Vector2Int(5, 6), true)), 
             },
             new[] // Connected diagonal pairs
             {
-                ((new Vector2<int>(2, 4), true), (new Vector2<int>(3, 5), true)), 
-                ((new Vector2<int>(1, 1), false), (new Vector2<int>(2, 2), true)), 
+                ((new Vector2Int(2, 4), true), (new Vector2Int(3, 5), true)), 
+                ((new Vector2Int(1, 1), false), (new Vector2Int(2, 2), true)), 
             }
         ];
         
@@ -1638,52 +1638,52 @@ public class PathfindingPipelineTests
         [
             "N134", // Scenario
             new PathfindingSize(3),
-            new (Vector2<int>, Vector2<int>, Area[], Area[])[]
+            new (Vector2Int, Vector2Int, Area[], Area[])[]
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(3, 4),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(3, 4),
                     [
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(3, 1))
+                        new Area(new Vector2Int(2, 2), new Vector2Int(3, 1))
                     ],
                     [
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(3, 4))
+                        new Area(new Vector2Int(2, 2), new Vector2Int(3, 4))
                     ]
                 ),
                 (
-                    new Vector2<int>(3, 4),
-                    new Vector2<int>(3, 3),
+                    new Vector2Int(3, 4),
+                    new Vector2Int(3, 3),
                     [],
                     [
-                        new Area(new Vector2<int>(3, 4), new Vector2<int>(3, 3))
+                        new Area(new Vector2Int(3, 4), new Vector2Int(3, 3))
                     ]
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 2),
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 2))
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 2))
                     ]
                 ),
                 (
-                    new Vector2<int>(4, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(4, 8),
+                    new Vector2Int(1, 1),
                     [],
                     [
-                        new Area(new Vector2<int>(4, 8), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(4, 8), new Vector2Int(1, 1))
                     ]
                 ),
             },
             // Expected:
             new[] // Non connected diagonal pairs
             {
-                ((new Vector2<int>(2, 3), true), (new Vector2<int>(3, 4), true)), 
+                ((new Vector2Int(2, 3), true), (new Vector2Int(3, 4), true)), 
             },
             new[] // Connected diagonal pairs
             {
-                ((new Vector2<int>(2, 2), true), (new Vector2<int>(2, 3), true)), 
-                ((new Vector2<int>(1, 0), false), (new Vector2<int>(2, 1), false)), 
+                ((new Vector2Int(2, 2), true), (new Vector2Int(2, 3), true)), 
+                ((new Vector2Int(1, 0), false), (new Vector2Int(2, 1), false)), 
             }
         ];
         
@@ -1691,156 +1691,156 @@ public class PathfindingPipelineTests
         [
             "Z110", // Scenario
             new PathfindingSize(1),
-            new (Vector2<int>, Vector2<int>, Area[], Area[])[]
+            new (Vector2Int, Vector2Int, Area[], Area[])[]
             {
                 (
-                    new Vector2<int>(1, 1),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(1, 1),
+                    new Vector2Int(1, 1),
                     [
-                        new Area(new Vector2<int>(1, 1), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(1, 1), new Vector2Int(1, 1))
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(1, 1),
                     [
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(1, 1))
-                    ],
-                    []
-                ),
-                
-                (
-                    new Vector2<int>(5, 1),
-                    new Vector2<int>(1, 1),
-                    [
-                        new Area(new Vector2<int>(5, 1), new Vector2<int>(1, 1))
-                    ],
-                    []
-                ),
-                (
-                    new Vector2<int>(4, 2),
-                    new Vector2<int>(1, 1),
-                    [
-                        new Area(new Vector2<int>(4, 2), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(2, 2), new Vector2Int(1, 1))
                     ],
                     []
                 ),
                 
                 (
-                    new Vector2<int>(1, 4),
-                    new Vector2<int>(1, 1), [], []
-                ),
-                (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(1, 1), [], []
-                ),
-                (
-                    new Vector2<int>(2, 4),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(5, 1),
+                    new Vector2Int(1, 1),
                     [
-                        new Area(new Vector2<int>(2, 4), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(5, 1), new Vector2Int(1, 1))
+                    ],
+                    []
+                ),
+                (
+                    new Vector2Int(4, 2),
+                    new Vector2Int(1, 1),
+                    [
+                        new Area(new Vector2Int(4, 2), new Vector2Int(1, 1))
                     ],
                     []
                 ),
                 
                 (
-                    new Vector2<int>(4, 4),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(1, 4),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(5, 5),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(2, 5),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(4, 5),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(2, 4),
+                    new Vector2Int(1, 1),
                     [
-                        new Area(new Vector2<int>(4, 5), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(2, 4), new Vector2Int(1, 1))
                     ],
                     []
                 ),
                 
                 (
-                    new Vector2<int>(7, 4),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(4, 4),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(8, 5),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(5, 5),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(8, 4),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(4, 5),
+                    new Vector2Int(1, 1),
                     [
-                        new Area(new Vector2<int>(8, 4), new Vector2<int>(1, 1))
-                    ],
-                    []
-                ),
-                (
-                    new Vector2<int>(7, 5),
-                    new Vector2<int>(1, 1),
-                    [
-                        new Area(new Vector2<int>(7, 5), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(4, 5), new Vector2Int(1, 1))
                     ],
                     []
                 ),
                 
                 (
-                    new Vector2<int>(2, 7),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(7, 4),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(1, 8),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(8, 5),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(1, 7),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(8, 4),
+                    new Vector2Int(1, 1),
                     [
-                        new Area(new Vector2<int>(1, 7), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(8, 4), new Vector2Int(1, 1))
+                    ],
+                    []
+                ),
+                (
+                    new Vector2Int(7, 5),
+                    new Vector2Int(1, 1),
+                    [
+                        new Area(new Vector2Int(7, 5), new Vector2Int(1, 1))
                     ],
                     []
                 ),
                 
                 (
-                    new Vector2<int>(5, 7),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(2, 7),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(4, 8),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(1, 8),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(5, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(1, 7),
+                    new Vector2Int(1, 1),
                     [
-                        new Area(new Vector2<int>(5, 8), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(1, 7), new Vector2Int(1, 1))
                     ],
                     []
                 ),
                 
                 (
-                    new Vector2<int>(8, 7),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(5, 7),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(7, 8),
-                    new Vector2<int>(1, 1), [], []
+                    new Vector2Int(4, 8),
+                    new Vector2Int(1, 1), [], []
                 ),
                 (
-                    new Vector2<int>(7, 7),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(5, 8),
+                    new Vector2Int(1, 1),
                     [
-                        new Area(new Vector2<int>(7, 7), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(5, 8), new Vector2Int(1, 1))
+                    ],
+                    []
+                ),
+                
+                (
+                    new Vector2Int(8, 7),
+                    new Vector2Int(1, 1), [], []
+                ),
+                (
+                    new Vector2Int(7, 8),
+                    new Vector2Int(1, 1), [], []
+                ),
+                (
+                    new Vector2Int(7, 7),
+                    new Vector2Int(1, 1),
+                    [
+                        new Area(new Vector2Int(7, 7), new Vector2Int(1, 1))
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(8, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(8, 8),
+                    new Vector2Int(1, 1),
                     [
-                        new Area(new Vector2<int>(8, 8), new Vector2<int>(1, 1))
+                        new Area(new Vector2Int(8, 8), new Vector2Int(1, 1))
                     ],
                     []
                 ),
@@ -1848,19 +1848,19 @@ public class PathfindingPipelineTests
             // Expected:
             new[] // Non connected diagonal pairs
             {
-                ((new Vector2<int>(2, 4), true), (new Vector2<int>(1, 5), false)), 
-                ((new Vector2<int>(5, 4), false), (new Vector2<int>(4, 5), true)), 
-                ((new Vector2<int>(8, 4), true), (new Vector2<int>(7, 5), true)), 
-                ((new Vector2<int>(1, 7), true), (new Vector2<int>(2, 8), false)), 
-                ((new Vector2<int>(4, 7), false), (new Vector2<int>(5, 8), true)), 
-                ((new Vector2<int>(7, 7), true), (new Vector2<int>(8, 8), true)), 
+                ((new Vector2Int(2, 4), true), (new Vector2Int(1, 5), false)), 
+                ((new Vector2Int(5, 4), false), (new Vector2Int(4, 5), true)), 
+                ((new Vector2Int(8, 4), true), (new Vector2Int(7, 5), true)), 
+                ((new Vector2Int(1, 7), true), (new Vector2Int(2, 8), false)), 
+                ((new Vector2Int(4, 7), false), (new Vector2Int(5, 8), true)), 
+                ((new Vector2Int(7, 7), true), (new Vector2Int(8, 8), true)), 
             },
             new[] // Connected diagonal pairs
             {
-                ((new Vector2<int>(1, 1), true), (new Vector2<int>(2, 2), true)), 
-                ((new Vector2<int>(5, 1), true), (new Vector2<int>(4, 2), true)), 
-                ((new Vector2<int>(2, 1), false), (new Vector2<int>(1, 2), false)), 
-                ((new Vector2<int>(4, 1), false), (new Vector2<int>(5, 2), false)), 
+                ((new Vector2Int(1, 1), true), (new Vector2Int(2, 2), true)), 
+                ((new Vector2Int(5, 1), true), (new Vector2Int(4, 2), true)), 
+                ((new Vector2Int(2, 1), false), (new Vector2Int(1, 2), false)), 
+                ((new Vector2Int(4, 1), false), (new Vector2Int(5, 2), false)), 
             }
         ];
     }
@@ -1870,9 +1870,9 @@ public class PathfindingPipelineTests
     public void Pathfinding_ShouldCalculateConnections_ForDiagonals(
         string scenario,
         PathfindingSize pathfindingSize,
-        (Vector2<int>, Vector2<int>, Area[], Area[])[] entities,
-        ((Vector2<int>, bool), (Vector2<int>, bool))[] expectedNonConnectedDiagonalPairs,
-        ((Vector2<int>, bool), (Vector2<int>, bool))[] expectedConnectedDiagonalPairs)
+        (Vector2Int, Vector2Int, Area[], Area[])[] entities,
+        ((Vector2Int, bool), (Vector2Int, bool))[] expectedNonConnectedDiagonalPairs,
+        ((Vector2Int, bool), (Vector2Int, bool))[] expectedConnectedDiagonalPairs)
     {
         foreach (var (pos, size, ascendables, highGrounds) in entities)
         {
@@ -1897,51 +1897,51 @@ public class PathfindingPipelineTests
         [
             "B146", // Scenario
             new PathfindingSize(1),
-            new (Vector2<int>, Vector2<int>, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
+            new (Vector2Int, Vector2Int, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
             {
                 (
-                    new Vector2<int>(5, 2),
-                    new Vector2<int>(1, 7),
+                    new Vector2Int(5, 2),
+                    new Vector2Int(1, 7),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 5)), 
-                        new Area(new Vector2<int>(5, 2), new Vector2<int>(1, 7)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 5)), 
+                        new Area(new Vector2Int(5, 2), new Vector2Int(1, 7)), 
                     ],
                     [
-                        new Area(new Vector2<int>(5, 5), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(5, 5), new Vector2Int(1, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(4, 3),
-                    new Vector2<int>(3, 5),
+                    new Vector2Int(4, 3),
+                    new Vector2Int(3, 5),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(3, 3)), 
-                        new Area(new Vector2<int>(4, 3), new Vector2<int>(3, 5)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(3, 3)), 
+                        new Area(new Vector2Int(4, 3), new Vector2Int(3, 5)), 
                     ], []
                 ),
                 (
-                    new Vector2<int>(3, 4),
-                    new Vector2<int>(5, 3),
+                    new Vector2Int(3, 4),
+                    new Vector2Int(5, 3),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(3, 3)), 
-                        new Area(new Vector2<int>(3, 4), new Vector2<int>(5, 3)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(3, 3)), 
+                        new Area(new Vector2Int(3, 4), new Vector2Int(5, 3)), 
                     ], []
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(7, 1),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(7, 1),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(3, 5), new Vector2<int>(5, 1)), 
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(7, 1)), 
+                        new Area(new Vector2Int(3, 5), new Vector2Int(5, 1)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(7, 1)), 
                     ], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(5, 2), 
                 new(4, 3), new(5, 3), new(6, 3), 
@@ -1951,8 +1951,8 @@ public class PathfindingPipelineTests
                 new(4, 7), new(5, 7), new(6, 7), 
                 new(5, 8), 
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(5, 2), 
                 new(4, 3), new(5, 3), new(6, 3), 
@@ -1962,10 +1962,10 @@ public class PathfindingPipelineTests
                 new(4, 7), new(5, 7), new(6, 7), 
                 new(5, 8), 
             },
-            Array.Empty<((Vector2<int>, bool), (Vector2<int>, bool))>(), // Non connected position pairs,
+            Array.Empty<((Vector2Int, bool), (Vector2Int, bool))>(), // Non connected position pairs,
             new[] // Connected position pairs
             {
-                ((new Vector2<int>(1, 4), false), (new Vector2<int>(2, 5), true)), 
+                ((new Vector2Int(1, 4), false), (new Vector2Int(2, 5), true)), 
             },
         ];
 
@@ -1973,51 +1973,51 @@ public class PathfindingPipelineTests
         [
             "B158", // Scenario
             new PathfindingSize(2),
-            new (Vector2<int>, Vector2<int>, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
+            new (Vector2Int, Vector2Int, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
             {
                 (
-                    new Vector2<int>(5, 2),
-                    new Vector2<int>(1, 7),
+                    new Vector2Int(5, 2),
+                    new Vector2Int(1, 7),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 5)), 
-                        new Area(new Vector2<int>(5, 2), new Vector2<int>(1, 7)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 5)), 
+                        new Area(new Vector2Int(5, 2), new Vector2Int(1, 7)), 
                     ],
                     [
-                        new Area(new Vector2<int>(5, 5), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(5, 5), new Vector2Int(1, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(4, 3),
-                    new Vector2<int>(3, 5),
+                    new Vector2Int(4, 3),
+                    new Vector2Int(3, 5),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(3, 3)), 
-                        new Area(new Vector2<int>(4, 3), new Vector2<int>(3, 5)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(3, 3)), 
+                        new Area(new Vector2Int(4, 3), new Vector2Int(3, 5)), 
                     ], []
                 ),
                 (
-                    new Vector2<int>(3, 4),
-                    new Vector2<int>(5, 3),
+                    new Vector2Int(3, 4),
+                    new Vector2Int(5, 3),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(3, 3)), 
-                        new Area(new Vector2<int>(3, 4), new Vector2<int>(5, 3)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(3, 3)), 
+                        new Area(new Vector2Int(3, 4), new Vector2Int(5, 3)), 
                     ], []
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(7, 1),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(7, 1),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(3, 5), new Vector2<int>(5, 1)), 
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(7, 1)), 
+                        new Area(new Vector2Int(3, 5), new Vector2Int(5, 1)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(7, 1)), 
                     ], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(5, 2), 
                 new(4, 3), new(5, 3), new(6, 3), 
@@ -2027,8 +2027,8 @@ public class PathfindingPipelineTests
                 new(4, 7), new(5, 7), new(6, 7), 
                 new(5, 8), 
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(5, 2), 
                 new(4, 3), new(5, 3), new(6, 3), 
@@ -2038,10 +2038,10 @@ public class PathfindingPipelineTests
                 new(4, 7), new(5, 7), new(6, 7), 
                 new(5, 8), 
             },
-            Array.Empty<((Vector2<int>, bool), (Vector2<int>, bool))>(), // Non connected position pairs,
+            Array.Empty<((Vector2Int, bool), (Vector2Int, bool))>(), // Non connected position pairs,
             new[] // Connected position pairs
             {
-                ((new Vector2<int>(1, 4), false), (new Vector2<int>(2, 5), true)), 
+                ((new Vector2Int(1, 4), false), (new Vector2Int(2, 5), true)), 
             },
         ];
         
@@ -2049,51 +2049,51 @@ public class PathfindingPipelineTests
         [
             "B170", // Scenario
             new PathfindingSize(3),
-            new (Vector2<int>, Vector2<int>, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
+            new (Vector2Int, Vector2Int, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
             {
                 (
-                    new Vector2<int>(5, 2),
-                    new Vector2<int>(1, 7),
+                    new Vector2Int(5, 2),
+                    new Vector2Int(1, 7),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 5)), 
-                        new Area(new Vector2<int>(5, 2), new Vector2<int>(1, 7)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 5)), 
+                        new Area(new Vector2Int(5, 2), new Vector2Int(1, 7)), 
                     ],
                     [
-                        new Area(new Vector2<int>(5, 5), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(5, 5), new Vector2Int(1, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(4, 3),
-                    new Vector2<int>(3, 5),
+                    new Vector2Int(4, 3),
+                    new Vector2Int(3, 5),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(3, 3)), 
-                        new Area(new Vector2<int>(4, 3), new Vector2<int>(3, 5)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(3, 3)), 
+                        new Area(new Vector2Int(4, 3), new Vector2Int(3, 5)), 
                     ], []
                 ),
                 (
-                    new Vector2<int>(3, 4),
-                    new Vector2<int>(5, 3),
+                    new Vector2Int(3, 4),
+                    new Vector2Int(5, 3),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(3, 3)), 
-                        new Area(new Vector2<int>(3, 4), new Vector2<int>(5, 3)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(3, 3)), 
+                        new Area(new Vector2Int(3, 4), new Vector2Int(5, 3)), 
                     ], []
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(7, 1),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(7, 1),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(3, 5), new Vector2<int>(5, 1)), 
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(7, 1)), 
+                        new Area(new Vector2Int(3, 5), new Vector2Int(5, 1)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(7, 1)), 
                     ], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(5, 2), 
                 new(4, 3), new(5, 3), new(6, 3), 
@@ -2102,11 +2102,11 @@ public class PathfindingPipelineTests
                 new(3, 6), new(4, 6), new(5, 6), new(6, 6), new(7, 6), 
                 new(4, 7), new(5, 7), new(6, 7), 
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(8, 5), new(5, 8), 
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(5, 2), 
                 new(4, 3), new(5, 3), new(6, 3), 
@@ -2115,10 +2115,10 @@ public class PathfindingPipelineTests
                 new(3, 6), new(4, 6), new(5, 6), new(6, 6), new(7, 6), 
                 new(4, 7), new(5, 7), new(6, 7), 
             },
-            Array.Empty<((Vector2<int>, bool), (Vector2<int>, bool))>(), // Non connected position pairs,
+            Array.Empty<((Vector2Int, bool), (Vector2Int, bool))>(), // Non connected position pairs,
             new[] // Connected position pairs
             {
-                ((new Vector2<int>(1, 4), false), (new Vector2<int>(2, 5), true)), 
+                ((new Vector2Int(1, 4), false), (new Vector2Int(2, 5), true)), 
             },
         ];
         
@@ -2126,65 +2126,65 @@ public class PathfindingPipelineTests
         [
             "N146", // Scenario
             new PathfindingSize(1),
-            new (Vector2<int>, Vector2<int>, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
+            new (Vector2Int, Vector2Int, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
             {
                 (
-                    new Vector2<int>(4, 2),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(4, 2),
+                    new Vector2Int(4, 1),
                     Team.Default,
                     [
-                        new Area(new Vector2<int>(5, 2), new Vector2<int>(1, 1)), 
-                        new Area(new Vector2<int>(4, 2), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(5, 2), new Vector2Int(1, 1)), 
+                        new Area(new Vector2Int(4, 2), new Vector2Int(1, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(6, 2), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(7, 2),
-                    new Vector2<int>(1, 5),
+                    new Vector2Int(7, 2),
+                    new Vector2Int(1, 5),
                     Team.Default,
                     [],
                     [
-                        new Area(new Vector2<int>(7, 2), new Vector2<int>(1, 5)), 
+                        new Area(new Vector2Int(7, 2), new Vector2Int(1, 5)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(4, 6),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(4, 6),
+                    new Vector2Int(4, 1),
                     Team.Default,
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(1, 1)), 
-                        new Area(new Vector2<int>(4, 6), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(1, 1)), 
+                        new Area(new Vector2Int(4, 6), new Vector2Int(1, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(6, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 4),
-                    new Vector2<int>(5, 1),
+                    new Vector2Int(2, 4),
+                    new Vector2Int(5, 1),
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(2, 4),
-                    new Vector2<int>(1, 5),
+                    new Vector2Int(2, 4),
+                    new Vector2Int(1, 5),
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(2, 8),
-                    new Vector2<int>(6, 1),
+                    new Vector2Int(2, 8),
+                    new Vector2Int(6, 1),
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(7, 7),
-                    new Vector2<int>(1, 2),
+                    new Vector2Int(7, 7),
+                    new Vector2Int(1, 2),
                     Team.Default, [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 2), new(5, 2), new(6, 2), new(7, 2), 
                 new(7, 3), 
@@ -2198,8 +2198,8 @@ public class PathfindingPipelineTests
                 new(2, 7), new(7, 7), 
                 new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), new(7, 8), 
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 2), new(5, 2), new(6, 2), new(7, 2), 
                 new(7, 3), 
@@ -2209,22 +2209,22 @@ public class PathfindingPipelineTests
             },
             new[] // Non connected position pairs
             {
-                ((new Vector2<int>(4, 5), false), (new Vector2<int>(5, 6), true)), 
-                ((new Vector2<int>(5, 5), false), (new Vector2<int>(5, 6), true)), 
-                ((new Vector2<int>(6, 5), false), (new Vector2<int>(5, 6), true)), 
-                ((new Vector2<int>(4, 7), false), (new Vector2<int>(5, 6), true)), 
-                ((new Vector2<int>(5, 7), false), (new Vector2<int>(5, 6), true)), 
-                ((new Vector2<int>(6, 7), false), (new Vector2<int>(5, 6), true)), 
+                ((new Vector2Int(4, 5), false), (new Vector2Int(5, 6), true)), 
+                ((new Vector2Int(5, 5), false), (new Vector2Int(5, 6), true)), 
+                ((new Vector2Int(6, 5), false), (new Vector2Int(5, 6), true)), 
+                ((new Vector2Int(4, 7), false), (new Vector2Int(5, 6), true)), 
+                ((new Vector2Int(5, 7), false), (new Vector2Int(5, 6), true)), 
+                ((new Vector2Int(6, 7), false), (new Vector2Int(5, 6), true)), 
             },
             new[] // Connected position pairs
             {
-                ((new Vector2<int>(3, 5), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(4, 5), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(5, 5), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(3, 6), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(3, 7), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(4, 7), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(5, 7), false), (new Vector2<int>(4, 6), true)), 
+                ((new Vector2Int(3, 5), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(4, 5), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(5, 5), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(3, 6), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(3, 7), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(4, 7), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(5, 7), false), (new Vector2Int(4, 6), true)), 
             },
         ];
         
@@ -2232,65 +2232,65 @@ public class PathfindingPipelineTests
         [
             "N158", // Scenario
             new PathfindingSize(1),
-            new (Vector2<int>, Vector2<int>, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
+            new (Vector2Int, Vector2Int, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
             {
                 (
-                    new Vector2<int>(4, 2),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(4, 2),
+                    new Vector2Int(4, 1),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(5, 2), new Vector2<int>(1, 1)), 
-                        new Area(new Vector2<int>(4, 2), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(5, 2), new Vector2Int(1, 1)), 
+                        new Area(new Vector2Int(4, 2), new Vector2Int(1, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(6, 2), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(7, 2),
-                    new Vector2<int>(1, 5),
+                    new Vector2Int(7, 2),
+                    new Vector2Int(1, 5),
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(7, 2), new Vector2<int>(1, 5)), 
+                        new Area(new Vector2Int(7, 2), new Vector2Int(1, 5)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(4, 6),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(4, 6),
+                    new Vector2Int(4, 1),
                     new Team(2),
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(1, 1)), 
-                        new Area(new Vector2<int>(4, 6), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(1, 1)), 
+                        new Area(new Vector2Int(4, 6), new Vector2Int(1, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(6, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 4),
-                    new Vector2<int>(5, 1),
+                    new Vector2Int(2, 4),
+                    new Vector2Int(5, 1),
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(2, 4),
-                    new Vector2<int>(1, 5),
+                    new Vector2Int(2, 4),
+                    new Vector2Int(1, 5),
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(2, 8),
-                    new Vector2<int>(6, 1),
+                    new Vector2Int(2, 8),
+                    new Vector2Int(6, 1),
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(7, 7),
-                    new Vector2<int>(1, 2),
+                    new Vector2Int(7, 7),
+                    new Vector2Int(1, 2),
                     Team.Default, [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(4, 2), new(5, 2), new(6, 2), new(7, 2), 
                 new(7, 3), 
@@ -2308,8 +2308,8 @@ public class PathfindingPipelineTests
                 new(3, 6), 
                 new(3, 7), new(4, 7), new(5, 7), new(6, 7), 
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(4, 2), new(5, 2), new(6, 2), new(7, 2), 
                 new(7, 3), 
@@ -2319,68 +2319,68 @@ public class PathfindingPipelineTests
             },
             new[] // Non connected position pairs
             {
-                ((new Vector2<int>(3, 5), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(4, 5), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(5, 5), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(3, 6), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(3, 7), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(4, 7), false), (new Vector2<int>(4, 6), true)), 
-                ((new Vector2<int>(5, 7), false), (new Vector2<int>(4, 6), true)), 
+                ((new Vector2Int(3, 5), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(4, 5), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(5, 5), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(3, 6), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(3, 7), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(4, 7), false), (new Vector2Int(4, 6), true)), 
+                ((new Vector2Int(5, 7), false), (new Vector2Int(4, 6), true)), 
                 
-                ((new Vector2<int>(4, 5), false), (new Vector2<int>(5, 6), true)), 
-                ((new Vector2<int>(5, 5), false), (new Vector2<int>(5, 6), true)), 
-                ((new Vector2<int>(6, 5), false), (new Vector2<int>(5, 6), true)), 
-                ((new Vector2<int>(4, 7), false), (new Vector2<int>(5, 6), true)), 
-                ((new Vector2<int>(5, 7), false), (new Vector2<int>(5, 6), true)), 
-                ((new Vector2<int>(6, 7), false), (new Vector2<int>(5, 6), true)), 
+                ((new Vector2Int(4, 5), false), (new Vector2Int(5, 6), true)), 
+                ((new Vector2Int(5, 5), false), (new Vector2Int(5, 6), true)), 
+                ((new Vector2Int(6, 5), false), (new Vector2Int(5, 6), true)), 
+                ((new Vector2Int(4, 7), false), (new Vector2Int(5, 6), true)), 
+                ((new Vector2Int(5, 7), false), (new Vector2Int(5, 6), true)), 
+                ((new Vector2Int(6, 7), false), (new Vector2Int(5, 6), true)), 
             },
-            Array.Empty<((Vector2<int>, bool), (Vector2<int>, bool))>(), // Connected position pairs
+            Array.Empty<((Vector2Int, bool), (Vector2Int, bool))>(), // Connected position pairs
         ];
         
         yield return
         [
             "Z146", // Scenario
             new PathfindingSize(1),
-            new (Vector2<int>, Vector2<int>, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
+            new (Vector2Int, Vector2Int, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
             {
                 (
-                    new Vector2<int>(5, 3),
-                    new Vector2<int>(1, 4),
+                    new Vector2Int(5, 3),
+                    new Vector2Int(1, 4),
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(5, 4), new Vector2<int>(1, 2)), 
+                        new Area(new Vector2Int(5, 4), new Vector2Int(1, 2)), 
                     ],
                     [
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 4)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 4)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(6, 3),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(6, 3),
+                    new Vector2Int(2, 1),
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(7, 3),
-                    new Vector2<int>(1, 4),
+                    new Vector2Int(7, 3),
+                    new Vector2Int(1, 4),
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(6, 6),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(6, 6),
+                    new Vector2Int(2, 1),
                     Team.Default, [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(5, 3), new(6, 3), new(7, 3), 
                 new(5, 4), new(7, 4), 
                 new(5, 5), new(7, 5), 
                 new(5, 6), new(6, 6), new(7, 6), 
             },
-            Array.Empty<Vector2<int>>(), // Occupation: high ground
-            new Vector2<int>[] // Free high ground
+            Array.Empty<Vector2Int>(), // Occupation: high ground
+            new Vector2Int[] // Free high ground
             {
                 new(5, 3), 
                 new(5, 4), 
@@ -2389,26 +2389,26 @@ public class PathfindingPipelineTests
             },
             new[] // Non connected position pairs
             {
-                ((new Vector2<int>(4, 2), false), (new Vector2<int>(5, 3), true)), 
-                ((new Vector2<int>(5, 2), false), (new Vector2<int>(5, 3), true)), 
-                ((new Vector2<int>(6, 2), false), (new Vector2<int>(5, 3), true)), 
-                ((new Vector2<int>(4, 3), false), (new Vector2<int>(5, 3), true)), 
-                ((new Vector2<int>(4, 4), false), (new Vector2<int>(5, 3), true)), 
-                ((new Vector2<int>(6, 4), false), (new Vector2<int>(5, 3), true)), 
+                ((new Vector2Int(4, 2), false), (new Vector2Int(5, 3), true)), 
+                ((new Vector2Int(5, 2), false), (new Vector2Int(5, 3), true)), 
+                ((new Vector2Int(6, 2), false), (new Vector2Int(5, 3), true)), 
+                ((new Vector2Int(4, 3), false), (new Vector2Int(5, 3), true)), 
+                ((new Vector2Int(4, 4), false), (new Vector2Int(5, 3), true)), 
+                ((new Vector2Int(6, 4), false), (new Vector2Int(5, 3), true)), 
             },
             new[] // Connected position pairs
             {
-                ((new Vector2<int>(4, 3), false), (new Vector2<int>(5, 4), true)), 
-                ((new Vector2<int>(4, 4), false), (new Vector2<int>(5, 4), true)), 
-                ((new Vector2<int>(4, 5), false), (new Vector2<int>(5, 4), true)), 
-                ((new Vector2<int>(6, 4), false), (new Vector2<int>(5, 4), true)), 
-                ((new Vector2<int>(6, 5), false), (new Vector2<int>(5, 4), true)), 
+                ((new Vector2Int(4, 3), false), (new Vector2Int(5, 4), true)), 
+                ((new Vector2Int(4, 4), false), (new Vector2Int(5, 4), true)), 
+                ((new Vector2Int(4, 5), false), (new Vector2Int(5, 4), true)), 
+                ((new Vector2Int(6, 4), false), (new Vector2Int(5, 4), true)), 
+                ((new Vector2Int(6, 5), false), (new Vector2Int(5, 4), true)), 
 
-                ((new Vector2<int>(4, 4), false), (new Vector2<int>(5, 5), true)), 
-                ((new Vector2<int>(4, 5), false), (new Vector2<int>(5, 5), true)), 
-                ((new Vector2<int>(4, 6), false), (new Vector2<int>(5, 5), true)), 
-                ((new Vector2<int>(6, 4), false), (new Vector2<int>(5, 5), true)), 
-                ((new Vector2<int>(6, 5), false), (new Vector2<int>(5, 5), true)), 
+                ((new Vector2Int(4, 4), false), (new Vector2Int(5, 5), true)), 
+                ((new Vector2Int(4, 5), false), (new Vector2Int(5, 5), true)), 
+                ((new Vector2Int(4, 6), false), (new Vector2Int(5, 5), true)), 
+                ((new Vector2Int(6, 4), false), (new Vector2Int(5, 5), true)), 
+                ((new Vector2Int(6, 5), false), (new Vector2Int(5, 5), true)), 
             },
         ];
         
@@ -2416,38 +2416,38 @@ public class PathfindingPipelineTests
         [
             "Z158", // Scenario
             new PathfindingSize(1),
-            new (Vector2<int>, Vector2<int>, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
+            new (Vector2Int, Vector2Int, Team, Area[], Area[])[] // Position, size, team, ascendables, high grounds
             {
                 (
-                    new Vector2<int>(5, 3),
-                    new Vector2<int>(1, 4),
+                    new Vector2Int(5, 3),
+                    new Vector2Int(1, 4),
                     new Team(2), 
                     [
-                        new Area(new Vector2<int>(5, 4), new Vector2<int>(1, 2)), 
+                        new Area(new Vector2Int(5, 4), new Vector2Int(1, 2)), 
                     ],
                     [
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 4)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 4)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(5, 3),
-                    new Vector2<int>(3, 1),
+                    new Vector2Int(5, 3),
+                    new Vector2Int(3, 1),
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(7, 3),
-                    new Vector2<int>(1, 4),
+                    new Vector2Int(7, 3),
+                    new Vector2Int(1, 4),
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(3, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(3, 1),
                     Team.Default, [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(5, 3), new(6, 3), new(7, 3), 
                 new(5, 4), new(7, 4), 
@@ -2457,7 +2457,7 @@ public class PathfindingPipelineTests
                 new(6, 4),
                 new(6, 5),
             },
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 // Not actually occupied, just inaccessible.
                 new(5, 3), 
@@ -2465,29 +2465,29 @@ public class PathfindingPipelineTests
                 new(5, 5), 
                 new(5, 6), 
             },
-            Array.Empty<Vector2<int>>(), // Free high ground
+            Array.Empty<Vector2Int>(), // Free high ground
             new[] // Non connected position pairs
             {
-                ((new Vector2<int>(4, 2), false), (new Vector2<int>(5, 3), true)), 
-                ((new Vector2<int>(5, 2), false), (new Vector2<int>(5, 3), true)), 
-                ((new Vector2<int>(6, 2), false), (new Vector2<int>(5, 3), true)), 
-                ((new Vector2<int>(4, 3), false), (new Vector2<int>(5, 3), true)), 
-                ((new Vector2<int>(4, 4), false), (new Vector2<int>(5, 3), true)), 
-                ((new Vector2<int>(6, 4), false), (new Vector2<int>(5, 3), true)), 
+                ((new Vector2Int(4, 2), false), (new Vector2Int(5, 3), true)), 
+                ((new Vector2Int(5, 2), false), (new Vector2Int(5, 3), true)), 
+                ((new Vector2Int(6, 2), false), (new Vector2Int(5, 3), true)), 
+                ((new Vector2Int(4, 3), false), (new Vector2Int(5, 3), true)), 
+                ((new Vector2Int(4, 4), false), (new Vector2Int(5, 3), true)), 
+                ((new Vector2Int(6, 4), false), (new Vector2Int(5, 3), true)), 
                 
-                ((new Vector2<int>(4, 3), false), (new Vector2<int>(5, 4), true)), 
-                ((new Vector2<int>(4, 4), false), (new Vector2<int>(5, 4), true)), 
-                ((new Vector2<int>(4, 5), false), (new Vector2<int>(5, 4), true)), 
-                ((new Vector2<int>(6, 4), false), (new Vector2<int>(5, 4), true)), 
-                ((new Vector2<int>(6, 5), false), (new Vector2<int>(5, 4), true)), 
+                ((new Vector2Int(4, 3), false), (new Vector2Int(5, 4), true)), 
+                ((new Vector2Int(4, 4), false), (new Vector2Int(5, 4), true)), 
+                ((new Vector2Int(4, 5), false), (new Vector2Int(5, 4), true)), 
+                ((new Vector2Int(6, 4), false), (new Vector2Int(5, 4), true)), 
+                ((new Vector2Int(6, 5), false), (new Vector2Int(5, 4), true)), 
 
-                ((new Vector2<int>(4, 4), false), (new Vector2<int>(5, 5), true)), 
-                ((new Vector2<int>(4, 5), false), (new Vector2<int>(5, 5), true)), 
-                ((new Vector2<int>(4, 6), false), (new Vector2<int>(5, 5), true)), 
-                ((new Vector2<int>(6, 4), false), (new Vector2<int>(5, 5), true)), 
-                ((new Vector2<int>(6, 5), false), (new Vector2<int>(5, 5), true)), 
+                ((new Vector2Int(4, 4), false), (new Vector2Int(5, 5), true)), 
+                ((new Vector2Int(4, 5), false), (new Vector2Int(5, 5), true)), 
+                ((new Vector2Int(4, 6), false), (new Vector2Int(5, 5), true)), 
+                ((new Vector2Int(6, 4), false), (new Vector2Int(5, 5), true)), 
+                ((new Vector2Int(6, 5), false), (new Vector2Int(5, 5), true)), 
             },
-            Array.Empty<((Vector2<int>, bool), (Vector2<int>, bool))>(), // Connected position pairs
+            Array.Empty<((Vector2Int, bool), (Vector2Int, bool))>(), // Connected position pairs
         ];
     }
 
@@ -2496,12 +2496,12 @@ public class PathfindingPipelineTests
     public void Pathfinding_ShouldCalculateHighGroundAndOccupation_ForComplexStairs(
         string scenario,
         PathfindingSize pathfindingSize,
-        (Vector2<int>, Vector2<int>, Team, Area[], Area[])[] entities, 
-        Vector2<int>[] expectedOccupiedLowGroundPositions,
-        Vector2<int>[] expectedOccupiedHighGroundPositions,
-        Vector2<int>[] expectedFreeHighGroundPositions,
-        ((Vector2<int>, bool), (Vector2<int>, bool))[] expectedNonConnectedPositionPairs,
-        ((Vector2<int>, bool), (Vector2<int>, bool))[] expectedConnectedPositionPairs)
+        (Vector2Int, Vector2Int, Team, Area[], Area[])[] entities, 
+        Vector2Int[] expectedOccupiedLowGroundPositions,
+        Vector2Int[] expectedOccupiedHighGroundPositions,
+        Vector2Int[] expectedFreeHighGroundPositions,
+        ((Vector2Int, bool), (Vector2Int, bool))[] expectedNonConnectedPositionPairs,
+        ((Vector2Int, bool), (Vector2Int, bool))[] expectedConnectedPositionPairs)
     {
         foreach (var (pos, size, team, ascendables, highGrounds) in entities)
         {
@@ -2534,9 +2534,9 @@ public class PathfindingPipelineTests
     public class GivenEntity
     {
         public required int Id { get; init; }
-        public required Vector2<int> PrimaryPosition { get; init; }
-        public required Vector2<int> Size { get; init; }
-        public required Vector2<int>[][] Ascendables { get; init; } = [];
+        public required Vector2Int PrimaryPosition { get; init; }
+        public required Vector2Int Size { get; init; }
+        public required Vector2Int[][] Ascendables { get; init; } = [];
         public required Area[] HighGrounds { get; init; } = [];
         public required Area[] Walkables { get; init; } = [];
     }
@@ -2546,10 +2546,10 @@ public class PathfindingPipelineTests
         public required string Scenario { get; init; }
         public required int[] AddedEntities { get; init; } = [];
         public required int[] RemovedEntities { get; init; } = [];
-        public required Vector2<int>[] ExpectedOccupiedLowGroundPositions { get; init; } = [];
-        public required Vector2<int>[] ExpectedOccupiedHighGroundPositions { get; init; } = [];
-        public required Vector2<int>[] ExpectedFreeHighGroundPositions { get; init; } = [];
-        public required ((Vector2<int>, bool), (Vector2<int>, bool))[] ExpectedNonConnectedPositionPairs { get; init; } = [];
+        public required Vector2Int[] ExpectedOccupiedLowGroundPositions { get; init; } = [];
+        public required Vector2Int[] ExpectedOccupiedHighGroundPositions { get; init; } = [];
+        public required Vector2Int[] ExpectedFreeHighGroundPositions { get; init; } = [];
+        public required ((Vector2Int, bool), (Vector2Int, bool))[] ExpectedNonConnectedPositionPairs { get; init; } = [];
     }
     
     public static IEnumerable<object[]> GetExpectedOccupationAndHighGroundForChangesOverTime()
@@ -2563,37 +2563,37 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 32,
-                    PrimaryPosition = new Vector2<int>(3, 2),
-                    Size = new Vector2<int>(3, 3),
+                    PrimaryPosition = new Vector2Int(3, 2),
+                    Size = new Vector2Int(3, 3),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(3, 3), new(4, 3), new(3, 4), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(2, 1)), 
                     ],
                     Walkables =
                     [
-                        new Area(new Vector2<int>(3, 2), new Vector2<int>(3, 1)), 
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(3, 2), new Vector2Int(3, 1)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 1)), 
                     ]
                 }, 
                 new()
                 {
                     Id = 62,
-                    PrimaryPosition = new Vector2<int>(6, 2),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(6, 2),
+                    Size = new Vector2Int(1, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 3),  
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 2),  
                         }, 
@@ -2604,42 +2604,42 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 64,
-                    PrimaryPosition = new Vector2<int>(6, 4),
-                    Size = new Vector2<int>(1, 3),
+                    PrimaryPosition = new Vector2Int(6, 4),
+                    Size = new Vector2Int(1, 3),
                     Ascendables = [],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(6, 4), new Vector2<int>(1, 3)), 
+                        new Area(new Vector2Int(6, 4), new Vector2Int(1, 3)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 78,
-                    PrimaryPosition = new Vector2<int>(7, 8),
-                    Size = new Vector2<int>(3, 2),
+                    PrimaryPosition = new Vector2Int(7, 8),
+                    Size = new Vector2Int(3, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(8, 8), new(8, 9), 
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(7, 8), new(7, 9), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(9, 8), new Vector2<int>(1, 2)), 
+                        new Area(new Vector2Int(9, 8), new Vector2Int(1, 2)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 93,
-                    PrimaryPosition = new Vector2<int>(9, 3),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(9, 3),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -2647,8 +2647,8 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 28,
-                    PrimaryPosition = new Vector2<int>(2, 8),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(2, 8),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -2661,7 +2661,7 @@ public class PathfindingPipelineTests
                     Scenario = "B182",
                     AddedEntities = [32, 62, 64, 78, 93, 28],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -2677,8 +2677,8 @@ public class PathfindingPipelineTests
                         
                         new(2, 8), new(2, 9), 
                     },
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[] { },
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -2690,14 +2690,14 @@ public class PathfindingPipelineTests
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "N182",
                     AddedEntities = [],
                     RemovedEntities = [62],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -2711,8 +2711,8 @@ public class PathfindingPipelineTests
                         
                         new(2, 8), new(2, 9), 
                     },
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[] { },
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -2722,14 +2722,14 @@ public class PathfindingPipelineTests
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "Z182",
                     AddedEntities = [],
                     RemovedEntities = [32],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                         
@@ -2740,23 +2740,23 @@ public class PathfindingPipelineTests
                         
                         new(2, 8), new(2, 9), 
                     },
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "AL182",
                     AddedEntities = [],
                     RemovedEntities = [78],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                         
@@ -2764,12 +2764,12 @@ public class PathfindingPipelineTests
                         
                         new(2, 8), new(2, 9), 
                     },
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
             }
         ];
@@ -2783,37 +2783,37 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 32,
-                    PrimaryPosition = new Vector2<int>(3, 2),
-                    Size = new Vector2<int>(3, 3),
+                    PrimaryPosition = new Vector2Int(3, 2),
+                    Size = new Vector2Int(3, 3),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(3, 3), new(4, 3), new(3, 4), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(2, 1)), 
                     ],
                     Walkables =
                     [
-                        new Area(new Vector2<int>(3, 2), new Vector2<int>(3, 1)), 
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(3, 2), new Vector2Int(3, 1)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 1)), 
                     ]
                 }, 
                 new()
                 {
                     Id = 62,
-                    PrimaryPosition = new Vector2<int>(6, 2),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(6, 2),
+                    Size = new Vector2Int(1, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 3),  
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 2),  
                         }, 
@@ -2824,42 +2824,42 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 64,
-                    PrimaryPosition = new Vector2<int>(6, 4),
-                    Size = new Vector2<int>(1, 3),
+                    PrimaryPosition = new Vector2Int(6, 4),
+                    Size = new Vector2Int(1, 3),
                     Ascendables = [],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(6, 4), new Vector2<int>(1, 3)), 
+                        new Area(new Vector2Int(6, 4), new Vector2Int(1, 3)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 78,
-                    PrimaryPosition = new Vector2<int>(7, 8),
-                    Size = new Vector2<int>(3, 2),
+                    PrimaryPosition = new Vector2Int(7, 8),
+                    Size = new Vector2Int(3, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(8, 8), new(8, 9), 
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(7, 8), new(7, 9), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(9, 8), new Vector2<int>(1, 2)), 
+                        new Area(new Vector2Int(9, 8), new Vector2Int(1, 2)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 93,
-                    PrimaryPosition = new Vector2<int>(9, 3),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(9, 3),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -2867,8 +2867,8 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 28,
-                    PrimaryPosition = new Vector2<int>(2, 8),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(2, 8),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -2881,7 +2881,7 @@ public class PathfindingPipelineTests
                     Scenario = "B194",
                     AddedEntities = [32, 62, 64, 78, 93, 28],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -2902,7 +2902,7 @@ public class PathfindingPipelineTests
                         new(1, 7), new(2, 7), new(1, 8), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4), 
@@ -2914,15 +2914,15 @@ public class PathfindingPipelineTests
                         new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), 
                         
                         new(7, 8), new(8, 8), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[]
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[]
                     {
-                        new ((new Vector2<int>(7, 6), false), (new Vector2<int>(6, 7), false)), 
+                        new ((new Vector2Int(7, 6), false), (new Vector2Int(6, 7), false)), 
                     }
                 }, 
                 new()
@@ -2930,7 +2930,7 @@ public class PathfindingPipelineTests
                     Scenario = "N194",
                     AddedEntities = [],
                     RemovedEntities = [62],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -2948,7 +2948,7 @@ public class PathfindingPipelineTests
                         new(1, 7), new(2, 7), new(1, 8), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4), 
@@ -2958,15 +2958,15 @@ public class PathfindingPipelineTests
                         new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), 
                         
                         new(7, 8), new(8, 8), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[]
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[]
                     {
-                        new ((new Vector2<int>(7, 6), false), (new Vector2<int>(6, 7), false)), 
+                        new ((new Vector2Int(7, 6), false), (new Vector2Int(6, 7), false)), 
                     }
                 }, 
                 new()
@@ -2974,7 +2974,7 @@ public class PathfindingPipelineTests
                     Scenario = "Z194",
                     AddedEntities = [],
                     RemovedEntities = [32],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(5, 3), new(6, 3), new(5, 4), new(5, 5), new(5, 6), 
                         new(6, 4), new(6, 5), new(6, 6), 
@@ -2989,20 +2989,20 @@ public class PathfindingPipelineTests
                         new(1, 7), new(2, 7), new(1, 8), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                         
                         new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(7, 8), new(8, 8), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[]
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[]
                     {
-                        new ((new Vector2<int>(7, 6), false), (new Vector2<int>(6, 7), false)), 
+                        new ((new Vector2Int(7, 6), false), (new Vector2Int(6, 7), false)), 
                     }
                 }, 
                 new()
@@ -3010,7 +3010,7 @@ public class PathfindingPipelineTests
                     Scenario = "AL194",
                     AddedEntities = [],
                     RemovedEntities = [78],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(5, 3), new(6, 3), new(5, 4), new(5, 5), new(5, 6), 
                         new(6, 4), new(6, 5), new(6, 6), 
@@ -3021,12 +3021,12 @@ public class PathfindingPipelineTests
                         new(1, 7), new(2, 7), new(1, 8), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
             }
         ];
@@ -3040,37 +3040,37 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 32,
-                    PrimaryPosition = new Vector2<int>(3, 2),
-                    Size = new Vector2<int>(3, 3),
+                    PrimaryPosition = new Vector2Int(3, 2),
+                    Size = new Vector2Int(3, 3),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(3, 3), new(4, 3), new(3, 4), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(2, 1)), 
                     ],
                     Walkables =
                     [
-                        new Area(new Vector2<int>(3, 2), new Vector2<int>(3, 1)), 
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(3, 2), new Vector2Int(3, 1)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 1)), 
                     ]
                 }, 
                 new()
                 {
                     Id = 62,
-                    PrimaryPosition = new Vector2<int>(6, 2),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(6, 2),
+                    Size = new Vector2Int(1, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 3),  
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 2),  
                         }, 
@@ -3081,42 +3081,42 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 64,
-                    PrimaryPosition = new Vector2<int>(6, 4),
-                    Size = new Vector2<int>(1, 3),
+                    PrimaryPosition = new Vector2Int(6, 4),
+                    Size = new Vector2Int(1, 3),
                     Ascendables = [],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(6, 4), new Vector2<int>(1, 3)), 
+                        new Area(new Vector2Int(6, 4), new Vector2Int(1, 3)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 78,
-                    PrimaryPosition = new Vector2<int>(7, 8),
-                    Size = new Vector2<int>(3, 2),
+                    PrimaryPosition = new Vector2Int(7, 8),
+                    Size = new Vector2Int(3, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(8, 8), new(8, 9), 
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(7, 8), new(7, 9), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(9, 8), new Vector2<int>(1, 2)), 
+                        new Area(new Vector2Int(9, 8), new Vector2Int(1, 2)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 93,
-                    PrimaryPosition = new Vector2<int>(9, 3),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(9, 3),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -3124,8 +3124,8 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 28,
-                    PrimaryPosition = new Vector2<int>(2, 8),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(2, 8),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -3138,7 +3138,7 @@ public class PathfindingPipelineTests
                     Scenario = "B206",
                     AddedEntities = [32, 62, 64, 78, 93, 28],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 2), new(4, 2), new(5, 2), new(5, 3), new(2, 3), new(2, 4), 
                         new(3, 3), new(4, 3), 
@@ -3169,7 +3169,7 @@ public class PathfindingPipelineTests
                         
                         new(7, 5), 
                     }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4), 
@@ -3181,15 +3181,15 @@ public class PathfindingPipelineTests
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "N206",
                     AddedEntities = [],
                     RemovedEntities = [62],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 2), new(4, 2), new(5, 2), new(5, 3), new(2, 3), new(2, 4), 
                         new(3, 3), new(4, 3), 
@@ -3216,7 +3216,7 @@ public class PathfindingPipelineTests
                         
                         new(7, 5), 
                     }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4), 
@@ -3226,15 +3226,15 @@ public class PathfindingPipelineTests
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "Z206",
                     AddedEntities = [],
                     RemovedEntities = [32],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(4, 2), new(5, 2), new(6, 2), 
                         new(4, 3), new(5, 3), new(6, 3), 
@@ -3257,22 +3257,22 @@ public class PathfindingPipelineTests
                         
                         new(7, 5), 
                     }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                         
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "AL206",
                     AddedEntities = [],
                     RemovedEntities = [78],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(4, 2), new(5, 2), new(6, 2), 
                         new(4, 3), new(5, 3), new(6, 3), 
@@ -3288,12 +3288,12 @@ public class PathfindingPipelineTests
                         new(0, 7), new(1, 7), new(2, 7), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
             }
         ];
@@ -3307,37 +3307,37 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 32,
-                    PrimaryPosition = new Vector2<int>(3, 2),
-                    Size = new Vector2<int>(3, 3),
+                    PrimaryPosition = new Vector2Int(3, 2),
+                    Size = new Vector2Int(3, 3),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(3, 3), new(4, 3), new(3, 4), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(2, 1)), 
                     ],
                     Walkables =
                     [
-                        new Area(new Vector2<int>(3, 2), new Vector2<int>(3, 1)), 
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(3, 2), new Vector2Int(3, 1)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 1)), 
                     ]
                 }, 
                 new()
                 {
                     Id = 62,
-                    PrimaryPosition = new Vector2<int>(6, 2),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(6, 2),
+                    Size = new Vector2Int(1, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 3),  
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 2),  
                         }, 
@@ -3348,42 +3348,42 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 64,
-                    PrimaryPosition = new Vector2<int>(6, 4),
-                    Size = new Vector2<int>(1, 3),
+                    PrimaryPosition = new Vector2Int(6, 4),
+                    Size = new Vector2Int(1, 3),
                     Ascendables = [],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(6, 4), new Vector2<int>(1, 3)), 
+                        new Area(new Vector2Int(6, 4), new Vector2Int(1, 3)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 78,
-                    PrimaryPosition = new Vector2<int>(7, 8),
-                    Size = new Vector2<int>(3, 2),
+                    PrimaryPosition = new Vector2Int(7, 8),
+                    Size = new Vector2Int(3, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(8, 8), new(8, 9), 
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(7, 8), new(7, 9), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(9, 8), new Vector2<int>(1, 2)), 
+                        new Area(new Vector2Int(9, 8), new Vector2Int(1, 2)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 93,
-                    PrimaryPosition = new Vector2<int>(9, 3),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(9, 3),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -3391,8 +3391,8 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 28,
-                    PrimaryPosition = new Vector2<int>(2, 8),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(2, 8),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -3405,7 +3405,7 @@ public class PathfindingPipelineTests
                     Scenario = "AL182",
                     AddedEntities = [93, 28, 64],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                         
@@ -3413,19 +3413,19 @@ public class PathfindingPipelineTests
                         
                         new(2, 8), new(2, 9), 
                     },
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "Z182",
                     AddedEntities = [78],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                         
@@ -3436,23 +3436,23 @@ public class PathfindingPipelineTests
                         
                         new(2, 8), new(2, 9), 
                     },
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "N182",
                     AddedEntities = [32],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -3466,8 +3466,8 @@ public class PathfindingPipelineTests
                         
                         new(2, 8), new(2, 9), 
                     },
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[] { },
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -3477,14 +3477,14 @@ public class PathfindingPipelineTests
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "B182",
                     AddedEntities = [62],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -3500,8 +3500,8 @@ public class PathfindingPipelineTests
                         
                         new(2, 8), new(2, 9), 
                     },
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[] { },
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -3513,7 +3513,7 @@ public class PathfindingPipelineTests
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
             }
         ];
@@ -3527,37 +3527,37 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 32,
-                    PrimaryPosition = new Vector2<int>(3, 2),
-                    Size = new Vector2<int>(3, 3),
+                    PrimaryPosition = new Vector2Int(3, 2),
+                    Size = new Vector2Int(3, 3),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(3, 3), new(4, 3), new(3, 4), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(2, 1)), 
                     ],
                     Walkables =
                     [
-                        new Area(new Vector2<int>(3, 2), new Vector2<int>(3, 1)), 
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(3, 2), new Vector2Int(3, 1)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 1)), 
                     ]
                 }, 
                 new()
                 {
                     Id = 62,
-                    PrimaryPosition = new Vector2<int>(6, 2),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(6, 2),
+                    Size = new Vector2Int(1, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 3),  
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 2),  
                         }, 
@@ -3568,42 +3568,42 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 64,
-                    PrimaryPosition = new Vector2<int>(6, 4),
-                    Size = new Vector2<int>(1, 3),
+                    PrimaryPosition = new Vector2Int(6, 4),
+                    Size = new Vector2Int(1, 3),
                     Ascendables = [],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(6, 4), new Vector2<int>(1, 3)), 
+                        new Area(new Vector2Int(6, 4), new Vector2Int(1, 3)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 78,
-                    PrimaryPosition = new Vector2<int>(7, 8),
-                    Size = new Vector2<int>(3, 2),
+                    PrimaryPosition = new Vector2Int(7, 8),
+                    Size = new Vector2Int(3, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(8, 8), new(8, 9), 
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(7, 8), new(7, 9), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(9, 8), new Vector2<int>(1, 2)), 
+                        new Area(new Vector2Int(9, 8), new Vector2Int(1, 2)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 93,
-                    PrimaryPosition = new Vector2<int>(9, 3),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(9, 3),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -3611,8 +3611,8 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 28,
-                    PrimaryPosition = new Vector2<int>(2, 8),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(2, 8),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -3625,7 +3625,7 @@ public class PathfindingPipelineTests
                     Scenario = "AL194",
                     AddedEntities = [93, 28, 64],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(5, 3), new(6, 3), new(5, 4), new(5, 5), new(5, 6), 
                         new(6, 4), new(6, 5), new(6, 6), 
@@ -3636,19 +3636,19 @@ public class PathfindingPipelineTests
                         new(1, 7), new(2, 7), new(1, 8), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "Z194",
                     AddedEntities = [78],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(5, 3), new(6, 3), new(5, 4), new(5, 5), new(5, 6), 
                         new(6, 4), new(6, 5), new(6, 6), 
@@ -3663,20 +3663,20 @@ public class PathfindingPipelineTests
                         new(1, 7), new(2, 7), new(1, 8), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                         
                         new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(7, 8), new(8, 8), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[]
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[]
                     {
-                        new ((new Vector2<int>(7, 6), false), (new Vector2<int>(6, 7), false)), 
+                        new ((new Vector2Int(7, 6), false), (new Vector2Int(6, 7), false)), 
                     }
                 }, 
                 new()
@@ -3684,7 +3684,7 @@ public class PathfindingPipelineTests
                     Scenario = "N194",
                     AddedEntities = [32],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -3702,7 +3702,7 @@ public class PathfindingPipelineTests
                         new(1, 7), new(2, 7), new(1, 8), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4), 
@@ -3712,15 +3712,15 @@ public class PathfindingPipelineTests
                         new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), 
                         
                         new(7, 8), new(8, 8), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[]
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[]
                     {
-                        new ((new Vector2<int>(7, 6), false), (new Vector2<int>(6, 7), false)), 
+                        new ((new Vector2Int(7, 6), false), (new Vector2Int(6, 7), false)), 
                     }
                 }, 
                 new()
@@ -3728,7 +3728,7 @@ public class PathfindingPipelineTests
                     Scenario = "B194",
                     AddedEntities = [62],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4),
@@ -3749,7 +3749,7 @@ public class PathfindingPipelineTests
                         new(1, 7), new(2, 7), new(1, 8), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4), 
@@ -3761,15 +3761,15 @@ public class PathfindingPipelineTests
                         new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[]
+                    ExpectedFreeHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), 
                         
                         new(7, 8), new(8, 8), 
                     },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[]
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[]
                     {
-                        new ((new Vector2<int>(7, 6), false), (new Vector2<int>(6, 7), false)), 
+                        new ((new Vector2Int(7, 6), false), (new Vector2Int(6, 7), false)), 
                     }
                 }, 
             }
@@ -3785,37 +3785,37 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 32,
-                    PrimaryPosition = new Vector2<int>(3, 2),
-                    Size = new Vector2<int>(3, 3),
+                    PrimaryPosition = new Vector2Int(3, 2),
+                    Size = new Vector2Int(3, 3),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(3, 3), new(4, 3), new(3, 4), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(4, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(4, 4), new Vector2Int(2, 1)), 
                     ],
                     Walkables =
                     [
-                        new Area(new Vector2<int>(3, 2), new Vector2<int>(3, 1)), 
-                        new Area(new Vector2<int>(5, 3), new Vector2<int>(1, 1)), 
+                        new Area(new Vector2Int(3, 2), new Vector2Int(3, 1)), 
+                        new Area(new Vector2Int(5, 3), new Vector2Int(1, 1)), 
                     ]
                 }, 
                 new()
                 {
                     Id = 62,
-                    PrimaryPosition = new Vector2<int>(6, 2),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(6, 2),
+                    Size = new Vector2Int(1, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 3),  
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(6, 2),  
                         }, 
@@ -3826,42 +3826,42 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 64,
-                    PrimaryPosition = new Vector2<int>(6, 4),
-                    Size = new Vector2<int>(1, 3),
+                    PrimaryPosition = new Vector2Int(6, 4),
+                    Size = new Vector2Int(1, 3),
                     Ascendables = [],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(6, 4), new Vector2<int>(1, 3)), 
+                        new Area(new Vector2Int(6, 4), new Vector2Int(1, 3)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 78,
-                    PrimaryPosition = new Vector2<int>(7, 8),
-                    Size = new Vector2<int>(3, 2),
+                    PrimaryPosition = new Vector2Int(7, 8),
+                    Size = new Vector2Int(3, 2),
                     Ascendables =
                     [
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(8, 8), new(8, 9), 
                         }, 
-                        new Vector2<int>[]
+                        new Vector2Int[]
                         {
                             new(7, 8), new(7, 9), 
                         }, 
                     ],
                     HighGrounds =
                     [
-                        new Area(new Vector2<int>(9, 8), new Vector2<int>(1, 2)), 
+                        new Area(new Vector2Int(9, 8), new Vector2Int(1, 2)), 
                     ],
                     Walkables = []
                 }, 
                 new()
                 {
                     Id = 93,
-                    PrimaryPosition = new Vector2<int>(9, 3),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(9, 3),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -3869,8 +3869,8 @@ public class PathfindingPipelineTests
                 new()
                 {
                     Id = 28,
-                    PrimaryPosition = new Vector2<int>(2, 8),
-                    Size = new Vector2<int>(1, 2),
+                    PrimaryPosition = new Vector2Int(2, 8),
+                    Size = new Vector2Int(1, 2),
                     Ascendables = [],
                     HighGrounds = [],
                     Walkables = []
@@ -3883,7 +3883,7 @@ public class PathfindingPipelineTests
                     Scenario = "AL206",
                     AddedEntities = [93, 28, 64],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(4, 2), new(5, 2), new(6, 2), 
                         new(4, 3), new(5, 3), new(6, 3), 
@@ -3899,19 +3899,19 @@ public class PathfindingPipelineTests
                         new(0, 7), new(1, 7), new(2, 7), 
                         new(2, 8), new(2, 9), 
                     }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "Z206",
                     AddedEntities = [78],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(4, 2), new(5, 2), new(6, 2), 
                         new(4, 3), new(5, 3), new(6, 3), 
@@ -3934,22 +3934,22 @@ public class PathfindingPipelineTests
                         
                         new(7, 5), 
                     }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(6, 4), new(6, 5), new(6, 6), 
                         
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "N206",
                     AddedEntities = [32],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 2), new(4, 2), new(5, 2), new(5, 3), new(2, 3), new(2, 4), 
                         new(3, 3), new(4, 3), 
@@ -3976,7 +3976,7 @@ public class PathfindingPipelineTests
                         
                         new(7, 5), 
                     }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4), 
@@ -3986,15 +3986,15 @@ public class PathfindingPipelineTests
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
                 new()
                 {
                     Scenario = "B206",
                     AddedEntities = [62],
                     RemovedEntities = [],
-                    ExpectedOccupiedLowGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
                     {
                         new(3, 2), new(4, 2), new(5, 2), new(5, 3), new(2, 3), new(2, 4), 
                         new(3, 3), new(4, 3), 
@@ -4025,7 +4025,7 @@ public class PathfindingPipelineTests
                         
                         new(7, 5), 
                     }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-                    ExpectedOccupiedHighGroundPositions = new Vector2<int>[]
+                    ExpectedOccupiedHighGroundPositions = new Vector2Int[]
                     {
                         new(3, 3), new(4, 3), 
                         new(3, 4), new(4, 4), new(5, 4), 
@@ -4037,8 +4037,8 @@ public class PathfindingPipelineTests
                         new(7, 8), new(8, 8), new(9, 8), 
                         new(7, 9), new(8, 9), new(9, 9), 
                     },
-                    ExpectedFreeHighGroundPositions = new Vector2<int>[] { },
-                    ExpectedNonConnectedPositionPairs = new ((Vector2<int>, bool), (Vector2<int>, bool))[] { }
+                    ExpectedFreeHighGroundPositions = new Vector2Int[] { },
+                    ExpectedNonConnectedPositionPairs = new ((Vector2Int, bool), (Vector2Int, bool))[] { }
                 }, 
             }
         ];
@@ -4128,81 +4128,81 @@ public class PathfindingPipelineTests
             "B218", // Scenario
             new PathfindingSize(1),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(2, 3),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(3, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 7),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
                     ]
                 ),
                 
                 (
-                    new Vector2<int>(3, 5),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(3, 5),
+                    new Vector2Int(2, 2),
                     true,
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(1, 1),
                     true,
                     new Team(2), [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(2, 2), new(3, 2), 
                 new(2, 3), new(3, 3), 
@@ -4212,11 +4212,11 @@ public class PathfindingPipelineTests
                 new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
                 new(2, 8), new(3, 8), 
             },
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(5, 6), 
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(2, 2), new(3, 2), 
                 new(2, 3), new(3, 3), 
@@ -4233,81 +4233,81 @@ public class PathfindingPipelineTests
             "N218", // Scenario
             new PathfindingSize(1),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(2, 3),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(3, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 7),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
                     ]
                 ),
                 
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(2, 2),
                     true,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(1, 1),
                     true,
                     new Team(2), [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(2, 2), new(3, 2), 
                 new(2, 3), new(3, 3), 
@@ -4317,13 +4317,13 @@ public class PathfindingPipelineTests
                 new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
                 new(2, 8), new(3, 8), 
             },
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(2, 5), new(3, 5), new(4, 5), 
                 new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
                                                             new(6, 7),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(2, 2), new(3, 2), 
                 new(2, 3), new(3, 3), 
@@ -4340,99 +4340,99 @@ public class PathfindingPipelineTests
             "Z218", // Scenario
             new PathfindingSize(1),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(2, 3),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(3, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 7),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
                     ]
                 ),
                 
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(2, 2),
                     true,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(7, 6),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(7, 6),
+                    new Vector2Int(2, 2),
                     true,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(1, 7),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(1, 7),
+                    new Vector2Int(1, 1),
                     false,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(7, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(7, 8),
+                    new Vector2Int(1, 1),
                     false,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(8, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(8, 8),
+                    new Vector2Int(1, 1),
                     false,
                     new Team(2), [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(2, 2), new(3, 2), 
                 new(2, 3), new(3, 3), 
@@ -4448,13 +4448,13 @@ public class PathfindingPipelineTests
                 
                 new(7, 8), new(8, 8), 
             },
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(2, 5), new(3, 5), new(4, 5), 
                 new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
                                                             new(6, 7), new(7, 7), new(8, 7), new(9, 7),
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(2, 2), new(3, 2), 
                 new(2, 3), new(3, 3), 
@@ -4472,81 +4472,81 @@ public class PathfindingPipelineTests
             "B230", // Scenario
             new PathfindingSize(2),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(2, 3),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(3, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 7),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
                     ]
                 ),
                 
                 (
-                    new Vector2<int>(3, 5),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(3, 5),
+                    new Vector2Int(2, 2),
                     true,
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(1, 1),
                     true,
                     new Team(2), [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(1, 2), new(1, 3), new(1, 4), new(1, 5), new(1, 6), new(1, 7), 
                 new(4, 4), new(5, 5), new(6, 5), new(8, 6), new(5, 7), 
@@ -4558,7 +4558,7 @@ public class PathfindingPipelineTests
                 new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
                 new(2, 8), new(3, 8), 
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(3, 2), 
                 new(3, 3), 
@@ -4567,7 +4567,7 @@ public class PathfindingPipelineTests
                 new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
                 new(3, 7), new(6, 7), new(8, 7), new(9, 7), 
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(2, 2),  
                 new(2, 3), 
@@ -4584,81 +4584,81 @@ public class PathfindingPipelineTests
             "N230", // Scenario
             new PathfindingSize(2),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(2, 3),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(3, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 7),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
                     ]
                 ),
                 
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(2, 2),
                     true,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(1, 1),
                     true,
                     new Team(2), [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(1, 2), new(1, 3), new(1, 4), new(1, 5), new(1, 6), new(1, 7), 
                 new(4, 4), new(5, 5), new(6, 5), new(8, 6), new(5, 7), 
@@ -4670,7 +4670,7 @@ public class PathfindingPipelineTests
                 new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
                 new(2, 8), new(3, 8), 
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(3, 2), 
                 new(3, 3), 
@@ -4679,7 +4679,7 @@ public class PathfindingPipelineTests
                 new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
                 new(3, 7), new(6, 7), new(8, 7), new(9, 7), 
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(2, 2),  
                 new(2, 3), 
@@ -4693,99 +4693,99 @@ public class PathfindingPipelineTests
             "Z230", // Scenario
             new PathfindingSize(2),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(2, 3),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(3, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 7),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
                     ]
                 ),
                 
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(2, 2),
                     true,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(7, 6),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(7, 6),
+                    new Vector2Int(2, 2),
                     true,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(1, 7),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(1, 7),
+                    new Vector2Int(1, 1),
                     false,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(7, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(7, 8),
+                    new Vector2Int(1, 1),
                     false,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(8, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(8, 8),
+                    new Vector2Int(1, 1),
                     false,
                     new Team(2), [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(1, 2), new(1, 3), new(1, 4), new(1, 5), new(1, 6), new(1, 7), 
                 new(4, 4), new(5, 5), new(6, 5), new(8, 6), new(5, 7), 
@@ -4808,7 +4808,7 @@ public class PathfindingPipelineTests
                 
                 new(4, 7), new(0, 8), new(1, 8), new(4, 8), new(5, 8), 
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(3, 2), 
                 new(3, 3), 
@@ -4818,7 +4818,7 @@ public class PathfindingPipelineTests
                 new(2, 7), new(3, 7), new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
                 new(2, 8), new(3, 8), 
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
                 new(2, 2),  
                 new(2, 3), 
@@ -4831,81 +4831,81 @@ public class PathfindingPipelineTests
             "B242", // Scenario
             new PathfindingSize(3),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(2, 3),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(3, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 7),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
                     ]
                 ),
                 
                 (
-                    new Vector2<int>(3, 5),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(3, 5),
+                    new Vector2Int(2, 2),
                     true,
                     Team.Default, [], []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(1, 1),
                     true,
                     new Team(2), [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(0, 1), new(1, 1), new(2, 1), new(3, 1), 
                 new(0, 2), new(1, 2), 
@@ -4922,7 +4922,7 @@ public class PathfindingPipelineTests
                 new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
                 new(2, 8), new(3, 8), 
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(2, 2), new(3, 2), 
                 new(2, 3), new(3, 3), 
@@ -4932,7 +4932,7 @@ public class PathfindingPipelineTests
                 new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
                 new(2, 8), new(3, 8), 
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
             },
         ];
@@ -4942,81 +4942,81 @@ public class PathfindingPipelineTests
             "N242", // Scenario
             new PathfindingSize(3),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(2, 3),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(3, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 7),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
                     ]
                 ),
                 
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(2, 2),
                     true,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(1, 1),
                     true,
                     new Team(2), [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(0, 1), new(1, 1), new(2, 1), new(3, 1), 
                 new(0, 2), new(1, 2), 
@@ -5033,7 +5033,7 @@ public class PathfindingPipelineTests
                 new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
                 new(2, 8), new(3, 8), 
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(2, 2), new(3, 2), 
                 new(2, 3), new(3, 3), 
@@ -5043,7 +5043,7 @@ public class PathfindingPipelineTests
                 new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
                 new(2, 8), new(3, 8), 
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
             },
         ];
@@ -5053,99 +5053,99 @@ public class PathfindingPipelineTests
             "Z242", // Scenario
             new PathfindingSize(3),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
             {
                 (
-                    new Vector2<int>(2, 2),
-                    new Vector2<int>(2, 3),
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 3), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 2), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(2, 4), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(3, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(2, 5), new Vector2<int>(3, 2)), 
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(2, 7),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(2, 7), new Vector2<int>(2, 1)), 
-                        new Area(new Vector2<int>(2, 8), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
                     []
                 ),
                 (
-                    new Vector2<int>(5, 6),
-                    new Vector2<int>(2, 1),
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
                     false,
                     Team.Default, 
                     [],
                     [
-                        new Area(new Vector2<int>(5, 6), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
                     ]
                 ),
                 (
-                    new Vector2<int>(6, 7),
-                    new Vector2<int>(4, 1),
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
                     false,
                     Team.Default, 
                     [
-                        new Area(new Vector2<int>(7, 7), new Vector2<int>(2, 1)), 
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
                     ],
                     [
-                        new Area(new Vector2<int>(6, 7), new Vector2<int>(4, 1)), 
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
                     ]
                 ),
                 
                 (
-                    new Vector2<int>(2, 5),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(2, 5),
+                    new Vector2Int(2, 2),
                     true,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(7, 6),
-                    new Vector2<int>(2, 2),
+                    new Vector2Int(7, 6),
+                    new Vector2Int(2, 2),
                     true,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(1, 7),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(1, 7),
+                    new Vector2Int(1, 1),
                     false,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(7, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(7, 8),
+                    new Vector2Int(1, 1),
                     false,
                     new Team(2), [], []
                 ),
                 (
-                    new Vector2<int>(8, 8),
-                    new Vector2<int>(1, 1),
+                    new Vector2Int(8, 8),
+                    new Vector2Int(1, 1),
                     false,
                     new Team(2), [], []
                 ),
             },
 
             // Expected:
-            new Vector2<int>[] // Occupation: low ground
+            new Vector2Int[] // Occupation: low ground
             {
                 new(0, 1), new(1, 1), new(2, 1), new(3, 1), 
                 new(0, 2), new(1, 2), 
@@ -5169,7 +5169,7 @@ public class PathfindingPipelineTests
                 
                 new(7, 8), new(8, 8), 
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
-            new Vector2<int>[] // Occupation: high ground
+            new Vector2Int[] // Occupation: high ground
             {
                 new(2, 2), new(3, 2), 
                 new(2, 3), new(3, 3), 
@@ -5179,7 +5179,7 @@ public class PathfindingPipelineTests
                 new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
                 new(2, 8), new(3, 8), 
             },
-            new Vector2<int>[] // Free high ground
+            new Vector2Int[] // Free high ground
             {
             },
         ];
@@ -5190,10 +5190,10 @@ public class PathfindingPipelineTests
     public void Pathfinding_ShouldCalculateHighGroundAndOccupation_ForEntitiesOnHighGround(
         string scenario,
         PathfindingSize pathfindingSize,
-        (Vector2<int>, Vector2<int>, bool, Team, Area[], Area[])[] entities, 
-        Vector2<int>[] expectedOccupiedLowGroundPositions,
-        Vector2<int>[] expectedOccupiedHighGroundPositions,
-        Vector2<int>[] expectedFreeHighGroundPositions)
+        (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] entities, 
+        Vector2Int[] expectedOccupiedLowGroundPositions,
+        Vector2Int[] expectedOccupiedHighGroundPositions,
+        Vector2Int[] expectedFreeHighGroundPositions)
     {
         foreach (var (pos, size, isOnHighGround, team, ascendables, 
                      highGrounds) in entities)
@@ -5243,11 +5243,11 @@ public class PathfindingPipelineTests
 
     private void ExpectedPositionsShouldNotBeContainedIn(
         List<Point> availablePoints,
-        Vector2<int>[] expectedPositions,
+        Vector2Int[] expectedPositions,
         CheckElevation checkElevation,
         string scenario)
     {
-        var foundUnfulfilledExpectedPositions = new HashSet<Vector2<int>>();
+        var foundUnfulfilledExpectedPositions = new HashSet<Vector2Int>();
 
         foreach (var position in IterateVector2Int.Positions(_config.MapSize))
         {
@@ -5297,12 +5297,12 @@ public class PathfindingPipelineTests
             }
         }
 
-        foundUnfulfilledExpectedPositions.Should().BeSubsetOf(Array.Empty<Vector2<int>>(), 
+        foundUnfulfilledExpectedPositions.Should().BeSubsetOf(Array.Empty<Vector2Int>(), 
             $"Found positions should be occupied or inaccessible at {checkElevation} for scenario {scenario}");
     }
 
     private static void ExpectedHighGroundPositionsShouldBeAccessibleIn(IEnumerable<Point> availablePoints, 
-        Vector2<int>[] expectedFreeHighGroundPositions, string scenario)
+        Vector2Int[] expectedFreeHighGroundPositions, string scenario)
     {
         expectedFreeHighGroundPositions.Should().BeSubsetOf(
             availablePoints.Where(x => x.IsHighGround).Select(x => x.Position), 
@@ -5310,8 +5310,8 @@ public class PathfindingPipelineTests
     }
     
     private void ExpectedPositionsShouldBeConnected(PathfindingSize pathfindingSize, 
-        ((Vector2<int>, bool), (Vector2<int>, bool))[] expectedNonConnectedPositionPairs, 
-        ((Vector2<int>, bool), (Vector2<int>, bool))[] expectedConnectedPositionPairs, 
+        ((Vector2Int, bool), (Vector2Int, bool))[] expectedNonConnectedPositionPairs, 
+        ((Vector2Int, bool), (Vector2Int, bool))[] expectedConnectedPositionPairs, 
         string scenario)
     {
         var foundIncorrectlyConnectedPositionPairs = 
@@ -5325,10 +5325,10 @@ public class PathfindingPipelineTests
             $"Found position pairs should be connected for scenario {scenario}");
     }
 
-    private Guid SetupAddingEntityInstance(Vector2<int> entityPrimaryPosition, Vector2<int> entitySize,
-        Team? team = null, bool? isOnHighGround = null, IEnumerable<Vector2<int>>? walkablePositions = null,
-        IList<IEnumerable<Vector2<int>>>? ascendablePositions = null,
-        IEnumerable<Vector2<int>>? highGroundPositions = null)
+    private Guid SetupAddingEntityInstance(Vector2Int entityPrimaryPosition, Vector2Int entitySize,
+        Team? team = null, bool? isOnHighGround = null, IEnumerable<Vector2Int>? walkablePositions = null,
+        IList<IEnumerable<Vector2Int>>? ascendablePositions = null,
+        IEnumerable<Vector2Int>? highGroundPositions = null)
     {
         var entityId = Guid.NewGuid();
         var entity = new PathfindingEntity(entityId, entityPrimaryPosition, entitySize, team ?? Team.Default,
@@ -5336,10 +5336,10 @@ public class PathfindingPipelineTests
             (fp, tp, t) => AllowsConnectionBetweenPoints(fp, tp, t, entityId));
 
         _entities[entityId] = entity;
-        _walkablePositionsByEntityId[entityId] = walkablePositions ?? new List<Vector2<int>>();
+        _walkablePositionsByEntityId[entityId] = walkablePositions ?? new List<Vector2Int>();
         _ascendablesByEntityId[entityId] = ascendablePositions
-                                           ?? new List<IEnumerable<Vector2<int>>> { new List<Vector2<int>>() };
-        _highGroundsByEntityId[entityId] = highGroundPositions ?? new List<Vector2<int>>();
+                                           ?? new List<IEnumerable<Vector2Int>> { new List<Vector2Int>() };
+        _highGroundsByEntityId[entityId] = highGroundPositions ?? new List<Vector2Int>();
 
         _pathfinding.AddOrUpdateEntity(entity);
         if (ascendablePositions != null)
@@ -5403,7 +5403,7 @@ public class PathfindingPipelineTests
         return false;
     }
 
-    private bool CanBeMovedOnAtAscendable(Vector2<int> position, Guid entityId)
+    private bool CanBeMovedOnAtAscendable(Vector2Int position, Guid entityId)
     {
         var ascendablePositions = _ascendablesByEntityId[entityId]
             .SelectMany(inner => inner)
@@ -5412,15 +5412,15 @@ public class PathfindingPipelineTests
         return ascendablePositions.Contains(position);
     }
 
-    private bool CanBeMovedOnAtHighGround(Vector2<int> position, Guid entityId)
+    private bool CanBeMovedOnAtHighGround(Vector2Int position, Guid entityId)
         => _highGroundsByEntityId[entityId].Contains(position);
     
-    private List<((Vector2<int>, bool), (Vector2<int>, bool))> GetConnectedPairs(
+    private List<((Vector2Int, bool), (Vector2Int, bool))> GetConnectedPairs(
         PathfindingSize pathfindingSize, 
-        IEnumerable<((Vector2<int>, bool), (Vector2<int>, bool))> positionPairs, 
+        IEnumerable<((Vector2Int, bool), (Vector2Int, bool))> positionPairs, 
         bool shouldBeConnected)
     {
-        var result = new List<((Vector2<int>, bool), (Vector2<int>, bool))>();
+        var result = new List<((Vector2Int, bool), (Vector2Int, bool))>();
         
         foreach (var (pointAEntry, pointBEntry) in positionPairs)
         {

@@ -7,7 +7,7 @@ namespace MultipurposePathfindingTests;
 
 public class InitializationTerrainTests
 {
-    private readonly Vector2<int> _startingPosition = new(0, 0);
+    private readonly Vector2Int _startingPosition = new(0, 0);
     private readonly Configuration _config = new();
     private const float SearchRange = 100f;
 
@@ -23,12 +23,12 @@ public class InitializationTerrainTests
             1,
             new[]
             {
-                new Vector2<int>(4, 3), new Vector2<int>(5, 3),
+                new Vector2Int(4, 3), new Vector2Int(5, 3),
             },
             // Expected:
             new[]
             {
-                new Vector2<int>(4, 3), new Vector2<int>(5, 3),
+                new Vector2Int(4, 3), new Vector2Int(5, 3),
             }
         ];
 
@@ -37,14 +37,14 @@ public class InitializationTerrainTests
             1,
             new[]
             {
-                new Vector2<int>(4, 3),
-                new Vector2<int>(4, 4),
+                new Vector2Int(4, 3),
+                new Vector2Int(4, 4),
             },
             // Expected:
             new[]
             {
-                new Vector2<int>(4, 3),
-                new Vector2<int>(4, 4),
+                new Vector2Int(4, 3),
+                new Vector2Int(4, 4),
             }
         ];
 
@@ -53,13 +53,13 @@ public class InitializationTerrainTests
             2,
             new[]
             {
-                new Vector2<int>(4, 3), new Vector2<int>(5, 3),
+                new Vector2Int(4, 3), new Vector2Int(5, 3),
             },
             // Expected:
             new[]
             {
-                new Vector2<int>(3, 2), new Vector2<int>(4, 2), new Vector2<int>(5, 2),
-                new Vector2<int>(3, 3), new Vector2<int>(4, 3), new Vector2<int>(5, 3), 
+                new Vector2Int(3, 2), new Vector2Int(4, 2), new Vector2Int(5, 2),
+                new Vector2Int(3, 3), new Vector2Int(4, 3), new Vector2Int(5, 3), 
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray()
         ];
 
@@ -68,15 +68,15 @@ public class InitializationTerrainTests
             2,
             new[]
             {
-                new Vector2<int>(4, 3),
-                new Vector2<int>(4, 4),
+                new Vector2Int(4, 3),
+                new Vector2Int(4, 4),
             },
             // Expected:
             new[]
             {
-                new Vector2<int>(3, 2), new Vector2<int>(4, 2),
-                new Vector2<int>(3, 3), new Vector2<int>(4, 3),
-                new Vector2<int>(3, 4), new Vector2<int>(4, 4),
+                new Vector2Int(3, 2), new Vector2Int(4, 2),
+                new Vector2Int(3, 3), new Vector2Int(4, 3),
+                new Vector2Int(3, 4), new Vector2Int(4, 4),
             }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray()
         ];
 
@@ -85,14 +85,14 @@ public class InitializationTerrainTests
             3,
             new[]
             {
-                new Vector2<int>(4, 3), new Vector2<int>(5, 3),
+                new Vector2Int(4, 3), new Vector2Int(5, 3),
             },
             // Expected:
             new[]
             {
-                new Vector2<int>(2, 1), new Vector2<int>(3, 1), new Vector2<int>(4, 1), new Vector2<int>(5, 1),
-                new Vector2<int>(2, 2), new Vector2<int>(3, 2), new Vector2<int>(4, 2), new Vector2<int>(5, 2),
-                new Vector2<int>(2, 3), new Vector2<int>(3, 3), new Vector2<int>(4, 3), new Vector2<int>(5, 3),
+                new Vector2Int(2, 1), new Vector2Int(3, 1), new Vector2Int(4, 1), new Vector2Int(5, 1),
+                new Vector2Int(2, 2), new Vector2Int(3, 2), new Vector2Int(4, 2), new Vector2Int(5, 2),
+                new Vector2Int(2, 3), new Vector2Int(3, 3), new Vector2Int(4, 3), new Vector2Int(5, 3),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray()
         ];
 
@@ -101,16 +101,16 @@ public class InitializationTerrainTests
             3,
             new[]
             {
-                new Vector2<int>(4, 3),
-                new Vector2<int>(4, 4),
+                new Vector2Int(4, 3),
+                new Vector2Int(4, 4),
             },
             // Expected:
             new[]
             {
-                new Vector2<int>(2, 1), new Vector2<int>(3, 1), new Vector2<int>(4, 1),
-                new Vector2<int>(2, 2), new Vector2<int>(3, 2), new Vector2<int>(4, 2),
-                new Vector2<int>(2, 3), new Vector2<int>(3, 3), new Vector2<int>(4, 3),
-                new Vector2<int>(2, 4), new Vector2<int>(3, 4), new Vector2<int>(4, 4),
+                new Vector2Int(2, 1), new Vector2Int(3, 1), new Vector2Int(4, 1),
+                new Vector2Int(2, 2), new Vector2Int(3, 2), new Vector2Int(4, 2),
+                new Vector2Int(2, 3), new Vector2Int(3, 3), new Vector2Int(4, 3),
+                new Vector2Int(2, 4), new Vector2Int(3, 4), new Vector2Int(4, 4),
             }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray()
         ];
     }
@@ -119,8 +119,8 @@ public class InitializationTerrainTests
     [MemberData(nameof(GetExpectedMountains))]
     public void Pathfinding_ShouldCalculateMountainsPathing_ForPathfindingSizes(
         int pathfindingSize,
-        Vector2<int>[] mountainPositions,
-        Vector2<int>[] expectedMountainPositions)
+        Vector2Int[] mountainPositions,
+        Vector2Int[] expectedMountainPositions)
     {
         var initialPositionsAndTerrainIndexes = IterateVector2Int
             .Positions(_config.MapSize)
@@ -157,10 +157,10 @@ public class InitializationTerrainTests
     { 
         yield return
         [
-            new Vector2<int>(0, 0),
+            new Vector2Int(0, 0),
             new[]
             {
-                new Vector2<int>(1, 1), new Vector2<int>(2, 2),
+                new Vector2Int(1, 1), new Vector2Int(2, 2),
             },
             // Expected:
             true
@@ -168,10 +168,10 @@ public class InitializationTerrainTests
         
         yield return
         [
-            new Vector2<int>(0, 0),
+            new Vector2Int(0, 0),
             new[]
             {
-                new Vector2<int>(1, 0), new Vector2<int>(0, 1),
+                new Vector2Int(1, 0), new Vector2Int(0, 1),
             },
             // Expected:
             false
@@ -179,10 +179,10 @@ public class InitializationTerrainTests
         
         yield return
         [
-            new Vector2<int>(0, 2),
+            new Vector2Int(0, 2),
             new[]
             {
-                new Vector2<int>(0, 1), new Vector2<int>(1, 2), new Vector2<int>(1, 3),
+                new Vector2Int(0, 1), new Vector2Int(1, 2), new Vector2Int(1, 3),
             },
             // Expected:
             false
@@ -190,10 +190,10 @@ public class InitializationTerrainTests
         
         yield return
         [
-            new Vector2<int>(3, 1),
+            new Vector2Int(3, 1),
             new[]
             {
-                new Vector2<int>(3, 0), new Vector2<int>(2, 1), new Vector2<int>(3, 2),
+                new Vector2Int(3, 0), new Vector2Int(2, 1), new Vector2Int(3, 2),
             },
             // Expected:
             false
@@ -201,12 +201,12 @@ public class InitializationTerrainTests
         
         yield return
         [
-            new Vector2<int>(0, 0),
+            new Vector2Int(0, 0),
             new[]
             {
-                new Vector2<int>(1, 1), new Vector2<int>(3, 0),
-                new Vector2<int>(1, 2), new Vector2<int>(3, 1),
-                new Vector2<int>(1, 3), new Vector2<int>(3, 2),
+                new Vector2Int(1, 1), new Vector2Int(3, 0),
+                new Vector2Int(1, 2), new Vector2Int(3, 1),
+                new Vector2Int(1, 3), new Vector2Int(3, 2),
             },
             // Expected:
             true
@@ -216,10 +216,10 @@ public class InitializationTerrainTests
     [Theory]
     [MemberData(nameof(GetExpectedDiagonals))]
     public void Pathfinding_EndPositionShouldBeAccessibleAccordingToDiagonals_WithGivenMountainsInA4x4Map(
-        Vector2<int> startPosition, Vector2<int>[] mountainPositions, bool expectedToBeAccessible)
+        Vector2Int startPosition, Vector2Int[] mountainPositions, bool expectedToBeAccessible)
     {
-        var endPosition = new Vector2<int>(3, 3);
-        var mapSize = new Vector2<int>(4, 4);
+        var endPosition = new Vector2Int(3, 3);
+        var mapSize = new Vector2Int(4, 4);
         _config.MapSize = mapSize;
         
         var initialPositionsAndTerrainIndexes = IterateVector2Int

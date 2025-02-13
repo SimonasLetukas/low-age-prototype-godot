@@ -22,15 +22,15 @@ namespace DijkstraMap.Methods
         /// <see cref="float.PositiveInfinity"/>, diagonal connections are disabled.</param>
         /// <returns>Returns a Dictionary, where keys are coordinates of points (Vector2) and values are the
         /// corresponding point IDs.</returns>
-        public static Dictionary<Vector2<int>, PointId> AddSquareGrid(
+        public static Dictionary<Vector2Int, PointId> AddSquareGrid(
             this Dijkstra dijkstraMap,
             int width, int height, 
-            Vector2<int>? initialOffset = null, 
+            Vector2Int? initialOffset = null, 
             Terrain? defaultTerrain = null, 
             float? orthogonalCost = null, 
             float? diagonalCost = null)
         {
-            var offset = initialOffset ?? new Vector2<int>(0, 0);
+            var offset = initialOffset ?? new Vector2Int(0, 0);
             var terrain = defaultTerrain ?? Terrain.Default;
             var orthogonal = orthogonalCost ?? 1.0f;
             var diagonal = diagonalCost ?? float.PositiveInfinity;
@@ -41,15 +41,15 @@ namespace DijkstraMap.Methods
             // Orthogonal directions
             var orthos = new[]
             {
-                new Vector2<int>(1, 0), new Vector2<int>(-1, 0),
-                new Vector2<int>(0, 1), new Vector2<int>(0, -1)
+                new Vector2Int(1, 0), new Vector2Int(-1, 0),
+                new Vector2Int(0, 1), new Vector2Int(0, -1)
             };
 
             // Diagonal directions
             var diags = new[]
             {
-                new Vector2<int>(1, 1), new Vector2<int>(-1, 1),
-                new Vector2<int>(1, -1), new Vector2<int>(-1, -1)
+                new Vector2Int(1, 1), new Vector2Int(-1, 1),
+                new Vector2Int(1, -1), new Vector2Int(-1, -1)
             };
 
             foreach (var (pos, id1) in posToId)
@@ -112,14 +112,14 @@ namespace DijkstraMap.Methods
         ///  \     / \     /
         ///    \ /     \ /
         /// </code></example>
-        public static Dictionary<Vector2<int>, PointId> AddHexagonalGrid(
+        public static Dictionary<Vector2Int, PointId> AddHexagonalGrid(
             this Dijkstra dijkstraMap,
             int width, int height, 
-            Vector2<int>? initialOffset, 
+            Vector2Int? initialOffset, 
             Terrain defaultTerrain, 
             float? weight)
         {
-            var offset = initialOffset ?? new Vector2<int>(0, 0);
+            var offset = initialOffset ?? new Vector2Int(0, 0);
             var posToId = AddGridInternal(dijkstraMap, offset.X, offset.Y, 
                 width, height, defaultTerrain);
 
@@ -130,15 +130,15 @@ namespace DijkstraMap.Methods
             {
                 new[]
                 {
-                    new Vector2<int>(-1, -1), new Vector2<int>(0, -1),
-                    new Vector2<int>(-1, 0), new Vector2<int>(1, 0),
-                    new Vector2<int>(-1, 1), new Vector2<int>(0, 1)
+                    new Vector2Int(-1, -1), new Vector2Int(0, -1),
+                    new Vector2Int(-1, 0), new Vector2Int(1, 0),
+                    new Vector2Int(-1, 1), new Vector2Int(0, 1)
                 }, // Even columns
                 new[]
                 {
-                    new Vector2<int>(0, -1), new Vector2<int>(1, -1),
-                    new Vector2<int>(-1, 0), new Vector2<int>(1, 0),
-                    new Vector2<int>(0, 1), new Vector2<int>(1, 1)
+                    new Vector2Int(0, -1), new Vector2Int(1, -1),
+                    new Vector2Int(-1, 0), new Vector2Int(1, 0),
+                    new Vector2Int(0, 1), new Vector2Int(1, 1)
                 } // Odd columns
             };
 
@@ -161,17 +161,17 @@ namespace DijkstraMap.Methods
             return posToId;
         }
         
-        private static Dictionary<Vector2<int>, PointId> AddGridInternal(this Dijkstra dijkstraMap, 
+        private static Dictionary<Vector2Int, PointId> AddGridInternal(this Dijkstra dijkstraMap, 
             int xOffset, int yOffset, int width, int height, Terrain defaultTerrain)
         {
             var id = dijkstraMap.GetAvailableId();
-            var posToId = new Dictionary<Vector2<int>, PointId>();
+            var posToId = new Dictionary<Vector2Int, PointId>();
 
             for (var x = xOffset; x < width + xOffset; x++)
             {
                 for (var y = yOffset; y < height + yOffset; y++)
                 {
-                    var pos = new Vector2<int>(x, y);
+                    var pos = new Vector2Int(x, y);
                     id = dijkstraMap.GetAvailableId(new PointId(id.Value + 1));
                     dijkstraMap.AddOrReplacePoint(id, defaultTerrain);
                     posToId[pos] = id;

@@ -8,7 +8,7 @@ namespace MultipurposePathfinding
 {
     public class Configuration
     {
-        public Vector2<int> MapSize { get; set; } = new Vector2<int>(10, 10);
+        public Vector2Int MapSize { get; set; } = new Vector2Int(10, 10);
         public int BaseTerrain { get; set; } = 0;
         public Dictionary<int, float> TerrainWeights { get; set; } =
             new Dictionary<int, float>

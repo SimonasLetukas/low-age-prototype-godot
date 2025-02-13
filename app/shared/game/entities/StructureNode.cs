@@ -22,15 +22,15 @@ public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
     public override Area RelativeSize => EntitySize.Except(WalkablePositionsBlueprint);
     public string FlattenedSprite { get; private set; }
     public Vector2? FlattenedCenterOffset { get; private set; }
-    public Vector2<int> CenterPoint { get; protected set; }
+    public Vector2Int CenterPoint { get; protected set; }
     public IList<Area> WalkableAreasBlueprint { get; protected set; }
     public IEnumerable<Area> WalkableAreas => WalkableAreasBlueprint.Select(x => 
         new Area(x.Start + EntityPrimaryPosition, x.Size)).ToList();
-    public IEnumerable<Vector2<int>> WalkablePositionsBlueprint => WalkableAreasBlueprint.Select(walkableArea =>
+    public IEnumerable<Vector2Int> WalkablePositionsBlueprint => WalkableAreasBlueprint.Select(walkableArea =>
         walkableArea.ToList()).SelectMany(walkablePositions => walkablePositions).ToHashSet();
-    public IEnumerable<Vector2<int>> WalkablePositions => WalkableAreas.Select(walkableArea => walkableArea.ToList())
+    public IEnumerable<Vector2Int> WalkablePositions => WalkableAreas.Select(walkableArea => walkableArea.ToList())
         .SelectMany(walkablePositions => walkablePositions).ToHashSet();
-    public IEnumerable<Vector2<int>> NonWalkablePositions => EntityOccupyingPositions.Except(WalkablePositions);
+    public IEnumerable<Vector2Int> NonWalkablePositions => EntityOccupyingPositions.Except(WalkablePositions);
     
     private Structure Blueprint { get; set; }
     
@@ -63,20 +63,20 @@ public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
                 if (centerPointAssigned)
                     break;
                 
-                var currentPoint = new Vector2<int>(x, y);
+                var currentPoint = new Vector2Int(x, y);
                 var newX = EntitySize.Y - 1 - y;
                 var newY = x;
 
                 if (CenterPoint.Equals(currentPoint) is false)
                     continue;
                 
-                CenterPoint = new Vector2<int>(newX, newY);
+                CenterPoint = new Vector2Int(newX, newY);
                 centerPointAssigned = true;
             }
         }
 
         WalkableAreasBlueprint = WalkableAreasBlueprint.RotateClockwiseInside(EntitySize);
-        EntitySize = new Vector2<int>(EntitySize.Y, EntitySize.X);
+        EntitySize = new Vector2Int(EntitySize.Y, EntitySize.X);
         Renderer.AdjustToRelativeSize(RelativeSize);
         
         base.Rotate();

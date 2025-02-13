@@ -27,18 +27,18 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public Team Team { get; set; } = 1;
     public EntityRenderer Renderer { get; private set; }
-    public Vector2<int> EntityPrimaryPosition { get; set; }
-    public Vector2<int> EntitySize { get; protected set; } = Vector2Int.One;
+    public Vector2Int EntityPrimaryPosition { get; set; }
+    public Vector2Int EntitySize { get; protected set; } = Vector2Int.One;
     public virtual Area RelativeSize => new Area(Vector2Int.Zero, EntitySize);
-    public IList<Vector2<int>> EntityOccupyingPositions => new Area(EntityPrimaryPosition, EntitySize).ToList();
-    public Dictionary<Vector2<int>, int> ProvidedHighGroundHeightByOccupyingPosition =>
+    public IList<Vector2Int> EntityOccupyingPositions => new Area(EntityPrimaryPosition, EntitySize).ToList();
+    public Dictionary<Vector2Int, int> ProvidedHighGroundHeightByOccupyingPosition =>
         _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
             pair => pair.Value);
     public string DisplayName { get; protected set; }
     public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; }
-    public Func<IList<Vector2<int>>, IList<Tiles.TileInstance>> GetHighestTiles { protected get; set; }
-    public Func<Vector2<int>, bool, Tiles.TileInstance> GetTile { protected get; set; }
+    public Func<IList<Vector2Int>, IList<Tiles.TileInstance>> GetHighestTiles { protected get; set; }
+    public Func<Vector2Int, bool, Tiles.TileInstance> GetTile { protected get; set; }
     
     protected bool Selected { get; private set; } = false;
     protected bool Hovered { get; private set; } = false;
@@ -55,7 +55,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     private IList<Vector2> _movePath = new List<Vector2>();
 
-    private readonly Dictionary<Vector2<int>, int> _providingHighGroundHeightByLocalEntityPosition = new Dictionary<Vector2<int>, int>();
+    private readonly Dictionary<Vector2Int, int> _providingHighGroundHeightByLocalEntityPosition = new Dictionary<Vector2Int, int>();
     private float _movementDuration;
     private bool _canBePlacedOnTheWholeMap = false;
     

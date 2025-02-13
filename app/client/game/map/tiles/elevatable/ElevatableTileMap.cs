@@ -7,6 +7,8 @@ public partial class ElevatableTileMap : TileMapLayer
     [Export]
     public Texture2D ElevatedSpriteTexture { get; set; } = null!;
 
+    public Vector2 Offset { get; private set; } = Vector2.Zero;
+    
     protected int Height { get; private set; } = 0;
     protected Dictionary<Vector2, Sprite2D> SpritesByPosition { get; set; } = new();
     
@@ -80,15 +82,15 @@ public partial class ElevatableTileMap : TileMapLayer
     
     private void DeterminePosition(bool flattened)
     {
-        var offset = Height == 0 ? Vector2.Zero : new Vector2(0, -(Constants.TileHeight / 2));
+        Offset = Height == 0 ? Vector2.Zero : new Vector2(0, -(Constants.TileHeight / 2));
         
         if (flattened && Height > 0)
         {
-            Position = Vector2.Up * Constants.FlattenedHighGroundHeight + offset;
+            Position = Vector2.Up * Constants.FlattenedHighGroundHeight + Offset;
             return;
         }
 
-        Position = Vector2.Up * Height + offset;
+        Position = Vector2.Up * Height + Offset;
     }
 
     private void OnWhenFlattenedChanged(bool to) => DeterminePosition(to);

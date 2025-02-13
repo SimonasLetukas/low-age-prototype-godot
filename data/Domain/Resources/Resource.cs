@@ -27,7 +27,7 @@ namespace LowAgeData.Domain.Resources
             DisplayName = displayName;
             Description = description;
             Sprite = sprite;
-            CenterOffset = new Vector2<int>(0, 0);
+            CenterOffset = new Vector2Int(0, 0);
             HasLimit = hasLimit;
             IsConsumable = isConsumable;
             HasBank = hasBank;
@@ -104,6 +104,6 @@ namespace LowAgeData.Domain.Resources
 
         public string? Sprite { get; }
         
-        public Vector2<int> CenterOffset { get; }
+        public Vector2Int CenterOffset { get; }
     }
 }

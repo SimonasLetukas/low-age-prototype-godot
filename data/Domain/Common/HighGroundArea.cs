@@ -4,7 +4,7 @@ namespace LowAgeData.Domain.Common
 {
     public struct HighGroundArea
     {
-        public HighGroundArea(Area area, Vector2<int> spriteOffset)
+        public HighGroundArea(Area area, Vector2Int spriteOffset)
         {
             Area = area;
             SpriteOffset = spriteOffset;
@@ -15,6 +15,6 @@ namespace LowAgeData.Domain.Common
         /// <summary>
         /// How much the entities need to be offset to appear on top of this high-ground area.
         /// </summary>
-        public Vector2<int> SpriteOffset { get; }
+        public Vector2Int SpriteOffset { get; }
     }
 }

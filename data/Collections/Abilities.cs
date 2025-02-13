@@ -1313,10 +1313,10 @@ namespace LowAgeData.Collections
                         // oxxo
                         // oxxo
                         //  oo
-                        new Area(start: new Vector2<int>(x: 0, y: -1), size: new Vector2<int>(x: 2, y: 1)),
-                        new Area(start: new Vector2<int>(x: 2, y: 0), size: new Vector2<int>(x: 1, y: 2)),
-                        new Area(start: new Vector2<int>(x: 0, y: 2), size: new Vector2<int>(x: 2, y: 1)),
-                        new Area(start: new Vector2<int>(x: -1, y: 0), size: new Vector2<int>(x: 1, y: 2)),
+                        new Area(start: new Vector2Int(x: 0, y: -1), size: new Vector2Int(x: 2, y: 1)),
+                        new Area(start: new Vector2Int(x: 2, y: 0), size: new Vector2Int(x: 1, y: 2)),
+                        new Area(start: new Vector2Int(x: 0, y: 2), size: new Vector2Int(x: 2, y: 1)),
+                        new Area(start: new Vector2Int(x: -1, y: 0), size: new Vector2Int(x: 1, y: 2)),
                     }),
                     effects: new List<EffectId>
                     {

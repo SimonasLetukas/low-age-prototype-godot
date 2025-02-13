@@ -30,7 +30,7 @@ public partial class HoveringPanel : Control
         _mapSize = mapSize;
     }
     
-    private void OnNewTileFocused(Vector2<int> tileHovered, Terrain terrain, IList<EntityNode>? occupants)
+    private void OnNewTileFocused(Vector2Int tileHovered, Terrain terrain, IList<EntityNode>? occupants)
     {
         string coordinatesText;
         string terrainText;

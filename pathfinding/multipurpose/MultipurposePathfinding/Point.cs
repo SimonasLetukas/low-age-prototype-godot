@@ -6,7 +6,7 @@ namespace MultipurposePathfinding
     public class Point : IEquatable<Point>
     {
         public int Id { get; set; }
-        public Vector2<int> Position { get; set; }
+        public Vector2Int Position { get; set; }
         public int HighGroundAscensionLevel { get; set; }
         public bool IsHighGround { get; set; }
         public bool IsLowGround => IsHighGround is false;

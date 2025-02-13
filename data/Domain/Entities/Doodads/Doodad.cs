@@ -17,7 +17,7 @@ namespace LowAgeData.Domain.Entities.Doodads
             string displayName, 
             string description, 
             string sprite, 
-            Vector2<int> centerOffset,
+            Vector2Int centerOffset,
             EffectId? onCollisionEffect = null,
             IList<IFilterItem>? collisionFilters = null,
             EffectId? periodicEffect = null,

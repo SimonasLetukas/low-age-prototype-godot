@@ -15,7 +15,7 @@ public partial class ElevatableTiles : Node2D
     private readonly HashSet<int> _preparedElevations = [0]; 
     private Node2D _alpha = null!;
 
-    private readonly Dictionary<(Vector2<int>, int), int> _zIndexesByPositionAndElevation = new();
+    private readonly Dictionary<(Vector2Int, int), int> _zIndexesByPositionAndElevation = new();
     private readonly Dictionary<int, AvailableTiles> _availableTilesVisual = new();
     private readonly Dictionary<int, AvailableHoveringTiles> _availableTilesHovering = new();
     private IEnumerable<Tiles.TileInstance> _availableTilesCache = new List<Tiles.TileInstance>();
@@ -26,9 +26,9 @@ public partial class ElevatableTiles : Node2D
     private readonly Dictionary<int, PathTiles> _pathTileMaps = new();
     
     private Guid? _availableTilesCachedEntity = Guid.Empty;
-    private Vector2<int> _availableTilesCachedEntityPosition = Vector2Int.Zero;
+    private Vector2Int _availableTilesCachedEntityPosition = Vector2Int.Zero;
     private Guid? _availableHoveringTilesCachedEntity = Guid.Empty;
-    private Vector2<int> _availableHoveringTilesCachedEntityPosition = Vector2Int.Zero;
+    private Vector2Int _availableHoveringTilesCachedEntityPosition = Vector2Int.Zero;
 
     private const int SourceId = 0;
     
@@ -114,7 +114,7 @@ public partial class ElevatableTiles : Node2D
             var availablePositions = pointsByElevation
                 .Where(x => x.Key == tileMapsByElevationEntry.Key)
                 .SelectMany(x => x.Value, (_, point) => 
-                    (point.Position.ToGodotVector2I<int>(), GetZIndexAt(point.Position, tileMapsByElevationEntry.Key)))
+                    (point.Position.ToGodotVector2I(), GetZIndexAt(point.Position, tileMapsByElevationEntry.Key)))
                 .ToList();
             
             if (hovering)
@@ -146,28 +146,30 @@ public partial class ElevatableTiles : Node2D
         var mousePosition = GetGlobalMousePosition();
         var highestElevation = -1;
         Tiles.TileInstance? result = null;
-        foreach (var availableTiles in _availableTilesVisual)
+        foreach (var (elevation, availableTiles) in _availableTilesVisual)
         {
-            var position = availableTiles.Value.LocalToMap(mousePosition 
-                                                           - availableTiles.Value.Position) - _tilemapOffset;
-            var tileExists = _availableTilesCache.Any(x => x.Position.ToGodotVector2().Equals(position) 
-                                                           && x.YSpriteOffset.Equals(availableTiles.Key));
-            if (tileExists is false || availableTiles.Key <= highestElevation) 
+            if (elevation <= highestElevation)
+                continue;
+
+            var position = GetMapPositionFromGlobalPosition(mousePosition, availableTiles);
+            var tileExists = _availableTilesCache.Any(x => x.Position.Equals(position) 
+                                                           && x.YSpriteOffset.Equals(elevation));
+            if (tileExists is false) 
                 continue;
             
-            result = _availableTilesCache.First(x => x.Position.ToGodotVector2().Equals(position)
-                                                     && x.YSpriteOffset.Equals(availableTiles.Key));
-            highestElevation = availableTiles.Key;
+            result = _availableTilesCache.First(x => x.Position.Equals(position) 
+                                                     && x.YSpriteOffset.Equals(elevation));
+            highestElevation = elevation;
         }
 
         return result;
     }
-    
+
     public bool IsCurrentlyAvailable(Tiles.TileInstance tile) => IsCurrentlyAvailable(tile.Point);
     
     private bool IsCurrentlyAvailable(Point point) => _availableTilesCache.Any(x => x.Point.Id.Equals(point.Id));
 
-    public void SetTargetTiles(IEnumerable<Vector2<int>> targets, bool isPlacementAreaTheWholeMap, bool isTargetPositive = true)
+    public void SetTargetTiles(IEnumerable<Vector2Int> targets, bool isPlacementAreaTheWholeMap, bool isTargetPositive = true)
     {
         if (isPlacementAreaTheWholeMap)
         {
@@ -197,7 +199,7 @@ public partial class ElevatableTiles : Node2D
             var targetPositions = pointsByElevation
                 .Where(x => x.Key == entry.Key)
                 .SelectMany(x => x.Value, (_, point) => 
-                    (point.Position.ToGodotVector2I<int>(), GetZIndexAt(point.Position, entry.Key)))
+                    (point.Position.ToGodotVector2I(), GetZIndexAt(point.Position, entry.Key)))
                 .ToList();
             
             entry.Value.SetTiles(targetPositions, isTargetPositive);
@@ -217,7 +219,7 @@ public partial class ElevatableTiles : Node2D
             var pathPositions = pointsByElevation
                 .Where(x => x.Key == entry.Key)
                 .SelectMany(x => x.Value, (_, point) => 
-                    (point.Position.ToGodotVector2I<int>(), GetZIndexAt(point.Position, entry.Key)));
+                    (point.Position.ToGodotVector2I(), GetZIndexAt(point.Position, entry.Key)));
             
             entry.Value.SetTiles(pathPositions, TileMapPathTerrainSetIndex, TileMapPathTerrainIndex);
         }
@@ -280,6 +282,10 @@ public partial class ElevatableTiles : Node2D
         ClearAvailableTilesCache(true);
         ClearAvailableTilesCache(false);
     }
+    
+    private Vector2Int GetMapPositionFromGlobalPosition(Vector2 globalPosition, ElevatableTileMap tileMap) 
+        => (tileMap.LocalToMap(globalPosition - tileMap.Position + tileMap.Offset) - _tilemapOffset)
+            .ToVector2();
     
     private static Dictionary<int, ICollection<Tiles.TileInstance>> SplitIntoElevations(
         IEnumerable<Tiles.TileInstance> tiles)
@@ -418,7 +424,7 @@ public partial class ElevatableTiles : Node2D
         _availableTilesCache = availableTiles;
     }
 
-    private int GetZIndexAt(Vector2<int> position, int elevation) 
+    private int GetZIndexAt(Vector2Int position, int elevation) 
         => _zIndexesByPositionAndElevation.ContainsKey((position, elevation))
             ? _zIndexesByPositionAndElevation[(position, elevation)] 
             : 0;

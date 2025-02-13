@@ -21,18 +21,18 @@ public partial class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGrou
         return behaviour;
     }
     
-    public IList<(IEnumerable<Vector2<int>>, int)> LeveledPositions => LeveledLocalPositions
+    public IList<(IEnumerable<Vector2Int>, int)> LeveledPositions => LeveledLocalPositions
         .Select(x => (x.Item1.Select(y => y + Parent.EntityPrimaryPosition), x.Item2))
         .ToList();
-    public IList<IEnumerable<Vector2<int>>> LeveledPositionsWithoutSpriteOffset => LeveledLocalPositions
+    public IList<IEnumerable<Vector2Int>> LeveledPositionsWithoutSpriteOffset => LeveledLocalPositions
         .Select(x => x.Item1.Select(y => y + Parent.EntityPrimaryPosition))
         .ToList();
-    public IList<(IEnumerable<Vector2<int>>, int)> LeveledLocalPositions { get; private set; } = new List<(IEnumerable<Vector2<int>>, int)>();
-    public Dictionary<Vector2<int>, int> FlattenedPositions => FlattenedLocalPositions
+    public IList<(IEnumerable<Vector2Int>, int)> LeveledLocalPositions { get; private set; } = new List<(IEnumerable<Vector2Int>, int)>();
+    public Dictionary<Vector2Int, int> FlattenedPositions => FlattenedLocalPositions
         .ToDictionary(pair => pair.Key + Parent.EntityPrimaryPosition, pair => pair.Value);
-    public IEnumerable<Vector2<int>> FlattenedPositionsWithoutSpriteOffset => FlattenedLocalPositions
+    public IEnumerable<Vector2Int> FlattenedPositionsWithoutSpriteOffset => FlattenedLocalPositions
         .Select(x => x.Key + Parent.EntityPrimaryPosition);
-    public Dictionary<Vector2<int>, int> FlattenedLocalPositions { get; set; } = new Dictionary<Vector2<int>, int>();
+    public Dictionary<Vector2Int, int> FlattenedLocalPositions { get; set; } = new Dictionary<Vector2Int, int>();
 
     private HighGround Blueprint { get; set; }
 
@@ -52,7 +52,7 @@ public partial class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGrou
         EventBus.Instance.RaisePathfindingUpdating(this, false);
     }
 
-    public bool CanBeMovedOnAt(Vector2<int> position, Team forTeam) => FlattenedPositions.ContainsKey(position);
+    public bool CanBeMovedOnAt(Vector2Int position, Team forTeam) => FlattenedPositions.ContainsKey(position);
 
     public bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam) => true;
     
@@ -67,14 +67,14 @@ public partial class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGrou
         
         var entityBoundsBeforeRotation = finalRotation is ActorRotation.BottomLeft 
                                          || finalRotation is ActorRotation.TopRight 
-            ? new Vector2<int>(Parent.EntitySize.Y, Parent.EntitySize.X) 
+            ? new Vector2Int(Parent.EntitySize.Y, Parent.EntitySize.X) 
             : Parent.EntitySize;
         
         var rotatedRectsBlueprint = leveledRectsBlueprint.Select(entry => entry.Item1).ToList();
         rotatedRectsBlueprint = rotatedRectsBlueprint.RotateClockwiseInside(entityBoundsBeforeRotation, rotationCount)
             .ToList();
         
-        var leveledPositions = new List<(IEnumerable<Vector2<int>>, int)>();
+        var leveledPositions = new List<(IEnumerable<Vector2Int>, int)>();
         for (var i = 0; i < leveledRectsBlueprint.Count; i++)
         {
             var rect2 = rotatedRectsBlueprint[i];

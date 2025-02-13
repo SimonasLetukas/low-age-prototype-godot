@@ -65,7 +65,7 @@ namespace MultipurposePathfinding
         /// <param name="initialPositionsAndTerrainIndexes">Positions and their terrain indexes to initialize.</param>
         /// <param name="configuration">Configuration of the pathfinding graph. If null, default values will be
         /// used.</param>
-        void Initialize(IEnumerable<(Vector2<int>, Terrain)> initialPositionsAndTerrainIndexes,
+        void Initialize(IEnumerable<(Vector2Int, Terrain)> initialPositionsAndTerrainIndexes,
             Configuration configuration = null);
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace MultipurposePathfinding
         /// <param name="pathfindingSize">What is the MxM size of the pathfinding entity.</param>
         /// <param name="temporary">If true, the calculation will not be cached. False by default.</param>
         /// <returns>All points available for pathfinding.</returns>
-        IEnumerable<Point> GetAvailablePoints(Vector2<int> from, float range, bool lookingFromHighGround,
+        IEnumerable<Point> GetAvailablePoints(Vector2Int from, float range, bool lookingFromHighGround,
             Team team, PathfindingSize pathfindingSize, bool temporary = false);
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace MultipurposePathfinding
         /// <param name="entityId">Reference to the entity for which the ascendable high ground is added.</param>
         /// <param name="path">A list of ascendable steps (from lowest to highest): each step is a collection of
         /// positions and their corresponding sprite offset.</param>
-        void AddAscendableHighGround(Guid entityId, IList<IEnumerable<Vector2<int>>> path);
+        void AddAscendableHighGround(Guid entityId, IList<IEnumerable<Vector2Int>> path);
 
         /// <summary>
         /// Removes the path of ascendable high-ground from the pathfinding calculations for the given entity.
@@ -153,7 +153,7 @@ namespace MultipurposePathfinding
         /// Adds the positions of high-ground to the pathfinding calculations for the given entity.
         /// <see cref="UpdateAround"/> should be called to update the pathfinding graph.
         /// </summary>
-        void AddHighGround(Guid entityId, IEnumerable<Vector2<int>> positions);
+        void AddHighGround(Guid entityId, IEnumerable<Vector2Int> positions);
 
         /// <summary>
         /// Removes the positions of high-ground from the pathfinding calculations for the given entity.
@@ -190,12 +190,12 @@ namespace MultipurposePathfinding
         private bool _terrainGraphFurtherPassesInitialized = false;
         private bool _diagonalConnectionsInitialized = false;
         private Terrain _terrainWithSmallestMovementCost;
-        private IList<(Vector2<int>, Terrain)> _positionsAndTerrainsForFirstPassInitialization;
-        private Dictionary<Terrain, IList<Vector2<int>>> _positionsByTerrainForFurtherInitialization;
-        private Dictionary<Vector2<int>, int> _pointIdsByPositionsForInitialization;
+        private IList<(Vector2Int, Terrain)> _positionsAndTerrainsForFirstPassInitialization;
+        private Dictionary<Terrain, IList<Vector2Int>> _positionsByTerrainForFurtherInitialization;
+        private Dictionary<Vector2Int, int> _pointIdsByPositionsForInitialization;
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
-        public void Initialize(IEnumerable<(Vector2<int>, Terrain)> initialPositionsAndTerrainIndexes,
+        public void Initialize(IEnumerable<(Vector2Int, Terrain)> initialPositionsAndTerrainIndexes,
             Configuration configuration = null)
         {
             Config = configuration ?? new Configuration();
@@ -206,11 +206,11 @@ namespace MultipurposePathfinding
                 .Select(x => new Terrain(x.Key))
                 .ToList();
             _terrainWithSmallestMovementCost = terrainsWithAscendingMovementCost.First();
-            _positionsByTerrainForFurtherInitialization = new Dictionary<Terrain, IList<Vector2<int>>>();
+            _positionsByTerrainForFurtherInitialization = new Dictionary<Terrain, IList<Vector2Int>>();
             foreach (var terrain in terrainsWithAscendingMovementCost
                          .Where(terrain => terrain.Equals(_terrainWithSmallestMovementCost) is false))
             {
-                _positionsByTerrainForFurtherInitialization[terrain] = new List<Vector2<int>>();
+                _positionsByTerrainForFurtherInitialization[terrain] = new List<Vector2Int>();
             }
 
             _positionsAndTerrainsForFirstPassInitialization = initialPositionsAndTerrainIndexes.ToList();
@@ -357,7 +357,7 @@ namespace MultipurposePathfinding
 
         #region Cache
 
-        private Vector2<int> _previousPosition = Vector2Int.Max;
+        private Vector2Int _previousPosition = Vector2Int.Max;
         private float _previousRange = -1.0f;
         private bool _previousLookingFromHighGround = false;
         private Team _previousTeam = 1;
@@ -365,7 +365,7 @@ namespace MultipurposePathfinding
 
         public void ClearCache() => SetCache(Vector2Int.Max, -1.0f, false, 1, 1);
 
-        private bool IsCached(Vector2<int> position, float range, bool lookingFromHighGround, Team team,
+        private bool IsCached(Vector2Int position, float range, bool lookingFromHighGround, Team team,
             PathfindingSize size)
             => position.Equals(_previousPosition)
                && range.Equals(_previousRange)
@@ -373,7 +373,7 @@ namespace MultipurposePathfinding
                && team.Equals(_previousTeam)
                && size.Equals(_previousSize);
 
-        private void SetCache(Vector2<int> position, float range, bool lookingFromHighGround, Team team,
+        private void SetCache(Vector2Int position, float range, bool lookingFromHighGround, Team team,
             PathfindingSize size)
         {
             _previousPosition = position;
@@ -387,7 +387,7 @@ namespace MultipurposePathfinding
 
         #region Getters
 
-        public IEnumerable<Point> GetAvailablePoints(Vector2<int> from, float range, bool lookingFromHighGround,
+        public IEnumerable<Point> GetAvailablePoints(Vector2Int from, float range, bool lookingFromHighGround,
             Team team, PathfindingSize pathfindingSize, bool temporary = false)
         {
             if (pathfindingSize > Config.MaxSizeForPathfinding)
@@ -445,7 +445,7 @@ namespace MultipurposePathfinding
 
         public IEnumerable<Point> GetTerrainPoints() => Graph.GetTerrainPoints();
         
-        internal Point GetPointAt(Vector2<int> position, bool isHighGround, PathfindingSize size, Team? team = null) 
+        internal Point GetPointAt(Vector2Int position, bool isHighGround, PathfindingSize size, Team? team = null) 
             => Graph.ContainsPoint(position, team ?? Team.Default, size, isHighGround) 
                 ? Graph.GetPoint(position, team ?? Team.Default, size, isHighGround)
                 : null;
@@ -458,13 +458,13 @@ namespace MultipurposePathfinding
         {
             public bool HasAscendableHighGround => AscendablePath.Any();
 
-            public IList<IEnumerable<Vector2<int>>> AscendablePath { get; set; } =
-                new List<IEnumerable<Vector2<int>>>();
+            public IList<IEnumerable<Vector2Int>> AscendablePath { get; set; } =
+                new List<IEnumerable<Vector2Int>>();
 
-            public void RemoveAscendablePath() => AscendablePath = new List<IEnumerable<Vector2<int>>>();
+            public void RemoveAscendablePath() => AscendablePath = new List<IEnumerable<Vector2Int>>();
             public bool HasHighGround => HighGroundPositions.Any();
-            public IEnumerable<Vector2<int>> HighGroundPositions { get; set; } = new List<Vector2<int>>();
-            public void RemoveHighGroundPositions() => HighGroundPositions = new List<Vector2<int>>();
+            public IEnumerable<Vector2Int> HighGroundPositions { get; set; } = new List<Vector2Int>();
+            public void RemoveHighGroundPositions() => HighGroundPositions = new List<Vector2Int>();
             public bool HasOccupation => OccupyingEntity.HasOccupation;
             public PathfindingEntity OccupyingEntity { get; set; }
         }
@@ -473,7 +473,7 @@ namespace MultipurposePathfinding
 
         private class AscendableAdded : IPathfindingChangeEvent
         {
-            public IList<IEnumerable<Vector2<int>>> AddedPath { get; set; }
+            public IList<IEnumerable<Vector2Int>> AddedPath { get; set; }
         }
 
         private class AscendableRemoved : IPathfindingChangeEvent
@@ -483,7 +483,7 @@ namespace MultipurposePathfinding
 
         private class HighGroundAdded : IPathfindingChangeEvent
         {
-            public IEnumerable<Vector2<int>> AddedPositions { get; set; }
+            public IEnumerable<Vector2Int> AddedPositions { get; set; }
         }
 
         private class HighGroundRemoved : IPathfindingChangeEvent
@@ -535,7 +535,7 @@ namespace MultipurposePathfinding
             EventsByEntity.Remove(entityId);
         }
 
-        public void AddAscendableHighGround(Guid entityId, IList<IEnumerable<Vector2<int>>> path)
+        public void AddAscendableHighGround(Guid entityId, IList<IEnumerable<Vector2Int>> path)
         {
             if (PipelineItemsByEntityId.TryGetValue(entityId, out var item) is false)
                 return;
@@ -564,7 +564,7 @@ namespace MultipurposePathfinding
             });
         }
 
-        public void AddHighGround(Guid entityId, IEnumerable<Vector2<int>> positions)
+        public void AddHighGround(Guid entityId, IEnumerable<Vector2Int> positions)
         {
             if (PipelineItemsByEntityId.TryGetValue(entityId, out var item) is false)
                 return;
@@ -658,7 +658,7 @@ namespace MultipurposePathfinding
             }
         }
 
-        private void RunPathfindingPipeline(Vector2<int> from, Vector2<int> to)
+        private void RunPathfindingPipeline(Vector2Int from, Vector2Int to)
         {
             // TODO connect with Pathfinding.cs
             // TODO write tests for simulating units walking on top of high ground and graph updating
@@ -682,7 +682,7 @@ namespace MultipurposePathfinding
                 RunAscendableCalculation(item.AscendablePath, item.OccupyingEntity);
             }
             
-            var occupationPositions = new HashSet<Vector2<int>>();
+            var occupationPositions = new HashSet<Vector2Int>();
             foreach (var item in foundItems)
             {
                 var foundOccupationPositions = RunOccupationCalculation(item);
@@ -692,8 +692,8 @@ namespace MultipurposePathfinding
             RunDiagonalConnectionCalculation(occupationPositions);
         }
 
-        private IEnumerable<PathfindingEntity> GetEntitiesIntersectingWith(Vector2<int> lowerBounds,
-            Vector2<int> upperBounds)
+        private IEnumerable<PathfindingEntity> GetEntitiesIntersectingWith(Vector2Int lowerBounds,
+            Vector2Int upperBounds)
         {
             var searchBounds = new Envelope(
                 new Coordinate(lowerBounds.X, lowerBounds.Y),
@@ -703,7 +703,7 @@ namespace MultipurposePathfinding
                 .Where(x => x.Bounds.Intersects(searchBounds));
         }
 
-        private void RunHighGroundCalculation(IEnumerable<Vector2<int>> highGroundPositions)
+        private void RunHighGroundCalculation(IEnumerable<Vector2Int> highGroundPositions)
         {
             foreach (var pos in highGroundPositions)
             {
@@ -719,14 +719,14 @@ namespace MultipurposePathfinding
                     Console.WriteLine($"1. Creating point {JsonConvert.SerializeObject(point)}");
 
                 foreach (var offset in IterateVector2Int.Positions(
-                             new Vector2<int>(-1, -1), new Vector2<int>(2, 2)))
+                             new Vector2Int(-1, -1), new Vector2Int(2, 2)))
                 {
                     TryConnectingToAdjacentHighGroundPoint(point, offset);
                 }
             }
         }
 
-        private void RunAscendableCalculation(IList<IEnumerable<Vector2<int>>> path, 
+        private void RunAscendableCalculation(IList<IEnumerable<Vector2Int>> path, 
             PathfindingEntity ascendableEntity)
         {
             if (path.IsEmpty() || path.Any(x => x is null))
@@ -744,7 +744,7 @@ namespace MultipurposePathfinding
                     var point = GetExistingOrAddNewHighGroundPoint(pos, currentAscensionLevel);
 
                     foreach (var offset in IterateVector2Int.Positions(
-                                 new Vector2<int>(-1, -1), new Vector2<int>(2, 2)))
+                                 new Vector2Int(-1, -1), new Vector2Int(2, 2)))
                     {
                         TryConnectingToAdjacentHighGroundPoint(point, offset);
 
@@ -760,7 +760,7 @@ namespace MultipurposePathfinding
             }
         }
         
-        private IEnumerable<Vector2<int>> RunOccupationCalculation(PipelineItem item)
+        private IEnumerable<Vector2Int> RunOccupationCalculation(PipelineItem item)
         {
             var entity = item.OccupyingEntity;
             var offset = Vector2Int.One * Config.MaxSizeForPathfinding.Value;
@@ -798,7 +798,7 @@ namespace MultipurposePathfinding
             return entityPositions;
         }
         
-        private void RunDiagonalConnectionCalculation(IEnumerable<Vector2<int>> positions)
+        private void RunDiagonalConnectionCalculation(IEnumerable<Vector2Int> positions)
         {
             foreach (var position in positions)
             {
@@ -842,7 +842,7 @@ namespace MultipurposePathfinding
                 .All(point => entity.CanBeMovedThroughAt(point, forTeam));
 
         private bool AllPointsHaveSmoothGradient(List<Point> points, Team team, PathfindingSize size, 
-            Vector2<int> lowerBounds, Vector2<int> upperBounds)
+            Vector2Int lowerBounds, Vector2Int upperBounds)
         {
             if (points.Count <= 1)
                 return true;
@@ -868,7 +868,7 @@ namespace MultipurposePathfinding
             return true;
         }
 
-        private Point GetExistingOrAddNewHighGroundPoint(Vector2<int> at, int currentAscensionLevel)
+        private Point GetExistingOrAddNewHighGroundPoint(Vector2Int at, int currentAscensionLevel)
         {
             Point point;
             if (Graph.ContainsMainPoint(at, true))
@@ -887,7 +887,7 @@ namespace MultipurposePathfinding
             return point;
         }
 
-        private void TryConnectingToAdjacentHighGroundPoint(Point point, Vector2<int> offset)
+        private void TryConnectingToAdjacentHighGroundPoint(Point point, Vector2Int offset)
         {
             var highGroundPoint = GetAdjacentConnectableMainPoint(point, offset, true);
             if (highGroundPoint == null) 
@@ -899,7 +899,7 @@ namespace MultipurposePathfinding
                                   $"point {JsonConvert.SerializeObject(highGroundPoint)}. ");
         }
 
-        private void TryConnectingToAdjacentLowGroundPoint(Point point, Vector2<int> offset, int currentStep, 
+        private void TryConnectingToAdjacentLowGroundPoint(Point point, Vector2Int offset, int currentStep, 
             int pathCount, PathfindingEntity ascendableEntity)
         {
             var isLastStep = currentStep == pathCount - 1;
@@ -922,8 +922,8 @@ namespace MultipurposePathfinding
             }
         }
 
-        private void TryConnectingToAdjacentPreviousStepPoint(Point point, Vector2<int> offset, int currentStep, 
-            IList<IEnumerable<Vector2<int>>> path)
+        private void TryConnectingToAdjacentPreviousStepPoint(Point point, Vector2Int offset, int currentStep, 
+            IList<IEnumerable<Vector2Int>> path)
         {
             if (path.Count <= 1 || currentStep == 0) 
                 return;
@@ -946,7 +946,7 @@ namespace MultipurposePathfinding
                                   $"step point {JsonConvert.SerializeObject(previousStepPoint)}. ");
         }
 
-        private Point GetAdjacentConnectableMainPoint(Point point, Vector2<int> offset, bool isHighGround)
+        private Point GetAdjacentConnectableMainPoint(Point point, Vector2Int offset, bool isHighGround)
         {
             var otherPosition = point.Position + offset;
             if (otherPosition.IsInBoundsOf(Config.MapSize) is false)

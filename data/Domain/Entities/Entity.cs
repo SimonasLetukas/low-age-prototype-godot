@@ -6,7 +6,7 @@ namespace LowAgeData.Domain.Entities
 {
     public abstract class Entity : IDisplayable
     {
-        protected Entity(EntityId id, string displayName, string description, string sprite, Vector2<int> centerOffset)
+        protected Entity(EntityId id, string displayName, string description, string sprite, Vector2Int centerOffset)
         {
             Id = id;
             DisplayName = displayName;
@@ -20,6 +20,6 @@ namespace LowAgeData.Domain.Entities
         public string DisplayName { get; }
         public string Description { get; }
         public string? Sprite { get; }
-        public Vector2<int> CenterOffset { get; }
+        public Vector2Int CenterOffset { get; }
     }
 }

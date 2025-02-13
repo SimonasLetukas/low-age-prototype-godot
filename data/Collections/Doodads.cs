@@ -20,7 +20,7 @@ namespace LowAgeData.Collections
                     description: "Any unit in this area is contaminated: has its vision and Attack Distance " +
                                  "reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn.",
                     sprite: "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png", // TODO
-                    centerOffset: new Vector2<int>(0, 0),
+                    centerOffset: new Vector2Int(0, 0),
                     onCollisionEffect: EffectId.Shaman.WondrousGooSearch,
                     collisionFilters: new List<IFilterItem>
                     {
@@ -34,7 +34,7 @@ namespace LowAgeData.Collections
                     description: "The cargo which is attached to Pyre leaves a path of flames when moved, which " +
                                  "stay until the start of the next Pyre's action or until death.",
                     sprite: "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png", // TODO
-                    centerOffset: new Vector2<int>(0, 0),
+                    centerOffset: new Vector2Int(0, 0),
                     canBeAttacked: true,
                     occupiesSpace: true,
                     onlyOneCanExist: true),
@@ -44,7 +44,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(DoodadId.PyreFlames).CamelCaseToWords(),
                     description: "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
                     sprite: "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png", // TODO
-                    centerOffset: new Vector2<int>(0, 0),
+                    centerOffset: new Vector2Int(0, 0),
                     onCollisionEffect: EffectId.Pyre.WallOfFlamesDamage,
                     collisionFilters: new List<IFilterItem>
                     {
@@ -59,7 +59,7 @@ namespace LowAgeData.Collections
                     "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's " +
                     "owner has vision of this tile.",
                     sprite: "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png", // TODO
-                    centerOffset: new Vector2<int>(0, 0),
+                    centerOffset: new Vector2Int(0, 0),
                     size: 1,
                     statsCopiedFromSource: true,
                     alliesCanStack: true),
@@ -70,7 +70,7 @@ namespace LowAgeData.Collections
                     description:
                     "These tiles are revealed for Radar's owner until the start of the next planning phase.",
                     sprite: "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png", // TODO
-                    centerOffset: new Vector2<int>(0, 0),
+                    centerOffset: new Vector2Int(0, 0),
                     size: 3,
                     alliesCanStack: true),
 
@@ -79,7 +79,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(DoodadId.RadarRedDot).CamelCaseToWords(),
                     description: "This red dot shows where enemy unit is currently located inside the fog of war.",
                     sprite: "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png", // TODO
-                    centerOffset: new Vector2<int>(0, 0),
+                    centerOffset: new Vector2Int(0, 0),
                     size: 1),
 
                 new Doodad(
@@ -89,7 +89,7 @@ namespace LowAgeData.Collections
                     "Provides +3 Melee Armour and +3 Range Armour to all friendly units until the start of " +
                     "Vessel's action.",
                     sprite: "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png", // TODO
-                    centerOffset: new Vector2<int>(0, 0),
+                    centerOffset: new Vector2Int(0, 0),
                     periodicEffect: EffectId.Vessel.FortifySearch,
                     size: 7,
                     alliesCanStack: true,
@@ -102,7 +102,7 @@ namespace LowAgeData.Collections
                     "50% of all damage done to this rendition will be done as Pure Damage to the original " +
                     "target.",
                     sprite: "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png", // TODO
-                    centerOffset: new Vector2<int>(0, 0),
+                    centerOffset: new Vector2Int(0, 0),
                     canBeAttacked: true,
                     occupiesSpace: true,
                     statsCopiedFromSource: true)

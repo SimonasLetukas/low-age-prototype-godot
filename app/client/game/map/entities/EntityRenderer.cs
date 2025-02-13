@@ -129,7 +129,7 @@ public partial class EntityRenderer : Node2D
         UpdateSpriteBounds();
     }
 
-    public void UpdateSpriteOffset(Vector2<int> entitySize, Vector2 centerOffset)
+    public void UpdateSpriteOffset(Vector2Int entitySize, Vector2 centerOffset)
     {
         var offsetFromX = (int)(entitySize.X - 1) * 
                         new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));

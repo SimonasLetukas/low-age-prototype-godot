@@ -19,6 +19,6 @@ namespace LowAgeData.Domain.Common
         /// <summary>
         /// Counting from top-left, how many pixels to move to center the back side sprite.
         /// </summary>
-        public Vector2<int> BackSideCenterOffset { get; }
+        public Vector2Int BackSideCenterOffset { get; }
     }
 }

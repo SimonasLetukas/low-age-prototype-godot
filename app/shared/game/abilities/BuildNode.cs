@@ -46,7 +46,7 @@ public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelect
     public bool CanBePlacedOnTheWholeMap() => PlacementArea is LowAgeData.Domain.Common.Shape.Map 
                                               && Blueprint.UseWalkableTilesAsPlacementArea is false;
 
-    public IEnumerable<Vector2<int>> GetPlacementPositions(EntityNode caster, Vector2<int> mapSize)
+    public IEnumerable<Vector2Int> GetPlacementPositions(EntityNode caster, Vector2Int mapSize)
     {
         if (Blueprint.UseWalkableTilesAsPlacementArea && caster is StructureNode structure)
         {

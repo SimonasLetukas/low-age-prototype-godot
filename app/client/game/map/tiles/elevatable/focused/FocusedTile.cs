@@ -12,7 +12,7 @@ public partial class FocusedTile : AnimatedSprite2D
 
     private Tiles _tiles = null!;
     private EntityNode? _focusedEntity = null;
-    private Vector2<int> _previousPosition = Vector2Int.Zero;
+    private Vector2Int _previousPosition = Vector2Int.Zero;
     private bool _stateChanged = false;
 
     private RichTextLabel _zIndexText = null!;
@@ -100,7 +100,7 @@ public partial class FocusedTile : AnimatedSprite2D
     public void Enable() => Visible = true;
     public void Disable() => Visible = false;
     
-    private void MoveTo(Vector2<int> position, int height, int zIndex)
+    private void MoveTo(Vector2Int position, int height, int zIndex)
     {
         GlobalPosition = _tiles.GetGlobalPositionFromMapPosition(position) + Vector2.Up * height;
         ZIndex = zIndex;

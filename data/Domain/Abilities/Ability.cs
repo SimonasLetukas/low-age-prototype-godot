@@ -29,7 +29,7 @@ namespace LowAgeData.Domain.Abilities
             DisplayName = displayName;
             Description = description;
             Sprite = sprite;
-            CenterOffset = new Vector2<int>(0, 0);
+            CenterOffset = new Vector2Int(0, 0);
         }
 
         [JsonProperty(Order = -4)] public AbilityId Id { get; }
@@ -68,6 +68,6 @@ namespace LowAgeData.Domain.Abilities
         public string DisplayName { get; }
         public string Description { get; }
         public string? Sprite { get; }
-        public Vector2<int> CenterOffset { get; }
+        public Vector2Int CenterOffset { get; }
     }
 }

@@ -28,7 +28,7 @@ public partial class StructureFoundation : TileMapLayer
     public void Initialize(StructureNode structure)
     {
         SetCellsTerrainConnect(structure.WalkablePositions
-                .Select(x => x.ToGodotVector2I<int>())
+                .Select(x => x.ToGodotVector2I())
                 .ToGodotArray(), 
             WalkableFoundationTerrainSetIndex, 
             WalkableFoundationTerrainIndex,
@@ -40,7 +40,7 @@ public partial class StructureFoundation : TileMapLayer
         }
         
         SetCellsTerrainConnect(structure.NonWalkablePositions
-                .Select(x => x.ToGodotVector2I<int>())
+                .Select(x => x.ToGodotVector2I())
                 .ToGodotArray(), 
             FoundationTerrainSetIndex, 
             FoundationTerrainIndex);

@@ -51,9 +51,9 @@ public partial class Creator : Node2D
             return;
         }
 
-        var mapSize = new Vector2<int>(image.GetWidth(), image.GetHeight());
-        var startingPositions = new List<Vector2<int>>();
-        var tiles = new List<(Vector2<int>, TileId)>();
+        var mapSize = new Vector2Int(image.GetWidth(), image.GetHeight());
+        var startingPositions = new List<Vector2Int>();
+        var tiles = new List<(Vector2Int, TileId)>();
         
         for (var y = 0; y < mapSize.Y; y++)
         {
@@ -69,9 +69,9 @@ public partial class Creator : Node2D
                 if (pixel == ColorMarsh) tile = TileId.Marsh;
                 if (pixel == ColorScraps) tile = TileId.Scraps;
                 if (pixel == ColorCelestium) tile = TileId.Celestium;
-                if (pixel == ColorStart) startingPositions.Add(new Vector2<int>(x, y));
+                if (pixel == ColorStart) startingPositions.Add(new Vector2Int(x, y));
                 
-                tiles.Add((new Vector2<int>(x, y), tile));
+                tiles.Add((new Vector2Int(x, y), tile));
             }
         }
         

@@ -23,7 +23,7 @@ public partial class ClientMap : Map
 
 	private Player _currentPlayer;
 	private IList<Area> _startingPositions = new List<Area>();
-	private Vector2<int> _mapSize = Vector2Int.Max;
+	private Vector2Int _mapSize = Vector2Int.Max;
 	private Tiles _tileMap;
 	private FocusedTile _focusedTile;
 	private SelectionOverlay _selectionOverlay = SelectionOverlay.None;
@@ -98,7 +98,7 @@ public partial class ClientMap : Map
 		ResetLines();
 	}
 
-	private void InitializePathfinding(ICollection<(Vector2<int>, TileId)> tiles)
+	private void InitializePathfinding(ICollection<(Vector2Int, TileId)> tiles)
 	{
 		var blueprint = Data.Instance.Blueprint;
 		var initialPositionsAndTerrainIndexes = tiles
@@ -177,7 +177,7 @@ public partial class ClientMap : Map
 
 		if (_paused)
 			return;
-
+		
 		var mousePosition = GetGlobalMousePosition();
 
 		if (_selectionOverlay is SelectionOverlay.None)
@@ -387,7 +387,7 @@ public partial class ClientMap : Map
 		return entityWasHovered ? Entities.HoveredEntity : null;
 	}
 
-	private Vector2<int> GetMapPositionFromMousePosition()
+	private Vector2Int GetMapPositionFromMousePosition()
 		=> _tileMap.GetMapPositionFromGlobalPosition(GetGlobalMousePosition());
 
 	private void AddOccupation(EntityNode entity)
@@ -439,7 +439,7 @@ public partial class ClientMap : Map
 		{
 			for (var y = 0; y < 10; y++)
 			{
-				var position = new Vector2<int>(x, y);
+				var position = new Vector2Int(x, y);
 				var tile = _tileMap.GetHighestTile(position);
 				if (tile is null || tile.Point.IsImpassable)
 					continue;
@@ -448,7 +448,7 @@ public partial class ClientMap : Map
 				{
 					for (var offsetY = -1; offsetY < 2; offsetY++)
 					{
-						var adjacentPosition = position + new Vector2<int>(offsetX, offsetY);
+						var adjacentPosition = position + new Vector2Int(offsetX, offsetY);
 						var adjacentTile = _tileMap.GetHighestTile(adjacentPosition);
 						if (adjacentTile is null)
 							continue;
@@ -513,7 +513,7 @@ public partial class ClientMap : Map
 		EventBus.Instance.RaiseHighGroundPointRemoved(point);
 	}
 
-	private void OnNewTileFocused(Vector2<int> mapPosition, Terrain terrain, IList<EntityNode>? occupants)
+	private void OnNewTileFocused(Vector2Int mapPosition, Terrain terrain, IList<EntityNode>? occupants)
 	{
 		if (_focusedTile.IsWithinTheMap is false)
 			return;

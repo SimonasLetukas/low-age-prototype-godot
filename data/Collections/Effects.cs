@@ -334,8 +334,8 @@ namespace LowAgeData.Collections
                     id: EffectId.Barricade.ProtectiveShieldSearch,
                     shape: new Custom(areas: new List<Area>
                     {
-                        new Area(start: new Vector2<int>(x: -1,y: -1), 
-                            size: new Vector2<int> (x: 3, y: 2))
+                        new Area(start: new Vector2Int(x: -1,y: -1), 
+                            size: new Vector2Int (x: 3, y: 2))
                     }),
                     searchFlags: new List<SearchFlag>
                     {
@@ -373,8 +373,8 @@ namespace LowAgeData.Collections
                     id: EffectId.Barricade.CaltropsSearch,
                     shape: new Custom(areas: new List<Area>
                     {
-                        new Area(start: new Vector2<int>(x: 1,y: -1), 
-                            size: new Vector2<int> (x: 3, y: 2))
+                        new Area(start: new Vector2Int(x: 1,y: -1), 
+                            size: new Vector2Int (x: 3, y: 2))
                     }),
                     searchFlags: new List<SearchFlag>
                     {
