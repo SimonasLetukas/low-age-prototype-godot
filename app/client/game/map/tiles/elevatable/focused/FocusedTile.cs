@@ -55,9 +55,6 @@ public partial class FocusedTile : AnimatedSprite2D
 
     public void UpdateTile()
     {
-        if (Visible is false)
-            return;
-
         var (mapPosition, tile) = DetermineMapPositionAndTile();
         
         if (_previousPosition == mapPosition && _stateChanged is false)
