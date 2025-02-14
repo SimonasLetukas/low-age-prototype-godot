@@ -58,16 +58,10 @@ public partial class FocusedTile : AnimatedSprite2D
         if (Visible is false)
             return;
 
-        var availableTileAtMousePosition = _tiles.Elevatable.GetAvailableTileAtMousePosition();
-        var mapPosition = availableTileAtMousePosition?.Position 
-                          ?? _focusedEntity?.EntityPrimaryPosition 
-                          ?? _tiles.GetMapPositionFromGlobalPosition(GetGlobalMousePosition());
+        var (mapPosition, tile) = DetermineMapPositionAndTile();
         
         if (_previousPosition == mapPosition && _stateChanged is false)
             return;
-
-        var tile = availableTileAtMousePosition 
-                   ?? _tiles.GetTile(mapPosition, _focusedEntity is UnitNode { IsOnHighGround: true });
         
         var hoveredTerrain = _tiles.GetTerrain(tile);
         EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.Occupants);
@@ -83,6 +77,27 @@ public partial class FocusedTile : AnimatedSprite2D
         }
 
         CurrentTile = tile;
+    }
+
+    private (Vector2Int, Tiles.TileInstance?) DetermineMapPositionAndTile()
+    {
+        var (availableTileElevation, availableTile) = _tiles.Elevatable.GetElevationAndAvailableTileAtMousePosition();
+
+        if (availableTileElevation > 0 && availableTile != null)
+            return (availableTile.Position, availableTile);
+
+        if (_focusedEntity != null)
+        {
+            var entityPosition = _focusedEntity.EntityPrimaryPosition;
+            return (entityPosition, _tiles.GetTile(entityPosition, 
+                _focusedEntity is UnitNode { IsOnHighGround: true }));
+        }
+        
+        if (availableTile != null)
+            return (availableTile.Position, availableTile);
+
+        var position = _tiles.GetMapPositionFromGlobalPosition(GetGlobalMousePosition());
+        return (position, _tiles.GetTile(position, false));
     }
 
     public void FocusEntity(EntityNode entity)

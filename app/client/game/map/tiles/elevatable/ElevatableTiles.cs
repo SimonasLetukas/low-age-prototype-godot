@@ -138,14 +138,15 @@ public partial class ElevatableTiles : Node2D
         CacheAvailableTiles(entity, hovering, availableTileInstances);
     }
 
-    public Tiles.TileInstance? GetAvailableTileAtMousePosition()
+    public (int, Tiles.TileInstance?) GetElevationAndAvailableTileAtMousePosition()
     {
+        var highestElevation = -1;
+        Tiles.TileInstance? foundTile = null;
+        
         if (_availableTilesVisual.Values.Any(x => x.Visible is false))
-            return null;
+            return (highestElevation, foundTile);
         
         var mousePosition = GetGlobalMousePosition();
-        var highestElevation = -1;
-        Tiles.TileInstance? result = null;
         foreach (var (elevation, availableTiles) in _availableTilesVisual)
         {
             if (elevation <= highestElevation)
@@ -157,12 +158,12 @@ public partial class ElevatableTiles : Node2D
             if (tileExists is false) 
                 continue;
             
-            result = _availableTilesCache.First(x => x.Position.Equals(position) 
-                                                     && x.YSpriteOffset.Equals(elevation));
+            foundTile = _availableTilesCache.First(x => x.Position.Equals(position) 
+                                                        && x.YSpriteOffset.Equals(elevation));
             highestElevation = elevation;
         }
 
-        return result;
+        return (highestElevation, foundTile);
     }
 
     public bool IsCurrentlyAvailable(Tiles.TileInstance tile) => IsCurrentlyAvailable(tile.Point);
