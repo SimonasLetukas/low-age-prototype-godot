@@ -310,8 +310,8 @@ namespace MultipurposePathfinding
                     && HighGroundPointHasLowGroundConnections(pointB, team, size) is false)
                     return false;
 
-                if ((crossPointA.IsLowGround && crossPointB.IsHighGround && crossPointB.IsImpassable)
-                    || (crossPointB.IsLowGround && crossPointA.IsHighGround && crossPointA.IsImpassable))
+                if ((crossPointA.IsLowGround && crossPointB is { IsHighGround: true, IsImpassable: true })
+                    || (crossPointB.IsLowGround && crossPointA is { IsHighGround: true, IsImpassable: true }))
                     return false;
             }
 
@@ -324,6 +324,13 @@ namespace MultipurposePathfinding
             if (pointA.IsLowGround && pointB.IsHighGround)
             {
                 if (HighGroundPointHasLowGroundConnections(pointB, team, size) is false)
+                    return false;
+            }
+
+            if (pointA.IsLowGround && pointB.IsLowGround && crossPointA.IsHighGround && crossPointB.IsHighGround)
+            {
+                if (HighGroundPointHasLowGroundConnections(crossPointA, team, size) is false
+                    && HighGroundPointHasLowGroundConnections(crossPointB, team, size) is false)
                     return false;
             }
 

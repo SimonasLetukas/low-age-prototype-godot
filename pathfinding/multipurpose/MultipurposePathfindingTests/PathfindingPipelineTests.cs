@@ -1863,6 +1863,81 @@ public class PathfindingPipelineTests
                 ((new Vector2Int(4, 1), false), (new Vector2Int(5, 2), false)), 
             }
         ];
+        
+        yield return
+        [
+            "AL110", // Scenario
+            new PathfindingSize(1),
+            new (Vector2Int, Vector2Int, Area[], Area[])[]
+            {
+                (
+                    new Vector2Int(4, 3),
+                    new Vector2Int(1, 1),
+                    [],
+                    [
+                        new Area(new Vector2Int(4, 3), new Vector2Int(1, 1))
+                    ]
+                ),
+                (
+                    new Vector2Int(3, 4),
+                    new Vector2Int(1, 1),
+                    [],
+                    [
+                        new Area(new Vector2Int(3, 4), new Vector2Int(1, 1))
+                    ]
+                ),
+                (
+                    new Vector2Int(2, 5),
+                    new Vector2Int(1, 1),
+                    [],
+                    [
+                        new Area(new Vector2Int(2, 5), new Vector2Int(1, 1))
+                    ]
+                ),
+                
+                (
+                    new Vector2Int(6, 2),
+                    new Vector2Int(1, 1),
+                    [],
+                    [
+                        new Area(new Vector2Int(6, 2), new Vector2Int(1, 1))
+                    ]
+                ),
+                (
+                    new Vector2Int(7, 3),
+                    new Vector2Int(1, 1),
+                    [],
+                    [
+                        new Area(new Vector2Int(7, 3), new Vector2Int(1, 1))
+                    ]
+                ),
+                (
+                    new Vector2Int(8, 4),
+                    new Vector2Int(1, 1),
+                    [],
+                    [
+                        new Area(new Vector2Int(8, 4), new Vector2Int(1, 1))
+                    ]
+                ),
+            },
+            // Expected:
+            new[] // Non connected diagonal pairs
+            {
+                ((new Vector2Int(3, 3), false), (new Vector2Int(4, 4), false)), 
+                ((new Vector2Int(2, 4), false), (new Vector2Int(3, 5), false)), 
+                
+                ((new Vector2Int(7, 2), false), (new Vector2Int(6, 3), false)), 
+                ((new Vector2Int(8, 3), false), (new Vector2Int(7, 4), false)), 
+            },
+            new[] // Connected diagonal pairs
+            {
+                ((new Vector2Int(4, 2), false), (new Vector2Int(5, 3), false)), 
+                ((new Vector2Int(1, 5), false), (new Vector2Int(2, 6), false)), 
+                
+                ((new Vector2Int(6, 1), false), (new Vector2Int(5, 2), false)), 
+                ((new Vector2Int(9, 4), false), (new Vector2Int(8, 5), false)), 
+            }
+        ];
     }
 
     [Theory]
@@ -1880,7 +1955,7 @@ public class PathfindingPipelineTests
                 ascendables.Select(x => x.ToVectors()).ToList(),
                 highGrounds.SelectMany(x => x.ToVectors()).ToHashSet());
         }
-
+        
         GetAvailablePointsFor(pathfindingSize);
         
         ExpectedPositionsShouldBeConnected(pathfindingSize, expectedNonConnectedDiagonalPairs, 
