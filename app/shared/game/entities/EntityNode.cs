@@ -55,7 +55,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     private IList<Vector2> _movePath = new List<Vector2>();
 
-    private readonly Dictionary<Vector2Int, int> _providingHighGroundHeightByLocalEntityPosition = new Dictionary<Vector2Int, int>();
+    private readonly Dictionary<Vector2Int, int> _providingHighGroundHeightByLocalEntityPosition = new();
     private float _movementDuration;
     private bool _canBePlacedOnTheWholeMap = false;
     

@@ -432,15 +432,16 @@ public partial class ElevatableTiles : Node2D
 
     private void OnEntityZIndexUpdated(EntityNode entity, int to)
     {
-        foreach (var (position, elevation) in entity.ProvidedHighGroundHeightByOccupyingPosition)
+        var positionsWithElevation = entity.ProvidedHighGroundHeightByOccupyingPosition;
+        foreach (var (position, elevation) in positionsWithElevation)
         {
             if (elevation is 0)
-                return;
+                continue;
             
             _zIndexesByPositionAndElevation[(position, elevation)] = to;
             
             if (_preparedElevations.Contains(elevation) is false)
-                return;
+                continue;
 
             var godotPosition = position.ToGodotVector2();
             _availableTilesVisual[elevation].SetTileZIndex(godotPosition, to);

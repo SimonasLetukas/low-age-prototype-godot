@@ -114,7 +114,7 @@ public partial class ClientMap : Map
 			MaxSizeForPathfinding = blueprint.Entities.Units.Max(x => x.Size),
 			MaxNumberOfTeams = 2, // TODO
 			DiagonalCost = Mathf.Sqrt2,
-			DebugEnabled = true
+			DebugEnabled = false
 		});
 	}
 
