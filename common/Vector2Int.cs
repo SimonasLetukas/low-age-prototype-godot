@@ -15,6 +15,13 @@ public static class Vector2IntExtensions
            && vector2.X < upperBounds.X
            && vector2.Y < upperBounds.Y;
 
+    public static Vector2Int ClampBetween(this Vector2Int vector2, Vector2Int min, Vector2Int max)
+    {
+        vector2.X = Math.Clamp(vector2.X, min.X, max.X);
+        vector2.Y = Math.Clamp(vector2.Y, min.Y, max.Y);
+        return vector2;
+    }
+
     public static bool IsDiagonalTo(this Vector2Int vector2, Vector2Int point)
         => vector2.X - vector2.Y == point.X - point.Y
            || vector2.X + vector2.Y == point.X + point.Y;
@@ -117,8 +124,8 @@ public struct Vector2Int(int x, int y) : IEquatable<Vector2Int>
     public static Vector2Int Zero => new(0, 0);
     public static Vector2Int Max => new(int.MaxValue, int.MaxValue);
 
-    public int X { get; private set; } = x;
-    public int Y { get; private set; } = y;
+    public int X { get; internal set; } = x;
+    public int Y { get; internal set; } = y;
 
     public override string ToString()
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using DijkstraMap;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
@@ -66,7 +63,7 @@ namespace MultipurposePathfinding
         /// <param name="configuration">Configuration of the pathfinding graph. If null, default values will be
         /// used.</param>
         void Initialize(IEnumerable<(Vector2Int, Terrain)> initialPositionsAndTerrainIndexes,
-            Configuration configuration = null);
+            Configuration? configuration = null);
 
         /// <summary>
         /// Runs the next iterations for initializing the pathfinding graph. Invokes the event
@@ -180,8 +177,8 @@ namespace MultipurposePathfinding
         public event Action<Point> PointAdded = delegate { };
         public event Action<Point> PointRemoved = delegate { };
 
-        private Configuration Config { get; set; }
-        private Graph Graph { get; } = new Graph();
+        private Configuration Config { get; set; } = null!;
+        private Graph Graph { get; } = new();
 
         #region Initialization
 
@@ -190,13 +187,13 @@ namespace MultipurposePathfinding
         private bool _terrainGraphFurtherPassesInitialized = false;
         private bool _diagonalConnectionsInitialized = false;
         private Terrain _terrainWithSmallestMovementCost;
-        private IList<(Vector2Int, Terrain)> _positionsAndTerrainsForFirstPassInitialization;
-        private Dictionary<Terrain, IList<Vector2Int>> _positionsByTerrainForFurtherInitialization;
-        private Dictionary<Vector2Int, int> _pointIdsByPositionsForInitialization;
-        private readonly Stopwatch _stopwatch = new Stopwatch();
+        private List<(Vector2Int, Terrain)> _positionsAndTerrainsForFirstPassInitialization = null!;
+        private Dictionary<Terrain, IList<Vector2Int>> _positionsByTerrainForFurtherInitialization = null!;
+        private Dictionary<Vector2Int, int> _pointIdsByPositionsForInitialization = null!;
+        private readonly Stopwatch _stopwatch = new();
 
         public void Initialize(IEnumerable<(Vector2Int, Terrain)> initialPositionsAndTerrainIndexes,
-            Configuration configuration = null)
+            Configuration? configuration = null)
         {
             Config = configuration ?? new Configuration();
             Graph.Initialize(Config);
@@ -285,7 +282,7 @@ namespace MultipurposePathfinding
             {
                 Graph.SetTerrainForPoint(coordinates, terrain, Vector2Int.Zero, 
                     Config.MapSize + Vector2Int.One);
-                var point = Graph.GetMainPoint(coordinates);
+                var point = Graph.GetMainPoint(coordinates, false);
                 PointAdded(point);
                 return;
             }
@@ -315,7 +312,7 @@ namespace MultipurposePathfinding
 
             Graph.SetTerrainForPoint(coordinates, terrain.Value, Vector2Int.Zero, 
                 Config.MapSize + Vector2Int.One);
-            var point = Graph.GetMainPoint(coordinates);
+            var point = Graph.GetMainPoint(coordinates, false);
             PointAdded(point);
         }
 
@@ -397,7 +394,7 @@ namespace MultipurposePathfinding
                                             $"value of '{Config.MaxSizeForPathfinding}'.");
 
             if (Graph.IsSupported(team, pathfindingSize) is false)
-                return Enumerable.Empty<Point>();
+                return [];
 
             if (IsCached(from, range, lookingFromHighGround, team, pathfindingSize) is false)
             {
@@ -424,7 +421,7 @@ namespace MultipurposePathfinding
         {
             if (to.Position.IsInBoundsOf(Config.MapSize) is false
                 || Graph.IsSupported(team, pathfindingSize) is false)
-                return Enumerable.Empty<Point>();
+                return [];
 
             var points = Graph.GetShortestPathFromPoint(to.Id, team, pathfindingSize);
 
@@ -445,7 +442,7 @@ namespace MultipurposePathfinding
 
         public IEnumerable<Point> GetTerrainPoints() => Graph.GetTerrainPoints();
         
-        internal Point GetPointAt(Vector2Int position, bool isHighGround, PathfindingSize size, Team? team = null) 
+        internal Point? GetPointAt(Vector2Int position, bool isHighGround, PathfindingSize size, Team? team = null) 
             => Graph.ContainsPoint(position, team ?? Team.Default, size, isHighGround) 
                 ? Graph.GetPoint(position, team ?? Team.Default, size, isHighGround)
                 : null;
@@ -465,41 +462,42 @@ namespace MultipurposePathfinding
             public bool HasHighGround => HighGroundPositions.Any();
             public IEnumerable<Vector2Int> HighGroundPositions { get; set; } = new List<Vector2Int>();
             public void RemoveHighGroundPositions() => HighGroundPositions = new List<Vector2Int>();
-            public bool HasOccupation => OccupyingEntity.HasOccupation;
-            public PathfindingEntity OccupyingEntity { get; set; }
+            public required PathfindingEntity OccupyingEntity { get; set; }
         }
         
-        private interface IPathfindingChangeEvent { }
+        private interface IPathfindingChangeEvent;
 
         private class AscendableAdded : IPathfindingChangeEvent
         {
-            public IList<IEnumerable<Vector2Int>> AddedPath { get; set; }
+            public required IList<IEnumerable<Vector2Int>> AddedPath { get; init; }
         }
 
         private class AscendableRemoved : IPathfindingChangeEvent
         {
-            public IEnumerable<Point> RemovedPoints { get; set; }
+            public required IEnumerable<Point> RemovedPoints { get; init; }
         }
 
         private class HighGroundAdded : IPathfindingChangeEvent
         {
-            public IEnumerable<Vector2Int> AddedPositions { get; set; }
+            public required IEnumerable<Vector2Int> AddedPositions { get; init; }
         }
 
         private class HighGroundRemoved : IPathfindingChangeEvent
         {
-            public IEnumerable<Point> RemovedPoints { get; set; }
+            public required IEnumerable<Point> RemovedPoints { get; init; }
         }
         
-        private Dictionary<Guid, PipelineItem> PipelineItemsByEntityId { get; } = new Dictionary<Guid, PipelineItem>();
-        private Quadtree<PathfindingEntity> EntitiesSpatialMap { get; } = new Quadtree<PathfindingEntity>();
-        private Dictionary<Guid, ICollection<IPathfindingChangeEvent>> EventsByEntity { get; } =
-            new Dictionary<Guid, ICollection<IPathfindingChangeEvent>>();
+        private Dictionary<Guid, PipelineItem> PipelineItemsByEntityId { get; } = new();
+        private Quadtree<PathfindingEntity> EntitiesSpatialMap { get; } = new();
+        private Dictionary<Guid, ICollection<IPathfindingChangeEvent>> EventsByEntity { get; } = new();
 
         public void AddOrUpdateEntity(PathfindingEntity entity)
         {
             var entityIsBeingTracked = PipelineItemsByEntityId.ContainsKey(entity.Id);
-            var pipelineItem = new PipelineItem();
+            var pipelineItem = new PipelineItem
+            {
+                OccupyingEntity = entity
+            };
 
             if (entityIsBeingTracked)
             {
@@ -555,7 +553,7 @@ namespace MultipurposePathfinding
 
             var path = item.AscendablePath;
             var points = path.SelectMany(section => section,
-                (entry, pos) => Graph.GetMainPoint(pos, true)).ToList();
+                (_, pos) => Graph.GetMainPoint(pos, true)).ToList();
             item.RemoveAscendablePath();
 
             EventsByEntity[entityId].Add(new AscendableRemoved
@@ -660,13 +658,10 @@ namespace MultipurposePathfinding
 
         private void RunPathfindingPipeline(Vector2Int from, Vector2Int to)
         {
-            // TODO connect with Pathfinding.cs
-            // TODO write tests for simulating units walking on top of high ground and graph updating
-            
             var boundsOffset = Vector2Int.One * Config.MaxSizeForPathfinding.Value;
             var lowerBounds = from - boundsOffset;
             var upperBounds = to + boundsOffset;
-            var foundItems = GetEntitiesIntersectingWith(lowerBounds, upperBounds)
+            var foundItems = GetEntitiesIntersectingWith(lowerBounds, upperBounds + boundsOffset)
                 .Select(e => PipelineItemsByEntityId[e.Id])
                 .ToList();
 
@@ -729,7 +724,7 @@ namespace MultipurposePathfinding
         private void RunAscendableCalculation(IList<IEnumerable<Vector2Int>> path, 
             PathfindingEntity ascendableEntity)
         {
-            if (path.IsEmpty() || path.Any(x => x is null))
+            if (path.IsEmpty())
                 return;
 
             var currentAscensionLevel = 100;
@@ -936,9 +931,11 @@ namespace MultipurposePathfinding
             
             var previousStepPosition = path[currentStep - 1]
                 .FirstOrDefault(x => x.Equals(offsetPosition));
-            var previousStepPoint = Graph.GetMainPoint(previousStepPosition, true);
-            if (previousStepPoint is null)
+            var previousStepPointExists = Graph.ContainsMainPoint(previousStepPosition, true);
+            if (previousStepPointExists is false)
                 return;
+            
+            var previousStepPoint = Graph.GetMainPoint(previousStepPosition, true);
             
             Graph.ConnectPoints(point, previousStepPoint);
             if (Config.DebugEnabled)
@@ -946,7 +943,7 @@ namespace MultipurposePathfinding
                                   $"step point {JsonConvert.SerializeObject(previousStepPoint)}. ");
         }
 
-        private Point GetAdjacentConnectableMainPoint(Point point, Vector2Int offset, bool isHighGround)
+        private Point? GetAdjacentConnectableMainPoint(Point point, Vector2Int offset, bool isHighGround)
         {
             var otherPosition = point.Position + offset;
             if (otherPosition.IsInBoundsOf(Config.MapSize) is false)

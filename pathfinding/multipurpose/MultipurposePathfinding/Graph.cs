@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using DijkstraMap;
 using DijkstraMap.Methods;
 using LowAgeCommon;
-using LowAgeCommon.Extensions;
 
 namespace MultipurposePathfinding
 {
@@ -151,7 +148,7 @@ namespace MultipurposePathfinding
         {
             if (TryGetPointId(coordinates, 1, 1, out _) is false)
                 return;
-
+            
             foreach (var team in SupportedTeams)
             {
                 foreach (var size in SupportedSizes)
@@ -159,12 +156,8 @@ namespace MultipurposePathfinding
                     var from = coordinates - Vector2Int.One * size.Value + Vector2Int.One;
                     var to = coordinates + Vector2Int.One;
                     var dilatedPositions = IterateVector2Int.Positions(
-                        from.IsInBoundsOf(lowerBounds, upperBounds) 
-                            ? from 
-                            : lowerBounds,
-                        to.IsInBoundsOf(lowerBounds, upperBounds) 
-                            ? to 
-                            : upperBounds);
+                        from.ClampBetween(lowerBounds, upperBounds),
+                        to.ClampBetween(lowerBounds, upperBounds));
                     
                     foreach (var position in dilatedPositions)
                     {
@@ -220,6 +213,7 @@ namespace MultipurposePathfinding
         public void SetPointImpassable(bool to, int pointId, Team team, PathfindingSize size)
         {
             var point = GetPoint(pointId, team, size);
+            
             point.IsImpassable = to;
             DijkstraMapBySizeByTeam[team][size].SetTerrainForPoint(point.Id, point.CalculatedTerrainIndex);
         }
@@ -364,7 +358,7 @@ namespace MultipurposePathfinding
         /// <summary>
         /// Returned <see cref="Point"/> can be null.
         /// </summary>
-        public Point GetTerrainPoint(int id)
+        public Point? GetTerrainPoint(int id)
         {
             var point = GetPoint(id, 1, 1);
             if (point.IsHighGround)
@@ -384,11 +378,14 @@ namespace MultipurposePathfinding
                 positionsByTerrain[terrain] = new List<Vector2Int>();
             }
             
-            foreach (var position in IterateVector2Int.Positions(lowerBounds, upperBounds))
+            var boundsOffset = Vector2Int.One * Config.MaxSizeForPathfinding.Value;
+            foreach (var position in IterateVector2Int.Positions(lowerBounds, upperBounds + boundsOffset))
             {
+                var isWithinBounds = position.IsInBoundsOf(lowerBounds, upperBounds);
+                
                 var highGroundPointExists = TryGetMainPointId(position, 
                     out var highGroundPointId, true);
-                if (highGroundPointExists)
+                if (highGroundPointExists && isWithinBounds)
                     RemoveAllPoints(highGroundPointId);
 
                 var lowGroundPointExists = TryGetMainPointId(position, 
@@ -399,6 +396,9 @@ namespace MultipurposePathfinding
                 var point = GetMainPoint(lowGroundPointId);
                 positionsByTerrain[point.OriginalTerrainIndex].Add(point.Position);
 
+                if (isWithinBounds is false)
+                    continue;
+                
                 foreach (var adjacentPosition in point.Position.AdjacentPositions())
                 {
                     var adjacentPointExists = TryGetMainPointId(adjacentPosition, 
@@ -423,10 +423,10 @@ namespace MultipurposePathfinding
 
         public Point GetPoint(int id, Team team, PathfindingSize size) => PointByIdBySizeByTeam[team][size][id];
 
-        public Point GetPoint(Vector2Int position, Team team, PathfindingSize size, bool isHighGround = false)
+        public Point GetPoint(Vector2Int position, Team team, PathfindingSize size, bool isHighGround)
             => GetPoint(GetPointId(position, team, size, isHighGround), team, size);
 
-        public Point GetMainPoint(Vector2Int position, bool isHighGround = false, Team? team = null)
+        public Point GetMainPoint(Vector2Int position, bool isHighGround, Team? team = null)
             => GetPoint(position, team ?? new Team(1), 1, isHighGround);
 
         public Point GetMainPoint(int id, Team? team = null) => GetPoint(id, team ?? new Team(1), 1);
@@ -445,10 +445,10 @@ namespace MultipurposePathfinding
             return GetPoint(position, team, size, false);
         }
 
-        public bool ContainsMainPoint(Vector2Int position, bool isHighGround = false, Team? team = null)
+        public bool ContainsMainPoint(Vector2Int position, bool isHighGround, Team? team = null)
             => ContainsPoint(position, team ?? new Team(1), 1, isHighGround);
 
-        public bool ContainsPoint(Vector2Int position, Team team, PathfindingSize size, bool isHighGround = false)
+        public bool ContainsPoint(Vector2Int position, Team team, PathfindingSize size, bool isHighGround)
             => PointIdByPositionBySizeByTeam[team][size].ContainsKey((position, isHighGround));
 
         public bool TryGetPointId(Vector2Int position, Team team, PathfindingSize size, out int id,
@@ -471,7 +471,7 @@ namespace MultipurposePathfinding
         public int GetMainPointId(Vector2Int position, bool isHighGround = false, Team? team = null)
             => GetPointId(position, team ?? new Team(1), 1, isHighGround);
 
-        public bool TryGetMainPointId(Vector2Int position, out int id, bool isHighGround = false, Team? team = null) 
+        public bool TryGetMainPointId(Vector2Int position, out int id, bool isHighGround, Team? team = null) 
             => TryGetPointId(position, team ?? new Team(1), 1, out id, isHighGround);
 
         public Point AddPoint(Vector2Int position, bool isHighGround, int highGroundAscensionLevel,

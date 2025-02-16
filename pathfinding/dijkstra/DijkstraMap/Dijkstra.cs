@@ -193,18 +193,18 @@ namespace DijkstraMap
         /// reached by the algorithm.</param>
         public void Recalculate(
             int origin,
-            IEnumerable<int> additionalOrigins = null,
+            IEnumerable<int>? additionalOrigins = null,
             bool? inputIsDestination = null,
             float? maximumCost = null,
-            List<float> initialCosts = null,
-            Dictionary<int, float> terrainWeights = null,
-            HashSet<int> terminationPoints = null)
+            List<float>? initialCosts = null,
+            Dictionary<int, float>? terrainWeights = null,
+            HashSet<int>? terminationPoints = null)
         {
-            additionalOrigins = additionalOrigins ?? new List<int>();
-            inputIsDestination = inputIsDestination ?? true;
-            initialCosts = initialCosts ?? new List<float>();
-            terrainWeights = terrainWeights ?? new Dictionary<int, float>();
-            terminationPoints = terminationPoints ?? new HashSet<int>();
+            additionalOrigins ??= new List<int>();
+            inputIsDestination ??= true;
+            initialCosts ??= [];
+            terrainWeights ??= new Dictionary<int, float>();
+            terminationPoints ??= [];
             
             Recalculate(
                 origin,
@@ -246,20 +246,20 @@ namespace DijkstraMap
         /// reached by the algorithm.</param>
         public void Recalculate(
             PointId origin,
-            IEnumerable<PointId> additionalOrigins = null,
+            IEnumerable<PointId>? additionalOrigins = null,
             InputDirection? inputDirection = null,
             Cost? maximumCost = null,
-            List<Cost> initialCosts = null,
-            Dictionary<Terrain, Weight> terrainWeights = null,
-            HashSet<PointId> terminationPoints = null)
+            List<Cost>? initialCosts = null,
+            Dictionary<Terrain, Weight>? terrainWeights = null,
+            HashSet<PointId>? terminationPoints = null)
         {
             var origins = new List<PointId> { origin }; 
             origins.AddRange(additionalOrigins ?? new List<PointId>());
-            inputDirection = inputDirection ?? InputDirection.InputIsDestination;
-            maximumCost = maximumCost ?? new Cost(float.PositiveInfinity);
-            initialCosts = initialCosts ?? new List<Cost>();
-            terrainWeights = terrainWeights ?? new Dictionary<Terrain, Weight>();
-            terminationPoints = terminationPoints ?? new HashSet<PointId>();
+            inputDirection ??= InputDirection.InputIsDestination;
+            maximumCost ??= new Cost(float.PositiveInfinity);
+            initialCosts ??= [];
+            terrainWeights ??= new Dictionary<Terrain, Weight>();
+            terminationPoints ??= [];
 
             ComputedInfo.Clear();
             SortedPoints.Clear();
@@ -318,20 +318,17 @@ namespace DijkstraMap
             }
         }
 
-        private Dictionary<PointId, Weight> GetConnections(PointId pointId, InputDirection inputDirectionMode)
+        private Dictionary<PointId, Weight>? GetConnections(PointId pointId, InputDirection inputDirectionMode)
         {
             if (Points.TryGetValue(pointId, out var info) is false)
                 return null;
 
-            switch (inputDirectionMode)
+            return inputDirectionMode switch
             {
-                case InputDirection.InputIsDestination:
-                    return info.ReverseConnections;
-                case InputDirection.InputIsOrigin:
-                    return info.Connections;
-                default:
-                    return null;
-            }
+                InputDirection.InputIsDestination => info.ReverseConnections,
+                InputDirection.InputIsOrigin => info.Connections,
+                _ => null
+            };
         }
 
         /// Clears the <see cref="Dijkstra"/> of all points and connections.

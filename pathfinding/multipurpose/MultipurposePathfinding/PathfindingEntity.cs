@@ -14,7 +14,6 @@ namespace MultipurposePathfinding
         internal bool IsOnHighGround { get; private set; }
         internal Func<Point, Team, bool> CanBeMovedThroughAt { get; }
         internal Func<Point, Point, Team, bool> AllowsConnectionBetweenPoints { get; }
-        internal bool HasOccupation => Size != Vector2Int.Zero;
         internal Vector2Int UpperBounds => Position + Size;
 
         public PathfindingEntity(Guid id, Vector2Int position, Vector2Int size, Team team, bool isOnHighGround,

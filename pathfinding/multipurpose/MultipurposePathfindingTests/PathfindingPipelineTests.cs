@@ -23,7 +23,7 @@ public class PathfindingPipelineTests
             ConfigureMembers = true
         });
 
-    private readonly Pathfinding _pathfinding;
+    private Pathfinding _pathfinding;
     private bool _pathfindingInitialized = false;
 
     private readonly Dictionary<Guid, PathfindingEntity> _entities = new();
@@ -166,6 +166,7 @@ public class PathfindingPipelineTests
     //   - - no connection is allowed between these points
     //   w - walkable positions
     //   # - inaccessible
+    //   m - indicates terrain value (m = mountains)
 
     #region Complex Scenarios: 1. Long Stairs
 
@@ -2605,27 +2606,6 @@ public class PathfindingPipelineTests
     #endregion Complex Scenarios: 5. Complex Stairs
 
     #region Complex Scenarios: 6. Changes Over Time
-
-    public class GivenEntity
-    {
-        public required int Id { get; init; }
-        public required Vector2Int PrimaryPosition { get; init; }
-        public required Vector2Int Size { get; init; }
-        public required Vector2Int[][] Ascendables { get; init; } = [];
-        public required Area[] HighGrounds { get; init; } = [];
-        public required Area[] Walkables { get; init; } = [];
-    }
-    
-    public class ChangeStep
-    {
-        public required string Scenario { get; init; }
-        public required int[] AddedEntities { get; init; } = [];
-        public required int[] RemovedEntities { get; init; } = [];
-        public required Vector2Int[] ExpectedOccupiedLowGroundPositions { get; init; } = [];
-        public required Vector2Int[] ExpectedOccupiedHighGroundPositions { get; init; } = [];
-        public required Vector2Int[] ExpectedFreeHighGroundPositions { get; init; } = [];
-        public required ((Vector2Int, bool), (Vector2Int, bool))[] ExpectedNonConnectedPositionPairs { get; init; } = [];
-    }
     
     public static IEnumerable<object[]> GetExpectedOccupationAndHighGroundForChangesOverTime()
     {
@@ -4134,8 +4114,7 @@ public class PathfindingPipelineTests
 
             var rng = new Random();
             var randomizedIds = entitiesInScene.Keys.ToList().OrderBy(_ => rng.Next()).ToList();
-            /*if (changeStep.Scenario.Equals("Z206")) 
-                randomizedIds = [78, 93, 64, 28];*/
+            
             foreach (var id in randomizedIds)
             {
                 var guid = entitiesInScene[id];
@@ -4164,32 +4143,6 @@ public class PathfindingPipelineTests
                     [], $"{scenario}-{changeStep.Scenario}");
             }
         }
-    }
-
-    private Dictionary<int, Guid> UpdateEntitiesInScene(ChangeStep changeStep, 
-        Dictionary<int, Guid> entitiesInScene, GivenEntity[] entities)
-    {
-        foreach (var addedEntityId in changeStep.AddedEntities)
-        {
-            if (entitiesInScene.ContainsKey(addedEntityId))
-                continue;
-                
-            var entity = entities.Single(x => x.Id == addedEntityId);
-            var guid = SetupAddingEntityInstance(entity.PrimaryPosition, entity.Size, Team.Default, false, 
-                entity.Walkables.SelectMany(x => x.ToVectors()).ToHashSet(),
-                entity.Ascendables.Select(x => x.AsEnumerable()).ToList(),
-                entity.HighGrounds.SelectMany(x => x.ToVectors()).ToHashSet());
-                
-            entitiesInScene[addedEntityId] = guid;
-        }
-            
-        foreach (var removedEntityId in changeStep.RemovedEntities)
-        {
-            _pathfinding.RemoveEntity(entitiesInScene[removedEntityId]);
-            entitiesInScene.Remove(removedEntityId);
-        }
-
-        return entitiesInScene;
     }
     
     #endregion Complex Scenarios: 6. Changes Over Time
@@ -5294,14 +5247,775 @@ public class PathfindingPipelineTests
     
     #endregion Complex Scenarios: 7. Entities on High Ground
 
+    #region Complex Scenarios: 8. Movement Near Terrain
+
+    public static IEnumerable<object[]> GetExpectedOccupationAndHighGroundForMovementNearTerrain()
+    {
+        yield return
+        [
+            "Forwards", 
+            new PathfindingSize(1),
+            new Vector2Int[]
+            {
+                new(0, 0), 
+                new(0, 1), new(1, 1), 
+                new(0, 2), new(1, 2), new(2, 2), 
+                new(0, 3), new(1, 3), new(2, 3), 
+                new(0, 4), new(1, 4), new(2, 4), 
+                        
+                new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                new(6, 4), new(6, 5), 
+                        
+                new(9, 6), new(2, 7), new(9, 7), 
+                new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+            },
+            new GivenEntity[]
+            {
+                new()
+                {
+                    Id = 10,
+                    PrimaryPosition = new Vector2Int(1, 0),
+                    Size = new Vector2Int(1, 1),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(1, 0), new Vector2Int(1, 1)) ]
+                }, 
+                new()
+                {
+                    Id = 32,
+                    PrimaryPosition = new Vector2Int(3, 2),
+                    Size = new Vector2Int(1, 1),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(3, 2), new Vector2Int(1, 1)) ]
+                }, 
+                new()
+                {
+                    Id = 55,
+                    PrimaryPosition = new Vector2Int(5, 5),
+                    Size = new Vector2Int(1, 1),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(5, 5), new Vector2Int(1, 1)) ]
+                }, 
+                new()
+                {
+                    Id = 85,
+                    PrimaryPosition = new Vector2Int(8, 5),
+                    Size = new Vector2Int(1, 1),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(8, 5), new Vector2Int(1, 1)) ]
+                }, 
+            },
+            new ChangeStep[]
+            {
+                new()
+                {
+                    Scenario = "B254",
+                    AddedEntities = [10],
+                    RemovedEntities = [],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        
+                        new(9, 9), 
+                    },
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "N254",
+                    AddedEntities = [32],
+                    RemovedEntities = [10],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        
+                        new(9, 9), 
+                    },
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "Z254",
+                    AddedEntities = [55],
+                    RemovedEntities = [32],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        
+                        new(9, 9), 
+                    },
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "AL254",
+                    AddedEntities = [85],
+                    RemovedEntities = [55],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        
+                        new(9, 9), 
+                    },
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+            }
+        ];
+        
+        yield return
+        [
+            "Backwards", 
+            new PathfindingSize(1),
+            new Vector2Int[]
+            {
+                new(0, 0), 
+                new(0, 1), new(1, 1), 
+                new(0, 2), new(1, 2), new(2, 2), 
+                new(0, 3), new(1, 3), new(2, 3), 
+                new(0, 4), new(1, 4), new(2, 4), 
+                        
+                new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                new(6, 4), new(6, 5), 
+                        
+                new(9, 6), new(2, 7), new(9, 7), 
+                new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+            },
+            new GivenEntity[]
+            {
+                new()
+                {
+                    Id = 10,
+                    PrimaryPosition = new Vector2Int(1, 0),
+                    Size = new Vector2Int(1, 1),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(1, 0), new Vector2Int(1, 1)) ]
+                }, 
+                new()
+                {
+                    Id = 32,
+                    PrimaryPosition = new Vector2Int(3, 2),
+                    Size = new Vector2Int(1, 1),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(3, 2), new Vector2Int(1, 1)) ]
+                }, 
+                new()
+                {
+                    Id = 55,
+                    PrimaryPosition = new Vector2Int(5, 5),
+                    Size = new Vector2Int(1, 1),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(5, 5), new Vector2Int(1, 1)) ]
+                }, 
+                new()
+                {
+                    Id = 85,
+                    PrimaryPosition = new Vector2Int(8, 5),
+                    Size = new Vector2Int(1, 1),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(8, 5), new Vector2Int(1, 1)) ]
+                }, 
+            },
+            new ChangeStep[]
+            {
+                new()
+                {
+                    Scenario = "AL254",
+                    AddedEntities = [85],
+                    RemovedEntities = [],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        
+                        new(9, 9), 
+                    },
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "Z254",
+                    AddedEntities = [55],
+                    RemovedEntities = [85],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        
+                        new(9, 9), 
+                    },
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "N254",
+                    AddedEntities = [32],
+                    RemovedEntities = [55],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        
+                        new(9, 9), 
+                    },
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "B254",
+                    AddedEntities = [10],
+                    RemovedEntities = [32],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        
+                        new(9, 9), 
+                    },
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+            }
+        ];
+        
+        yield return
+        [
+            "Forwards", 
+            new PathfindingSize(2),
+            new Vector2Int[]
+            {
+                new(0, 0), 
+                new(0, 1), new(1, 1), 
+                new(0, 2), new(1, 2), new(2, 2), 
+                new(0, 3), new(1, 3), new(2, 3), 
+                new(0, 4), new(1, 4), new(2, 4), 
+                        
+                new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                new(6, 4), new(6, 5), 
+                        
+                new(9, 6), new(2, 7), new(9, 7), 
+                new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+            },
+            new GivenEntity[]
+            {
+                new()
+                {
+                    Id = 20,
+                    PrimaryPosition = new Vector2Int(2, 0),
+                    Size = new Vector2Int(2, 2),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(2, 0), new Vector2Int(2, 2)) ]
+                }, 
+                new()
+                {
+                    Id = 32,
+                    PrimaryPosition = new Vector2Int(3, 2),
+                    Size = new Vector2Int(2, 2),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(3, 2), new Vector2Int(2, 2)) ]
+                }, 
+                new()
+                {
+                    Id = 45,
+                    PrimaryPosition = new Vector2Int(4, 5),
+                    Size = new Vector2Int(2, 2),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(4, 5), new Vector2Int(2, 2)) ]
+                }, 
+                new()
+                {
+                    Id = 74,
+                    PrimaryPosition = new Vector2Int(7, 4),
+                    Size = new Vector2Int(2, 2),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(7, 4), new Vector2Int(2, 2)) ]
+                }, 
+            },
+            new ChangeStep[]
+            {
+                new()
+                {
+                    Scenario = "B266",
+                    AddedEntities = [20],
+                    RemovedEntities = [],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        new(1, 0), new(2, 1), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        new(4, 0), new(4, 1), new(4, 2), new(4, 3), new(4, 4), 
+                        new(6, 3), new(5, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        new(8, 5), new(1, 6), new(2, 6), new(8, 6), new(1, 8), 
+                        new(1, 7), new(3, 7), new(4, 7), new(5, 7), new(6, 7), new(7, 7), new(8, 7), 
+                    }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "N266",
+                    AddedEntities = [32],
+                    RemovedEntities = [20],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        new(1, 0), new(2, 1), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        new(4, 0), new(4, 1), new(4, 2), new(4, 3), new(4, 4), 
+                        new(6, 3), new(5, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        new(8, 5), new(1, 6), new(2, 6), new(8, 6), new(1, 8), 
+                        new(1, 7), new(3, 7), new(4, 7), new(5, 7), new(6, 7), new(7, 7), new(8, 7), 
+                    }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "Z266",
+                    AddedEntities = [45],
+                    RemovedEntities = [32],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        new(1, 0), new(2, 1), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        new(4, 0), new(4, 1), new(4, 2), new(4, 3), new(4, 4), 
+                        new(6, 3), new(5, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        new(8, 5), new(1, 6), new(2, 6), new(8, 6), new(1, 8), 
+                        new(1, 7), new(3, 7), new(4, 7), new(5, 7), new(6, 7), new(7, 7), new(8, 7), 
+                    }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "AL266",
+                    AddedEntities = [74],
+                    RemovedEntities = [45],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        new(1, 0), new(2, 1), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        new(4, 0), new(4, 1), new(4, 2), new(4, 3), new(4, 4), 
+                        new(6, 3), new(5, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        new(8, 5), new(1, 6), new(2, 6), new(8, 6), new(1, 8), 
+                        new(1, 7), new(3, 7), new(4, 7), new(5, 7), new(6, 7), new(7, 7), new(8, 7), 
+                    }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+            }
+        ];
+        
+        yield return
+        [
+            "Backwards", 
+            new PathfindingSize(2),
+            new Vector2Int[]
+            {
+                new(0, 0), 
+                new(0, 1), new(1, 1), 
+                new(0, 2), new(1, 2), new(2, 2), 
+                new(0, 3), new(1, 3), new(2, 3), 
+                new(0, 4), new(1, 4), new(2, 4), 
+                        
+                new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                new(6, 4), new(6, 5), 
+                        
+                new(9, 6), new(2, 7), new(9, 7), 
+                new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+            },
+            new GivenEntity[]
+            {
+                new()
+                {
+                    Id = 20,
+                    PrimaryPosition = new Vector2Int(2, 0),
+                    Size = new Vector2Int(2, 2),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(2, 0), new Vector2Int(2, 2)) ]
+                }, 
+                new()
+                {
+                    Id = 32,
+                    PrimaryPosition = new Vector2Int(3, 2),
+                    Size = new Vector2Int(2, 2),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(3, 2), new Vector2Int(2, 2)) ]
+                }, 
+                new()
+                {
+                    Id = 45,
+                    PrimaryPosition = new Vector2Int(4, 5),
+                    Size = new Vector2Int(2, 2),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(4, 5), new Vector2Int(2, 2)) ]
+                }, 
+                new()
+                {
+                    Id = 74,
+                    PrimaryPosition = new Vector2Int(7, 4),
+                    Size = new Vector2Int(2, 2),
+                    Ascendables = [],
+                    HighGrounds = [],
+                    Walkables = [ new Area(new Vector2Int(7, 4), new Vector2Int(2, 2)) ]
+                }, 
+            },
+            new ChangeStep[]
+            {
+                new()
+                {
+                    Scenario = "AL266",
+                    AddedEntities = [74],
+                    RemovedEntities = [],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        new(1, 0), new(2, 1), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        new(4, 0), new(4, 1), new(4, 2), new(4, 3), new(4, 4), 
+                        new(6, 3), new(5, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        new(8, 5), new(1, 6), new(2, 6), new(8, 6), new(1, 8), 
+                        new(1, 7), new(3, 7), new(4, 7), new(5, 7), new(6, 7), new(7, 7), new(8, 7), 
+                    }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "Z266",
+                    AddedEntities = [45],
+                    RemovedEntities = [74],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        new(1, 0), new(2, 1), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        new(4, 0), new(4, 1), new(4, 2), new(4, 3), new(4, 4), 
+                        new(6, 3), new(5, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        new(8, 5), new(1, 6), new(2, 6), new(8, 6), new(1, 8), 
+                        new(1, 7), new(3, 7), new(4, 7), new(5, 7), new(6, 7), new(7, 7), new(8, 7), 
+                    }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "N266",
+                    AddedEntities = [32],
+                    RemovedEntities = [45],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        new(1, 0), new(2, 1), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        new(4, 0), new(4, 1), new(4, 2), new(4, 3), new(4, 4), 
+                        new(6, 3), new(5, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        new(8, 5), new(1, 6), new(2, 6), new(8, 6), new(1, 8), 
+                        new(1, 7), new(3, 7), new(4, 7), new(5, 7), new(6, 7), new(7, 7), new(8, 7), 
+                    }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+                new()
+                {
+                    Scenario = "B266",
+                    AddedEntities = [20],
+                    RemovedEntities = [32],
+                    ExpectedOccupiedLowGroundPositions = new Vector2Int[]
+                    {
+                        new(0, 0), 
+                        new(0, 1), new(1, 1), 
+                        new(0, 2), new(1, 2), new(2, 2), 
+                        new(0, 3), new(1, 3), new(2, 3), 
+                        new(0, 4), new(1, 4), new(2, 4), 
+                        new(1, 0), new(2, 1), 
+                        
+                        new(5, 0), new(5, 1), new(5, 2), new(5, 3), new(5, 4), 
+                        new(6, 4), new(6, 5), 
+                        new(4, 0), new(4, 1), new(4, 2), new(4, 3), new(4, 4), 
+                        new(6, 3), new(5, 5), 
+                        
+                        new(9, 6), new(2, 7), new(9, 7), 
+                        new(2, 8), new(3, 8), new(4, 8), new(5, 8), new(6, 8), 
+                        new(7, 8), new(8, 8), new(9, 8), new(7, 9), new(8, 9), 
+                        new(8, 5), new(1, 6), new(2, 6), new(8, 6), new(1, 8), 
+                        new(1, 7), new(3, 7), new(4, 7), new(5, 7), new(6, 7), new(7, 7), new(8, 7), 
+                    }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+                    ExpectedOccupiedHighGroundPositions = [],
+                    ExpectedFreeHighGroundPositions = [],
+                    ExpectedNonConnectedPositionPairs = []
+                }, 
+            }
+        ];
+    }
+
+    [Theory]
+    [MemberData(nameof(GetExpectedOccupationAndHighGroundForMovementNearTerrain))]
+    public void Pathfinding_ShouldCalculateHighGroundAndOccupation_ForMovementNearTerrain(
+        string scenario,
+        PathfindingSize pathfindingSize,
+        Vector2Int[] mountainTerrains, 
+        GivenEntity[] entities,
+        ChangeStep[] changeSteps)
+    {
+        _pathfinding = new Pathfinding();
+        var initialPositionsAndTerrainIndexes = IterateVector2Int
+            .Positions(_config.MapSize)
+            .Select(position => (position, mountainTerrains.Contains(position) 
+                ? new Terrain(1) 
+                : new Terrain(0)))
+            .ToList();
+        _pathfinding.Initialize(initialPositionsAndTerrainIndexes, _config);
+        _pathfinding.FinishedInitializing += OnPathfindingInitialized;
+        _pathfindingInitialized = false;
+        while (_pathfindingInitialized is false)
+        {
+            _pathfinding.IterateInitialization(0.01f);
+        }
+        
+        var entitiesInScene = new Dictionary<int, Guid>();
+        foreach (var changeStep in changeSteps)
+        {
+            entitiesInScene = UpdateEntitiesInScene(changeStep, entitiesInScene, entities);
+
+            var rng = new Random();
+            var randomizedIds = entitiesInScene.Keys.ToList().OrderBy(_ => rng.Next()).ToList();
+            
+            foreach (var id in randomizedIds)
+            {
+                var guid = entitiesInScene[id];
+                _pathfinding.RemoveEntity(guid);
+                var entity = entities.Single(x => x.Id == id);
+                var newGuid = SetupAddingEntityInstance(entity.PrimaryPosition, entity.Size, Team.Default, false, 
+                    entity.Walkables.SelectMany(x => x.ToVectors()).ToHashSet(),
+                    entity.Ascendables.Select(x => x.AsEnumerable()).ToList(),
+                    entity.HighGrounds.SelectMany(x => x.ToVectors()).ToHashSet());
+                entitiesInScene[id] = newGuid;
+                
+                var availablePoints = GetAvailablePointsFor(pathfindingSize, from: new Vector2Int(3, 5));
+
+                ExpectedPositionsShouldNotBeContainedIn(availablePoints,
+                    changeStep.ExpectedOccupiedLowGroundPositions, CheckElevation.LowGround, 
+                    $"{scenario}-{changeStep.Scenario}");
+
+                ExpectedPositionsShouldNotBeContainedIn(availablePoints,
+                    changeStep.ExpectedOccupiedHighGroundPositions, CheckElevation.HighGround,
+                    $"{scenario}-{changeStep.Scenario}");
+                
+                ExpectedHighGroundPositionsShouldBeAccessibleIn(availablePoints, 
+                    changeStep.ExpectedFreeHighGroundPositions, $"{scenario}-{changeStep.Scenario}");
+
+                ExpectedPositionsShouldBeConnected(pathfindingSize, changeStep.ExpectedNonConnectedPositionPairs, 
+                    [], $"{scenario}-{changeStep.Scenario}");
+            }
+        }
+    }
+
+    #endregion Complex Scenarios: 8. Movement Near Terrain
+
     #region Helpers
 
     private List<Point> GetAvailablePointsFor(PathfindingSize pathfindingSize,
-        Team? team = null, bool? lookingFromHighGround = null)
+        Team? team = null, bool? lookingFromHighGround = null, Vector2Int? from = null)
     {
         _pathfinding.ClearCache();
         var availablePoints = _pathfinding.GetAvailablePoints(
-            _startingPoint,
+            from ?? _startingPoint,
             SearchRange,
             lookingFromHighGround ?? false,
             team ?? Team.Default,
@@ -5314,6 +6028,27 @@ public class PathfindingPipelineTests
         Any,
         LowGround,
         HighGround
+    }
+    
+    public class GivenEntity
+    {
+        public required int Id { get; init; }
+        public required Vector2Int PrimaryPosition { get; init; }
+        public required Vector2Int Size { get; init; }
+        public required Vector2Int[][] Ascendables { get; init; } = [];
+        public required Area[] HighGrounds { get; init; } = [];
+        public required Area[] Walkables { get; init; } = [];
+    }
+    
+    public class ChangeStep
+    {
+        public required string Scenario { get; init; }
+        public required int[] AddedEntities { get; init; } = [];
+        public required int[] RemovedEntities { get; init; } = [];
+        public required Vector2Int[] ExpectedOccupiedLowGroundPositions { get; init; } = [];
+        public required Vector2Int[] ExpectedOccupiedHighGroundPositions { get; init; } = [];
+        public required Vector2Int[] ExpectedFreeHighGroundPositions { get; init; } = [];
+        public required ((Vector2Int, bool), (Vector2Int, bool))[] ExpectedNonConnectedPositionPairs { get; init; } = [];
     }
 
     private void ExpectedPositionsShouldNotBeContainedIn(
@@ -5509,6 +6244,32 @@ public class PathfindingPipelineTests
         }
 
         return result;
+    }
+    
+    private Dictionary<int, Guid> UpdateEntitiesInScene(ChangeStep changeStep, 
+        Dictionary<int, Guid> entitiesInScene, GivenEntity[] entities)
+    {
+        foreach (var addedEntityId in changeStep.AddedEntities)
+        {
+            if (entitiesInScene.ContainsKey(addedEntityId))
+                continue;
+                
+            var entity = entities.Single(x => x.Id == addedEntityId);
+            var guid = SetupAddingEntityInstance(entity.PrimaryPosition, entity.Size, Team.Default, false, 
+                entity.Walkables.SelectMany(x => x.ToVectors()).ToHashSet(),
+                entity.Ascendables.Select(x => x.AsEnumerable()).ToList(),
+                entity.HighGrounds.SelectMany(x => x.ToVectors()).ToHashSet());
+                
+            entitiesInScene[addedEntityId] = guid;
+        }
+            
+        foreach (var removedEntityId in changeStep.RemovedEntities)
+        {
+            _pathfinding.RemoveEntity(entitiesInScene[removedEntityId]);
+            entitiesInScene.Remove(removedEntityId);
+        }
+
+        return entitiesInScene;
     }
 
     #endregion Helpers
