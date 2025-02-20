@@ -45,7 +45,7 @@ public partial class PlayerInLobby : HBoxContainer
         }
         Name = $"{playerId}";
 
-        Player = Data.Instance.Players.Single(x => x.Id.Equals(playerId));
+        Player = Players.Instance.Get(playerId);
         _nameLabel.Text = Player.Name;
         
         _factionSelection.SetSelectedFaction(Player.Faction);

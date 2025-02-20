@@ -63,5 +63,5 @@ public partial class ClientLobby : Lobby
         Client.Instance.StartGame();
     }
 
-    private static bool IsStartGameButtonDisabled() => Data.Instance.AllPlayersReady is false;
+    private static bool IsStartGameButtonDisabled() => Players.Instance.AllReady is false;
 }

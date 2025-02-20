@@ -8,15 +8,13 @@ using Newtonsoft.Json;
 using FileAccess = Godot.FileAccess;
 
 /// <summary>
-/// Handles game data for players, tiles, units & structures.
+/// Handles game data blueprint.
 /// </summary>
 public partial class Data : Node
 {
-    public static Data Instance = null;
-    
-    public Blueprint Blueprint { get; private set; }
-    public IList<Player> Players { get; private set; } = new List<Player>();
-    public bool AllPlayersReady => Players.All(x => x.Ready);
+    public static Data Instance = null!;
+
+    public Blueprint Blueprint { get; private set; } = null!;
     
     private const string DataBlueprintLocation = "res://data/data.json";
 
@@ -24,16 +22,13 @@ public partial class Data : Node
     {
         base._Ready();
         
-        if (Instance is null)
-        {
-            Instance = this;
-        }
+        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+        Instance ??= this;
     }
     
     public void Reset()
     {
-        Blueprint = null;
-        Players = new List<Player>();
+        Blueprint = null!;
     }
     
     public void ReadBlueprint() 
@@ -48,44 +43,13 @@ public partial class Data : Node
         {
             SerializationBinder = new KnownTypesBinder(),
             TypeNameHandling = TypeNameHandling.Auto
-        });
+        })!;
     }
-
-    public void AddPlayer(int playerId, string playerName, bool ready, FactionId faction)
-    {
-        Players.Add(new Player
-        {
-            Id = playerId,
-            Name = playerName,
-            Ready = ready,
-            Faction = faction
-        });
-    }
-    
-    public void RemovePlayer(int id)
-    {
-        var playerToRemove = Players.SingleOrDefault(x => x.Id.Equals(id));
-        if (playerToRemove is null)
-        {
-            return;
-        }
-        Players.Remove(playerToRemove);
-    }
-
-    public string GetPlayerName(int id) => Players.Single(x => x.Id.Equals(id)).Name;
 
     public Entity GetEntityBlueprintById(EntityId id)
     {
         return (Blueprint.Entities.Units.FirstOrDefault(x => x.Id.Equals(id)) 
-                ?? (Entity)Blueprint.Entities.Structures.FirstOrDefault(x => x.Id.Equals(id))) 
+                ?? Blueprint.Entities.Structures.FirstOrDefault(x => x.Id.Equals(id)) as Entity) 
                ?? Blueprint.Entities.Doodads.First(x => x.Id.Equals(id));
     }
-}
-
-public partial class Player
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public bool Ready { get; set; }
-    public FactionId Faction { get; set; }
 }

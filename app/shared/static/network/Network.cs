@@ -28,10 +28,10 @@ public partial class Network : Node
     {
 	    var playerId = (int)playerIdL;
 	    GD.Print("Player disconnected: " + playerId);
-	    Data.Instance.RemovePlayer(playerId);
+	    Players.Instance.Remove(playerId);
 	    
 	    EmitSignal(nameof(PlayerRemoved), playerId);
 
-	    GD.Print($"Total players: {Data.Instance.Players.Count}");
+	    GD.Print($"Total players: {Players.Instance.Count}");
     }
 }

@@ -88,13 +88,13 @@ public partial class ClientGame : Game
     {
         var playerId = Multiplayer.GetUniqueId();
         GD.Print($"{nameof(ClientGame)}.{nameof(OnNewGameEventRegistered)}: event '{eventBody.TrimForLogs()}' " +
-                 $"received for player {playerId} '{Data.Instance.GetPlayerName(playerId)}'");
+                 $"received for player {playerId} '{Players.Instance.GetName(playerId)}'");
 
         var gameEvent = StringToEvent(eventBody);
         if (Events.Any(x => x.Id.Equals(gameEvent.Id)))
         {
             GD.Print($"{nameof(ClientGame)}.{nameof(OnNewGameEventRegistered)}: event '{gameEvent.Id}' " +
-                     $"already exists for player {playerId} '{Data.Instance.GetPlayerName(playerId)}'");
+                     $"already exists for player {playerId} '{Players.Instance.GetName(playerId)}'");
             return;
         }
 

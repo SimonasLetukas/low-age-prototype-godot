@@ -31,14 +31,14 @@ public partial class Server : Network
         Client.Instance.OnRegisterPlayer(playerId, playerName, playerReady, playerFactionId);
 
         // Register the new player with all existing clients
-        foreach (var currentPlayer in Data.Instance.Players)
+        foreach (var currentPlayerId in Players.Instance.GetAllIds())
         {
-            Client.Instance.RegisterPlayer(currentPlayer.Id, playerId, playerName, playerReady, 
+            Client.Instance.RegisterPlayer(currentPlayerId, playerId, playerName, playerReady, 
                 new FactionId(playerFactionId));
         }
 
         // Catch the new player up with who is already here
-        foreach (var currentPlayer in Data.Instance.Players)
+        foreach (var currentPlayer in Players.Instance.GetAll())
         {
             if (currentPlayer.Id != playerId)
             {

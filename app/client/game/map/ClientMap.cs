@@ -83,7 +83,7 @@ public partial class ClientMap : Map
 		if (DebugEnabled)
 			GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} {nameof(ClientMap)}.{nameof(Initialize)}");
 
-        _currentPlayer = Data.Instance.Players.Single(x => x.Id.Equals(Multiplayer.GetUniqueId()));
+        _currentPlayer = Players.Instance.Current;
 		_mapSize = @event.MapSize;
 		_startingPositions = @event.StartingPositions[_currentPlayer.Id];
 

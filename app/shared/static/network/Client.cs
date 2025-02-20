@@ -60,10 +60,10 @@ public partial class Client : Network
     public void OnRegisterPlayer(int playerId, string playerName, bool playerReady, string playerFactionId)
     {
         GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerReady}, {playerFactionId}");
-        Data.Instance.AddPlayer(playerId, playerName, playerReady, new FactionId(playerFactionId));
+        Players.Instance.Add(playerId, playerName, playerReady, new FactionId(playerFactionId));
         
         EmitSignal(SignalName.PlayerAdded, playerId);
-        GD.Print($"Total players: {Data.Instance.Players.Count}");
+        GD.Print($"Total players: {Players.Instance.Count}");
     }
 
     public void StartGame()

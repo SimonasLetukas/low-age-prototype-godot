@@ -26,10 +26,10 @@ public partial class ServerGame : Game
 
         _notLoadedPlayers = new List<int>();
         _notInitializedPlayers = new List<int>();
-        foreach (var player in Data.Instance.Players)
+        foreach (var playerId in Players.Instance.GetAllIds())
         {
-            _notLoadedPlayers.Add(player.Id);
-            _notInitializedPlayers.Add(player.Id);
+            _notLoadedPlayers.Add(playerId);
+            _notInitializedPlayers.Add(playerId);
         }
     }
 
@@ -118,7 +118,7 @@ public partial class ServerGame : Game
     
     private void OnPlayerRemoved(int playerId)
     {
-        if (Data.Instance.Players.Count < 2)
+        if (Players.Instance.Count < 2)
         {
             GD.Print($"{nameof(ServerGame)}.{nameof(OnPlayerRemoved)}: not enough players to run the " +
                      "game, returning to lobby");
@@ -128,6 +128,6 @@ public partial class ServerGame : Game
             Callable.From(() => GetTree().ChangeSceneToFile(ServerLobby.ScenePath)).CallDeferred();
         }
         
-        GD.Print($"{nameof(ServerGame)}.{nameof(OnPlayerRemoved)}: '{Data.Instance.Players.Count}' players remaining");
+        GD.Print($"{nameof(ServerGame)}.{nameof(OnPlayerRemoved)}: '{Players.Instance.Count}' players remaining");
     }
 }
