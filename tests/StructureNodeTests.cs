@@ -1,14 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using AutoFixture;
 using AutoFixture.AutoMoq;
 using FluentAssertions;
-using Godot;
-using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeCommon;
 using TestProject1.Helpers;
-using Xunit;
 using Area = LowAgeCommon.Area;
 using Array = System.Array;
 

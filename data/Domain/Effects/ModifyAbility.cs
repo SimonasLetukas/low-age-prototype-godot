@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LowAgeData.Domain.Abilities;
+﻿using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Logic;
 
 namespace LowAgeData.Domain.Effects

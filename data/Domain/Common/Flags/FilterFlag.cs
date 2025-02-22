@@ -1,5 +1,4 @@
-﻿using System;
-using LowAgeData.Domain.Effects;
+﻿using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Entities;
 using LowAgeCommon;
 using Newtonsoft.Json;

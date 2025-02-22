@@ -1,9 +1,9 @@
+using System;
 using Godot;
 
 public partial class Network : Node
-{
-    [Signal]
-    public delegate void PlayerRemovedEventHandler(int playerId);
+{ 
+	public event Action<long> PlayerRemoved = delegate { };
 
     public override void _Ready()
     {
@@ -30,7 +30,7 @@ public partial class Network : Node
 	    GD.Print("Player disconnected: " + playerId);
 	    Players.Instance.Remove(playerId);
 	    
-	    EmitSignal(nameof(PlayerRemoved), playerId);
+	    PlayerRemoved(playerIdL);
 
 	    GD.Print($"Total players: {Players.Instance.Count}");
     }

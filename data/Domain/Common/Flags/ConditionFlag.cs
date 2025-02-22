@@ -1,5 +1,4 @@
-﻿using System;
-using LowAgeData.Domain.Logic;
+﻿using LowAgeData.Domain.Logic;
 using LowAgeCommon;
 using Newtonsoft.Json;
 

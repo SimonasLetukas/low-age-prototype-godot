@@ -1,17 +1,17 @@
-using System;
 using LowAgeCommon;
+using Newtonsoft.Json;
 
 namespace MultipurposePathfinding
 {
     public class Point : IEquatable<Point>
     {
-        public int Id { get; set; }
-        public Vector2Int Position { get; set; }
-        public int HighGroundAscensionLevel { get; set; }
-        public bool IsHighGround { get; set; }
+        public required int Id { get; init; }
+        public required Vector2Int Position { get; init; }
+        public required int HighGroundAscensionLevel { get; init; }
+        public required bool IsHighGround { get; init; }
         public bool IsLowGround => IsHighGround is false;
+        
         private bool _isImpassable;
-
         public bool IsImpassable
         {
             get
@@ -24,19 +24,21 @@ namespace MultipurposePathfinding
             set => _isImpassable = value;
         }
 
-        public int OriginalTerrainIndex { get; set; }
-
+        public int OriginalTerrainIndex { get; internal set; }
+        
         public int CalculatedTerrainIndex => _isImpassable
             ? Configuration.ImpassableIndex
             : IsHighGround
                 ? Configuration.HighGroundIndex
                 : OriginalTerrainIndex;
 
-        internal Configuration Configuration { private get; set; }
-
-        public bool Equals(Point other)
+        [JsonProperty] 
+        internal Configuration Configuration { get; init; } = null!;
+        
+        public bool Equals(Point? other)
         {
-            return Id == other.Id
+            return other is not null 
+                   && Id == other.Id
                    && Position.Equals(other.Position)
                    && IsHighGround == other.IsHighGround
                    && HighGroundAscensionLevel == other.HighGroundAscensionLevel
@@ -44,7 +46,7 @@ namespace MultipurposePathfinding
                    && IsImpassable == other.IsImpassable;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is Point other && Equals(other);
         }
@@ -57,7 +59,6 @@ namespace MultipurposePathfinding
                 hashCode = (hashCode * 397) ^ Position.GetHashCode();
                 hashCode = (hashCode * 397) ^ IsHighGround.GetHashCode();
                 hashCode = (hashCode * 397) ^ HighGroundAscensionLevel;
-                hashCode = (hashCode * 397) ^ OriginalTerrainIndex;
                 hashCode = (hashCode * 397) ^ IsImpassable.GetHashCode();
                 return hashCode;
             }

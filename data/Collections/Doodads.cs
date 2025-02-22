@@ -1,7 +1,5 @@
 ﻿using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Entities.Doodads;
-using System.Collections.Generic;
-using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Filters;
 using LowAgeData.Domain.Common.Flags;
 using LowAgeCommon;

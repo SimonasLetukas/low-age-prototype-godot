@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LowAgeData.Domain.Common;
+﻿using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;

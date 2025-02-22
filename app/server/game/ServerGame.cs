@@ -92,7 +92,7 @@ public partial class ServerGame : Game
                 break;
             default:
                 GD.Print($"{nameof(ServerGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
-                         $"'{EventToString(gameEvent).TrimForLogs()}'. Type not implemented or not relevant " +
+                         $"'{EventToString(gameEvent).TrimForLogs(50)}...'. Type not implemented or not relevant " +
                          $"for server.");
                 break;
         }

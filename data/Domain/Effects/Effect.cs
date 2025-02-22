@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LowAgeData.Domain.Logic;
+﻿using LowAgeData.Domain.Logic;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Effects

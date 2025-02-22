@@ -1,26 +1,26 @@
+using System;
 using Godot;
 using LowAgeData.Domain.Factions;
+using MultipurposePathfinding;
 
 public partial class Client : Network
 {
-    public static Client Instance = null;
+    public static Client Instance = null!;
+
+    public event Action<int> PlayerAdded = delegate { };
+    public event Action GameStarted = delegate { };
     
-    [Signal] public delegate void PlayerAddedEventHandler(int playerId);
-    [Signal] public delegate void GameStartedEventHandler();
-    
-    public string LocalPlayerName { get; private set; }
-    public FactionId LocalPlayerFaction { get; private set; }
+    public string LocalPlayerName { get; private set; } = null!;
+    public FactionId LocalPlayerFaction { get; private set; } = null!;
     public bool LocalPlayerReady { get; private set; } = false;
     public bool QuickStartEnabled { get; set; } = false;
 
     public override void _Ready()
     {
         base._Ready();
-        
-        if (Instance is null)
-        {
-            Instance = this;
-        }
+
+        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+        Instance ??= this;
     }
     
     public bool JoinGame(string playerName, FactionId playerFaction)
@@ -50,19 +50,22 @@ public partial class Client : Network
         Data.Instance.ReadBlueprint();
     }
 
-    public void RegisterPlayer(int recipientId, int playerId, string playerName, bool playerReady, FactionId playerFaction)
+    public void RegisterPlayer(int recipientId, int playerId, string playerName, bool playerReady, 
+        FactionId playerFaction, Team playerTeam)
     {
         RpcId(recipientId, nameof(OnRegisterPlayer), playerId, playerName, playerReady, 
-            playerFaction.ToString());
+            playerFaction.ToString(), playerTeam.Value);
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void OnRegisterPlayer(int playerId, string playerName, bool playerReady, string playerFactionId)
+    public void OnRegisterPlayer(int playerId, string playerName, bool playerReady, string playerFactionId, 
+        int playerTeam)
     {
         GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerReady}, {playerFactionId}");
-        Players.Instance.Add(playerId, playerName, playerReady, new FactionId(playerFactionId));
+        Players.Instance.Add(playerId, playerName, playerReady, new FactionId(playerFactionId), 
+            new Team(playerTeam));
         
-        EmitSignal(SignalName.PlayerAdded, playerId);
+        PlayerAdded(playerId);
         GD.Print($"Total players: {Players.Instance.Count}");
     }
 
@@ -76,6 +79,6 @@ public partial class Client : Network
     public void OnStartGame()
     {
         GD.Print($"{nameof(Client)}: {nameof(OnStartGame)} called for {LocalPlayerName}.");
-        EmitSignal(nameof(GameStarted));
+        GameStarted();
     }
 }

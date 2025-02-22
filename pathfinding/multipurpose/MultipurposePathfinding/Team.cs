@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace MultipurposePathfinding
 {
     /// <summary>
@@ -31,6 +28,10 @@ namespace MultipurposePathfinding
         public static bool operator ==(Team left, Team right) => left.Equals(right);
 
         public static bool operator !=(Team left, Team right) => !left.Equals(right);
+        
+        public static bool operator <(Team left, Team right) => left.Value < right.Value;
+
+        public static bool operator >(Team left, Team right) => left.Value > right.Value;
 
         public int Compare(Team x, Team y)
         {

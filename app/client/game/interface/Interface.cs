@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;
-using Array = Godot.Collections.Array;
 
 public partial class Interface : CanvasLayer
 {

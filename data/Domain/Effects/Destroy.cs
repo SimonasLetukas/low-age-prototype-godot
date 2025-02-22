@@ -1,5 +1,4 @@
 ﻿using LowAgeData.Domain.Logic;
-using System.Collections.Generic;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;

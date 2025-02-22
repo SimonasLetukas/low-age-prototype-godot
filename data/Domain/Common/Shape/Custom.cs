@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LowAgeCommon;
+﻿using LowAgeCommon;
 
 namespace LowAgeData.Domain.Common.Shape
 {

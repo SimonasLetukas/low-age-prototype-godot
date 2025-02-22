@@ -4,7 +4,7 @@ public partial class ClientLobby : Lobby
 {
     public const string ScenePath = @"res://app/client/lobby/ClientLobby.tscn";
 
-    private Button _startGameButton;
+    private Button _startGameButton = null!;
     
     public override void _Ready()
     {
@@ -13,14 +13,21 @@ public partial class ClientLobby : Lobby
         _startGameButton = GetNode<Button>("StartGame");
         _startGameButton.Connect(nameof(_startGameButton.Pressed).ToLower(), new Callable(this, nameof(OnStartGamePressed)));
         
-        Client.Instance.Connect(nameof(Client.GameStarted), new Callable(this, nameof(OnGameStarted)));
-
+        Client.Instance.GameStarted += OnGameStarted;
+        
         // Tell the server about you (client)
         Server.Instance.RegisterSelf(
             Multiplayer.GetUniqueId(), 
             Client.Instance.LocalPlayerName, 
             Client.Instance.LocalPlayerReady,
             Client.Instance.LocalPlayerFaction);
+    }
+
+    public override void _ExitTree()
+    {
+        Client.Instance.GameStarted -= OnGameStarted;
+        
+        base._ExitTree();
     }
 
     protected override void OnPlayerAdded(int playerId)

@@ -1,5 +1,4 @@
-﻿using System;
-using LowAgeData.Domain.Entities.Actors;
+﻿using LowAgeData.Domain.Entities.Actors;
 using LowAgeCommon;
 using Newtonsoft.Json;
 

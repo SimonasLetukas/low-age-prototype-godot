@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LowAgeCommon
+﻿namespace LowAgeCommon
 {
     public class Id : ValueObject<Id>
     {

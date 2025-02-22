@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData;
 using LowAgeData.Domain.Entities;
-using LowAgeData.Domain.Factions;
 using Newtonsoft.Json;
 using FileAccess = Godot.FileAccess;
 

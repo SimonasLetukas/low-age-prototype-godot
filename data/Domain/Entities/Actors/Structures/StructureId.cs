@@ -1,5 +1,4 @@
-﻿using System;
-using LowAgeCommon;
+﻿using LowAgeCommon;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Entities.Actors.Structures

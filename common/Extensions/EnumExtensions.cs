@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LowAgeCommon.Extensions
+﻿namespace LowAgeCommon.Extensions
 {
     public static class EnumExtensions
     {

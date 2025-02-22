@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LowAgeData.Domain.Common.Filters
+﻿namespace LowAgeData.Domain.Common.Filters
 {
     /// <summary>
     /// Can be used to logically group the <see cref="IFilterItem"/>s. By default, a list of <see cref="IFilterItem"/>s

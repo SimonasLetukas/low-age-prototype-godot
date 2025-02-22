@@ -7,7 +7,6 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
 using LowAgeCommon;
-using LowAgeCommon.Extensions;
 using MultipurposePathfinding;
 
 /// <summary>

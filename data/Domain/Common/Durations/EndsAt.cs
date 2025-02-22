@@ -1,5 +1,4 @@
-﻿using System;
-using LowAgeData.Domain.Behaviours;
+﻿using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeData.Domain.Entities.Doodads;
 using LowAgeCommon;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using LowAgeData.Domain.Common;
+﻿using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Durations;
 using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Entities.Actors;

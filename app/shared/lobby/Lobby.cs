@@ -1,17 +1,26 @@
 using Godot;
 using System.Linq;
 using LowAgeData.Domain.Factions;
+using MultipurposePathfinding;
 
 public partial class Lobby : VBoxContainer
 {
-    private VBoxContainer _playersList;
+    private VBoxContainer _playersList = null!;
     
     public override void _Ready()
     {
         _playersList = GetNode<VBoxContainer>("Players");
         
-        Client.Instance.Connect(nameof(Client.PlayerAdded), new Callable(this, nameof(OnPlayerAdded)));
-        Client.Instance.Connect(nameof(Network.PlayerRemoved), new Callable(this, nameof(OnPlayerRemoved)));
+        Client.Instance.PlayerAdded += OnPlayerAdded;
+        Client.Instance.PlayerRemoved += OnPlayerRemoved;
+    }
+
+    public override void _ExitTree()
+    {
+        Client.Instance.PlayerAdded -= OnPlayerAdded;
+        Client.Instance.PlayerRemoved -= OnPlayerRemoved;
+        
+        base._ExitTree();
     }
 
     protected virtual void OnPlayerAdded(int playerId)
@@ -22,10 +31,13 @@ public partial class Lobby : VBoxContainer
         _playersList.AddChild(playerInfo);
         playerInfo.GetTree().SetMultiplayer(Multiplayer);
         
-        var player = playerInfo.SetupPlayer(playerId);
-        playerInfo.PlayerSelectedFaction += OnPlayerChangedSelectedFaction;
-        playerInfo.PlayerChangedReadyStatus += OnPlayerChangedReadyStatus;
+        Callable.From(() => playerInfo.SetupPlayer(playerId)).CallDeferred();
         
+        playerInfo.PlayerSelectedFaction += OnPlayerChangedSelectedFaction;
+        playerInfo.PlayerSelectedTeam += OnPlayerChangedSelectedTeam;
+        playerInfo.PlayerChangedReadyStatus += OnPlayerChangedReadyStatus;
+
+        var player = Players.Instance.Get(playerId);
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerAdded)}: player {player.Name} ({player.Id}) " +
                  "successfully added to lobby.");
     }
@@ -34,11 +46,18 @@ public partial class Lobby : VBoxContainer
     {
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerRemoved)}: removing player {playerId} from lobby.");
         
-        foreach (var player in _playersList.GetChildren().OfType<PlayerInLobby>())
+        foreach (var playerInfo in _playersList.GetChildren().OfType<PlayerInLobby>())
         {
-            if (player.Player.Id != playerId) continue;
+            if (playerInfo.Player.Id != playerId)
+            {
+                playerInfo.AdjustMaxSelectedTeam();
+                continue;
+            }
             
-            RemoveChild(player);
+            playerInfo.PlayerSelectedFaction -= OnPlayerChangedSelectedFaction;
+            playerInfo.PlayerSelectedTeam -= OnPlayerChangedSelectedTeam;
+            playerInfo.PlayerChangedReadyStatus -= OnPlayerChangedReadyStatus;
+            playerInfo.QueueFree();
             
             GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerRemoved)}: player {playerId} successfully removed from lobby.");
             return;
@@ -93,6 +112,56 @@ public partial class Lobby : VBoxContainer
             
             GD.Print($"{nameof(Lobby)}.{nameof(ChangeSelectedFactionForPlayer)}: player '{playerId}' changed " +
                      $"faction to '{factionId}'");
+            return;
+        }
+    }
+    
+    /// <summary>
+    /// Calls the server that the team selection has changed
+    /// </summary>
+    /// <param name="playerInLobby"></param>
+    /// <param name="newTeam"></param>
+    private void OnPlayerChangedSelectedTeam(PlayerInLobby playerInLobby, Team newTeam)
+    {
+        var playerId = playerInLobby.Player.Id;
+        GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedTeam)} called with " +
+                 $"{nameof(playerId)} '{playerId}', {nameof(newTeam)} '{newTeam}'.");
+
+        if (Multiplayer.IsServer()) 
+            return;
+        
+        GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedTeam)}: calling " +
+                 $"{nameof(UpdateSelectedPlayerTeam)}.");
+        RpcId(Constants.ENet.ServerId, nameof(UpdateSelectedPlayerTeam), playerId, 
+            newTeam.Value);
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    protected virtual void UpdateSelectedPlayerTeam(int playerId, int team)
+    {
+        GD.Print($"{nameof(Lobby)}.{nameof(UpdateSelectedPlayerTeam)}: called with " +
+                 $"{nameof(playerId)} '{playerId}', {nameof(team)} '{team}'.");
+    }
+    
+    /// <summary>
+    /// Callback from the server for each client to update their player team selection
+    /// </summary>
+    /// <param name="playerId"></param>
+    /// <param name="team"></param>
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    protected virtual void ChangeSelectedTeamForPlayer(int playerId, int team)
+    {
+        GD.Print($"{nameof(Lobby)}.{nameof(ChangeSelectedTeamForPlayer)}: trying to change player " +
+                 $"'{playerId}' team to '{team}'");
+        
+        foreach (var player in _playersList.GetChildren().OfType<PlayerInLobby>())
+        {
+            if (player.Player.Id != playerId) continue;
+            
+            player.SetSelectedTeam(new Team(team));
+            
+            GD.Print($"{nameof(Lobby)}.{nameof(ChangeSelectedTeamForPlayer)}: player '{playerId}' changed " +
+                     $"team to '{team}'");
             return;
         }
     }

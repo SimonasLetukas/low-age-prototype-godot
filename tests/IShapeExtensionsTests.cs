@@ -1,9 +1,6 @@
-using System.Collections.Generic;
 using FluentAssertions;
 using LowAgeData.Domain.Common.Shape;
 using LowAgeCommon;
-using Xunit;
-using Vector2 = Godot.Vector2;
 
 namespace LowAgeTests
 {

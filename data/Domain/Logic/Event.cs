@@ -1,5 +1,4 @@
-﻿using System;
-using LowAgeData.Domain.Common;
+﻿using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Masks;
 using LowAgeCommon;

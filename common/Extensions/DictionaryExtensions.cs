@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace LowAgeCommon.Extensions
 {
     public static class DictionaryExtensions
