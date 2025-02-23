@@ -373,10 +373,10 @@ public partial class ElevatableTiles : Node2D
         {
             var tile = _tiles.GetTile(point.Position + offset, point.IsHighGround);
                 
-            if (tile is null || entity.CanBeMovedOnAt(tile.Point, entity.Team) is false)
+            if (tile is null || entity.CanBeMovedOnAt(tile.Point, entity.Player.Team) is false)
                 continue;
 
-            if (tile.Occupants.Any(occupant => occupant.CanBeMovedOnAt(tile.Point, entity.Team) is false))
+            if (tile.Occupants.Any(occupant => occupant.CanBeMovedOnAt(tile.Point, entity.Player.Team) is false))
                 return false;
         }
 

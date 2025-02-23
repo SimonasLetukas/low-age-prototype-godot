@@ -18,8 +18,7 @@ public partial class ServerGame : Game
         _creator = GetNode<Creator>($"{nameof(Creator)}");
         
         _creator.MapCreated += OnRegisterServerEvent;
-        
-        Server.Instance.Connect(nameof(Network.PlayerRemoved), new Callable(this, nameof(OnPlayerRemoved)));
+        Server.Instance.PlayerRemoved += OnPlayerRemoved;
 
         // Wait until the parent scene is fully loaded
         await ToSignal(GetTree().Root.GetChild(GetTree().Root.GetChildCount() - 1), "ready");
@@ -36,6 +35,7 @@ public partial class ServerGame : Game
     public override void _ExitTree()
     {
         _creator.MapCreated -= OnRegisterServerEvent;
+        Server.Instance.PlayerRemoved -= OnPlayerRemoved;
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
@@ -116,7 +116,7 @@ public partial class ServerGame : Game
                  $"{_notInitializedPlayers.Count} players to initialize");
     }
     
-    private void OnPlayerRemoved(int playerId)
+    private void OnPlayerRemoved(long playerId)
     {
         if (Players.Instance.Count < 2)
         {

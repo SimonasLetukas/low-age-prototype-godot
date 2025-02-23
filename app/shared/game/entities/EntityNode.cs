@@ -25,7 +25,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public Guid InstanceId { get; set; } = Guid.NewGuid();
 
-    public Team Team { get; set; } = 1;
+    public Player Player { get; protected set; } = null!;
     public EntityRenderer Renderer { get; private set; }
     public Vector2Int EntityPrimaryPosition { get; set; }
     public Vector2Int EntitySize { get; protected set; } = Vector2Int.One;

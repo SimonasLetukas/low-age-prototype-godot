@@ -38,6 +38,10 @@ public partial class Players : Node
     public Player? TryGet(int id) => _players.FirstOrDefault(x => x.Id.Equals(id));
     
     public string GetName(int id) => _players.Single(x => x.Id.Equals(id)).Name;
+
+    public bool IsCurrentPlayerEnemyTo(Player player) => Current.Team.IsEnemyTo(player.Team);
+    
+    public bool IsCurrentPlayerAllyTo(Player player) => Current.Team.IsAllyTo(player.Team);
     
     public Team GetNextAvailableTeam() => new(_players.Count + 1);
     

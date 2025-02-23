@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c06ip2burr08v"]
+[gd_scene load_steps=32 format=3 uid="uid://c06ip2burr08v"]
 
 [ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/AbilitySubtitle.cs" id="1"]
 [ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/TopText.cs" id="2"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://3bifm1r5ske3" path="res://assets/icons/icon_distance_big.png" id="20"]
 [ext_resource type="Texture2D" uid="uid://culpwwebox15l" path="res://assets/icons/icon_melee_armour_big.png" id="21"]
 [ext_resource type="Texture2D" uid="uid://c8y4p2h6a0qx6" path="res://assets/icons/icon_ranged_armour_big.png" id="22"]
+[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/PlayerAttributes.cs" id="23_w80o8"]
 
 [sub_resource type="FontFile" id="1"]
 fallbacks = Array[Font]([ExtResource("9"), ExtResource("9")])
@@ -111,13 +112,13 @@ void fragment()
 	COLOR = final_color; 
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d3101"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bfn3q"]
 resource_local_to_scene = true
 shader = SubResource("3")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kdfyc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hlbma"]
 resource_local_to_scene = true
 shader = SubResource("3")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
@@ -144,6 +145,11 @@ cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_xxcha"]
+resource_local_to_scene = true
+resource_name = "line"
+color = Color(1, 1, 1, 1)
 
 [node name="InfoDisplay" type="MarginContainer"]
 custom_minimum_size = Vector2(248, 0)
@@ -349,11 +355,11 @@ layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="Melee" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource("11")]
-material = SubResource("ShaderMaterial_d3101")
+material = SubResource("ShaderMaterial_bfn3q")
 layout_mode = 2
 
 [node name="Ranged" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource("11")]
-material = SubResource("ShaderMaterial_kdfyc")
+material = SubResource("ShaderMaterial_hlbma")
 layout_mode = 2
 Icon = ExtResource("15")
 
@@ -389,7 +395,7 @@ e_big.png[/img]to the selected target. If "
 
 [node name="ActorAttributes" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_bottom = -2
 script = ExtResource("3")
 
 [node name="Label" type="Label" parent="VBoxContainer/ActorAttributes"]
@@ -399,6 +405,34 @@ size_flags_horizontal = 3
 mouse_filter = 1
 theme = ExtResource("6")
 text = "Light - Biological"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="PlayerAttributes" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+script = ExtResource("23_w80o8")
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/PlayerAttributes"]
+self_modulate = Color(0.878431, 0.819608, 0.74902, 0.529412)
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_xxcha")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PlayerAttributes"]
+layout_mode = 2
+theme_override_constants/margin_top = -4
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="VBoxContainer/PlayerAttributes/MarginContainer"]
+custom_minimum_size = Vector2(3, 5)
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("6")
+text = "User - Enemy"
 horizontal_alignment = 1
 vertical_alignment = 2
 

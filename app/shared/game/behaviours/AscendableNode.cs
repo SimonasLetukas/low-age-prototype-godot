@@ -54,14 +54,11 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
         EventBus.Instance.RaisePathfindingUpdating(this, false);
     }
     
-    public bool CanBeMovedOnAt(Vector2Int position, Team forTeam)
-    {
-        return FlattenedPositions.ContainsKey(position);
-    }
+    public bool CanBeMovedOnAt(Vector2Int position, Team forTeam) => FlattenedPositions.ContainsKey(position);
 
     public bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam)
     {
-        var isSameTeam = Blueprint.ClosingEnabled is false || (forTeam == Parent.Team || Opened);
+        var isSameTeam = Blueprint.ClosingEnabled is false || (forTeam.IsAllyTo(Parent.Player.Team) || Opened);
         
         return FlattenedPositions.ContainsKey(toPoint.Position)
                && ((isSameTeam && fromPoint.IsLowGround) || fromPoint.IsHighGround);

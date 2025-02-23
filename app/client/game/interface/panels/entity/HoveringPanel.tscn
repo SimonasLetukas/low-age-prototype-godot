@@ -52,7 +52,7 @@ layout_mode = 0
 offset_left = -4.0
 offset_top = 92.0
 offset_right = 62.0
-offset_bottom = 128.0
+offset_bottom = 132.0
 scale = Vector2(4, 4)
 texture = ExtResource("3")
 patch_margin_left = 32
@@ -61,9 +61,11 @@ patch_margin_right = 32
 patch_margin_bottom = 18
 
 [node name="InfoDisplay" parent="." instance=ExtResource("2")]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = 96.0
 offset_right = 256.0
-offset_bottom = 226.0
+offset_bottom = 250.0
+grow_vertical = 0

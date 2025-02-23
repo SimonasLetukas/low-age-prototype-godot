@@ -13,7 +13,7 @@ script = ExtResource("2")
 
 [node name="EntityPanel" parent="." instance=ExtResource("1")]
 offset_top = -720.0
-offset_bottom = 38.0
+offset_bottom = 18.0
 
 [node name="SelectionPanel" parent="." instance=ExtResource("3")]
 
@@ -21,6 +21,6 @@ offset_bottom = 38.0
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -220.0
-offset_bottom = -220.0
+offset_top = -248.0
+offset_bottom = -248.0
 grow_vertical = 0

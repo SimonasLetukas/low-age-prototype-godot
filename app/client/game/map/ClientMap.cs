@@ -195,7 +195,7 @@ public partial class ClientMap : Map
 				var size = Entities.SelectedEntity.EntitySize.X;
 				var path = Pathfinding.FindPath(
 					_focusedTile.CurrentTile.Point,
-					Entities.SelectedEntity.Team,
+					Entities.SelectedEntity.Player.Team,
 					size);
 				_tileMap.Elevatable.SetPathTiles(path, size);
 			}
@@ -289,7 +289,7 @@ public partial class ClientMap : Map
 				entity.EntityPrimaryPosition,
 				unit.Movement,
 				unit.IsOnHighGround,
-				unit.Team,
+				unit.Player.Team,
 				size);
 			_tileMap.Elevatable.ClearAvailableTiles(true);
 			_tileMap.Elevatable.SetAvailableTiles(unit, availablePoints, size, false);
@@ -347,7 +347,7 @@ public partial class ClientMap : Map
 		var selectedEntity = Entities.SelectedEntity;
 		var path = Pathfinding.FindPath(
 			_focusedTile.CurrentTile.Point,
-			selectedEntity.Team,
+			selectedEntity.Player.Team,
 			selectedEntity.EntitySize.X).ToList();
 		var globalPath = _tileMap.GetGlobalPositionsFromMapPoints(path);
 		UnitMovementIssued(new UnitMovedAlongPathEvent(selectedEntity.InstanceId, globalPath, path));
@@ -365,7 +365,7 @@ public partial class ClientMap : Map
 		ExecuteEntitySelection(true);
 	}
 
-	private EntityNode UpdateHoveredEntity(Vector2 mousePosition)
+	private EntityNode? UpdateHoveredEntity(Vector2 mousePosition)
 	{
 		if (_focusedTile.IsWithinTheMap is false)
 			return null;
@@ -395,14 +395,17 @@ public partial class ClientMap : Map
 		_tileMap.AddOccupation(entity);
 
 		var pathfindingEntity = new PathfindingEntity(entity.InstanceId, entity.EntityPrimaryPosition,
-			entity.EntitySize, entity.Team, entity is UnitNode { IsOnHighGround: true },
+			entity.EntitySize, entity.Player.Team, entity is UnitNode { IsOnHighGround: true },
 			entity.CanBeMovedThroughAt, entity.AllowsConnectionBetweenPoints);
 		Pathfinding.AddOrUpdateEntity(pathfindingEntity);
 		Pathfinding.UpdateAround(entity.InstanceId);
 	}
 
-	private void RemoveOccupation(EntityNode entity)
+	private void RemoveOccupation(EntityNode? entity)
 	{
+		if (entity is null)
+			return;
+		
 		_tileMap.RemoveOccupation(entity);
 
 		Pathfinding.RemoveEntity(entity.InstanceId);
@@ -533,7 +536,7 @@ public partial class ClientMap : Map
 				unit.EntityPrimaryPosition,
 				unit.GetReach(),
 				unit.IsOnHighGround,
-				unit.Team,
+				unit.Player.Team,
 				unit.EntitySize.X,
 				true);
 

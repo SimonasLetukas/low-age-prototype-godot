@@ -9,13 +9,15 @@ using Area = LowAgeCommon.Area;
 
 public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {
-    public const string ScenePath = @"res://app/shared/game/entities/StructureNode.tscn";
+    private const string ScenePath = @"res://app/shared/game/entities/StructureNode.tscn";
     public static StructureNode Instance() => (StructureNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static StructureNode InstantiateAsChild(Structure blueprint, Node parentNode)
+    public static StructureNode InstantiateAsChild(Structure blueprint, Node parentNode, Player player)
     {
         var structure = Instance();
         parentNode.AddChild(structure);
         structure.SetBlueprint(blueprint);
+        structure.Player = player;
+        
         return structure;
     }
     

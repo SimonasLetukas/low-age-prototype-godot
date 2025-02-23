@@ -20,8 +20,8 @@ public partial class EntityPanel : Control
     private EntityNode _selectedEntity;
     private int _biggestPreviousAbilityTextSize = 0;
     private const int YSizeForAbility = 834;
-    private const int YSizeForUnit = 758;
-    private const int YSizeForStructure = 816;
+    private const int YSizeForUnit = 738;
+    private const int YSizeForStructure = 796;
     private const int YSizeForHiding = 1500;
     private const float PanelMoveDuration = 0.1f;
     private readonly IList<Ability> _abilitiesBlueprint = Data.Instance.Blueprint.Abilities;

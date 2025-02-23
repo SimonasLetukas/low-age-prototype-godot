@@ -8,13 +8,14 @@ using MultipurposePathfinding;
 
 public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 {
-    public const string ScenePath = @"res://app/shared/game/entities/UnitNode.tscn";
+    private const string ScenePath = @"res://app/shared/game/entities/UnitNode.tscn";
     public static UnitNode Instance() => (UnitNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static UnitNode InstantiateAsChild(Unit blueprint, Node parentNode)
+    public static UnitNode InstantiateAsChild(Unit blueprint, Node parentNode, Player player)
     {
         var unit = Instance();
         parentNode.AddChild(unit);
         unit.SetBlueprint(blueprint);
+        unit.Player = player;
         return unit;
     }
     
