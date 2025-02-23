@@ -100,7 +100,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         UpdateVisuals();
     }
 
-    public virtual void SetOutline(bool to) => Renderer.SetOutline(to);
+    public virtual void SetOutline(bool to) => Renderer.SetOutline(to, Players.Instance.IsCurrentPlayerEnemyTo(Player));
 
     public virtual void SnapTo(Vector2 globalPosition)
     {

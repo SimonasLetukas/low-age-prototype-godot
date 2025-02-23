@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using LowAgeCommon;
 using Area = LowAgeCommon.Area;
@@ -24,29 +23,32 @@ public partial class EntityRenderer : Node2D
     public Vector2 SpriteSize => _sprite.Texture.GetSize();
     public int YHighGroundOffset { get; private set; } = 0;
 
-    public readonly List<EntityRenderer> StaticDependencies = new List<EntityRenderer>();
-    public readonly List<EntityRenderer> DynamicDependencies = new List<EntityRenderer>();
+    public readonly List<EntityRenderer> StaticDependencies = [];
+    public readonly List<EntityRenderer> DynamicDependencies = [];
+
+    private Color _outlineColorNormal = Colors.Black;
+    private Color _outlineColorEnemy = Colors.Red;
     
-    private EntityNode _parentEntity;
+    private EntityNode? _parentEntity;
     private Area _entityRelativeSize;
     
     private Vector2 _topOrigin;
     private Vector2 _bottomOrigin;
 
-    private Node2D _debugVisuals;
-    private Sprite2D _topOriginSprite;
-    private Sprite2D _bottomOriginSprite;
-    private RichTextLabel _zIndexText;
+    private Node2D _debugVisuals = null!;
+    private Sprite2D _topOriginSprite = null!;
+    private Sprite2D _bottomOriginSprite = null!;
+    private RichTextLabel _zIndexText = null!;
 
-    private Node2D _spriteContainer;
-    private Sprite2D _sprite;
-    private TextureRect _icon;
-    private readonly Vector2 _iconOffset = new Vector2(-4, -5);
+    private Node2D _spriteContainer = null!;
+    private Sprite2D _sprite = null!;
+    private TextureRect _icon = null!;
+    private readonly Vector2 _iconOffset = new(-4, -5);
 
-    private Area2D _area;
-    private Rect2 _previousSpriteBounds = new Rect2();
+    private Area2D _area = null!;
+    private Rect2 _previousSpriteBounds = new();
 
-    private EntityNode _entityBelow = null;
+    private EntityNode? _entityBelow = null;
     private bool _isOnHighGround = false;
 
     public Vector2 AsPoint => SortType is SortTypes.Point 
@@ -101,10 +103,15 @@ public partial class EntityRenderer : Node2D
     public void MakeDynamic() => IsDynamic = true;
     public void MakeStatic() => IsDynamic = false;
 
-    public void SetOutline(bool to)
+    public void SetOutline(bool to, bool isEnemy)
     {
-        if (_sprite.Material is ShaderMaterial spriteShaderMaterial) 
-            spriteShaderMaterial.SetShaderParameter("draw_outline", to);
+        if (_sprite.Material is not ShaderMaterial spriteShaderMaterial) 
+            return;
+        
+        spriteShaderMaterial.SetShaderParameter("draw_outline", to);
+        spriteShaderMaterial.SetShaderParameter("outline_color", isEnemy 
+            ? _outlineColorEnemy 
+            : _outlineColorNormal);
     }
 
     public void SetTintColor(Color color)
@@ -131,10 +138,10 @@ public partial class EntityRenderer : Node2D
 
     public void UpdateSpriteOffset(Vector2Int entitySize, Vector2 centerOffset)
     {
-        var offsetFromX = (int)(entitySize.X - 1) * 
-                        new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 4));
-        var offsetFromY = (int)(entitySize.Y - 1) *
-                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 4));
+        const int quarterWidth = Constants.TileWidth / 4;
+        const int quarterHeight = Constants.TileHeight / 4;
+        var offsetFromX = (entitySize.X - 1) * new Vector2(quarterWidth, quarterHeight);
+        var offsetFromY = (entitySize.Y - 1) * new Vector2(quarterWidth * -1, quarterHeight);
         _sprite.Offset = (centerOffset * -1) + offsetFromX + offsetFromY;
         UpdateSpriteBounds();
     }
@@ -193,10 +200,10 @@ public partial class EntityRenderer : Node2D
         const int widthHalfStep = Constants.TileWidth / 4;
         const int heightHalfStep = Constants.TileHeight / 4;
         
-        var offsetFromX = (int)px * new Vector2((int)(widthStep), (int)(heightHalfStep)) + 
-                          (int)(sx - 1) * new Vector2((int)(widthHalfStep), (int)(heightHalfStep));
-        var offsetFromY = (int)py * new Vector2((int)(widthStep) * -1, (int)(heightHalfStep)) + 
-                          (int)(sy - 1) * new Vector2((int)(widthHalfStep) * -1, (int)(heightHalfStep));
+        var offsetFromX = px * new Vector2(widthStep, heightHalfStep) + 
+                          (sx - 1) * new Vector2(widthHalfStep, heightHalfStep);
+        var offsetFromY = py * new Vector2(widthStep * -1, heightHalfStep) + 
+                          (sy - 1) * new Vector2(widthHalfStep * -1, heightHalfStep);
         _icon.Position = offsetFromX + offsetFromY + _iconOffset + (SortType is SortTypes.Point 
             ? Vector2.Zero 
             : (xBiggerThanY ? px * Vector2.Down : py * Vector2.Down) * heightHalfStep);
@@ -211,7 +218,7 @@ public partial class EntityRenderer : Node2D
         SpriteBounds = new Rect2(top, SpriteSize);
         
         if (DebugEnabled)
-            GD.Print($"New {_parentEntity.DisplayName} sprite bounds: {SpriteBounds}");
+            GD.Print($"New {_parentEntity?.DisplayName} sprite bounds: {SpriteBounds}");
         
         UpdateCollisionShape();
         
@@ -248,7 +255,7 @@ public partial class EntityRenderer : Node2D
         ZIndex = to;
         _zIndexText.Text = to.ToString();
 
-        EventBus.Instance.RaiseEntityZIndexUpdated(_parentEntity, ZIndex);
+        EventBus.Instance.RaiseEntityZIndexUpdated(_parentEntity!, ZIndex);
     }
 
     public bool ContainsSpriteAt(Vector2 globalPosition)
@@ -270,8 +277,8 @@ public partial class EntityRenderer : Node2D
         {
             case SortTypes.Point when renderer2.SortType == SortTypes.Point:
                 if (DebugEnabled)
-                    GD.Print($"'{renderer1._parentEntity.DisplayName}' topOrigin: '{renderer1._topOrigin}', " +
-                             $"'{renderer2._parentEntity.DisplayName}' topOrigin: '{renderer2._topOrigin}'.");
+                    GD.Print($"'{renderer1._parentEntity!.DisplayName}' topOrigin: '{renderer1._topOrigin}', " +
+                             $"'{renderer2._parentEntity!.DisplayName}' topOrigin: '{renderer2._topOrigin}'.");
                 result = renderer2._topOrigin.Y.CompareTo(renderer1._topOrigin.Y);
                 break;
             case SortTypes.Line when renderer2.SortType == SortTypes.Line:
@@ -291,11 +298,11 @@ public partial class EntityRenderer : Node2D
         if (DebugEnabled)
         {
             var resultText = result == 0 ? "Both the same." : result > 0 
-                ? $"'{renderer2._parentEntity.DisplayName}' at '{renderer2._parentEntity.EntityPrimaryPosition}' is on top." 
-                : $"'{renderer1._parentEntity.DisplayName}' at '{renderer1._parentEntity.EntityPrimaryPosition}' is on top.";
-            GD.Print($"Renderer '{renderer1._parentEntity.DisplayName}' at " +
-                     $"'{renderer1._parentEntity.EntityPrimaryPosition}' of type '{renderer1.SortType}' compared to " +
-                     $"'{renderer2._parentEntity.DisplayName}' at '{renderer2._parentEntity.EntityPrimaryPosition}' " +
+                ? $"'{renderer2._parentEntity!.DisplayName}' at '{renderer2._parentEntity.EntityPrimaryPosition}' is on top." 
+                : $"'{renderer1._parentEntity!.DisplayName}' at '{renderer1._parentEntity.EntityPrimaryPosition}' is on top.";
+            GD.Print($"Renderer '{renderer1._parentEntity!.DisplayName}' at " +
+                     $"'{renderer1._parentEntity!.EntityPrimaryPosition}' of type '{renderer1.SortType}' compared to " +
+                     $"'{renderer2._parentEntity!.DisplayName}' at '{renderer2._parentEntity.EntityPrimaryPosition}' " +
                      $"of type '{renderer2.SortType}' with the result of {result}. " + resultText);
         }
 
@@ -304,8 +311,8 @@ public partial class EntityRenderer : Node2D
         {
             result = renderer1.IsDynamic ? -1 : 1;
             if (DebugEnabled)
-                GD.Print(result > 0 ? $"'{renderer2._parentEntity.DisplayName}' is on top because it's dynamic." 
-                    : $"'{renderer1._parentEntity.DisplayName}' is on top because it's dynamic.");
+                GD.Print(result > 0 ? $"'{renderer2._parentEntity!.DisplayName}' is on top because it's dynamic." 
+                    : $"'{renderer1._parentEntity!.DisplayName}' is on top because it's dynamic.");
         }
         
         return result;
@@ -387,7 +394,7 @@ public partial class EntityRenderer : Node2D
         if (previousBounds.Equals(SpriteBounds))
             return;
         
-        foreach (var node in _area.GetChildren().OfType<Node>()) 
+        foreach (var node in _area.GetChildren()) 
             node.QueueFree();
         
         var shape = new RectangleShape2D();
