@@ -5,6 +5,14 @@ using LowAgeData.Domain.Abilities;
 
 public partial class Abilities : Node2D
 {
+    private ActorNode Parent { get; set; } = null!;
+    
+    public override void _Ready()
+    {
+        base._Ready();
+        Parent = (ActorNode)GetParent();
+    }
+    
     public IList<PassiveNode> GetPassives() => GetChildren().OfType<PassiveNode>().ToList();
     
     public void PopulateFromBlueprint(IEnumerable<AbilityId> abilities)
@@ -16,10 +24,10 @@ public partial class Abilities : Node2D
             switch (abilityBlueprint)
             {
                 case Build buildBlueprint:
-                    BuildNode.InstantiateAsChild(buildBlueprint, this);
+                    BuildNode.InstantiateAsChild(buildBlueprint, this, Parent);
                     break;
                 case Passive passiveBlueprint:
-                    PassiveNode.InstantiateAsChild(passiveBlueprint, this);
+                    PassiveNode.InstantiateAsChild(passiveBlueprint, this, Parent);
                     break;
                 default:
                     break;
@@ -27,9 +35,9 @@ public partial class Abilities : Node2D
         }
     }
 
-    public void OnActorBirth(EntityNode actor)
+    public void OnActorBirth()
     {
         foreach (var passive in GetPassives()) 
-            passive.OnActorBirth(actor);
+            passive.OnActorBirth(Parent);
     }
 }

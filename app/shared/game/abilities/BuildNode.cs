@@ -12,11 +12,12 @@ public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelect
 {
     public const string ScenePath = @"res://app/shared/game/abilities/BuildNode.tscn";
     public static BuildNode Instance() => (BuildNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static BuildNode InstantiateAsChild(Build blueprint, Node parentNode)
+    public static BuildNode InstantiateAsChild(Build blueprint, Node parentNode, ActorNode owner)
     {
         var ability = Instance();
         parentNode.AddChild(ability);
         ability.SetBlueprint(blueprint);
+        ability.Owner = owner;
         return ability;
     }
     

@@ -66,7 +66,7 @@ public partial class SelectionPanel : Control
     {
         _selectionAmount = 0;
         var selectionIds = new List<Id>();
-        Action<ISelectable, Id> selectionButtonOnClicked = null;
+        Action<ISelectable, Id> selectionButtonOnClicked = delegate { };
         switch (ability)
         {
             case BuildNode build:
@@ -85,9 +85,13 @@ public partial class SelectionPanel : Control
         }
     }
 
-    private void OnBuildSelectionItemPressed(ISelectable abilityNode, Id id)
+    private void OnBuildSelectionItemPressed(ISelectable abilityNode, Id selectionId)
     {
-        SelectedToBuild((BuildNode)abilityNode, (EntityId)id);
+        var buildAbility = (BuildNode)abilityNode;
+        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(buildAbility.Owner) is false)
+            return;
+        
+        SelectedToBuild(buildAbility, (EntityId)selectionId);
     }
 
     private void HidePanel()

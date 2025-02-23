@@ -13,6 +13,7 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
 
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     public AbilityId Id { get; protected set; }
+    public ActorNode Owner { get; protected set; }
     public EndsAtNode RemainingCooldown { get; protected set; }
     public List<Payment> PaymentPaid { get; protected set; }
     public bool IsResearched { get; protected set; }

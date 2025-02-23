@@ -59,7 +59,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public override void Complete()
     {
         base.Complete();
-        Abilities.OnActorBirth(this);
+        Abilities.OnActorBirth();
     }
 
     public virtual void Rotate()

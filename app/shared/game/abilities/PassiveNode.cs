@@ -7,11 +7,12 @@ public partial class PassiveNode : AbilityNode, INodeFromBlueprint<Passive>
 {
     public const string ScenePath = @"res://app/shared/game/abilities/PassiveNode.tscn";
     public static PassiveNode Instance() => (PassiveNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static PassiveNode InstantiateAsChild(Passive blueprint, Node parentNode)
+    public static PassiveNode InstantiateAsChild(Passive blueprint, Node parentNode, ActorNode owner)
     {
         var ability = Instance();
         parentNode.AddChild(ability);
         ability.SetBlueprint(blueprint);
+        ability.Owner = owner;
         return ability;
     }
     

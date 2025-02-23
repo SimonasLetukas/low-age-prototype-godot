@@ -13,7 +13,7 @@ public partial class InformationalText : Control
         SelectedMovement
     }
     
-    private VBoxContainer _vBoxContainer;
+    private VBoxContainer _vBoxContainer = null!;
     
     public override void _Ready()
     {
@@ -28,7 +28,7 @@ public partial class InformationalText : Control
         Position = GetGlobalMousePosition();
     }
 
-    public void SwitchTo(InfoTextType type)
+    public void SwitchTo(InfoTextType type, bool executionAllowed = true)
     {
         Reset();
         
@@ -55,7 +55,8 @@ public partial class InformationalText : Control
                 break;
             case InfoTextType.SelectedMovement:
                 AddText($"Left-click: select");
-                AddText($"Right-click: move");
+                if (executionAllowed) 
+                    AddText($"Right-click: move");
                 AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
                 break;
             default:
@@ -72,11 +73,11 @@ public partial class InformationalText : Control
 
     private void Reset()
     {
-        foreach (var child in _vBoxContainer.GetChildren().OfType<Node>()) 
+        foreach (var child in _vBoxContainer.GetChildren()) 
             child.QueueFree();
     }
     
-    private static string GetInput(string id) => InputMap.ActionGetEvents(id).Cast<InputEvent>().First().AsText();
+    private static string GetInput(string id) => InputMap.ActionGetEvents(id).First().AsText();
 
     private void AddText(string text)
     {

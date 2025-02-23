@@ -42,6 +42,9 @@ public partial class Players : Node
     public bool IsCurrentPlayerEnemyTo(Player player) => Current.Team.IsEnemyTo(player.Team);
     
     public bool IsCurrentPlayerAllyTo(Player player) => Current.Team.IsAllyTo(player.Team);
+
+    public bool IsActionAllowedForCurrentPlayerOn(EntityNode? entity) 
+        => entity is null || entity.Player.Id.Equals(Current.Id);
     
     public Team GetNextAvailableTeam() => new(_players.Count + 1);
     

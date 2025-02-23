@@ -261,7 +261,7 @@ public partial class ClientMap : Map
 			return;
 		}
 
-		if (_selectionOverlay is SelectionOverlay.Placement)
+		if (_selectionOverlay is SelectionOverlay.Placement && IsActionAllowedForCurrentPlayerOnSelectedEntity())
 		{
 			ExecutePlacement();
 			return;
@@ -321,7 +321,7 @@ public partial class ClientMap : Map
 		if (_selectionOverlay is SelectionOverlay.None)
 			return;
 
-		if (_selectionOverlay is SelectionOverlay.Movement)
+		if (_selectionOverlay is SelectionOverlay.Movement && IsActionAllowedForCurrentPlayerOnSelectedEntity())
 		{
 			_focusedTile.UpdateTile();
 			ExecuteMovement();
@@ -421,6 +421,9 @@ public partial class ClientMap : Map
 			}
 		}
 	}
+	
+	private bool IsActionAllowedForCurrentPlayerOnSelectedEntity() 
+		=> Players.Instance.IsActionAllowedForCurrentPlayerOn(Entities.SelectedEntity);
 
 	private void ResetLines()
 	{
