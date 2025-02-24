@@ -69,6 +69,9 @@ public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         // pathfinding.
     }
 
+    public override bool CanBeMovedThroughAt(Point point, Team forTeam) 
+        => Player.Team.IsAllyTo(forTeam) && base.CanBeMovedThroughAt(point, forTeam);
+
     protected override void UpdateVisuals()
     {
         base.UpdateVisuals();

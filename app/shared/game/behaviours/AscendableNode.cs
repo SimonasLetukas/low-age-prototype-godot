@@ -8,6 +8,9 @@ using MultipurposePathfinding;
 
 public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendable>, IPathfindingUpdatable
 {
+    [Export]
+    public bool DebugEnabled { get; set; } = false;
+    
     public const string ScenePath = @"res://app/shared/game/behaviours/AscendableNode.tscn";
     public static AscendableNode Instance() => (AscendableNode) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static AscendableNode InstantiateAsChild(Ascendable blueprint, Node parentNode, Effects history, 
@@ -58,10 +61,21 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
 
     public bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam)
     {
-        var isSameTeam = Blueprint.ClosingEnabled is false || (forTeam.IsAllyTo(Parent.Player.Team) || Opened);
+        var isAllowedToEnter = Blueprint.ClosingEnabled is false || (forTeam.IsAllyTo(Parent.Player.Team) || Opened);
         
-        return FlattenedPositions.ContainsKey(toPoint.Position)
-               && ((isSameTeam && fromPoint.IsLowGround) || fromPoint.IsHighGround);
+        var allowsConnectionBetweenPoints = FlattenedPositions.ContainsKey(toPoint.Position) 
+                                            && ((isAllowedToEnter && fromPoint.IsLowGround) || fromPoint.IsHighGround);
+
+        if (DebugEnabled)
+            GD.Print($"{nameof(AllowsConnectionBetweenPoints)}: '{allowsConnectionBetweenPoints}' for " +
+                     $"'{Parent.DisplayName}' at '{Parent.EntityPrimaryPosition}' for team '{forTeam}'. From " +
+                     $"{(fromPoint.IsLowGround ? "low ground" : "high ground")} point at {fromPoint.Position} to " +
+                     $"{(toPoint.IsLowGround ? "low ground" : "high ground")} point at {toPoint.Position}. " +
+                     $"{nameof(Blueprint.ClosingEnabled)} '{Blueprint.ClosingEnabled}', {nameof(Opened)} '{Opened}', " +
+                     $"{nameof(isAllowedToEnter)} '{isAllowedToEnter}', ContainsKey " +
+                     $"'{FlattenedPositions.ContainsKey(toPoint.Position)}'");
+        
+        return allowsConnectionBetweenPoints;
     }
 
     private void SetupPositions()
