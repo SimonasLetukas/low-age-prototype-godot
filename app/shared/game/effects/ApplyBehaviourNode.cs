@@ -2,7 +2,7 @@
 
 public class ApplyBehaviourNode : EffectNode, INodeFromBlueprint<ApplyBehaviour>
 {
-    private ApplyBehaviour Blueprint { get; set; }
+    private ApplyBehaviour Blueprint { get; set; } = null!;
     
     public ApplyBehaviourNode(ApplyBehaviour blueprint, EntityNode initiator, Effects history) : base(history)
     {

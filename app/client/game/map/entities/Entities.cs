@@ -29,8 +29,8 @@ public partial class Entities : Node2D
     private EntityRenderers _renderers = null!;
     private Node2D _units = null!;
     private Node2D _structures = null!;
-    private Func<IList<Vector2Int>, IList<Tiles.TileInstance>> _getHighestTiles = null!;
-    private Func<Vector2Int, bool, Tiles.TileInstance> _getTile = null!;
+    private Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> _getHighestTiles = null!;
+    private Func<Vector2Int, bool, Tiles.TileInstance?> _getTile = null!;
 
     private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new();
 
@@ -43,8 +43,8 @@ public partial class Entities : Node2D
         NewPositionOccupied += _renderers.UpdateSorting;
     }
     
-    public void Initialize(Func<IList<Vector2Int>, IList<Tiles.TileInstance>> getHighestTiles, 
-        Func<Vector2Int, bool, Tiles.TileInstance> getTile)
+    public void Initialize(Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles, 
+        Func<Vector2Int, bool, Tiles.TileInstance?> getTile)
     {
         _getHighestTiles = getHighestTiles;
         _getTile = getTile;
@@ -221,6 +221,22 @@ public partial class Entities : Node2D
         EntityInPlacement = null;
     }
 
+    public void HandleEvent(EntityPlacedEvent @event)
+    {
+        var entity = GetEntityByInstanceId(@event.InstanceId);
+        if (entity != null)
+        {
+            PlaceEntity(entity, false);
+            return;
+        }
+        
+        var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
+        entity = InstantiateEntity(entityBlueprint, @event.PlayerId, @event.InstanceId);
+        entity.ForcePlace(@event);
+        
+        NewPositionOccupied(entity);
+    }
+
     public EntityNode? PlaceEntity()
     {
         if (EntityInPlacement is null)
@@ -235,24 +251,6 @@ public partial class Entities : Node2D
         
         entity.DeterminePlacementValidity(true);
         return PlaceEntity(entity, true);
-    }
-
-    public EntityNode? PlaceEntity(EntityPlacedEvent @event)
-    {
-        var entity = GetEntityByInstanceId(@event.InstanceId);
-        if (entity is null)
-        {
-            var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
-            entity = InstantiateEntity(entityBlueprint, @event.PlayerId, @event.InstanceId);
-            entity.EntityPrimaryPosition = @event.MapPosition;
-            entity.OverridePlacementValidity();
-            if (entity is ActorNode actor)
-                actor.SetActorRotation(@event.ActorRotation);
-            // TODO this is getting quite extensive, think of a way to move the synchronization of entity state to be
-            // handled inside the entity
-        }
-
-        return PlaceEntity(entity, false);
     }
     
     private EntityNode? PlaceEntity(Entity entityBlueprint, Vector2Int mapPosition)
@@ -320,19 +318,17 @@ public partial class Entities : Node2D
 
     private StructureNode InstantiateStructure(Structure structureBlueprint, Player player)
     {
-        var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures, player);
-        structure.GetHighestTiles = _getHighestTiles;
-        structure.GetTile = _getTile;
+        var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures, player, 
+            _getTile, _getHighestTiles);
 
         return structure;
     }
 
     private UnitNode InstantiateUnit(Unit unitBlueprint, Player player)
     {
-        var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units, player);
+        var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units, player, 
+            _getTile, _getHighestTiles);
 
-        unit.GetHighestTiles = _getHighestTiles;
-        unit.GetTile = _getTile;
         unit.FinishedMoving += OnEntityFinishedMoving;
 
         return unit;

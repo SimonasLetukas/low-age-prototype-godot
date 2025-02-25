@@ -226,10 +226,10 @@ public partial class EntityRenderer : Node2D
         //_bottomOriginSprite.GlobalPosition = SpriteBounds.End;
     }
     
-    public void UpdateElevation(bool isOnHighGround, int yHighGroundOffset, EntityNode entityBelow)
+    public void UpdateElevation(bool isOnHighGround, int? yHighGroundOffset, EntityNode? entityBelow)
     {
         _isOnHighGround = isOnHighGround;
-        YHighGroundOffset = yHighGroundOffset;
+        YHighGroundOffset = yHighGroundOffset ?? 0;
         _entityBelow = entityBelow;
     }
     

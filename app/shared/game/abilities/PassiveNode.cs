@@ -15,8 +15,8 @@ public partial class PassiveNode : AbilityNode, INodeFromBlueprint<Passive>
         ability.Owner = owner;
         return ability;
     }
-    
-    private Passive Blueprint { get; set; }
+
+    private Passive Blueprint { get; set; } = null!;
     
     public void SetBlueprint(Passive blueprint)
     {
@@ -24,7 +24,7 @@ public partial class PassiveNode : AbilityNode, INodeFromBlueprint<Passive>
         Blueprint = blueprint;
     }
 
-    public BehaviourId GetOnBuildBehaviourOrDefault()
+    public BehaviourId? GetOnBuildBehaviourOrDefault()
     {
         return Blueprint.OnBuildBehaviour;
     }

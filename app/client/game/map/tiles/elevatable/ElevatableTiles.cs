@@ -166,7 +166,7 @@ public partial class ElevatableTiles : Node2D
         return (highestElevation, foundTile);
     }
 
-    public bool IsCurrentlyAvailable(Tiles.TileInstance tile) => IsCurrentlyAvailable(tile.Point);
+    public bool IsCurrentlyAvailable(Tiles.TileInstance? tile) => tile != null && IsCurrentlyAvailable(tile.Point);
     
     private bool IsCurrentlyAvailable(Point point) => _availableTilesCache.Any(x => x.Point.Id.Equals(point.Id));
 

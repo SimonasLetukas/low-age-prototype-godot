@@ -27,6 +27,6 @@
             return finalString;
         }
 
-        public static bool IsNotNullOrEmpty(this string input) => string.IsNullOrEmpty(input) is false;
+        public static bool IsNotNullOrEmpty(this string? input) => string.IsNullOrEmpty(input) is false;
     }
 }

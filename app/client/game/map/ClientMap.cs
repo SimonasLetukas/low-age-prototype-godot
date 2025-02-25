@@ -18,14 +18,14 @@ public partial class ClientMap : Map
 	public event Action<EntityNode> EntityIsBeingPlaced = delegate { };
 	public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
 
-	public Entities Entities { get; private set; }
-	private IPathfinding Pathfinding { get; set; } = new Pathfinding();
+	public Entities Entities { get; private set; } = null!;
+	private Pathfinding Pathfinding { get; set; } = new();
 
-	private Player _currentPlayer;
+	private Player _currentPlayer = null!;
 	private IList<Area> _startingPositions = new List<Area>();
 	private Vector2Int _mapSize = Vector2Int.Max;
-	private Tiles _tileMap;
-	private FocusedTile _focusedTile;
+	private Tiles _tileMap = null!;
+	private FocusedTile _focusedTile = null!;
 	private SelectionOverlay _selectionOverlay = SelectionOverlay.None;
 
 	private enum SelectionOverlay
@@ -36,8 +36,8 @@ public partial class ClientMap : Map
 		Attack
 	}
 
-	private (BuildNode, EntityId) _previousBuildSelection = (null, null);
-	private Node2D _lines;
+	private (BuildNode?, EntityId?) _previousBuildSelection = (null, null);
+	private Node2D _lines = null!;
 
 	private bool _tileMapIsInitialized = false;
 	private bool _pathfindingIsInitialized = false;
@@ -61,6 +61,7 @@ public partial class ClientMap : Map
 		Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing;
 		Pathfinding.PointAdded += OnPathfindingPointAdded;
 		Pathfinding.PointRemoved += OnPathfindingPointRemoved;
+		EventBus.Instance.EntityPlaced += OnEntityPlaced;
 		EventBus.Instance.NewTileFocused += OnNewTileFocused;
 		EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
 	}
@@ -73,6 +74,7 @@ public partial class ClientMap : Map
 		Pathfinding.FinishedInitializing -= OnPathfindingFinishedInitializing;
 		Pathfinding.PointAdded += OnPathfindingPointAdded;
 		Pathfinding.PointRemoved += OnPathfindingPointRemoved;
+		EventBus.Instance.EntityPlaced -= OnEntityPlaced;
 		EventBus.Instance.NewTileFocused -= OnNewTileFocused;
 		EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
 		base._ExitTree();
@@ -192,9 +194,9 @@ public partial class ClientMap : Map
 			// TODO optimization: only if focused tile changed from above, display path
 			if (_focusedTile.IsWithinTheMap)
 			{
-				var size = Entities.SelectedEntity.EntitySize.X;
+				var size = Entities.SelectedEntity!.EntitySize.X;
 				var path = Pathfinding.FindPath(
-					_focusedTile.CurrentTile.Point,
+					_focusedTile.CurrentTile!.Point,
 					Entities.SelectedEntity.Player.Team,
 					size);
 				_tileMap.Elevatable.SetPathTiles(path, size);
@@ -220,6 +222,16 @@ public partial class ClientMap : Map
 	{
 		_paused = to;
 	}
+	
+	public void HandleEvent(UnitMovedAlongPathEvent @event)
+	{
+		var selectedEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
+		if (selectedEntity is null)
+			return;
+		
+		RemoveOccupation(selectedEntity);
+		Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
+	}
 
 	public void HandleDeselecting()
 	{
@@ -227,13 +239,6 @@ public partial class ClientMap : Map
 		_tileMap.Elevatable.ClearPath();
 		Entities.DeselectEntity();
 		_selectionOverlay = SelectionOverlay.None;
-	}
-
-	public void MoveUnit(UnitMovedAlongPathEvent @event)
-	{
-		var selectedEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
-		RemoveOccupation(selectedEntity);
-		Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
 	}
 
 	private void HandleFlattenInput()
@@ -254,8 +259,7 @@ public partial class ClientMap : Map
 
 		_focusedTile.UpdateTile();
 
-		if (_selectionOverlay is SelectionOverlay.None
-			|| _selectionOverlay is SelectionOverlay.Movement)
+		if (_selectionOverlay is SelectionOverlay.None or SelectionOverlay.Movement)
 		{
 			ExecuteEntitySelection();
 			return;
@@ -303,7 +307,7 @@ public partial class ClientMap : Map
 
 		if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
 		{
-			OnSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2);
+			OnSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2!);
 			return;
 		}
 
@@ -328,8 +332,7 @@ public partial class ClientMap : Map
 			return;
 		}
 
-		if (_selectionOverlay is SelectionOverlay.Placement
-			|| _selectionOverlay is SelectionOverlay.Attack)
+		if (_selectionOverlay is SelectionOverlay.Placement or SelectionOverlay.Attack)
 		{
 			ExecuteCancellation();
 			return;
@@ -339,7 +342,7 @@ public partial class ClientMap : Map
 	private void ExecuteMovement()
 	{
 		if (_tileMap.Elevatable.IsCurrentlyAvailable(_focusedTile.CurrentTile) is false
-			|| Entities.SelectedEntity.EntityPrimaryPosition.Equals(_focusedTile.CurrentTile.Position))
+			|| Entities.SelectedEntity!.EntityPrimaryPosition.Equals(_focusedTile.CurrentTile!.Position))
 			return;
 
 		// TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
@@ -381,7 +384,7 @@ public partial class ClientMap : Map
 				return topEntity;
 		}
 
-		var entityWasHovered = Entities.TryHoveringEntityOn(_focusedTile.CurrentTile);
+		var entityWasHovered = Entities.TryHoveringEntityOn(_focusedTile.CurrentTile!);
 		_focusedTile.StopEntityFocus(); // TODO remove flashing when focusing from one entity to another
 
 		return entityWasHovered ? Entities.HoveredEntity : null;
@@ -549,6 +552,8 @@ public partial class ClientMap : Map
 			_tileMap.Elevatable.ClearAvailableTiles(true);
 	}
 
+	private void OnEntityPlaced(EntityNode entity) => AddOccupation(entity);
+
 	private void OnEntitiesNewPositionOccupied(EntityNode entity)
 	{
 		var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPrimaryPosition);
@@ -579,7 +584,7 @@ public partial class ClientMap : Map
 		_focusedTile.Disable();
 
 		var canBePlacedOnTheWholeMap = buildAbility.CanBePlacedOnTheWholeMap();
-		_tileMap.Elevatable.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity, _mapSize),
+		_tileMap.Elevatable.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity!, _mapSize),
 			canBePlacedOnTheWholeMap);
 
 		var entity = Entities.SetEntityForPlacement(entityId, canBePlacedOnTheWholeMap);

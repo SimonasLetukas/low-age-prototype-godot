@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -6,23 +7,28 @@ using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeCommon;
 using MultipurposePathfinding;
 
-public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
+public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 {
     private const string ScenePath = @"res://app/shared/game/entities/UnitNode.tscn";
     public static UnitNode Instance() => (UnitNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static UnitNode InstantiateAsChild(Unit blueprint, Node parentNode, Player player)
+    public static UnitNode InstantiateAsChild(Unit blueprint, Node parentNode, Player player,
+        Func<Vector2Int, bool, Tiles.TileInstance?> getTile, 
+        Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles)
     {
         var unit = Instance();
         parentNode.AddChild(unit);
         unit.SetBlueprint(blueprint);
         unit.Player = player;
+        unit.GetTile = getTile;
+        unit.GetHighestTiles = getHighestTiles;
+        
         return unit;
     }
     
-    public bool IsOnHighGround { get; protected set; } = false;
-    public float Movement { get; protected set; }
-    
-    private Unit Blueprint { get; set; }
+    public bool IsOnHighGround { get; private set; } = false;
+    public float Movement { get; private set; }
+
+    private Unit Blueprint { get; set; } = null!;
     
     public void SetBlueprint(Unit blueprint)
     {
@@ -34,7 +40,7 @@ public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
                 && combatStat.CombatType.Equals(StatType.Movement))
             .CurrentValue + 0.5f; // TODO 0.5 is added for smoother corners to align with circles from IShape,
                                   // decide if this is needed. Argument against: not moving straight diagonally is 
-                                  // more cost effective, which is not intuitive for the player. This bonus could be
+                                  // more cost-effective, which is not intuitive for the player. This bonus could be
                                   // added for units with 1 movement only.
                                   
         Renderer.Initialize(this, true);
@@ -92,17 +98,17 @@ public partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         
         Renderer.UpdateElevation(
             IsOnHighGround, 
-            GetTile(resultingPoint.Position, resultingPoint.IsHighGround).YSpriteOffset, 
+            GetTile(resultingPoint.Position, resultingPoint.IsHighGround)?.YSpriteOffset, 
             GetEntitiesBelow().OrderByDescending(x => x.Renderer.ZIndex).FirstOrDefault());
     }
 
-    private IList<EntityNode> GetEntitiesBelow()
+    private List<EntityNode> GetEntitiesBelow()
     {
         var entities = new List<EntityNode>();
         foreach (var position in EntityOccupyingPositions)
         {
             var lowGroundTile = GetTile(position, false);
-            var entity = lowGroundTile.Occupants.FirstOrDefault();
+            var entity = lowGroundTile?.Occupants.FirstOrDefault();
             if (entity != null && entities.Any(x => x.InstanceId.Equals(entity.InstanceId)) is false)
                 entities.Add(entity);
         }

@@ -6,13 +6,13 @@ namespace LowAgeData.Domain.Common
     [JsonConverter(typeof(TerrainJsonConverter))]
     public class Terrain : EnumValueObject<Terrain, Terrain.TerrainsEnum>
     {
-        public static Terrain Grass => new Terrain(TerrainsEnum.Grass);
-        public static Terrain Mountains => new Terrain(TerrainsEnum.Mountains);
-        public static Terrain Marsh => new Terrain(TerrainsEnum.Marsh);
-        public static Terrain Scraps => new Terrain(TerrainsEnum.Scraps);
-        public static Terrain Celestium => new Terrain(TerrainsEnum.Celestium);
-        public static Terrain HighGround => new Terrain(TerrainsEnum.HighGround);
-        public static Terrain FromIndex(int index) => new Terrain((TerrainsEnum)index);
+        public static Terrain Grass => new(TerrainsEnum.Grass);
+        public static Terrain Mountains => new(TerrainsEnum.Mountains);
+        public static Terrain Marsh => new(TerrainsEnum.Marsh);
+        public static Terrain Scraps => new(TerrainsEnum.Scraps);
+        public static Terrain Celestium => new(TerrainsEnum.Celestium);
+        public static Terrain HighGround => new(TerrainsEnum.HighGround);
+        public static Terrain FromIndex(int index) => new((TerrainsEnum)index);
 
         public int ToIndex() => (int)Value;
         public string ToDisplayValue() => Value.ToString();

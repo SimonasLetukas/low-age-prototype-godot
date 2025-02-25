@@ -21,12 +21,12 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> FinishedMoving = delegate { };
     
-    public EntityId BlueprintId { get; set; }
+    public EntityId BlueprintId { get; private set; } = null!;
 
     public Guid InstanceId { get; set; } = Guid.NewGuid();
 
     public Player Player { get; protected set; } = null!;
-    public EntityRenderer Renderer { get; private set; }
+    public EntityRenderer Renderer { get; private set; } = null!;
     public Vector2Int EntityPrimaryPosition { get; set; }
     public Vector2Int EntitySize { get; protected set; } = Vector2Int.One;
     public virtual Area RelativeSize => new Area(Vector2Int.Zero, EntitySize);
@@ -34,12 +34,12 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public Dictionary<Vector2Int, int> ProvidedHighGroundHeightByOccupyingPosition =>
         _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
             pair => pair.Value);
-    public string DisplayName { get; protected set; }
+    public string DisplayName { get; private set; } = null!;
     public bool CanBePlaced { get; protected set; } = false;
-    public Behaviours Behaviours { get; protected set; }
-    public Func<IList<Vector2Int>, IList<Tiles.TileInstance>> GetHighestTiles { protected get; set; }
-    public Func<Vector2Int, bool, Tiles.TileInstance> GetTile { protected get; set; }
+    public Behaviours Behaviours { get; protected set; } = null!;
     
+    protected Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; set; } = null!;
+    protected Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; set; } = null!;
     protected bool Selected { get; private set; } = false;
     protected bool Hovered { get; private set; } = false;
     protected State EntityState { get; private set; }
@@ -50,8 +50,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Placed, // visible for all clients, in process of being paid for so cannot use abilities, but can be attacked
         Completed // visible for all clients and fully functional
     }
-    
-    private Entity Blueprint { get; set; }
+
+    private Entity Blueprint { get; set; } = null!;
 
     private IList<Vector2> _movePath = new List<Vector2>();
 
@@ -121,8 +121,6 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         UpdateVisuals();
     }
 
-    public void OverridePlacementValidity() => CanBePlaced = true;
-
     public bool DeterminePlacementValidity(bool requiresTargetTiles)
     {
         requiresTargetTiles = requiresTargetTiles && _canBePlacedOnTheWholeMap is false;
@@ -152,6 +150,15 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         UpdateVisuals();
         
         return true;
+    }
+
+    public virtual void ForcePlace(EntityPlacedEvent @event)
+    {
+        EntityPrimaryPosition = @event.MapPosition;
+        CanBePlaced = true;
+        EntityState = State.Candidate;
+
+        Place();
     }
 
     public bool Place()
@@ -247,10 +254,6 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         switch (EntityState)
         {
             case State.InPlacement:
-                SetTint(true);
-                SetTransparency(true);
-                SetPlacementValidityColor(CanBePlaced);
-                break;
             case State.Candidate:
                 SetTint(true);
                 SetTransparency(true);
@@ -293,15 +296,15 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Renderer.UpdateSpriteOffset(EntitySize, (Vector2)centerOffset);
     }
     
-    private bool IsPlacementGenerallyValid(IList<Tiles.TileInstance> tiles, bool requiresTargetTiles)
+    private static bool IsPlacementGenerallyValid(IList<Tiles.TileInstance?> tiles, bool requiresTargetTiles)
     {
         if (tiles.Any(x => x is null))
             return false;
 
-        if (requiresTargetTiles && tiles.All(x => x.IsTarget is false))
+        if (requiresTargetTiles && tiles.All(x => x!.IsTarget is false))
             return false;
         
-        if (tiles.Any(x => x.Occupants.Any(y => y is UnitNode)))
+        if (tiles.Any(x => x!.Occupants.Any(y => y is UnitNode)))
             return false;
 
         return true;
@@ -362,7 +365,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
             _providingHighGroundHeightByLocalEntityPosition[pair.Key] = pair.Value;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj == null || GetType() != obj.GetType()) return false;
         return InstanceId == ((EntityNode)obj).InstanceId;

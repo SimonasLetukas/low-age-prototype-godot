@@ -24,8 +24,8 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
         return behaviour;
     }
 
-    public bool Opened { get; private set; } = true; // TODO connect with logic that tracks when allies or enemies
-                                                     // end movement on any of the ascendable positions
+    public bool Opened { get; private set; } = false; // TODO connect with logic that tracks when allies or enemies
+                                                      // end movement on any of the ascendable positions
     public IList<(IEnumerable<Vector2Int>, int)> LeveledPositions => LeveledLocalPositions
         .Select(x => (x.Item1.Select(y => y + Parent.EntityPrimaryPosition), x.Item2))
         .ToList();
@@ -37,10 +37,10 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
         .ToDictionary(pair => pair.Key + Parent.EntityPrimaryPosition, pair => pair.Value);
     public IEnumerable<Vector2Int> FlattenedPositionsWithoutSpriteOffset => FlattenedLocalPositions
         .Select(x => x.Key + Parent.EntityPrimaryPosition);
-    public Dictionary<Vector2Int, int> FlattenedLocalPositions { get; set; } = new Dictionary<Vector2Int, int>();
+    public Dictionary<Vector2Int, int> FlattenedLocalPositions { get; set; } = new();
     
-    private Ascendable Blueprint { get; set; }
-    
+    private Ascendable Blueprint { get; set; } = null!;
+
     public void SetBlueprint(Ascendable blueprint)
     {
         base.SetBlueprint(blueprint);
