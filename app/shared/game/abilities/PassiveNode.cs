@@ -12,7 +12,7 @@ public partial class PassiveNode : AbilityNode, INodeFromBlueprint<Passive>
         var ability = Instance();
         parentNode.AddChild(ability);
         ability.SetBlueprint(blueprint);
-        ability.Owner = owner;
+        ability.OwnerActor = owner;
         return ability;
     }
 

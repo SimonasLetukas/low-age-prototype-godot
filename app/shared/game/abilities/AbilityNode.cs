@@ -12,20 +12,22 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     public event Action<AbilityNode> CooldownEnded = delegate { };
 
     public Guid InstanceId { get; set; } = Guid.NewGuid();
-    public AbilityId Id { get; protected set; }
-    public ActorNode Owner { get; protected set; }
-    public EndsAtNode RemainingCooldown { get; protected set; }
-    public List<Payment> PaymentPaid { get; protected set; }
+    public AbilityId Id { get; protected set; } = null!;
+    public string DisplayName { get; protected set; } = null!;
+    public ActorNode OwnerActor { get; protected set; } = null!;
+    public EndsAtNode RemainingCooldown { get; protected set; } = null!;
+    public List<Payment> PaymentPaid { get; protected set; } = null!;
     public bool IsResearched { get; protected set; }
     public bool IsActive { get; protected set; }
     public bool HasButton { get; protected set; }
     
-    private Ability Blueprint { get; set; }
-    
+    private Ability Blueprint { get; set; } = null!;
+
     public void SetBlueprint(Ability blueprint)
     {
         Blueprint = blueprint;
         Id = Blueprint.Id;
+        DisplayName = Blueprint.DisplayName;
         RemainingCooldown = EndsAtNode.InstantiateAsChild(Blueprint.Cooldown, this);
         RemainingCooldown.Completed += OnCooldownEnded;
         PaymentPaid = blueprint.Cost.Select(paymentRequired => new Payment(paymentRequired.Resource)).ToList();

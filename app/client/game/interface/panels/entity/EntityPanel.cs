@@ -10,16 +10,16 @@ public partial class EntityPanel : Control
     public event Action<AbilityButton> AbilityViewOpened = delegate { };
     public event Action AbilityViewClosed = delegate { };
 
-    private GridContainer _behaviours;
-    private EntityName _entityName;
-    private AbilityButtons _abilityButtons;
-    private InfoDisplay _display;
-    private RichTextLabel _abilityTextBox;
+    private GridContainer _behaviours = null!;
+    private EntityName _entityName = null!;
+    private AbilityButtons _abilityButtons = null!;
+    private InfoDisplay _display = null!;
+    private Text _abilityTextBox = null!;
     private bool _isShowingAbility;
     private bool _isSwitchingBetweenAbilities;
-    private EntityNode _selectedEntity;
+    private EntityNode? _selectedEntity;
     private int _biggestPreviousAbilityTextSize = 0;
-    private const int YSizeForAbility = 834;
+    private const int YSizeForAbility = 978;
     private const int YSizeForUnit = 738;
     private const int YSizeForStructure = 796;
     private const int YSizeForHiding = 1500;
@@ -32,7 +32,7 @@ public partial class EntityPanel : Control
         _entityName = GetNode<EntityName>($"{nameof(EntityName)}");
         _abilityButtons = GetNode<AbilityButtons>($"{nameof(Panel)}/{nameof(AbilityButtons)}");
         _display = GetNode<InfoDisplay>($"{nameof(Panel)}/{nameof(InfoDisplay)}");
-        _abilityTextBox = GetNode<RichTextLabel>($"{nameof(Panel)}/{nameof(InfoDisplay)}/{nameof(VBoxContainer)}/AbilityDescription/Text");
+        _abilityTextBox = GetNode<Text>($"{nameof(Panel)}/{nameof(InfoDisplay)}/{nameof(VBoxContainer)}/AbilityDescription/{nameof(Text)}");
 
         _abilityButtons.Connect(nameof(AbilityButtons.AbilitiesPopulated), new Callable(this, nameof(OnAbilityButtonsPopulated)));
         _display.Connect(nameof(InfoDisplay.AbilitiesClosed), new Callable(this, nameof(OnInfoDisplayAbilitiesClosed)));
@@ -70,7 +70,7 @@ public partial class EntityPanel : Control
         AbilityViewClosed();
     }
 
-    private void ChangeDisplay(AbilityButton clickedAbility = null)
+    private void ChangeDisplay(AbilityButton? clickedAbility = null)
     {
         if (_selectedEntity is null)
         {
@@ -196,7 +196,7 @@ public partial class EntityPanel : Control
 
     private void RemoveAllBehaviours()
     {
-        foreach (var behaviour in _behaviours.GetChildren().OfType<Node>())
+        foreach (var behaviour in _behaviours.GetChildren())
         {
             behaviour.QueueFree();
         }
@@ -271,7 +271,7 @@ public partial class EntityPanel : Control
         
         _abilityButtons.DeselectAll();
         _isShowingAbility = false;
-        ChangeDisplay(null);
+        ChangeDisplay();
         MovePanel();
 
         AbilityViewClosed();

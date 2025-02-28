@@ -67,6 +67,7 @@ public partial class InfoDisplay : MarginContainer
     private AttackTypeBox _rightSideMeleeAttack = null!;
     private AttackTypeBox _rightSideRangedAttack = null!;
     private Control _abilityDescription = null!;
+    private Text _abilityText = null!;
     private ActorAttributes _actorAttributes = null!;
     private PlayerAttributes _playerAttributes = null!;
 
@@ -92,6 +93,7 @@ public partial class InfoDisplay : MarginContainer
         _rightSideMeleeAttack = GetNode<AttackTypeBox>($"{nameof(VBoxContainer)}/TopPart/RightSide/Attacks/Melee");
         _rightSideRangedAttack = GetNode<AttackTypeBox>($"{nameof(VBoxContainer)}/TopPart/RightSide/Attacks/Ranged");
         _abilityDescription = GetNode<Control>($"{nameof(VBoxContainer)}/AbilityDescription");
+        _abilityText = _abilityDescription.GetNode<Text>(nameof(Text));
         _actorAttributes = GetNode<ActorAttributes>($"{nameof(VBoxContainer)}/{nameof(ActorAttributes)}");
         _playerAttributes = GetNode<PlayerAttributes>($"{nameof(VBoxContainer)}/{nameof(PlayerAttributes)}");
 
@@ -100,7 +102,7 @@ public partial class InfoDisplay : MarginContainer
         _rightSideMeleeAttack.Connect(nameof(AttackTypeBox.Hovering), new Callable(this, nameof(OnMeleeHovering)));
         _rightSideRangedAttack.Connect(nameof(AttackTypeBox.Hovering), new Callable(this, nameof(OnRangedHovering)));
         _navigationBack.Connect(nameof(NavigationBox.Clicked), new Callable(this, nameof(OnNavigationBoxClicked)));
-        _abilityDescription.GetNode<RichTextLabel>("Text").Connect("resized", new Callable(this, nameof(OnTextResized)));
+        _abilityText.Connect("finished", new Callable(this, nameof(OnTextResized)));
         
         _leftSideBottomEmptyBlock.SetEmpty();
         ShowView(View.UnitStats);
@@ -406,7 +408,8 @@ public partial class InfoDisplay : MarginContainer
         _researchText.SetResearch(_valueResearchText);
         GetNode<AbilitySubtitle>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(AbilitySubtitle)}")
             .SetAbilitySubtitle(_valueAbilityTurnPhase, _valueAbilityCooldown);
-        _abilityDescription.GetNode<RichTextLabel>("Text").Text = _valueAbilityText;
+        _abilityText.Text = _valueAbilityText;
+        _abilityText.ResetSize();
 
         _abilityTitle.Visible = true;
         _researchText.Visible = string.IsNullOrEmpty(_valueResearchText) is false;

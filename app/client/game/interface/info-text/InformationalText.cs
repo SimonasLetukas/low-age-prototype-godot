@@ -12,7 +12,8 @@ public partial class InformationalText : Control
         Selected,
         SelectedMovement
     }
-    
+
+    private Vector2 _textSize = new(300, 20);
     private VBoxContainer _vBoxContainer = null!;
     
     public override void _Ready()
@@ -81,8 +82,13 @@ public partial class InformationalText : Control
 
     private void AddText(string text)
     {
-        var row = InfoTextRow.Instance();
+        var row = Text.Instance();
         row.Text = $"[center]{text}";
+        row.IsBrighter = true;
+        row.HasOutline = true;
+        row.CustomMinimumSize = _textSize;
+        row.Size = _textSize;
+        row.SetFontSize(16);
         _vBoxContainer.AddChild(row);
     }
 }
