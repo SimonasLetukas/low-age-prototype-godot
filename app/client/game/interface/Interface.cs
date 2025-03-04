@@ -83,9 +83,10 @@ public partial class Interface : CanvasLayer
 
         var infoTextType = entity is StructureNode
             ? InformationalText.InfoTextType.Selected
-            : InformationalText.InfoTextType.SelectedMovement;
-        var executionAllowed = Players.Instance.IsActionAllowedForCurrentPlayerOn(entity);
-        _informationalText.SwitchTo(infoTextType, executionAllowed);
+            : ClientState.Instance.MovementToggled 
+                ? InformationalText.InfoTextType.SelectedMovement
+                : InformationalText.InfoTextType.SelectedAttack;
+        _informationalText.SwitchTo(infoTextType, entity);
     }
 
     internal void OnEntityDeselected()

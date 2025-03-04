@@ -40,6 +40,8 @@ public partial class ElevatableTileMap : TileMapLayer
             if (SpritesByPosition.ContainsKey(position))
                 continue;
 
+            // Handling this using sprites is needed because each tile will have its own z_index that is calculated
+            // during rendering. A single TileMap cannot set different z_indexes for different cells. 
             var sprite = new Sprite2D();
             sprite.Texture = ElevatedSpriteTexture;
             var localPosition = MapToLocal(position);

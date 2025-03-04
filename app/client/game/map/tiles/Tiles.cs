@@ -462,7 +462,8 @@ public partial class Tiles : Node2D
         Elevatable.ClearPath();
         Elevatable.ClearAvailableTiles(true);
         Elevatable.ClearAvailableTiles(false);
-        Elevatable.ClearTargetTiles();
+        Elevatable.ClearTargetTiles(true);
+        Elevatable.ClearTargetTiles(false);
         _grass.Clear();
         _scraps.Clear();
         _marsh.Clear();

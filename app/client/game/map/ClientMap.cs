@@ -7,6 +7,7 @@ using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Tiles;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
+using LowAgeData.Domain.Common.Shape;
 using MultipurposePathfinding;
 using Area = LowAgeCommon.Area;
 
@@ -79,6 +80,8 @@ public partial class ClientMap : Map
 		EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
 		base._ExitTree();
 	}
+
+	#region Initialization
 
 	public void Initialize(MapCreatedEvent @event)
 	{
@@ -166,6 +169,8 @@ public partial class ClientMap : Map
 		
 		FinishedInitializing();
 	}
+
+	#endregion Initialization
 	
 	public override void _Process(double delta)
 	{
@@ -203,6 +208,11 @@ public partial class ClientMap : Map
 			}
 		}
 
+		if (_selectionOverlay is SelectionOverlay.Attack)
+		{
+			UpdateHoveredEntity(mousePosition);
+		}
+
 		if (_selectionOverlay is SelectionOverlay.Placement)
 		{
 			var mapPosition = _tileMap.GetMapPositionFromGlobalPosition(mousePosition);
@@ -211,6 +221,7 @@ public partial class ClientMap : Map
 		}
 
 		HandleFlattenInput();
+		HandleMovementAttackToggle();
 	}
 
 	public void SetupFactionStart()
@@ -236,6 +247,7 @@ public partial class ClientMap : Map
 	public void HandleDeselecting()
 	{
 		_tileMap.Elevatable.ClearAvailableTiles(false);
+		_tileMap.Elevatable.ClearTargetTiles(false);
 		_tileMap.Elevatable.ClearPath();
 		Entities.DeselectEntity();
 		_selectionOverlay = SelectionOverlay.None;
@@ -249,6 +261,39 @@ public partial class ClientMap : Map
 		ClientState.Instance.ToggleFlattened();
 	}
 
+	private void HandleMovementAttackToggle()
+	{
+		if (Input.IsActionJustReleased(Constants.Input.MovementAttackToggle) is false)
+			return;
+		
+		if (_selectionOverlay is not (SelectionOverlay.Movement or SelectionOverlay.Attack)) 
+			return;
+		
+		var entity = Entities.SelectedEntity!;
+
+		var actor = entity as ActorNode;
+		var actorHasAnyAttacks = actor != null && (actor.HasMeleeAttack || actor.HasRangedAttack);
+		if (actorHasAnyAttacks is false)
+			return;
+		
+		var clientState = ClientState.Instance;
+		clientState.ToggleMovementAttackOverlay(entity);
+		
+		if (clientState.MovementToggled)
+		{
+			_tileMap.Elevatable.ClearTargetTiles(false);
+			ShowMovementOverlay(entity);
+			return;
+		}
+
+		if (clientState.AttackToggled)
+		{
+			_tileMap.Elevatable.ClearAvailableTiles(false);
+			_tileMap.Elevatable.ClearPath();
+			ShowAttackOverlay(actor!);
+		}
+	}
+
 	private void HandleLeftClick()
 	{
 		if (_focusedTile.IsWithinTheMap is false)
@@ -259,7 +304,7 @@ public partial class ClientMap : Map
 
 		_focusedTile.UpdateTile();
 
-		if (_selectionOverlay is SelectionOverlay.None or SelectionOverlay.Movement)
+		if (_selectionOverlay is SelectionOverlay.None or SelectionOverlay.Movement or SelectionOverlay.Attack)
 		{
 			ExecuteEntitySelection();
 			return;
@@ -271,49 +316,7 @@ public partial class ClientMap : Map
 			return;
 		}
 	}
-
-	private void ExecuteEntitySelection(bool maintainSelection = false)
-	{
-		var mousePosition = GetGlobalMousePosition();
-		var entity = maintainSelection
-			? Entities.SelectedEntity
-			: UpdateHoveredEntity(mousePosition);
-
-		HandleDeselecting();
-
-		if (entity is null)
-			return;
-
-		Entities.SelectEntity(entity);
-
-		if (entity is UnitNode unit)
-		{
-			var size = unit.EntitySize.X;
-			var availablePoints = Pathfinding.GetAvailablePoints(
-				entity.EntityPrimaryPosition,
-				unit.Movement,
-				unit.IsOnHighGround,
-				unit.Player.Team,
-				size);
-			_tileMap.Elevatable.ClearAvailableTiles(true);
-			_tileMap.Elevatable.SetAvailableTiles(unit, availablePoints, size, false);
-			_selectionOverlay = SelectionOverlay.Movement;
-		}
-	}
-
-	private void ExecutePlacement()
-	{
-		Entities.PlaceEntity();
-
-		if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
-		{
-			OnSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2!);
-			return;
-		}
-
-		ExecuteCancellation();
-	}
-
+	
 	private void HandleRightClick()
 	{
 		if (_focusedTile.IsWithinTheMap is false)
@@ -332,11 +335,101 @@ public partial class ClientMap : Map
 			return;
 		}
 
-		if (_selectionOverlay is SelectionOverlay.Placement or SelectionOverlay.Attack)
+		if (_selectionOverlay is SelectionOverlay.Attack && IsActionAllowedForCurrentPlayerOnSelectedEntity())
+		{
+			// TODO execute attack
+			return;
+		}
+
+		if (_selectionOverlay is SelectionOverlay.Placement)
 		{
 			ExecuteCancellation();
 			return;
 		}
+	}
+
+	private void ExecuteEntitySelection(bool maintainSelection = false)
+	{
+		var mousePosition = GetGlobalMousePosition();
+		var entity = maintainSelection
+			? Entities.SelectedEntity
+			: UpdateHoveredEntity(mousePosition);
+
+		if (maintainSelection is false)
+			_tileMap.Elevatable.ClearTargetTiles(false);
+		
+		HandleDeselecting();
+
+		if (entity is null)
+			return;
+
+		Entities.SelectEntity(entity);
+		
+		ClientState.Instance.ResetMovementAttackOverlayToggle(entity);
+		ShowMovementOverlay(entity);
+	}
+
+	private void ShowMovementOverlay(EntityNode entity)
+	{
+		if (entity is not UnitNode unit) 
+			return;
+		
+		ShowMovementOverlay(unit);
+	}
+	
+	private void ShowMovementOverlay(UnitNode unit)
+	{
+		var size = unit.EntitySize.X;
+		var availablePoints = Pathfinding.GetAvailablePoints(
+			unit.EntityPrimaryPosition,
+			unit.Movement,
+			unit.IsOnHighGround,
+			unit.Player.Team,
+			size);
+		_tileMap.Elevatable.ClearAvailableTiles(false);
+		_tileMap.Elevatable.SetAvailableTiles(unit, availablePoints, size, false);
+		_selectionOverlay = SelectionOverlay.Movement;
+	}
+
+	private void ShowAttackOverlay(EntityNode entity)
+	{
+		if (entity is not ActorNode actor)
+			return;
+
+		ShowAttackOverlay(actor);
+	}
+
+	private void ShowAttackOverlay(ActorNode actor, bool? showMelee = null)
+	{
+		_tileMap.Elevatable.ClearTargetTiles(false);
+
+		var targetMeleeTiles = showMelee is null or true 
+			? actor.GetMeleeAttackTargetTiles(_mapSize) 
+			: [];
+		var targetRangedTiles = showMelee is null or false 
+			? actor.GetRangedAttackTargetTiles(_mapSize) 
+			: [];
+		
+		if (targetMeleeTiles.Count > 0)
+			_tileMap.Elevatable.SetTargetTiles(targetMeleeTiles, false, false, true);
+		
+		if (targetRangedTiles.Count > 0)
+			_tileMap.Elevatable.SetTargetTiles(targetRangedTiles, false, false, false);
+		
+		_selectionOverlay = SelectionOverlay.Attack;
+	}
+
+	private void ExecutePlacement()
+	{
+		Entities.PlaceEntity();
+
+		if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
+		{
+			OnSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2!);
+			return;
+		}
+
+		ExecuteCancellation();
 	}
 
 	private void ExecuteMovement()
@@ -361,7 +454,7 @@ public partial class ClientMap : Map
 	{
 		Pathfinding.ClearCache();
 		_tileMap.Elevatable.ClearCache();
-		_tileMap.Elevatable.ClearTargetTiles();
+		_tileMap.Elevatable.ClearTargetTiles(false);
 		Entities.CancelPlacement();
 		_previousBuildSelection = (null, null);
 		_focusedTile.Enable();
@@ -537,7 +630,9 @@ public partial class ClientMap : Map
 		{
 			if (Entities.IsEntitySelected(unit))
 				return;
-
+			
+			// TODO also show target hovering tiles
+			
 			var temporaryAvailablePoints = Pathfinding.GetAvailablePoints(
 				unit.EntityPrimaryPosition,
 				unit.GetReach(),
@@ -584,8 +679,10 @@ public partial class ClientMap : Map
 		_focusedTile.Disable();
 
 		var canBePlacedOnTheWholeMap = buildAbility.CanBePlacedOnTheWholeMap();
-		_tileMap.Elevatable.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity!, _mapSize),
-			canBePlacedOnTheWholeMap);
+		var placementTiles = buildAbility.GetPlacementPositions(Entities.SelectedEntity!, _mapSize)
+			.Select(position => _tileMap.GetTile(position, false))
+			.WhereNotNull();
+		_tileMap.Elevatable.SetTargetTiles(placementTiles, canBePlacedOnTheWholeMap, false);
 
 		var entity = Entities.SetEntityForPlacement(entityId, canBePlacedOnTheWholeMap);
 		// TODO pass in the cost to be tracked inside the buildableNode

@@ -23,12 +23,13 @@ script = ExtResource("2")
 [node name="Sprite2D" parent="EntityRenderer/SpriteContainer" index="0"]
 material = SubResource("1")
 
-[node name="Icon" parent="EntityRenderer" index="1"]
-expand_mode = 1
-
 [node name="Abilities" parent="." index="2" instance=ExtResource("4")]
 
-[node name="Vitals" type="Node2D" parent="." index="3"]
+[node name="Stats" type="Node2D" parent="." index="3"]
+
+[node name="Attacks" type="Node2D" parent="." index="4"]
+
+[node name="Vitals" type="Node2D" parent="." index="5"]
 z_index = 4096
 
 [node name="Health" type="TextureProgressBar" parent="Vitals" index="0"]

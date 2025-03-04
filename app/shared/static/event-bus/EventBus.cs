@@ -54,6 +54,10 @@ public partial class EventBus : Node
     
     public event Action<bool> AfterFlattenedChanged = delegate { };
     public void RaiseAfterFlattenedChanged(bool to) => AfterFlattenedChanged(to);
+    
+    public event Action<EntityNode> MovementAttackOverlayChanged = delegate { };
+    public void RaiseMovementAttackOverlayChanged(EntityNode selectedEntity) 
+        => MovementAttackOverlayChanged(selectedEntity);
 
     #endregion Events
 }

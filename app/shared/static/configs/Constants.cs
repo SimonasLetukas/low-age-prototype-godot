@@ -8,6 +8,7 @@ public static class Constants
         public const string MouseRight = "mouse_right";
         public const string Rotate = "rotate";
         public const string Flatten = "flatten";
+        public const string MovementAttackToggle = "movement_attack_toggle";
         public const string FocusSelection = "focus_selection";
         public const string RepeatPlacement = "repeat_placement";
     }

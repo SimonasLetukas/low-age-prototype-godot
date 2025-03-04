@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w6vi0lf6obtb"
-path="res://.godot/imported/target-positive.png-cdc287cfb598f459b0bf3df93de6e6ec.ctex"
+uid="uid://4k1tujhc25x5"
+path="res://.godot/imported/target-normal-hovering.png-1921ec9847938cdc26a4874c72805940.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/tiles/target-positive.png"
-dest_files=["res://.godot/imported/target-positive.png-cdc287cfb598f459b0bf3df93de6e6ec.ctex"]
+source_file="res://assets/sprites/tiles/target-normal-hovering.png"
+dest_files=["res://.godot/imported/target-normal-hovering.png-1921ec9847938cdc26a4874c72805940.ctex"]
 
 [params]
 

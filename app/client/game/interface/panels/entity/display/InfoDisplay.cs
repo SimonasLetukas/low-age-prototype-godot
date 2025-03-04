@@ -149,40 +149,28 @@ public partial class InfoDisplay : MarginContainer
     {
         var actor = (ActorNode)entity;
         
-        var currentStats = actor.CurrentStats;
-        var health = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.Health));
-        var shields = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.Shields));
-        var movement = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.Movement));
-        var initiative = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.Initiative));
-        var meleeArmour = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.MeleeArmour));
-        var rangedArmour = currentStats.FirstOrDefault(x =>
-            x.Blueprint is CombatStat combatStat
-            && combatStat.CombatType.Equals(StatType.RangedArmour));
+        var stats = actor.Stats;
+        var health = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.Health));
+        var shields = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.Shields));
+        var movement = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.Movement));
+        var initiative = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.Initiative));
+        var meleeArmour = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.MeleeArmour));
+        var rangedArmour = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.RangedArmour));
         var actorAttributes = actor.Attributes;
         var player = entity.Player;
         
         SetEntityStats(
-            health is null ? 0 : (int)health.CurrentValue, 
-            health is null ? 0 : health.Blueprint.MaxAmount, 
-            movement?.CurrentValue ?? 0, 
-            movement is null ? 0 : movement.Blueprint.MaxAmount, 
-            initiative is null ? 0 : (int)initiative.CurrentValue, 
-            meleeArmour is null ? 0 : (int)meleeArmour.CurrentValue, 
-            rangedArmour is null ? 0 : (int)rangedArmour.CurrentValue, 
+            health is null ? 0 : (int)health.CurrentAmount, 
+            health?.MaxAmount ?? 0, 
+            movement?.CurrentAmount ?? 0, 
+            movement?.MaxAmount ?? 0, 
+            initiative is null ? 0 : (int)initiative.CurrentAmount, 
+            meleeArmour is null ? 0 : (int)meleeArmour.CurrentAmount, 
+            rangedArmour is null ? 0 : (int)rangedArmour.CurrentAmount, 
             actorAttributes, 
             player,
-            shields is null ? 0 : (int)shields.CurrentValue, 
-            shields is null ? 0 : shields.Blueprint.MaxAmount);
+            shields is null ? 0 : (int)shields.CurrentAmount, 
+            shields?.MaxAmount ?? 0);
     }
 
     private void SetEntityStats(

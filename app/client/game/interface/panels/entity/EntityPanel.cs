@@ -105,17 +105,15 @@ public partial class EntityPanel : Control
         if (selectedActor is UnitNode selectedUnit)
         {
             _display.ResetAttacks();
-            foreach (var blueprint in selectedUnit.CurrentStats
-                         .Where(x => x.Blueprint is AttackStat)
-                         .Select(attack => (AttackStat)attack.Blueprint))
+            foreach (var attack in selectedUnit.Attacks)
             {
-                if (blueprint.AttackType.Equals(Attacks.Melee)) 
-                    _display.SetMeleeAttackStats(true, selectedActor.Name, blueprint.MaximumDistance, 
-                        blueprint.MaxAmount, blueprint.BonusAmount, blueprint.BonusTo);
+                if (selectedActor.HasMeleeAttack) 
+                    _display.SetMeleeAttackStats(true, selectedActor.Name, attack.MaximumDistance, 
+                        attack.Damage, attack.BonusDamage, attack.BonusTo);
                 
-                if (blueprint.AttackType.Equals(Attacks.Ranged)) 
-                    _display.SetRangedAttackStats(true, selectedActor.Name, blueprint.MaximumDistance, 
-                        blueprint.MaxAmount, blueprint.BonusAmount, blueprint.BonusTo);
+                if (selectedActor.HasRangedAttack) 
+                    _display.SetRangedAttackStats(true, selectedActor.Name, attack.MaximumDistance, 
+                        attack.Damage, attack.BonusDamage, attack.BonusTo);
             }
             
             _display.ShowView(View.UnitStats);

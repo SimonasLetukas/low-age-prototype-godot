@@ -10,7 +10,8 @@ public partial class InformationalText : Control
         Placing,
         PlacingRotatable,
         Selected,
-        SelectedMovement
+        SelectedMovement,
+        SelectedAttack,
     }
 
     private Vector2 _textSize = new(300, 20);
@@ -22,6 +23,15 @@ public partial class InformationalText : Control
 
         Visible = Config.Instance.ShowHints;
         SwitchToDefault();
+
+        EventBus.Instance.MovementAttackOverlayChanged += OnMovementAttackOverlayChanged;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus.Instance.MovementAttackOverlayChanged -= OnMovementAttackOverlayChanged;
+        
+        base._ExitTree();
     }
 
     public override void _Process(double delta)
@@ -29,9 +39,11 @@ public partial class InformationalText : Control
         Position = GetGlobalMousePosition();
     }
 
-    public void SwitchTo(InfoTextType type, bool executionAllowed = true)
+    public void SwitchTo(InfoTextType type, EntityNode? entity = null)
     {
         Reset();
+
+        var executionAllowed = entity is null || Players.Instance.IsActionAllowedForCurrentPlayerOn(entity);
         
         switch (type)
         {
@@ -59,6 +71,14 @@ public partial class InformationalText : Control
                 if (executionAllowed) 
                     AddText($"Right-click: move");
                 AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
+                AddText($"{GetInput(Constants.Input.MovementAttackToggle)}: switch to attack");
+                break;
+            case InfoTextType.SelectedAttack:
+                AddText($"Left-click: select");
+                if (executionAllowed) 
+                    AddText($"Right-click: attack");
+                AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
+                AddText($"{GetInput(Constants.Input.MovementAttackToggle)}: switch to movement");
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -91,4 +111,10 @@ public partial class InformationalText : Control
         row.SetFontSize(16);
         _vBoxContainer.AddChild(row);
     }
+
+    private void OnMovementAttackOverlayChanged(EntityNode selectedEntity) => SwitchTo(
+        ClientState.Instance.AttackToggled 
+            ? InfoTextType.SelectedAttack 
+            : InfoTextType.SelectedMovement, 
+        selectedEntity);
 }
