@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace LowAgeCommon
+﻿namespace LowAgeCommon
 {
     public abstract class EnumValueObject<TClass, TEnum> : ValueObject<TClass> 
         where TClass : ValueObject<TClass>

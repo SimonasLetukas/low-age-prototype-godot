@@ -2,20 +2,12 @@ using System;
 using LowAgeData.Domain.Entities;
 using LowAgeCommon;
 
-public partial class EntityPlacedEvent : IGameEvent
+public class EntityPlacedEvent : IGameEvent
 {
-    public EntityPlacedEvent(EntityId blueprintId, Vector2Int mapPosition, Guid instanceId, 
-        ActorRotation actorRotation)
-    {
-        BlueprintId = blueprintId;
-        MapPosition = mapPosition;
-        InstanceId = instanceId;
-        ActorRotation = actorRotation;
-    }
-    
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public EntityId BlueprintId { get; }
-    public Vector2Int MapPosition { get; }
-    public Guid InstanceId { get; }
-    public ActorRotation ActorRotation { get; }
+    public Guid Id { get; } = Guid.NewGuid();
+    public required EntityId BlueprintId { get; init; }
+    public required Vector2Int MapPosition { get; init; }
+    public required Guid InstanceId { get; init; }
+    public required ActorRotation ActorRotation { get; init; }
+    public required int PlayerId { get; init; }
 }

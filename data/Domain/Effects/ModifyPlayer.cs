@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LowAgeData.Domain.Common.Filters;
+﻿using LowAgeData.Domain.Common.Filters;
 using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Common.Modifications;
 using LowAgeData.Domain.Logic;

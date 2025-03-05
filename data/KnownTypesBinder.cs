@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using LowAgeData.Domain.Abilities;
+﻿using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Durations;

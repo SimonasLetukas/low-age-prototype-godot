@@ -21,52 +21,55 @@ public partial class InfoDisplay : MarginContainer
     private int _valueInitiative = 99;
     private int _valueMeleeArmour = 99;
     private int _valueRangedArmour = 99;
-    private IEnumerable<ActorAttribute> _valueActorAttributes = new[]
-    {
+    private IEnumerable<ActorAttribute> _valueActorAttributes =
+    [
         ActorAttribute.Biological, ActorAttribute.Armoured, ActorAttribute.Ranged
-    };
+    ];
+    private Player _valuePlayer = null!;
     
     private bool _hasMeleeAttack = true;
     private string _valueMeleeName = "Venom Fangs";
     private int _valueMeleeDistance = 1;
     private int _valueMeleeDamage = 999;
     private int _valueMeleeBonusDamage = 999;
-    private ActorAttribute _valueMeleeBonusType = ActorAttribute.Biological;
+    private ActorAttribute? _valueMeleeBonusType = ActorAttribute.Biological;
     
     private bool _hasRangedAttack = true;
     private string _valueRangedName = "Monev Fangs";
     private int _valueRangedDistance = 999;
     private int _valueRangedDamage = 999;
     private int _valueRangedBonusDamage = 999;
-    private ActorAttribute _valueRangedBonusType = ActorAttribute.Armoured;
+    private ActorAttribute? _valueRangedBonusType = ActorAttribute.Armoured;
     
     private string _valueAbilityName = "Build";
     private TurnPhase _valueAbilityTurnPhase = TurnPhase.Planning;
     private string _valueAbilityText = "Place a ghostly rendition of a selected enemy unit in [b]7[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] to an unoccupied space in a [b]3[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] from the selected target. The rendition has the same amount of [img=15x11]Client/UI/Icons/icon_health_big.png[/img], [img=15x11]Client/UI/Icons/icon_melee_armour_big.png[/img] and [img=15x11]Client/UI/Icons/icon_ranged_armour_big.png[/img] as the selected target, cannot act, can be attacked and stays for [b]2[/b] action phases. [b]50%[/b] of all [img=15x11]Client/UI/Icons/icon_damage_big.png[/img] done to the rendition is done as pure [img=15x11]Client/UI/Icons/icon_damage_big.png[/img]to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals [b]10[/b][img=15x11]Client/UI/Icons/icon_melee_attack.png[/img] and slows all adjacent enemies by [b]50%[/b] until the end of their next action.";
-    private EndsAtNode _valueAbilityCooldown = null;
+    private EndsAtNode _valueAbilityCooldown = null!;
     private string _valueResearchText = "Hardened Matrix";
 
-    private Control _abilityTitle;
-    private Research _researchText;
-    private NavigationBox _navigationBack;
-    private Control _leftSide;
-    private Control _leftSideTop;
-    private TopText _leftSideTopText;
-    private StatBlock _leftSideTopHealth;
-    private StatBlock _leftSideTopShields;
-    private StatBlock _leftSideMiddleMovement;
-    private StatBlock _leftSideMiddleInitiative;
-    private StatBlock _leftSideMiddleDamage;
-    private StatBlock _leftSideMiddleDistance;
-    private StatBlock _leftSideBottomMeleeArmour;
-    private StatBlock _leftSideBottomRangedArmour;
-    private StatBlockText _leftSideBottomStatBlockText;
-    private StatBlockText _leftSideBottomEmptyBlock;
-    private Control _rightSide;
-    private AttackTypeBox _rightSideMeleeAttack;
-    private AttackTypeBox _rightSideRangedAttack;
-    private Control _abilityDescription;
-    private ActorAttributes _actorAttributes;
+    private Control _abilityTitle = null!;
+    private Research _researchText = null!;
+    private NavigationBox _navigationBack = null!;
+    private Control _leftSide = null!;
+    private Control _leftSideTop = null!;
+    private TopText _leftSideTopText = null!;
+    private StatBlock _leftSideTopHealth = null!;
+    private StatBlock _leftSideTopShields = null!;
+    private StatBlock _leftSideMiddleMovement = null!;
+    private StatBlock _leftSideMiddleInitiative = null!;
+    private StatBlock _leftSideMiddleDamage = null!;
+    private StatBlock _leftSideMiddleDistance = null!;
+    private StatBlock _leftSideBottomMeleeArmour = null!;
+    private StatBlock _leftSideBottomRangedArmour = null!;
+    private StatBlockText _leftSideBottomStatBlockText = null!;
+    private StatBlockText _leftSideBottomEmptyBlock = null!;
+    private Control _rightSide = null!;
+    private AttackTypeBox _rightSideMeleeAttack = null!;
+    private AttackTypeBox _rightSideRangedAttack = null!;
+    private Control _abilityDescription = null!;
+    private Text _abilityText = null!;
+    private ActorAttributes _actorAttributes = null!;
+    private PlayerAttributes _playerAttributes = null!;
 
     public override void _Ready()
     {
@@ -90,14 +93,16 @@ public partial class InfoDisplay : MarginContainer
         _rightSideMeleeAttack = GetNode<AttackTypeBox>($"{nameof(VBoxContainer)}/TopPart/RightSide/Attacks/Melee");
         _rightSideRangedAttack = GetNode<AttackTypeBox>($"{nameof(VBoxContainer)}/TopPart/RightSide/Attacks/Ranged");
         _abilityDescription = GetNode<Control>($"{nameof(VBoxContainer)}/AbilityDescription");
+        _abilityText = _abilityDescription.GetNode<Text>(nameof(Text));
         _actorAttributes = GetNode<ActorAttributes>($"{nameof(VBoxContainer)}/{nameof(ActorAttributes)}");
+        _playerAttributes = GetNode<PlayerAttributes>($"{nameof(VBoxContainer)}/{nameof(PlayerAttributes)}");
 
         _rightSideMeleeAttack.Connect(nameof(AttackTypeBox.Clicked), new Callable(this, nameof(OnMeleeClicked)));
         _rightSideRangedAttack.Connect(nameof(AttackTypeBox.Clicked), new Callable(this, nameof(OnRangedClicked)));
         _rightSideMeleeAttack.Connect(nameof(AttackTypeBox.Hovering), new Callable(this, nameof(OnMeleeHovering)));
         _rightSideRangedAttack.Connect(nameof(AttackTypeBox.Hovering), new Callable(this, nameof(OnRangedHovering)));
         _navigationBack.Connect(nameof(NavigationBox.Clicked), new Callable(this, nameof(OnNavigationBoxClicked)));
-        _abilityDescription.GetNode<RichTextLabel>("Text").Connect("resized", new Callable(this, nameof(OnTextResized)));
+        _abilityText.Connect("finished", new Callable(this, nameof(OnTextResized)));
         
         _leftSideBottomEmptyBlock.SetEmpty();
         ShowView(View.UnitStats);
@@ -164,6 +169,7 @@ public partial class InfoDisplay : MarginContainer
             x.Blueprint is CombatStat combatStat
             && combatStat.CombatType.Equals(StatType.RangedArmour));
         var actorAttributes = actor.Attributes;
+        var player = entity.Player;
         
         SetEntityStats(
             health is null ? 0 : (int)health.CurrentValue, 
@@ -174,6 +180,7 @@ public partial class InfoDisplay : MarginContainer
             meleeArmour is null ? 0 : (int)meleeArmour.CurrentValue, 
             rangedArmour is null ? 0 : (int)rangedArmour.CurrentValue, 
             actorAttributes, 
+            player,
             shields is null ? 0 : (int)shields.CurrentValue, 
             shields is null ? 0 : shields.Blueprint.MaxAmount);
     }
@@ -187,6 +194,7 @@ public partial class InfoDisplay : MarginContainer
         int meleeArmour,
         int rangedArmour,
         IEnumerable<ActorAttribute> actorAttributes,
+        Player player,
         int currentShields = 0,
         int maxShields = 0)
     {
@@ -198,6 +206,7 @@ public partial class InfoDisplay : MarginContainer
         _valueMeleeArmour = meleeArmour;
         _valueRangedArmour = rangedArmour;
         _valueActorAttributes = actorAttributes;
+        _valuePlayer = player;
         _valueCurrentShields = currentShields;
         _valueMaxShields = maxShields;
     }
@@ -208,7 +217,7 @@ public partial class InfoDisplay : MarginContainer
         int distance = 0,
         int damage = 0,
         int bonusDamage = 0,
-        ActorAttribute bonusType = null)
+        ActorAttribute? bonusType = null)
     {
         _hasMeleeAttack = hasAttack;
         _valueMeleeName = attackName;
@@ -224,7 +233,7 @@ public partial class InfoDisplay : MarginContainer
         int distance = 0,
         int damage = 0,
         int bonusDamage = 0,
-        ActorAttribute bonusType = null)
+        ActorAttribute? bonusType = null)
     {
         _hasRangedAttack = hasAttack;
         _valueRangedName = attackName;
@@ -239,7 +248,7 @@ public partial class InfoDisplay : MarginContainer
         TurnPhase turnPhase,
         string text,
         EndsAtNode cooldown,
-        IList<ResearchId> research = null)
+        IList<ResearchId>? research = null)
     {
         _valueAbilityName = abilityName;
         _valueAbilityTurnPhase = turnPhase;
@@ -279,6 +288,7 @@ public partial class InfoDisplay : MarginContainer
         _rightSideRangedAttack.Visible = false;
         _abilityDescription.Visible = false;
         _actorAttributes.Visible = false;
+        _playerAttributes.Visible = false;
 
         if (fullReset is false)
             return;
@@ -296,6 +306,7 @@ public partial class InfoDisplay : MarginContainer
         _leftSideBottomMeleeArmour.SetValue(_valueMeleeArmour);
         _leftSideBottomRangedArmour.SetValue(_valueRangedArmour);
         _actorAttributes.SetTypes(_valueActorAttributes);
+        _playerAttributes.Set(_valuePlayer);
 
         _leftSide.Visible = true;
         _leftSideTop.Visible = true;
@@ -309,6 +320,7 @@ public partial class InfoDisplay : MarginContainer
         _rightSideMeleeAttack.Visible = _hasMeleeAttack;
         _rightSideRangedAttack.Visible = _hasRangedAttack;
         _actorAttributes.Visible = true;
+        _playerAttributes.Visible = true;
     }
 
     private void ShowStructureStats()
@@ -318,6 +330,7 @@ public partial class InfoDisplay : MarginContainer
         _leftSideBottomMeleeArmour.SetValue(_valueMeleeArmour);
         _leftSideBottomRangedArmour.SetValue(_valueRangedArmour);
         _actorAttributes.SetTypes(_valueActorAttributes);
+        _playerAttributes.Set(_valuePlayer);
 
         _leftSide.Visible = true;
         _leftSideTop.Visible = true;
@@ -326,6 +339,7 @@ public partial class InfoDisplay : MarginContainer
         _leftSideBottomMeleeArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _leftSideBottomRangedArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _actorAttributes.Visible = true;
+        _playerAttributes.Visible = true;
     }
 
     private void ShowMeleeAttack()
@@ -335,6 +349,7 @@ public partial class InfoDisplay : MarginContainer
         _leftSideMiddleDamage.SetValue(_valueMeleeDamage);
         _leftSideMiddleDistance.SetValue(_valueMeleeDistance);
         _actorAttributes.SetTypes(_valueActorAttributes);
+        _playerAttributes.Set(_valuePlayer);
 
         _leftSide.Visible = true;
         _leftSideTopText.Visible = true;
@@ -344,6 +359,7 @@ public partial class InfoDisplay : MarginContainer
         _rightSideMeleeAttack.Visible = _hasMeleeAttack;
         _rightSideRangedAttack.Visible = _hasRangedAttack;
         _actorAttributes.Visible = true;
+        _playerAttributes.Visible = true;
 
         if (_valueMeleeBonusType is null)
         {
@@ -363,6 +379,7 @@ public partial class InfoDisplay : MarginContainer
         _leftSideMiddleDamage.SetValue(_valueRangedDamage);
         _leftSideMiddleDistance.SetValue(_valueRangedDistance);
         _actorAttributes.SetTypes(_valueActorAttributes);
+        _playerAttributes.Set(_valuePlayer);
 
         _leftSide.Visible = true;
         _leftSideTopText.Visible = true;
@@ -372,6 +389,7 @@ public partial class InfoDisplay : MarginContainer
         _rightSideMeleeAttack.Visible = _hasMeleeAttack;
         _rightSideRangedAttack.Visible = _hasRangedAttack;
         _actorAttributes.Visible = true;
+        _playerAttributes.Visible = true;
 
         if (_valueRangedBonusType is null)
         {
@@ -390,7 +408,8 @@ public partial class InfoDisplay : MarginContainer
         _researchText.SetResearch(_valueResearchText);
         GetNode<AbilitySubtitle>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(AbilitySubtitle)}")
             .SetAbilitySubtitle(_valueAbilityTurnPhase, _valueAbilityCooldown);
-        _abilityDescription.GetNode<RichTextLabel>("Text").Text = _valueAbilityText;
+        _abilityText.Text = _valueAbilityText;
+        _abilityText.ResetSize();
 
         _abilityTitle.Visible = true;
         _researchText.Visible = string.IsNullOrEmpty(_valueResearchText) is false;

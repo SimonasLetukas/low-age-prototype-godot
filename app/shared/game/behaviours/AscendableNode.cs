@@ -8,6 +8,9 @@ using MultipurposePathfinding;
 
 public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendable>, IPathfindingUpdatable
 {
+    [Export]
+    public bool DebugEnabled { get; set; } = false;
+    
     public const string ScenePath = @"res://app/shared/game/behaviours/AscendableNode.tscn";
     public static AscendableNode Instance() => (AscendableNode) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static AscendableNode InstantiateAsChild(Ascendable blueprint, Node parentNode, Effects history, 
@@ -21,8 +24,8 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
         return behaviour;
     }
 
-    public bool Opened { get; private set; } = true; // TODO connect with logic that tracks when allies or enemies
-                                                     // end movement on any of the ascendable positions
+    public bool Opened { get; private set; } = false; // TODO connect with logic that tracks when allies or enemies
+                                                      // end movement on any of the ascendable positions
     public IList<(IEnumerable<Vector2Int>, int)> LeveledPositions => LeveledLocalPositions
         .Select(x => (x.Item1.Select(y => y + Parent.EntityPrimaryPosition), x.Item2))
         .ToList();
@@ -34,10 +37,10 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
         .ToDictionary(pair => pair.Key + Parent.EntityPrimaryPosition, pair => pair.Value);
     public IEnumerable<Vector2Int> FlattenedPositionsWithoutSpriteOffset => FlattenedLocalPositions
         .Select(x => x.Key + Parent.EntityPrimaryPosition);
-    public Dictionary<Vector2Int, int> FlattenedLocalPositions { get; set; } = new Dictionary<Vector2Int, int>();
+    public Dictionary<Vector2Int, int> FlattenedLocalPositions { get; set; } = new();
     
-    private Ascendable Blueprint { get; set; }
-    
+    private Ascendable Blueprint { get; set; } = null!;
+
     public void SetBlueprint(Ascendable blueprint)
     {
         base.SetBlueprint(blueprint);
@@ -54,17 +57,25 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
         EventBus.Instance.RaisePathfindingUpdating(this, false);
     }
     
-    public bool CanBeMovedOnAt(Vector2Int position, Team forTeam)
-    {
-        return FlattenedPositions.ContainsKey(position);
-    }
+    public bool CanBeMovedOnAt(Vector2Int position, Team forTeam) => FlattenedPositions.ContainsKey(position);
 
     public bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam)
     {
-        var isSameTeam = Blueprint.ClosingEnabled is false || (forTeam == Parent.Team || Opened);
+        var isAllowedToEnter = Blueprint.ClosingEnabled is false || (forTeam.IsAllyTo(Parent.Player.Team) || Opened);
         
-        return FlattenedPositions.ContainsKey(toPoint.Position)
-               && ((isSameTeam && fromPoint.IsLowGround) || fromPoint.IsHighGround);
+        var allowsConnectionBetweenPoints = FlattenedPositions.ContainsKey(toPoint.Position) 
+                                            && ((isAllowedToEnter && fromPoint.IsLowGround) || fromPoint.IsHighGround);
+
+        if (DebugEnabled)
+            GD.Print($"{nameof(AllowsConnectionBetweenPoints)}: '{allowsConnectionBetweenPoints}' for " +
+                     $"'{Parent.DisplayName}' at '{Parent.EntityPrimaryPosition}' for team '{forTeam}'. From " +
+                     $"{(fromPoint.IsLowGround ? "low ground" : "high ground")} point at {fromPoint.Position} to " +
+                     $"{(toPoint.IsLowGround ? "low ground" : "high ground")} point at {toPoint.Position}. " +
+                     $"{nameof(Blueprint.ClosingEnabled)} '{Blueprint.ClosingEnabled}', {nameof(Opened)} '{Opened}', " +
+                     $"{nameof(isAllowedToEnter)} '{isAllowedToEnter}', ContainsKey " +
+                     $"'{FlattenedPositions.ContainsKey(toPoint.Position)}'");
+        
+        return allowsConnectionBetweenPoints;
     }
 
     private void SetupPositions()

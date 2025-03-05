@@ -6,10 +6,10 @@ public partial class ClientGame : Game
 {
     public const string ScenePath = @"res://app/client/game/ClientGame.tscn";
     
-    private ClientMap _map;
-    private Camera _camera;
-    private Mouse _mouse;
-    private Interface _interface;
+    private ClientMap _map = null!;
+    private Camera _camera = null!;
+    private Mouse _mouse = null!;
+    private Interface _interface = null!;
     
     public override async void _Ready()
     {
@@ -88,13 +88,13 @@ public partial class ClientGame : Game
     {
         var playerId = Multiplayer.GetUniqueId();
         GD.Print($"{nameof(ClientGame)}.{nameof(OnNewGameEventRegistered)}: event '{eventBody.TrimForLogs()}' " +
-                 $"received for player {playerId} '{Data.Instance.GetPlayerName(playerId)}'");
+                 $"received for player {playerId} '{Players.Instance.GetName(playerId)}'");
 
         var gameEvent = StringToEvent(eventBody);
         if (Events.Any(x => x.Id.Equals(gameEvent.Id)))
         {
             GD.Print($"{nameof(ClientGame)}.{nameof(OnNewGameEventRegistered)}: event '{gameEvent.Id}' " +
-                     $"already exists for player {playerId} '{Data.Instance.GetPlayerName(playerId)}'");
+                     $"already exists for player {playerId} '{Players.Instance.GetName(playerId)}'");
             return;
         }
 
@@ -111,14 +111,14 @@ public partial class ClientGame : Game
                 _interface.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
                 _map.Initialize(mapCreatedEvent);
                 break;
-            case InitializationCompletedEvent initializationCompletedEvent:
+            case InitializationCompletedEvent:
                 OnEveryoneFinishedInitializing();
                 break;
             case UnitMovedAlongPathEvent unitMovedAlongPathEvent:
-                _map.MoveUnit(unitMovedAlongPathEvent);
+                _map.HandleEvent(unitMovedAlongPathEvent);
                 break;
             case EntityPlacedEvent entityPlacedEvent:
-                _map.Entities.PlaceEntity(entityPlacedEvent);
+                _map.Entities.HandleEvent(entityPlacedEvent);
                 _map.OnEntityPlaced();
                 break;
             default:

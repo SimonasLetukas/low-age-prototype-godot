@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -7,23 +8,29 @@ using LowAgeCommon.Extensions;
 using MultipurposePathfinding;
 using Area = LowAgeCommon.Area;
 
-public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
+public sealed partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 {
-    public const string ScenePath = @"res://app/shared/game/entities/StructureNode.tscn";
+    private const string ScenePath = @"res://app/shared/game/entities/StructureNode.tscn";
     public static StructureNode Instance() => (StructureNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static StructureNode InstantiateAsChild(Structure blueprint, Node parentNode)
+    public static StructureNode InstantiateAsChild(Structure blueprint, Node parentNode, Player player, 
+        Func<Vector2Int, bool, Tiles.TileInstance?> getTile, 
+        Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles)
     {
         var structure = Instance();
         parentNode.AddChild(structure);
         structure.SetBlueprint(blueprint);
+        structure.Player = player;
+        structure.GetTile = getTile;
+        structure.GetHighestTiles = getHighestTiles;
+        
         return structure;
     }
     
     public override Area RelativeSize => EntitySize.Except(WalkablePositionsBlueprint);
-    public string FlattenedSprite { get; private set; }
+    public string? FlattenedSprite { get; private set; }
     public Vector2? FlattenedCenterOffset { get; private set; }
-    public Vector2Int CenterPoint { get; protected set; }
-    public IList<Area> WalkableAreasBlueprint { get; protected set; }
+    public Vector2Int CenterPoint { get; private set; }
+    public IList<Area> WalkableAreasBlueprint { get; private set; } = null!;
     public IEnumerable<Area> WalkableAreas => WalkableAreasBlueprint.Select(x => 
         new Area(x.Start + EntityPrimaryPosition, x.Size)).ToList();
     public IEnumerable<Vector2Int> WalkablePositionsBlueprint => WalkableAreasBlueprint.Select(walkableArea =>
@@ -31,8 +38,8 @@ public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
     public IEnumerable<Vector2Int> WalkablePositions => WalkableAreas.Select(walkableArea => walkableArea.ToList())
         .SelectMany(walkablePositions => walkablePositions).ToHashSet();
     public IEnumerable<Vector2Int> NonWalkablePositions => EntityOccupyingPositions.Except(WalkablePositions);
-    
-    private Structure Blueprint { get; set; }
+
+    private Structure Blueprint { get; set; } = null!;
     
     public void SetBlueprint(Structure blueprint)
     {
@@ -114,12 +121,12 @@ public partial class StructureNode : ActorNode, INodeFromBlueprint<Structure>
 
     protected override void UpdateSprite()
     {
-        var needsBackSprite = ActorRotation == ActorRotation.TopLeft || ActorRotation == ActorRotation.TopRight;
-        var needsFlipping = ActorRotation == ActorRotation.BottomLeft || ActorRotation == ActorRotation.TopRight;
+        var needsBackSprite = ActorRotation is ActorRotation.TopLeft or ActorRotation.TopRight;
+        var needsFlipping = ActorRotation is ActorRotation.BottomLeft or ActorRotation.TopRight;
         
         var spriteLocation = needsBackSprite ? Blueprint.BackSideSprite : Blueprint.Sprite;
         if (spriteLocation.IsNotNullOrEmpty())
-            Renderer.SetSpriteTexture(spriteLocation);
+            Renderer.SetSpriteTexture(spriteLocation!);
 
         var offset = needsBackSprite
             ? Blueprint.BackSideCenterOffset.ToGodotVector2()

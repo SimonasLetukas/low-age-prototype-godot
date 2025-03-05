@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LowAgeData.Domain.Common.Flags;
+﻿using LowAgeData.Domain.Common.Flags;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Common.Modifications

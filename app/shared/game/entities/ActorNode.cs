@@ -11,14 +11,14 @@ using LowAgeCommon.Extensions;
 /// </summary>
 public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 {
-    public IList<StatNode> CurrentStats { get; protected set; }
-    public IList<ActorAttribute> Attributes { get; protected set; }
+    public IList<StatNode> CurrentStats { get; protected set; } = null!;
+    public IList<ActorAttribute> Attributes { get; protected set; } = null!;
     public ActorRotation ActorRotation { get; protected set; }
-    public Abilities Abilities { get; protected set; }
+    public Abilities Abilities { get; protected set; } = null!;
 
-    private Actor Blueprint { get; set; }
-    private TextureProgressBar _health;
-    private TextureProgressBar _shields;
+    private Actor Blueprint { get; set; } = null!;
+    private TextureProgressBar _health = null!;
+    private TextureProgressBar _shields = null!;
     private Vector2 _startingHealthPosition;
     private Vector2 _startingShieldsPosition;
 
@@ -56,31 +56,28 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         _shields.Visible = to && HasShields;
     }
 
+    public override void ForcePlace(EntityPlacedEvent @event)
+    {
+        SetActorRotation(@event.ActorRotation);
+        base.ForcePlace(@event);
+    }
+
     public override void Complete()
     {
         base.Complete();
-        Abilities.OnActorBirth(this);
+        Abilities.OnActorBirth();
     }
 
     public virtual void Rotate()
     {
-        switch (ActorRotation)
+        ActorRotation = ActorRotation switch
         {
-            case ActorRotation.BottomRight:
-                ActorRotation = ActorRotation.BottomLeft;
-                break;
-            case ActorRotation.BottomLeft:
-                ActorRotation = ActorRotation.TopLeft;
-                break;
-            case ActorRotation.TopLeft:
-                ActorRotation = ActorRotation.TopRight;
-                break;
-            case ActorRotation.TopRight:
-                ActorRotation = ActorRotation.BottomRight;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+            ActorRotation.BottomRight => ActorRotation.BottomLeft,
+            ActorRotation.BottomLeft => ActorRotation.TopLeft,
+            ActorRotation.TopLeft => ActorRotation.TopRight,
+            ActorRotation.TopRight => ActorRotation.BottomRight,
+            _ => throw new ArgumentOutOfRangeException()
+        };
 
         UpdateSprite();
         UpdateVitalsPosition();
@@ -105,15 +102,16 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
     protected void UpdateVitalsPosition()
     {
+        const int quarterTileWidth = Constants.TileWidth / 4;
+        const int halfTileWidth = Constants.TileWidth / 2;
+        const int halfTileHeight = Constants.TileHeight / 2;
+        
         var spriteSize = Renderer.SpriteSize;
-        var offsetFromX = (int)(RelativeSize.Size.X - 1) * 
-                          new Vector2((int)(Constants.TileWidth / 4), (int)(Constants.TileHeight / 2)) +
-                          (int)RelativeSize.Start.X * 
-                          new Vector2((int)(Constants.TileWidth / 2), (int)(Constants.TileHeight / 2));
-        var offsetFromY = (int)(RelativeSize.Size.Y - 1) *
-                          new Vector2((int)(Constants.TileWidth / 4) * -1, (int)(Constants.TileHeight / 2)) +
-                          (int)RelativeSize.Start.Y * 
-                          new Vector2((int)(Constants.TileWidth / 2) * -1, (int)(Constants.TileHeight / 2));
+        var offsetFromX = (RelativeSize.Size.X - 1) * new Vector2(quarterTileWidth, halfTileHeight) +
+                          RelativeSize.Start.X * new Vector2(halfTileWidth, halfTileHeight);
+        var offsetFromY = (RelativeSize.Size.Y - 1) * new Vector2(quarterTileWidth * -1, halfTileHeight) +
+                          RelativeSize.Start.Y * new Vector2(halfTileWidth * -1, halfTileHeight);
+        
         _health.Position = new Vector2(_startingHealthPosition.X,
             (spriteSize.Y * -1) - 2 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
         _shields.Position = new Vector2(_startingShieldsPosition.X,

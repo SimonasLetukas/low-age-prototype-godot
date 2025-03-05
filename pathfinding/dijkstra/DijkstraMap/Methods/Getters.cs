@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace DijkstraMap.Methods
 {
     public static class Getters

@@ -26,6 +26,7 @@ Server="*res://app/shared/static/network/Server.cs"
 Config="*res://app/shared/static/configs/Config.cs"
 EventBus="*res://app/shared/static/event-bus/EventBus.cs"
 ClientState="*res://app/shared/static/ClientState.cs"
+Players="*res://app/shared/static/Players.cs"
 
 [display]
 
@@ -43,6 +44,14 @@ project/assembly_name="LowAge"
 
 naming/scene_name_casing=1
 naming/script_name_casing=1
+
+[gui]
+
+timers/tooltip_delay_sec=0.1
+
+[importer_defaults]
+
+image={}
 
 [input]
 

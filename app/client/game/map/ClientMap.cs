@@ -18,14 +18,14 @@ public partial class ClientMap : Map
 	public event Action<EntityNode> EntityIsBeingPlaced = delegate { };
 	public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
 
-	public Entities Entities { get; private set; }
-	private IPathfinding Pathfinding { get; set; } = new Pathfinding();
+	public Entities Entities { get; private set; } = null!;
+	private Pathfinding Pathfinding { get; set; } = new();
 
-	private Player _currentPlayer;
+	private Player _currentPlayer = null!;
 	private IList<Area> _startingPositions = new List<Area>();
 	private Vector2Int _mapSize = Vector2Int.Max;
-	private Tiles _tileMap;
-	private FocusedTile _focusedTile;
+	private Tiles _tileMap = null!;
+	private FocusedTile _focusedTile = null!;
 	private SelectionOverlay _selectionOverlay = SelectionOverlay.None;
 
 	private enum SelectionOverlay
@@ -36,8 +36,8 @@ public partial class ClientMap : Map
 		Attack
 	}
 
-	private (BuildNode, EntityId) _previousBuildSelection = (null, null);
-	private Node2D _lines;
+	private (BuildNode?, EntityId?) _previousBuildSelection = (null, null);
+	private Node2D _lines = null!;
 
 	private bool _tileMapIsInitialized = false;
 	private bool _pathfindingIsInitialized = false;
@@ -61,6 +61,7 @@ public partial class ClientMap : Map
 		Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing;
 		Pathfinding.PointAdded += OnPathfindingPointAdded;
 		Pathfinding.PointRemoved += OnPathfindingPointRemoved;
+		EventBus.Instance.EntityPlaced += OnEntityPlaced;
 		EventBus.Instance.NewTileFocused += OnNewTileFocused;
 		EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
 	}
@@ -73,6 +74,7 @@ public partial class ClientMap : Map
 		Pathfinding.FinishedInitializing -= OnPathfindingFinishedInitializing;
 		Pathfinding.PointAdded += OnPathfindingPointAdded;
 		Pathfinding.PointRemoved += OnPathfindingPointRemoved;
+		EventBus.Instance.EntityPlaced -= OnEntityPlaced;
 		EventBus.Instance.NewTileFocused -= OnNewTileFocused;
 		EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
 		base._ExitTree();
@@ -83,7 +85,7 @@ public partial class ClientMap : Map
 		if (DebugEnabled)
 			GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} {nameof(ClientMap)}.{nameof(Initialize)}");
 
-        _currentPlayer = Data.Instance.Players.Single(x => x.Id.Equals(Multiplayer.GetUniqueId()));
+        _currentPlayer = Players.Instance.Current;
 		_mapSize = @event.MapSize;
 		_startingPositions = @event.StartingPositions[_currentPlayer.Id];
 
@@ -192,10 +194,10 @@ public partial class ClientMap : Map
 			// TODO optimization: only if focused tile changed from above, display path
 			if (_focusedTile.IsWithinTheMap)
 			{
-				var size = Entities.SelectedEntity.EntitySize.X;
+				var size = Entities.SelectedEntity!.EntitySize.X;
 				var path = Pathfinding.FindPath(
-					_focusedTile.CurrentTile.Point,
-					Entities.SelectedEntity.Team,
+					_focusedTile.CurrentTile!.Point,
+					Entities.SelectedEntity.Player.Team,
 					size);
 				_tileMap.Elevatable.SetPathTiles(path, size);
 			}
@@ -220,6 +222,16 @@ public partial class ClientMap : Map
 	{
 		_paused = to;
 	}
+	
+	public void HandleEvent(UnitMovedAlongPathEvent @event)
+	{
+		var selectedEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
+		if (selectedEntity is null)
+			return;
+		
+		RemoveOccupation(selectedEntity);
+		Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
+	}
 
 	public void HandleDeselecting()
 	{
@@ -227,13 +239,6 @@ public partial class ClientMap : Map
 		_tileMap.Elevatable.ClearPath();
 		Entities.DeselectEntity();
 		_selectionOverlay = SelectionOverlay.None;
-	}
-
-	public void MoveUnit(UnitMovedAlongPathEvent @event)
-	{
-		var selectedEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
-		RemoveOccupation(selectedEntity);
-		Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
 	}
 
 	private void HandleFlattenInput()
@@ -254,14 +259,13 @@ public partial class ClientMap : Map
 
 		_focusedTile.UpdateTile();
 
-		if (_selectionOverlay is SelectionOverlay.None
-			|| _selectionOverlay is SelectionOverlay.Movement)
+		if (_selectionOverlay is SelectionOverlay.None or SelectionOverlay.Movement)
 		{
 			ExecuteEntitySelection();
 			return;
 		}
 
-		if (_selectionOverlay is SelectionOverlay.Placement)
+		if (_selectionOverlay is SelectionOverlay.Placement && IsActionAllowedForCurrentPlayerOnSelectedEntity())
 		{
 			ExecutePlacement();
 			return;
@@ -289,7 +293,7 @@ public partial class ClientMap : Map
 				entity.EntityPrimaryPosition,
 				unit.Movement,
 				unit.IsOnHighGround,
-				unit.Team,
+				unit.Player.Team,
 				size);
 			_tileMap.Elevatable.ClearAvailableTiles(true);
 			_tileMap.Elevatable.SetAvailableTiles(unit, availablePoints, size, false);
@@ -303,7 +307,7 @@ public partial class ClientMap : Map
 
 		if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
 		{
-			OnSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2);
+			OnSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2!);
 			return;
 		}
 
@@ -321,15 +325,14 @@ public partial class ClientMap : Map
 		if (_selectionOverlay is SelectionOverlay.None)
 			return;
 
-		if (_selectionOverlay is SelectionOverlay.Movement)
+		if (_selectionOverlay is SelectionOverlay.Movement && IsActionAllowedForCurrentPlayerOnSelectedEntity())
 		{
 			_focusedTile.UpdateTile();
 			ExecuteMovement();
 			return;
 		}
 
-		if (_selectionOverlay is SelectionOverlay.Placement
-			|| _selectionOverlay is SelectionOverlay.Attack)
+		if (_selectionOverlay is SelectionOverlay.Placement or SelectionOverlay.Attack)
 		{
 			ExecuteCancellation();
 			return;
@@ -339,7 +342,7 @@ public partial class ClientMap : Map
 	private void ExecuteMovement()
 	{
 		if (_tileMap.Elevatable.IsCurrentlyAvailable(_focusedTile.CurrentTile) is false
-			|| Entities.SelectedEntity.EntityPrimaryPosition.Equals(_focusedTile.CurrentTile.Position))
+			|| Entities.SelectedEntity!.EntityPrimaryPosition.Equals(_focusedTile.CurrentTile!.Position))
 			return;
 
 		// TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
@@ -347,7 +350,7 @@ public partial class ClientMap : Map
 		var selectedEntity = Entities.SelectedEntity;
 		var path = Pathfinding.FindPath(
 			_focusedTile.CurrentTile.Point,
-			selectedEntity.Team,
+			selectedEntity.Player.Team,
 			selectedEntity.EntitySize.X).ToList();
 		var globalPath = _tileMap.GetGlobalPositionsFromMapPoints(path);
 		UnitMovementIssued(new UnitMovedAlongPathEvent(selectedEntity.InstanceId, globalPath, path));
@@ -365,7 +368,7 @@ public partial class ClientMap : Map
 		ExecuteEntitySelection(true);
 	}
 
-	private EntityNode UpdateHoveredEntity(Vector2 mousePosition)
+	private EntityNode? UpdateHoveredEntity(Vector2 mousePosition)
 	{
 		if (_focusedTile.IsWithinTheMap is false)
 			return null;
@@ -381,7 +384,7 @@ public partial class ClientMap : Map
 				return topEntity;
 		}
 
-		var entityWasHovered = Entities.TryHoveringEntityOn(_focusedTile.CurrentTile);
+		var entityWasHovered = Entities.TryHoveringEntityOn(_focusedTile.CurrentTile!);
 		_focusedTile.StopEntityFocus(); // TODO remove flashing when focusing from one entity to another
 
 		return entityWasHovered ? Entities.HoveredEntity : null;
@@ -395,14 +398,17 @@ public partial class ClientMap : Map
 		_tileMap.AddOccupation(entity);
 
 		var pathfindingEntity = new PathfindingEntity(entity.InstanceId, entity.EntityPrimaryPosition,
-			entity.EntitySize, entity.Team, entity is UnitNode { IsOnHighGround: true },
+			entity.EntitySize, entity.Player.Team, entity is UnitNode { IsOnHighGround: true },
 			entity.CanBeMovedThroughAt, entity.AllowsConnectionBetweenPoints);
 		Pathfinding.AddOrUpdateEntity(pathfindingEntity);
 		Pathfinding.UpdateAround(entity.InstanceId);
 	}
 
-	private void RemoveOccupation(EntityNode entity)
+	private void RemoveOccupation(EntityNode? entity)
 	{
+		if (entity is null)
+			return;
+		
 		_tileMap.RemoveOccupation(entity);
 
 		Pathfinding.RemoveEntity(entity.InstanceId);
@@ -418,6 +424,9 @@ public partial class ClientMap : Map
 			}
 		}
 	}
+	
+	private bool IsActionAllowedForCurrentPlayerOnSelectedEntity() 
+		=> Players.Instance.IsActionAllowedForCurrentPlayerOn(Entities.SelectedEntity);
 
 	private void ResetLines()
 	{
@@ -533,7 +542,7 @@ public partial class ClientMap : Map
 				unit.EntityPrimaryPosition,
 				unit.GetReach(),
 				unit.IsOnHighGround,
-				unit.Team,
+				unit.Player.Team,
 				unit.EntitySize.X,
 				true);
 
@@ -542,6 +551,8 @@ public partial class ClientMap : Map
 		else
 			_tileMap.Elevatable.ClearAvailableTiles(true);
 	}
+
+	private void OnEntityPlaced(EntityNode entity) => AddOccupation(entity);
 
 	private void OnEntitiesNewPositionOccupied(EntityNode entity)
 	{
@@ -573,7 +584,7 @@ public partial class ClientMap : Map
 		_focusedTile.Disable();
 
 		var canBePlacedOnTheWholeMap = buildAbility.CanBePlacedOnTheWholeMap();
-		_tileMap.Elevatable.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity, _mapSize),
+		_tileMap.Elevatable.SetTargetTiles(buildAbility.GetPlacementPositions(Entities.SelectedEntity!, _mapSize),
 			canBePlacedOnTheWholeMap);
 
 		var entity = Entities.SetEntityForPlacement(entityId, canBePlacedOnTheWholeMap);

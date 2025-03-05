@@ -13,8 +13,8 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         behaviour.SetBlueprint(blueprint);
         return behaviour;
     }
-    
-    private Buildable Blueprint { get; set; }
+
+    private Buildable Blueprint { get; set; } = null!;
     
     public void SetBlueprint(Buildable blueprint)
     {
@@ -22,7 +22,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         Blueprint = blueprint;
     }
 
-    public bool IsPlacementValid(IList<Tiles.TileInstance> tiles) => ValidationHandler
+    public bool IsPlacementValid(IList<Tiles.TileInstance?> tiles) => ValidationHandler
         .Validate(Blueprint.PlacementValidators)
         .With(tiles)
         .Handle();

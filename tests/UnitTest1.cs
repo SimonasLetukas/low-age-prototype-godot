@@ -1,9 +1,6 @@
-using System.Collections.Generic;
 using FluentAssertions;
 using Godot;
 using LowAgeData.Domain.Common;
-using LowAgeData.Domain.Common;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace LowAgeTests

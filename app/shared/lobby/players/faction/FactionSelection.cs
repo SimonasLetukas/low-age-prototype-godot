@@ -7,8 +7,8 @@ public partial class FactionSelection : OptionButton
 {
     public event Action<FactionId> FactionSelected = delegate { };
     
-    private readonly Dictionary<int, FactionId> _factionIdsByOptionButtonIndex = new Dictionary<int, FactionId>();
-    private readonly Dictionary<FactionId, int> _optionButtonIndexesByFactionId = new Dictionary<FactionId, int>();
+    private readonly Dictionary<int, FactionId> _factionIdsByOptionButtonIndex = new();
+    private readonly Dictionary<FactionId, int> _optionButtonIndexesByFactionId = new();
 
     public override void _Ready()
     {
@@ -27,6 +27,7 @@ public partial class FactionSelection : OptionButton
     
     private void PopulateFactions()
     {
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (Data.Instance.Blueprint is null) 
             Data.Instance.ReadBlueprint();
         
@@ -41,9 +42,8 @@ public partial class FactionSelection : OptionButton
             optionButtonIndex++;
         }
 
-        Selected = _optionButtonIndexesByFactionId.TryGetValue(Config.Instance.StartingFaction, out var preferredFaction) 
-            ? preferredFaction
-            : optionButtonIndex;
+        Selected = _optionButtonIndexesByFactionId.GetValueOrDefault(
+            Config.Instance.StartingFaction, optionButtonIndex);
     }
 
     private void OnItemSelected(int index)

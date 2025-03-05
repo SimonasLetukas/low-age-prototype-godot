@@ -9,14 +9,14 @@ public class ValidationHandler
     public static ValidationHandler Validate(IList<Validator> validators) => new ValidationHandler(validators);
     
     private readonly IList<Validator> _validators;
-    private IList<Tiles.TileInstance> _tileSource = new List<Tiles.TileInstance>();
+    private IList<Tiles.TileInstance?> _tileSource = new List<Tiles.TileInstance?>();
 
     private ValidationHandler(IList<Validator> validators)
     {
         _validators = validators;
     }
 
-    public ValidationHandler With(IList<Tiles.TileInstance> tileSource)
+    public ValidationHandler With(IList<Tiles.TileInstance?> tileSource)
     {
         _tileSource = tileSource;
         return this;
@@ -54,10 +54,10 @@ public class ValidationHandler
         return conditionFlag switch
         {
             _ when conditionFlag.Equals(ConditionFlag.TargetIsLowGround) => _tileSource.All(t => 
-                t.Point.IsHighGround is false),
+                t?.Point.IsHighGround is false),
             
             _ when conditionFlag.Equals(ConditionFlag.TargetIsUnoccupied) => _tileSource.All(x => 
-                x.Occupants.IsEmpty()),
+                x?.Occupants.IsEmpty() ?? true),
             
             _ => false
         };

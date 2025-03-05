@@ -4155,8 +4155,9 @@ public class PathfindingPipelineTests
         [
             "B218", // Scenario
             new PathfindingSize(1),
+            Team.Default,
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
             {
                 (
                     new Vector2Int(2, 2),
@@ -4169,7 +4170,8 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
-                    ]
+                    ],
+                    true
                 ),
                 (
                     new Vector2Int(2, 5),
@@ -4179,7 +4181,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
-                    ]
+                    ],
+                    null
                 ),
                 (
                     new Vector2Int(2, 7),
@@ -4190,7 +4193,8 @@ public class PathfindingPipelineTests
                         new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
                         new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
-                    []
+                    [],
+                    true
                 ),
                 (
                     new Vector2Int(5, 6),
@@ -4200,7 +4204,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
-                    ]
+                    ],
+                    null
                 ),
                 (
                     new Vector2Int(6, 7),
@@ -4212,20 +4217,21 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
-                    ]
+                    ],
+                    false
                 ),
                 
                 (
                     new Vector2Int(3, 5),
                     new Vector2Int(2, 2),
                     true,
-                    Team.Default, [], []
+                    Team.Default, [], [], null
                 ),
                 (
                     new Vector2Int(5, 6),
                     new Vector2Int(1, 1),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
             },
 
@@ -4260,8 +4266,9 @@ public class PathfindingPipelineTests
         [
             "N218", // Scenario
             new PathfindingSize(1),
+            Team.Default,
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
             {
                 (
                     new Vector2Int(2, 2),
@@ -4274,7 +4281,8 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
-                    ]
+                    ],
+                    true
                 ),
                 (
                     new Vector2Int(2, 5),
@@ -4284,7 +4292,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
-                    ]
+                    ],
+                    null
                 ),
                 (
                     new Vector2Int(2, 7),
@@ -4295,7 +4304,8 @@ public class PathfindingPipelineTests
                         new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
                         new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
-                    []
+                    [], 
+                    true
                 ),
                 (
                     new Vector2Int(5, 6),
@@ -4305,7 +4315,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(6, 7),
@@ -4317,20 +4328,21 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
-                    ]
+                    ], 
+                    false
                 ),
                 
                 (
                     new Vector2Int(2, 5),
                     new Vector2Int(2, 2),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(6, 7),
                     new Vector2Int(1, 1),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
             },
 
@@ -4367,8 +4379,9 @@ public class PathfindingPipelineTests
         [
             "Z218", // Scenario
             new PathfindingSize(1),
+            Team.Default,
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
             {
                 (
                     new Vector2Int(2, 2),
@@ -4381,7 +4394,8 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    true
                 ),
                 (
                     new Vector2Int(2, 5),
@@ -4391,7 +4405,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(2, 7),
@@ -4402,7 +4417,8 @@ public class PathfindingPipelineTests
                         new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
                         new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
-                    []
+                    [], 
+                    true
                 ),
                 (
                     new Vector2Int(5, 6),
@@ -4412,7 +4428,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(6, 7),
@@ -4424,38 +4441,39 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
-                    ]
+                    ], 
+                    false
                 ),
                 
                 (
                     new Vector2Int(2, 5),
                     new Vector2Int(2, 2),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(7, 6),
                     new Vector2Int(2, 2),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(1, 7),
                     new Vector2Int(1, 1),
                     false,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(7, 8),
                     new Vector2Int(1, 1),
                     false,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(8, 8),
                     new Vector2Int(1, 1),
                     false,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
             },
 
@@ -4494,13 +4512,13 @@ public class PathfindingPipelineTests
             },
         ];
         
-        
         yield return
         [
-            "B230", // Scenario
-            new PathfindingSize(2),
+            "AL218", // Scenario
+            new PathfindingSize(1),
+            new Team(2),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
             {
                 (
                     new Vector2Int(2, 2),
@@ -4513,7 +4531,8 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
-                    ]
+                    ],
+                    true
                 ),
                 (
                     new Vector2Int(2, 5),
@@ -4523,7 +4542,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
-                    ]
+                    ],
+                    null
                 ),
                 (
                     new Vector2Int(2, 7),
@@ -4534,7 +4554,8 @@ public class PathfindingPipelineTests
                         new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
                         new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
-                    []
+                    [],
+                    true
                 ),
                 (
                     new Vector2Int(5, 6),
@@ -4544,7 +4565,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
-                    ]
+                    ],
+                    null
                 ),
                 (
                     new Vector2Int(6, 7),
@@ -4556,20 +4578,135 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
-                    ]
+                    ],
+                    false
                 ),
                 
                 (
                     new Vector2Int(3, 5),
                     new Vector2Int(2, 2),
                     true,
-                    Team.Default, [], []
+                    Team.Default, [], [], null
                 ),
                 (
                     new Vector2Int(5, 6),
                     new Vector2Int(1, 1),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
+                ),
+            },
+
+            // Expected:
+            new Vector2Int[] // Occupation: low ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            },
+            new Vector2Int[] // Occupation: high ground
+            {
+                new(3, 5), new(4, 5), 
+                new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+            },
+            new Vector2Int[] // Free high ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), 
+                new(2, 6), 
+                new(2, 7), new(3, 7), 
+                new(2, 8), new(3, 8), 
+            },
+        ];
+        
+        
+        yield return
+        [
+            "B230", // Scenario
+            new PathfindingSize(2),
+            Team.Default,
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
+            {
+                (
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
+                    ], 
+                    true
+                ),
+                (
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
+                    ], 
+                    null
+                ),
+                (
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
+                    ],
+                    [], 
+                    true
+                ),
+                (
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
+                    ], 
+                    null
+                ),
+                (
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
+                    ], 
+                    false
+                ),
+                
+                (
+                    new Vector2Int(3, 5),
+                    new Vector2Int(2, 2),
+                    true,
+                    Team.Default, [], [], null
+                ),
+                (
+                    new Vector2Int(5, 6),
+                    new Vector2Int(1, 1),
+                    true,
+                    new Team(2), [], [], null
                 ),
             },
 
@@ -4611,8 +4748,9 @@ public class PathfindingPipelineTests
         [
             "N230", // Scenario
             new PathfindingSize(2),
+            Team.Default,
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
             {
                 (
                     new Vector2Int(2, 2),
@@ -4625,7 +4763,8 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    true
                 ),
                 (
                     new Vector2Int(2, 5),
@@ -4635,7 +4774,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(2, 7),
@@ -4646,7 +4786,8 @@ public class PathfindingPipelineTests
                         new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
                         new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
-                    []
+                    [], 
+                    true
                 ),
                 (
                     new Vector2Int(5, 6),
@@ -4656,7 +4797,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(6, 7),
@@ -4668,20 +4810,21 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
-                    ]
+                    ], 
+                    false
                 ),
                 
                 (
                     new Vector2Int(2, 5),
                     new Vector2Int(2, 2),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(6, 7),
                     new Vector2Int(1, 1),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
             },
 
@@ -4720,8 +4863,9 @@ public class PathfindingPipelineTests
         [
             "Z230", // Scenario
             new PathfindingSize(2),
+            Team.Default,
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
             {
                 (
                     new Vector2Int(2, 2),
@@ -4734,7 +4878,8 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    true
                 ),
                 (
                     new Vector2Int(2, 5),
@@ -4744,7 +4889,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(2, 7),
@@ -4755,7 +4901,8 @@ public class PathfindingPipelineTests
                         new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
                         new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
-                    []
+                    [], 
+                    true
                 ),
                 (
                     new Vector2Int(5, 6),
@@ -4765,7 +4912,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(6, 7),
@@ -4777,38 +4925,39 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
-                    ]
+                    ], 
+                    false
                 ),
                 
                 (
                     new Vector2Int(2, 5),
                     new Vector2Int(2, 2),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(7, 6),
                     new Vector2Int(2, 2),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(1, 7),
                     new Vector2Int(1, 1),
                     false,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(7, 8),
                     new Vector2Int(1, 1),
                     false,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(8, 8),
                     new Vector2Int(1, 1),
                     false,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
             },
 
@@ -4853,13 +5002,13 @@ public class PathfindingPipelineTests
             },
         ];
         
-        
         yield return
         [
-            "B242", // Scenario
-            new PathfindingSize(3),
+            "AL230", // Scenario
+            new PathfindingSize(2),
+            new Team(2),
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
             {
                 (
                     new Vector2Int(2, 2),
@@ -4872,7 +5021,8 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    true
                 ),
                 (
                     new Vector2Int(2, 5),
@@ -4882,7 +5032,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(2, 7),
@@ -4893,7 +5044,8 @@ public class PathfindingPipelineTests
                         new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
                         new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
-                    []
+                    [], 
+                    true
                 ),
                 (
                     new Vector2Int(5, 6),
@@ -4903,7 +5055,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(6, 7),
@@ -4915,20 +5068,137 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
-                    ]
+                    ], 
+                    false
                 ),
                 
                 (
                     new Vector2Int(3, 5),
                     new Vector2Int(2, 2),
                     true,
-                    Team.Default, [], []
+                    Team.Default, [], [], null
                 ),
                 (
                     new Vector2Int(5, 6),
                     new Vector2Int(1, 1),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
+                ),
+            },
+
+            // Expected:
+            new Vector2Int[] // Occupation: low ground
+            {
+                new(1, 2), new(1, 3), new(1, 4), new(1, 5), new(1, 6), new(1, 7), 
+                new(4, 4), new(5, 5), new(6, 5), new(7, 6), new(8, 6), new(5, 7), 
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            }.Concat(Vector2Collections.Size2BoundariesFor10X10).ToArray(),
+            new Vector2Int[] // Occupation: high ground
+            {
+                new(3, 2), 
+                new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(3, 7), new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+            },
+            new Vector2Int[] // Free high ground
+            {
+                new(2, 2),  
+                new(2, 3), 
+                new(2, 7), 
+                new(2, 8), new(3, 8), 
+            },
+        ];
+        
+        
+        yield return
+        [
+            "B242", // Scenario
+            new PathfindingSize(3),
+            Team.Default,
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
+            {
+                (
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
+                    ], 
+                    true
+                ),
+                (
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
+                    ], 
+                    null
+                ),
+                (
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
+                    ],
+                    [], 
+                    true
+                ),
+                (
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
+                    ], 
+                    null
+                ),
+                (
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
+                    ], 
+                    false
+                ),
+                
+                (
+                    new Vector2Int(3, 5),
+                    new Vector2Int(2, 2),
+                    true,
+                    Team.Default, [], [], null
+                ),
+                (
+                    new Vector2Int(5, 6),
+                    new Vector2Int(1, 1),
+                    true,
+                    new Team(2), [], [], null
                 ),
             },
 
@@ -4969,8 +5239,9 @@ public class PathfindingPipelineTests
         [
             "N242", // Scenario
             new PathfindingSize(3),
+            Team.Default,
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
             {
                 (
                     new Vector2Int(2, 2),
@@ -4983,7 +5254,8 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    true
                 ),
                 (
                     new Vector2Int(2, 5),
@@ -4993,7 +5265,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(2, 7),
@@ -5004,7 +5277,8 @@ public class PathfindingPipelineTests
                         new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
                         new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
-                    []
+                    [], 
+                    true
                 ),
                 (
                     new Vector2Int(5, 6),
@@ -5014,7 +5288,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(6, 7),
@@ -5026,20 +5301,21 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
-                    ]
+                    ], 
+                    false
                 ),
                 
                 (
                     new Vector2Int(2, 5),
                     new Vector2Int(2, 2),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(6, 7),
                     new Vector2Int(1, 1),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
             },
 
@@ -5080,8 +5356,9 @@ public class PathfindingPipelineTests
         [
             "Z242", // Scenario
             new PathfindingSize(3),
+            Team.Default,
             // Position, size, isOnHighGround, team, ascendables, high grounds
-            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] 
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
             {
                 (
                     new Vector2Int(2, 2),
@@ -5094,7 +5371,8 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    true
                 ),
                 (
                     new Vector2Int(2, 5),
@@ -5104,7 +5382,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(2, 7),
@@ -5115,7 +5394,8 @@ public class PathfindingPipelineTests
                         new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
                         new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
                     ],
-                    []
+                    [], 
+                    true
                 ),
                 (
                     new Vector2Int(5, 6),
@@ -5125,7 +5405,8 @@ public class PathfindingPipelineTests
                     [],
                     [
                         new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
-                    ]
+                    ], 
+                    null
                 ),
                 (
                     new Vector2Int(6, 7),
@@ -5137,38 +5418,39 @@ public class PathfindingPipelineTests
                     ],
                     [
                         new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
-                    ]
+                    ], 
+                    false
                 ),
                 
                 (
                     new Vector2Int(2, 5),
                     new Vector2Int(2, 2),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(7, 6),
                     new Vector2Int(2, 2),
                     true,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(1, 7),
                     new Vector2Int(1, 1),
                     false,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(7, 8),
                     new Vector2Int(1, 1),
                     false,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
                 (
                     new Vector2Int(8, 8),
                     new Vector2Int(1, 1),
                     false,
-                    new Team(2), [], []
+                    new Team(2), [], [], null
                 ),
             },
 
@@ -5211,27 +5493,146 @@ public class PathfindingPipelineTests
             {
             },
         ];
+        
+        yield return
+        [
+            "AL242", // Scenario
+            new PathfindingSize(3),
+            new Team(2),
+            // Position, size, isOnHighGround, team, ascendables, high grounds
+            new (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] 
+            {
+                (
+                    new Vector2Int(2, 2),
+                    new Vector2Int(2, 3),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2Int(2, 3), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 2), new Vector2Int(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2Int(2, 4), new Vector2Int(2, 1)), 
+                    ], 
+                    true
+                ),
+                (
+                    new Vector2Int(2, 5),
+                    new Vector2Int(3, 2),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2Int(2, 5), new Vector2Int(3, 2)), 
+                    ], 
+                    null
+                ),
+                (
+                    new Vector2Int(2, 7),
+                    new Vector2Int(2, 2),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2Int(2, 7), new Vector2Int(2, 1)), 
+                        new Area(new Vector2Int(2, 8), new Vector2Int(2, 1)), 
+                    ],
+                    [], 
+                    true
+                ),
+                (
+                    new Vector2Int(5, 6),
+                    new Vector2Int(2, 1),
+                    false,
+                    Team.Default, 
+                    [],
+                    [
+                        new Area(new Vector2Int(5, 6), new Vector2Int(2, 1)), 
+                    ], 
+                    null
+                ),
+                (
+                    new Vector2Int(6, 7),
+                    new Vector2Int(4, 1),
+                    false,
+                    Team.Default, 
+                    [
+                        new Area(new Vector2Int(7, 7), new Vector2Int(2, 1)), 
+                    ],
+                    [
+                        new Area(new Vector2Int(6, 7), new Vector2Int(4, 1)), 
+                    ], 
+                    false
+                ),
+                
+                (
+                    new Vector2Int(3, 5),
+                    new Vector2Int(2, 2),
+                    true,
+                    Team.Default, [], [], null
+                ),
+                (
+                    new Vector2Int(5, 6),
+                    new Vector2Int(1, 1),
+                    true,
+                    new Team(2), [], [], null
+                ),
+            },
+
+            // Expected:
+            new Vector2Int[] // Occupation: low ground
+            {
+                new(0, 1), new(1, 1), new(2, 1), new(3, 1), 
+                new(0, 2), new(1, 2), 
+                new(0, 3), new(1, 3), new(4, 3), 
+                new(0, 4), new(1, 4), new(4, 4), new(5, 4), new(6, 4), 
+                new(0, 5), new(1, 5), new(5, 5), new(6, 5), new(7, 5), 
+                new(0, 6), new(1, 6), new(7, 6), 
+                new(0, 7), new(1, 7), new(4, 7), new(5, 7), 
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            }.Concat(Vector2Collections.Size3BoundariesFor10X10).ToArray(),
+            new Vector2Int[] // Occupation: high ground
+            {
+                new(2, 2), new(3, 2), 
+                new(2, 3), new(3, 3), 
+                new(2, 4), new(3, 4), 
+                new(2, 5), new(3, 5), new(4, 5), 
+                new(2, 6), new(3, 6), new(4, 6), new(5, 6), new(6, 6), 
+                new(2, 7), new(3, 7),                       new(6, 7), new(7, 7), new(8, 7), new(9, 7), 
+                new(2, 8), new(3, 8), 
+            },
+            new Vector2Int[] // Free high ground
+            {
+            },
+        ];
     }
 
     [Theory]
     [MemberData(nameof(GetExpectedOccupationAndHighGroundForEntitiesOnHighGround))]
     public void Pathfinding_ShouldCalculateHighGroundAndOccupation_ForEntitiesOnHighGround(
         string scenario,
-        PathfindingSize pathfindingSize,
-        (Vector2Int, Vector2Int, bool, Team, Area[], Area[])[] entities, 
+        PathfindingSize searchPathfindingSize,
+        Team searchTeam,
+        (Vector2Int, Vector2Int, bool, Team, Area[], Area[], bool?)[] entities, 
         Vector2Int[] expectedOccupiedLowGroundPositions,
         Vector2Int[] expectedOccupiedHighGroundPositions,
         Vector2Int[] expectedFreeHighGroundPositions)
     {
         foreach (var (pos, size, isOnHighGround, team, ascendables, 
-                     highGrounds) in entities)
+                     highGrounds, isOpened) in entities)
         {
             SetupAddingEntityInstance(pos, size, team, isOnHighGround, null,
                 ascendables.Select(x => x.ToVectors()).ToList(),
-                highGrounds.SelectMany(x => x.ToVectors()).ToHashSet());
+                highGrounds.SelectMany(x => x.ToVectors()).ToHashSet(), 
+                isOpened);
         }
 
-        var availablePoints = GetAvailablePointsFor(pathfindingSize);
+        var availablePoints = GetAvailablePointsFor(searchPathfindingSize, searchTeam);
 
         ExpectedPositionsShouldNotBeContainedIn(availablePoints,
             expectedOccupiedLowGroundPositions, CheckElevation.LowGround,
@@ -6138,12 +6539,13 @@ public class PathfindingPipelineTests
     private Guid SetupAddingEntityInstance(Vector2Int entityPrimaryPosition, Vector2Int entitySize,
         Team? team = null, bool? isOnHighGround = null, IEnumerable<Vector2Int>? walkablePositions = null,
         IList<IEnumerable<Vector2Int>>? ascendablePositions = null,
-        IEnumerable<Vector2Int>? highGroundPositions = null)
+        IEnumerable<Vector2Int>? highGroundPositions = null, bool? isOpened = null)
     {
         var entityId = Guid.NewGuid();
         var entity = new PathfindingEntity(entityId, entityPrimaryPosition, entitySize, team ?? Team.Default,
             isOnHighGround ?? false, (p, t) => CanBeMovedThroughAt(p, t, entityId),
-            (fp, tp, t) => AllowsConnectionBetweenPoints(fp, tp, t, entityId));
+            (fp, tp, t) => AllowsConnectionBetweenPoints(fp, tp, t, entityId, 
+                isOpened ?? false));
 
         _entities[entityId] = entity;
         _walkablePositionsByEntityId[entityId] = walkablePositions ?? new List<Vector2Int>();
@@ -6161,9 +6563,10 @@ public class PathfindingPipelineTests
         return entityId;
     }
 
-    private bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam, Guid entityId)
+    private bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam, 
+        Guid entityId, bool isOpened)
     {
-        var isSameTeam = _entities[entityId].Team.Equals(forTeam);
+        var isSameTeam = _entities[entityId].Team.IsAllyTo(forTeam) || isOpened;
 
         var ascendablePositions = _ascendablesByEntityId[entityId]
             .SelectMany(inner => inner)
@@ -6176,13 +6579,13 @@ public class PathfindingPipelineTests
     private bool CanBeMovedThroughAt(Point point, Team forTeam, Guid entityId)
     {
         var entity = _entities[entityId];
-        if (entity.IsOnHighGround && entity.Team.Equals(forTeam)) // means it's a unit
+        if (entity.IsOnHighGround && entity.Team.IsAllyTo(forTeam)) // means it's a unit
             return true;
         
         if (_walkablePositionsByEntityId[entityId].Any(point.Position.Equals))
             return true;
 
-        if (HasHighGroundAt(point, forTeam, entityId))
+        if (HasHighGroundAt(point, entityId))
             return true;
 
         if (point.Position.IsInBoundsOf(
@@ -6193,7 +6596,7 @@ public class PathfindingPipelineTests
         return true;
     }
 
-    private bool HasHighGroundAt(Point point, Team forTeam, Guid entityId)
+    private bool HasHighGroundAt(Point point, Guid entityId)
     {
         if (point.IsLowGround)
             return false;

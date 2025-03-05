@@ -1,7 +1,6 @@
 ﻿using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Logic;
-using System.Collections.Generic;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Filters;

@@ -2,9 +2,9 @@
 {
     public static class StringExtensions
     {
-        public static string TrimForLogs(this string input) => input.Length < 2000 
+        public static string TrimForLogs(this string input, int length = 2000) => input.Length < length 
             ? input
-            : input.Substring(0, 2000);
+            : input[..length];
     
         public static string WrapToLines(this string inputText, int lineLength) 
         {
@@ -27,6 +27,6 @@
             return finalString;
         }
 
-        public static bool IsNotNullOrEmpty(this string input) => string.IsNullOrEmpty(input) is false;
+        public static bool IsNotNullOrEmpty(this string? input) => string.IsNullOrEmpty(input) is false;
     }
 }

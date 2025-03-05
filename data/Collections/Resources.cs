@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LowAgeData.Domain.Effects;
+﻿using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Resources;
 using LowAgeCommon;
 

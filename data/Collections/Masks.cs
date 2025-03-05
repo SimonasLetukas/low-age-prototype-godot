@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LowAgeData.Domain.Masks;
+﻿using LowAgeData.Domain.Masks;
 
 namespace LowAgeData.Collections
 {

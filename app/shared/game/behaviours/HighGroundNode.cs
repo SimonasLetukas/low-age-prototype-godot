@@ -32,9 +32,9 @@ public partial class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGrou
         .ToDictionary(pair => pair.Key + Parent.EntityPrimaryPosition, pair => pair.Value);
     public IEnumerable<Vector2Int> FlattenedPositionsWithoutSpriteOffset => FlattenedLocalPositions
         .Select(x => x.Key + Parent.EntityPrimaryPosition);
-    public Dictionary<Vector2Int, int> FlattenedLocalPositions { get; set; } = new Dictionary<Vector2Int, int>();
+    public Dictionary<Vector2Int, int> FlattenedLocalPositions { get; set; } = new();
 
-    private HighGround Blueprint { get; set; }
+    private HighGround Blueprint { get; set; } = null!;
 
     public void SetBlueprint(HighGround blueprint)
     {

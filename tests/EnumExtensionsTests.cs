@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using FluentAssertions;
+﻿using FluentAssertions;
 using LowAgeCommon.Extensions;
-using Xunit;
 
 namespace LowAgeTests
 {

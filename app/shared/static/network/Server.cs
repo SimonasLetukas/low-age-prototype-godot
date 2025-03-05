@@ -3,16 +3,14 @@ using LowAgeData.Domain.Factions;
 
 public partial class Server : Network
 {
-    public static Server Instance = null;
+    public static Server Instance = null!;
 
     public override void _Ready()
     {
         base._Ready();
-        
-        if (Instance is null)
-        {
-            Instance = this;
-        }
+
+        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+        Instance ??= this;
     }
 
     /// <summary>
@@ -27,23 +25,26 @@ public partial class Server : Network
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     public void OnRegisterSelf(int playerId, string playerName, bool playerReady, string playerFactionId)
     {
+        // Server has the authority to determine the next available team
+        var playerTeam = Players.Instance.GetNextAvailableTeam();
+        
         // Register this client with the server
-        Client.Instance.OnRegisterPlayer(playerId, playerName, playerReady, playerFactionId);
+        Client.Instance.OnRegisterPlayer(playerId, playerName, playerReady, playerFactionId, playerTeam.Value);
 
         // Register the new player with all existing clients
-        foreach (var currentPlayer in Data.Instance.Players)
+        foreach (var currentPlayerId in Players.Instance.GetAllIds())
         {
-            Client.Instance.RegisterPlayer(currentPlayer.Id, playerId, playerName, playerReady, 
-                new FactionId(playerFactionId));
+            Client.Instance.RegisterPlayer(currentPlayerId, playerId, playerName, playerReady, 
+                new FactionId(playerFactionId), playerTeam);
         }
 
         // Catch the new player up with who is already here
-        foreach (var currentPlayer in Data.Instance.Players)
+        foreach (var currentPlayer in Players.Instance.GetAll())
         {
             if (currentPlayer.Id != playerId)
             {
                 Client.Instance.RegisterPlayer(playerId, currentPlayer.Id, currentPlayer.Name, 
-                    currentPlayer.Ready, currentPlayer.Faction);
+                    currentPlayer.Ready, currentPlayer.Faction, currentPlayer.Team);
             }
         }
     }

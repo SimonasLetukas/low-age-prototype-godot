@@ -14,9 +14,16 @@ public partial class ServerLobby : Lobby
             GetTree().Quit();
         }
 
-        Client.Instance.Connect(nameof(Client.GameStarted), new Callable(this, nameof(OnGameStarted)));
+        Client.Instance.GameStarted += OnGameStarted;
     }
-    
+
+    public override void _ExitTree()
+    {
+        Client.Instance.GameStarted -= OnGameStarted;
+        
+        base._ExitTree();
+    }
+
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     protected override void UpdateSelectedPlayerFaction(int playerId, string factionId)
     {
@@ -24,6 +31,15 @@ public partial class ServerLobby : Lobby
                  $"{nameof(playerId)} '{playerId}', {nameof(factionId)} '{factionId}'.");
         
         Rpc(nameof(ChangeSelectedFactionForPlayer), playerId, factionId);
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    protected override void UpdateSelectedPlayerTeam(int playerId, int team)
+    {
+        GD.Print($"{nameof(ServerLobby)}.{nameof(UpdateSelectedPlayerTeam)}: called with " +
+                 $"{nameof(playerId)} '{playerId}', {nameof(team)} '{team}'.");
+        
+        Rpc(nameof(ChangeSelectedTeamForPlayer), playerId, team);
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]

@@ -11,7 +11,7 @@ public partial class SelectionPanel : Control
     
     private NinePatchRect _background;
     private GridContainer _gridContainer;
-    private RichTextLabel _text;
+    private Text _text;
     private int _selectionAmount = 0;
     private const int OneLineSize = 100;
     private const int NewLineHeight = 44;
@@ -25,7 +25,7 @@ public partial class SelectionPanel : Control
         _background = GetNode<NinePatchRect>("Background");
         _gridContainer = GetNode<GridContainer>(nameof(GridContainer));
         _gridContainer.Columns = Columns;
-        _text = GetNode<RichTextLabel>(nameof(RichTextLabel));
+        _text = GetNode<Text>(nameof(Text));
         
         Reset();
         HidePanel();
@@ -66,7 +66,7 @@ public partial class SelectionPanel : Control
     {
         _selectionAmount = 0;
         var selectionIds = new List<Id>();
-        Action<ISelectable, Id> selectionButtonOnClicked = null;
+        Action<ISelectable, Id> selectionButtonOnClicked = delegate { };
         switch (ability)
         {
             case BuildNode build:
@@ -85,9 +85,13 @@ public partial class SelectionPanel : Control
         }
     }
 
-    private void OnBuildSelectionItemPressed(ISelectable abilityNode, Id id)
+    private void OnBuildSelectionItemPressed(ISelectable abilityNode, Id selectionId)
     {
-        SelectedToBuild((BuildNode)abilityNode, (EntityId)id);
+        var buildAbility = (BuildNode)abilityNode;
+        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(buildAbility.OwnerActor) is false)
+            return;
+        
+        SelectedToBuild(buildAbility, (EntityId)selectionId);
     }
 
     private void HidePanel()

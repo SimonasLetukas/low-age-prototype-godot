@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;
-using Array = Godot.Collections.Array;
 
 public partial class Interface : CanvasLayer
 {
@@ -83,9 +80,12 @@ public partial class Interface : CanvasLayer
     internal void OnEntitySelected(EntityNode entity)
     {
         _entityPanel.OnEntitySelected(entity);
-        _informationalText.SwitchTo(entity is StructureNode 
-            ? InformationalText.InfoTextType.Selected 
-            : InformationalText.InfoTextType.SelectedMovement);
+
+        var infoTextType = entity is StructureNode
+            ? InformationalText.InfoTextType.Selected
+            : InformationalText.InfoTextType.SelectedMovement;
+        var executionAllowed = Players.Instance.IsActionAllowedForCurrentPlayerOn(entity);
+        _informationalText.SwitchTo(infoTextType, executionAllowed);
     }
 
     internal void OnEntityDeselected()

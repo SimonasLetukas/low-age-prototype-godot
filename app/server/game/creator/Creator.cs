@@ -81,9 +81,9 @@ public partial class Creator : Node2D
     private static Dictionary<int, IList<Area>> AssignStartingPositions(IList<Area> positions)
     {
         var assigned = new Dictionary<int, IList<Area>>();
-        foreach (var player in Data.Instance.Players)
+        foreach (var playerId in Players.Instance.GetAllIds())
         {
-            assigned[player.Id] = new List<Area> { positions.First() };
+            assigned[playerId] = new List<Area> { positions.First() };
             positions.RemoveAt(0);
         }
 

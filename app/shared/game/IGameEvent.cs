@@ -5,5 +5,5 @@ using System;
 /// </summary>
 public interface IGameEvent
 {
-    Guid Id { get; set; }
+    Guid Id { get; }
 }

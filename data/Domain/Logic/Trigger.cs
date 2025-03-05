@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LowAgeData.Domain.Logic
+﻿namespace LowAgeData.Domain.Logic
 {
     public class Trigger
     {

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://dax8eksfbotqw"]
+
+[ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1_rm6bv"]
+[ext_resource type="Script" path="res://app/client/game/interface/shared/Text.cs" id="2_sjj8n"]
+
+[node name="Text" type="RichTextLabel"]
+clip_contents = false
+custom_minimum_size = Vector2(100, 0)
+offset_right = 100.0
+offset_bottom = 252.0
+mouse_filter = 1
+theme = ExtResource("1_rm6bv")
+bbcode_enabled = true
+text = "  and  as the selected target, cannot act, can be attacked and stays for 2 action phases. 50% of [hint=some hint]all[/hint
+
+
+
+
+
+e_big.png[/img]to the selected target. If "
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+text_direction = 1
+script = ExtResource("2_sjj8n")

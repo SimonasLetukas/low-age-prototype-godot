@@ -7,7 +7,6 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
 using LowAgeCommon;
-using LowAgeCommon.Extensions;
 using MultipurposePathfinding;
 
 /// <summary>
@@ -23,17 +22,17 @@ public partial class Entities : Node2D
     public event Action EntityDeselected = delegate { };
 
     public bool EntityMoving { get; private set; } = false;
-    public EntityNode SelectedEntity { get; private set; } = null;
-    public EntityNode EntityInPlacement { get; private set; } = null;
-    public EntityNode HoveredEntity { get; private set; } = null;
+    public EntityNode? SelectedEntity { get; private set; } = null;
+    public EntityNode? EntityInPlacement { get; private set; } = null;
+    public EntityNode? HoveredEntity { get; private set; } = null;
 
-    private EntityRenderers _renderers;
-    private Node2D _units;
-    private Node2D _structures;
-    private Func<IList<Vector2Int>, IList<Tiles.TileInstance>> _getHighestTiles;
-    private Func<Vector2Int, bool, Tiles.TileInstance> _getTile;
+    private EntityRenderers _renderers = null!;
+    private Node2D _units = null!;
+    private Node2D _structures = null!;
+    private Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> _getHighestTiles = null!;
+    private Func<Vector2Int, bool, Tiles.TileInstance?> _getTile = null!;
 
-    private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new Dictionary<Guid, EntityNode>();
+    private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new();
 
     public override void _Ready()
     {
@@ -44,8 +43,8 @@ public partial class Entities : Node2D
         NewPositionOccupied += _renderers.UpdateSorting;
     }
     
-    public void Initialize(Func<IList<Vector2Int>, IList<Tiles.TileInstance>> getHighestTiles, 
-        Func<Vector2Int, bool, Tiles.TileInstance> getTile)
+    public void Initialize(Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles, 
+        Func<Vector2Int, bool, Tiles.TileInstance?> getTile)
     {
         _getHighestTiles = getHighestTiles;
         _getTile = getTile;
@@ -86,7 +85,7 @@ public partial class Entities : Node2D
             _renderers.UpdateSorting();
     }
 
-    public EntityNode GetEntityByInstanceId(Guid instanceId) => _entitiesByIds.ContainsKey(instanceId)
+    public EntityNode? GetEntityByInstanceId(Guid instanceId) => _entitiesByIds.ContainsKey(instanceId)
         ? _entitiesByIds[instanceId]
         : null;
 
@@ -98,7 +97,7 @@ public partial class Entities : Node2D
             return;
         
         if (IsEntitySelected())
-            SelectedEntity.SetSelected(false);
+            SelectedEntity!.SetSelected(false);
 
         SelectedEntity = entity;
         SelectedEntity.SetSelected(true);
@@ -110,7 +109,7 @@ public partial class Entities : Node2D
         if (IsEntitySelected() is false) 
             return;
         
-        SelectedEntity.SetSelected(false);
+        SelectedEntity!.SetSelected(false);
         SelectedEntity = null;
         EntityDeselected();
     }
@@ -118,12 +117,12 @@ public partial class Entities : Node2D
     public bool IsEntitySelected() => SelectedEntity != null;
 
     public bool IsEntitySelected(EntityNode entity) => IsEntitySelected() 
-                                                       && SelectedEntity.InstanceId == entity?.InstanceId;
+                                                       && SelectedEntity!.InstanceId == entity.InstanceId;
 
     public bool IsEntityHovered() => HoveredEntity != null;
 
     public bool IsEntityHovered(EntityNode entity) => IsEntityHovered() 
-                                                      && HoveredEntity.InstanceId == entity?.InstanceId;
+                                                      && HoveredEntity!.InstanceId == entity.InstanceId;
 
     public bool TryHoveringEntityOn(Tiles.TileInstance tile)
     {
@@ -133,7 +132,7 @@ public partial class Entities : Node2D
         var occupationExists = tile.Occupants.Any();
         var occupantEntity = tile.Occupants.LastOrDefault(); // TODO handle high-ground
         
-        if (occupationExists && IsEntityHovered(occupantEntity))
+        if (occupationExists && IsEntityHovered(occupantEntity!))
             return true;
 
         HoveredEntity?.SetTileHovered(false);
@@ -149,10 +148,10 @@ public partial class Entities : Node2D
         return false;
     }
     
-    public EntityNode GetTopEntity(Vector2 globalPosition)
+    public EntityNode? GetTopEntity(Vector2 globalPosition)
     {
         var topZ = float.NegativeInfinity;
-        EntityNode topEntity = null;
+        EntityNode? topEntity = null;
 
         var colliders = Colliders.GetAt(globalPosition, GetWorld2D());
         
@@ -194,8 +193,9 @@ public partial class Entities : Node2D
     public EntityNode SetEntityForPlacement(EntityId entityId, 
         bool canBePlacedOnTheWholeMap)
     {
+        var playerId = Players.Instance.Current.Id;
         var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
-        var newEntity = InstantiateEntity(newEntityBlueprint);
+        var newEntity = InstantiateEntity(newEntityBlueprint, playerId);
         
         newEntity.SetForPlacement(canBePlacedOnTheWholeMap);
         EntityInPlacement = newEntity;
@@ -207,6 +207,9 @@ public partial class Entities : Node2D
 
     public void UpdateEntityInPlacement(Vector2Int mapPosition, Vector2 globalPosition)
     {
+        if (EntityInPlacement is null)
+            return;
+        
         EntityInPlacement.EntityPrimaryPosition = mapPosition;
         EntityInPlacement.SnapTo(globalPosition);
         EntityInPlacement.DeterminePlacementValidity(true);
@@ -218,8 +221,27 @@ public partial class Entities : Node2D
         EntityInPlacement = null;
     }
 
-    public EntityNode PlaceEntity()
+    public void HandleEvent(EntityPlacedEvent @event)
     {
+        var entity = GetEntityByInstanceId(@event.InstanceId);
+        if (entity != null)
+        {
+            PlaceEntity(entity, false);
+            return;
+        }
+        
+        var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
+        entity = InstantiateEntity(entityBlueprint, @event.PlayerId, @event.InstanceId);
+        entity.ForcePlace(@event);
+        
+        NewPositionOccupied(entity);
+    }
+
+    public EntityNode? PlaceEntity()
+    {
+        if (EntityInPlacement is null)
+            return null;
+        
         var entity = EntityInPlacement;
         EntityInPlacement = null;
         
@@ -230,34 +252,17 @@ public partial class Entities : Node2D
         entity.DeterminePlacementValidity(true);
         return PlaceEntity(entity, true);
     }
-
-    public EntityNode PlaceEntity(EntityPlacedEvent @event)
-    {
-        var entity = GetEntityByInstanceId(@event.InstanceId);
-        if (entity is null)
-        {
-            var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
-            entity = InstantiateEntity(entityBlueprint, @event.InstanceId);
-            entity.EntityPrimaryPosition = @event.MapPosition;
-            entity.OverridePlacementValidity();
-            if (entity is ActorNode actor)
-                actor.SetActorRotation(@event.ActorRotation);
-            // TODO this is getting quite extensive, think of a way to move the synchronization of entity state to be
-            // handled inside the entity
-        }
-
-        return PlaceEntity(entity, false);
-    }
     
-    private EntityNode PlaceEntity(Entity entityBlueprint, Vector2Int mapPosition)
+    private EntityNode? PlaceEntity(Entity entityBlueprint, Vector2Int mapPosition)
     {
-        var entity = InstantiateEntity(entityBlueprint);
+        var playerId = Players.Instance.Current.Id;
+        var entity = InstantiateEntity(entityBlueprint, playerId);
         entity.EntityPrimaryPosition = mapPosition;
         entity.DeterminePlacementValidity(false);
         return PlaceEntity(entity, true);
     }
 
-    private EntityNode PlaceEntity(EntityNode entity, bool placeAsCandidate)
+    private EntityNode? PlaceEntity(EntityNode entity, bool placeAsCandidate)
     {
         var instanceId = entity.InstanceId;
         
@@ -268,8 +273,14 @@ public partial class Entities : Node2D
             return null;
         
         if (placeAsCandidate)
-            EntityPlaced(new EntityPlacedEvent(entity.BlueprintId, entity.EntityPrimaryPosition, instanceId, 
-                entity is ActorNode actor ? actor.ActorRotation : ActorRotation.BottomRight));
+            EntityPlaced(new EntityPlacedEvent
+            {
+                BlueprintId = entity.BlueprintId,
+                MapPosition = entity.EntityPrimaryPosition,
+                InstanceId = instanceId,
+                ActorRotation = entity is ActorNode actor ? actor.ActorRotation : ActorRotation.BottomRight,
+                PlayerId = entity.Player.Id
+            });
         
         NewPositionOccupied(entity);
         
@@ -285,21 +296,16 @@ public partial class Entities : Node2D
         return placedSuccessfully;
     }
 
-    private EntityNode InstantiateEntity(Entity entityBlueprint, Guid? instanceId = null)
+    private EntityNode InstantiateEntity(Entity entityBlueprint, int playerId, Guid? instanceId = null)
     {
-        EntityNode entity;
-        switch (entityBlueprint)
+        var player = Players.Instance.Get(playerId);
+
+        EntityNode entity = entityBlueprint switch
         {
-            case Structure structure:
-                entity = InstantiateStructure(structure);
-                break;
-            case Unit unit:
-                entity = InstantiateUnit(unit);
-                break;
-            // TODO case Doodad doodad:
-            default:
-                throw new ArgumentOutOfRangeException($"No possible cast for entity '{entityBlueprint.Id}'");
-        }
+            Structure structure => InstantiateStructure(structure, player),
+            Unit unit => InstantiateUnit(unit, player),
+            _ => throw new ArgumentOutOfRangeException($"No possible cast for entity '{entityBlueprint.Id}'")
+        };
 
         entity.Destroyed += OnEntityDestroyed;
 
@@ -310,21 +316,19 @@ public partial class Entities : Node2D
         return entity;
     }
 
-    private StructureNode InstantiateStructure(Structure structureBlueprint)
+    private StructureNode InstantiateStructure(Structure structureBlueprint, Player player)
     {
-        var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures);
-        structure.GetHighestTiles = _getHighestTiles;
-        structure.GetTile = _getTile;
+        var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures, player, 
+            _getTile, _getHighestTiles);
 
         return structure;
     }
 
-    private UnitNode InstantiateUnit(Unit unitBlueprint)
+    private UnitNode InstantiateUnit(Unit unitBlueprint, Player player)
     {
-        var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units);
+        var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units, player, 
+            _getTile, _getHighestTiles);
 
-        unit.GetHighestTiles = _getHighestTiles;
-        unit.GetTile = _getTile;
         unit.FinishedMoving += OnEntityFinishedMoving;
 
         return unit;

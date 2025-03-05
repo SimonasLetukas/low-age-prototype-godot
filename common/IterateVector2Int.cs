@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace LowAgeCommon
 {
     public static class IterateVector2Int

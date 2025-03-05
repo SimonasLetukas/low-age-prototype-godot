@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LowAgeCommon.Extensions
+﻿namespace LowAgeCommon.Extensions
 {
     public static class KeyValuePairExtensions
     {

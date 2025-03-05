@@ -18,24 +18,24 @@ public partial class ServerGame : Game
         _creator = GetNode<Creator>($"{nameof(Creator)}");
         
         _creator.MapCreated += OnRegisterServerEvent;
-        
-        Server.Instance.Connect(nameof(Network.PlayerRemoved), new Callable(this, nameof(OnPlayerRemoved)));
+        Server.Instance.PlayerRemoved += OnPlayerRemoved;
 
         // Wait until the parent scene is fully loaded
         await ToSignal(GetTree().Root.GetChild(GetTree().Root.GetChildCount() - 1), "ready");
 
         _notLoadedPlayers = new List<int>();
         _notInitializedPlayers = new List<int>();
-        foreach (var player in Data.Instance.Players)
+        foreach (var playerId in Players.Instance.GetAllIds())
         {
-            _notLoadedPlayers.Add(player.Id);
-            _notInitializedPlayers.Add(player.Id);
+            _notLoadedPlayers.Add(playerId);
+            _notInitializedPlayers.Add(playerId);
         }
     }
 
     public override void _ExitTree()
     {
         _creator.MapCreated -= OnRegisterServerEvent;
+        Server.Instance.PlayerRemoved -= OnPlayerRemoved;
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
@@ -92,7 +92,7 @@ public partial class ServerGame : Game
                 break;
             default:
                 GD.Print($"{nameof(ServerGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
-                         $"'{EventToString(gameEvent).TrimForLogs()}'. Type not implemented or not relevant " +
+                         $"'{EventToString(gameEvent).TrimForLogs(50)}...'. Type not implemented or not relevant " +
                          $"for server.");
                 break;
         }
@@ -116,9 +116,9 @@ public partial class ServerGame : Game
                  $"{_notInitializedPlayers.Count} players to initialize");
     }
     
-    private void OnPlayerRemoved(int playerId)
+    private void OnPlayerRemoved(long playerId)
     {
-        if (Data.Instance.Players.Count < 2)
+        if (Players.Instance.Count < 2)
         {
             GD.Print($"{nameof(ServerGame)}.{nameof(OnPlayerRemoved)}: not enough players to run the " +
                      "game, returning to lobby");
@@ -128,6 +128,6 @@ public partial class ServerGame : Game
             Callable.From(() => GetTree().ChangeSceneToFile(ServerLobby.ScenePath)).CallDeferred();
         }
         
-        GD.Print($"{nameof(ServerGame)}.{nameof(OnPlayerRemoved)}: '{Data.Instance.Players.Count}' players remaining");
+        GD.Print($"{nameof(ServerGame)}.{nameof(OnPlayerRemoved)}: '{Players.Instance.Count}' players remaining");
     }
 }
