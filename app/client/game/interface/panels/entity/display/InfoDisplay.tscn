@@ -112,13 +112,13 @@ void fragment()
 	COLOR = final_color; 
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yckud"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sfh7b"]
 resource_local_to_scene = true
 shader = SubResource("3")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_o4fdb"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qfubd"]
 resource_local_to_scene = true
 shader = SubResource("3")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
@@ -333,11 +333,11 @@ layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="Melee" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource("11")]
-material = SubResource("ShaderMaterial_yckud")
+material = SubResource("ShaderMaterial_sfh7b")
 layout_mode = 2
 
 [node name="Ranged" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource("11")]
-material = SubResource("ShaderMaterial_o4fdb")
+material = SubResource("ShaderMaterial_qfubd")
 layout_mode = 2
 Icon = ExtResource("15")
 

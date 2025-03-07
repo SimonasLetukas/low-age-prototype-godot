@@ -425,7 +425,7 @@ public partial class ClientMap : Map
 
 		if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
 		{
-			OnSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2!);
+			OnInterfaceSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2!);
 			return;
 		}
 
@@ -669,7 +669,7 @@ public partial class ClientMap : Map
 		HandleRightClick();
 	}
 
-	internal void OnSelectedToBuild(BuildNode buildAbility, EntityId entityId)
+	internal void OnInterfaceSelectedToBuild(BuildNode buildAbility, EntityId entityId)
 	{
 		_previousBuildSelection = (buildAbility, entityId);
 
@@ -697,5 +697,38 @@ public partial class ClientMap : Map
 			return;
 
 		ExecuteCancellation();
+	}
+
+	public void OnInterfaceAttackSelected(bool started, Attacks? attackType)
+	{
+		if (_selectionOverlay is SelectionOverlay.None or SelectionOverlay.Placement 
+		    || Entities.SelectedEntity is not ActorNode actor)
+			return;
+
+		var clientState = ClientState.Instance;
+		
+		if (started is false)
+		{
+			if (clientState.AttackToggled)
+				clientState.ToggleMovementAttackOverlay(actor);
+			
+			_tileMap.Elevatable.ClearTargetTiles(false);
+			ShowMovementOverlay(actor);
+			return;
+		}
+		
+		if (clientState.MovementToggled)
+			clientState.ToggleMovementAttackOverlay(actor);
+		
+		_tileMap.Elevatable.ClearAvailableTiles(false);
+		_tileMap.Elevatable.ClearPath();
+		bool? showMelee = attackType switch
+		{
+			null => null,
+			_ when attackType.Equals(Attacks.Ranged) => false,
+			_ when attackType.Equals(Attacks.Melee) => true,
+			_ => null,
+		};
+		ShowAttackOverlay(actor, showMelee);
 	}
 }

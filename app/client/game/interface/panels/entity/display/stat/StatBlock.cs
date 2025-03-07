@@ -25,16 +25,11 @@ public partial class StatBlock : MarginContainer
         MaxValue = maxValue;
         ShowCurrentValue = showCurrentValue;
 
-        string newLabelValue = null;
-        switch (ShowCurrentValue)
+        var newLabelValue = ShowCurrentValue switch
         {
-            case true:
-                newLabelValue = $"{currentValue:0.#}/{maxValue.ToString()}";
-                break;
-            case false:
-                newLabelValue = maxValue.ToString();
-                break;
-        }
+            true => $"{currentValue:0.#}/{maxValue.ToString()}",
+            false => maxValue.ToString()
+        };
 
         GetNode<Label>($"{nameof(HBoxContainer)}/{nameof(MarginContainer)}/{nameof(Label)}").Text = newLabelValue;
     }

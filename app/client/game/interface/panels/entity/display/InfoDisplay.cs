@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,8 +6,9 @@ using LowAgeData.Domain.Common;
 
 public partial class InfoDisplay : MarginContainer
 {
-    [Signal] public delegate void AbilitiesClosedEventHandler();
-    [Signal] public delegate void AbilityTextResizedEventHandler();
+    public event Action AbilitiesClosed = delegate { };
+    public event Action AbilityTextResized = delegate { };
+    public event Action<bool, Attacks?> AttackSelected = delegate { };
 
     public View CurrentView { get; private set; } = View.UnitStats;
     private View _previousView = View.UnitStats;
@@ -96,16 +98,26 @@ public partial class InfoDisplay : MarginContainer
         _abilityText = _abilityDescription.GetNode<Text>(nameof(Text));
         _actorAttributes = GetNode<ActorAttributes>($"{nameof(VBoxContainer)}/{nameof(ActorAttributes)}");
         _playerAttributes = GetNode<PlayerAttributes>($"{nameof(VBoxContainer)}/{nameof(PlayerAttributes)}");
-
-        _rightSideMeleeAttack.Connect(nameof(AttackTypeBox.Clicked), new Callable(this, nameof(OnMeleeClicked)));
-        _rightSideRangedAttack.Connect(nameof(AttackTypeBox.Clicked), new Callable(this, nameof(OnRangedClicked)));
-        _rightSideMeleeAttack.Connect(nameof(AttackTypeBox.Hovering), new Callable(this, nameof(OnMeleeHovering)));
-        _rightSideRangedAttack.Connect(nameof(AttackTypeBox.Hovering), new Callable(this, nameof(OnRangedHovering)));
+        
+        _rightSideMeleeAttack.Clicked += OnMeleeClicked;
+        _rightSideRangedAttack.Clicked += OnRangedClicked;
+        _rightSideMeleeAttack.Hovering += OnMeleeHovering;
+        _rightSideRangedAttack.Hovering += OnRangedHovering;
         _navigationBack.Connect(nameof(NavigationBox.Clicked), new Callable(this, nameof(OnNavigationBoxClicked)));
         _abilityText.Connect("finished", new Callable(this, nameof(OnTextResized)));
         
         _leftSideBottomEmptyBlock.SetEmpty();
         ShowView(View.UnitStats);
+    }
+
+    public override void _ExitTree()
+    {
+        _rightSideMeleeAttack.Clicked -= OnMeleeClicked;
+        _rightSideRangedAttack.Clicked -= OnRangedClicked;
+        _rightSideMeleeAttack.Hovering -= OnMeleeHovering;
+        _rightSideRangedAttack.Hovering -= OnRangedHovering;
+        
+        base._ExitTree();
     }
 
     public void ShowPreviousView()
@@ -116,9 +128,16 @@ public partial class InfoDisplay : MarginContainer
 
     public void ShowView(View view, bool showMinimal = false)
     {
+        if (view != View.AttackMelee && view != View.AttackRanged)
+            AttackSelected(false, null);
+        
         _previousView = CurrentView;
         _showMinimal = showMinimal;
         CurrentView = view;
+        
+        if (showMinimal is false)
+            ClientState.Instance.SetUiLoading(true);
+        
         switch (CurrentView)
         {
             case View.UnitStats:
@@ -133,16 +152,21 @@ public partial class InfoDisplay : MarginContainer
             case View.AttackMelee:
                 Reset(false);
                 ShowMeleeAttack();
+                AttackSelected(true, Attacks.Melee);
                 break;
             case View.AttackRanged:
                 Reset(false);
                 ShowRangedAttack();
+                AttackSelected(true, Attacks.Ranged);
                 break;
             case View.Ability:
                 Reset();
                 ShowAbility();
                 break;
         }
+        
+        if (showMinimal is false)
+            Callable.From(() => ClientState.Instance.SetUiLoading(false)).CallDeferred();
     }
 
     public void SetEntityStats(EntityNode entity)
@@ -412,10 +436,12 @@ public partial class InfoDisplay : MarginContainer
     {
         if (_rightSideMeleeAttack.IsSelected)
         {
+            _rightSideMeleeAttack.SetSelected(false);
             ShowView(View.UnitStats);
             return;
         }
         
+        _rightSideMeleeAttack.SetSelected(true);
         _rightSideRangedAttack.SetSelected(false);
         if (CurrentView != View.AttackMelee)
         {
@@ -427,10 +453,12 @@ public partial class InfoDisplay : MarginContainer
     {
         if (_rightSideRangedAttack.IsSelected)
         {
+            _rightSideRangedAttack.SetSelected(false);
             ShowView(View.UnitStats);
             return;
         }
         
+        _rightSideRangedAttack.SetSelected(true);
         _rightSideMeleeAttack.SetSelected(false);
         if (CurrentView != View.AttackRanged)
         {
@@ -440,12 +468,20 @@ public partial class InfoDisplay : MarginContainer
 
     private void OnMeleeHovering(bool started)
     {
+        if (_rightSideMeleeAttack.IsSelected || _rightSideRangedAttack.IsSelected)
+            return;
+        
         switch (started)
         {
             case true:
+                if (CurrentView is View.AttackMelee)
+                    break;
                 ShowView(View.AttackMelee);
                 break;
+            
             case false:
+                if (CurrentView is not View.AttackMelee)
+                    break;
                 ShowView(_previousView);
                 break;
         }
@@ -453,12 +489,20 @@ public partial class InfoDisplay : MarginContainer
 
     private void OnRangedHovering(bool started)
     {
+        if (_rightSideMeleeAttack.IsSelected || _rightSideRangedAttack.IsSelected)
+            return;
+        
         switch (started)
         {
             case true:
+                if (CurrentView is View.AttackRanged)
+                    break;
                 ShowView(View.AttackRanged);
                 break;
+            
             case false:
+                if (CurrentView is not View.AttackRanged)
+                    break;
                 ShowView(_previousView);
                 break;
         }
@@ -467,11 +511,8 @@ public partial class InfoDisplay : MarginContainer
     private void OnNavigationBoxClicked()
     {
         ShowView(_previousView);
-        EmitSignal(nameof(AbilitiesClosed));
+        AbilitiesClosed();
     }
 
-    private void OnTextResized()
-    {
-        EmitSignal(nameof(AbilityTextResized));
-    }
+    private void OnTextResized() => AbilityTextResized();
 }

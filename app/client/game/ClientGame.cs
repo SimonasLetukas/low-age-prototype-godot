@@ -49,7 +49,8 @@ public partial class ClientGame : Game
         
         _interface.MouseEntered += _mouse.OnInterfaceMouseEntered;
         _interface.MouseExited += _mouse.OnInterfaceMouseExited;
-        _interface.SelectedToBuild += _map.OnSelectedToBuild;
+        _interface.SelectedToBuild += _map.OnInterfaceSelectedToBuild;
+        _interface.AttackSelected += _map.OnInterfaceAttackSelected;
 
         _map.FinishedInitializing += OnMapFinishedInitializing;
         _map.EntityIsBeingPlaced += _interface.OnEntityIsBeingPlaced;
@@ -64,7 +65,8 @@ public partial class ClientGame : Game
     {
         _interface.MouseEntered -= _mouse.OnInterfaceMouseEntered;
         _interface.MouseExited -= _mouse.OnInterfaceMouseExited;
-        _interface.SelectedToBuild -= _map.OnSelectedToBuild;
+        _interface.SelectedToBuild -= _map.OnInterfaceSelectedToBuild;
+        _interface.AttackSelected -= _map.OnInterfaceAttackSelected;
         
         _map.FinishedInitializing -= OnMapFinishedInitializing;
         _map.EntityIsBeingPlaced -= _interface.OnEntityIsBeingPlaced;

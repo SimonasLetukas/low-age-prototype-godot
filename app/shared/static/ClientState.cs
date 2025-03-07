@@ -7,6 +7,7 @@ public partial class ClientState : Node
     public bool Flattened { get; private set; } = false;
     public bool MovementToggled { get; private set; } = true;
     public bool AttackToggled => MovementToggled is false;
+    public bool UiLoading { get; private set; }
 
     public override void _Ready()
     {
@@ -34,5 +35,13 @@ public partial class ClientState : Node
     {
         MovementToggled = true;
         EventBus.Instance.RaiseMovementAttackOverlayChanged(selectedEntity);
+    }
+    
+    public void SetUiLoading(bool value)
+    {
+        if (value is false)
+            Callable.From(() => UiLoading = value).CallDeferred();
+        else
+            UiLoading = value;
     }
 }

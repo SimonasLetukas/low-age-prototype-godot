@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Godot;
+using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;
 
 public partial class Interface : CanvasLayer
@@ -10,11 +11,12 @@ public partial class Interface : CanvasLayer
     public event Action MouseEntered = delegate { };
     public event Action MouseExited = delegate { };
     public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
+    public event Action<bool, Attacks?> AttackSelected = delegate { };
     
-    private EntityPanel _entityPanel;
-    private SelectionPanel _selectionPanel;
-    private InformationalText _informationalText;
-    private HoveringPanel _hoveringPanel;
+    private EntityPanel _entityPanel = null!;
+    private SelectionPanel _selectionPanel = null!;
+    private InformationalText _informationalText = null!;
+    private HoveringPanel _hoveringPanel = null!;
     
     public override void _Ready()
     {
@@ -37,6 +39,7 @@ public partial class Interface : CanvasLayer
 
         _entityPanel.AbilityViewOpened += _selectionPanel.OnSelectableAbilityPressed;
         _entityPanel.AbilityViewClosed += _selectionPanel.OnGoBackPressed;
+        _entityPanel.AttackSelected += OnEntityPanelAttackSelected;
         _selectionPanel.SelectedToBuild += OnSelectionPanelSelectedToBuild;
     }
 
@@ -44,6 +47,7 @@ public partial class Interface : CanvasLayer
     {
         _entityPanel.AbilityViewOpened -= _selectionPanel.OnSelectableAbilityPressed;
         _entityPanel.AbilityViewClosed -= _selectionPanel.OnGoBackPressed;
+        _entityPanel.AttackSelected -= OnEntityPanelAttackSelected;
         _selectionPanel.SelectedToBuild -= OnSelectionPanelSelectedToBuild;
         base._ExitTree();
     }
@@ -99,4 +103,6 @@ public partial class Interface : CanvasLayer
     {
         SelectedToBuild(buildAbility, entityId);
     }
+
+    private void OnEntityPanelAttackSelected(bool started, Attacks? attackType) => AttackSelected(started, attackType);
 }

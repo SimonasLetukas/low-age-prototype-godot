@@ -12,9 +12,15 @@ public partial class BaseButton : NinePatchRect
     
     public bool IsSelected { get; private set; } = false;
     public bool IsDisabled { get; private set; } = false;
+
+    protected Color TintColor = new("e0d1bf");
+
+    protected TextureRect TextureRect = null!;
     
     public override void _Ready()
     {
+        TextureRect = GetNode<TextureRect>(nameof(Godot.TextureRect));
+        
         SetIcon(Icon);
 
         Connect("mouse_entered", new Callable(this, nameof(OnBaseButtonMouseEntered)));
@@ -50,24 +56,25 @@ public partial class BaseButton : NinePatchRect
         Highlight(IsSelected);
     }
 
+    public void SetTint(bool to)
+    {
+        TextureRect.SelfModulate = to ? TintColor : Colors.White;
+    }
+
     public void SetIcon(Texture2D icon)
     {
         Icon = icon;
-        GetNode<TextureRect>(nameof(TextureRect)).Texture = icon;
-        GetNode<TextureRect>($"{nameof(TextureRect)}/Shadow").Texture = icon;
+        GetNode<TextureRect>(nameof(Godot.TextureRect)).Texture = icon;
+        GetNode<TextureRect>($"{nameof(Godot.TextureRect)}/Shadow").Texture = icon;
     }
     
-    protected void SetClicked(bool to)
+    protected virtual void SetClicked(bool to)
     {
-        switch (to)
+        Texture = to switch
         {
-            case true:
-                Texture = TextureClicked;
-                break;
-            case false:
-                Texture = TextureNormal;
-                break;
-        }
+            true => TextureClicked,
+            false => TextureNormal
+        };
     }
 
     protected void Highlight(bool to)
@@ -81,12 +88,14 @@ public partial class BaseButton : NinePatchRect
         if (Material is ShaderMaterial shaderMaterial) 
             shaderMaterial.SetShaderParameter("disabled", to);
 
-        var icon = GetNode<TextureRect>(nameof(TextureRect));
-        icon.Modulate = new Color(Colors.White, to ? 0.5f : 1);
+        TextureRect.Modulate = new Color(Colors.White, to ? 0.5f : 1);
     }
 
     private void OnBaseButtonMouseEntered()
     {
+        if (ClientState.Instance.UiLoading)
+            return;
+        
         if (IsSelected)
             return;
         
@@ -96,6 +105,9 @@ public partial class BaseButton : NinePatchRect
 
     private void OnBaseButtonMouseExited()
     {
+        if (ClientState.Instance.UiLoading)
+            return;
+        
         SetClicked(false);
         
         if (IsSelected)
