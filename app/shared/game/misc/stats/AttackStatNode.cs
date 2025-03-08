@@ -13,11 +13,11 @@ public partial class AttackStatNode : StatNode, INodeFromBlueprint<AttackStat>
 		return stat;
 	}
 
-	public bool IsMelee => Blueprint.AttackType.Equals(Attacks.Melee);
-	public bool IsRanged => Blueprint.AttackType.Equals(Attacks.Ranged);
+	public bool IsMelee => Blueprint.AttackType.Equals(AttackType.Melee);
+	public bool IsRanged => Blueprint.AttackType.Equals(AttackType.Ranged);
 	public int MinimumDistance { get; private set; }
 	public int MaximumDistance { get; private set; }
-	public int Damage => (int)MaxAmount;
+	public int Damage => MaxAmount;
 	public bool HasBonusDamage => BonusTo is not null || BonusDamage is 0;
 	public ActorAttribute? BonusTo { get; private set; }
 	public int BonusDamage { get; private set; }

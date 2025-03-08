@@ -9,7 +9,7 @@ namespace LowAgeData.Domain.Common.Modifications
         public AttackModification(
             Change change, 
             float amount,
-            Attacks attackType,
+            AttackType attackType,
             AttackAttribute attribute,
             IList<ModificationFlag>? modificationFlags = null) : base(change, amount)
         {
@@ -19,7 +19,7 @@ namespace LowAgeData.Domain.Common.Modifications
         }
         
         public AttackModification(
-            Attacks attackType,
+            AttackType attackType,
             IList<ModificationFlag> modificationFlags) : base(Change.AddCurrent, 0)
         {
             AttackType = attackType;
@@ -27,7 +27,7 @@ namespace LowAgeData.Domain.Common.Modifications
             ModificationFlags = modificationFlags;
         }
 
-        public Attacks AttackType { get; }
+        public AttackType AttackType { get; }
         public AttackAttribute Attribute { get; }
         public IList<ModificationFlag> ModificationFlags { get; }
     }

@@ -36,7 +36,7 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         Blueprint = blueprint;
         EntitySize = Vector2Int.One * Blueprint.Size;
         Movement = HasStat(StatType.Movement)
-            ? Stats.First(x => x.CombatType.Equals(StatType.Movement)).CurrentAmount + 0.5f
+            ? Stats.First(x => x.StatType.Equals(StatType.Movement)).CurrentAmount + 0.5f
             : 0;
         // TODO 0.5 is added for smoother corners to align with circles from IShape, decide if this is needed.
         // Argument against: not moving straight diagonally is more cost-effective, which is not intuitive for the
@@ -84,12 +84,12 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         
         var meleeAttack = (AttackStat)blueprint.Statistics.FirstOrDefault(x =>
             x is AttackStat attackStat
-            && attackStat.AttackType.Equals(LowAgeData.Domain.Common.Attacks.Melee));
+            && attackStat.AttackType.Equals(LowAgeData.Domain.Common.AttackType.Melee));
         var meleeDistance = meleeAttack?.MaximumDistance ?? 0;
         
         var rangedAttack = (AttackStat)blueprint.Statistics.FirstOrDefault(x =>
             x is AttackStat attackStat
-            && attackStat.AttackType.Equals(LowAgeData.Domain.Common.Attacks.Ranged));
+            && attackStat.AttackType.Equals(LowAgeData.Domain.Common.AttackType.Ranged));
         var rangedDistance = rangedAttack?.MaximumDistance ?? 0;
 
         var rangedReach = rangedDistance > 0 ? rangedDistance + 1 : 0;

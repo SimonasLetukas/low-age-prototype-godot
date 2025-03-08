@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Godot;
 using LowAgeData.Domain.Entities;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
+using LowAgeData.Domain.Common;
 using MultipurposePathfinding;
 using Area = LowAgeCommon.Area;
 
@@ -37,6 +39,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public string DisplayName { get; private set; } = null!;
     public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; } = null!;
+    public bool IsBeingDestroyed { get; private set; }
     
     protected Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; set; } = null!;
     protected Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; set; } = null!;
@@ -211,6 +214,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public virtual bool CanBeMovedThroughAt(Point point, Team forTeam) => true;
 
+    public virtual bool CanBeTargetedBy(EntityNode entity) => Player.Team.IsEnemyTo(entity.Player.Team);
+
     public bool HasHighGroundAt(Point point, Team forTeam)
     {
         if (point.IsHighGround is false)
@@ -242,9 +247,14 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
         return result;
     }
+
+    public virtual void ReceiveAttack(EntityNode source, AttackType attackType) { }
+    
+    protected virtual void ReceiveDamage(EntityNode source, DamageType damageType, int amount) { }
     
     public void Destroy()
     {
+        IsBeingDestroyed = true;
         Destroyed(this);
         QueueFree();
     }
@@ -301,7 +311,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         if (tiles.Any(x => x is null))
             return false;
 
-        if (requiresTargetTiles && tiles.All(x => x!.IsTarget is false))
+        if (requiresTargetTiles && tiles.All(x => x!.TargetType is TargetType.None))
             return false;
         
         if (tiles.Any(x => x!.Occupants.Any(y => y is UnitNode)))

@@ -18,6 +18,7 @@ public partial class ClientMap : Map
 	public event Action FinishedInitializing = delegate { };
 	public event Action<EntityNode> EntityIsBeingPlaced = delegate { };
 	public event Action<UnitMovedAlongPathEvent> UnitMovementIssued = delegate { };
+	public event Action<EntityAttackedEvent> EntityAttacked = delegate { };
 
 	public Entities Entities { get; private set; } = null!;
 	private Pathfinding Pathfinding { get; set; } = new();
@@ -57,6 +58,7 @@ public partial class ClientMap : Map
 		_lines = GetNode<Node2D>($"Lines");
 
 		Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
+		Entities.Destroyed += OnEntitiesDestroyed;
 		_tileMap.FinishedInitialInitializing += OnTileMapFinishedInitialInitializing;
 		_tileMap.FinishedPointInitialization += OnTileMapFinishedPointInitialization;
 		Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing;
@@ -70,6 +72,7 @@ public partial class ClientMap : Map
 	public override void _ExitTree()
 	{
 		Entities.NewPositionOccupied -= OnEntitiesNewPositionOccupied;
+		Entities.Destroyed += OnEntitiesDestroyed;
 		_tileMap.FinishedInitialInitializing -= OnTileMapFinishedInitialInitializing;
 		_tileMap.FinishedPointInitialization -= OnTileMapFinishedPointInitialization;
 		Pathfinding.FinishedInitializing -= OnPathfindingFinishedInitializing;
@@ -337,7 +340,8 @@ public partial class ClientMap : Map
 
 		if (_selectionOverlay is SelectionOverlay.Attack && IsActionAllowedForCurrentPlayerOnSelectedEntity())
 		{
-			// TODO execute attack
+			_focusedTile.UpdateTile();
+			ExecuteAttack();
 			return;
 		}
 
@@ -450,6 +454,27 @@ public partial class ClientMap : Map
 		HandleDeselecting();
 	}
 
+	private void ExecuteAttack()
+	{
+		if (_focusedTile.CurrentTile is not { } focusedTile
+			|| focusedTile.TargetType is TargetType.None
+		    || Entities.HoveredEntity is not { } targetEntity
+		    || Entities.SelectedEntity is not { } selectedEntity)
+			return;
+
+		if (targetEntity.CanBeTargetedBy(selectedEntity) is false)
+			return;
+		
+		var attackType = focusedTile.TargetType is TargetType.Melee ? AttackType.Melee : AttackType.Ranged;
+		EntityAttacked(new EntityAttackedEvent
+		{
+			SourceId = selectedEntity.InstanceId,
+			TargetId = targetEntity.InstanceId,
+			AttackType = attackType
+		});
+		HandleDeselecting();
+	}
+
 	private void ExecuteCancellation()
 	{
 		Pathfinding.ClearCache();
@@ -488,6 +513,9 @@ public partial class ClientMap : Map
 
 	private void AddOccupation(EntityNode entity)
 	{
+		Pathfinding.ClearCache();
+		_tileMap.Elevatable.ClearCache();
+		
 		_tileMap.AddOccupation(entity);
 
 		var pathfindingEntity = new PathfindingEntity(entity.InstanceId, entity.EntityPrimaryPosition,
@@ -505,6 +533,9 @@ public partial class ClientMap : Map
 		_tileMap.RemoveOccupation(entity);
 
 		Pathfinding.RemoveEntity(entity.InstanceId);
+		
+		Pathfinding.ClearCache();
+		_tileMap.Elevatable.ClearCache();
 
 		foreach (var tile in _tileMap.GetEntityTiles(entity))
 		{
@@ -658,6 +689,13 @@ public partial class ClientMap : Map
 		AddOccupation(entity);
 		UpdateLines();
 	}
+	
+	private void OnEntitiesDestroyed(EntityNode entity)
+	{
+		if (Entities.IsEntitySelected(entity))
+			HandleDeselecting();
+		RemoveOccupation(entity);
+	}
 
 	internal void OnMouseLeftReleasedWithoutDrag()
 	{
@@ -699,7 +737,7 @@ public partial class ClientMap : Map
 		ExecuteCancellation();
 	}
 
-	public void OnInterfaceAttackSelected(bool started, Attacks? attackType)
+	public void OnInterfaceAttackSelected(bool started, AttackType? attackType)
 	{
 		if (_selectionOverlay is SelectionOverlay.None or SelectionOverlay.Placement 
 		    || Entities.SelectedEntity is not ActorNode actor)
@@ -725,8 +763,8 @@ public partial class ClientMap : Map
 		bool? showMelee = attackType switch
 		{
 			null => null,
-			_ when attackType.Equals(Attacks.Ranged) => false,
-			_ when attackType.Equals(Attacks.Melee) => true,
+			_ when attackType.Equals(AttackType.Ranged) => false,
+			_ when attackType.Equals(AttackType.Melee) => true,
 			_ => null,
 		};
 		ShowAttackOverlay(actor, showMelee);

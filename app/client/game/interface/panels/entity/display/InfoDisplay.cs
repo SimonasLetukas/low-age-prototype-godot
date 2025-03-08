@@ -8,7 +8,7 @@ public partial class InfoDisplay : MarginContainer
 {
     public event Action AbilitiesClosed = delegate { };
     public event Action AbilityTextResized = delegate { };
-    public event Action<bool, Attacks?> AttackSelected = delegate { };
+    public event Action<bool, AttackType?> AttackSelected = delegate { };
 
     public View CurrentView { get; private set; } = View.UnitStats;
     private View _previousView = View.UnitStats;
@@ -152,12 +152,12 @@ public partial class InfoDisplay : MarginContainer
             case View.AttackMelee:
                 Reset(false);
                 ShowMeleeAttack();
-                AttackSelected(true, Attacks.Melee);
+                AttackSelected(true, AttackType.Melee);
                 break;
             case View.AttackRanged:
                 Reset(false);
                 ShowRangedAttack();
-                AttackSelected(true, Attacks.Ranged);
+                AttackSelected(true, AttackType.Ranged);
                 break;
             case View.Ability:
                 Reset();
@@ -174,12 +174,12 @@ public partial class InfoDisplay : MarginContainer
         var actor = (ActorNode)entity;
         
         var stats = actor.Stats;
-        var health = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.Health));
-        var shields = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.Shields));
-        var movement = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.Movement));
-        var initiative = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.Initiative));
-        var meleeArmour = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.MeleeArmour));
-        var rangedArmour = stats.FirstOrDefault(x => x.CombatType.Equals(StatType.RangedArmour));
+        var health = stats.FirstOrDefault(x => x.StatType.Equals(StatType.Health));
+        var shields = stats.FirstOrDefault(x => x.StatType.Equals(StatType.Shields));
+        var movement = stats.FirstOrDefault(x => x.StatType.Equals(StatType.Movement));
+        var initiative = stats.FirstOrDefault(x => x.StatType.Equals(StatType.Initiative));
+        var meleeArmour = stats.FirstOrDefault(x => x.StatType.Equals(StatType.MeleeArmour));
+        var rangedArmour = stats.FirstOrDefault(x => x.StatType.Equals(StatType.RangedArmour));
         var actorAttributes = actor.Attributes;
         var player = entity.Player;
         

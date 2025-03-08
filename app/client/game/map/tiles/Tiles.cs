@@ -26,7 +26,7 @@ public partial class Tiles : Node2D
         public Vector2Int Position { get; init; }
         public required TileId Blueprint { get; init; }
         public required Terrain Terrain { get; init; }
-        public bool IsTarget { get; set; }
+        public TargetType TargetType { get; set; }
         public required IList<EntityNode> Occupants { get; init; }
         public Point Point { get; set; } = null!;
         public int YSpriteOffset { get; set; }
@@ -484,8 +484,8 @@ public partial class Tiles : Node2D
                 {
                     Position = position,
                     Blueprint = TileId.HighGround,
-                    Terrain = Terrain.HighGround,
-                    IsTarget = false,
+                    Terrain = Terrain.HighGround, 
+                    TargetType = TargetType.None,
                     Occupants = new List<EntityNode>(),
                     Point = null!,
                     YSpriteOffset = ySpriteOffset
@@ -509,7 +509,7 @@ public partial class Tiles : Node2D
                 Position = point.Position,
                 Blueprint = TileId.HighGround,
                 Terrain = Terrain.HighGround,
-                IsTarget = false,
+                TargetType = TargetType.None,
                 Occupants = new List<EntityNode>(),
                 Point = point,
                 YSpriteOffset = 0

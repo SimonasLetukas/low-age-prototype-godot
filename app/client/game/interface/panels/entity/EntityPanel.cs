@@ -9,7 +9,7 @@ public partial class EntityPanel : Control
 {
     public event Action<AbilityButton> AbilityViewOpened = delegate { };
     public event Action AbilityViewClosed = delegate { };
-    public event Action<bool, Attacks?> AttackSelected = delegate { };
+    public event Action<bool, AttackType?> AttackSelected = delegate { };
 
     private GridContainer _behaviours = null!;
     private EntityName _entityName = null!;
@@ -292,5 +292,5 @@ public partial class EntityPanel : Control
         MovePanel();
     }
 
-    private void OnInfoDisplayAttackSelected(bool started, Attacks? attackType) => AttackSelected(started, attackType);
+    private void OnInfoDisplayAttackSelected(bool started, AttackType? attackType) => AttackSelected(started, attackType);
 }

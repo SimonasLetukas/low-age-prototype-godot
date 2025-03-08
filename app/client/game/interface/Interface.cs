@@ -11,7 +11,7 @@ public partial class Interface : CanvasLayer
     public event Action MouseEntered = delegate { };
     public event Action MouseExited = delegate { };
     public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
-    public event Action<bool, Attacks?> AttackSelected = delegate { };
+    public event Action<bool, AttackType?> AttackSelected = delegate { };
     
     private EntityPanel _entityPanel = null!;
     private SelectionPanel _selectionPanel = null!;
@@ -104,5 +104,5 @@ public partial class Interface : CanvasLayer
         SelectedToBuild(buildAbility, entityId);
     }
 
-    private void OnEntityPanelAttackSelected(bool started, Attacks? attackType) => AttackSelected(started, attackType);
+    private void OnEntityPanelAttackSelected(bool started, AttackType? attackType) => AttackSelected(started, attackType);
 }

@@ -18,6 +18,7 @@ public partial class Entities : Node2D
     
     public event Action<EntityPlacedEvent> EntityPlaced = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
+    public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
     public event Action EntityDeselected = delegate { };
 
@@ -119,7 +120,7 @@ public partial class Entities : Node2D
     public bool IsEntitySelected(EntityNode entity) => IsEntitySelected() 
                                                        && SelectedEntity!.InstanceId == entity.InstanceId;
 
-    public bool IsEntityHovered() => HoveredEntity != null;
+    public bool IsEntityHovered() => HoveredEntity is { IsBeingDestroyed: false };
 
     public bool IsEntityHovered(EntityNode entity) => IsEntityHovered() 
                                                       && HoveredEntity!.InstanceId == entity.InstanceId;
@@ -219,6 +220,28 @@ public partial class Entities : Node2D
     {
         EntityInPlacement?.Destroy();
         EntityInPlacement = null;
+    }
+
+    public void HandleEvent(EntityAttackedEvent @event)
+    {
+        var source = GetEntityByInstanceId(@event.SourceId);
+        var target = GetEntityByInstanceId(@event.TargetId);
+
+        if (source is null)
+        {
+            GD.Print($"{nameof(Entities)} could not apply {nameof(EntityAttackedEvent)} because " +
+                     $"{nameof(source)} '{@event.SourceId}' entity was null.");
+            return;
+        }
+        
+        if (target is null)
+        {
+            GD.Print($"{nameof(Entities)} could not apply {nameof(EntityAttackedEvent)} because " +
+                     $"{nameof(target)} '{@event.TargetId}' entity was null.");
+            return;
+        }
+
+        target.ReceiveAttack(source, @event.AttackType);
     }
 
     public void HandleEvent(EntityPlacedEvent @event)
@@ -342,12 +365,13 @@ public partial class Entities : Node2D
 
     private void OnEntityDestroyed(EntityNode entity)
     {
+        Destroyed(entity);
+        
         _renderers.UnregisterRenderer(entity.Renderer);
         
         entity.FinishedMoving -= OnEntityFinishedMoving;
         entity.Destroyed -= OnEntityDestroyed;
 
-        if (_entitiesByIds.ContainsKey(entity.InstanceId))
-            _entitiesByIds.Remove(entity.InstanceId);
+        _entitiesByIds.Remove(entity.InstanceId);
     }
 }

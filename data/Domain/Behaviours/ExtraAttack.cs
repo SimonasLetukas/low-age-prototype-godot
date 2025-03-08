@@ -10,7 +10,7 @@ namespace LowAgeData.Domain.Behaviours
             string displayName, 
             string description,
             string sprite,
-            IList<Attacks> attackTypes,
+            IList<AttackType> attackTypes,
             EndsAt? endsAt = null,
             bool canStack = false) 
             : base(
@@ -25,6 +25,6 @@ namespace LowAgeData.Domain.Behaviours
             AttackTypes = attackTypes;
         }
 
-        public IList<Attacks> AttackTypes { get; }
+        public IList<AttackType> AttackTypes { get; }
     }
 }

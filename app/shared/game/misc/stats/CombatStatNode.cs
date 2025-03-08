@@ -13,7 +13,7 @@ public partial class CombatStatNode : StatNode, INodeFromBlueprint<CombatStat>
 		return stat;
 	}
 
-	public StatType CombatType { get; private set; } = null!;
+	public StatType StatType { get; private set; } = null!;
 	
 	private CombatStat Blueprint { get; set; } = null!;
 
@@ -22,6 +22,6 @@ public partial class CombatStatNode : StatNode, INodeFromBlueprint<CombatStat>
 		base.SetBlueprint(blueprint);
 		Blueprint = blueprint;
 		
-		CombatType = blueprint.CombatType;
+		StatType = blueprint.CombatType;
 	}
 }

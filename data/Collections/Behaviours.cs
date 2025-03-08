@@ -34,7 +34,7 @@ namespace LowAgeData.Collections
                         new AttackModification(
                             change: Change.AddMax,
                             amount: 1,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             attribute: AttackAttribute.MaxDistance),
                         new StatModification(
                             change: Change.AddMax,
@@ -1001,12 +1001,12 @@ namespace LowAgeData.Collections
                         new AttackModification(
                             change: Change.AddMax,
                             amount: 1,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             attribute: AttackAttribute.MaxAmount),
                         new AttackModification(
                             change: Change.AddMax,
                             amount: 1,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             attribute: AttackAttribute.MaxDistance),
                         new StatModification(
                             change: Change.AddMax,
@@ -1050,7 +1050,7 @@ namespace LowAgeData.Collections
                         new AttackModification(
                             change: Change.AddMax,
                             amount: 1,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             attribute: AttackAttribute.MaxAmount),
                         new StatModification(
                             change: Change.AddMax,
@@ -1086,12 +1086,12 @@ namespace LowAgeData.Collections
                         new AttackModification(
                             change: Change.SubtractMax,
                             amount: 2,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             attribute: AttackAttribute.MaxAmount),
                         new AttackModification(
                             change: Change.SubtractMax,
                             amount: 2,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             attribute: AttackAttribute.MaxAmount)
                     },
                     endsAt: EndsAt.EndOf.This.Action,
@@ -1279,9 +1279,9 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Quickdraw.DoubleshotExtraAttack).CamelCaseToWords(),
                     description: "Ranged attacks twice.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    attackTypes: new List<Attacks>
+                    attackTypes: new List<AttackType>
                     {
-                        Attacks.Ranged
+                        AttackType.Ranged
                     }),
 
                 new Buff(
@@ -1418,12 +1418,12 @@ namespace LowAgeData.Collections
                         new AttackModification(
                             change: Change.SubtractMax,
                             amount: 3,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             attribute: AttackAttribute.MaxDistance),
                         new AttackModification(
                             change: Change.SubtractMax,
                             amount: 3,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             attribute: AttackAttribute.MaxDistance)
                     },
                     initialEffects: null,
@@ -1767,9 +1767,9 @@ namespace LowAgeData.Collections
                                  "the target.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     maxAmmunitionAmount: 2,
-                    ammunitionAttackTypes: new List<Attacks>
+                    ammunitionAttackTypes: new List<AttackType>
                     {
-                        Attacks.Ranged
+                        AttackType.Ranged
                     },
                     ammunitionAmountLostOnHit: 1,
                     onHitEffects: new List<EffectId>
@@ -1811,7 +1811,7 @@ namespace LowAgeData.Collections
                     initialModifications: new List<Modification>
                     {
                         new AttackModification(
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             modificationFlags: new List<ModificationFlag>
                             {
                                 ModificationFlag.IgnoreArmour
@@ -1855,7 +1855,7 @@ namespace LowAgeData.Collections
                         new AttackModification(
                             change: Change.AddMax,
                             amount: 1,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             attribute: AttackAttribute.MaxDistance)
                     },
                     initialEffects: null,

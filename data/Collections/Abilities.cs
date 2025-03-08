@@ -1163,9 +1163,9 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Quickdraw.CrippleApplyBehaviour
                     },
-                    onHitAttackTypes: new List<Attacks>
+                    onHitAttackTypes: new List<AttackType>
                     {
-                        Attacks.Ranged
+                        AttackType.Ranged
                     }),
 
                 new Passive(
@@ -1178,9 +1178,9 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Gorger.FanaticSuicideDestroy
                     },
-                    onHitAttackTypes: new List<Attacks>
+                    onHitAttackTypes: new List<AttackType>
                     {
-                        Attacks.Melee
+                        AttackType.Melee
                     },
                     onBirthEffects: new List<EffectId>
                     {
@@ -1215,9 +1215,9 @@ namespace LowAgeData.Collections
                         EffectId.Camou.SilentAssassinOnHitDamage,
                         EffectId.Camou.SilentAssassinOnHitSilence
                     },
-                    onHitAttackTypes: new List<Attacks>
+                    onHitAttackTypes: new List<AttackType>
                     {
-                        Attacks.Melee
+                        AttackType.Melee
                     }),
 
                 new Target(
@@ -1416,9 +1416,9 @@ namespace LowAgeData.Collections
                         EffectId.Parasite.ParalysingGraspApplyTetherBehaviour,
                         EffectId.Parasite.ParalysingGraspApplyAttackBehaviour,
                     },
-                    onHitAttackTypes: new List<Attacks>
+                    onHitAttackTypes: new List<AttackType>
                     {
-                        Attacks.Melee
+                        AttackType.Melee
                     }),
 
                 new Passive(
@@ -1461,9 +1461,9 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Marksman.CriticalMarkApplyBehaviour
                     },
-                    onHitAttackTypes: new List<Attacks>
+                    onHitAttackTypes: new List<AttackType>
                     {
-                        Attacks.Ranged
+                        AttackType.Ranged
                     }),
 
                 new Passive(
@@ -1694,9 +1694,9 @@ namespace LowAgeData.Collections
                     },
                     researchNeeded: null,
                     cooldown: null,
-                    overridesAttacks: new List<Attacks>
+                    overridesAttacks: new List<AttackType>
                     {
-                        Attacks.Ranged
+                        AttackType.Ranged
                     },
                     fallbackToAttack: false),
 
@@ -1740,9 +1740,9 @@ namespace LowAgeData.Collections
                     },
                     researchNeeded: null,
                     cooldown: null,
-                    overridesAttacks: new List<Attacks>
+                    overridesAttacks: new List<AttackType>
                     {
-                        Attacks.Ranged
+                        AttackType.Ranged
                     },
                     fallbackToAttack: false),
 

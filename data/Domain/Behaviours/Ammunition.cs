@@ -16,7 +16,7 @@ namespace LowAgeData.Domain.Behaviours
             string description,
             string sprite,
             int maxAmmunitionAmount,
-            IList<Attacks> ammunitionAttackTypes,
+            IList<AttackType> ammunitionAttackTypes,
             int? ammunitionAmountLostOnHit = null,
             IList<EffectId>? onHitEffects = null,
             int? ammunitionRecoveredOnReload = null, 
@@ -41,7 +41,7 @@ namespace LowAgeData.Domain.Behaviours
         public int AmmunitionAmountLostOnHit { get; }
         public int AmmunitionRecoveredOnReload { get; }
         public bool ApplyOriginalAttackToTarget { get; }
-        public IList<Attacks> AmmunitionAttackTypes { get; }
+        public IList<AttackType> AmmunitionAttackTypes { get; }
         public IList<EffectId> OnHitEffects { get; }
     }
 }

@@ -201,7 +201,7 @@ public partial class ElevatableTiles : Node2D
         {
             foreach (var target in targets)
             {
-                target.IsTarget = true;
+                target.TargetType = isMelee ? TargetType.Melee : TargetType.Ranged;
                 targetTileInstances.Add(target);
             }
         }
@@ -221,7 +221,7 @@ public partial class ElevatableTiles : Node2D
             entry.Value.SetTiles(targetPositions, hovering, isMelee);
         }
     }
-
+    
     public void SetPathTiles(IEnumerable<Point> pathPoints, int size)
     {
         ClearPath();
@@ -306,7 +306,7 @@ public partial class ElevatableTiles : Node2D
                 targetTiles.Clear();
             
             foreach (var tileInstance in _targetMeleeTileInstances) 
-                tileInstance.IsTarget = false;
+                tileInstance.TargetType = TargetType.None;
             
             _targetMeleeTileInstances.Clear();
 
@@ -317,7 +317,7 @@ public partial class ElevatableTiles : Node2D
                 targetTiles.Clear();
             
             foreach (var tileInstance in _targetNormalTileInstances) 
-                tileInstance.IsTarget = false;
+                tileInstance.TargetType = TargetType.None;
             
             _targetNormalTileInstances.Clear();
         }

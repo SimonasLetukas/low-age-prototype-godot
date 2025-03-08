@@ -16,7 +16,7 @@ namespace LowAgeData.Domain.Abilities
             EffectId? periodicEffect = null,
             IList<ResearchId>? researchNeeded = null,
             IList<EffectId>? onHitEffects = null,
-            IList<Attacks>? onHitAttackTypes = null,
+            IList<AttackType>? onHitAttackTypes = null,
             IList<EffectId>? onBirthEffects = null,
             BehaviourId? onBuildBehaviour = null,
             IList<Payment>? cost = null)
@@ -33,7 +33,7 @@ namespace LowAgeData.Domain.Abilities
         {
             PeriodicEffect = periodicEffect;
             OnHitEffects = onHitEffects ?? new List<EffectId>();
-            OnHitAttackTypes = onHitAttackTypes ?? new List<Attacks>();
+            OnHitAttackTypes = onHitAttackTypes ?? new List<AttackType>();
             OnBirthEffects = onBirthEffects ?? new List<EffectId>();
             OnBuildBehaviour = onBuildBehaviour;
         }
@@ -51,7 +51,7 @@ namespace LowAgeData.Domain.Abilities
         /// <summary>
         /// Determines which attack types trigger the on-hit effect
         /// </summary>
-        public IList<Attacks> OnHitAttackTypes { get; }
+        public IList<AttackType> OnHitAttackTypes { get; }
 
         /// <summary>
         /// Executes effect upon birth or upon research completion on an entity with this ability.

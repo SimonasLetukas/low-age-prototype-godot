@@ -58,6 +58,7 @@ public partial class ClientGame : Game
         _map.Entities.EntityDeselected += _interface.OnEntityDeselected;
         
         _map.UnitMovementIssued += RegisterNewGameEvent;
+        _map.EntityAttacked += RegisterNewGameEvent;
         _map.Entities.EntityPlaced += RegisterNewGameEvent;
     }
 
@@ -74,6 +75,7 @@ public partial class ClientGame : Game
         _map.Entities.EntityDeselected -= _interface.OnEntityDeselected;
         
         _map.UnitMovementIssued -= RegisterNewGameEvent;
+        _map.EntityAttacked -= RegisterNewGameEvent;
         _map.Entities.EntityPlaced -= RegisterNewGameEvent;
     }
 
@@ -118,6 +120,9 @@ public partial class ClientGame : Game
                 break;
             case UnitMovedAlongPathEvent unitMovedAlongPathEvent:
                 _map.HandleEvent(unitMovedAlongPathEvent);
+                break;
+            case EntityAttackedEvent entityAttackedEvent:
+                _map.Entities.HandleEvent(entityAttackedEvent);
                 break;
             case EntityPlacedEvent entityPlacedEvent:
                 _map.Entities.HandleEvent(entityPlacedEvent);
