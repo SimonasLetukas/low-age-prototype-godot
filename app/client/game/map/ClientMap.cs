@@ -7,7 +7,6 @@ using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Tiles;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
-using LowAgeData.Domain.Common.Shape;
 using MultipurposePathfinding;
 using Area = LowAgeCommon.Area;
 
@@ -213,7 +212,8 @@ public partial class ClientMap : Map
 
 		if (_selectionOverlay is SelectionOverlay.Attack)
 		{
-			UpdateHoveredEntity(mousePosition);
+			var hoveredEntity = UpdateHoveredEntity(mousePosition);
+			UpdateTargetedEntity(hoveredEntity, Entities.SelectedEntity);
 		}
 
 		if (_selectionOverlay is SelectionOverlay.Placement)
@@ -506,6 +506,16 @@ public partial class ClientMap : Map
 		_focusedTile.StopEntityFocus(); // TODO remove flashing when focusing from one entity to another
 
 		return entityWasHovered ? Entities.HoveredEntity : null;
+	}
+
+	private void UpdateTargetedEntity(EntityNode? target, EntityNode? source)
+	{
+		if (target is null || source is null || target.InstanceId.Equals(source.InstanceId) 
+		    || _focusedTile.CurrentTile is null)
+			return;
+
+		var attackType = _focusedTile.CurrentTile.TargetType is TargetType.Melee ? AttackType.Melee : AttackType.Ranged; 
+		EventBus.Instance.RaiseEntityTargeted(target, source, attackType);
 	}
 
 	private Vector2Int GetMapPositionFromMousePosition()

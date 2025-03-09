@@ -14,6 +14,7 @@ position = Vector2(1, 0)
 script = ExtResource("2")
 
 [node name="Interface" parent="." index="0" instance=ExtResource("5")]
+visible = false
 
 [node name="Map" parent="." index="1"]
 script = ExtResource("7")

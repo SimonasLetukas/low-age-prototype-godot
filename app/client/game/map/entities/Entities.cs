@@ -241,7 +241,7 @@ public partial class Entities : Node2D
             return;
         }
 
-        target.ReceiveAttack(source, @event.AttackType);
+        target.ReceiveAttack(source, @event.AttackType, false);
     }
 
     public void HandleEvent(EntityPlacedEvent @event)

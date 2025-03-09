@@ -96,24 +96,24 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         Abilities.OnActorBirth();
     }
 
-    public override void ReceiveAttack(EntityNode source, AttackType attackType)
+    public override (int, bool) ReceiveAttack(EntityNode source, AttackType attackType, bool isSimulation)
     {
-        base.ReceiveAttack(source, attackType);
+        base.ReceiveAttack(source, attackType, isSimulation);
 
         if (source is not ActorNode attacker)
-            return;
+            return (0, false);
 
         var damage = GetDamage(attacker, attackType);
         var damageType = attackType.Equals(AttackType.Melee) ? DamageType.Melee : DamageType.Ranged;
-        ReceiveDamage(source, damageType, damage);
+        return ReceiveDamage(source, damageType, damage, isSimulation);
     }
 
-    protected override void ReceiveDamage(EntityNode source, DamageType damageType, int amount)
+    protected override (int, bool) ReceiveDamage(EntityNode source, DamageType damageType, int amount, bool isSimulation)
     {
-        base.ReceiveDamage(source, damageType, amount);
+        base.ReceiveDamage(source, damageType, amount, isSimulation);
         
         if (source is not ActorNode attacker)
-            return;
+            return (0, false);
 
         var damage = damageType switch
         {
@@ -140,6 +140,9 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         };
         
         damage = Math.Max(damage, 1);
+        
+        if (isSimulation)
+            return GetSimulatedResult(damage);
 
         if (HasShields && Shields!.CurrentAmount > 0)
         {
@@ -156,13 +159,14 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         }
 
         if (HasHealth is false)
-            return;
+            return (0, false);
 
         Health!.CurrentAmount -= damage;
         if ((int)Health!.CurrentAmount < 0)
             Destroy();
         
         UpdateVitalsValues();
+        return (0, false);
     }
 
     protected int GetDamage(ActorNode from, AttackType attackType)
@@ -176,6 +180,13 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             damage += attack.BonusDamage;
 
         return damage;
+    }
+
+    public (int, bool) GetSimulatedResult(int damage)
+    {
+        var healthAndShields = (int)(Health?.CurrentAmount ?? 0) + (int)(Shields?.CurrentAmount ?? 0);
+        var isLethal = HasHealth && healthAndShields - damage <= 0;
+        return (damage, isLethal);
     }
 
     public virtual void Rotate()
@@ -262,20 +273,10 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
     protected void UpdateVitalsPosition()
     {
-        const int quarterTileWidth = Constants.TileWidth / 4;
-        const int halfTileWidth = Constants.TileWidth / 2;
-        const int halfTileHeight = Constants.TileHeight / 2;
+        var offset = GetTopCenterOffset();
         
-        var spriteSize = Renderer.SpriteSize;
-        var offsetFromX = (RelativeSize.Size.X - 1) * new Vector2(quarterTileWidth, halfTileHeight) +
-                          RelativeSize.Start.X * new Vector2(halfTileWidth, halfTileHeight);
-        var offsetFromY = (RelativeSize.Size.Y - 1) * new Vector2(quarterTileWidth * -1, halfTileHeight) +
-                          RelativeSize.Start.Y * new Vector2(halfTileWidth * -1, halfTileHeight);
-        
-        _health.Position = new Vector2(_startingHealthPosition.X,
-            (spriteSize.Y * -1) - 2 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
-        _shields.Position = new Vector2(_startingShieldsPosition.X,
-            (spriteSize.Y * -1) - 3 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
+        _health.Position = new Vector2(_startingHealthPosition.X, -2) + offset;
+        _shields.Position = new Vector2(_startingShieldsPosition.X, -3) + offset;
     }
     
     private IEnumerable<Vector2Int> GetPotentialAttackPositions(AttackType attackType, Vector2Int mapSize)

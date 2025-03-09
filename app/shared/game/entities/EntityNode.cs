@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using Godot;
 using LowAgeData.Domain.Entities;
 using LowAgeCommon;
@@ -85,6 +84,21 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Blueprint = blueprint;
         BlueprintId = Blueprint.Id;
         DisplayName = blueprint.DisplayName;
+    }
+
+    public Vector2 GetTopCenterOffset()
+    {
+        const int quarterTileWidth = Constants.TileWidth / 4;
+        const int halfTileWidth = Constants.TileWidth / 2;
+        const int halfTileHeight = Constants.TileHeight / 2;
+        
+        var spriteSize = Renderer.SpriteSize;
+        var offsetFromX = (RelativeSize.Size.X - 1) * new Vector2(quarterTileWidth, halfTileHeight) +
+                          RelativeSize.Start.X * new Vector2(halfTileWidth, halfTileHeight);
+        var offsetFromY = (RelativeSize.Size.Y - 1) * new Vector2(quarterTileWidth * -1, halfTileHeight) +
+                          RelativeSize.Start.Y * new Vector2(halfTileWidth * -1, halfTileHeight);
+
+        return new Vector2(0, spriteSize.Y * -1 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
     }
     
     public void SetTileHovered(bool to)
@@ -248,9 +262,10 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         return result;
     }
 
-    public virtual void ReceiveAttack(EntityNode source, AttackType attackType) { }
-    
-    protected virtual void ReceiveDamage(EntityNode source, DamageType damageType, int amount) { }
+    public virtual (int, bool) ReceiveAttack(EntityNode source, AttackType attackType, bool isSimulation) => (0, false);
+
+    protected virtual (int, bool) ReceiveDamage(EntityNode source, DamageType damageType, int amount, bool isSimulation) 
+        => (0, false);
     
     public void Destroy()
     {

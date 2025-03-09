@@ -144,6 +144,7 @@ public partial class ClientGame : Game
     private void OnEveryoneFinishedInitializing()
     {
         _map.SetupFactionStart();
+        _interface.Visible = true;
         SetPaused(false);
     }
 
