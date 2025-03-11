@@ -7,6 +7,7 @@ using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common.Shape;
+using MultipurposePathfinding;
 
 /// <summary>
 /// <see cref="StructureNode"/> or <see cref="UnitNode"/> with abilities and stats.
@@ -169,26 +170,6 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         return (0, false);
     }
 
-    protected int GetDamage(ActorNode from, AttackType attackType)
-    {
-        var attack = attackType.Equals(AttackType.Melee) ? from.MeleeAttack : from.RangedAttack;
-        if (attack is null)
-            return 0;
-        
-        var damage = attack.Damage;
-        if (attack.HasBonusDamage && Attributes.Any(x => x.Equals(attack.BonusTo)))
-            damage += attack.BonusDamage;
-
-        return damage;
-    }
-
-    public (int, bool) GetSimulatedResult(int damage)
-    {
-        var healthAndShields = (int)(Health?.CurrentAmount ?? 0) + (int)(Shields?.CurrentAmount ?? 0);
-        var isLethal = HasHealth && healthAndShields - damage <= 0;
-        return (damage, isLethal);
-    }
-
     public virtual void Rotate()
     {
         ActorRotation = ActorRotation switch
@@ -211,54 +192,14 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             Rotate();
     }
 
-    public List<Tiles.TileInstance> GetMeleeAttackTargetTiles(Vector2Int mapSize)
-    {
-        if (HasMeleeAttack is false)
-            return [];
-        
-        var positions = GetPotentialAttackPositions(AttackType.Melee, mapSize);
-        
-        // TODO filter invalid attack tiles (e.g. can't melee across (unascendable) high ground)
-        
-        var foundTiles = new List<Tiles.TileInstance>();
-        foreach (var position in positions)
-        {
-            var highGroundTile = GetTile(position, true);
-            if (highGroundTile is not null)
-            {
-                foundTiles.Add(highGroundTile);
-            }
-
-            var lowGroundTile = GetTile(position, false);
-            if (lowGroundTile is not null)
-                foundTiles.Add(lowGroundTile);
-        }
-
-        return foundTiles;
-    }
+    public virtual List<Tiles.TileInstance> GetMeleeAttackTargetTiles(Vector2Int mapSize, 
+        IEnumerable<Point> availablePoints) 
+        => HasMeleeAttack ? GetAttackTargetTiles(AttackType.Melee, mapSize) : [];
     
-    public List<Tiles.TileInstance> GetRangedAttackTargetTiles(Vector2Int mapSize)
-    {
-        if (HasRangedAttack is false)
-            return [];
-        
-        var positions = GetPotentialAttackPositions(AttackType.Ranged, mapSize);
-        
-        var foundTiles = new List<Tiles.TileInstance>();
-        foreach (var position in positions)
-        {
-            var highGroundTile = GetTile(position, true);
-            if (highGroundTile is not null)
-                foundTiles.Add(highGroundTile);
+    public virtual List<Tiles.TileInstance> GetRangedAttackTargetTiles(Vector2Int mapSize) => HasRangedAttack 
+        ? GetAttackTargetTiles(AttackType.Ranged, mapSize)
+        : [];
 
-            var lowGroundTile = GetTile(position, false);
-            if (lowGroundTile is not null)
-                foundTiles.Add(lowGroundTile);
-        }
-
-        return foundTiles;
-    }
-    
     protected Actor GetActorBlueprint() => Blueprint;
     
     protected bool HasStat(StatType statType) => Stats.Any(x => x.StatType.Equals(statType));
@@ -279,6 +220,25 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         _shields.Position = new Vector2(_startingShieldsPosition.X, -3) + offset;
     }
     
+    private List<Tiles.TileInstance> GetAttackTargetTiles(AttackType attackType, Vector2Int mapSize)
+    {
+        var positions = GetPotentialAttackPositions(attackType, mapSize);
+        
+        var foundTiles = new List<Tiles.TileInstance>();
+        foreach (var position in positions)
+        {
+            var highGroundTile = GetTile(position, true);
+            if (highGroundTile is not null)
+                foundTiles.Add(highGroundTile);
+
+            var lowGroundTile = GetTile(position, false);
+            if (lowGroundTile is not null)
+                foundTiles.Add(lowGroundTile);
+        }
+
+        return foundTiles;
+    }
+    
     private IEnumerable<Vector2Int> GetPotentialAttackPositions(AttackType attackType, Vector2Int mapSize)
     {
         var attack = attackType switch
@@ -293,9 +253,26 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         
         var radius = attack.MaximumDistance;
         var skip = Math.Max(attack.MinimumDistance - 1, 0);
-        return new Circle(radius, skip).ToPositions(
-            EntityPrimaryPosition, 
-            mapSize, 
-            this);
+        return new Circle(radius, skip).ToPositions(EntityPrimaryPosition, mapSize, this);
+    }
+    
+    private int GetDamage(ActorNode from, AttackType attackType)
+    {
+        var attack = attackType.Equals(AttackType.Melee) ? from.MeleeAttack : from.RangedAttack;
+        if (attack is null)
+            return 0;
+        
+        var damage = attack.Damage;
+        if (attack.HasBonusDamage && Attributes.Any(x => x.Equals(attack.BonusTo)))
+            damage += attack.BonusDamage;
+
+        return damage;
+    }
+
+    private (int, bool) GetSimulatedResult(int damage)
+    {
+        var healthAndShields = (int)(Health?.CurrentAmount ?? 0) + (int)(Shields?.CurrentAmount ?? 0);
+        var isLethal = HasHealth && healthAndShields - damage <= 0;
+        return (damage, isLethal);
     }
 }

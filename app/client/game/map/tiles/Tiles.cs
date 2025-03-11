@@ -21,7 +21,7 @@ public partial class Tiles : Node2D
     /// <summary>
     /// Wrapper of <see cref="Point"/>.
     /// </summary>
-    public class TileInstance
+    public class TileInstance : IEquatable<TileInstance>
     {
         public Vector2Int Position { get; init; }
         public required TileId Blueprint { get; init; }
@@ -34,6 +34,23 @@ public partial class Tiles : Node2D
         public bool IsOccupied(EntityNode? by = null) => by is null 
             ? Occupants.Any() 
             : Occupants.Contains(by);
+
+        public bool Equals(TileInstance? other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Point.Id.Equals(other.Point.Id);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((TileInstance)obj);
+        }
+
+        public override int GetHashCode() => HashCode.Combine(Position, Terrain);
     }
     
     public event Action FinishedInitialInitializing = delegate { };

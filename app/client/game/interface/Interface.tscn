@@ -27,4 +27,3 @@ offset_bottom = -248.0
 grow_vertical = 0
 
 [node name="EntityOverlay" parent="." instance=ExtResource("6_3k5kl")]
-visible = true

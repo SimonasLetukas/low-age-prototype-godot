@@ -36,11 +36,9 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         Blueprint = blueprint;
         EntitySize = Vector2Int.One * Blueprint.Size;
         Movement = HasStat(StatType.Movement)
-            ? Stats.First(x => x.StatType.Equals(StatType.Movement)).CurrentAmount + 0.5f
+            ? Stats.First(x => x.StatType.Equals(StatType.Movement)).CurrentAmount 
+              + Constants.Pathfinding.SearchIncrement
             : 0;
-        // TODO 0.5 is added for smoother corners to align with circles from IShape, decide if this is needed.
-        // Argument against: not moving straight diagonally is more cost-effective, which is not intuitive for the
-        // player. This bonus could be added for units with 1 movement only.
                                   
         Renderer.Initialize(this, true);
         UpdateSprite();
@@ -49,6 +47,30 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 
     public override bool CanBeMovedThroughAt(Point point, Team forTeam) 
         => Player.Team.IsAllyTo(forTeam) && base.CanBeMovedThroughAt(point, forTeam);
+
+    public override List<Tiles.TileInstance> GetMeleeAttackTargetTiles(Vector2Int mapSize, 
+        IEnumerable<Point> availablePoints)
+    {
+        var availablePointIds = availablePoints.Select(x => x.Id).ToHashSet();
+        var tiles = base.GetMeleeAttackTargetTiles(mapSize, []);
+        return IsOnHighGround 
+            ? tiles.Where(tile => availablePointIds.Contains(tile.Point.Id)).ToList()
+            : tiles.Where(tile => tile.Point.IsLowGround 
+                                  || (tile.Point.IsHighGround && availablePointIds.Contains(tile.Point.Id)))
+                .ToList();
+    }
+
+    public override List<Tiles.TileInstance> GetRangedAttackTargetTiles(Vector2Int mapSize)
+    {
+        var tiles = base.GetRangedAttackTargetTiles(mapSize);
+        var entitiesBelow = IsOnHighGround ? GetEntitiesBelow() : [];
+        var filteredTiles = new HashSet<Tiles.TileInstance>();
+        foreach (var tile in entitiesBelow.SelectMany(entity => entity.EntityOccupyingPositions, 
+                     (_, position) => GetTile(position, false)).OfType<Tiles.TileInstance>()) 
+            filteredTiles.Add(tile);
+
+        return tiles.Except(filteredTiles).ToList();
+    }
 
     protected override void UpdateVisuals()
     {

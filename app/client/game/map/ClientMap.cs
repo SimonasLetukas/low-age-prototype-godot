@@ -406,9 +406,18 @@ public partial class ClientMap : Map
 	private void ShowAttackOverlay(ActorNode actor, bool? showMelee = null)
 	{
 		_tileMap.Elevatable.ClearTargetTiles(false);
-
+		
+		var availablePoints = actor is UnitNode unit 
+			? Pathfinding.GetAvailablePoints(
+				unit.EntityPrimaryPosition,
+				unit.MeleeAttack?.MaximumDistance + Constants.Pathfinding.SearchIncrement ?? 0,
+				unit.IsOnHighGround,
+				unit.Player.Team,
+			unit.EntitySize.X) 
+			: [];
+		
 		var targetMeleeTiles = showMelee is null or true 
-			? actor.GetMeleeAttackTargetTiles(_mapSize) 
+			? actor.GetMeleeAttackTargetTiles(_mapSize, availablePoints) 
 			: [];
 		var targetRangedTiles = showMelee is null or false 
 			? actor.GetRangedAttackTargetTiles(_mapSize) 
@@ -462,7 +471,7 @@ public partial class ClientMap : Map
 		    || Entities.SelectedEntity is not { } selectedEntity)
 			return;
 
-		if (targetEntity.CanBeTargetedBy(selectedEntity) is false)
+		if (targetEntity.CanBeTargetedBy(selectedEntity) is false && Config.Instance.AllowSameTeamCombat is false)
 			return;
 		
 		var attackType = focusedTile.TargetType is TargetType.Melee ? AttackType.Melee : AttackType.Ranged;

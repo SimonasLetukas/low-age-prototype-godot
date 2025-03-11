@@ -44,6 +44,13 @@ public static class Constants
         public const float DiagonalCost = Mathf.Sqrt2;
         public const int ImpassableIndex = -1;
         public const int HighGroundIndex = -2;
+        
+        /// <summary>
+        /// TODO: 0.5 is added for smoother corners to align with circles from IShape, decide if this is needed.
+        /// Argument against: not moving straight diagonally is more cost-effective, which is not intuitive for the
+        /// player. This bonus could be added for units with 1 movement only.
+        /// </summary>
+        public const float SearchIncrement = 0.5f;
     }
 
     public static class Os

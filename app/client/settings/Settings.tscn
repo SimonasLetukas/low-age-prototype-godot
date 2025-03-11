@@ -1,39 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgjxf6ovswhuk"]
+[gd_scene load_steps=4 format=3 uid="uid://dgjxf6ovswhuk"]
 
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1"]
-[ext_resource type="FontFile" uid="uid://d0w7npripgnag" path="res://assets/fonts/Karla-Regular.ttf" id="2"]
-[ext_resource type="PackedScene" path="res://app/shared/lobby/players/faction/FactionSelection.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://b2njs71bqtlfm" path="res://app/shared/lobby/players/faction/FactionSelection.tscn" id="3"]
 [ext_resource type="Script" path="res://app/client/settings/Settings.cs" id="4"]
-
-[sub_resource type="FontFile" id="1"]
-fallbacks = Array[Font]([ExtResource("2")])
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-
-[sub_resource type="FontFile" id="2"]
-fallbacks = Array[Font]([ExtResource("2")])
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-
-[sub_resource type="FontFile" id="3"]
-fallbacks = Array[Font]([ExtResource("2")])
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
 
 [node name="Settings" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("1")
 script = ExtResource("4")
 
@@ -42,164 +19,216 @@ layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Items" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_top = 100.0
-offset_right = 1280.0
-offset_bottom = 619.0
-theme_override_constants/separation = 40
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
 
-[node name="Title" type="Label" parent="Items"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 75
+alignment = 1
+
+[node name="SettingsTitle" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_fonts/font = SubResource("1")
+theme_override_font_sizes/font_size = 20
 text = "Settings"
 horizontal_alignment = 1
 
-[node name="StartingFaction" type="HBoxContainer" parent="Items"]
+[node name="SettingGroups" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 70
-alignment = 1
+theme_override_constants/separation = 25
 
-[node name="Title" type="Label" parent="Items/StartingFaction"]
+[node name="General" type="VBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups"]
 layout_mode = 2
-tooltip_text = "Preferred starting faction."
-mouse_filter = 1
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_fonts/font = SubResource("2")
-text = "Starting Faction:"
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/General"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "General"
 horizontal_alignment = 1
 
-[node name="Faction" parent="Items/StartingFaction" instance=ExtResource("3")]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/SettingGroups/General"]
 layout_mode = 2
+theme_override_constants/h_separation = 150
+theme_override_constants/v_separation = 10
+columns = 2
 
-[node name="AnimationSpeed" type="HBoxContainer" parent="Items"]
+[node name="StartingFaction" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer"]
 layout_mode = 2
-theme_override_constants/separation = 58
+size_flags_horizontal = 3
+tooltip_text = "Preferred starting faction."
 alignment = 1
 
-[node name="Title" type="Label" parent="Items/AnimationSpeed"]
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer/StartingFaction"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
+size_flags_horizontal = 2
+mouse_filter = 1
+text = "Starting Faction:"
+
+[node name="Faction" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer/StartingFaction" instance=ExtResource("3")]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="AnimationSpeed" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 tooltip_text = "Determines how fast all
 animations play out."
-mouse_filter = 1
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_fonts/font = SubResource("2")
-text = "Animation Speed:"
-horizontal_alignment = 1
-
-[node name="Animation" type="OptionButton" parent="Items/AnimationSpeed"]
-custom_minimum_size = Vector2(300, 40)
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="ResearchEnabled" type="HBoxContainer" parent="Items"]
-layout_mode = 2
-theme_override_constants/separation = 54
 alignment = 1
 
-[node name="Title" type="Label" parent="Items/ResearchEnabled"]
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer/AnimationSpeed"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+mouse_filter = 1
+text = "Animation Speed:"
+
+[node name="Animation" type="OptionButton" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer/AnimationSpeed"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+item_count = 3
+popup/item_0/text = "Slow"
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Fast"
+popup/item_2/id = 2
+
+[node name="CursorSize" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer"]
+layout_mode = 2
+tooltip_text = "If checked, cursor becomes
+larger in-game. This is useful
+for screens with big resolution."
+alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer/CursorSize"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+mouse_filter = 1
+text = "Large Cursor:"
+
+[node name="BigCursor" type="CheckBox" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer/CursorSize"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="Hints" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer"]
+layout_mode = 2
+tooltip_text = "If checked, hints about controls will follow the mouse during the game."
+alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer/Hints"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+mouse_filter = 1
+text = "Show Hints:"
+
+[node name="ShowHints" type="CheckBox" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer/Hints"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="BeautifulTerrain" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer"]
+layout_mode = 2
+tooltip_text = "If checked, the terrain tiles will get more variability, but the game will load much slower."
+alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer/BeautifulTerrain"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+mouse_filter = 1
+text = "Beautiful Terrain:"
+
+[node name="ConnectTerrain" type="CheckBox" parent="MarginContainer/VBoxContainer/SettingGroups/General/GridContainer/BeautifulTerrain"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/SettingGroups/General"]
+layout_mode = 2
+
+[node name="Debug" type="VBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/Debug"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Debug"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/SettingGroups/Debug"]
+layout_mode = 2
+theme_override_constants/h_separation = 150
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="ResearchEnabled" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer"]
 layout_mode = 2
 tooltip_text = "If checked, research becomes
 required to unlock various
 abilities. Useful to disable
 during testing."
+alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer/ResearchEnabled"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 2
 mouse_filter = 1
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_fonts/font = SubResource("2")
 text = "Research Enabled:"
-horizontal_alignment = 1
 
-[node name="Research" type="CheckBox" parent="Items/ResearchEnabled"]
+[node name="Research" type="CheckBox" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer/ResearchEnabled"]
 custom_minimum_size = Vector2(300, 40)
 layout_mode = 2
+size_flags_horizontal = 2
 size_flags_vertical = 4
 
-[node name="CursorSize" type="HBoxContainer" parent="Items"]
+[node name="SameTeamCombat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer"]
 layout_mode = 2
-theme_override_constants/separation = 116
+tooltip_text = "If checked, combat is allowed within the same team (which also includes attacking your own units)."
 alignment = 1
 
-[node name="Title" type="Label" parent="Items/CursorSize"]
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer/SameTeamCombat"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
-tooltip_text = "If checked, cursor becomes
-larger in-game. This is useful
-for screens with big resolution."
+size_flags_horizontal = 2
 mouse_filter = 1
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_fonts/font = SubResource("2")
-text = "Large Cursor:"
-horizontal_alignment = 1
+text = "Same Team Combat:"
 
-[node name="BigCursor" type="CheckBox" parent="Items/CursorSize"]
+[node name="AllowSameTeamCombat" type="CheckBox" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer/SameTeamCombat"]
 custom_minimum_size = Vector2(300, 40)
 layout_mode = 2
+size_flags_horizontal = 2
 size_flags_vertical = 4
 
-[node name="Hints" type="HBoxContainer" parent="Items"]
-layout_mode = 2
-theme_override_constants/separation = 128
-alignment = 1
-
-[node name="Title" type="Label" parent="Items/Hints"]
-layout_mode = 2
-mouse_filter = 1
-theme_override_constants/shadow_offset_x = 2
-theme_override_fonts/font = SubResource("2")
-text = "Show Hints:"
-horizontal_alignment = 1
-
-[node name="ShowHints" type="CheckBox" parent="Items/Hints"]
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="TextInput" type="HBoxContainer" parent="Items"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 65
-alignment = 1
-
-[node name="Title" type="Label" parent="Items/TextInput"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_fonts/font = SubResource("3")
-text = "Starting Faction:"
-horizontal_alignment = 1
-
-[node name="Input" type="LineEdit" parent="Items/TextInput"]
-custom_minimum_size = Vector2(300, 40)
-layout_mode = 2
-size_flags_vertical = 4
-text = "Username"
-max_length = 20
-clear_button_enabled = true
-selecting_enabled = false
-caret_blink = true
-caret_blink_interval = 0.5
-
-[node name="MarginContainer" type="MarginContainer" parent="Items"]
-layout_mode = 2
-theme_override_constants/margin_top = 80
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Items/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 22
-alignment = 1
-
-[node name="EmptySpace" type="Control" parent="Items/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(102, 0)
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/SettingGroups/Debug"]
 layout_mode = 2
 
-[node name="Back" type="Button" parent="Items/MarginContainer/HBoxContainer"]
+[node name="Back" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(160, 40)
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Back"

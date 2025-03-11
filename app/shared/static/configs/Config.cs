@@ -7,7 +7,7 @@ using FileAccess = Godot.FileAccess;
 public partial class Config : Node
 {
     public const string SavePath = @"res://data/config.json";
-    public static Config Instance = null;
+    public static Config Instance = null!;
     
     public void Save()
     {
@@ -81,16 +81,20 @@ public partial class Config : Node
         set => _data.ShowHints = value;
     }
 
-    private ConfigData _data = new ConfigData();
+    public bool AllowSameTeamCombat
+    {
+        get => _data.AllowSameTeamCombat;
+        set => _data.AllowSameTeamCombat = value;
+    }
+
+    private ConfigData _data = new();
     
     public override void _Ready()
     {
         base._Ready();
         
-        if (Instance is null)
-        {
-            Instance = this;
-        }
+        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+        Instance ??= this;
         
         Load();
         Save();
@@ -104,6 +108,7 @@ public partial class Config : Node
         public FactionId StartingFaction { get; set; } = FactionId.Uee;
         public bool LargeCursor { get; set; } = false;
         public bool ShowHints { get; set; } = true;
+        public bool AllowSameTeamCombat { get; set; } = false;
     }
 
     public enum AnimationSpeeds
