@@ -471,7 +471,8 @@ public partial class ClientMap : Map
 		    || Entities.SelectedEntity is not { } selectedEntity)
 			return;
 
-		if (targetEntity.CanBeTargetedBy(selectedEntity) is false && Config.Instance.AllowSameTeamCombat is false)
+		if (targetEntity.CanBeTargetedBy(selectedEntity) is false 
+		    && Config.Instance.AllowSameTeamCombat is false)
 			return;
 		
 		var attackType = focusedTile.TargetType is TargetType.Melee ? AttackType.Melee : AttackType.Ranged;
@@ -555,17 +556,6 @@ public partial class ClientMap : Map
 		
 		Pathfinding.ClearCache();
 		_tileMap.Elevatable.ClearCache();
-
-		foreach (var tile in _tileMap.GetEntityTiles(entity))
-		{
-			if (tile.IsOccupied() is false)
-				continue;
-
-			foreach (var occupant in tile.Occupants)
-			{
-				//Pathfinding.AddOccupation(occupant); TODO test if this is still needed
-			}
-		}
 	}
 	
 	private bool IsActionAllowedForCurrentPlayerOnSelectedEntity() 

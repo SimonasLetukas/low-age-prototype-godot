@@ -30,8 +30,10 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public EntityRenderer Renderer { get; private set; } = null!;
     public Vector2Int EntityPrimaryPosition { get; set; }
     public Vector2Int EntitySize { get; protected set; } = Vector2Int.One;
-    public virtual Area RelativeSize => new Area(Vector2Int.Zero, EntitySize);
+    public virtual Area RelativeSize => new(Vector2Int.Zero, EntitySize);
     public IList<Vector2Int> EntityOccupyingPositions => new Area(EntityPrimaryPosition, EntitySize).ToList();
+    public virtual IList<Tiles.TileInstance> EntityOccupyingTiles => EntityOccupyingPositions
+        .Select(position => GetTile(position, false)).WhereNotNull().ToList();
     public Dictionary<Vector2Int, int> ProvidedHighGroundHeightByOccupyingPosition =>
         _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
             pair => pair.Value);

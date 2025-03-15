@@ -5,6 +5,7 @@ using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeCommon;
+using LowAgeCommon.Extensions;
 using MultipurposePathfinding;
 
 public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
@@ -27,6 +28,9 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     
     public bool IsOnHighGround { get; private set; } = false;
     public float Movement { get; private set; }
+    public override IList<Tiles.TileInstance> EntityOccupyingTiles => IsOnHighGround
+        ? GetHighestTiles(EntityOccupyingPositions).WhereNotNull().ToList()
+        : base.EntityOccupyingTiles; 
 
     private Unit Blueprint { get; set; } = null!;
     

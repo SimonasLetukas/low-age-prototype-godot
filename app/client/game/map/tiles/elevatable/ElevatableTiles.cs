@@ -25,8 +25,8 @@ public partial class ElevatableTiles : Node2D
     private readonly Dictionary<int, TargetMeleeTiles> _targetMeleeTileMapsHovering = new();
     private TileMapLayer _targetMapTiles = null!;
     private TileMapLayer _targetMapTilesHovering = null!;
-    private readonly List<Tiles.TileInstance> _targetNormalTileInstances = [];
-    private readonly List<Tiles.TileInstance> _targetMeleeTileInstances = [];
+    private readonly HashSet<Tiles.TileInstance> _targetNormalTileInstances = [];
+    private readonly HashSet<Tiles.TileInstance> _targetMeleeTileInstances = [];
     private readonly Dictionary<int, PathTiles> _pathTileMaps = new();
     
     private Guid? _availableTilesCachedEntity = Guid.Empty;
@@ -195,17 +195,7 @@ public partial class ElevatableTiles : Node2D
         
         ClearTargetTiles(hovering, isMelee);
 
-        var targetTileInstances = isMelee ? _targetMeleeTileInstances : _targetNormalTileInstances;
-
-        if (hovering is false)
-        {
-            foreach (var target in targets)
-            {
-                target.TargetType = isMelee ? TargetType.Melee : TargetType.Ranged;
-                targetTileInstances.Add(target);
-            }
-        }
-        
+        var targetTileInstances = GetUpdatedTargetTileInstances(targets, hovering, isMelee);
         var pointsByElevation = SplitIntoElevations(targetTileInstances);
         var tileMapsByElevation = GetAndPrepareAllElevationsOfTargetTileMap(
             pointsByElevation.Keys, hovering, isMelee);
@@ -340,6 +330,37 @@ public partial class ElevatableTiles : Node2D
     private Vector2Int GetMapPositionFromGlobalPosition(Vector2 globalPosition, ElevatableTileMap tileMap) 
         => (tileMap.LocalToMap(globalPosition - tileMap.Position + tileMap.Offset) - _tilemapOffset)
             .ToVector2();
+    
+    private HashSet<Tiles.TileInstance> GetUpdatedTargetTileInstances(IEnumerable<Tiles.TileInstance> targets, 
+        bool hovering, bool isMelee)
+    {
+        var targetTileInstances = isMelee ? _targetMeleeTileInstances : _targetNormalTileInstances;
+
+        if (hovering) 
+            return targetTileInstances;
+        
+        foreach (var target in targets)
+        {
+            if (isMelee is false && _targetMeleeTileInstances.Contains(target))
+                continue;
+
+            var targetType = isMelee ? TargetType.Melee : TargetType.Ranged;
+
+            target.TargetType = targetType;
+            targetTileInstances.Add(target);
+            
+            foreach (var occupant in target.Occupants)
+            {
+                foreach (var occupiedTile in occupant.EntityOccupyingTiles)
+                {
+                    occupiedTile.TargetType = targetType;
+                    targetTileInstances.Add(occupiedTile);
+                }
+            }
+        }
+
+        return targetTileInstances;
+    }
     
     private static Dictionary<int, ICollection<Tiles.TileInstance>> SplitIntoElevations(
         IEnumerable<Tiles.TileInstance> tiles)
