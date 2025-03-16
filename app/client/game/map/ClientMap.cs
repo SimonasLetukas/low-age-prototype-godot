@@ -243,6 +243,9 @@ public partial class ClientMap : Map
 		if (selectedEntity is null)
 			return;
 		
+		if (Entities.IsEntitySelected(selectedEntity))
+			HandleDeselecting();
+		
 		RemoveOccupation(selectedEntity);
 		Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
 	}
