@@ -349,7 +349,7 @@ public partial class ElevatableTiles : Node2D
             target.TargetType = targetType;
             targetTileInstances.Add(target);
             
-            foreach (var occupant in target.Occupants)
+            foreach (var occupant in target.GetOccupants())
             {
                 foreach (var occupiedTile in occupant.EntityOccupyingTiles)
                 {
@@ -469,7 +469,8 @@ public partial class ElevatableTiles : Node2D
             if (tile is null || entity.CanBeMovedOnAt(tile.Point, entity.Player.Team) is false)
                 continue;
 
-            if (tile.Occupants.Any(occupant => occupant.CanBeMovedOnAt(tile.Point, entity.Player.Team) is false))
+            if (tile.GetOccupants().Any(occupant => 
+                    occupant.CanBeMovedOnAt(tile.Point, entity.Player.Team) is false))
                 return false;
         }
 

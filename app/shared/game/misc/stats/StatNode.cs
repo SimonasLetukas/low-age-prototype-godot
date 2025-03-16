@@ -50,4 +50,7 @@ public partial class StatNode : Node2D, INodeFromBlueprint<Stat>
 
         maxProperty = (int)value;
     }
+    
+    public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
+    public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
 }

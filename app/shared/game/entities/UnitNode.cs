@@ -87,6 +87,21 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
             SetTransparency(true);
     }
 
+    public override void DropDownToLowGround()
+    {
+        base.DropDownToLowGround();
+
+        IsOnHighGround = false;
+        UpdateVitalsPosition();
+        
+        Renderer.UpdateElevation(IsOnHighGround, GetTile(EntityPrimaryPosition, false)?.YSpriteOffset, null);
+
+        var vitalsAmount = HasShields 
+            ? Shields!.MaxAmount + Health!.MaxAmount
+            : Health?.MaxAmount ?? 0;
+        ReceiveDamage(this, DamageType.Pure, vitalsAmount / 2, false);
+    }
+
     public override void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
     {
         IsOnHighGround = resultingPoint.IsHighGround;
@@ -133,7 +148,7 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         foreach (var position in EntityOccupyingPositions)
         {
             var lowGroundTile = GetTile(position, false);
-            var entity = lowGroundTile?.Occupants.FirstOrDefault();
+            var entity = lowGroundTile?.GetFirstOccupantOrNull();
             if (entity != null && entities.Any(x => x.InstanceId.Equals(entity.InstanceId)) is false)
                 entities.Add(entity);
         }

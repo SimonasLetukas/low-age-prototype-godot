@@ -38,4 +38,7 @@ public class EffectNode : INodeFromBlueprint<Effect>
     {
         return IsValidated;
     }
+    
+    public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
+    public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
 }

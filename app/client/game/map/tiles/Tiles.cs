@@ -27,13 +27,58 @@ public partial class Tiles : Node2D
         public required TileId Blueprint { get; init; }
         public required Terrain Terrain { get; init; }
         public TargetType TargetType { get; set; }
-        public required IList<EntityNode> Occupants { get; init; }
         public Point Point { get; set; } = null!;
         public int YSpriteOffset { get; set; }
+        private List<EntityNode> Occupants { get; init; } = [];
+
+        public IEnumerable<EntityNode> GetOccupants()
+        {
+            foreach (var occupant in Occupants)
+            {
+                if (occupant.IsBeingDestroyed is false)
+                    yield return occupant;
+            }
+        }
+
+        public EntityNode? GetFirstOccupantOrNull()
+        {
+            var occupant = Occupants.FirstOrDefault();
+            if (occupant == null)
+                return null;
+            if (occupant.IsBeingDestroyed)
+                return null;
+            return occupant;
+        }
         
-        public bool IsOccupied(EntityNode? by = null) => by is null 
-            ? Occupants.Any() 
-            : Occupants.Contains(by);
+        public EntityNode? GetLastOccupantOrNull()
+        {
+            var occupant = Occupants.LastOrDefault();
+            if (occupant == null)
+                return null;
+            if (occupant.IsBeingDestroyed)
+                return null;
+            return occupant;
+        }
+        
+        public bool IsOccupied(EntityNode? by = null)
+        {
+            if (GetFirstOccupantOrNull() is null)
+                return false;
+            
+            return by is null || Occupants.Contains(by);
+        }
+
+        public bool IsOccupiedBy<TEntity>() where TEntity : EntityNode
+        {
+            if (GetFirstOccupantOrNull() is null)
+                return false;
+            
+            return Occupants.Any(o => o is TEntity);
+        }
+        
+        public void AddOccupant(EntityNode entity) => Occupants.Add(entity);
+
+        public void RemoveOccupant(EntityNode entity) => Occupants.Remove(entity);
 
         public bool Equals(TileInstance? other)
         {
@@ -222,7 +267,6 @@ public partial class Tiles : Node2D
             Position = position,
             Blueprint = blueprintId,
             Terrain = GetBlueprint(blueprintId).Terrain,
-            Occupants = new List<EntityNode>()
         };
         _tiles[(position, false)] = tile;
     }
@@ -363,7 +407,7 @@ public partial class Tiles : Node2D
             if (tile.IsOccupied(entity))
                 continue;
             
-            tile.Occupants.Add(entity);
+            tile.AddOccupant(entity);
         }
         
         if (entity is StructureNode structure)
@@ -374,7 +418,7 @@ public partial class Tiles : Node2D
     {
         foreach (var tile in entity.EntityOccupyingTiles)
         {
-            tile.Occupants.Remove(entity);
+            tile.RemoveOccupant(entity);
         }
         
         if (entity is StructureNode structure)
@@ -498,7 +542,6 @@ public partial class Tiles : Node2D
                     Blueprint = TileId.HighGround,
                     Terrain = Terrain.HighGround, 
                     TargetType = TargetType.None,
-                    Occupants = new List<EntityNode>(),
                     Point = null!,
                     YSpriteOffset = ySpriteOffset
                 };
@@ -522,7 +565,6 @@ public partial class Tiles : Node2D
                 Blueprint = TileId.HighGround,
                 Terrain = Terrain.HighGround,
                 TargetType = TargetType.None,
-                Occupants = new List<EntityNode>(),
                 Point = point,
                 YSpriteOffset = 0
             };

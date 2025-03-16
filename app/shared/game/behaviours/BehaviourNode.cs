@@ -41,4 +41,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     {
         Ended(this);
     }
+    
+    public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
+    public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
 }

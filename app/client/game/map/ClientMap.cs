@@ -471,8 +471,7 @@ public partial class ClientMap : Map
 		    || Entities.SelectedEntity is not { } selectedEntity)
 			return;
 
-		if (targetEntity.CanBeTargetedBy(selectedEntity) is false 
-		    && Config.Instance.AllowSameTeamCombat is false)
+		if (targetEntity.CanBeTargetedBy(selectedEntity) is false)
 			return;
 		
 		var attackType = focusedTile.TargetType is TargetType.Melee ? AttackType.Melee : AttackType.Ranged;
@@ -556,6 +555,29 @@ public partial class ClientMap : Map
 		
 		Pathfinding.ClearCache();
 		_tileMap.Elevatable.ClearCache();
+	}
+
+	private void DropAllEntitiesDownToLowGround(IList<Vector2Int> positions)
+	{
+		var entities = new HashSet<EntityNode>();
+		foreach (var position in positions)
+		{
+			var highGroundTile = _tileMap.GetTile(position, true);
+			if (highGroundTile is null)
+				continue;
+
+			foreach (var occupant in highGroundTile.GetOccupants())
+			{
+				entities.Add(occupant);
+			}
+		}
+
+		foreach (var entity in entities)
+		{
+			RemoveOccupation(entity);
+		}
+		
+		Entities.DropDownToLowGround(entities);
 	}
 	
 	private bool IsActionAllowedForCurrentPlayerOnSelectedEntity() 
@@ -703,6 +725,10 @@ public partial class ClientMap : Map
 	{
 		if (Entities.IsEntitySelected(entity))
 			HandleDeselecting();
+
+		if (entity.ProvidesHighGround)
+			DropAllEntitiesDownToLowGround(entity.EntityOccupyingPositions);
+			
 		RemoveOccupation(entity);
 	}
 

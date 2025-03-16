@@ -86,4 +86,7 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
         IsActive = IsResearched;
         CooldownEnded(this);
     }
+    
+    public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
+    public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
 }

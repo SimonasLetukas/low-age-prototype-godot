@@ -33,7 +33,7 @@ namespace MultipurposePathfinding
                 ? Configuration.HighGroundIndex
                 : OriginalTerrainIndex;
 
-        [JsonProperty] 
+        [JsonProperty] // TODO not serializing this would reduce the amount of text logged by ~50%, perhaps static class could be used instead?
         internal Configuration Configuration { get; init; } = null!;
         
         public bool Equals(Point? other)
