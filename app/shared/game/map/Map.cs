@@ -11,5 +11,7 @@ public partial class Map : Node2D
 	public override void _Ready()
 	{
 		if (DebugEnabled) GD.Print($"{nameof(Map)}: entering");
+		
+		base._Ready();
 	}
 }

@@ -1,0 +1,109 @@
+[gd_scene load_steps=8 format=3 uid="uid://dvv2ohlj1odfj"]
+
+[ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1_47ekw"]
+[ext_resource type="Texture2D" uid="uid://bwsurngc2ifae" path="res://assets/sprites/interface/turn-panel.png" id="1_p5xop"]
+[ext_resource type="Texture2D" uid="uid://bwnv6lsvmx0wf" path="res://assets/sprites/interface/next-turn-button.png" id="2_lisms"]
+[ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="3_hun1e"]
+[ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="4_1shhu"]
+[ext_resource type="Texture2D" uid="uid://c0mgklbumga5v" path="res://assets/sprites/interface/next-turn-button-pressed.png" id="5_73yaf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_123wc"]
+resource_local_to_scene = true
+shader = ExtResource("4_1shhu")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[node name="TurnPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_47ekw")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(340, 104)
+layout_mode = 0
+offset_right = 340.0
+offset_bottom = 104.0
+texture = ExtResource("1_p5xop")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 26.0
+offset_bottom = 32.0
+theme_override_font_sizes/normal_font_size = 19
+bbcode_enabled = true
+text = "[center]9"
+fit_content = true
+scroll_active = false
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="TextureRect"]
+offset_left = 30.0
+offset_top = 8.0
+offset_right = 46.0
+offset_bottom = 32.0
+theme_override_font_sizes/normal_font_size = 19
+bbcode_enabled = true
+text = "[center]9"
+fit_content = true
+scroll_active = false
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="TextureRect"]
+offset_left = 50.0
+offset_top = 8.0
+offset_right = 66.0
+offset_bottom = 32.0
+theme_override_font_sizes/normal_font_size = 19
+bbcode_enabled = true
+text = "[center]9"
+fit_content = true
+scroll_active = false
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="TextureRect"]
+offset_left = 78.0
+offset_top = 8.0
+offset_right = 216.0
+offset_bottom = 32.0
+theme_override_font_sizes/normal_font_size = 19
+bbcode_enabled = true
+text = "Planning Phase"
+fit_content = true
+scroll_active = false
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="TextureRect"]
+offset_left = 228.0
+offset_top = 11.0
+offset_right = 312.0
+offset_bottom = 32.0
+theme_override_font_sizes/bold_font_size = 16
+bbcode_enabled = true
+text = "[center][b]Next Turn"
+fit_content = true
+scroll_active = false
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(124, 120)
+layout_mode = 0
+offset_left = 208.0
+offset_top = 52.0
+offset_right = 332.0
+offset_bottom = 172.0
+texture = ExtResource("2_lisms")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BaseButton" parent="." instance=ExtResource("3_hun1e")]
+visible = false
+material = SubResource("ShaderMaterial_123wc")
+custom_minimum_size = Vector2(124, 120)
+layout_mode = 0
+texture = ExtResource("2_lisms")
+TextureNormal = ExtResource("2_lisms")
+TextureClicked = ExtResource("5_73yaf")

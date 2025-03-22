@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ognkssytefqy"]
+[gd_scene load_steps=9 format=3 uid="uid://ognkssytefqy"]
 
 [ext_resource type="PackedScene" uid="uid://cai8kctsxyqal" path="res://app/client/game/interface/panels/entity/EntityPanel.tscn" id="1"]
 [ext_resource type="Script" path="res://app/client/game/interface/Interface.cs" id="2"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cddff8jooclq0" path="res://app/client/game/interface/info-text/InformationalText.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://bu22m8bagumka" path="res://app/client/game/interface/entity-overlay/EntityOverlay.tscn" id="6_3k5kl"]
 [ext_resource type="PackedScene" uid="uid://do7c3ujys6yd4" path="res://app/client/game/interface/panels/entity/HoveringPanel.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://xuo5vjwxjxjb" path="res://app/client/game/interface/panels/resource/ResourcePanel.tscn" id="7_474pk"]
+[ext_resource type="PackedScene" uid="uid://dvv2ohlj1odfj" path="res://app/client/game/interface/panels/turn/TurnPanel.tscn" id="8_bmuqm"]
 
 [node name="Interface" type="CanvasLayer"]
 script = ExtResource("2")
@@ -27,3 +29,13 @@ offset_bottom = -248.0
 grow_vertical = 0
 
 [node name="EntityOverlay" parent="." instance=ExtResource("6_3k5kl")]
+
+[node name="ResourcePanel" parent="." instance=ExtResource("7_474pk")]
+
+[node name="TurnPanel" parent="." instance=ExtResource("8_bmuqm")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -332.0
+offset_right = -332.0
+grow_horizontal = 0

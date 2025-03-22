@@ -1,7 +1,9 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://dp1nuutqxoubu"]
+[gd_resource type="Theme" load_steps=16 format=3 uid="uid://dp1nuutqxoubu"]
 
 [ext_resource type="FontFile" uid="uid://d0w7npripgnag" path="res://assets/fonts/Karla-Regular.ttf" id="1"]
 [ext_resource type="Texture2D" uid="uid://dhlym7w4676g2" path="res://assets/sprites/interface/small-panel-smaller-inverted-x4.png" id="2"]
+[ext_resource type="FontFile" uid="uid://bufso40qbg61j" path="res://assets/fonts/Karla-SemiBold.ttf" id="2_s6pg1"]
+[ext_resource type="FontFile" uid="uid://cgipi4wcusibp" path="res://assets/fonts/Karla-Italic.ttf" id="3_ihu48"]
 
 [sub_resource type="FontFile" id="1"]
 fallbacks = Array[Font]([ExtResource("1")])
@@ -251,6 +253,8 @@ RichTextLabel/font_sizes/bold_italics_font_size = 15
 RichTextLabel/font_sizes/italics_font_size = 15
 RichTextLabel/font_sizes/mono_font_size = 15
 RichTextLabel/font_sizes/normal_font_size = 15
+RichTextLabel/fonts/bold_font = ExtResource("2_s6pg1")
+RichTextLabel/fonts/italics_font = ExtResource("3_ihu48")
 RichTextLabel/fonts/normal_font = SubResource("FontVariation_uhlvj")
 RichTextLabel/styles/focus = SubResource("StyleBoxFlat_blmx6")
 RichTextLabel/styles/normal = SubResource("StyleBoxEmpty_y58ab")

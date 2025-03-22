@@ -13,7 +13,7 @@ public partial class Camera : Camera2D
 
     private readonly Dictionary<ZoomLevel, int> _timesPerZoomLevel = new()
     {
-        { ZoomLevel.Close, 4 }, { ZoomLevel.Medium, 2 }, { ZoomLevel.Far, 1 }
+        { ZoomLevel.VeryClose, 8 }, { ZoomLevel.Close, 4 }, { ZoomLevel.Medium, 2 }, { ZoomLevel.Far, 1 }
     };
     private ZoomLevel _currentZoomLevel = ZoomLevel.Medium;
     private int _mapWidthPixels = 1;
@@ -90,7 +90,7 @@ public partial class Camera : Camera2D
     
     private bool ZoomedIn()
     {
-        if (_currentZoomLevel is ZoomLevel.Close) 
+        if (_currentZoomLevel is ZoomLevel.VeryClose) 
             return false;
         if (Input.IsActionJustReleased("ui_zoom_in") is false) 
             return false;
@@ -189,6 +189,7 @@ public partial class Camera : Camera2D
     {
         Far,
         Medium,
-        Close
+        Close,
+        VeryClose
     }
 }
