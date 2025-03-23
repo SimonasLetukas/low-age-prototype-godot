@@ -54,10 +54,10 @@ public class ValidationHandler
         return conditionFlag switch
         {
             _ when conditionFlag.Equals(ConditionFlag.TargetIsLowGround) => _tileSource.All(t => 
-                t?.Point.IsHighGround is false),
+                t is null || t.Point.IsHighGround is false),
             
-            _ when conditionFlag.Equals(ConditionFlag.TargetIsUnoccupied) => _tileSource.All(x => 
-                x?.Occupants.IsEmpty() ?? true),
+            _ when conditionFlag.Equals(ConditionFlag.TargetIsUnoccupied) => _tileSource.All(t => 
+                t is null || t.IsOccupied() is false),
             
             _ => false
         };

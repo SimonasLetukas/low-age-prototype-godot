@@ -3,7 +3,7 @@ using AutoFixture.AutoMoq;
 using FluentAssertions;
 using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeCommon;
-using TestProject1.Helpers;
+using LowAgeTests.Helpers;
 using Area = LowAgeCommon.Area;
 using Array = System.Array;
 

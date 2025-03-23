@@ -21,19 +21,81 @@ public partial class Tiles : Node2D
     /// <summary>
     /// Wrapper of <see cref="Point"/>.
     /// </summary>
-    public class TileInstance
+    public class TileInstance : IEquatable<TileInstance>
     {
         public Vector2Int Position { get; init; }
         public required TileId Blueprint { get; init; }
         public required Terrain Terrain { get; init; }
-        public bool IsTarget { get; set; }
-        public required IList<EntityNode> Occupants { get; init; }
+        public TargetType TargetType { get; set; }
         public Point Point { get; set; } = null!;
         public int YSpriteOffset { get; set; }
+        private List<EntityNode> Occupants { get; init; } = [];
+
+        public IEnumerable<EntityNode> GetOccupants()
+        {
+            foreach (var occupant in Occupants)
+            {
+                if (occupant.IsBeingDestroyed is false)
+                    yield return occupant;
+            }
+        }
+
+        public EntityNode? GetFirstOccupantOrNull()
+        {
+            var occupant = Occupants.FirstOrDefault();
+            if (occupant == null)
+                return null;
+            if (occupant.IsBeingDestroyed)
+                return null;
+            return occupant;
+        }
         
-        public bool IsOccupied(EntityNode? by = null) => by is null 
-            ? Occupants.Any() 
-            : Occupants.Contains(by);
+        public EntityNode? GetLastOccupantOrNull()
+        {
+            var occupant = Occupants.LastOrDefault();
+            if (occupant == null)
+                return null;
+            if (occupant.IsBeingDestroyed)
+                return null;
+            return occupant;
+        }
+        
+        public bool IsOccupied(EntityNode? by = null)
+        {
+            if (GetFirstOccupantOrNull() is null)
+                return false;
+            
+            return by is null || Occupants.Contains(by);
+        }
+
+        public bool IsOccupiedBy<TEntity>() where TEntity : EntityNode
+        {
+            if (GetFirstOccupantOrNull() is null)
+                return false;
+            
+            return Occupants.Any(o => o is TEntity);
+        }
+        
+        public void AddOccupant(EntityNode entity) => Occupants.Add(entity);
+
+        public void RemoveOccupant(EntityNode entity) => Occupants.Remove(entity);
+
+        public bool Equals(TileInstance? other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Point.Id.Equals(other.Point.Id);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((TileInstance)obj);
+        }
+
+        public override int GetHashCode() => HashCode.Combine(Position, Terrain);
     }
     
     public event Action FinishedInitialInitializing = delegate { };
@@ -205,7 +267,6 @@ public partial class Tiles : Node2D
             Position = position,
             Blueprint = blueprintId,
             Terrain = GetBlueprint(blueprintId).Terrain,
-            Occupants = new List<EntityNode>()
         };
         _tiles[(position, false)] = tile;
     }
@@ -325,11 +386,6 @@ public partial class Tiles : Node2D
         ? GetTile(at, isHighGround)?.Terrain
         : Terrain.Mountains) ?? Terrain.Mountains;
 
-    public IList<TileInstance> GetEntityTiles(EntityNode entity) 
-        => entity.EntityOccupyingPositions.Select(position => entity is UnitNode { IsOnHighGround: true }
-            ? GetHighestTile(position) 
-            : GetTile(position, false)).WhereNotNull().ToList();
-
     public IList<TileInstance?> GetHighestTiles(IList<Vector2Int> at) => at.Select(GetHighestTile).ToList();
 
     public TileInstance? GetHighestTile(Vector2Int at) => GetTile(at, true) ?? GetTile(at, false);
@@ -346,12 +402,12 @@ public partial class Tiles : Node2D
 
     public void AddOccupation(EntityNode entity)
     {
-        foreach (var tile in GetEntityTiles(entity))
+        foreach (var tile in entity.EntityOccupyingTiles)
         {
             if (tile.IsOccupied(entity))
                 continue;
             
-            tile.Occupants.Add(entity);
+            tile.AddOccupant(entity);
         }
         
         if (entity is StructureNode structure)
@@ -360,9 +416,9 @@ public partial class Tiles : Node2D
 
     public void RemoveOccupation(EntityNode entity)
     {
-        foreach (var tile in GetEntityTiles(entity))
+        foreach (var tile in entity.EntityOccupyingTiles)
         {
-            tile.Occupants.Remove(entity);
+            tile.RemoveOccupant(entity);
         }
         
         if (entity is StructureNode structure)
@@ -462,7 +518,8 @@ public partial class Tiles : Node2D
         Elevatable.ClearPath();
         Elevatable.ClearAvailableTiles(true);
         Elevatable.ClearAvailableTiles(false);
-        Elevatable.ClearTargetTiles();
+        Elevatable.ClearTargetTiles(true);
+        Elevatable.ClearTargetTiles(false);
         _grass.Clear();
         _scraps.Clear();
         _marsh.Clear();
@@ -483,9 +540,8 @@ public partial class Tiles : Node2D
                 {
                     Position = position,
                     Blueprint = TileId.HighGround,
-                    Terrain = Terrain.HighGround,
-                    IsTarget = false,
-                    Occupants = new List<EntityNode>(),
+                    Terrain = Terrain.HighGround, 
+                    TargetType = TargetType.None,
                     Point = null!,
                     YSpriteOffset = ySpriteOffset
                 };
@@ -508,8 +564,7 @@ public partial class Tiles : Node2D
                 Position = point.Position,
                 Blueprint = TileId.HighGround,
                 Terrain = Terrain.HighGround,
-                IsTarget = false,
-                Occupants = new List<EntityNode>(),
+                TargetType = TargetType.None,
                 Point = point,
                 YSpriteOffset = 0
             };

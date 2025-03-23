@@ -59,7 +59,6 @@ public partial class EntityRenderers : Node2D
         }
     }
 
-    // TODO: to be called before entity is removed / destroyed
     public void UnregisterRenderer(EntityRenderer rendererToRemove)
     {
         if (rendererToRemove.Registered is false) 

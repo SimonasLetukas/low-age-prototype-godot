@@ -5,6 +5,7 @@ using Godot;
 using LowAgeData.Domain.Entities;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
+using LowAgeData.Domain.Common;
 using MultipurposePathfinding;
 using Area = LowAgeCommon.Area;
 
@@ -29,14 +30,18 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public EntityRenderer Renderer { get; private set; } = null!;
     public Vector2Int EntityPrimaryPosition { get; set; }
     public Vector2Int EntitySize { get; protected set; } = Vector2Int.One;
-    public virtual Area RelativeSize => new Area(Vector2Int.Zero, EntitySize);
+    public virtual Area RelativeSize => new(Vector2Int.Zero, EntitySize);
     public IList<Vector2Int> EntityOccupyingPositions => new Area(EntityPrimaryPosition, EntitySize).ToList();
+    public virtual IList<Tiles.TileInstance> EntityOccupyingTiles => EntityOccupyingPositions
+        .Select(position => GetTile(position, false)).WhereNotNull().ToList();
+    public bool ProvidesHighGround => Behaviours.GetPathfindingUpdatables.IsEmpty() is false;
     public Dictionary<Vector2Int, int> ProvidedHighGroundHeightByOccupyingPosition =>
         _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
             pair => pair.Value);
     public string DisplayName { get; private set; } = null!;
     public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; } = null!;
+    public bool IsBeingDestroyed { get; private set; }
     
     protected Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; set; } = null!;
     protected Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; set; } = null!;
@@ -82,6 +87,21 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Blueprint = blueprint;
         BlueprintId = Blueprint.Id;
         DisplayName = blueprint.DisplayName;
+    }
+
+    public Vector2 GetTopCenterOffset()
+    {
+        const int quarterTileWidth = Constants.TileWidth / 4;
+        const int halfTileWidth = Constants.TileWidth / 2;
+        const int halfTileHeight = Constants.TileHeight / 2;
+        
+        var spriteSize = Renderer.SpriteSize;
+        var offsetFromX = (RelativeSize.Size.X - 1) * new Vector2(quarterTileWidth, halfTileHeight) +
+                          RelativeSize.Start.X * new Vector2(halfTileWidth, halfTileHeight);
+        var offsetFromY = (RelativeSize.Size.Y - 1) * new Vector2(quarterTileWidth * -1, halfTileHeight) +
+                          RelativeSize.Start.Y * new Vector2(halfTileWidth * -1, halfTileHeight);
+
+        return new Vector2(0, spriteSize.Y * -1 - Renderer.YHighGroundOffset) + offsetFromX + offsetFromY;
     }
     
     public void SetTileHovered(bool to)
@@ -187,6 +207,11 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         
         Behaviours.RemoveAll<BuildableNode>();
     }
+
+    public virtual void DropDownToLowGround()
+    {
+        Renderer.ResetElevationOffset();
+    }
     
     public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
     {
@@ -211,21 +236,23 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public virtual bool CanBeMovedThroughAt(Point point, Team forTeam) => true;
 
+    public virtual bool CanBeTargetedBy(EntityNode entity) => Player.Team.IsEnemyTo(entity.Player.Team) 
+                                                              || Config.Instance.AllowSameTeamCombat;
+    
     public bool HasHighGroundAt(Point point, Team forTeam)
     {
         if (point.IsHighGround is false)
+            return false;
+
+        if (ProvidesHighGround is false)
             return false;
 
         var position = point.Position;
         
         if (position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize) is false)
             return false;
-        
-        var pathfindingUpdatableBehaviours = Behaviours.GetPathfindingUpdatables;
-        if (pathfindingUpdatableBehaviours.IsEmpty())
-            return false;
 
-        var result = pathfindingUpdatableBehaviours.Any(x => 
+        var result = Behaviours.GetPathfindingUpdatables.Any(x => 
             x.CanBeMovedOnAt(position, forTeam));
         
         return result;
@@ -242,9 +269,15 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
         return result;
     }
+
+    public virtual (int, bool) ReceiveAttack(EntityNode source, AttackType attackType, bool isSimulation) => (0, false);
+
+    protected virtual (int, bool) ReceiveDamage(EntityNode source, DamageType damageType, int amount, bool isSimulation) 
+        => (0, false);
     
     public void Destroy()
     {
+        IsBeingDestroyed = true;
         Destroyed(this);
         QueueFree();
     }
@@ -298,13 +331,13 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     private static bool IsPlacementGenerallyValid(IList<Tiles.TileInstance?> tiles, bool requiresTargetTiles)
     {
-        if (tiles.Any(x => x is null))
+        if (tiles.Any(tile => tile is null))
             return false;
 
-        if (requiresTargetTiles && tiles.All(x => x!.IsTarget is false))
+        if (requiresTargetTiles && tiles.All(tile => tile!.TargetType is TargetType.None))
             return false;
         
-        if (tiles.Any(x => x!.Occupants.Any(y => y is UnitNode)))
+        if (tiles.Any(tile => tile!.IsOccupiedBy<UnitNode>()))
             return false;
 
         return true;
@@ -365,16 +398,6 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
             _providingHighGroundHeightByLocalEntityPosition[pair.Key] = pair.Value;
     }
 
-    public override bool Equals(object? obj)
-    {
-        if (obj == null || GetType() != obj.GetType()) return false;
-        return InstanceId == ((EntityNode)obj).InstanceId;
-    }
-
-    public override int GetHashCode()
-    {
-        // Instance ID might be set after instance is created to sync IDs between multiplayer clients.
-        // ReSharper disable once NonReadonlyMemberInGetHashCode
-        return InstanceId.GetHashCode();
-    }
+    public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
+    public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
 }

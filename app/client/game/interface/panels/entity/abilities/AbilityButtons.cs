@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -8,7 +9,7 @@ public partial class AbilityButtons : HBoxContainer
     [Export] public Godot.Collections.Dictionary<string, string> AbilityIconPaths { get; set; } 
     // TODO have paths to icons on blueprint level instead
     
-    [Signal] public delegate void AbilitiesPopulatedEventHandler();
+    public event Action AbilitiesPopulated = delegate { };
 
     private readonly Dictionary<AbilityId, Texture2D> _abilityIcons = new Dictionary<AbilityId, Texture2D>();
 
@@ -41,7 +42,7 @@ public partial class AbilityButtons : HBoxContainer
             AddChild(abilityButton);
         }
         
-        EmitSignal(nameof(AbilitiesPopulated));
+        AbilitiesPopulated();
     }
 
     public void DeselectAll()

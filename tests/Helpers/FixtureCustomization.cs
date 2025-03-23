@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using AutoFixture;
 
-namespace TestProject1.Helpers
+namespace LowAgeTests.Helpers
 {
     public partial class FixtureCustomization<T>
     {

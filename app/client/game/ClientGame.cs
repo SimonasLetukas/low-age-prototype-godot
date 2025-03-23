@@ -49,7 +49,8 @@ public partial class ClientGame : Game
         
         _interface.MouseEntered += _mouse.OnInterfaceMouseEntered;
         _interface.MouseExited += _mouse.OnInterfaceMouseExited;
-        _interface.SelectedToBuild += _map.OnSelectedToBuild;
+        _interface.SelectedToBuild += _map.OnInterfaceSelectedToBuild;
+        _interface.AttackSelected += _map.OnInterfaceAttackSelected;
 
         _map.FinishedInitializing += OnMapFinishedInitializing;
         _map.EntityIsBeingPlaced += _interface.OnEntityIsBeingPlaced;
@@ -57,6 +58,7 @@ public partial class ClientGame : Game
         _map.Entities.EntityDeselected += _interface.OnEntityDeselected;
         
         _map.UnitMovementIssued += RegisterNewGameEvent;
+        _map.EntityAttacked += RegisterNewGameEvent;
         _map.Entities.EntityPlaced += RegisterNewGameEvent;
     }
 
@@ -64,7 +66,8 @@ public partial class ClientGame : Game
     {
         _interface.MouseEntered -= _mouse.OnInterfaceMouseEntered;
         _interface.MouseExited -= _mouse.OnInterfaceMouseExited;
-        _interface.SelectedToBuild -= _map.OnSelectedToBuild;
+        _interface.SelectedToBuild -= _map.OnInterfaceSelectedToBuild;
+        _interface.AttackSelected -= _map.OnInterfaceAttackSelected;
         
         _map.FinishedInitializing -= OnMapFinishedInitializing;
         _map.EntityIsBeingPlaced -= _interface.OnEntityIsBeingPlaced;
@@ -72,6 +75,7 @@ public partial class ClientGame : Game
         _map.Entities.EntityDeselected -= _interface.OnEntityDeselected;
         
         _map.UnitMovementIssued -= RegisterNewGameEvent;
+        _map.EntityAttacked -= RegisterNewGameEvent;
         _map.Entities.EntityPlaced -= RegisterNewGameEvent;
     }
 
@@ -117,6 +121,9 @@ public partial class ClientGame : Game
             case UnitMovedAlongPathEvent unitMovedAlongPathEvent:
                 _map.HandleEvent(unitMovedAlongPathEvent);
                 break;
+            case EntityAttackedEvent entityAttackedEvent:
+                _map.Entities.HandleEvent(entityAttackedEvent);
+                break;
             case EntityPlacedEvent entityPlacedEvent:
                 _map.Entities.HandleEvent(entityPlacedEvent);
                 _map.OnEntityPlaced();
@@ -137,6 +144,7 @@ public partial class ClientGame : Game
     private void OnEveryoneFinishedInitializing()
     {
         _map.SetupFactionStart();
+        _interface.Visible = true;
         SetPaused(false);
     }
 

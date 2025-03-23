@@ -18,9 +18,11 @@ public partial class Entities : Node2D
     
     public event Action<EntityPlacedEvent> EntityPlaced = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
+    public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
     public event Action EntityDeselected = delegate { };
 
+    public bool EntitiesBeingDestroyed => _entitiesBeingDestroyed.Count != 0;
     public bool EntityMoving { get; private set; } = false;
     public EntityNode? SelectedEntity { get; private set; } = null;
     public EntityNode? EntityInPlacement { get; private set; } = null;
@@ -33,6 +35,7 @@ public partial class Entities : Node2D
     private Func<Vector2Int, bool, Tiles.TileInstance?> _getTile = null!;
 
     private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new();
+    private readonly List<EntityNode> _entitiesBeingDestroyed = [];
 
     public override void _Ready()
     {
@@ -78,6 +81,9 @@ public partial class Entities : Node2D
 
     public override void _Process(double delta)
     {
+        if (EntitiesBeingDestroyed)
+            return;
+        
         if (Input.IsActionJustPressed(Constants.Input.Rotate) && EntityInPlacement is ActorNode actor) 
             actor.Rotate();
         
@@ -116,21 +122,32 @@ public partial class Entities : Node2D
 
     public bool IsEntitySelected() => SelectedEntity != null;
 
-    public bool IsEntitySelected(EntityNode entity) => IsEntitySelected() 
-                                                       && SelectedEntity!.InstanceId == entity.InstanceId;
+    public bool IsEntitySelected(EntityNode entity) => IsEntitySelected() && SelectedEntity!.Equals(entity);
 
-    public bool IsEntityHovered() => HoveredEntity != null;
+    public bool IsEntityHovered()
+    {
+        if (HoveredEntity is null)
+            return false;
 
-    public bool IsEntityHovered(EntityNode entity) => IsEntityHovered() 
-                                                      && HoveredEntity!.InstanceId == entity.InstanceId;
+        if (HoveredEntity.IsBeingDestroyed)
+        {
+            HoveredEntity = null;
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool IsEntityHovered(EntityNode entity) => IsEntityHovered() && HoveredEntity!.Equals(entity);
 
     public bool TryHoveringEntityOn(Tiles.TileInstance tile)
     {
         if (EntityMoving)
             return false;
 
-        var occupationExists = tile.Occupants.Any();
-        var occupantEntity = tile.Occupants.LastOrDefault(); // TODO handle high-ground
+        
+        var occupationExists = tile.IsOccupied();
+        var occupantEntity = tile.GetLastOccupantOrNull();
         
         if (occupationExists && IsEntityHovered(occupantEntity!))
             return true;
@@ -219,6 +236,43 @@ public partial class Entities : Node2D
     {
         EntityInPlacement?.Destroy();
         EntityInPlacement = null;
+    }
+
+    public void DropDownToLowGround(IEnumerable<EntityNode> entities)
+    {
+        foreach (var entity in entities)
+        {
+            entity.DropDownToLowGround();
+            if (entity.IsBeingDestroyed)
+            {
+                _renderers.UnregisterRenderer(entity.Renderer);
+                continue;
+            }
+            
+            NewPositionOccupied(entity);
+        }
+    }
+
+    public void HandleEvent(EntityAttackedEvent @event)
+    {
+        var source = GetEntityByInstanceId(@event.SourceId);
+        var target = GetEntityByInstanceId(@event.TargetId);
+
+        if (source is null)
+        {
+            GD.Print($"{nameof(Entities)} could not apply {nameof(EntityAttackedEvent)} because " +
+                     $"{nameof(source)} '{@event.SourceId}' entity was null.");
+            return;
+        }
+        
+        if (target is null)
+        {
+            GD.Print($"{nameof(Entities)} could not apply {nameof(EntityAttackedEvent)} because " +
+                     $"{nameof(target)} '{@event.TargetId}' entity was null.");
+            return;
+        }
+
+        target.ReceiveAttack(source, @event.AttackType, false);
     }
 
     public void HandleEvent(EntityPlacedEvent @event)
@@ -342,12 +396,19 @@ public partial class Entities : Node2D
 
     private void OnEntityDestroyed(EntityNode entity)
     {
+        _entitiesBeingDestroyed.Add(entity);
+        
+        if (IsEntityHovered(entity))
+            HoveredEntity = null;
+        
+        Destroyed(entity);
+        
         _renderers.UnregisterRenderer(entity.Renderer);
         
         entity.FinishedMoving -= OnEntityFinishedMoving;
         entity.Destroyed -= OnEntityDestroyed;
 
-        if (_entitiesByIds.ContainsKey(entity.InstanceId))
-            _entitiesByIds.Remove(entity.InstanceId);
+        _entitiesByIds.Remove(entity.InstanceId);
+        _entitiesBeingDestroyed.Remove(entity);
     }
 }

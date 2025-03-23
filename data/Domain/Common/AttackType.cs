@@ -4,14 +4,14 @@ using Newtonsoft.Json;
 namespace LowAgeData.Domain.Common
 {
     [JsonConverter(typeof(AttacksJsonConverter))]
-    public class Attacks : EnumValueObject<Attacks, Attacks.AttacksEnum>
+    public class AttackType : EnumValueObject<AttackType, AttackType.AttacksEnum>
     {
-        public static Attacks Melee => new Attacks(AttacksEnum.Melee);
-        public static Attacks Ranged => new Attacks(AttacksEnum.Ranged);
+        public static AttackType Melee => new(AttacksEnum.Melee);
+        public static AttackType Ranged => new(AttacksEnum.Ranged);
 
-        private Attacks(AttacksEnum @enum) : base(@enum) { }
+        private AttackType(AttacksEnum @enum) : base(@enum) { }
         
-        private Attacks(string? from) : base(from) { }
+        private AttackType(string? from) : base(from) { }
         
         public enum AttacksEnum
         {
@@ -23,12 +23,12 @@ namespace LowAgeData.Domain.Common
         {
             public override bool CanConvert(Type objectType)
             {
-                return objectType == typeof(Attacks);
+                return objectType == typeof(AttackType);
             }
             
             public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
             {
-                var id = (Attacks)value!;
+                var id = (AttackType)value!;
                 serializer.Serialize(writer, id.ToString());
             }
 
@@ -38,7 +38,7 @@ namespace LowAgeData.Domain.Common
                     return null;
                 
                 var value = serializer.Deserialize<string>(reader);
-                return new Attacks(value);
+                return new AttackType(value);
             }
         }
     }

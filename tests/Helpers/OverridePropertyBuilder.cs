@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using AutoFixture.Kernel;
 
-namespace TestProject1.Helpers
+namespace LowAgeTests.Helpers
 {
     public partial class OverridePropertyBuilder<T, TProp> : ISpecimenBuilder
     {

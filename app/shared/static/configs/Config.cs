@@ -7,7 +7,7 @@ using FileAccess = Godot.FileAccess;
 public partial class Config : Node
 {
     public const string SavePath = @"res://data/config.json";
-    public static Config Instance = null;
+    public static Config Instance = null!;
     
     public void Save()
     {
@@ -41,56 +41,71 @@ public partial class Config : Node
         }
         catch (Exception e)
         {
+            GD.PrintErr(e.Message);
             return false;
         }
     }
 
     public AnimationSpeeds AnimationSpeed
     {
-        get => _data.AnimationSpeed;
-        set => _data.AnimationSpeed = value;
+        get => GetData().AnimationSpeed;
+        set => GetData().AnimationSpeed = value;
     }
 
     public bool ConnectTerrain
     {
-        get => _data.ConnectTerrain;
-        set => _data.ConnectTerrain = value;
+        get => GetData().ConnectTerrain;
+        set => GetData().ConnectTerrain = value;
     }
 
     public bool ResearchEnabled
     {
-        get => _data.ResearchEnabled;
-        set => _data.ResearchEnabled = value;
+        get => GetData().ResearchEnabled;
+        set => GetData().ResearchEnabled = value;
     }
 
     public FactionId StartingFaction
     {
-        get => _data.StartingFaction;
-        set => _data.StartingFaction = value;
+        get => GetData().StartingFaction;
+        set => GetData().StartingFaction = value;
     }
 
     public bool LargeCursor
     {
-        get => _data.LargeCursor;
-        set => _data.LargeCursor = value;
+        get => GetData().LargeCursor;
+        set => GetData().LargeCursor = value;
     }
 
     public bool ShowHints
     {
-        get => _data.ShowHints;
-        set => _data.ShowHints = value;
+        get => GetData().ShowHints;
+        set => GetData().ShowHints = value;
     }
 
-    private ConfigData _data = new ConfigData();
+    public bool AllowSameTeamCombat
+    {
+        get => GetData().AllowSameTeamCombat;
+        set => GetData().AllowSameTeamCombat = value;
+    }
+
+    private ConfigData? _data;
+    private ConfigData GetData()
+    {
+        if (_data is null)
+            Load();
+        
+        return _data!;
+    }
     
     public override void _Ready()
     {
         base._Ready();
         
-        if (Instance is null)
-        {
-            Instance = this;
-        }
+        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+        Instance ??= this;
+
+        if (GetMultiplayer().IsServer())
+            return;
         
         Load();
         Save();
@@ -104,6 +119,7 @@ public partial class Config : Node
         public FactionId StartingFaction { get; set; } = FactionId.Uee;
         public bool LargeCursor { get; set; } = false;
         public bool ShowHints { get; set; } = true;
+        public bool AllowSameTeamCombat { get; set; } = false;
     }
 
     public enum AnimationSpeeds

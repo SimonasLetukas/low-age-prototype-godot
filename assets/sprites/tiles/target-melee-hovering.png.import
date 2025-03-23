@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g621qs4wmumq"
-path="res://.godot/imported/target-negative.png-49ce8883168de9585d7b9c2c15b3fe2b.ctex"
+uid="uid://bykvhftvfq6dy"
+path="res://.godot/imported/target-melee-hovering.png-ee03d25b564f7324c0922a8cc9a3159b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/tiles/target-negative.png"
-dest_files=["res://.godot/imported/target-negative.png-49ce8883168de9585d7b9c2c15b3fe2b.ctex"]
+source_file="res://assets/sprites/tiles/target-melee-hovering.png"
+dest_files=["res://.godot/imported/target-melee-hovering.png-ee03d25b564f7324c0922a8cc9a3159b.ctex"]
 
 [params]
 

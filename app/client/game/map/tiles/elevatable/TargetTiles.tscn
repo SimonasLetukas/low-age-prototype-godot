@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://dcf0dncb4sc76" path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.tscn" id="1"]
 [ext_resource type="Script" path="res://app/client/game/map/tiles/elevatable/TargetTiles.cs" id="2"]
-[ext_resource type="Texture2D" uid="uid://w6vi0lf6obtb" path="res://assets/sprites/tiles/target-positive.png" id="3"]
-[ext_resource type="Texture2D" uid="uid://g621qs4wmumq" path="res://assets/sprites/tiles/target-negative.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://4k1tujhc25x5" path="res://assets/sprites/tiles/target-normal-hovering.png" id="3_84dfk"]
+[ext_resource type="Texture2D" uid="uid://7fk55fc56s1a" path="res://assets/sprites/tiles/target-normal.png" id="4_bir0l"]
 
 [node name="TargetTiles" instance=ExtResource("1")]
 script = ExtResource("2")
-ElevatedNegativeSpriteTexture = ExtResource("4")
-ElevatedSpriteTexture = ExtResource("3")
+ElevatedHoveringSpriteTexture = ExtResource("3_84dfk")
+ElevatedSpriteTexture = ExtResource("4_bir0l")

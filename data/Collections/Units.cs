@@ -28,7 +28,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 1, 
-                            attackType: Attacks.Melee, 
+                            attackType: AttackType.Melee, 
                             minimumDistance: 1, 
                             maximumDistance: 1)
                     },
@@ -62,7 +62,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 5, 
-                            attackType: Attacks.Melee, 
+                            attackType: AttackType.Melee, 
                             minimumDistance: 1, 
                             maximumDistance: 2, 
                             bonusTo: ActorAttribute.Biological, 
@@ -97,12 +97,12 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 1,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1),
                         new AttackStat(
                             maxAmount: 3,
-                            attackType: Attacks.Ranged, 
+                            attackType: AttackType.Ranged, 
                             minimumDistance: 2,
                             maximumDistance: 6,
                             bonusTo: ActorAttribute.Light,
@@ -138,7 +138,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 3,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
                             bonusTo: ActorAttribute.Biological,
@@ -173,7 +173,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 6,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
                             bonusTo: ActorAttribute.Armoured,
@@ -208,12 +208,12 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 1,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1),
                         new AttackStat(
                             maxAmount: 2,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             minimumDistance: 2,
                             maximumDistance: 4,
                             bonusTo: ActorAttribute.Ranged,
@@ -248,12 +248,12 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 1,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1),
                         new AttackStat(
                             maxAmount: 6,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             minimumDistance: 2,
                             maximumDistance: 5,
                             bonusTo: ActorAttribute.Armoured,
@@ -289,7 +289,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 6, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 8,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
                             bonusTo: ActorAttribute.Giant,
@@ -324,7 +324,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 3,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1)
                     },
@@ -357,7 +357,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 6,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
                             bonusTo: ActorAttribute.Mechanical,
@@ -391,7 +391,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 0,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1)
                     },
@@ -424,7 +424,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 9,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
                             bonusTo: ActorAttribute.Armoured,
@@ -460,12 +460,12 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 1,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1),
                         new AttackStat(
                             maxAmount: 4,
-                            attackType: Attacks.Ranged, 
+                            attackType: AttackType.Ranged, 
                             minimumDistance: 2,
                             maximumDistance: 7,
                             bonusTo: ActorAttribute.Ranged,
@@ -501,7 +501,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 5,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
                             bonusTo: ActorAttribute.Light,
@@ -536,12 +536,12 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 2,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1),
                         new AttackStat(
                             maxAmount: 8,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             minimumDistance: 2,
                             maximumDistance: 5,
                             bonusTo: ActorAttribute.Armoured,
@@ -579,7 +579,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 3,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
                             bonusTo: ActorAttribute.Celestial,
@@ -616,7 +616,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 1,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
                             bonusTo: ActorAttribute.Mechanical,
@@ -653,7 +653,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 20,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             minimumDistance: 1,
                             maximumDistance: 10,
                             bonusTo: ActorAttribute.Structure,
@@ -691,7 +691,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 6, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 9,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             minimumDistance: 1,
                             maximumDistance: 9,
                             bonusTo: ActorAttribute.Giant,
@@ -760,7 +760,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 6, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 2,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
                             bonusTo: ActorAttribute.Mechanical,
@@ -798,14 +798,14 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
                             maxAmount: 10,
-                            attackType: Attacks.Melee,
+                            attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1,
                             bonusTo: ActorAttribute.Biological,
                             bonusAmount: 10),
                         new AttackStat(
                             maxAmount: 5,
-                            attackType: Attacks.Ranged,
+                            attackType: AttackType.Ranged,
                             minimumDistance: 2,
                             maximumDistance: 4,
                             bonusTo: ActorAttribute.Biological,

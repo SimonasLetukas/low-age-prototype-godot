@@ -27,6 +27,16 @@ public static class IShapeExtensions
                 : ActorRotation.BottomRight);
     }
     
+    public static IEnumerable<Vector2Int> ToPositions(this IShape shape, ActorNode actor, 
+        Vector2Int mapSize)
+    {
+        return shape.ToPositions(
+            actor.EntityPrimaryPosition, 
+            mapSize, 
+            actor.EntitySize,
+            actor.ActorRotation);
+    }
+    
     public static IEnumerable<Vector2Int> ToPositions(this IShape shape, Vector2Int centerPoint, 
         Vector2Int mapSize, Vector2Int? actorSize = null, ActorRotation? actorRotation = null)
     {
@@ -86,10 +96,10 @@ public static class IShapeExtensions
     }
 
     private static HashSet<Vector2Int> DrawCircle(int radius, int centerX, int centerY, int? radiusSquared = null, 
-        HashSet<Vector2Int> existingPositions = null)
+        HashSet<Vector2Int>? existingPositions = null)
     {
-        radiusSquared = radiusSquared ?? radius * radius;
-        var positions = existingPositions ?? new HashSet<Vector2Int>();
+        radiusSquared ??= radius * radius;
+        var positions = existingPositions ?? [];
         
         for (var x = -radius; x < radius + 1; x++)
         {
@@ -130,12 +140,10 @@ public static class IShapeExtensions
         Vector2Int? actorSize = null, ActorRotation? actorRotation = null)
     {
         var positions = new List<Vector2Int>();
-        var size = actorSize ?? new Vector2Int(1, 1);
-        actorRotation = actorRotation ?? ActorRotation.BottomRight;
-        var xAxis = actorRotation is ActorRotation.BottomRight 
-                    || actorRotation is ActorRotation.TopLeft;
-        var positiveGrowth = actorRotation is ActorRotation.BottomRight 
-                             || actorRotation is ActorRotation.BottomLeft;
+        var size = actorSize ?? Vector2Int.One;
+        actorRotation ??= ActorRotation.BottomRight;
+        var xAxis = actorRotation is ActorRotation.BottomRight or ActorRotation.TopLeft;
+        var positiveGrowth = actorRotation is ActorRotation.BottomRight or ActorRotation.BottomLeft;
         var offset = positiveGrowth
             ? xAxis 
                 ? size.X 
@@ -160,7 +168,7 @@ public static class IShapeExtensions
             }
         }
 
-        if (line.IgnoreLength == -1 && line.Length > 0)
+        if (line is { IgnoreLength: -1, Length: > 0 })
         {
             for (var x = 0; x < size.X; x++)
             {

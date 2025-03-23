@@ -244,7 +244,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": null,
@@ -314,7 +314,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 2,
             "bonusTo": "ActorAttribute.Biological",
@@ -383,7 +383,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": null,
@@ -393,7 +393,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Ranged",
+            "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 6,
             "bonusTo": "ActorAttribute.Light",
@@ -463,7 +463,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": "ActorAttribute.Biological",
@@ -532,7 +532,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": "ActorAttribute.Armoured",
@@ -601,7 +601,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": null,
@@ -611,7 +611,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Ranged",
+            "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 4,
             "bonusTo": "ActorAttribute.Ranged",
@@ -680,7 +680,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": null,
@@ -690,7 +690,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Ranged",
+            "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 5,
             "bonusTo": "ActorAttribute.Armoured",
@@ -760,7 +760,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": "ActorAttribute.Giant",
@@ -828,7 +828,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": null,
@@ -897,7 +897,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": "ActorAttribute.Mechanical",
@@ -965,7 +965,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": null,
@@ -1039,7 +1039,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": "ActorAttribute.Armoured",
@@ -1114,7 +1114,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": null,
@@ -1124,7 +1124,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Ranged",
+            "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 7,
             "bonusTo": "ActorAttribute.Ranged",
@@ -1199,7 +1199,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": "ActorAttribute.Light",
@@ -1273,7 +1273,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": null,
@@ -1283,7 +1283,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Ranged",
+            "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 5,
             "bonusTo": "ActorAttribute.Armoured",
@@ -1360,7 +1360,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": "ActorAttribute.Celestial",
@@ -1436,7 +1436,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": "ActorAttribute.Mechanical",
@@ -1512,7 +1512,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Ranged",
+            "attackType": "AttackType.Ranged",
             "minimumDistance": 1,
             "maximumDistance": 10,
             "bonusTo": "ActorAttribute.Structure",
@@ -1588,7 +1588,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Ranged",
+            "attackType": "AttackType.Ranged",
             "minimumDistance": 1,
             "maximumDistance": 9,
             "bonusTo": "ActorAttribute.Giant",
@@ -1732,7 +1732,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": "ActorAttribute.Mechanical",
@@ -1808,7 +1808,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Melee",
+            "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
             "bonusTo": "ActorAttribute.Biological",
@@ -1818,7 +1818,7 @@
           },
           {
             "$type": "AttackStat",
-            "attackType": "Attacks.Ranged",
+            "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 4,
             "bonusTo": "ActorAttribute.Biological",
@@ -6555,7 +6555,7 @@
         "effect-quickdraw-cripple-apply-behaviour"
       ],
       "onHitAttackTypes": [
-        "Attacks.Ranged"
+        "AttackType.Ranged"
       ],
       "onBirthEffects": [],
       "onBuildBehaviour": null,
@@ -6580,7 +6580,7 @@
         "effect-gorger-fanatic-suicide-destroy"
       ],
       "onHitAttackTypes": [
-        "Attacks.Melee"
+        "AttackType.Melee"
       ],
       "onBirthEffects": [
         "effect-gorger-fanatic-suicide-apply-behaviour-buff"
@@ -6628,7 +6628,7 @@
         "effect-camou-silent-assassin-on-hit-silence"
       ],
       "onHitAttackTypes": [
-        "Attacks.Melee"
+        "AttackType.Melee"
       ],
       "onBirthEffects": [],
       "onBuildBehaviour": null,
@@ -6993,7 +6993,7 @@
         "effect-parasite-paralysing-grasp-apply-attack-behaviour"
       ],
       "onHitAttackTypes": [
-        "Attacks.Melee"
+        "AttackType.Melee"
       ],
       "onBirthEffects": [],
       "onBuildBehaviour": null,
@@ -7060,7 +7060,7 @@
         "effect-marksman-critical-mark-apply-behaviour"
       ],
       "onHitAttackTypes": [
-        "Attacks.Ranged"
+        "AttackType.Ranged"
       ],
       "onBirthEffects": [],
       "onBuildBehaviour": null,
@@ -7477,7 +7477,7 @@
         "effect-cannon-heat-up-create-entity"
       ],
       "overridesAttacks": [
-        "Attacks.Ranged"
+        "AttackType.Ranged"
       ],
       "fallbackToAttack": false,
       "leashArea": {
@@ -7553,7 +7553,7 @@
         "effect-ballista-aim-apply-behaviour"
       ],
       "overridesAttacks": [
-        "Attacks.Ranged"
+        "AttackType.Ranged"
       ],
       "fallbackToAttack": false,
       "leashArea": {
@@ -11530,7 +11530,7 @@
       "initialModifications": [
         {
           "$type": "AttackModification",
-          "attackType": "Attacks.Ranged",
+          "attackType": "AttackType.Ranged",
           "attribute": "AttackAttribute.MaxDistance",
           "modificationFlags": [],
           "change": "Change.AddMax",
@@ -13558,7 +13558,7 @@
       "initialModifications": [
         {
           "$type": "AttackModification",
-          "attackType": "Attacks.Ranged",
+          "attackType": "AttackType.Ranged",
           "attribute": "AttackAttribute.MaxAmount",
           "modificationFlags": [],
           "change": "Change.AddMax",
@@ -13566,7 +13566,7 @@
         },
         {
           "$type": "AttackModification",
-          "attackType": "Attacks.Ranged",
+          "attackType": "AttackType.Ranged",
           "attribute": "AttackAttribute.MaxDistance",
           "modificationFlags": [],
           "change": "Change.AddMax",
@@ -13654,7 +13654,7 @@
         },
         {
           "$type": "AttackModification",
-          "attackType": "Attacks.Ranged",
+          "attackType": "AttackType.Ranged",
           "attribute": "AttackAttribute.MaxAmount",
           "modificationFlags": [],
           "change": "Change.AddMax",
@@ -13723,7 +13723,7 @@
       "initialModifications": [
         {
           "$type": "AttackModification",
-          "attackType": "Attacks.Melee",
+          "attackType": "AttackType.Melee",
           "attribute": "AttackAttribute.MaxAmount",
           "modificationFlags": [],
           "change": "Change.SubtractMax",
@@ -13731,7 +13731,7 @@
         },
         {
           "$type": "AttackModification",
-          "attackType": "Attacks.Ranged",
+          "attackType": "AttackType.Ranged",
           "attribute": "AttackAttribute.MaxAmount",
           "modificationFlags": [],
           "change": "Change.SubtractMax",
@@ -14069,7 +14069,7 @@
       "$type": "ExtraAttack",
       "id": "behaviour-quickdraw-doubleshot-extra-attack",
       "attackTypes": [
-        "Attacks.Ranged"
+        "AttackType.Ranged"
       ],
       "displayName": "Doubleshot Extra Attack",
       "description": "Ranged attacks twice.",
@@ -14291,7 +14291,7 @@
       "initialModifications": [
         {
           "$type": "AttackModification",
-          "attackType": "Attacks.Melee",
+          "attackType": "AttackType.Melee",
           "attribute": "AttackAttribute.MaxDistance",
           "modificationFlags": [],
           "change": "Change.SubtractMax",
@@ -14299,7 +14299,7 @@
         },
         {
           "$type": "AttackModification",
-          "attackType": "Attacks.Ranged",
+          "attackType": "AttackType.Ranged",
           "attribute": "AttackAttribute.MaxDistance",
           "modificationFlags": [],
           "change": "Change.SubtractMax",
@@ -14794,7 +14794,7 @@
       "ammunitionRecoveredOnReload": 2,
       "applyOriginalAttackToTarget": false,
       "ammunitionAttackTypes": [
-        "Attacks.Ranged"
+        "AttackType.Ranged"
       ],
       "onHitEffects": [
         "effect-mortar-deadly-ammunition-search"
@@ -14872,7 +14872,7 @@
       "initialModifications": [
         {
           "$type": "AttackModification",
-          "attackType": "Attacks.Ranged",
+          "attackType": "AttackType.Ranged",
           "attribute": "AttackAttribute.MaxAmount",
           "modificationFlags": [
             "ModificationFlag.IgnoreArmour"
@@ -14942,7 +14942,7 @@
       "initialModifications": [
         {
           "$type": "AttackModification",
-          "attackType": "Attacks.Ranged",
+          "attackType": "AttackType.Ranged",
           "attribute": "AttackAttribute.MaxDistance",
           "modificationFlags": [],
           "change": "Change.AddMax",

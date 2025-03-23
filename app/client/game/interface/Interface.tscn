@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ognkssytefqy"]
+[gd_scene load_steps=7 format=3 uid="uid://ognkssytefqy"]
 
 [ext_resource type="PackedScene" uid="uid://cai8kctsxyqal" path="res://app/client/game/interface/panels/entity/EntityPanel.tscn" id="1"]
 [ext_resource type="Script" path="res://app/client/game/interface/Interface.cs" id="2"]
 [ext_resource type="PackedScene" uid="uid://bdnwt6x7ftrs1" path="res://app/client/game/interface/panels/selection/SelectionPanel.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://cddff8jooclq0" path="res://app/client/game/interface/info-text/InformationalText.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://bu22m8bagumka" path="res://app/client/game/interface/entity-overlay/EntityOverlay.tscn" id="6_3k5kl"]
 [ext_resource type="PackedScene" uid="uid://do7c3ujys6yd4" path="res://app/client/game/interface/panels/entity/HoveringPanel.tscn" id="7"]
 
 [node name="Interface" type="CanvasLayer"]
@@ -24,3 +25,5 @@ anchor_bottom = 1.0
 offset_top = -248.0
 offset_bottom = -248.0
 grow_vertical = 0
+
+[node name="EntityOverlay" parent="." instance=ExtResource("6_3k5kl")]

@@ -19,10 +19,14 @@ public partial class ElevatableTiles : Node2D
     private readonly Dictionary<int, AvailableTiles> _availableTilesVisual = new();
     private readonly Dictionary<int, AvailableHoveringTiles> _availableTilesHovering = new();
     private IEnumerable<Tiles.TileInstance> _availableTilesCache = new List<Tiles.TileInstance>();
-    private readonly Dictionary<int, TargetTiles> _targetTileMaps = new();
-    private TileMapLayer _targetMapPositiveTiles = null!;
-    private TileMapLayer _targetMapNegativeTiles = null!;
-    private readonly List<Tiles.TileInstance> _targetTileInstances = [];
+    private readonly Dictionary<int, TargetTiles> _targetNormalTileMaps = new();
+    private readonly Dictionary<int, TargetMeleeTiles> _targetMeleeTileMaps = new();
+    private readonly Dictionary<int, TargetTiles> _targetNormalTileMapsHovering = new();
+    private readonly Dictionary<int, TargetMeleeTiles> _targetMeleeTileMapsHovering = new();
+    private TileMapLayer _targetMapTiles = null!;
+    private TileMapLayer _targetMapTilesHovering = null!;
+    private readonly HashSet<Tiles.TileInstance> _targetNormalTileInstances = [];
+    private readonly HashSet<Tiles.TileInstance> _targetMeleeTileInstances = [];
     private readonly Dictionary<int, PathTiles> _pathTileMaps = new();
     
     private Guid? _availableTilesCachedEntity = Guid.Empty;
@@ -46,11 +50,14 @@ public partial class ElevatableTiles : Node2D
         _availableTilesVisual[0] = GetNode<AvailableTiles>($"Alpha/{nameof(AvailableTiles)}");
         _availableTilesHovering[0] = GetNode<AvailableHoveringTiles>($"Alpha/{nameof(AvailableHoveringTiles)}");
         GD.Print($"Count: {_availableTilesVisual.Count}");
-        _targetTileMaps[0] = GetNode<TargetTiles>($"Alpha/{nameof(TargetTiles)}");
-        _targetMapPositiveTiles = GetNode<TileMapLayer>("Alpha/TargetMapPositive");
-        _targetMapPositiveTiles.Clear();
-        _targetMapNegativeTiles = GetNode<TileMapLayer>("Alpha/TargetMapNegative");
-        _targetMapNegativeTiles.Clear();
+        _targetNormalTileMaps[0] = GetNode<TargetTiles>($"Alpha/{nameof(TargetTiles)}");
+        _targetMeleeTileMaps[0] = GetNode<TargetMeleeTiles>($"Alpha/{nameof(TargetMeleeTiles)}");
+        _targetNormalTileMapsHovering[0] = GetNode<TargetTiles>($"Alpha/{nameof(TargetTiles)}Hovering");
+        _targetMeleeTileMapsHovering[0] = GetNode<TargetMeleeTiles>($"Alpha/{nameof(TargetMeleeTiles)}Hovering");
+        _targetMapTiles = GetNode<TileMapLayer>("Alpha/TargetMap");
+        _targetMapTiles.Clear();
+        _targetMapTilesHovering = GetNode<TileMapLayer>("Alpha/TargetMapHovering");
+        _targetMapTilesHovering.Clear();
         
         _pathTileMaps[0] = GetNode<PathTiles>($"{nameof(PathTiles)}");
         
@@ -62,7 +69,8 @@ public partial class ElevatableTiles : Node2D
         ClearPath();
         ClearAvailableTiles(true);
         ClearAvailableTiles(false);
-        ClearTargetTiles();
+        ClearTargetTiles(true);
+        ClearTargetTiles(false);
     }
     
     public override void _ExitTree()
@@ -82,8 +90,8 @@ public partial class ElevatableTiles : Node2D
 
     public void SetMapWideTargetTiles(Vector2I at)
     {
-        _targetMapPositiveTiles.SetCell(at, SourceId, TargetTiles.TileMapPositiveTargetAtlasPosition);
-        _targetMapNegativeTiles.SetCell(at, SourceId, TargetTiles.TileMapNegativeTargetAtlasPosition);
+        _targetMapTiles.SetCell(at, SourceId, TargetTiles.TileMapNormalTargetAtlasPosition);
+        _targetMapTilesHovering.SetCell(at, SourceId, TargetTiles.TileMapHoveringTargetAtlasPosition);
     }
 
     public void SetAvailableTiles(EntityNode entity, IEnumerable<Point> availablePoints, int size, bool hovering)
@@ -170,30 +178,27 @@ public partial class ElevatableTiles : Node2D
     
     private bool IsCurrentlyAvailable(Point point) => _availableTilesCache.Any(x => x.Point.Id.Equals(point.Id));
 
-    public void SetTargetTiles(IEnumerable<Vector2Int> targets, bool isPlacementAreaTheWholeMap, bool isTargetPositive = true)
+    public void SetTargetTiles(IEnumerable<Tiles.TileInstance> targets, bool isPlacementAreaTheWholeMap, 
+        bool hovering, bool isMelee = false)
     {
         if (isPlacementAreaTheWholeMap)
         {
-            _targetMapPositiveTiles.Visible = isTargetPositive;
-            _targetMapNegativeTiles.Visible = isTargetPositive is false;
+            if (hovering)
+            {
+                _targetMapTilesHovering.Visible = true;
+                return;
+            }
             
+            _targetMapTiles.Visible = true;
             return;
         }
         
-        ClearTargetTiles();
+        ClearTargetTiles(hovering, isMelee);
 
-        foreach (var target in targets)
-        {
-            var tileInstance = _tiles.GetHighestTile(target);
-            if (tileInstance is null)
-                continue;
-            
-            tileInstance.IsTarget = true;
-            _targetTileInstances.Add(tileInstance);
-        }
-
-        var pointsByElevation = SplitIntoElevations(_targetTileInstances);
-        var tileMapsByElevation = GetAndPrepareAllElevationsOfTargetTileMap(pointsByElevation.Keys);
+        var targetTileInstances = GetUpdatedTargetTileInstances(targets, hovering, isMelee);
+        var pointsByElevation = SplitIntoElevations(targetTileInstances);
+        var tileMapsByElevation = GetAndPrepareAllElevationsOfTargetTileMap(
+            pointsByElevation.Keys, hovering, isMelee);
         
         foreach (var entry in tileMapsByElevation)
         {
@@ -203,10 +208,10 @@ public partial class ElevatableTiles : Node2D
                     (point.Position.ToGodotVector2I(), GetZIndexAt(point.Position, entry.Key)))
                 .ToList();
             
-            entry.Value.SetTiles(targetPositions, isTargetPositive);
+            entry.Value.SetTiles(targetPositions, hovering, isMelee);
         }
     }
-
+    
     public void SetPathTiles(IEnumerable<Point> pathPoints, int size)
     {
         ClearPath();
@@ -257,17 +262,55 @@ public partial class ElevatableTiles : Node2D
         }
     }
     
-    public void ClearTargetTiles()
+    public void ClearTargetTiles(bool hovering)
     {
-        _targetMapPositiveTiles.Visible = false;
-        _targetMapNegativeTiles.Visible = false;
-        foreach (var targetTiles in _targetTileMaps.Values)
+        ClearTargetTiles(hovering, true);
+        ClearTargetTiles(hovering, false);
+    }
+
+    public void ClearTargetTiles(bool hovering, bool isMelee)
+    {
+        if (hovering)
         {
-            targetTiles.Clear();
+            _targetMapTilesHovering.Visible = false;
+
+            if (isMelee)
+            {
+                foreach (var targetTiles in _targetMeleeTileMapsHovering.Values)
+                    targetTiles.Clear();
+            }
+            else
+            {
+                foreach (var targetTiles in _targetNormalTileMapsHovering.Values) 
+                    targetTiles.Clear();
+            }
+            
+            return;
         }
-        foreach (var tileInstance in _targetTileInstances) 
-            tileInstance.IsTarget = false;
-        _targetTileInstances.Clear();
+        
+        _targetMapTiles.Visible = false;
+
+        if (isMelee)
+        {
+            foreach (var targetTiles in _targetMeleeTileMaps.Values)
+                targetTiles.Clear();
+            
+            foreach (var tileInstance in _targetMeleeTileInstances) 
+                tileInstance.TargetType = TargetType.None;
+            
+            _targetMeleeTileInstances.Clear();
+
+        }
+        else
+        {
+            foreach (var targetTiles in _targetNormalTileMaps.Values) 
+                targetTiles.Clear();
+            
+            foreach (var tileInstance in _targetNormalTileInstances) 
+                tileInstance.TargetType = TargetType.None;
+            
+            _targetNormalTileInstances.Clear();
+        }
     }
     
     public void ClearPath()
@@ -287,6 +330,37 @@ public partial class ElevatableTiles : Node2D
     private Vector2Int GetMapPositionFromGlobalPosition(Vector2 globalPosition, ElevatableTileMap tileMap) 
         => (tileMap.LocalToMap(globalPosition - tileMap.Position + tileMap.Offset) - _tilemapOffset)
             .ToVector2();
+    
+    private HashSet<Tiles.TileInstance> GetUpdatedTargetTileInstances(IEnumerable<Tiles.TileInstance> targets, 
+        bool hovering, bool isMelee)
+    {
+        var targetTileInstances = isMelee ? _targetMeleeTileInstances : _targetNormalTileInstances;
+
+        if (hovering) 
+            return targetTileInstances;
+        
+        foreach (var target in targets)
+        {
+            if (isMelee is false && _targetMeleeTileInstances.Contains(target))
+                continue;
+
+            var targetType = isMelee ? TargetType.Melee : TargetType.Ranged;
+
+            target.TargetType = targetType;
+            targetTileInstances.Add(target);
+            
+            foreach (var occupant in target.GetOccupants())
+            {
+                foreach (var occupiedTile in occupant.EntityOccupyingTiles)
+                {
+                    occupiedTile.TargetType = targetType;
+                    targetTileInstances.Add(occupiedTile);
+                }
+            }
+        }
+
+        return targetTileInstances;
+    }
     
     private static Dictionary<int, ICollection<Tiles.TileInstance>> SplitIntoElevations(
         IEnumerable<Tiles.TileInstance> tiles)
@@ -317,13 +391,21 @@ public partial class ElevatableTiles : Node2D
         return result;
     }
     
-    private Dictionary<int, TargetTiles> GetAndPrepareAllElevationsOfTargetTileMap(IEnumerable<int> elevations)
+    private Dictionary<int, TargetTiles> GetAndPrepareAllElevationsOfTargetTileMap(IEnumerable<int> elevations, 
+        bool hovering, bool isMelee)
     {
         var result = new Dictionary<int, TargetTiles>();
         foreach (var elevation in elevations)
         {
             PrepareElevation(elevation);
-            result[elevation] = _targetTileMaps[elevation];
+            result[elevation] = hovering switch
+            {
+                false when isMelee => _targetMeleeTileMaps[elevation],
+                false when isMelee is false => _targetNormalTileMaps[elevation],
+                true when isMelee => _targetMeleeTileMapsHovering[elevation],
+                true when isMelee is false => _targetNormalTileMapsHovering[elevation],
+                _ => _targetNormalTileMaps[elevation],
+            };
         }
 
         return result;
@@ -358,8 +440,19 @@ public partial class ElevatableTiles : Node2D
         
         // Target tiles
         var targetTiles = TargetTiles.InstantiateAsChild(_alpha);
+        var targetTilesHovering = TargetTiles.InstantiateAsChild(_alpha);
+        var targetMeleeTiles = TargetMeleeTiles.InstantiateAsChild(_alpha);
+        var targetMeleeTilesHovering = TargetMeleeTiles.InstantiateAsChild(_alpha);
+        
         targetTiles.SetElevation(elevation);
-        _targetTileMaps[elevation] = targetTiles;
+        targetTilesHovering.SetElevation(elevation);
+        targetMeleeTiles.SetElevation(elevation);
+        targetMeleeTilesHovering.SetElevation(elevation);
+            
+        _targetNormalTileMaps[elevation] = targetTiles;
+        _targetNormalTileMapsHovering[elevation] = targetTilesHovering;
+        _targetMeleeTileMaps[elevation] = targetMeleeTiles;
+        _targetMeleeTileMapsHovering[elevation] = targetMeleeTilesHovering;
         
         // Path tiles
         var pathTiles = PathTiles.InstantiateAsChild(this);
@@ -376,7 +469,8 @@ public partial class ElevatableTiles : Node2D
             if (tile is null || entity.CanBeMovedOnAt(tile.Point, entity.Player.Team) is false)
                 continue;
 
-            if (tile.Occupants.Any(occupant => occupant.CanBeMovedOnAt(tile.Point, entity.Player.Team) is false))
+            if (tile.GetOccupants().Any(occupant => 
+                    occupant.CanBeMovedOnAt(tile.Point, entity.Player.Team) is false))
                 return false;
         }
 
@@ -446,7 +540,7 @@ public partial class ElevatableTiles : Node2D
             var godotPosition = position.ToGodotVector2();
             _availableTilesVisual[elevation].SetTileZIndex(godotPosition, to);
             _availableTilesHovering[elevation].SetTileZIndex(godotPosition, to);
-            _targetTileMaps[elevation].SetTileZIndex(godotPosition, to);
+            _targetNormalTileMaps[elevation].SetTileZIndex(godotPosition, to);
             _pathTileMaps[elevation].SetTileZIndex(godotPosition, to);
         }
     }

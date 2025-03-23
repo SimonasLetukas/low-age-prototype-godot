@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbpctgqjpgmrc"]
+[gd_scene load_steps=9 format=3 uid="uid://dbpctgqjpgmrc"]
 
 [ext_resource type="PackedScene" uid="uid://dqx5ug0yue5x5" path="res://app/client/game/map/tiles/elevatable/AvailableTiles.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://bjnfno8is1wf2" path="res://app/client/game/map/tiles/elevatable/AvailableHoveringTiles.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://b6v8fe0oxw6w3" path="res://app/client/game/map/tiles/elevatable/focused/FocusedTile.tscn" id="4"]
 [ext_resource type="Script" path="res://app/client/game/map/tiles/elevatable/ElevatableTiles.cs" id="5"]
+[ext_resource type="PackedScene" uid="uid://pl6to8rbtsr2" path="res://app/client/game/map/tiles/elevatable/TargetMeleeTiles.tscn" id="5_n2fre"]
 [ext_resource type="TileSet" uid="uid://c2mts8v0fly0n" path="res://app/client/game/map/tiles/Tiles.tres" id="5_u7an0"]
 [ext_resource type="PackedScene" uid="uid://b3ytvqwnxhfxn" path="res://app/client/game/map/tiles/elevatable/PathTiles.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://dulmh6kru36er" path="res://app/client/game/map/tiles/elevatable/TargetTiles.tscn" id="7"]
@@ -20,12 +21,18 @@ modulate = Color(1, 1, 1, 0.54902)
 
 [node name="TargetTiles" parent="Alpha" instance=ExtResource("7")]
 
-[node name="TargetMapPositive" type="TileMapLayer" parent="Alpha"]
+[node name="TargetTilesHovering" parent="Alpha" instance=ExtResource("7")]
+
+[node name="TargetMeleeTiles" parent="Alpha" instance=ExtResource("5_n2fre")]
+
+[node name="TargetMeleeTilesHovering" parent="Alpha" instance=ExtResource("5_n2fre")]
+
+[node name="TargetMap" type="TileMapLayer" parent="Alpha"]
 tile_set = ExtResource("5_u7an0")
 collision_enabled = false
 navigation_enabled = false
 
-[node name="TargetMapNegative" type="TileMapLayer" parent="Alpha"]
+[node name="TargetMapHovering" type="TileMapLayer" parent="Alpha"]
 tile_set = ExtResource("5_u7an0")
 collision_enabled = false
 navigation_enabled = false

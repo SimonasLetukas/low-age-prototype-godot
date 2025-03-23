@@ -10,6 +10,7 @@ namespace MultipurposePathfinding
         public required int HighGroundAscensionLevel { get; init; }
         public required bool IsHighGround { get; init; }
         public bool IsLowGround => IsHighGround is false;
+        public bool IsAscendable => HighGroundAscensionLevel != 100;
         
         private bool _isImpassable;
         public bool IsImpassable
@@ -32,7 +33,7 @@ namespace MultipurposePathfinding
                 ? Configuration.HighGroundIndex
                 : OriginalTerrainIndex;
 
-        [JsonProperty] 
+        [JsonProperty] // TODO not serializing this would reduce the amount of text logged by ~50%, perhaps static class could be used instead?
         internal Configuration Configuration { get; init; } = null!;
         
         public bool Equals(Point? other)

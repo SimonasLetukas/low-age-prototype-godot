@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=3 uid="uid://dg3tb4y475nx6"]
+
+[ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1_4b6hl"]
+[ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="2_vr60w"]
+[ext_resource type="Texture2D" uid="uid://baqmoc5ryxara" path="res://assets/sprites/interface/panel-40x40.png" id="3_uw2nd"]
+[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypeButton.cs" id="4_70eag"]
+[ext_resource type="Texture2D" uid="uid://cywki6wytl5nr" path="res://assets/icons/icon_melee_attack.png" id="4_tj146"]
+[ext_resource type="Texture2D" uid="uid://cpci4byytqrqu" path="res://assets/sprites/interface/panel-clicked-40x40.png" id="5_u0x7v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_acstd"]
+resource_local_to_scene = true
+shader = ExtResource("2_vr60w")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[node name="AttackTypeButton" instance=ExtResource("1_4b6hl")]
+material = SubResource("ShaderMaterial_acstd")
+texture = ExtResource("3_uw2nd")
+script = ExtResource("4_70eag")
+TextureNormal = ExtResource("3_uw2nd")
+TextureClicked = ExtResource("5_u0x7v")
+
+[node name="TextureRect" parent="." index="0"]
+self_modulate = Color(0.756863, 0.843137, 0.87451, 1)
+texture = ExtResource("4_tj146")
+
+[node name="Shadow" parent="TextureRect" index="0"]
+texture = ExtResource("4_tj146")

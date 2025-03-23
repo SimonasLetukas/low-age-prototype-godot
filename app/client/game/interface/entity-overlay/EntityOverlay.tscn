@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu22m8bagumka"]
+
+[ext_resource type="Script" path="res://app/client/game/interface/entity-overlay/EntityOverlay.cs" id="1_c8ww7"]
+[ext_resource type="PackedScene" uid="uid://dax8eksfbotqw" path="res://app/client/game/interface/shared/Text.tscn" id="3_51ijp"]
+
+[node name="EntityOverlay" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 400.0
+offset_top = 400.0
+offset_right = 400.0
+offset_bottom = 400.0
+script = ExtResource("1_c8ww7")
+
+[node name="DamageCalculationDisplay" parent="." instance=ExtResource("3_51ijp")]
+modulate = Color(0.989792, 0.000511726, 0.000279928, 1)
+clip_contents = true
+custom_minimum_size = Vector2(16, 10)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.0
+offset_top = -32.0
+offset_right = 21.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "[center]-999"
+text_direction = 0
+HasOutline = true

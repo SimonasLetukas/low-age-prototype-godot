@@ -61,7 +61,7 @@ public partial class FocusedTile : AnimatedSprite2D
             return;
         
         var hoveredTerrain = _tiles.GetTerrain(tile);
-        EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.Occupants);
+        EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.GetOccupants().ToList());
         
         MoveTo(mapPosition, GetHeight(tile), GetZIndex(tile));
         _previousPosition = mapPosition;
@@ -133,9 +133,9 @@ public partial class FocusedTile : AnimatedSprite2D
         Tiles.TileInstance? tileBelow = null;
         if (tile != null) 
             tileBelow = _tiles.GetTile(tile.Position, false);
-        
-        return tile?.Occupants.FirstOrDefault()?.Renderer.ZIndex
-               ?? tileBelow?.Occupants.FirstOrDefault()?.Renderer.ZIndex + 1
+
+        return tile?.GetFirstOccupantOrNull()?.Renderer.ZIndex
+               ?? tileBelow?.GetFirstOccupantOrNull()?.Renderer.ZIndex + 1
                ?? 0;
     }
 

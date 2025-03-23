@@ -9,6 +9,7 @@ public partial class EntityPanel : Control
 {
     public event Action<AbilityButton> AbilityViewOpened = delegate { };
     public event Action AbilityViewClosed = delegate { };
+    public event Action<bool, AttackType?> AttackSelected = delegate { };
 
     private GridContainer _behaviours = null!;
     private EntityName _entityName = null!;
@@ -34,11 +35,22 @@ public partial class EntityPanel : Control
         _display = GetNode<InfoDisplay>($"{nameof(Panel)}/{nameof(InfoDisplay)}");
         _abilityTextBox = GetNode<Text>($"{nameof(Panel)}/{nameof(InfoDisplay)}/{nameof(VBoxContainer)}/AbilityDescription/{nameof(Text)}");
 
-        _abilityButtons.Connect(nameof(AbilityButtons.AbilitiesPopulated), new Callable(this, nameof(OnAbilityButtonsPopulated)));
-        _display.Connect(nameof(InfoDisplay.AbilitiesClosed), new Callable(this, nameof(OnInfoDisplayAbilitiesClosed)));
-        _display.Connect(nameof(InfoDisplay.AbilityTextResized), new Callable(this, nameof(OnInfoDisplayTextResized)));
+        _abilityButtons.AbilitiesPopulated += OnAbilityButtonsPopulated;
+        _display.AbilitiesClosed += OnInfoDisplayAbilitiesClosed;
+        _display.AbilityTextResized += OnInfoDisplayTextResized;
+        _display.AttackSelected += OnInfoDisplayAttackSelected;
         
         HidePanel();
+    }
+
+    public override void _ExitTree()
+    {
+        _abilityButtons.AbilitiesPopulated -= OnAbilityButtonsPopulated;
+        _display.AbilitiesClosed -= OnInfoDisplayAbilitiesClosed;
+        _display.AbilityTextResized -= OnInfoDisplayTextResized;
+        _display.AttackSelected -= OnInfoDisplayAttackSelected;
+        
+        base._ExitTree();
     }
 
     public void OnEntitySelected(EntityNode selectedEntity)
@@ -105,17 +117,15 @@ public partial class EntityPanel : Control
         if (selectedActor is UnitNode selectedUnit)
         {
             _display.ResetAttacks();
-            foreach (var blueprint in selectedUnit.CurrentStats
-                         .Where(x => x.Blueprint is AttackStat)
-                         .Select(attack => (AttackStat)attack.Blueprint))
+            foreach (var attack in selectedUnit.Attacks)
             {
-                if (blueprint.AttackType.Equals(Attacks.Melee)) 
-                    _display.SetMeleeAttackStats(true, selectedActor.Name, blueprint.MaximumDistance, 
-                        blueprint.MaxAmount, blueprint.BonusAmount, blueprint.BonusTo);
+                if (attack.IsMelee) 
+                    _display.SetMeleeAttackStats(true, "Melee Attack", attack.MaximumDistance,
+                        attack.Damage, attack.BonusDamage, attack.BonusTo);
                 
-                if (blueprint.AttackType.Equals(Attacks.Ranged)) 
-                    _display.SetRangedAttackStats(true, selectedActor.Name, blueprint.MaximumDistance, 
-                        blueprint.MaxAmount, blueprint.BonusAmount, blueprint.BonusTo);
+                if (attack.IsRanged) 
+                    _display.SetRangedAttackStats(true, "Ranged Attack", attack.MaximumDistance, 
+                        attack.Damage, attack.BonusDamage, attack.BonusTo);
             }
             
             _display.ShowView(View.UnitStats);
@@ -281,4 +291,6 @@ public partial class EntityPanel : Control
     {
         MovePanel();
     }
+
+    private void OnInfoDisplayAttackSelected(bool started, AttackType? attackType) => AttackSelected(started, attackType);
 }

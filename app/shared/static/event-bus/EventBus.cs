@@ -35,6 +35,10 @@ public partial class EventBus : Node
     
     public event Action<EntityNode> EntityPlaced = delegate { };
     public void RaiseEntityPlaced(EntityNode entity) => EntityPlaced(entity);
+    
+    public event Action<EntityNode, EntityNode, AttackType> EntityTargeted = delegate { };
+    public void RaiseEntityTargeted(EntityNode target, EntityNode source, AttackType attackType) 
+        => EntityTargeted(target, source, attackType);
 
     public event Action<EntityNode, int> EntityZIndexUpdated = delegate { };
     public void RaiseEntityZIndexUpdated(EntityNode entity, int zIndex) => EntityZIndexUpdated(entity, zIndex);
@@ -54,6 +58,10 @@ public partial class EventBus : Node
     
     public event Action<bool> AfterFlattenedChanged = delegate { };
     public void RaiseAfterFlattenedChanged(bool to) => AfterFlattenedChanged(to);
+    
+    public event Action<EntityNode> MovementAttackOverlayChanged = delegate { };
+    public void RaiseMovementAttackOverlayChanged(EntityNode selectedEntity) 
+        => MovementAttackOverlayChanged(selectedEntity);
 
     #endregion Events
 }

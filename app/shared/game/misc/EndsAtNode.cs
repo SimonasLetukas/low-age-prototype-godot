@@ -364,6 +364,9 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         
         return capitalizeFirstLetter ? text[0].ToString().ToUpper() + text.Substring(1) : text;
     }
+    
+    public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
+    public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
 
     private enum TriggersOnEnum
     {

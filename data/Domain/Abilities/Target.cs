@@ -19,7 +19,7 @@ namespace LowAgeData.Domain.Abilities
             IList<EffectId> effects,
             IList<ResearchId>? researchNeeded = null,
             EndsAt? cooldown = null,
-            IList<Attacks>? overridesAttacks = null,
+            IList<AttackType>? overridesAttacks = null,
             bool? fallbackToAttack = false,
             IList<Payment>? cost = null,
             IShape? leashArea = null)
@@ -36,7 +36,7 @@ namespace LowAgeData.Domain.Abilities
         {
             TargetArea = targetArea;
             Effects = effects;
-            OverridesAttacks = overridesAttacks ?? new List<Attacks>();
+            OverridesAttacks = overridesAttacks ?? new List<AttackType>();
             FallbackToAttack = fallbackToAttack ?? false;
             LeashArea = leashArea ?? new Map();
         }
@@ -45,12 +45,12 @@ namespace LowAgeData.Domain.Abilities
         public IList<EffectId> Effects { get; }
 
         /// <summary>
-        /// Attacking using any of the listed <see cref="Attacks"/> will execute this <see cref="Target"/> ability
-        /// instead. Having any <see cref="Attacks"/> in this list will automatically change button of
-        /// <see cref="Target"/> to be <see cref="Passive"/>. <see cref="Attacks"/> could then target ground, depending
+        /// Attacking using any of the listed <see cref="AttackType"/> will execute this <see cref="Target"/> ability
+        /// instead. Having any <see cref="AttackType"/> in this list will automatically change button of
+        /// <see cref="Target"/> to be <see cref="Passive"/>. <see cref="AttackType"/> could then target ground, depending
         /// on underlying <see cref="Effects"/>.
         /// </summary>
-        public IList<Attacks> OverridesAttacks { get; }
+        public IList<AttackType> OverridesAttacks { get; }
 
         /// <summary>
         /// If true, when <see cref="Target"/> cannot override an attack listed in <see cref="OverridesAttacks"/> (e.g.

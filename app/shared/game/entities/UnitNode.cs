@@ -5,6 +5,7 @@ using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeCommon;
+using LowAgeCommon.Extensions;
 using MultipurposePathfinding;
 
 public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
@@ -27,6 +28,9 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     
     public bool IsOnHighGround { get; private set; } = false;
     public float Movement { get; private set; }
+    public override IList<Tiles.TileInstance> EntityOccupyingTiles => IsOnHighGround
+        ? GetHighestTiles(EntityOccupyingPositions).WhereNotNull().ToList()
+        : base.EntityOccupyingTiles; 
 
     private Unit Blueprint { get; set; } = null!;
     
@@ -35,48 +39,42 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
         EntitySize = Vector2Int.One * Blueprint.Size;
-        Movement = CurrentStats.First(x => 
-                x.Blueprint is CombatStat combatStat
-                && combatStat.CombatType.Equals(StatType.Movement))
-            .CurrentValue + 0.5f; // TODO 0.5 is added for smoother corners to align with circles from IShape,
-                                  // decide if this is needed. Argument against: not moving straight diagonally is 
-                                  // more cost-effective, which is not intuitive for the player. This bonus could be
-                                  // added for units with 1 movement only.
+        Movement = HasStat(StatType.Movement)
+            ? Stats.First(x => x.StatType.Equals(StatType.Movement)).CurrentAmount 
+              + Constants.Pathfinding.SearchIncrement
+            : 0;
                                   
         Renderer.Initialize(this, true);
         UpdateSprite();
         UpdateVitalsPosition();
     }
 
-    public float GetReach()
-    {
-        return Movement;
-        
-        var blueprint = GetActorBlueprint();
-        
-        // TODO: take from current max range (in case it is modified by behaviours)
-        
-        var meleeAttack = (AttackStat)blueprint.Statistics.FirstOrDefault(x =>
-            x is AttackStat attackStat
-            && attackStat.AttackType.Equals(Attacks.Melee));
-        var meleeDistance = meleeAttack?.MaximumDistance ?? 0;
-        
-        var rangedAttack = (AttackStat)blueprint.Statistics.FirstOrDefault(x =>
-            x is AttackStat attackStat
-            && attackStat.AttackType.Equals(Attacks.Ranged));
-        var rangedDistance = rangedAttack?.MaximumDistance ?? 0;
-
-        var rangedReach = rangedDistance > 0 ? rangedDistance + 1 : 0;
-        var meleeReach = meleeDistance > 0 ? meleeDistance + Movement : 0;
-        return rangedReach > meleeReach ? rangedReach : meleeReach;
-        
-        // TODO logic (outside of this method too) needs to be made more intelligent, because right now this doesn't
-        // take into account targeting logic (however complex it would be) and everything gets calculated through
-        // pathfinding.
-    }
-
     public override bool CanBeMovedThroughAt(Point point, Team forTeam) 
         => Player.Team.IsAllyTo(forTeam) && base.CanBeMovedThroughAt(point, forTeam);
+
+    public override List<Tiles.TileInstance> GetMeleeAttackTargetTiles(Vector2Int mapSize, 
+        IEnumerable<Point> availablePoints)
+    {
+        var availablePointIds = availablePoints.Select(x => x.Id).ToHashSet();
+        var tiles = base.GetMeleeAttackTargetTiles(mapSize, []);
+        return IsOnHighGround 
+            ? tiles.Where(tile => availablePointIds.Contains(tile.Point.Id)).ToList()
+            : tiles.Where(tile => tile.Point.IsLowGround 
+                                  || (tile.Point.IsHighGround && availablePointIds.Contains(tile.Point.Id)))
+                .ToList();
+    }
+
+    public override List<Tiles.TileInstance> GetRangedAttackTargetTiles(Vector2Int mapSize)
+    {
+        var tiles = base.GetRangedAttackTargetTiles(mapSize);
+        var entitiesBelow = IsOnHighGround ? GetEntitiesBelow() : [];
+        var filteredTiles = new HashSet<Tiles.TileInstance>();
+        foreach (var tile in entitiesBelow.SelectMany(entity => entity.EntityOccupyingPositions, 
+                     (_, position) => GetTile(position, false)).OfType<Tiles.TileInstance>()) 
+            filteredTiles.Add(tile);
+
+        return tiles.Except(filteredTiles).ToList();
+    }
 
     protected override void UpdateVisuals()
     {
@@ -87,6 +85,21 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         
         if (EntityState is State.Completed && ClientState.Instance.Flattened)
             SetTransparency(true);
+    }
+
+    public override void DropDownToLowGround()
+    {
+        base.DropDownToLowGround();
+
+        IsOnHighGround = false;
+        UpdateVitalsPosition();
+        
+        Renderer.UpdateElevation(IsOnHighGround, GetTile(EntityPrimaryPosition, false)?.YSpriteOffset, null);
+
+        var vitalsAmount = HasShields 
+            ? Shields!.MaxAmount + Health!.MaxAmount
+            : Health?.MaxAmount ?? 0;
+        ReceiveDamage(this, DamageType.Pure, vitalsAmount / 2, false);
     }
 
     public override void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
@@ -101,6 +114,33 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
             GetTile(resultingPoint.Position, resultingPoint.IsHighGround)?.YSpriteOffset, 
             GetEntitiesBelow().OrderByDescending(x => x.Renderer.ZIndex).FirstOrDefault());
     }
+    
+    public float GetReach()
+    {
+        return Movement;
+        
+        var blueprint = GetActorBlueprint();
+        
+        // TODO: take from current max range (in case it is modified by behaviours)
+        
+        var meleeAttack = (AttackStat)blueprint.Statistics.FirstOrDefault(x =>
+            x is AttackStat attackStat
+            && attackStat.AttackType.Equals(LowAgeData.Domain.Common.AttackType.Melee));
+        var meleeDistance = meleeAttack?.MaximumDistance ?? 0;
+        
+        var rangedAttack = (AttackStat)blueprint.Statistics.FirstOrDefault(x =>
+            x is AttackStat attackStat
+            && attackStat.AttackType.Equals(LowAgeData.Domain.Common.AttackType.Ranged));
+        var rangedDistance = rangedAttack?.MaximumDistance ?? 0;
+
+        var rangedReach = rangedDistance > 0 ? rangedDistance + 1 : 0;
+        var meleeReach = meleeDistance > 0 ? meleeDistance + Movement : 0;
+        return rangedReach > meleeReach ? rangedReach : meleeReach;
+        
+        // TODO logic (outside of this method too) needs to be made more intelligent, because right now this doesn't
+        // take into account targeting logic (however complex it would be) and everything gets calculated through
+        // pathfinding.
+    }
 
     private List<EntityNode> GetEntitiesBelow()
     {
@@ -108,7 +148,7 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         foreach (var position in EntityOccupyingPositions)
         {
             var lowGroundTile = GetTile(position, false);
-            var entity = lowGroundTile?.Occupants.FirstOrDefault();
+            var entity = lowGroundTile?.GetFirstOccupantOrNull();
             if (entity != null && entities.Any(x => x.InstanceId.Equals(entity.InstanceId)) is false)
                 entities.Add(entity);
         }
