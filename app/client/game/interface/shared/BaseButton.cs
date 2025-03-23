@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class BaseButton : NinePatchRect
+public partial class BaseButton : TextureRect
 {
     [Export] public Texture2D Icon { get; set; }
     [Export] public Texture2D TextureNormal { get; set; }

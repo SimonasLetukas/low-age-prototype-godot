@@ -1,0 +1,99 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwhiskb2143fg"]
+
+[ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1_8liim"]
+[ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="2_pe5r7"]
+[ext_resource type="Texture2D" uid="uid://doimx2uu8i3fs" path="res://assets/sprites/interface/selection-panel.png" id="2_sn8wj"]
+[ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="3_xsu7a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a44wm"]
+resource_local_to_scene = true
+shader = ExtResource("3_xsu7a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[node name="InitiativePanel" type="Control"]
+layout_mode = 3
+offset_right = -198.4
+theme = ExtResource("1_8liim")
+
+[node name="Background" type="NinePatchRect" parent="."]
+custom_minimum_size = Vector2(48, 24)
+layout_mode = 2
+offset_left = -164.0
+offset_right = -82.0
+offset_bottom = 24.0
+grow_horizontal = 2
+scale = Vector2(4, 4)
+mouse_filter = 1
+texture = ExtResource("2_sn8wj")
+patch_margin_left = 24
+patch_margin_top = 10
+patch_margin_right = 24
+patch_margin_bottom = 10
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 0
+offset_left = -104.0
+offset_top = 20.0
+offset_right = 104.0
+offset_bottom = 76.0
+follow_focus = true
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="BaseButton" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
+material = SubResource("ShaderMaterial_a44wm")
+layout_mode = 2
+
+[node name="BaseButton2" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
+material = SubResource("ShaderMaterial_a44wm")
+layout_mode = 2
+
+[node name="BaseButton3" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
+material = SubResource("ShaderMaterial_a44wm")
+layout_mode = 2
+
+[node name="BaseButton4" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
+material = SubResource("ShaderMaterial_a44wm")
+layout_mode = 2
+
+[node name="BaseButton5" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
+material = SubResource("ShaderMaterial_a44wm")
+layout_mode = 2
+
+[node name="BaseButton6" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
+material = SubResource("ShaderMaterial_a44wm")
+layout_mode = 2
+
+[node name="BaseButton7" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
+material = SubResource("ShaderMaterial_a44wm")
+layout_mode = 2
+
+[node name="BaseButton8" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
+material = SubResource("ShaderMaterial_a44wm")
+layout_mode = 2
+
+[node name="BaseButton9" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
+material = SubResource("ShaderMaterial_a44wm")
+layout_mode = 2
+
+[node name="BaseButton10" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
+material = SubResource("ShaderMaterial_a44wm")
+layout_mode = 2

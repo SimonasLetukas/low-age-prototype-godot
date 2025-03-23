@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ognkssytefqy"]
+[gd_scene load_steps=10 format=3 uid="uid://ognkssytefqy"]
 
 [ext_resource type="PackedScene" uid="uid://cai8kctsxyqal" path="res://app/client/game/interface/panels/entity/EntityPanel.tscn" id="1"]
 [ext_resource type="Script" path="res://app/client/game/interface/Interface.cs" id="2"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://do7c3ujys6yd4" path="res://app/client/game/interface/panels/entity/HoveringPanel.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://xuo5vjwxjxjb" path="res://app/client/game/interface/panels/resource/ResourcePanel.tscn" id="7_474pk"]
 [ext_resource type="PackedScene" uid="uid://dvv2ohlj1odfj" path="res://app/client/game/interface/panels/turn/TurnPanel.tscn" id="8_bmuqm"]
+[ext_resource type="PackedScene" uid="uid://bwhiskb2143fg" path="res://app/client/game/interface/panels/initiative/InitiativePanel.tscn" id="9_tavor"]
 
 [node name="Interface" type="CanvasLayer"]
 script = ExtResource("2")
@@ -39,3 +40,10 @@ anchor_right = 1.0
 offset_left = -332.0
 offset_right = -332.0
 grow_horizontal = 0
+
+[node name="InitiativePanel" parent="." instance=ExtResource("9_tavor")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_right = 0.0
+grow_horizontal = 2
