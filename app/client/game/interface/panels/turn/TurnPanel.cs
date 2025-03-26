@@ -22,8 +22,7 @@ public partial class TurnPanel : Control
 		_nextTurnButton = GetNode<BaseButton>("NextTurnButton");
 		
 		_nextTurnButton.Clicked += OnNextTurnButtonClicked;
-		
-		OnNewTurn(1234, Phase.Planning);
+		EventBus.Instance.PhaseStarted += OnPhaseStarted;
 	}
 
 	public override void _ExitTree()
@@ -33,7 +32,7 @@ public partial class TurnPanel : Control
 		base._ExitTree();
 	}
 
-	public void OnNewTurn(int turn, Phase phase)
+	public void OnPhaseStarted(int turn, Phase phase)
 	{
 		SetTurnCounter(turn);
 		SetPhaseLabel(phase);

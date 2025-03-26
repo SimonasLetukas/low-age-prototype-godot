@@ -28,6 +28,12 @@ public partial class EventBus : Node
     #endregion Singleton
 
     #region Events
+    
+    public event Action<int, Phase> PhaseStarted = delegate { };
+    public void RaisePhaseStarted(int turn, Phase phase) => PhaseStarted(turn, phase);
+    
+    public event Action<int, Phase> PhaseEnded = delegate { };
+    public void RaisePhaseEnded(int turn, Phase phase) => PhaseEnded(turn, phase);
 
     public event Action<Vector2Int, Terrain, IList<EntityNode>?> NewTileFocused = delegate { };
     public void RaiseNewTileFocused(Vector2Int mapPosition, Terrain terrain, IList<EntityNode>? occupants)

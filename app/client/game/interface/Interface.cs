@@ -12,11 +12,13 @@ public partial class Interface : CanvasLayer
     public event Action MouseExited = delegate { };
     public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
     public event Action<bool, AttackType?> AttackSelected = delegate { };
+    public event Action NextTurnClicked = delegate { };
     
     private EntityPanel _entityPanel = null!;
     private SelectionPanel _selectionPanel = null!;
     private InformationalText _informationalText = null!;
     private HoveringPanel _hoveringPanel = null!;
+    private TurnPanel _turnPanel = null!;
     
     public override void _Ready()
     {
@@ -26,6 +28,7 @@ public partial class Interface : CanvasLayer
         _selectionPanel = GetNode<SelectionPanel>($"{nameof(SelectionPanel)}");
         _informationalText = GetNode<InformationalText>($"{nameof(InformationalText)}");
         _hoveringPanel = GetNode<HoveringPanel>($"{nameof(HoveringPanel)}");
+        _turnPanel = GetNode<TurnPanel>($"{nameof(TurnPanel)}");
 
         foreach (var firstLevel in GetChildren().OfType<Control>())
         {
@@ -41,6 +44,7 @@ public partial class Interface : CanvasLayer
         _entityPanel.AbilityViewClosed += _selectionPanel.OnGoBackPressed;
         _entityPanel.AttackSelected += OnEntityPanelAttackSelected;
         _selectionPanel.SelectedToBuild += OnSelectionPanelSelectedToBuild;
+        _turnPanel.NextTurnClicked += OnTurnPanelNextTurnClicked;
     }
 
     public override void _ExitTree()
@@ -49,6 +53,8 @@ public partial class Interface : CanvasLayer
         _entityPanel.AbilityViewClosed -= _selectionPanel.OnGoBackPressed;
         _entityPanel.AttackSelected -= OnEntityPanelAttackSelected;
         _selectionPanel.SelectedToBuild -= OnSelectionPanelSelectedToBuild;
+        _turnPanel.NextTurnClicked -= OnTurnPanelNextTurnClicked;
+        
         base._ExitTree();
     }
 
@@ -64,7 +70,7 @@ public partial class Interface : CanvasLayer
             ? InformationalText.InfoTextType.PlacingRotatable 
             : InformationalText.InfoTextType.Placing);
     }
-
+    
     private void OnControlMouseEntered(Control which)
     {
         if (DebugEnabled)
@@ -105,4 +111,6 @@ public partial class Interface : CanvasLayer
     }
 
     private void OnEntityPanelAttackSelected(bool started, AttackType? attackType) => AttackSelected(started, attackType);
+
+    private void OnTurnPanelNextTurnClicked() => NextTurnClicked();
 }

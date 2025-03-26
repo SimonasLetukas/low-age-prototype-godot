@@ -9,11 +9,15 @@ using Newtonsoft.Json;
 public partial class Game : Node2D
 {
     // In case of out-of-sync, this could be used to get the difference: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/how-to-find-the-set-difference-between-two-lists-linq
-    protected List<IGameEvent> Events { get; set; } = new List<IGameEvent>();
+    protected List<IGameEvent> Events { get; set; } = [];
+
+    protected Turns Turns { get; private set; } = null!;
     
     public override void _Ready()
     {
         GD.Print("Game: entering");
+
+        Turns = GetNode<Turns>(nameof(Turns));
     }
 
     #region Calls to the server
