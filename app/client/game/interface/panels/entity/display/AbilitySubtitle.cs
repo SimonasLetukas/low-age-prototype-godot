@@ -3,9 +3,9 @@ using LowAgeData.Domain.Common;
 
 public partial class AbilitySubtitle : MarginContainer
 {
-    public void SetAbilitySubtitle(TurnPhase abilityType, EndsAtNode cooldown)
+    public void SetAbilitySubtitle(TurnPhase phase, EndsAtNode cooldown)
     {
-        var newText = abilityType.ToDisplayValue().Capitalize();
+        var newText = phase.ToDisplayValue().Capitalize();
         if (cooldown.HasCompleted() is false)
         {
             newText += $" (cooldown remaining: {cooldown.GetText()})";

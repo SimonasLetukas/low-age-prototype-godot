@@ -22,6 +22,8 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public bool HasRangedArmour => HasStat(StatType.RangedArmour);
     public CombatStatNode? MeleeArmour => Stats.FirstOrDefault(x => x.StatType == StatType.MeleeArmour);
     public CombatStatNode? RangedArmour => Stats.FirstOrDefault(x => x.StatType == StatType.RangedArmour);
+    public bool HasInitiative => HasStat(StatType.Initiative);
+    public CombatStatNode? Initiative => Stats.FirstOrDefault(x => x.StatType == StatType.Initiative);
     public bool HasMeleeAttack => Attacks.Any(x => x.IsMelee);
     public bool HasRangedAttack => Attacks.Any(x => x.IsRanged);
     public AttackStatNode? MeleeAttack => Attacks.FirstOrDefault(x => x.IsMelee);
@@ -85,7 +87,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         _shields.Visible = to && HasShields;
     }
 
-    public override void ForcePlace(EntityPlacedEvent @event)
+    public override void ForcePlace(EntityPlacedResponseEvent @event)
     {
         SetActorRotation(@event.ActorRotation);
         base.ForcePlace(@event);

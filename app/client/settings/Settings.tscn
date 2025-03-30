@@ -182,7 +182,7 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_constants/h_separation = 150
 theme_override_constants/v_separation = 10
-columns = 4
+columns = 2
 
 [node name="ResearchEnabled" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer"]
 layout_mode = 2
@@ -218,6 +218,24 @@ mouse_filter = 1
 text = "Same Team Combat:"
 
 [node name="AllowSameTeamCombat" type="CheckBox" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer/SameTeamCombat"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="InitiativeCalculation" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer"]
+layout_mode = 2
+tooltip_text = "If checked, the turn order during action phase is calcuated in a deterministic (non-random) way."
+alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer/InitiativeCalculation"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+mouse_filter = 1
+text = "Deterministic Initiative:"
+
+[node name="DeterministicInitiative" type="CheckBox" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer/InitiativeCalculation"]
 custom_minimum_size = Vector2(300, 40)
 layout_mode = 2
 size_flags_horizontal = 2

@@ -11,7 +11,7 @@ public partial class Config : Node
     
     public void Save()
     {
-        var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
+        using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
         file.StoreString(ToString());
         file.Close();
     }
@@ -21,7 +21,7 @@ public partial class Config : Node
         if (FileAccess.FileExists(SavePath) is false)
             return;
 
-        var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Read);
+        using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Read);
         FromString(file.GetAsText());
         file.Close();
     }
@@ -58,12 +58,6 @@ public partial class Config : Node
         set => GetData().ConnectTerrain = value;
     }
 
-    public bool ResearchEnabled
-    {
-        get => GetData().ResearchEnabled;
-        set => GetData().ResearchEnabled = value;
-    }
-
     public FactionId StartingFaction
     {
         get => GetData().StartingFaction;
@@ -86,6 +80,18 @@ public partial class Config : Node
     {
         get => GetData().AllowSameTeamCombat;
         set => GetData().AllowSameTeamCombat = value;
+    }
+    
+    public bool ResearchEnabled
+    {
+        get => GetData().ResearchEnabled;
+        set => GetData().ResearchEnabled = value;
+    }
+
+    public bool DeterministicInitiative
+    {
+        get => GetData().DeterministicInitiative;
+        set => GetData().DeterministicInitiative = value;
     }
 
     private ConfigData? _data;
@@ -115,11 +121,12 @@ public partial class Config : Node
     {
         public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Fast;
         public bool ConnectTerrain { get; set; } = false;
-        public bool ResearchEnabled { get; set; } = false;
         public FactionId StartingFaction { get; set; } = FactionId.Uee;
         public bool LargeCursor { get; set; } = false;
         public bool ShowHints { get; set; } = true;
         public bool AllowSameTeamCombat { get; set; } = false;
+        public bool ResearchEnabled { get; set; } = false;
+        public bool DeterministicInitiative { get; set; } = false;
     }
 
     public enum AnimationSpeeds

@@ -86,7 +86,8 @@ public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelect
 
     public bool IsSelectableItemDisabled(Id selectableItemId)
     {
+        var researchEnabled = Config.Instance.ResearchEnabled;
         var item = Selection.First(x => x.Name.Equals(selectableItemId));
-        return item.ResearchNeeded.Any() || item.GrayOutIfAlreadyExists;
+        return (item.ResearchNeeded.Any() && researchEnabled) || item.GrayOutIfAlreadyExists;
     }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
-using LowAgeData.Domain.Common.Durations;
 
 public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
 {
@@ -14,6 +13,9 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     public AbilityId Id { get; protected set; } = null!;
     public string DisplayName { get; protected set; } = null!;
+    public string Description { get; protected set; } = null!;
+    public TurnPhase TurnPhase { get; protected set; } = null!;
+    public IList<ResearchId> ResearchNeeded { get; protected set; } = [];
     public ActorNode OwnerActor { get; protected set; } = null!;
     public EndsAtNode RemainingCooldown { get; protected set; } = null!;
     public List<Payment> PaymentPaid { get; protected set; } = null!;
@@ -28,24 +30,31 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
         Blueprint = blueprint;
         Id = Blueprint.Id;
         DisplayName = Blueprint.DisplayName;
-        RemainingCooldown = EndsAtNode.InstantiateAsChild(Blueprint.Cooldown, this);
+        Description = Blueprint.Description;
+        TurnPhase = Blueprint.TurnPhase;
+        ResearchNeeded = Blueprint.ResearchNeeded; // TODO right now never updated, to be fetched from player and updated upon new research
+        RemainingCooldown = EndsAtNode.InstantiateAsChild(Blueprint.Cooldown, this, OwnerActor);
         RemainingCooldown.Completed += OnCooldownEnded;
         PaymentPaid = blueprint.Cost.Select(paymentRequired => new Payment(paymentRequired.Resource)).ToList();
-        IsResearched = true; // TODO fetch from player
+        IsResearched = (Config.Instance.ResearchEnabled && ResearchNeeded.Any()) is false;
         IsActive = IsPaid() && IsResearched;
         HasButton = Blueprint.HasButton;
     }
 
+    // TODO might not be needed -- need to think of how the "instant" abilities will work first
     public virtual void Preview()
     {
     }
     
-    public virtual bool TryActivate()
+    public virtual bool TryActivate(TurnPhase currentTurnPhase, ActorNode? actorInAction)
     {
-        if (IsActive is false)
+        if (IsActive is false 
+            || currentTurnPhase.Equals(TurnPhase) is false 
+            || OwnerActor.Equals(actorInAction) is false)
             return false;
 
         IsActive = TryStartCooldown() is false;
+        // TODO start paying and execute ability only after it's paid
         Activated(this);
         return true;
     }
@@ -74,16 +83,16 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
 
     protected virtual bool TryStartCooldown()
     {
-        if (Blueprint.Cooldown.Equals(EndsAt.Instant))
+        if (RemainingCooldown.HasDuration() is false)
             return false;
         
-        RemainingCooldown.SetBlueprint(Blueprint.Cooldown);
+        RemainingCooldown.ResetDuration();
         return true;
     }
     
     protected virtual void OnCooldownEnded()
     {
-        IsActive = IsResearched;
+        IsActive = IsPaid() && IsResearched;
         CooldownEnded(this);
     }
     

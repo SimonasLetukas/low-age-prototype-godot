@@ -1,8 +1,9 @@
 using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
 
 public partial class InstantNode : AbilityNode, INodeFromBlueprint<Instant>
 {
-    private Instant Blueprint { get; set; }
+    private Instant Blueprint { get; set; } = null!;
     
     public void SetBlueprint(Instant blueprint)
     {
@@ -10,10 +11,10 @@ public partial class InstantNode : AbilityNode, INodeFromBlueprint<Instant>
         Blueprint = blueprint;
     }
 
-    public override bool TryActivate()
+    public override bool TryActivate(TurnPhase currentTurnPhase, ActorNode? actorInAction)
     {
         // TODO execute effects
         
-        return base.TryActivate();
+        return base.TryActivate(currentTurnPhase, actorInAction);
     }
 }

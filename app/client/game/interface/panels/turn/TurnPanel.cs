@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using LowAgeData.Domain.Common;
 
 public partial class TurnPanel : Control
 {
@@ -32,7 +33,7 @@ public partial class TurnPanel : Control
 		base._ExitTree();
 	}
 
-	public void OnPhaseStarted(int turn, Phase phase)
+	public void OnPhaseStarted(int turn, TurnPhase phase)
 	{
 		SetTurnCounter(turn);
 		SetPhaseLabel(phase);
@@ -51,7 +52,7 @@ public partial class TurnPanel : Control
 		_turnCounterSingle.Text = $"[center]{ones.ToString()}";
 	}
 
-	private void SetPhaseLabel(Phase phase) => _phaseLabel.Text = $"{phase.ToString()} Phase";
+	private void SetPhaseLabel(TurnPhase phase) => _phaseLabel.Text = $"{phase.ToDisplayValue().Capitalize()} Phase";
 
 	private void OnNextTurnButtonClicked() => NextTurnClicked();
 }

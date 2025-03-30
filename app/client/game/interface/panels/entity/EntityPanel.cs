@@ -92,14 +92,12 @@ public partial class EntityPanel : Control
         
         if (_isShowingAbility && clickedAbility != null)
         {
-            var abilityBlueprint = _abilitiesBlueprint.First(x => x.Id.Equals(clickedAbility.Ability.Id));
-            // TODO should probably get all of these properties from AbilityNode instead of all blueprints 
-            var abilityInstance = clickedAbility.Ability;
-            var name = abilityBlueprint.DisplayName;
-            var turnPhase = abilityBlueprint.TurnPhase;
-            var text = abilityBlueprint.Description;
-            var research = abilityBlueprint.ResearchNeeded;
-            var cooldown = abilityInstance.RemainingCooldown;
+            var ability = clickedAbility.Ability;
+            var name = ability.DisplayName;
+            var turnPhase = ability.TurnPhase;
+            var text = ability.Description;
+            var research = ability.ResearchNeeded;
+            var cooldown = ability.RemainingCooldown;
             _display.SetAbilityStats(name, turnPhase, text, cooldown, research);
             _display.ShowView(View.Ability);
             return;

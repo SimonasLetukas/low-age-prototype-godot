@@ -2,7 +2,7 @@ using System;
 using LowAgeData.Domain.Entities;
 using LowAgeCommon;
 
-public class EntityPlacedEvent : IGameEvent
+public class EntityPlacedRequestEvent : IGameEvent
 {
     public Guid Id { get; } = Guid.NewGuid();
     public required EntityId BlueprintId { get; init; }

@@ -117,8 +117,8 @@ public partial class ClientGame : Game
                 _interface.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
                 _map.Initialize(mapCreatedEvent);
                 break;
-            case InitializationCompletedEvent:
-                OnEveryoneFinishedInitializing();
+            case InitializationCompletedEvent initializationCompletedEvent:
+                HandleEvent(initializationCompletedEvent);
                 break;
             case UnitMovedAlongPathEvent unitMovedAlongPathEvent:
                 _map.HandleEvent(unitMovedAlongPathEvent);
@@ -126,7 +126,7 @@ public partial class ClientGame : Game
             case EntityAttackedEvent entityAttackedEvent:
                 _map.Entities.HandleEvent(entityAttackedEvent);
                 break;
-            case EntityPlacedEvent entityPlacedEvent:
+            case EntityPlacedResponseEvent entityPlacedEvent:
                 _map.Entities.HandleEvent(entityPlacedEvent);
                 _map.OnEntityPlaced();
                 break;
@@ -136,15 +136,10 @@ public partial class ClientGame : Game
                 break;
         }
     }
-
-    private void OnMapFinishedInitializing()
+    
+    private void HandleEvent(InitializationCompletedEvent @event)
     {
-        GD.Print($"{nameof(ClientGame)}.{nameof(OnMapFinishedInitializing)}");
-        RegisterNewGameEvent(new ClientFinishedInitializingEvent(Multiplayer.GetUniqueId()));
-    }
-
-    private void OnEveryoneFinishedInitializing()
-    {
+        SharedRandom.Set(@event.RandomSeed);
         _map.SetupFactionStart();
         _interface.Visible = true;
         SetPaused(false);
@@ -154,5 +149,11 @@ public partial class ClientGame : Game
     {
         GetTree().Paused = to;
         _map.SetPaused(to);
+    }
+
+    private void OnMapFinishedInitializing()
+    {
+        GD.Print($"{nameof(ClientGame)}.{nameof(OnMapFinishedInitializing)}");
+        RegisterNewGameEvent(new ClientFinishedInitializingEvent(Multiplayer.GetUniqueId()));
     }
 }

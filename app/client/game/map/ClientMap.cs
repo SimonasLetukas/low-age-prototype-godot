@@ -37,6 +37,7 @@ public partial class ClientMap : Map
 		Attack
 	}
 
+	private AbilityNode? _selectedAbility;
 	private (BuildNode?, EntityId?) _previousBuildSelection = (null, null);
 	private Node2D _lines = null!;
 
@@ -80,6 +81,7 @@ public partial class ClientMap : Map
 		EventBus.Instance.EntityPlaced -= OnEntityPlaced;
 		EventBus.Instance.NewTileFocused -= OnNewTileFocused;
 		EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
+		
 		base._ExitTree();
 	}
 
@@ -316,7 +318,9 @@ public partial class ClientMap : Map
 			return;
 		}
 
-		if (_selectionOverlay is SelectionOverlay.Placement && IsActionAllowedForCurrentPlayerOnSelectedEntity())
+		if (_selectionOverlay is SelectionOverlay.Placement 
+		    && IsActionAuthorizedForCurrentPlayerOnSelectedEntity()
+		    && TryActivateAbilityInCurrentPhase())
 		{
 			ExecutePlacement();
 			return;
@@ -334,14 +338,18 @@ public partial class ClientMap : Map
 		if (_selectionOverlay is SelectionOverlay.None)
 			return;
 
-		if (_selectionOverlay is SelectionOverlay.Movement && IsActionAllowedForCurrentPlayerOnSelectedEntity())
+		if (_selectionOverlay is SelectionOverlay.Movement 
+		    && IsActionAuthorizedForCurrentPlayerOnSelectedEntity()
+		    && TryActivateAbilityInCurrentPhase())
 		{
 			_focusedTile.UpdateTile();
 			ExecuteMovement();
 			return;
 		}
 
-		if (_selectionOverlay is SelectionOverlay.Attack && IsActionAllowedForCurrentPlayerOnSelectedEntity())
+		if (_selectionOverlay is SelectionOverlay.Attack 
+		    && IsActionAuthorizedForCurrentPlayerOnSelectedEntity()
+		    && TryActivateAbilityInCurrentPhase())
 		{
 			_focusedTile.UpdateTile();
 			ExecuteAttack();
@@ -494,6 +502,7 @@ public partial class ClientMap : Map
 		_tileMap.Elevatable.ClearTargetTiles(false);
 		Entities.CancelPlacement();
 		_previousBuildSelection = (null, null);
+		_selectedAbility = null;
 		_focusedTile.Enable();
 		ExecuteEntitySelection(true);
 	}
@@ -583,8 +592,19 @@ public partial class ClientMap : Map
 		Entities.DropDownToLowGround(entities);
 	}
 	
-	private bool IsActionAllowedForCurrentPlayerOnSelectedEntity() 
+	private bool IsActionAuthorizedForCurrentPlayerOnSelectedEntity() 
 		=> Players.Instance.IsActionAllowedForCurrentPlayerOn(Entities.SelectedEntity);
+
+	private bool TryActivateAbilityInCurrentPhase() => _selectionOverlay switch
+	{
+		SelectionOverlay.Placement // or SelectionOverlay.Ability TODO
+			when _selectedAbility is not null && _selectedAbility.TryActivate(CurrentPhase, ActorInAction) => true,
+
+		SelectionOverlay.Movement or SelectionOverlay.Attack
+			when Entities.SelectedEntity!.Equals(ActorInAction) => true,
+
+		_ => false
+	};
 
 	private void ResetLines()
 	{
@@ -763,6 +783,7 @@ public partial class ClientMap : Map
 		var entity = Entities.SetEntityForPlacement(entityId, canBePlacedOnTheWholeMap);
 		// TODO pass in the cost to be tracked inside the buildableNode
 
+		_selectedAbility = buildAbility;
 		_selectionOverlay = SelectionOverlay.Placement;
 		EntityIsBeingPlaced(entity);
 	}

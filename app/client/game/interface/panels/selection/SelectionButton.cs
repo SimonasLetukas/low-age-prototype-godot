@@ -44,8 +44,7 @@ public partial class SelectionButton : BaseButton
         if (entity?.Sprite != null)
             SetIcon(GD.Load<Texture2D>(entity.Sprite));
         
-        if (Config.Instance.ResearchEnabled)
-            SetDisabled(ability.IsSelectableItemDisabled(selectionId));
+        SetDisabled(ability.IsSelectableItemDisabled(selectionId));
     }
     
     private void OnButtonClicked() => Clicked(Ability, SelectionId);

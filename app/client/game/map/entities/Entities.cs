@@ -16,7 +16,7 @@ public partial class Entities : Node2D
 {
     [Export] public bool DebugEnabled { get; set; } = false;
     
-    public event Action<EntityPlacedEvent> EntityPlaced = delegate { };
+    public event Action<EntityPlacedRequestEvent> EntityPlaced = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
     public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
@@ -33,6 +33,7 @@ public partial class Entities : Node2D
     private Node2D _structures = null!;
     private Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> _getHighestTiles = null!;
     private Func<Vector2Int, bool, Tiles.TileInstance?> _getTile = null!;
+    private PlayerPriority _playerPriority = null!;
 
     private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new();
     private readonly List<EntityNode> _entitiesBeingDestroyed = [];
@@ -51,6 +52,10 @@ public partial class Entities : Node2D
     {
         _getHighestTiles = getHighestTiles;
         _getTile = getTile;
+        _playerPriority = new PlayerPriority
+        {
+            Queue = Players.Instance.GetAll().ToList(),
+        };
     }
 
     public void SetupStartingEntities(IList<Vector2Int> startingPositions, FactionId factionId)
@@ -94,6 +99,17 @@ public partial class Entities : Node2D
     public EntityNode? GetEntityByInstanceId(Guid instanceId) => _entitiesByIds.ContainsKey(instanceId)
         ? _entitiesByIds[instanceId]
         : null;
+
+    public List<EntityNode> GetSortedByInitiative()
+    {
+        var entitiesGroupedBySortedInitiative = GetEntityInitiativeMap()
+            .OrderByDescending(pair => pair.Value)
+            .ThenBy(pair => pair.Key.CreationToken)
+            .GroupBy(pair => pair.Value)
+            .Select(group => group.Select(pair => pair.Key));
+
+        return ResolveIdenticalInitiatives(entitiesGroupedBySortedInitiative);
+    }
 
     public void AdjustGlobalPosition(EntityNode entity, Vector2 globalPosition) => entity.SnapTo(globalPosition);
 
@@ -275,11 +291,12 @@ public partial class Entities : Node2D
         target.ReceiveAttack(source, @event.AttackType, false);
     }
 
-    public void HandleEvent(EntityPlacedEvent @event)
+    public void HandleEvent(EntityPlacedResponseEvent @event)
     {
         var entity = GetEntityByInstanceId(@event.InstanceId);
         if (entity != null)
         {
+            entity.CreationToken = @event.CreationToken;
             PlaceEntity(entity, false);
             return;
         }
@@ -327,7 +344,7 @@ public partial class Entities : Node2D
             return null;
         
         if (placeAsCandidate)
-            EntityPlaced(new EntityPlacedEvent
+            EntityPlaced(new EntityPlacedRequestEvent
             {
                 BlueprintId = entity.BlueprintId,
                 MapPosition = entity.EntityPrimaryPosition,
@@ -387,6 +404,62 @@ public partial class Entities : Node2D
 
         return unit;
     }
+    
+    private Dictionary<EntityNode, int> GetEntityInitiativeMap()
+    {
+        var deterministicInitiative = Config.Instance.DeterministicInitiative;
+        var entityInitiativeMap = new Dictionary<EntityNode, int>();
+        
+        foreach (var entity in _entitiesByIds.Values)
+        {
+            if (entity is not ActorNode actor || actor.HasInitiative is false)
+                continue;
+
+            var initiative = deterministicInitiative 
+                ? (int)actor.Initiative!.CurrentAmount 
+                : Dice.RollMultiple(19, (int)actor.Initiative!.CurrentAmount).Sum();
+
+            entityInitiativeMap[actor] = initiative;
+        }
+        
+        return entityInitiativeMap;
+    }
+
+    private List<EntityNode> ResolveIdenticalInitiatives(
+        IEnumerable<IEnumerable<EntityNode>> entitiesGroupedBySortedInitiative)
+    {
+        var finalOrder = new List<EntityNode>();
+
+        foreach (var group in entitiesGroupedBySortedInitiative)
+        {
+            var entitiesByPlayer = new Dictionary<Player, List<EntityNode>>();
+            foreach (var entity in group)
+            {
+                if (entitiesByPlayer.ContainsKey(entity.Player) is false)
+                    entitiesByPlayer[entity.Player] = [];
+                
+                entitiesByPlayer[entity.Player].Add(entity);
+            }
+
+            while (entitiesByPlayer.Values.Any(entities => entities.Count > 0))
+            {
+                var uniquePlayerEntityGroup = new List<EntityNode>();
+                foreach (var playerId in entitiesByPlayer.Keys.Where(playerId => entitiesByPlayer[playerId].Count > 0))
+                {
+                    uniquePlayerEntityGroup.Add(entitiesByPlayer[playerId].First());
+                    entitiesByPlayer[playerId].RemoveAt(0);
+                }
+
+                uniquePlayerEntityGroup.Sort((entityA, entityB) => 
+                    _playerPriority.Compare(entityA.Player, entityB.Player));
+                _playerPriority.Rotate();
+                
+                finalOrder.AddRange(uniquePlayerEntityGroup);
+            }
+        }
+
+        return finalOrder;
+    }
 
     private void OnEntityFinishedMoving(EntityNode entity)
     {
@@ -410,5 +483,22 @@ public partial class Entities : Node2D
 
         _entitiesByIds.Remove(entity.InstanceId);
         _entitiesBeingDestroyed.Remove(entity);
+    }
+    
+    private class PlayerPriority
+    {
+        public required IList<Player> Queue { private get; init; }
+
+        public int Compare(Player p1, Player p2) => Queue.IndexOf(p1).CompareTo(Queue.IndexOf(p2));
+
+        public void Rotate()
+        {
+            if (Queue.Count < 1)
+                return;
+            
+            var firstPlayer = Queue.First();
+            Queue.RemoveAt(0);
+            Queue.Add(firstPlayer);
+        }
     }
 }

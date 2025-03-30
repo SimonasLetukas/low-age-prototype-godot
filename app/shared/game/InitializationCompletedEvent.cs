@@ -1,10 +1,7 @@
 using System;
 
-public partial class InitializationCompletedEvent : IGameEvent
+public class InitializationCompletedEvent : IGameEvent
 {
-    public InitializationCompletedEvent()
-    {
-    }
-    
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; } = Guid.NewGuid();
+    public required int RandomSeed { get; init; }
 }

@@ -7,10 +7,11 @@ public partial class ServerGame : Game
 {
     public const string ScenePath = @"res://app/server/game/ServerGame.tscn";
 
-    private List<int> _notLoadedPlayers;
-    private List<int> _notInitializedPlayers;
-    private Creator _creator;
-
+    private readonly List<int> _notLoadedPlayers = [];
+    private readonly List<int> _notInitializedPlayers = [];
+    private int _entityCreationTokenCounter;
+    private Creator _creator = null!;
+    
     public override async void _Ready()
     {
         GD.Print($"{nameof(ServerGame)}: entering");
@@ -22,9 +23,7 @@ public partial class ServerGame : Game
 
         // Wait until the parent scene is fully loaded
         await ToSignal(GetTree().Root.GetChild(GetTree().Root.GetChildCount() - 1), "ready");
-
-        _notLoadedPlayers = new List<int>();
-        _notInitializedPlayers = new List<int>();
+        
         foreach (var playerId in Players.Instance.GetAllIds())
         {
             _notLoadedPlayers.Add(playerId);
@@ -90,6 +89,9 @@ public partial class ServerGame : Game
             case ClientFinishedInitializingEvent clientFinishedInitializingEvent:
                 HandleEvent(clientFinishedInitializingEvent);
                 break;
+            case EntityPlacedRequestEvent entityPlacedRequestEvent:
+                HandleEvent(entityPlacedRequestEvent);
+                break;
             default:
                 GD.Print($"{nameof(ServerGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
                          $"'{EventToString(gameEvent).TrimForLogs(50)}...'. Type not implemented or not relevant " +
@@ -108,12 +110,24 @@ public partial class ServerGame : Game
         {
             GD.Print($"{nameof(ServerGame)}.{nameof(ClientFinishedInitializingEvent)}: all clients have loaded, " +
                      "notifying all players");
-            OnRegisterServerEvent(new InitializationCompletedEvent());
+            
+            var @event = new InitializationCompletedEvent
+            {
+                RandomSeed = SharedRandom.Seed,
+            };
+            OnRegisterServerEvent(@event);
+            
             return;
         }
         
         GD.Print($"{nameof(ServerGame)}.{nameof(ClientFinishedInitializingEvent)}: still waiting for " +
                  $"{_notInitializedPlayers.Count} players to initialize");
+    }
+
+    private void HandleEvent(EntityPlacedRequestEvent entityPlacedRequestEvent)
+    {
+        var response = EntityPlacedResponseEvent.From(entityPlacedRequestEvent, ++_entityCreationTokenCounter);
+        OnRegisterServerEvent(response);
     }
     
     private void OnPlayerRemoved(long playerId)

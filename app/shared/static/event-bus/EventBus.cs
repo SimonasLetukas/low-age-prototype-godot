@@ -29,11 +29,17 @@ public partial class EventBus : Node
 
     #region Events
     
-    public event Action<int, Phase> PhaseStarted = delegate { };
-    public void RaisePhaseStarted(int turn, Phase phase) => PhaseStarted(turn, phase);
+    public event Action<int, TurnPhase> PhaseStarted = delegate { };
+    public void RaisePhaseStarted(int turn, TurnPhase phase) => PhaseStarted(turn, phase);
     
-    public event Action<int, Phase> PhaseEnded = delegate { };
-    public void RaisePhaseEnded(int turn, Phase phase) => PhaseEnded(turn, phase);
+    public event Action<int, TurnPhase> PhaseEnded = delegate { };
+    public void RaisePhaseEnded(int turn, TurnPhase phase) => PhaseEnded(turn, phase);
+
+    public event Action<ActorNode> ActionStarted = delegate { };
+    public void RaiseActionStarted(ActorNode actor) => ActionStarted(actor);
+    
+    public event Action<ActorNode> ActionEnded = delegate { };
+    public void RaiseActionEnded(ActorNode actor) => ActionEnded(actor);
 
     public event Action<Vector2Int, Terrain, IList<EntityNode>?> NewTileFocused = delegate { };
     public void RaiseNewTileFocused(Vector2Int mapPosition, Terrain terrain, IList<EntityNode>? occupants)

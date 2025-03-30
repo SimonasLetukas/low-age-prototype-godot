@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using LowAgeData.Domain.Common;
 
 /// <summary>
 /// Responsible for keeping track of turns and phases.
@@ -11,7 +12,7 @@ public partial class Turns : Node2D
 	[Export] public bool DebugEnabled { get; set; } = false;
 
 	private int Turn { get; set; }
-	private Phase Phase { get; set; }
+	private TurnPhase Phase { get; set; }
 
 	public override void _Ready()
 	{
@@ -36,27 +37,11 @@ public partial class Turns : Node2D
 	{
 		EventBus.Instance.RaisePhaseEnded(Turn, Phase);
 
-		switch (Phase)
-		{
-			case Phase.Planning:
-				Phase = Phase.Action;
-				break;
-			
-			case Phase.Action:
-				Phase = Phase.Planning;
-				Turn++;
-				break;
-			
-			default:
-				break;
-		}
+		Phase.Next();
+
+		if (Phase.Equals(TurnPhase.Action))
+			Turn++;
 		
 		EventBus.Instance.RaisePhaseStarted(Turn, Phase);
 	}
-}
-
-public enum Phase
-{
-	Planning,
-	Action,
 }

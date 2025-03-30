@@ -25,6 +25,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public EntityId BlueprintId { get; private set; } = null!;
 
     public Guid InstanceId { get; set; } = Guid.NewGuid();
+    public int CreationToken { get; set; }
 
     public Player Player { get; protected set; } = null!;
     public EntityRenderer Renderer { get; private set; } = null!;
@@ -172,8 +173,9 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         return true;
     }
 
-    public virtual void ForcePlace(EntityPlacedEvent @event)
+    public virtual void ForcePlace(EntityPlacedResponseEvent @event)
     {
+        CreationToken = @event.CreationToken;
         EntityPrimaryPosition = @event.MapPosition;
         CanBePlaced = true;
         EntityState = State.Candidate;

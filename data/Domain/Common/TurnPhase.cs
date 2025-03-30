@@ -6,11 +6,22 @@ namespace LowAgeData.Domain.Common
     [JsonConverter(typeof(TurnPhaseJsonConverter))]
     public class TurnPhase : EnumValueObject<TurnPhase, TurnPhase.TurnPhases>
     {
-        public static TurnPhase Passive => new TurnPhase(TurnPhases.Passive);
-        public static TurnPhase Planning => new TurnPhase(TurnPhases.Planning);
-        public static TurnPhase Action => new TurnPhase(TurnPhases.Action);
+        public static TurnPhase Passive => new(TurnPhases.Passive);
+        public static TurnPhase Planning => new(TurnPhases.Planning);
+        public static TurnPhase Action => new(TurnPhases.Action);
         
         public string ToDisplayValue() => Value.ToString();
+
+        public TurnPhase Next()
+        {
+            return Value switch
+            {
+                TurnPhases.Planning => Action,
+                TurnPhases.Action => Planning,
+                TurnPhases.Passive => Passive,
+                _ => Passive
+            };
+        }
 
         private TurnPhase(TurnPhases @enum) : base(@enum) { }
         

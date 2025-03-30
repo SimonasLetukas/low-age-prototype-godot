@@ -260,14 +260,12 @@ public partial class InfoDisplay : MarginContainer
         TurnPhase turnPhase,
         string text,
         EndsAtNode cooldown,
-        IList<ResearchId>? research = null)
+        IList<ResearchId> research)
     {
         _valueAbilityName = abilityName;
         _valueAbilityTurnPhase = turnPhase;
         _valueAbilityText = text;
-        _valueResearchText = research is null
-            ? string.Empty
-            : string.Join(", ", research.Select(x => x.ToString()).ToList()); // TODO add nice display names to research
+        _valueResearchText = string.Join(", ", research.Select(x => x.ToString()).ToList()); // TODO add nice display names to research
         _valueAbilityCooldown = cooldown;
     }
     

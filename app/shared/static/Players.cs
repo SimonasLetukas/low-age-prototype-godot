@@ -93,7 +93,7 @@ public partial class Players : Node
     #endregion Setters (should only be accessed by the multiplayer-related nodes)
 }
 
-public class Player
+public class Player : IEquatable<Player>
 {
     public required int Id { get; init; }
     public required string Name { get; init; }
@@ -101,4 +101,24 @@ public class Player
     public required FactionId Faction { get; set; }
     public required Team Team { get; set; }
     public required bool Ready { get; set; }
+
+    public bool Equals(Player? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Id == other.Id;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != GetType()) return false;
+        return Equals((Player)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return Id;
+    }
 }
