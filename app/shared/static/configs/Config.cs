@@ -126,7 +126,7 @@ public partial class Config : Node
         public bool ShowHints { get; set; } = true;
         public bool AllowSameTeamCombat { get; set; } = false;
         public bool ResearchEnabled { get; set; } = false;
-        public bool DeterministicInitiative { get; set; } = false;
+        public bool DeterministicInitiative { get; set; } = true;
     }
 
     public enum AnimationSpeeds

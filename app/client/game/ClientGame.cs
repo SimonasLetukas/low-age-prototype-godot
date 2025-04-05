@@ -13,6 +13,8 @@ public partial class ClientGame : Game
     
     public override async void _Ready()
     {
+        GD.Print($"{LogPrefix}: entering.");
+        
         base._Ready();
         
         _map = GetNode<ClientMap>($"{nameof(Map)}");
@@ -20,7 +22,6 @@ public partial class ClientGame : Game
         _mouse = GetNode<Mouse>($"{nameof(Mouse)}");
         _interface = GetNode<Interface>($"{nameof(Interface)}");
         
-        GD.Print($"{nameof(ClientGame)}: entering.");
         SetPaused(true);
         
         // Wait until the parent scene is fully loaded
@@ -39,7 +40,7 @@ public partial class ClientGame : Game
 
     private void ConnectSignals()
     {
-        GD.Print($"{nameof(ClientGame)}.{nameof(ConnectSignals)}: connecting signals.");
+        GD.Print($"{LogPrefix}.{nameof(ConnectSignals)}: connecting signals.");
         
         _mouse.Connect(nameof(Mouse.LeftReleasedWithoutDrag), new Callable(_map, nameof(ClientMap.OnMouseLeftReleasedWithoutDrag)));
         _mouse.Connect(nameof(Mouse.RightReleasedWithoutExamine), new Callable(_map, nameof(ClientMap.OnMouseRightReleasedWithoutExamine)));
@@ -61,6 +62,9 @@ public partial class ClientGame : Game
         _map.UnitMovementIssued += RegisterNewGameEvent;
         _map.EntityAttacked += RegisterNewGameEvent;
         _map.Entities.EntityPlaced += RegisterNewGameEvent;
+        
+        Turns.PlanningPhaseEnded += RegisterNewGameEvent;
+        Turns.ActionEnded += RegisterNewGameEvent;
     }
 
     private void DisconnectSignals()
@@ -79,12 +83,15 @@ public partial class ClientGame : Game
         _map.UnitMovementIssued -= RegisterNewGameEvent;
         _map.EntityAttacked -= RegisterNewGameEvent;
         _map.Entities.EntityPlaced -= RegisterNewGameEvent;
+        
+        Turns.PlanningPhaseEnded -= RegisterNewGameEvent;
+        Turns.ActionEnded -= RegisterNewGameEvent;
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected override void GameEnded()
     {
-        GD.Print($"{nameof(ClientGame)}.{nameof(GameEnded)}: returning to main menu.");
+        GD.Print($"{LogPrefix}.{nameof(GameEnded)}: returning to main menu.");
         Client.Instance.ResetNetwork();
         Callable.From(() => GetTree().ChangeSceneToFile(MainMenu.ScenePath)).CallDeferred();
     }
@@ -93,13 +100,13 @@ public partial class ClientGame : Game
     protected override void OnNewGameEventRegistered(string eventBody)
     {
         var playerId = Multiplayer.GetUniqueId();
-        GD.Print($"{nameof(ClientGame)}.{nameof(OnNewGameEventRegistered)}: event '{eventBody.TrimForLogs()}' " +
+        GD.Print($"{LogPrefix}.{nameof(OnNewGameEventRegistered)}: event '{eventBody.TrimForLogs()}' " +
                  $"received for player {playerId} '{Players.Instance.GetName(playerId)}'");
 
         var gameEvent = StringToEvent(eventBody);
         if (Events.Any(x => x.Id.Equals(gameEvent.Id)))
         {
-            GD.Print($"{nameof(ClientGame)}.{nameof(OnNewGameEventRegistered)}: event '{gameEvent.Id}' " +
+            GD.Print($"{LogPrefix}.{nameof(OnNewGameEventRegistered)}: event '{gameEvent.Id}' " +
                      $"already exists for player {playerId} '{Players.Instance.GetName(playerId)}'");
             return;
         }
@@ -116,6 +123,7 @@ public partial class ClientGame : Game
                 _camera.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
                 _interface.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
                 _map.Initialize(mapCreatedEvent);
+                Turns.Initialize(_map.Entities.GetActorsSortedByInitiative, _map.Entities.GetCandidateEntities);
                 break;
             case InitializationCompletedEvent initializationCompletedEvent:
                 HandleEvent(initializationCompletedEvent);
@@ -130,8 +138,15 @@ public partial class ClientGame : Game
                 _map.Entities.HandleEvent(entityPlacedEvent);
                 _map.OnEntityPlaced();
                 break;
+            case PlanningPhaseEndedResponseEvent planningPhaseEndedResponseEvent:
+                _map.Entities.CancelCandidateEntities(planningPhaseEndedResponseEvent.CancelledCandidateEntities);
+                Turns.HandleEvent(planningPhaseEndedResponseEvent);
+                break;
+            case ActionEndedEvent actionEndedEvent:
+                Turns.HandleEvent(actionEndedEvent);
+                break;
             default:
-                GD.Print($"{nameof(ClientGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
+                GD.Print($"{LogPrefix}.{nameof(ExecuteGameEvent)}: could not execute event " +
                          $"'{EventToString(gameEvent)}'. Type not implemented or not relevant for client.");
                 break;
         }
@@ -153,7 +168,7 @@ public partial class ClientGame : Game
 
     private void OnMapFinishedInitializing()
     {
-        GD.Print($"{nameof(ClientGame)}.{nameof(OnMapFinishedInitializing)}");
+        GD.Print($"{LogPrefix}.{nameof(OnMapFinishedInitializing)}");
         RegisterNewGameEvent(new ClientFinishedInitializingEvent(Multiplayer.GetUniqueId()));
     }
 }

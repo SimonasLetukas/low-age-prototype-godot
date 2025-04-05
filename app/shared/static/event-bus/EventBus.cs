@@ -41,6 +41,9 @@ public partial class EventBus : Node
     public event Action<ActorNode> ActionEnded = delegate { };
     public void RaiseActionEnded(ActorNode actor) => ActionEnded(actor);
 
+    public event Action<IList<ActorNode>> InitiativeQueueUpdated = delegate { };
+    public void RaiseInitiativeQueueUpdated(IList<ActorNode> actors) => InitiativeQueueUpdated(actors);
+
     public event Action<Vector2Int, Terrain, IList<EntityNode>?> NewTileFocused = delegate { };
     public void RaiseNewTileFocused(Vector2Int mapPosition, Terrain terrain, IList<EntityNode>? occupants)
         => NewTileFocused(mapPosition, terrain, occupants);

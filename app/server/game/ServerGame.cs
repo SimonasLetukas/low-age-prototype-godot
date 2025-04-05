@@ -1,6 +1,8 @@
+using System;
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using LowAgeCommon;
 using LowAgeCommon.Extensions;
 
 public partial class ServerGame : Game
@@ -9,12 +11,16 @@ public partial class ServerGame : Game
 
     private readonly List<int> _notLoadedPlayers = [];
     private readonly List<int> _notInitializedPlayers = [];
+    private readonly HashSet<int> _finishedPlanningPlayers = [];
+    private readonly Dictionary<int, IList<PlanningPhaseEndedRequestEvent>> _planningPhaseEndedEventsByTurn = [];
     private int _entityCreationTokenCounter;
     private Creator _creator = null!;
     
     public override async void _Ready()
     {
         GD.Print($"{nameof(ServerGame)}: entering");
+        
+        base._Ready();
         
         _creator = GetNode<Creator>($"{nameof(Creator)}");
         
@@ -92,6 +98,9 @@ public partial class ServerGame : Game
             case EntityPlacedRequestEvent entityPlacedRequestEvent:
                 HandleEvent(entityPlacedRequestEvent);
                 break;
+            case PlanningPhaseEndedRequestEvent planningPhaseEndedRequestEvent:
+                HandleEvent(planningPhaseEndedRequestEvent);
+                break;
             default:
                 GD.Print($"{nameof(ServerGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
                          $"'{EventToString(gameEvent).TrimForLogs(50)}...'. Type not implemented or not relevant " +
@@ -127,6 +136,58 @@ public partial class ServerGame : Game
     private void HandleEvent(EntityPlacedRequestEvent entityPlacedRequestEvent)
     {
         var response = EntityPlacedResponseEvent.From(entityPlacedRequestEvent, ++_entityCreationTokenCounter);
+        OnRegisterServerEvent(response);
+    }
+
+    private void HandleEvent(PlanningPhaseEndedRequestEvent @event)
+    {
+        _finishedPlanningPlayers.Add(@event.PlayerId);
+        
+        var turn = @event.Turn;
+        if (_planningPhaseEndedEventsByTurn.ContainsKey(turn) is false)
+            _planningPhaseEndedEventsByTurn[turn] = new List<PlanningPhaseEndedRequestEvent>();
+        
+        _planningPhaseEndedEventsByTurn[turn].Add(@event);
+        
+        if (_finishedPlanningPlayers.Count != Players.Instance.Count)
+            return;
+
+        var cancelledCandidates = new List<Guid>();
+        var checkedEventPairs = new HashSet<(Guid, Guid)>();
+        
+        foreach (var planningPhaseEndedA in _planningPhaseEndedEventsByTurn[turn])
+        {
+            foreach (var planningPhaseEndedB in _planningPhaseEndedEventsByTurn[turn])
+            {
+                if (planningPhaseEndedA.Id.Equals(planningPhaseEndedB.Id))
+                    continue;
+                
+                var pair = planningPhaseEndedA.Id.CompareTo(planningPhaseEndedB.Id) < 0 
+                    ? (planningPhaseEndedA.Id, planningPhaseEndedB.Id) 
+                    : (planningPhaseEndedB.Id, planningPhaseEndedA.Id);
+                if (checkedEventPairs.Contains(pair))
+                    continue;
+
+                foreach (var candidateEntityA in planningPhaseEndedA.CandidateEntities)
+                {
+                    foreach (var candidateEntityB in planningPhaseEndedB.CandidateEntities)
+                    {
+                        if (candidateEntityA.OccupyingPositions.Any(candidateEntityB.OccupyingPositions.Contains)) 
+                            cancelledCandidates.AddRange([candidateEntityA.EntityId, candidateEntityB.EntityId]);
+                    }
+                }
+                
+                checkedEventPairs.Add(pair);
+            }
+        }
+
+        _finishedPlanningPlayers.Clear();
+        
+        var response = new PlanningPhaseEndedResponseEvent
+        {
+            Turn = turn,
+            CancelledCandidateEntities = cancelledCandidates
+        };
         OnRegisterServerEvent(response);
     }
     

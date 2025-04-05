@@ -8,13 +8,14 @@ using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
 using LowAgeCommon;
 using MultipurposePathfinding;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Parent of all entities (units & structures) and their rendering on the map.
 /// </summary>
 public partial class Entities : Node2D
 {
-    [Export] public bool DebugEnabled { get; set; } = false;
+    [Export] public bool DebugEnabled { get; set; } = true;
     
     public event Action<EntityPlacedRequestEvent> EntityPlaced = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
@@ -54,7 +55,7 @@ public partial class Entities : Node2D
         _getTile = getTile;
         _playerPriority = new PlayerPriority
         {
-            Queue = Players.Instance.GetAll().ToList(),
+            Queue = Players.Instance.GetAll().OrderBy(x => x.Id).ToList(),
         };
     }
 
@@ -100,15 +101,31 @@ public partial class Entities : Node2D
         ? _entitiesByIds[instanceId]
         : null;
 
-    public List<EntityNode> GetSortedByInitiative()
+    public IList<ActorNode> GetActorsSortedByInitiative()
     {
-        var entitiesGroupedBySortedInitiative = GetEntityInitiativeMap()
+        var actorsGroupedBySortedInitiative = GetActorInitiativeMap()
             .OrderByDescending(pair => pair.Value)
             .ThenBy(pair => pair.Key.CreationToken)
             .GroupBy(pair => pair.Value)
             .Select(group => group.Select(pair => pair.Key));
 
-        return ResolveIdenticalInitiatives(entitiesGroupedBySortedInitiative);
+        var finalOrder = ResolveIdenticalInitiatives(actorsGroupedBySortedInitiative);
+        
+        if (DebugEnabled)
+            GD.Print($"{nameof(Entities)}.{nameof(GetActorsSortedByInitiative)}: Final order of actors sorted " +
+                     $"by initiative: {JsonConvert.SerializeObject(finalOrder.Select(x => new
+                     {
+                         Id = x.InstanceId, 
+                         Name = x.DisplayName, 
+                         Position = x.EntityPrimaryPosition 
+                     }).ToList())}");
+        
+        return finalOrder;
+    }
+
+    public IList<EntityNode> GetCandidateEntities()
+    {
+        return [];
     }
 
     public void AdjustGlobalPosition(EntityNode entity, Vector2 globalPosition) => entity.SnapTo(globalPosition);
@@ -203,8 +220,8 @@ public partial class Entities : Node2D
             topEntity = entity;
         }
         
-        if (DebugEnabled && topEntity != null)
-            GD.Print($"{nameof(Entities)}.{nameof(GetTopEntity)}: entity found '{topEntity.DisplayName}'");
+        //if (DebugEnabled && topEntity != null)
+            //GD.Print($"{nameof(Entities)}.{nameof(GetTopEntity)}: entity found '{topEntity.DisplayName}'");
 
         return topEntity;
     }
@@ -267,6 +284,11 @@ public partial class Entities : Node2D
             
             NewPositionOccupied(entity);
         }
+    }
+
+    public void CancelCandidateEntities(IEnumerable<Guid> candidateEntities)
+    {
+        
     }
 
     public void HandleEvent(EntityAttackedEvent @event)
@@ -405,12 +427,12 @@ public partial class Entities : Node2D
         return unit;
     }
     
-    private Dictionary<EntityNode, int> GetEntityInitiativeMap()
+    private Dictionary<ActorNode, int> GetActorInitiativeMap()
     {
         var deterministicInitiative = Config.Instance.DeterministicInitiative;
-        var entityInitiativeMap = new Dictionary<EntityNode, int>();
+        var entityInitiativeMap = new Dictionary<ActorNode, int>();
         
-        foreach (var entity in _entitiesByIds.Values)
+        foreach (var entity in _entitiesByIds.Values.OrderBy(e => e.CreationToken))
         {
             if (entity is not ActorNode actor || actor.HasInitiative is false)
                 continue;
@@ -419,20 +441,24 @@ public partial class Entities : Node2D
                 ? (int)actor.Initiative!.CurrentAmount 
                 : Dice.RollMultiple(19, (int)actor.Initiative!.CurrentAmount).Sum();
 
+            if (DebugEnabled)
+                GD.Print($"{nameof(Entities)}.{nameof(GetActorInitiativeMap)}: {actor.DisplayName} at " + 
+                         $"{actor.EntityPrimaryPosition} {nameof(initiative)} {initiative}");
+            
             entityInitiativeMap[actor] = initiative;
         }
         
         return entityInitiativeMap;
     }
 
-    private List<EntityNode> ResolveIdenticalInitiatives(
-        IEnumerable<IEnumerable<EntityNode>> entitiesGroupedBySortedInitiative)
+    private List<ActorNode> ResolveIdenticalInitiatives(
+        IEnumerable<IEnumerable<ActorNode>> entitiesGroupedBySortedInitiative)
     {
-        var finalOrder = new List<EntityNode>();
+        var finalOrder = new List<ActorNode>();
 
         foreach (var group in entitiesGroupedBySortedInitiative)
         {
-            var entitiesByPlayer = new Dictionary<Player, List<EntityNode>>();
+            var entitiesByPlayer = new Dictionary<Player, List<ActorNode>>();
             foreach (var entity in group)
             {
                 if (entitiesByPlayer.ContainsKey(entity.Player) is false)
@@ -443,11 +469,13 @@ public partial class Entities : Node2D
 
             while (entitiesByPlayer.Values.Any(entities => entities.Count > 0))
             {
-                var uniquePlayerEntityGroup = new List<EntityNode>();
-                foreach (var playerId in entitiesByPlayer.Keys.Where(playerId => entitiesByPlayer[playerId].Count > 0))
+                var uniquePlayerEntityGroup = new List<ActorNode>();
+                foreach (var player in entitiesByPlayer.Keys
+                             .Where(player => entitiesByPlayer[player].Count > 0)
+                             .OrderBy(player => player.Id))
                 {
-                    uniquePlayerEntityGroup.Add(entitiesByPlayer[playerId].First());
-                    entitiesByPlayer[playerId].RemoveAt(0);
+                    uniquePlayerEntityGroup.Add(entitiesByPlayer[player].First());
+                    entitiesByPlayer[player].RemoveAt(0);
                 }
 
                 uniquePlayerEntityGroup.Sort((entityA, entityB) => 

@@ -6,6 +6,8 @@ public partial class TurnPanel : Control
 {
 	public event Action NextTurnClicked = delegate { };
 
+	private TurnPhase _currentPhase = TurnPhase.Planning;
+	
 	private RichTextLabel _turnCounterHundred = null!;
 	private RichTextLabel _turnCounterTen = null!;
 	private RichTextLabel _turnCounterSingle = null!;
@@ -35,6 +37,9 @@ public partial class TurnPanel : Control
 
 	public void OnPhaseStarted(int turn, TurnPhase phase)
 	{
+		_currentPhase = phase;
+		_nextTurnButton.SetDisabled(false);
+		
 		SetTurnCounter(turn);
 		SetPhaseLabel(phase);
 	}
@@ -54,5 +59,11 @@ public partial class TurnPanel : Control
 
 	private void SetPhaseLabel(TurnPhase phase) => _phaseLabel.Text = $"{phase.ToDisplayValue().Capitalize()} Phase";
 
-	private void OnNextTurnButtonClicked() => NextTurnClicked();
+	private void OnNextTurnButtonClicked()
+	{
+		if (_currentPhase.Equals(TurnPhase.Planning))
+			_nextTurnButton.SetDisabled(true);
+		
+		NextTurnClicked();
+	}
 }

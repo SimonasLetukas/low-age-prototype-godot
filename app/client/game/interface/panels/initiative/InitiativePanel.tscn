@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwhiskb2143fg"]
+[gd_scene load_steps=15 format=3 uid="uid://bwhiskb2143fg"]
 
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1_8liim"]
 [ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="2_pe5r7"]
@@ -16,8 +16,108 @@ shader_parameter/disabled_saturation = 0.2
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 shader_parameter/tint_effect_factor = 0.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p5mjo"]
+resource_local_to_scene = true
+shader = ExtResource("3_xsu7a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dx10p"]
+resource_local_to_scene = true
+shader = ExtResource("3_xsu7a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3jeoj"]
+resource_local_to_scene = true
+shader = ExtResource("3_xsu7a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tmksw"]
+resource_local_to_scene = true
+shader = ExtResource("3_xsu7a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06pes"]
+resource_local_to_scene = true
+shader = ExtResource("3_xsu7a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pfb8f"]
+resource_local_to_scene = true
+shader = ExtResource("3_xsu7a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qyf66"]
+resource_local_to_scene = true
+shader = ExtResource("3_xsu7a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uosat"]
+resource_local_to_scene = true
+shader = ExtResource("3_xsu7a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kmdx4"]
+resource_local_to_scene = true
+shader = ExtResource("3_xsu7a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = null
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
 [node name="InitiativePanel" type="Control"]
 layout_mode = 3
+anchors_preset = 0
 offset_right = -198.4
 theme = ExtResource("1_8liim")
 
@@ -63,37 +163,37 @@ material = SubResource("ShaderMaterial_a44wm")
 layout_mode = 2
 
 [node name="BaseButton2" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
-material = SubResource("ShaderMaterial_a44wm")
+material = SubResource("ShaderMaterial_p5mjo")
 layout_mode = 2
 
 [node name="BaseButton3" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
-material = SubResource("ShaderMaterial_a44wm")
+material = SubResource("ShaderMaterial_dx10p")
 layout_mode = 2
 
 [node name="BaseButton4" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
-material = SubResource("ShaderMaterial_a44wm")
+material = SubResource("ShaderMaterial_3jeoj")
 layout_mode = 2
 
 [node name="BaseButton5" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
-material = SubResource("ShaderMaterial_a44wm")
+material = SubResource("ShaderMaterial_tmksw")
 layout_mode = 2
 
 [node name="BaseButton6" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
-material = SubResource("ShaderMaterial_a44wm")
+material = SubResource("ShaderMaterial_06pes")
 layout_mode = 2
 
 [node name="BaseButton7" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
-material = SubResource("ShaderMaterial_a44wm")
+material = SubResource("ShaderMaterial_pfb8f")
 layout_mode = 2
 
 [node name="BaseButton8" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
-material = SubResource("ShaderMaterial_a44wm")
+material = SubResource("ShaderMaterial_qyf66")
 layout_mode = 2
 
 [node name="BaseButton9" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
-material = SubResource("ShaderMaterial_a44wm")
+material = SubResource("ShaderMaterial_uosat")
 layout_mode = 2
 
 [node name="BaseButton10" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
-material = SubResource("ShaderMaterial_a44wm")
+material = SubResource("ShaderMaterial_kmdx4")
 layout_mode = 2
