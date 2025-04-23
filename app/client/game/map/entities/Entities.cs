@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 /// </summary>
 public partial class Entities : Node2D
 {
-    [Export] public bool DebugEnabled { get; set; } = true;
+    [Export] public bool DebugEnabled { get; set; } = false;
     
     public event Action<EntityPlacedRequestEvent> EntityPlaced = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
@@ -123,10 +123,9 @@ public partial class Entities : Node2D
         return finalOrder;
     }
 
-    public IList<EntityNode> GetCandidateEntities()
-    {
-        return [];
-    }
+    public IList<EntityNode> GetCandidateEntities() => _entitiesByIds.Values
+        .Where(e => e.IsCandidate())
+        .ToList();
 
     public void AdjustGlobalPosition(EntityNode entity, Vector2 globalPosition) => entity.SnapTo(globalPosition);
 
@@ -288,7 +287,16 @@ public partial class Entities : Node2D
 
     public void CancelCandidateEntities(IEnumerable<Guid> candidateEntities)
     {
-        
+        foreach (var cancelledCandidate in candidateEntities)
+        {
+            if (_entitiesByIds.TryGetValue(cancelledCandidate, out var entity) is false)
+                continue;
+
+            if (entity.IsCandidate() is false)
+                continue;
+            
+            entity.Destroy();
+        }
     }
 
     public void HandleEvent(EntityAttackedEvent @event)

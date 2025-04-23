@@ -173,6 +173,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         return true;
     }
 
+    public bool IsCandidate() => EntityState is State.Candidate;
+
     public virtual void ForcePlace(EntityPlacedResponseEvent @event)
     {
         CreationToken = @event.CreationToken;

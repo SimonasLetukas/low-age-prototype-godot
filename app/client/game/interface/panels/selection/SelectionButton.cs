@@ -44,7 +44,8 @@ public partial class SelectionButton : BaseButton
         if (entity?.Sprite != null)
             SetIcon(GD.Load<Texture2D>(entity.Sprite));
         
-        SetDisabled(ability.IsSelectableItemDisabled(selectionId));
+        // Need to call this after the new node had time to become _Ready
+        Callable.From(() => SetDisabled(ability.IsSelectableItemDisabled(selectionId))).CallDeferred();
     }
     
     private void OnButtonClicked() => Clicked(Ability, SelectionId);

@@ -50,7 +50,7 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     {
         if (IsActive is false 
             || currentTurnPhase.Equals(TurnPhase) is false 
-            || OwnerActor.Equals(actorInAction) is false)
+            || (TurnPhase.Equals(TurnPhase.Action) && OwnerActor.Equals(actorInAction) is false))
             return false;
 
         IsActive = TryStartCooldown() is false;

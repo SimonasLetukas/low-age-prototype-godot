@@ -2,7 +2,6 @@ using System;
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
-using LowAgeCommon;
 using LowAgeCommon.Extensions;
 
 public partial class ServerGame : Game
@@ -11,8 +10,8 @@ public partial class ServerGame : Game
 
     private readonly List<int> _notLoadedPlayers = [];
     private readonly List<int> _notInitializedPlayers = [];
-    private readonly HashSet<int> _finishedPlanningPlayers = [];
-    private readonly Dictionary<int, IList<PlanningPhaseEndedRequestEvent>> _planningPhaseEndedEventsByTurn = [];
+    private readonly List<EntityPlacedRequestEvent> _pendingEntityPlacedRequests = [];
+    private readonly List<PlanningPhaseEndedRequestEvent> _planningPhaseEndedEventsByTurn = [];
     private int _entityCreationTokenCounter;
     private Creator _creator = null!;
     
@@ -135,29 +134,49 @@ public partial class ServerGame : Game
 
     private void HandleEvent(EntityPlacedRequestEvent entityPlacedRequestEvent)
     {
-        var response = EntityPlacedResponseEvent.From(entityPlacedRequestEvent, ++_entityCreationTokenCounter);
-        OnRegisterServerEvent(response);
+        _pendingEntityPlacedRequests.Add(entityPlacedRequestEvent);
     }
 
     private void HandleEvent(PlanningPhaseEndedRequestEvent @event)
     {
-        _finishedPlanningPlayers.Add(@event.PlayerId);
+        var existingRequestFromThisPlayer = _planningPhaseEndedEventsByTurn.FirstOrDefault(x => 
+            x.PlayerId.Equals(@event.PlayerId));
+        if (existingRequestFromThisPlayer != null)
+            _planningPhaseEndedEventsByTurn.Remove(existingRequestFromThisPlayer);
         
-        var turn = @event.Turn;
-        if (_planningPhaseEndedEventsByTurn.ContainsKey(turn) is false)
-            _planningPhaseEndedEventsByTurn[turn] = new List<PlanningPhaseEndedRequestEvent>();
+        _planningPhaseEndedEventsByTurn.Add(@event);
         
-        _planningPhaseEndedEventsByTurn[turn].Add(@event);
-        
-        if (_finishedPlanningPlayers.Count != Players.Instance.Count)
+        if (_planningPhaseEndedEventsByTurn.Count != Players.Instance.Count)
             return;
 
-        var cancelledCandidates = new List<Guid>();
+        var cancelledCandidates = GetCancelledCandidates(_planningPhaseEndedEventsByTurn).ToHashSet();
+
+        foreach (var entityPlacedResponse in _pendingEntityPlacedRequests
+                     .Where(request => cancelledCandidates.Contains(request.InstanceId) is false)
+                     .Select(request => EntityPlacedResponseEvent.From(request, ++_entityCreationTokenCounter)))
+        {
+            OnRegisterServerEvent(entityPlacedResponse);
+        }
+
+        _pendingEntityPlacedRequests.Clear();
+        _planningPhaseEndedEventsByTurn.Clear();
+        
+        var planningPhaseEndedResponse = new PlanningPhaseEndedResponseEvent
+        {
+            Turn = @event.Turn,
+            CancelledCandidateEntities = cancelledCandidates.ToList()
+        };
+        OnRegisterServerEvent(planningPhaseEndedResponse);
+    }
+
+    private static IEnumerable<Guid> GetCancelledCandidates(
+        IList<PlanningPhaseEndedRequestEvent> planningPhaseEndedEvents)
+    {
         var checkedEventPairs = new HashSet<(Guid, Guid)>();
         
-        foreach (var planningPhaseEndedA in _planningPhaseEndedEventsByTurn[turn])
+        foreach (var planningPhaseEndedA in planningPhaseEndedEvents)
         {
-            foreach (var planningPhaseEndedB in _planningPhaseEndedEventsByTurn[turn])
+            foreach (var planningPhaseEndedB in planningPhaseEndedEvents)
             {
                 if (planningPhaseEndedA.Id.Equals(planningPhaseEndedB.Id))
                     continue;
@@ -172,23 +191,17 @@ public partial class ServerGame : Game
                 {
                     foreach (var candidateEntityB in planningPhaseEndedB.CandidateEntities)
                     {
-                        if (candidateEntityA.OccupyingPositions.Any(candidateEntityB.OccupyingPositions.Contains)) 
-                            cancelledCandidates.AddRange([candidateEntityA.EntityId, candidateEntityB.EntityId]);
+                        if (candidateEntityA.OccupyingPositions.Any(candidateEntityB.OccupyingPositions.Contains))
+                        {
+                            yield return candidateEntityA.EntityId;
+                            yield return candidateEntityB.EntityId;
+                        }
                     }
                 }
                 
                 checkedEventPairs.Add(pair);
             }
         }
-
-        _finishedPlanningPlayers.Clear();
-        
-        var response = new PlanningPhaseEndedResponseEvent
-        {
-            Turn = turn,
-            CancelledCandidateEntities = cancelledCandidates
-        };
-        OnRegisterServerEvent(response);
     }
     
     private void OnPlayerRemoved(long playerId)

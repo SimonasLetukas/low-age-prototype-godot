@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cai8kctsxyqal"]
+[gd_scene load_steps=12 format=3 uid="uid://cai8kctsxyqal"]
 
 [ext_resource type="Script" path="res://app/client/game/interface/panels/entity/EntityPanel.cs" id="1"]
 [ext_resource type="PackedScene" uid="uid://dhihaeur1rr0g" path="res://app/client/game/interface/panels/entity/EntityName.tscn" id="2"]
@@ -76,6 +76,12 @@ void fragment()
 }"
 
 [sub_resource type="ShaderMaterial" id="3"]
+resource_local_to_scene = true
+shader = SubResource("2")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/enabled = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d35yb"]
 resource_local_to_scene = true
 shader = SubResource("2")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
@@ -182,6 +188,10 @@ AbilityIconPaths = {
 
 [node name="AbilityButton" parent="Panel/AbilityButtons" instance=ExtResource("8")]
 material = SubResource("3")
+layout_mode = 2
+
+[node name="AbilityButton2" parent="Panel/AbilityButtons" instance=ExtResource("8")]
+material = SubResource("ShaderMaterial_d35yb")
 layout_mode = 2
 
 [node name="InfoDisplay" parent="Panel" instance=ExtResource("10")]
