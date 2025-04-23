@@ -87,7 +87,7 @@ public partial class Turns : Node2D
 		
 		InitiativeQueue = _getActorsSortedByInitiative is null ? [] : _getActorsSortedByInitiative();
 
-		if (InitiativeQueue.IsEmpty())
+		if (InitiativeQueue.IsEmpty() || Turn == 0)
 		{
 			AdvanceToNextPhase();
 			return;

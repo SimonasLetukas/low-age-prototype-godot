@@ -158,6 +158,7 @@ public partial class ClientGame : Game
         _map.SetupFactionStart();
         _interface.Visible = true;
         SetPaused(false);
+        Callable.From(() => Turns.OnNextTurnButtonClicked()).CallDeferred();
     }
 
     private void SetPaused(bool to)
