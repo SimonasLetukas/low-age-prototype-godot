@@ -56,6 +56,21 @@ public partial class BaseButton : TextureRect
         Highlight(IsSelected);
     }
 
+    public void SetHovering(bool to)
+    {
+        if (ClientState.Instance.UiLoading)
+            return;
+        
+        if (to is false)
+            SetClicked(false);
+        
+        if (IsSelected)
+            return;
+        
+        Highlight(to);
+        Hovering(to);
+    }
+
     public void SetTint(bool to)
     {
         TextureRect.SelfModulate = to ? TintColor : Colors.White;
@@ -91,29 +106,7 @@ public partial class BaseButton : TextureRect
         TextureRect.Modulate = new Color(Colors.White, to ? 0.5f : 1);
     }
 
-    private void OnBaseButtonMouseEntered()
-    {
-        if (ClientState.Instance.UiLoading)
-            return;
-        
-        if (IsSelected)
-            return;
-        
-        Highlight(true);
-        Hovering(true);
-    }
+    private void OnBaseButtonMouseEntered() => SetHovering(true);
 
-    private void OnBaseButtonMouseExited()
-    {
-        if (ClientState.Instance.UiLoading)
-            return;
-        
-        SetClicked(false);
-        
-        if (IsSelected)
-            return;
-        
-        Highlight(false);
-        Hovering(false);
-    }
+    private void OnBaseButtonMouseExited() => SetHovering(false);
 }

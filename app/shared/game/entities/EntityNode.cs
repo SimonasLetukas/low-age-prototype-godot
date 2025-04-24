@@ -40,6 +40,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
             pair => pair.Value);
     public string DisplayName { get; private set; } = null!;
+    public string? SpriteLocation => Blueprint.Sprite;
     public bool CanBePlaced { get; protected set; } = false;
     public Behaviours Behaviours { get; protected set; } = null!;
     public bool IsBeingDestroyed { get; private set; }

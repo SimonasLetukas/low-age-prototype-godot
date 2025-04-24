@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bwhiskb2143fg"]
+[gd_scene load_steps=16 format=3 uid="uid://bwhiskb2143fg"]
 
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1_8liim"]
 [ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="2_pe5r7"]
+[ext_resource type="Script" path="res://app/client/game/interface/panels/initiative/InitiativePanel.cs" id="2_rfnqo"]
 [ext_resource type="Texture2D" uid="uid://doimx2uu8i3fs" path="res://assets/sprites/interface/selection-panel.png" id="2_sn8wj"]
 [ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="3_xsu7a"]
 
@@ -120,6 +121,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = -198.4
 theme = ExtResource("1_8liim")
+script = ExtResource("2_rfnqo")
 
 [node name="Background" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(48, 24)
