@@ -86,9 +86,17 @@ public partial class Turns : Node2D
 		AdvanceToNextPhase();
 		
 		InitiativeQueue = _getActorsSortedByInitiative is null ? [] : _getActorsSortedByInitiative();
+		
+		if (Turn == 0) // Turn 0 is used for initialization only
+		{
+			EventBus.Instance.RaiseInitiativeQueueUpdated([]);
+			AdvanceToNextPhase();
+			return;
+		}
+		
 		EventBus.Instance.RaiseInitiativeQueueUpdated(InitiativeQueue);
 		
-		if (InitiativeQueue.IsEmpty() || Turn == 0)
+		if (InitiativeQueue.IsEmpty())
 		{
 			AdvanceToNextPhase();
 			return;
