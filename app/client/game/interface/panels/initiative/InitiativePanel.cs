@@ -102,7 +102,7 @@ public partial class InitiativePanel : Control
 		_hidden = true;
 		
 		var tween = CreateTween();
-		tween.TweenProperty(this, "offset_top", _background.Size.Y, PanelMoveDuration)
+		tween.TweenProperty(this, "offset_top", -_background.Size.Y * 4, PanelMoveDuration)
 			.FromCurrent()
 			.SetTrans(Tween.TransitionType.Quad);
 
