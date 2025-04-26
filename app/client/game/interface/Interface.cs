@@ -19,6 +19,7 @@ public partial class Interface : CanvasLayer
     private InformationalText _informationalText = null!;
     private HoveringPanel _hoveringPanel = null!;
     private TurnPanel _turnPanel = null!;
+    private InitiativePanel _initiativePanel = null!;
     
     public override void _Ready()
     {
@@ -29,6 +30,7 @@ public partial class Interface : CanvasLayer
         _informationalText = GetNode<InformationalText>($"{nameof(InformationalText)}");
         _hoveringPanel = GetNode<HoveringPanel>($"{nameof(HoveringPanel)}");
         _turnPanel = GetNode<TurnPanel>($"{nameof(TurnPanel)}");
+        _initiativePanel = GetNode<InitiativePanel>($"{nameof(InitiativePanel)}");
 
         foreach (var firstLevel in GetChildren().OfType<Control>())
         {
@@ -97,12 +99,15 @@ public partial class Interface : CanvasLayer
                 ? InformationalText.InfoTextType.SelectedMovement
                 : InformationalText.InfoTextType.SelectedAttack;
         _informationalText.SwitchTo(infoTextType, entity);
+
+        _initiativePanel.OnEntitySelected(entity);
     }
 
     internal void OnEntityDeselected()
     {
         _entityPanel.OnEntityDeselected();
         _informationalText.SwitchToDefault();
+        _initiativePanel.OnEntityDeselected();
     }
 
     private void OnSelectionPanelSelectedToBuild(BuildNode buildAbility, EntityId entityId)

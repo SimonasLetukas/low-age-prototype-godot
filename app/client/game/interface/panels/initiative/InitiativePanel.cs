@@ -44,6 +44,30 @@ public partial class InitiativePanel : Control
 		base._ExitTree();
 	}
 
+	public void OnEntitySelected(EntityNode entity)
+	{
+		if (_currentInitiativeQueue.IsEmpty())
+			return;
+		
+		if (entity is not ActorNode actor)
+			return;
+
+		if (_currentInitiativeQueue.Contains(actor) is false)
+			return;
+
+		_buttonsByActor[actor].SetSelected(true);
+		_currentlySelectedActor = actor;
+	}
+
+	public void OnEntityDeselected()
+	{
+		if (_currentlySelectedActor is null)
+			return;
+		
+		_buttonsByActor[_currentlySelectedActor].SetSelected(false);
+		_currentlySelectedActor = null;
+	}
+
 	private void OnInitiativeQueueUpdated(IList<ActorNode> actors)
 	{
 		// TODO handle if there were previously selected actors that are still in the queue now
