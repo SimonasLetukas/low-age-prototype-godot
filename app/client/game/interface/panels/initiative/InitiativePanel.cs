@@ -19,7 +19,7 @@ public partial class InitiativePanel : Control
 	private bool _hidden = false;
 	private IList<ActorNode> _currentInitiativeQueue = [];
 	private ActorNode? _currentlySelectedActor;
-	private InitiativeButton? _previouslyHoveredButton;
+	private InitiativeButton? _currentlyHoveringButton;
 	private readonly Dictionary<ActorNode, InitiativeButton> _buttonsByActor = new();
 	
 	public override void _Ready()
@@ -46,26 +46,35 @@ public partial class InitiativePanel : Control
 
 	public void OnEntitySelected(EntityNode entity)
 	{
-		if (_currentInitiativeQueue.IsEmpty())
-			return;
-		
-		if (entity is not ActorNode actor)
+		var button = GetButtonByEntity(entity);
+
+		if (button is null)
 			return;
 
-		if (_currentInitiativeQueue.Contains(actor) is false)
-			return;
-
-		_buttonsByActor[actor].SetSelected(true);
-		_currentlySelectedActor = actor;
+		button.SetSelected(true);
+		_currentlySelectedActor = (ActorNode)entity;
 	}
 
-	public void OnEntityDeselected()
+	public void OnEntityDeselected(EntityNode entity)
 	{
-		if (_currentlySelectedActor is null)
+		var button = GetButtonByEntity(entity);
+
+		if (button is null)
 			return;
 		
-		_buttonsByActor[_currentlySelectedActor].SetSelected(false);
+		button.SetSelected(false);
 		_currentlySelectedActor = null;
+	}
+
+	private InitiativeButton? GetButtonByEntity(EntityNode entity)
+	{
+		if (_currentInitiativeQueue.IsEmpty())
+			return null;
+
+		if (entity is not ActorNode actor)
+			return null;
+
+		return _buttonsByActor.GetValueOrDefault(actor);
 	}
 
 	private void OnInitiativeQueueUpdated(IList<ActorNode> actors)
@@ -108,17 +117,18 @@ public partial class InitiativePanel : Control
 			_ when _currentlySelectedActor.Equals(actor) => null,
 			_ => actor,
 		};
+
+		if (_currentlyHoveringButton != null 
+		    && _currentlyHoveringButton.Actor.Equals(_currentlySelectedActor))
+		{
+			_currentlyHoveringButton = null;
+			ActorHovered(null);
+		}
 		
 		ActorSelected(_currentlySelectedActor);
 	}
 
-	private void OnInitiativeButtonHovering(bool flag, ActorNode actor)
-	{
-		if (_previouslyHoveredButton != null && _previouslyHoveredButton.Actor.Equals(actor))
-			return;
-		
-		ActorHovered(flag ? actor : null);
-	}
+	private void OnInitiativeButtonHovering(bool flag, ActorNode actor) => ActorHovered(flag ? actor : null);
 
 	private void HidePanel()
 	{
@@ -150,7 +160,7 @@ public partial class InitiativePanel : Control
 	private void Reset()
 	{
 		_buttonsByActor.Clear();
-		_previouslyHoveredButton = null;
+		_currentlyHoveringButton = null;
 		
 		foreach (var child in _container.GetChildren())
 		{
@@ -166,7 +176,11 @@ public partial class InitiativePanel : Control
 
 	private void OnNewTileFocused(Vector2Int mapPosition, Terrain terrain, IList<EntityNode>? occupants)
 	{
-		_previouslyHoveredButton?.SetHovering(false);
+		if (_currentlyHoveringButton != null)
+		{
+			_currentlyHoveringButton.SetHovering(false);
+			_currentlyHoveringButton = null;
+		}
 
 		if (occupants is null || occupants.IsEmpty() || _currentInitiativeQueue.IsEmpty())
 			return;
@@ -178,7 +192,7 @@ public partial class InitiativePanel : Control
 		if (_buttonsByActor.TryGetValue(actorWithInitiative, out var button) is false)
 			return;
 		
-		_previouslyHoveredButton = button;
+		_currentlyHoveringButton = button;
 		button.SetHovering(true);
 	}
 }

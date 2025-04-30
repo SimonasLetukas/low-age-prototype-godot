@@ -60,6 +60,10 @@ public partial class FocusedTile : AnimatedSprite2D
         if (_previousPosition == mapPosition && _stateChanged is false)
             return;
         
+        if (DebugEnabled)
+            GD.Print($"Updating tile to position {mapPosition}, reason: new position " +
+                     $"({_previousPosition != mapPosition}), state changed ({_stateChanged}).");
+        
         var hoveredTerrain = _tiles.GetTerrain(tile);
         EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.GetOccupants().ToList());
         
@@ -99,12 +103,18 @@ public partial class FocusedTile : AnimatedSprite2D
 
     public void FocusEntity(EntityNode entity)
     {
+        if (_focusedEntity != null && _focusedEntity.Equals(entity))
+            return;
+        
         _focusedEntity = entity;
         _stateChanged = true;
     }
 
     public void StopEntityFocus()
     {
+        if (_focusedEntity == null)
+            return;
+        
         _focusedEntity = null;
         _stateChanged = true;
     }

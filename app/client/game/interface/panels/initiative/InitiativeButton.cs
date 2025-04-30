@@ -22,11 +22,13 @@ public partial class InitiativeButton : BaseButton
     {
         base._Ready();
         base.Clicked += OnButtonClicked;
+        base.Hovering += OnButtonHovering;
     }
 
     public override void _ExitTree()
     {
         base.Clicked -= OnButtonClicked;
+        base.Hovering -= OnButtonHovering;
         base._ExitTree();
     }
 

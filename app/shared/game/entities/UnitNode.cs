@@ -28,6 +28,8 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     
     public bool IsOnHighGround { get; private set; } = false;
     public float Movement { get; private set; }
+    public override Tiles.TileInstance EntityPrimaryTile => GetHighestTiles([EntityPrimaryPosition])
+        .WhereNotNull().Single();
     public override IList<Tiles.TileInstance> EntityOccupyingTiles => IsOnHighGround
         ? GetHighestTiles(EntityOccupyingPositions).WhereNotNull().ToList()
         : base.EntityOccupyingTiles; 

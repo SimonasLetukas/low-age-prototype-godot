@@ -27,6 +27,7 @@ public partial class ClientMap : Map
 	private Vector2Int _mapSize = Vector2Int.Max;
 	private Tiles _tileMap = null!;
 	private FocusedTile _focusedTile = null!;
+	private ActorNode? _hoveredInitiativePanelActor;
 	private SelectionOverlay _selectionOverlay = SelectionOverlay.None;
 
 	private enum SelectionOverlay
@@ -201,13 +202,12 @@ public partial class ClientMap : Map
 			UpdateHoveredEntity(mousePosition);
 
 			// TODO optimization: only if focused tile changed from above, display path
-			if (_focusedTile.IsWithinTheMap)
+			if (_focusedTile.IsWithinTheMap || _hoveredInitiativePanelActor != null)
 			{
+				var to = _hoveredInitiativePanelActor?.EntityPrimaryTile.Point ?? _focusedTile.CurrentTile!.Point;
+				var team = Entities.SelectedEntity!.Player.Team;
 				var size = Entities.SelectedEntity!.EntitySize.X;
-				var path = Pathfinding.FindPath(
-					_focusedTile.CurrentTile!.Point,
-					Entities.SelectedEntity.Player.Team,
-					size);
+				var path = Pathfinding.FindPath(to, team, size);
 				_tileMap.Elevatable.SetPathTiles(path, size);
 			}
 		}
@@ -363,16 +363,21 @@ public partial class ClientMap : Map
 		}
 	}
 
-	private void ExecuteEntitySelection(bool maintainSelection = false)
+	private void ExecuteEntitySelection(bool maintainCurrentlySelectedEntity = false)
 	{
 		var mousePosition = GetGlobalMousePosition();
-		var entity = maintainSelection
+		var entity = maintainCurrentlySelectedEntity
 			? Entities.SelectedEntity
 			: UpdateHoveredEntity(mousePosition);
 
-		if (maintainSelection is false)
+		if (maintainCurrentlySelectedEntity is false)
 			_tileMap.Elevatable.ClearTargetTiles(false);
 		
+		ExecuteEntitySelection(entity);
+	}
+	
+	private void ExecuteEntitySelection(EntityNode? entity)
+	{
 		HandleDeselecting();
 
 		if (entity is null)
@@ -509,6 +514,15 @@ public partial class ClientMap : Map
 
 	private EntityNode? UpdateHoveredEntity(Vector2 mousePosition)
 	{
+		if (_hoveredInitiativePanelActor != null)
+		{
+			_focusedTile.FocusEntity(_hoveredInitiativePanelActor);
+			_focusedTile.UpdateTile();
+			return Entities.TryHoveringEntity(_hoveredInitiativePanelActor) 
+				? Entities.HoveredEntity 
+				: null;
+		}
+		
 		if (_focusedTile.IsWithinTheMap is false)
 			return null;
 
@@ -702,21 +716,21 @@ public partial class ClientMap : Map
 
 	private void OnNewTileFocused(Vector2Int mapPosition, Terrain terrain, IList<EntityNode>? occupants)
 	{
-		if (_focusedTile.IsWithinTheMap is false)
+		if (_focusedTile.IsWithinTheMap is false && _hoveredInitiativePanelActor is null)
 			return;
 
-		if (occupants is null || occupants.IsEmpty())
+		var occupant = _hoveredInitiativePanelActor ?? occupants?.LastOrDefault();
+
+		if (occupant is null)
 		{
 			_tileMap.Elevatable.ClearAvailableTiles(true);
 			return;
 		}
 
-		if (occupants.Last() is UnitNode unit)
+		if (occupant is UnitNode unit)
 		{
 			if (Entities.IsEntitySelected(unit))
 				return;
-			
-			// TODO also show target hovering tiles
 			
 			var temporaryAvailablePoints = Pathfinding.GetAvailablePoints(
 				unit.EntityPrimaryPosition,
@@ -726,6 +740,7 @@ public partial class ClientMap : Map
 				unit.EntitySize.X,
 				true);
 
+			// TODO also show target hovering tiles
 			_tileMap.Elevatable.SetAvailableTiles(unit, temporaryAvailablePoints, unit.EntitySize.X, true);
 		}
 		else
@@ -796,7 +811,7 @@ public partial class ClientMap : Map
 		ExecuteCancellation();
 	}
 
-	public void OnInterfaceAttackSelected(bool started, AttackType? attackType)
+	internal void OnInterfaceAttackSelected(bool started, AttackType? attackType)
 	{
 		if (_selectionOverlay is SelectionOverlay.None or SelectionOverlay.Placement 
 		    || Entities.SelectedEntity is not ActorNode actor)
@@ -828,4 +843,8 @@ public partial class ClientMap : Map
 		};
 		ShowAttackOverlay(actor, showMelee);
 	}
+
+	internal void OnInitiativePanelActorHovered(ActorNode? actor) => _hoveredInitiativePanelActor = actor;
+
+	internal void OnInitiativePanelActorSelected(ActorNode? actor) => ExecuteEntitySelection(actor);
 }

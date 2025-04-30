@@ -21,7 +21,7 @@ public partial class Entities : Node2D
     public event Action<EntityNode> NewPositionOccupied = delegate { };
     public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
-    public event Action EntityDeselected = delegate { };
+    public event Action<EntityNode> EntityDeselected = delegate { };
 
     public bool EntitiesBeingDestroyed => _entitiesBeingDestroyed.Count != 0;
     public bool EntityMoving { get; private set; } = false;
@@ -146,10 +146,12 @@ public partial class Entities : Node2D
     {
         if (IsEntitySelected() is false) 
             return;
-        
-        SelectedEntity!.SetSelected(false);
+
+        var unselectedEntity = SelectedEntity;
+        unselectedEntity!.SetSelected(false);
         SelectedEntity = null;
-        EntityDeselected();
+        
+        EntityDeselected(unselectedEntity);
     }
 
     public bool IsEntitySelected() => SelectedEntity != null;
@@ -172,11 +174,18 @@ public partial class Entities : Node2D
 
     public bool IsEntityHovered(EntityNode entity) => IsEntityHovered() && HoveredEntity!.Equals(entity);
 
+    public bool TryHoveringEntity(EntityNode entity)
+    {
+        HoveredEntity?.SetTileHovered(false);
+        entity.SetTileHovered(true);
+        HoveredEntity = entity;
+        return true;
+    }
+    
     public bool TryHoveringEntityOn(Tiles.TileInstance tile)
     {
         if (EntityMoving)
             return false;
-
         
         var occupationExists = tile.IsOccupied();
         var occupantEntity = tile.GetLastOccupantOrNull();

@@ -30,6 +30,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public Player Player { get; protected set; } = null!;
     public EntityRenderer Renderer { get; private set; } = null!;
     public Vector2Int EntityPrimaryPosition { get; set; }
+    public virtual Tiles.TileInstance EntityPrimaryTile => GetTile(EntityPrimaryPosition, false)!;
     public Vector2Int EntitySize { get; protected set; } = Vector2Int.One;
     public virtual Area RelativeSize => new(Vector2Int.Zero, EntitySize);
     public IList<Vector2Int> EntityOccupyingPositions => new Area(EntityPrimaryPosition, EntitySize).ToList();

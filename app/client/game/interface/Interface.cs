@@ -13,6 +13,8 @@ public partial class Interface : CanvasLayer
     public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
     public event Action<bool, AttackType?> AttackSelected = delegate { };
     public event Action NextTurnClicked = delegate { };
+    public event Action<ActorNode?> InitiativePanelActorHovered = delegate { };
+    public event Action<ActorNode?> InitiativePanelActorSelected = delegate { };
     
     private EntityPanel _entityPanel = null!;
     private SelectionPanel _selectionPanel = null!;
@@ -47,6 +49,8 @@ public partial class Interface : CanvasLayer
         _entityPanel.AttackSelected += OnEntityPanelAttackSelected;
         _selectionPanel.SelectedToBuild += OnSelectionPanelSelectedToBuild;
         _turnPanel.NextTurnClicked += OnTurnPanelNextTurnClicked;
+        _initiativePanel.ActorHovered += OnInitiativePanelActorHovered;
+        _initiativePanel.ActorSelected += OnInitiativePanelActorSelected;
     }
 
     public override void _ExitTree()
@@ -56,6 +60,8 @@ public partial class Interface : CanvasLayer
         _entityPanel.AttackSelected -= OnEntityPanelAttackSelected;
         _selectionPanel.SelectedToBuild -= OnSelectionPanelSelectedToBuild;
         _turnPanel.NextTurnClicked -= OnTurnPanelNextTurnClicked;
+        _initiativePanel.ActorHovered -= OnInitiativePanelActorHovered;
+        _initiativePanel.ActorSelected -= OnInitiativePanelActorSelected;
         
         base._ExitTree();
     }
@@ -103,11 +109,11 @@ public partial class Interface : CanvasLayer
         _initiativePanel.OnEntitySelected(entity);
     }
 
-    internal void OnEntityDeselected()
+    internal void OnEntityDeselected(EntityNode entity)
     {
         _entityPanel.OnEntityDeselected();
         _informationalText.SwitchToDefault();
-        _initiativePanel.OnEntityDeselected();
+        _initiativePanel.OnEntityDeselected(entity);
     }
 
     private void OnSelectionPanelSelectedToBuild(BuildNode buildAbility, EntityId entityId)
@@ -118,4 +124,8 @@ public partial class Interface : CanvasLayer
     private void OnEntityPanelAttackSelected(bool started, AttackType? attackType) => AttackSelected(started, attackType);
 
     private void OnTurnPanelNextTurnClicked() => NextTurnClicked();
+
+    private void OnInitiativePanelActorHovered(ActorNode? actor) => InitiativePanelActorHovered(actor);
+    
+    private void OnInitiativePanelActorSelected(ActorNode? actor) => InitiativePanelActorSelected(actor);
 }
