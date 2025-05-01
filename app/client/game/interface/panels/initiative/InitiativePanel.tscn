@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://bwhiskb2143fg"]
+[gd_scene load_steps=17 format=3 uid="uid://bwhiskb2143fg"]
 
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1_8liim"]
 [ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="2_pe5r7"]
 [ext_resource type="Script" path="res://app/client/game/interface/panels/initiative/InitiativePanel.cs" id="2_rfnqo"]
 [ext_resource type="Texture2D" uid="uid://doimx2uu8i3fs" path="res://assets/sprites/interface/selection-panel.png" id="2_sn8wj"]
 [ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="3_xsu7a"]
+[ext_resource type="Texture2D" uid="uid://c8djka1ouyvbo" path="res://assets/sprites/interface/outline-panel.png" id="6_l6jal"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a44wm"]
 resource_local_to_scene = true
@@ -199,3 +200,9 @@ layout_mode = 2
 [node name="BaseButton10" parent="ScrollContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_pe5r7")]
 material = SubResource("ShaderMaterial_kmdx4")
 layout_mode = 2
+
+[node name="Outline" type="TextureRect" parent="ScrollContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_l6jal")
+stretch_mode = 4
