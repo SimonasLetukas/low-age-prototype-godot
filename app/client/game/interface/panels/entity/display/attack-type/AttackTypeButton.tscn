@@ -25,7 +25,7 @@ script = ExtResource("4_70eag")
 TextureNormal = ExtResource("3_uw2nd")
 TextureClicked = ExtResource("5_u0x7v")
 
-[node name="TextureRect" parent="." index="0"]
+[node name="TextureRect" parent="." index="1"]
 self_modulate = Color(0.756863, 0.843137, 0.87451, 1)
 texture = ExtResource("4_tj146")
 

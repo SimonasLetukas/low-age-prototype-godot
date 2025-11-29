@@ -58,7 +58,7 @@ public partial class AbilityButtons : HBoxContainer
 
     public void Reset()
     {
-        foreach (var child in GetChildren().OfType<Node>())
+        foreach (var child in GetChildren())
         {
             child.QueueFree();
         }

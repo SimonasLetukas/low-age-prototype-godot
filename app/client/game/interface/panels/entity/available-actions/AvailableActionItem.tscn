@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://4vfl23b58dni"]
+
+[ext_resource type="Texture2D" uid="uid://clln5kiul5im4" path="res://assets/sprites/interface/panel-bright-12x12.png" id="1_78ix6"]
+[ext_resource type="Texture2D" uid="uid://cywki6wytl5nr" path="res://assets/icons/icon_melee_attack.png" id="2_dvi33"]
+
+[node name="AvailableActionItem" type="NinePatchRect"]
+custom_minimum_size = Vector2(32, 32)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "This is a tooltip"
+mouse_filter = 1
+texture = ExtResource("1_78ix6")
+region_rect = Rect2(0, 0, 12, 12)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 28.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture = ExtResource("2_dvi33")
+expand_mode = 1
+stretch_mode = 5

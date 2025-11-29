@@ -13,6 +13,7 @@ public partial class AttackStatNode : StatNode, INodeFromBlueprint<AttackStat>
 		return stat;
 	}
 
+	public string DisplayName => Blueprint.DisplayName;
 	public bool IsMelee => Blueprint.AttackType.Equals(AttackType.Melee);
 	public bool IsRanged => Blueprint.AttackType.Equals(AttackType.Ranged);
 	public int MinimumDistance { get; private set; }

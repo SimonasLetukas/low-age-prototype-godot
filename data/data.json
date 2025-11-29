@@ -244,6 +244,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Bite",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -314,6 +315,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Glory Blade",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 2,
@@ -383,6 +385,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Dagger",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -393,6 +396,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Desert Eagle",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 6,
@@ -463,6 +467,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Stomach Acid",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -532,6 +537,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Elongated Claws",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -601,6 +607,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Staff",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -611,6 +618,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Experimental Grenade",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 4,
@@ -680,6 +688,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Kick",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -690,6 +699,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Fire Arrows",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 5,
@@ -760,6 +770,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Hardened Antlers",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -828,6 +839,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Infected Syringe",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -897,6 +909,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Corrosive Sting",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -965,6 +978,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Shrivelling Touch",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1039,6 +1053,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Energy Sword",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1114,6 +1129,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Punch",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1124,6 +1140,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Sniper Rifle",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 7,
@@ -1199,6 +1216,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Energy Sword",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1273,6 +1291,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Buttstroke",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1283,6 +1302,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Grenade Launcher",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 5,
@@ -1360,6 +1380,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Silver Army Knife",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1436,6 +1457,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Crowbar",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1512,6 +1534,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Heavy Artillery",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 1,
             "maximumDistance": 10,
@@ -1588,6 +1611,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Homing Missile",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 1,
             "maximumDistance": 9,
@@ -1732,6 +1756,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Electric Blast",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1808,6 +1833,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Purification",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1818,6 +1844,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Purification",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 4,

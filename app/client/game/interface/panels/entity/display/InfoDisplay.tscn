@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c06ip2burr08v"]
+[gd_scene load_steps=31 format=3 uid="uid://c06ip2burr08v"]
 
 [ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/AbilitySubtitle.cs" id="1"]
 [ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/TopText.cs" id="2"]
@@ -45,6 +45,32 @@ cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
+cache/0/14/0/ascent = 0.0
+cache/0/14/0/descent = 0.0
+cache/0/14/0/underline_position = 0.0
+cache/0/14/0/underline_thickness = 0.0
+cache/0/14/0/scale = 1.0
+cache/0/15/0/ascent = 0.0
+cache/0/15/0/descent = 0.0
+cache/0/15/0/underline_position = 0.0
+cache/0/15/0/underline_thickness = 0.0
+cache/0/15/0/scale = 1.0
+cache/0/13/0/ascent = 0.0
+cache/0/13/0/descent = 0.0
+cache/0/13/0/underline_position = 0.0
+cache/0/13/0/underline_thickness = 0.0
+cache/0/13/0/scale = 1.0
+cache/0/12/0/ascent = 0.0
+cache/0/12/0/descent = 0.0
+cache/0/12/0/underline_position = 0.0
+cache/0/12/0/underline_thickness = 0.0
+cache/0/12/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_q8wda"]
+font_size = 12
+font_color = Color(0.756863, 0.843137, 0.87451, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 0)
 
 [sub_resource type="Shader" id="3"]
 code = "shader_type canvas_item;
@@ -112,13 +138,13 @@ void fragment()
 	COLOR = final_color; 
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_baa8s"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojxcr"]
 resource_local_to_scene = true
 shader = SubResource("3")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0xbiy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w6ytk"]
 resource_local_to_scene = true
 shader = SubResource("3")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
@@ -246,9 +272,9 @@ theme_override_constants/margin_left = 4
 [node name="Label" type="Label" parent="VBoxContainer/TopPart/LeftSide/Rows/TopText/Type"]
 layout_mode = 2
 mouse_filter = 1
-theme_override_colors/font_color = Color(0.756863, 0.843137, 0.87451, 1)
 theme_override_fonts/font = SubResource("2")
 text = "Ranged"
+label_settings = SubResource("LabelSettings_q8wda")
 vertical_alignment = 2
 
 [node name="Top" type="HBoxContainer" parent="VBoxContainer/TopPart/LeftSide/Rows"]
@@ -333,11 +359,11 @@ layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="Melee" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource("11")]
-material = SubResource("ShaderMaterial_baa8s")
+material = SubResource("ShaderMaterial_ojxcr")
 layout_mode = 2
 
 [node name="Ranged" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource("11")]
-material = SubResource("ShaderMaterial_0xbiy")
+material = SubResource("ShaderMaterial_w6ytk")
 layout_mode = 2
 Icon = ExtResource("15")
 

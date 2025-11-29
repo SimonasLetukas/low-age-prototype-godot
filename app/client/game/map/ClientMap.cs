@@ -320,7 +320,7 @@ public partial class ClientMap : Map
 
 		if (_selectionOverlay is SelectionOverlay.Placement 
 		    && IsActionAuthorizedForCurrentPlayerOnSelectedEntity()
-		    && TryActivateAbilityInCurrentPhase())
+		    && TryActivateActionInCurrentPhase())
 		{
 			ExecutePlacement();
 			return;
@@ -338,20 +338,20 @@ public partial class ClientMap : Map
 		if (_selectionOverlay is SelectionOverlay.None)
 			return;
 
+		_focusedTile.UpdateTile();
+		
 		if (_selectionOverlay is SelectionOverlay.Movement 
 		    && IsActionAuthorizedForCurrentPlayerOnSelectedEntity()
-		    && TryActivateAbilityInCurrentPhase())
+		    && TryActivateActionInCurrentPhase())
 		{
-			_focusedTile.UpdateTile();
 			ExecuteMovement();
 			return;
 		}
 
 		if (_selectionOverlay is SelectionOverlay.Attack 
 		    && IsActionAuthorizedForCurrentPlayerOnSelectedEntity()
-		    && TryActivateAbilityInCurrentPhase())
+		    && TryActivateActionInCurrentPhase())
 		{
-			_focusedTile.UpdateTile();
 			ExecuteAttack();
 			return;
 		}
@@ -481,6 +481,7 @@ public partial class ClientMap : Map
 
 	private void ExecuteAttack()
 	{
+		// TODO extract this into a method that would be used in TryActivateActionInCurrentPhase which would use ActionEconomy for the response
 		if (_focusedTile.CurrentTile is not { } focusedTile
 			|| focusedTile.TargetType is TargetType.None
 		    || Entities.HoveredEntity is not { } targetEntity
@@ -609,7 +610,7 @@ public partial class ClientMap : Map
 	private bool IsActionAuthorizedForCurrentPlayerOnSelectedEntity() 
 		=> Players.Instance.IsActionAllowedForCurrentPlayerOn(Entities.SelectedEntity);
 
-	private bool TryActivateAbilityInCurrentPhase() => _selectionOverlay switch
+	private bool TryActivateActionInCurrentPhase() => _selectionOverlay switch
 	{
 		SelectionOverlay.Placement // or SelectionOverlay.Ability TODO
 			when _selectedAbility is not null && _selectedAbility.TryActivate(CurrentPhase, ActorInAction) => true,

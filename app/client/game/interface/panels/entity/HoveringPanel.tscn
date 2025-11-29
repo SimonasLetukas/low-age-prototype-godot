@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://do7c3ujys6yd4"]
+[gd_scene load_steps=7 format=3 uid="uid://do7c3ujys6yd4"]
 
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1"]
 [ext_resource type="PackedScene" uid="uid://c06ip2burr08v" path="res://app/client/game/interface/panels/entity/display/InfoDisplay.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://c8yg71tnayeuw" path="res://assets/sprites/interface/panel.png" id="3"]
+[ext_resource type="PackedScene" uid="uid://dbqjtlnaa724l" path="res://app/client/game/interface/panels/entity/available-actions/AvailableActionsDisplay.tscn" id="3_45vhb"]
 [ext_resource type="Script" path="res://app/client/game/interface/panels/entity/HoveringPanel.cs" id="4"]
 [ext_resource type="Texture2D" uid="uid://wqoojcwqla4p" path="res://assets/sprites/interface/bottom left debug panel.png" id="5"]
 
@@ -11,6 +12,13 @@ layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1")
 script = ExtResource("4")
+
+[node name="AvailableActionsDisplay" parent="." instance=ExtResource("3_45vhb")]
+layout_mode = 0
+offset_left = 264.0
+offset_top = 32.0
+offset_right = 332.0
+offset_bottom = 244.0
 
 [node name="DebugPanel" type="TextureRect" parent="."]
 layout_mode = 0

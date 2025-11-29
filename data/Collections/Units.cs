@@ -27,6 +27,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Bite",
                             maxAmount: 1, 
                             attackType: AttackType.Melee, 
                             minimumDistance: 1, 
@@ -61,6 +62,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 28, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Glory Blade",
                             maxAmount: 5, 
                             attackType: AttackType.Melee, 
                             minimumDistance: 1, 
@@ -96,11 +98,13 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 18, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Dagger",
                             maxAmount: 1,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1),
                         new AttackStat(
+                            displayName: "Desert Eagle",
                             maxAmount: 3,
                             attackType: AttackType.Ranged, 
                             minimumDistance: 2,
@@ -137,6 +141,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 26, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Stomach Acid",
                             maxAmount: 3,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -172,6 +177,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 23, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Elongated Claws",
                             maxAmount: 6,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -207,11 +213,13 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 19, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Staff",
                             maxAmount: 1,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1),
                         new AttackStat(
+                            displayName: "Experimental Grenade",
                             maxAmount: 2,
                             attackType: AttackType.Ranged,
                             minimumDistance: 2,
@@ -247,11 +255,13 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 12, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Kick",
                             maxAmount: 1,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1),
                         new AttackStat(
+                            displayName: "Fire Arrows",
                             maxAmount: 6,
                             attackType: AttackType.Ranged,
                             minimumDistance: 2,
@@ -288,6 +298,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 25, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 6, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Hardened Antlers",
                             maxAmount: 8,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -323,6 +334,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 16, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Infected Syringe",
                             maxAmount: 3,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -356,6 +368,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 15, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Corrosive Sting",
                             maxAmount: 6,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -390,6 +403,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 14, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Shrivelling Touch",
                             maxAmount: 0,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -423,6 +437,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 32, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Energy Sword",
                             maxAmount: 9,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -459,11 +474,13 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 17, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Punch",
                             maxAmount: 1,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1),
                         new AttackStat(
+                            displayName: "Sniper Rifle",
                             maxAmount: 4,
                             attackType: AttackType.Ranged, 
                             minimumDistance: 2,
@@ -500,6 +517,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 30, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Energy Sword",
                             maxAmount: 5,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -535,11 +553,13 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 21, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Buttstroke",
                             maxAmount: 2,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
                             maximumDistance: 1),
                         new AttackStat(
+                            displayName: "Grenade Launcher",
                             maxAmount: 8,
                             attackType: AttackType.Ranged,
                             minimumDistance: 2,
@@ -578,6 +598,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 45, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Silver Army Knife",
                             maxAmount: 3,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -615,6 +636,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 11, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Crowbar",
                             maxAmount: 1,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -652,6 +674,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 8, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Heavy Artillery",
                             maxAmount: 20,
                             attackType: AttackType.Ranged,
                             minimumDistance: 1,
@@ -690,6 +713,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 27, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 6, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Homing Missile",
                             maxAmount: 9,
                             attackType: AttackType.Ranged,
                             minimumDistance: 1,
@@ -759,6 +783,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 29, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 6, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Electric Blast",
                             maxAmount: 2,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -797,6 +822,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 13, hasCurrent: false, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
+                            displayName: "Purification",
                             maxAmount: 10,
                             attackType: AttackType.Melee,
                             minimumDistance: 1,
@@ -804,6 +830,7 @@ namespace LowAgeData.Collections
                             bonusTo: ActorAttribute.Biological,
                             bonusAmount: 10),
                         new AttackStat(
+                            displayName: "Purification",
                             maxAmount: 5,
                             attackType: AttackType.Ranged,
                             minimumDistance: 2,

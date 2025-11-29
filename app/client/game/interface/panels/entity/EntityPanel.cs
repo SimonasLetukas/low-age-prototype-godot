@@ -118,11 +118,11 @@ public partial class EntityPanel : Control
             foreach (var attack in selectedUnit.Attacks)
             {
                 if (attack.IsMelee) 
-                    _display.SetMeleeAttackStats(true, "Melee Attack", attack.MaximumDistance,
+                    _display.SetMeleeAttackStats(true, attack.DisplayName, attack.MaximumDistance,
                         attack.Damage, attack.BonusDamage, attack.BonusTo);
                 
                 if (attack.IsRanged) 
-                    _display.SetRangedAttackStats(true, "Ranged Attack", attack.MaximumDistance, 
+                    _display.SetRangedAttackStats(true, attack.DisplayName, attack.MaximumDistance, 
                         attack.Damage, attack.BonusDamage, attack.BonusTo);
             }
             

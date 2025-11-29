@@ -29,6 +29,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public AttackStatNode? MeleeAttack => Attacks.FirstOrDefault(x => x.IsMelee);
     public AttackStatNode? RangedAttack => Attacks.FirstOrDefault(x => x.IsRanged);
     
+    public ActionEconomy ActionEconomy { get; protected set; } = new();
     public IList<AttackStatNode> Attacks { get; protected set; } = null!;
     public IList<CombatStatNode> Stats { get; protected set; } = null!;
     public IList<ActorAttribute> Attributes { get; protected set; } = null!;
@@ -64,6 +65,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+        ActionEconomy.Restore();
         Attacks = blueprint.Statistics
             .Where(stat => stat is AttackStat)
             .Select(stat => AttackStatNode.InstantiateAsChild((AttackStat)stat, AttacksNode))
