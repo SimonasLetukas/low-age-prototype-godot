@@ -9,6 +9,7 @@ public class ActionEconomy
     public bool CanRangedAttack => RangedAttackActions > 0;
     public bool CanUseAbilityAction => AbilityActions > 0;
     public bool CanMove { get; private set; }
+    public int NumberOfPossibleActions => MeleeAttackActions + RangedAttackActions + AbilityActions + (CanMove ? 1 : 0);
 
     // Configuration properties
     public int MaxMeleeAttackActions { get; set; } = 1;

@@ -1,14 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b2me7lpqetnom"]
+[gd_scene load_steps=6 format=3 uid="uid://b2me7lpqetnom"]
 
 [ext_resource type="Script" uid="uid://cxnu60csnxx2q" path="res://app/client/game/interface/shared/BaseButton.cs" id="1"]
 [ext_resource type="Material" uid="uid://cbiftuoxjvf1s" path="res://app/shared/shaders/InterfaceMaterial.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://dy5m8n2l4paaa" path="res://assets/sprites/interface/small-panel-x4.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://dhlym7w4676g2" path="res://assets/sprites/interface/small-panel-smaller-inverted-x4.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://cowuxof271j4d" path="res://assets/icons/icon_ability_build.png" id="5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ua5l"]
-bg_color = Color(0.772549, 0.941176, 0.827451, 1)
-corner_detail = 1
 
 [node name="BaseButton" type="TextureRect"]
 material = ExtResource("2")
@@ -21,49 +17,6 @@ stretch_mode = 5
 script = ExtResource("1")
 TextureNormal = ExtResource("3")
 TextureClicked = ExtResource("4")
-
-[node name="HBoxContainer" type="GridContainer" parent="."]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 36.0
-offset_bottom = 32.0
-columns = 4
-
-[node name="Panel" type="Panel" parent="HBoxContainer"]
-custom_minimum_size = Vector2(4, 4)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_0ua5l")
-
-[node name="Panel2" type="Panel" parent="HBoxContainer"]
-custom_minimum_size = Vector2(4, 4)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_0ua5l")
-
-[node name="Panel3" type="Panel" parent="HBoxContainer"]
-custom_minimum_size = Vector2(4, 4)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_0ua5l")
-
-[node name="Panel4" type="Panel" parent="HBoxContainer"]
-custom_minimum_size = Vector2(4, 4)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_0ua5l")
-
-[node name="Panel5" type="Panel" parent="HBoxContainer"]
-custom_minimum_size = Vector2(4, 4)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_0ua5l")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 self_modulate = Color(0.878431, 0.819608, 0.74902, 1)

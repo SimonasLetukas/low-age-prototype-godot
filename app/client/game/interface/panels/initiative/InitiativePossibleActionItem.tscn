@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cu4tmnnici8bh"]
+
+[ext_resource type="Script" uid="uid://wsksnemiv581" path="res://app/client/game/interface/panels/initiative/InitiativePossibleActionItem.cs" id="1_dp6i5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vqma0"]
+bg_color = Color(0.772549, 0.941176, 0.827451, 1)
+corner_detail = 1
+
+[node name="InitiativePossibleActionItem" type="Panel"]
+custom_minimum_size = Vector2(4, 4)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_vqma0")
+script = ExtResource("1_dp6i5")

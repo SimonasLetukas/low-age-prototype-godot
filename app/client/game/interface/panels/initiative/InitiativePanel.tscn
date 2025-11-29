@@ -127,8 +127,8 @@ script = ExtResource("2_rfnqo")
 [node name="Background" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(48, 24)
 layout_mode = 0
-offset_left = -164.0
-offset_right = -82.0
+offset_left = -328.0
+offset_right = -164.0
 offset_bottom = 24.0
 grow_horizontal = 2
 scale = Vector2(4, 4)
@@ -144,9 +144,9 @@ axis_stretch_vertical = 2
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 0
-offset_left = -104.0
+offset_left = -268.0
 offset_top = 20.0
-offset_right = 104.0
+offset_right = 268.0
 offset_bottom = 76.0
 follow_focus = true
 horizontal_scroll_mode = 2

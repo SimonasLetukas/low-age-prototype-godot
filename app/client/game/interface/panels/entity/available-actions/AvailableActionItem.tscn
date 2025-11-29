@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://4vfl23b58dni"]
+[gd_scene load_steps=4 format=3 uid="uid://4vfl23b58dni"]
 
 [ext_resource type="Texture2D" uid="uid://clln5kiul5im4" path="res://assets/sprites/interface/panel-bright-12x12.png" id="1_78ix6"]
+[ext_resource type="Script" uid="uid://bf2llqaermw2l" path="res://app/client/game/interface/panels/entity/available-actions/AvailableActionItem.cs" id="2_04tlo"]
 [ext_resource type="Texture2D" uid="uid://cywki6wytl5nr" path="res://assets/icons/icon_melee_attack.png" id="2_dvi33"]
 
 [node name="AvailableActionItem" type="NinePatchRect"]
@@ -15,6 +16,7 @@ patch_margin_left = 4
 patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
+script = ExtResource("2_04tlo")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 self_modulate = Color(0, 0, 0, 1)
