@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cebns35i2b2lf"]
 
 [ext_resource type="FontFile" uid="uid://d0w7npripgnag" path="res://assets/fonts/Karla-Regular.ttf" id="1"]
-[ext_resource type="Script" path="res://app/shared/lobby/players/PlayerInLobby.cs" id="2"]
+[ext_resource type="Script" uid="uid://c4h0suc01dl3t" path="res://app/shared/lobby/players/PlayerInLobby.cs" id="2"]
 [ext_resource type="PackedScene" uid="uid://b2njs71bqtlfm" path="res://app/shared/lobby/players/faction/FactionSelection.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://ju17lnpl6usx" path="res://app/shared/lobby/players/team/TeamSelection.tscn" id="4_mep4q"]
 

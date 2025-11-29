@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1_4b6hl"]
 [ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="2_vr60w"]
 [ext_resource type="Texture2D" uid="uid://baqmoc5ryxara" path="res://assets/sprites/interface/panel-40x40.png" id="3_uw2nd"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypeButton.cs" id="4_70eag"]
+[ext_resource type="Script" uid="uid://blnk1tccj402b" path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypeButton.cs" id="4_70eag"]
 [ext_resource type="Texture2D" uid="uid://cywki6wytl5nr" path="res://assets/icons/icon_melee_attack.png" id="4_tj146"]
 [ext_resource type="Texture2D" uid="uid://cpci4byytqrqu" path="res://assets/sprites/interface/panel-clicked-40x40.png" id="5_u0x7v"]
 
@@ -11,7 +11,7 @@
 resource_local_to_scene = true
 shader = ExtResource("2_vr60w")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/draw_outline = null
+shader_parameter/draw_outline = false
 shader_parameter/intensity = 250
 shader_parameter/disabled = false
 shader_parameter/disabled_saturation = 0.2

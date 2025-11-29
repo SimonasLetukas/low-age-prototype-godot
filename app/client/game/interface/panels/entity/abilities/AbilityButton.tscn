@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://cowuxof271j4d" path="res://assets/icons/icon_ability_build.png" id="2"]
 [ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="2_yl2wq"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/abilities/AbilityButton.cs" id="4"]
+[ext_resource type="Script" uid="uid://bqboejckuj6au" path="res://app/client/game/interface/panels/entity/abilities/AbilityButton.cs" id="4"]
 [ext_resource type="Texture2D" uid="uid://b1tiga6d3y0ru" path="res://assets/sprites/interface/small-panel-borderless-inverted-x4.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://b03h6jrccyqp0" path="res://assets/sprites/interface/small-panel-borderless-x4.png" id="6"]
 
@@ -11,7 +11,7 @@
 resource_local_to_scene = true
 shader = ExtResource("2_yl2wq")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/draw_outline = null
+shader_parameter/draw_outline = false
 shader_parameter/intensity = 250
 shader_parameter/disabled = false
 shader_parameter/disabled_saturation = 0.2

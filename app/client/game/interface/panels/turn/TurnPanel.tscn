@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1_47ekw"]
 [ext_resource type="Texture2D" uid="uid://bwsurngc2ifae" path="res://assets/sprites/interface/turn-panel.png" id="1_p5xop"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/turn/TurnPanel.cs" id="2_lxw2d"]
+[ext_resource type="Script" uid="uid://kqcu2n61npyv" path="res://app/client/game/interface/panels/turn/TurnPanel.cs" id="2_lxw2d"]
 [ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="3_hun1e"]
 [ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="4_1shhu"]
 [ext_resource type="Texture2D" uid="uid://clspyltxdnu04" path="res://assets/sprites/interface/next-turn-button-x4.png" id="6_7fdlb"]
@@ -12,7 +12,7 @@
 resource_local_to_scene = true
 shader = ExtResource("4_1shhu")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/draw_outline = null
+shader_parameter/draw_outline = false
 shader_parameter/intensity = 250
 shader_parameter/disabled = false
 shader_parameter/disabled_saturation = 0.2

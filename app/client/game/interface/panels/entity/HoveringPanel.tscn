@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c06ip2burr08v" path="res://app/client/game/interface/panels/entity/display/InfoDisplay.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://c8yg71tnayeuw" path="res://assets/sprites/interface/panel.png" id="3"]
 [ext_resource type="PackedScene" uid="uid://dbqjtlnaa724l" path="res://app/client/game/interface/panels/entity/available-actions/AvailableActionsDisplay.tscn" id="3_45vhb"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/HoveringPanel.cs" id="4"]
+[ext_resource type="Script" uid="uid://bsn02mvcwg5e6" path="res://app/client/game/interface/panels/entity/HoveringPanel.cs" id="4"]
 [ext_resource type="Texture2D" uid="uid://wqoojcwqla4p" path="res://assets/sprites/interface/bottom left debug panel.png" id="5"]
 
 [node name="HoveringPanel" type="Control"]

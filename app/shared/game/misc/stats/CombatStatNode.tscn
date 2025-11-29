@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c8yg6b3nsxgdp"]
 
 [ext_resource type="PackedScene" uid="uid://dvq76wh7f6gpo" path="res://app/shared/game/misc/stats/StatNode.tscn" id="1_j8gbe"]
-[ext_resource type="Script" path="res://app/shared/game/misc/stats/CombatStatNode.cs" id="2_35fsd"]
+[ext_resource type="Script" uid="uid://16v6qjje7yvp" path="res://app/shared/game/misc/stats/CombatStatNode.cs" id="2_35fsd"]
 
 [node name="CombatStatNode" instance=ExtResource("1_j8gbe")]
 script = ExtResource("2_35fsd")

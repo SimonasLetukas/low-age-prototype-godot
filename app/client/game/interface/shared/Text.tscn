@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dax8eksfbotqw"]
 
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1_rm6bv"]
-[ext_resource type="Script" path="res://app/client/game/interface/shared/Text.cs" id="2_sjj8n"]
+[ext_resource type="Script" uid="uid://s4pyrehjgwtx" path="res://app/client/game/interface/shared/Text.cs" id="2_sjj8n"]
 
 [node name="Text" type="RichTextLabel"]
 clip_contents = false

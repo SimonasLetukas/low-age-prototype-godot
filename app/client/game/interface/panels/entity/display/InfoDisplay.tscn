@@ -1,10 +1,10 @@
 [gd_scene load_steps=31 format=3 uid="uid://c06ip2burr08v"]
 
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/AbilitySubtitle.cs" id="1"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/TopText.cs" id="2"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/ActorAttributes.cs" id="3"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/Research.cs" id="4"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/InfoDisplay.cs" id="5"]
+[ext_resource type="Script" uid="uid://itc8aq70pbev" path="res://app/client/game/interface/panels/entity/display/AbilitySubtitle.cs" id="1"]
+[ext_resource type="Script" uid="uid://hkohgs5mx1mr" path="res://app/client/game/interface/panels/entity/display/TopText.cs" id="2"]
+[ext_resource type="Script" uid="uid://uchxnib00hm1" path="res://app/client/game/interface/panels/entity/display/ActorAttributes.cs" id="3"]
+[ext_resource type="Script" uid="uid://b5bjt0p24bku6" path="res://app/client/game/interface/panels/entity/display/Research.cs" id="4"]
+[ext_resource type="Script" uid="uid://f23sakt83hpv" path="res://app/client/game/interface/panels/entity/display/InfoDisplay.cs" id="5"]
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="6"]
 [ext_resource type="Texture2D" uid="uid://ci76xk3frme78" path="res://assets/icons/icon_shields_big.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://du7sdgqeqyxgj" path="res://assets/icons/icon_initiative_big.png" id="8"]
@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://culpwwebox15l" path="res://assets/icons/icon_melee_armour_big.png" id="21"]
 [ext_resource type="PackedScene" uid="uid://dax8eksfbotqw" path="res://app/client/game/interface/shared/Text.tscn" id="21_m7hgs"]
 [ext_resource type="Texture2D" uid="uid://c8y4p2h6a0qx6" path="res://assets/icons/icon_ranged_armour_big.png" id="22"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/PlayerAttributes.cs" id="23_w80o8"]
+[ext_resource type="Script" uid="uid://d02ccvv22elty" path="res://app/client/game/interface/panels/entity/display/PlayerAttributes.cs" id="23_w80o8"]
 
 [sub_resource type="FontFile" id="1"]
 fallbacks = Array[Font]([ExtResource("9"), ExtResource("9")])
@@ -138,13 +138,13 @@ void fragment()
 	COLOR = final_color; 
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojxcr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g8x7u"]
 resource_local_to_scene = true
 shader = SubResource("3")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w6ytk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_olcnq"]
 resource_local_to_scene = true
 shader = SubResource("3")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
@@ -359,11 +359,11 @@ layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="Melee" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource("11")]
-material = SubResource("ShaderMaterial_ojxcr")
+material = SubResource("ShaderMaterial_g8x7u")
 layout_mode = 2
 
 [node name="Ranged" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource("11")]
-material = SubResource("ShaderMaterial_w6ytk")
+material = SubResource("ShaderMaterial_olcnq")
 layout_mode = 2
 Icon = ExtResource("15")
 

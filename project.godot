@@ -12,7 +12,7 @@ config_version=5
 
 config/name="LowAge"
 run/main_scene="res://app/startup/Startup.tscn"
-config/features=PackedStringArray("4.3", "C#", "Forward Plus")
+config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/fullsize=false
 boot_splash/use_filter=false

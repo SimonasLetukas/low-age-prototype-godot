@@ -1,8 +1,8 @@
 [gd_scene load_steps=13 format=3 uid="uid://cai8kctsxyqal"]
 
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/EntityPanel.cs" id="1"]
+[ext_resource type="Script" uid="uid://b06c2ifjbxkf1" path="res://app/client/game/interface/panels/entity/EntityPanel.cs" id="1"]
 [ext_resource type="PackedScene" uid="uid://dhihaeur1rr0g" path="res://app/client/game/interface/panels/entity/EntityName.tscn" id="2"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/abilities/AbilityButtons.cs" id="3"]
+[ext_resource type="Script" uid="uid://66fohf5kqs4d" path="res://app/client/game/interface/panels/entity/abilities/AbilityButtons.cs" id="3"]
 [ext_resource type="PackedScene" uid="uid://dbqjtlnaa724l" path="res://app/client/game/interface/panels/entity/available-actions/AvailableActionsDisplay.tscn" id="3_agyqn"]
 [ext_resource type="PackedScene" uid="uid://ba8roqfkqi5rh" path="res://app/client/game/interface/panels/entity/abilities/AbilityButton.tscn" id="8"]
 [ext_resource type="Texture2D" uid="uid://c8yg71tnayeuw" path="res://assets/sprites/interface/panel.png" id="9"]

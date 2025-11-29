@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c0xvq83ar80ii"]
 
-[ext_resource type="Script" path="res://RiderTestRunner/NetCoreRunner.cs" id="1"]
+[ext_resource type="Script" uid="uid://dh1em5px7loap" path="res://RiderTestRunner/NetCoreRunner.cs" id="1"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1")

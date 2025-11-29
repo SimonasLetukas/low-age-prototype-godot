@@ -43,6 +43,7 @@ fit_content = true
 scroll_active = false
 
 [node name="ResourceBackground2" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 84.0
 offset_top = -4.0
 offset_right = 180.0

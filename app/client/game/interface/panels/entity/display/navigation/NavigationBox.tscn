@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://chxp7ger6n0vp" path="res://assets/sprites/interface/panel-28x28.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://dua3vxhjgicgf" path="res://assets/icons/icon_arrow_up_simplified.png" id="2"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/navigation/NavigationBox.cs" id="3"]
-[ext_resource type="Material" path="res://app/shared/shaders/InterfaceMaterial.tres" id="4"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/navigation/NavigationBoxPanel.cs" id="5"]
+[ext_resource type="Script" uid="uid://brwetmer14in1" path="res://app/client/game/interface/panels/entity/display/navigation/NavigationBox.cs" id="3"]
+[ext_resource type="Material" uid="uid://cbiftuoxjvf1s" path="res://app/shared/shaders/InterfaceMaterial.tres" id="4"]
+[ext_resource type="Script" uid="uid://d3y217ukue140" path="res://app/client/game/interface/panels/entity/display/navigation/NavigationBoxPanel.cs" id="5"]
 [ext_resource type="Texture2D" uid="uid://dv475wcs5rrlr" path="res://assets/sprites/interface/panel-clicked-28x28.png" id="6"]
 
 [node name="NavigationBox" type="MarginContainer"]

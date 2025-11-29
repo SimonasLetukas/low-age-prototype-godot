@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://p1we4fggrwh4"]
 
-[ext_resource type="Script" path="res://app/shared/game/entities/EntityNode.cs" id="1"]
+[ext_resource type="Script" uid="uid://ddqivqkbimb1c" path="res://app/shared/game/entities/EntityNode.cs" id="1"]
 [ext_resource type="Material" uid="uid://bq1v62bbv2o0r" path="res://app/shared/shaders/EntitiesMaterial.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://cgjqqyu7bukhv" path="res://assets/sprites/units/revs/slave indexed 1x1.png" id="3"]
 [ext_resource type="PackedScene" uid="uid://ofbj4x2l0kxt" path="res://app/shared/game/behaviours/Behaviours.tscn" id="4"]
 [ext_resource type="Texture2D" uid="uid://bw5j24ahxgdpc" path="res://assets/sprites/debug-dot.png" id="5"]
-[ext_resource type="Script" path="res://app/client/game/map/entities/EntityRenderer.cs" id="6"]
+[ext_resource type="Script" uid="uid://cpgtiofb5n8j3" path="res://app/client/game/map/entities/EntityRenderer.cs" id="6"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(5, 15)

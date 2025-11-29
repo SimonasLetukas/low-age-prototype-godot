@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cddff8jooclq0"]
 
-[ext_resource type="Script" path="res://app/client/game/interface/info-text/InformationalText.cs" id="2"]
+[ext_resource type="Script" uid="uid://dyf1lv15xw27r" path="res://app/client/game/interface/info-text/InformationalText.cs" id="2"]
 [ext_resource type="PackedScene" uid="uid://dax8eksfbotqw" path="res://app/client/game/interface/shared/Text.tscn" id="3_t3efl"]
 [ext_resource type="Texture2D" uid="uid://chxp7ger6n0vp" path="res://assets/sprites/interface/panel-28x28.png" id="4"]
 

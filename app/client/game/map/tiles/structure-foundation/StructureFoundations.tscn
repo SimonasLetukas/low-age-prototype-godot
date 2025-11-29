@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b3uh2frt5nryv"]
 
 [ext_resource type="PackedScene" uid="uid://cxoakp5h8ow56" path="res://app/client/game/map/tiles/structure-foundation/StructureFoundation.tscn" id="1"]
-[ext_resource type="Script" path="res://app/client/game/map/tiles/structure-foundation/StructureFoundations.cs" id="2"]
+[ext_resource type="Script" uid="uid://csgrhyycyo0je" path="res://app/client/game/map/tiles/structure-foundation/StructureFoundations.cs" id="2"]
 
 [node name="StructureFoundations" type="Node2D"]
 script = ExtResource("2")

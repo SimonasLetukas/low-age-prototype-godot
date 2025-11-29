@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://crga8uvsmhwds"]
 
 [ext_resource type="PackedScene" uid="uid://ctk2gn63op568" path="res://app/shared/game/Game.tscn" id="1"]
-[ext_resource type="Script" path="res://app/client/game/ClientGame.cs" id="2"]
+[ext_resource type="Script" uid="uid://ck4rjqsnr0lqu" path="res://app/client/game/ClientGame.cs" id="2"]
 [ext_resource type="PackedScene" uid="uid://d0rwuiknh1tww" path="res://app/client/game/mouse/Mouse.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://bxsjphsp1duj6" path="res://app/client/game/camera/Camera.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://ognkssytefqy" path="res://app/client/game/interface/Interface.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://cfrpqywjxr3el" path="res://app/client/game/map/entities/Entities.tscn" id="6"]
-[ext_resource type="Script" path="res://app/client/game/map/ClientMap.cs" id="7"]
+[ext_resource type="Script" uid="uid://bycd54134s0ef" path="res://app/client/game/map/ClientMap.cs" id="7"]
 [ext_resource type="PackedScene" uid="uid://d0f4u53428x0a" path="res://app/client/game/map/tiles/Tiles.tscn" id="8"]
 
 [node name="Game" instance=ExtResource("1")]

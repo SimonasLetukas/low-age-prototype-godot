@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1"]
 [ext_resource type="PackedScene" uid="uid://b2njs71bqtlfm" path="res://app/shared/lobby/players/faction/FactionSelection.tscn" id="3"]
-[ext_resource type="Script" path="res://app/client/settings/Settings.cs" id="4"]
+[ext_resource type="Script" uid="uid://cr8w3allsriek" path="res://app/client/settings/Settings.cs" id="4"]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -103,6 +103,7 @@ size_flags_horizontal = 2
 size_flags_vertical = 4
 item_count = 3
 popup/item_0/text = "Slow"
+popup/item_0/id = 0
 popup/item_1/text = "Medium"
 popup/item_1/id = 1
 popup/item_2/text = "Fast"

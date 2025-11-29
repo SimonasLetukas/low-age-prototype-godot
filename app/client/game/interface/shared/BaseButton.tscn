@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://b2me7lpqetnom"]
 
-[ext_resource type="Script" path="res://app/client/game/interface/shared/BaseButton.cs" id="1"]
+[ext_resource type="Script" uid="uid://cxnu60csnxx2q" path="res://app/client/game/interface/shared/BaseButton.cs" id="1"]
 [ext_resource type="Material" uid="uid://cbiftuoxjvf1s" path="res://app/shared/shaders/InterfaceMaterial.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://dy5m8n2l4paaa" path="res://assets/sprites/interface/small-panel-x4.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://dhlym7w4676g2" path="res://assets/sprites/interface/small-panel-smaller-inverted-x4.png" id="4"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://pgbvbhmyesbr"]
 
-[ext_resource type="Script" path="res://app/shared/game/map/Map.cs" id="1"]
+[ext_resource type="Script" uid="uid://d6tgr4eisnsu" path="res://app/shared/game/map/Map.cs" id="1"]
 
 [node name="Map" type="Node2D"]
 z_as_relative = false

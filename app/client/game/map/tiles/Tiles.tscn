@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dbpctgqjpgmrc" path="res://app/client/game/map/tiles/elevatable/ElevatableTiles.tscn" id="2"]
 [ext_resource type="TileSet" uid="uid://c2mts8v0fly0n" path="res://app/client/game/map/tiles/Tiles.tres" id="2_qq7n5"]
-[ext_resource type="Script" path="res://app/client/game/map/tiles/Tiles.cs" id="3"]
+[ext_resource type="Script" uid="uid://bdvutqpu1whs2" path="res://app/client/game/map/tiles/Tiles.cs" id="3"]
 [ext_resource type="PackedScene" uid="uid://b3uh2frt5nryv" path="res://app/client/game/map/tiles/structure-foundation/StructureFoundations.tscn" id="5"]
 
 [node name="Tiles" type="Node2D"]

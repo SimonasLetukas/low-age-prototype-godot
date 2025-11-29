@@ -4,7 +4,6 @@ using System.Linq;
 
 public partial class AvailableActionsDisplay : VFlowContainer
 {
-	[Flags]
 	public enum AvailableActionType
 	{
 		Movement,
@@ -13,7 +12,7 @@ public partial class AvailableActionsDisplay : VFlowContainer
 		Ability
 	}
 	
-	[Export] public Godot.Collections.Dictionary<AvailableActionType, string> IconPaths { get; set; } 
+	[Export] public Godot.Collections.Dictionary<AvailableActionType, Texture2D> Icons { get; set; } 
 	
 	public override void _Ready()
 	{
@@ -32,9 +31,9 @@ public partial class AvailableActionsDisplay : VFlowContainer
 		{
 			var itemScene = GD.Load<PackedScene>(AvailableActionItem.ScenePath);
 			var item = itemScene.Instantiate<AvailableActionItem>();
-			if (IconPaths.TryGetValue(AvailableActionType.MeleeAttack, out var icon) is false)
+			if (Icons.TryGetValue(AvailableActionType.MeleeAttack, out var icon) is false)
 			{
-				icon = IconPaths.Values.First();
+				icon = Icons.Values.First();
 			}
 			item.Set(icon, "Melee attack action is available!");
 			AddChild(item);
@@ -44,9 +43,9 @@ public partial class AvailableActionsDisplay : VFlowContainer
 		{
 			var itemScene = GD.Load<PackedScene>(AvailableActionItem.ScenePath);
 			var item = itemScene.Instantiate<AvailableActionItem>();
-			if (IconPaths.TryGetValue(AvailableActionType.RangedAttack, out var icon) is false)
+			if (Icons.TryGetValue(AvailableActionType.RangedAttack, out var icon) is false)
 			{
-				icon = IconPaths.Values.First();
+				icon = Icons.Values.First();
 			}
 			item.Set(icon, "Ranged attack action is available!");
 			AddChild(item);
@@ -56,9 +55,9 @@ public partial class AvailableActionsDisplay : VFlowContainer
 		{
 			var itemScene = GD.Load<PackedScene>(AvailableActionItem.ScenePath);
 			var item = itemScene.Instantiate<AvailableActionItem>();
-			if (IconPaths.TryGetValue(AvailableActionType.Ability, out var icon) is false)
+			if (Icons.TryGetValue(AvailableActionType.Ability, out var icon) is false)
 			{
-				icon = IconPaths.Values.First();
+				icon = Icons.Values.First();
 			}
 			item.Set(icon, "Ability action is available!");
 			AddChild(item);
@@ -68,9 +67,9 @@ public partial class AvailableActionsDisplay : VFlowContainer
 		{
 			var itemScene = GD.Load<PackedScene>(AvailableActionItem.ScenePath);
 			var item = itemScene.Instantiate<AvailableActionItem>();
-			if (IconPaths.TryGetValue(AvailableActionType.Movement, out var icon) is false)
+			if (Icons.TryGetValue(AvailableActionType.Movement, out var icon) is false)
 			{
-				icon = IconPaths.Values.First();
+				icon = Icons.Values.First();
 			}
 			item.Set(icon, "Movement action is available!");
 			AddChild(item);

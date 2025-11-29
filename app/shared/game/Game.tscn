@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://ctk2gn63op568"]
 
 [ext_resource type="PackedScene" uid="uid://pgbvbhmyesbr" path="res://app/shared/game/map/Map.tscn" id="1"]
-[ext_resource type="Script" path="res://app/shared/game/Game.cs" id="2"]
+[ext_resource type="Script" uid="uid://cjmwaulbe1lii" path="res://app/shared/game/Game.cs" id="2"]
 [ext_resource type="PackedScene" uid="uid://cudklipemwp08" path="res://app/shared/game/turns/Turns.tscn" id="3_kch7f"]
-[ext_resource type="Script" path="res://app/shared/game/turns/Turns.cs" id="4_62s4r"]
+[ext_resource type="Script" uid="uid://cftoot315ors1" path="res://app/shared/game/turns/Turns.cs" id="4_62s4r"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("2")

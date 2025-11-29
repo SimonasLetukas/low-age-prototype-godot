@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bu22m8bagumka"]
 
-[ext_resource type="Script" path="res://app/client/game/interface/entity-overlay/EntityOverlay.cs" id="1_c8ww7"]
+[ext_resource type="Script" uid="uid://deqoxug2qhpic" path="res://app/client/game/interface/entity-overlay/EntityOverlay.cs" id="1_c8ww7"]
 [ext_resource type="PackedScene" uid="uid://dax8eksfbotqw" path="res://app/client/game/interface/shared/Text.tscn" id="3_51ijp"]
 
 [node name="EntityOverlay" type="Control"]

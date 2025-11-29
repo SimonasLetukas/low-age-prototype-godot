@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ofbj4x2l0kxt"]
 
-[ext_resource type="Script" path="res://app/shared/game/behaviours/Behaviours.cs" id="1"]
+[ext_resource type="Script" uid="uid://b3kkaja1o0jth" path="res://app/shared/game/behaviours/Behaviours.cs" id="1"]
 
 [node name="Behaviours" type="Node2D"]
 script = ExtResource("1")

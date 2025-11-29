@@ -2,13 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1_hh0s0"]
 [ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="2_u8e48"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/initiative/InitiativeButton.cs" id="3_sfstn"]
+[ext_resource type="Script" uid="uid://bmldjln43xr3f" path="res://app/client/game/interface/panels/initiative/InitiativeButton.cs" id="3_sfstn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ky5jl"]
 resource_local_to_scene = true
 shader = ExtResource("2_u8e48")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/draw_outline = null
+shader_parameter/draw_outline = false
 shader_parameter/intensity = 250
 shader_parameter/disabled = false
 shader_parameter/disabled_saturation = 0.2

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b6v8fe0oxw6w3"]
 
 [ext_resource type="Texture2D" uid="uid://ipj1af5ttikp" path="res://assets/sprites/tiles/focused_tile.png" id="1"]
-[ext_resource type="Script" path="res://app/client/game/map/tiles/elevatable/focused/FocusedTile.cs" id="2"]
+[ext_resource type="Script" uid="uid://2vm64hpv3lvu" path="res://app/client/game/map/tiles/elevatable/focused/FocusedTile.cs" id="2"]
 
 [sub_resource type="AtlasTexture" id="1"]
 atlas = ExtResource("1")

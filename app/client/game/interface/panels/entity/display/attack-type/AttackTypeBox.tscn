@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bfuikrbrpk82v"]
 
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypeBox.cs" id="1"]
+[ext_resource type="Script" uid="uid://cdutwhkjr273i" path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypeBox.cs" id="1"]
 [ext_resource type="Texture2D" uid="uid://cywki6wytl5nr" path="res://assets/icons/icon_melee_attack.png" id="2"]
 [ext_resource type="PackedScene" uid="uid://dg3tb4y475nx6" path="res://app/client/game/interface/panels/entity/display/attack-type/AttackTypeButton.tscn" id="3_xkhag"]
 [ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="4_vj7k4"]
@@ -9,7 +9,7 @@
 resource_local_to_scene = true
 shader = ExtResource("4_vj7k4")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/draw_outline = null
+shader_parameter/draw_outline = false
 shader_parameter/intensity = 250
 shader_parameter/disabled = false
 shader_parameter/disabled_saturation = 0.2

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://pl6to8rbtsr2"]
 
 [ext_resource type="PackedScene" uid="uid://dulmh6kru36er" path="res://app/client/game/map/tiles/elevatable/TargetTiles.tscn" id="1_wdfs3"]
-[ext_resource type="Script" path="res://app/client/game/map/tiles/elevatable/TargetMeleeTiles.cs" id="2_55qm4"]
+[ext_resource type="Script" uid="uid://pn01jed2cqoc" path="res://app/client/game/map/tiles/elevatable/TargetMeleeTiles.cs" id="2_55qm4"]
 [ext_resource type="Texture2D" uid="uid://bykvhftvfq6dy" path="res://assets/sprites/tiles/target-melee-hovering.png" id="3_sbbsw"]
 [ext_resource type="Texture2D" uid="uid://bluf1jc0ol4vs" path="res://assets/sprites/tiles/target-melee.png" id="4_2v2v2"]
 

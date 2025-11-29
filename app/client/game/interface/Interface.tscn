@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://ognkssytefqy"]
 
 [ext_resource type="PackedScene" uid="uid://cai8kctsxyqal" path="res://app/client/game/interface/panels/entity/EntityPanel.tscn" id="1"]
-[ext_resource type="Script" path="res://app/client/game/interface/Interface.cs" id="2"]
+[ext_resource type="Script" uid="uid://mypd4tgabc4f" path="res://app/client/game/interface/Interface.cs" id="2"]
 [ext_resource type="PackedScene" uid="uid://bdnwt6x7ftrs1" path="res://app/client/game/interface/panels/selection/SelectionPanel.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://cddff8jooclq0" path="res://app/client/game/interface/info-text/InformationalText.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://bu22m8bagumka" path="res://app/client/game/interface/entity-overlay/EntityOverlay.tscn" id="6_3k5kl"]
