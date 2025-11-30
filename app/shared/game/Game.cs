@@ -12,7 +12,11 @@ public partial class Game : Node2D
     protected List<IGameEvent> Events { get; set; } = [];
 
     protected Turns Turns { get; private set; } = null!;
-    protected string LogPrefix => $"{Players.Instance.Current.Id}.{GetType().Name}";
+    protected string LogPrefix => $"{CurrentPlayerId}.{GetType().Name}";
+
+    private string CurrentPlayerId => Multiplayer.IsServer() 
+        ? "0"
+        : Players.Instance.Current.Id.ToString();
     
     public override void _Ready()
     {
