@@ -17,6 +17,8 @@ public partial class Map : Node2D
 		if (DebugEnabled) GD.Print($"{nameof(Map)}: entering");
 		
 		EventBus.Instance.PhaseStarted += OnPhaseStarted;
+		EventBus.Instance.PhaseEnded += OnPhaseEnded;
+		EventBus.Instance.ActionStarted += OnActionStarted;
 		
 		base._Ready();
 	}
@@ -24,6 +26,8 @@ public partial class Map : Node2D
 	public override void _ExitTree()
 	{
 		EventBus.Instance.PhaseStarted -= OnPhaseStarted;
+		EventBus.Instance.PhaseEnded -= OnPhaseEnded;
+		EventBus.Instance.ActionStarted -= OnActionStarted;
 		
 		base._ExitTree();
 	}
@@ -33,5 +37,15 @@ public partial class Map : Node2D
 		CurrentPhase = phase;
 		if (CurrentPhase.Equals(TurnPhase.Planning))
 			ActorInAction = null;
+	}
+
+	private void OnPhaseEnded(int turn, TurnPhase phase)
+	{
+		ActorInAction = null;
+	}
+
+	private void OnActionStarted(ActorNode actor)
+	{
+		ActorInAction = actor;
 	}
 }

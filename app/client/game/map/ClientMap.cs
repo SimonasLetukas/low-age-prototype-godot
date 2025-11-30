@@ -204,7 +204,8 @@ public partial class ClientMap : Map
 			// TODO optimization: only if focused tile changed from above, display path
 			if (_focusedTile.IsWithinTheMap || _hoveredInitiativePanelActor != null)
 			{
-				var to = _hoveredInitiativePanelActor?.EntityPrimaryTile.Point ?? _focusedTile.CurrentTile!.Point;
+				var to = _hoveredInitiativePanelActor?.EntityPrimaryTile.Point 
+				         ?? _focusedTile.CurrentTile!.Point;
 				var team = Entities.SelectedEntity!.Player.Team;
 				var size = Entities.SelectedEntity!.EntitySize.X;
 				var path = Pathfinding.FindPath(to, team, size);
