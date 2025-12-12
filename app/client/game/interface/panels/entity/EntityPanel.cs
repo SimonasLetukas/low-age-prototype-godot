@@ -11,6 +11,7 @@ public partial class EntityPanel : Control
     public event Action AbilityViewClosed = delegate { };
     public event Action<bool, AttackType?> AttackSelected = delegate { };
 
+    private AvailableActionsDisplay _availableActions = null!;
     private GridContainer _behaviours = null!;
     private EntityName _entityName = null!;
     private AbilityButtons _abilityButtons = null!;
@@ -29,6 +30,7 @@ public partial class EntityPanel : Control
 
     public override void _Ready()
     {
+        _availableActions = GetNode<AvailableActionsDisplay>($"{nameof(AvailableActionsDisplay)}");
         _behaviours = GetNode<GridContainer>($"Behaviours");
         _entityName = GetNode<EntityName>($"{nameof(EntityName)}");
         _abilityButtons = GetNode<AbilityButtons>($"{nameof(Panel)}/{nameof(AbilityButtons)}");
@@ -64,9 +66,11 @@ public partial class EntityPanel : Control
 
         DisconnectAbilityButtons();
         _abilityButtons.Reset();
+        _availableActions.Reset();
         if (selectedEntity is ActorNode selectedActor)
         {
             _abilityButtons.Populate(selectedActor.Abilities); 
+            _availableActions.Populate(selectedActor.ActionEconomy);
         }
         
         _entityName.SetValue(selectedEntity.DisplayName);

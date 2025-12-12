@@ -10,12 +10,12 @@ public class ActionEconomyTests
     [Fact]
     public void Restore_ShouldAssignConfiguredValues_WhenCalled()
     {
-        _sut.MaxMeleeAttackActions = 3;
-        _sut.MaxRangedAttackActions = 4;
-        _sut.MaxAbilityActions = 5;
+        _sut.Config.MaxMeleeAttackActions = 3;
+        _sut.Config.MaxRangedAttackActions = 4;
+        _sut.Config.MaxAbilitiesInActionPhase = 5;
         _sut.Moved(100, false);
         
-        _sut.Restore();
+        _sut.Restore(TurnPhase.Action);
 
         _sut.MeleeAttackActions.Should().Be(3);
         _sut.RangedAttackActions.Should().Be(4);
@@ -96,13 +96,13 @@ public class ActionEconomyTests
         bool expectedCanMeleeAttack, bool expectedCanRangedAttack, bool expectedCanUseAbilityAction, 
         bool expectedCanMove)
     {
-        _sut.MeleeAttackActionAllowedAfterMinimumMovement = meleeAttackActionAllowedAfterMinimumMovement;
-        _sut.MeleeAttackActionAllowedAfterFullMovement = meleeAttackActionAllowedAfterFullMovement;
-        _sut.RangedAttackActionAllowedAfterMinimumMovement = rangedAttackActionAllowedAfterMinimumMovement;
-        _sut.RangedAttackActionAllowedAfterFullMovement = rangedAttackActionAllowedAfterFullMovement;
-        _sut.AbilityActionAllowedAfterMinimumMovement = abilityActionAllowedAfterMinimumMovement;
-        _sut.AbilityActionAllowedAfterFullMovement = abilityActionAllowedAfterFullMovement;
-        _sut.Restore();
+        _sut.Config.MeleeAttackActionAllowedAfterMinimumMovement = meleeAttackActionAllowedAfterMinimumMovement;
+        _sut.Config.MeleeAttackActionAllowedAfterFullMovement = meleeAttackActionAllowedAfterFullMovement;
+        _sut.Config.RangedAttackActionAllowedAfterMinimumMovement = rangedAttackActionAllowedAfterMinimumMovement;
+        _sut.Config.RangedAttackActionAllowedAfterFullMovement = rangedAttackActionAllowedAfterFullMovement;
+        _sut.Config.AbilityActionAllowedAfterMinimumMovement = abilityActionAllowedAfterMinimumMovement;
+        _sut.Config.AbilityActionAllowedAfterFullMovement = abilityActionAllowedAfterFullMovement;
+        _sut.Restore(TurnPhase.Action);
         
         _sut.Moved(movementValue, anyMovementRemaining);
 
@@ -188,16 +188,16 @@ public class ActionEconomyTests
     {
         if (isMeleeAttack)
         {
-            _sut.MaxMeleeAttackActions = startingActions;
-            _sut.CanMoveAfterMeleeAttackAction = canMoveAfterAction;
+            _sut.Config.MaxMeleeAttackActions = startingActions;
+            _sut.Config.CanMoveAfterMeleeAttackAction = canMoveAfterAction;
         }
         else
         {
-            _sut.MaxRangedAttackActions = startingActions;
-            _sut.CanMoveAfterRangedAttackAction = canMoveAfterAction;
+            _sut.Config.MaxRangedAttackActions = startingActions;
+            _sut.Config.CanMoveAfterRangedAttackAction = canMoveAfterAction;
         }
-        _sut.CanMoveAfterAnyAction = canMoveAfterAnyAction;
-        _sut.Restore();
+        _sut.Config.CanMoveAfterAnyAction = canMoveAfterAnyAction;
+        _sut.Restore(TurnPhase.Action);
 
         var attackType = isMeleeAttack ? AttackType.Melee : AttackType.Ranged;
         _sut.Attacked(attackType);

@@ -29,7 +29,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public AttackStatNode? MeleeAttack => Attacks.FirstOrDefault(x => x.IsMelee);
     public AttackStatNode? RangedAttack => Attacks.FirstOrDefault(x => x.IsRanged);
     
-    public ActionEconomy ActionEconomy { get; protected set; } = new();
+    public ActionEconomy ActionEconomy { get; protected set; } = null!;
     public IList<AttackStatNode> Attacks { get; protected set; } = null!;
     public IList<CombatStatNode> Stats { get; protected set; } = null!;
     public IList<ActorAttribute> Attributes { get; protected set; } = null!;
@@ -65,7 +65,6 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
-        ActionEconomy.Restore();
         Attacks = blueprint.Statistics
             .Where(stat => stat is AttackStat)
             .Select(stat => AttackStatNode.InstantiateAsChild((AttackStat)stat, AttacksNode))
@@ -78,6 +77,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         ActorRotation = ActorRotation.BottomRight;
         Abilities.PopulateFromBlueprint(Blueprint.Abilities);
         Behaviours.AddOnBuildBehaviours(Abilities.GetPassives());
+        ActionEconomy = ActionEconomy.For(this);
         
         UpdateVitalsValues();
     }
@@ -100,8 +100,17 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         base.Complete();
         Abilities.OnActorBirth();
     }
+    
+    public bool CanAttack(bool? isMelee) => isMelee is null 
+        ? CanAttack(AttackType.Melee) || CanAttack(AttackType.Ranged) 
+        : CanAttack(isMelee is true ? AttackType.Melee : AttackType.Ranged);
 
-    public override (int, bool) ReceiveAttack(EntityNode source, AttackType attackType, bool isSimulation)
+    public bool CanAttack(AttackType attackType) 
+        => (attackType.Equals(AttackType.Melee) && ActionEconomy.CanMeleeAttack) 
+           || (attackType.Equals(AttackType.Ranged) && ActionEconomy.CanRangedAttack);
+
+    public override (int damage, bool isLethal) ReceiveAttack(EntityNode source, AttackType attackType, 
+        bool isSimulation)
     {
         base.ReceiveAttack(source, attackType, isSimulation);
 
@@ -113,7 +122,8 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         return ReceiveDamage(source, damageType, damage, isSimulation);
     }
 
-    protected override (int, bool) ReceiveDamage(EntityNode source, DamageType damageType, int amount, bool isSimulation)
+    protected override (int damage, bool isLethal) ReceiveDamage(EntityNode source, DamageType damageType, 
+        int amount, bool isSimulation)
     {
         base.ReceiveDamage(source, damageType, amount, isSimulation);
         
@@ -223,7 +233,13 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         _health.Position = new Vector2(_startingHealthPosition.X, -2) + offset;
         _shields.Position = new Vector2(_startingShieldsPosition.X, -3) + offset;
     }
-    
+
+    protected override void OnPhaseStarted(int turn, TurnPhase phase)
+    {
+        ActionEconomy.Restore(phase);
+        base.OnPhaseStarted(turn, phase);
+    }
+
     private List<Tiles.TileInstance> GetAttackTargetTiles(AttackType attackType, Vector2Int mapSize)
     {
         var positions = GetPotentialAttackPositions(attackType, mapSize);

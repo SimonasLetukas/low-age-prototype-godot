@@ -11,10 +11,10 @@ public partial class InstantNode : AbilityNode, INodeFromBlueprint<Instant>
         Blueprint = blueprint;
     }
 
-    public override bool TryActivate(TurnPhase currentTurnPhase, ActorNode? actorInAction)
+    public override void Activate()
     {
         // TODO execute effects
         
-        return base.TryActivate(currentTurnPhase, actorInAction);
+        base.Activate();
     }
 }

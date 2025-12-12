@@ -31,9 +31,9 @@ public partial class ClientState : Node
         EventBus.Instance.RaiseMovementAttackOverlayChanged(selectedEntity);
     }
 
-    public void ResetMovementAttackOverlayToggle(EntityNode selectedEntity)
+    public void ResetMovementAttackOverlayToggle(bool movementToggled, EntityNode selectedEntity)
     {
-        MovementToggled = true;
+        MovementToggled = movementToggled;
         EventBus.Instance.RaiseMovementAttackOverlayChanged(selectedEntity);
     }
     

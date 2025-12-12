@@ -7,6 +7,7 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
 using LowAgeCommon;
+using LowAgeData.Domain.Common;
 using MultipurposePathfinding;
 using Newtonsoft.Json;
 
@@ -77,6 +78,7 @@ public partial class Entities : Node2D
     public override void _ExitTree()
     {
         NewPositionOccupied -= _renderers.UpdateSorting;
+        
         foreach (var unit in _units.GetChildren().OfType<UnitNode>())
         {
             unit.FinishedMoving -= OnEntityFinishedMoving;
@@ -234,12 +236,10 @@ public partial class Entities : Node2D
         return topEntity;
     }
     
-    public void MoveEntity(EntityNode entity, IEnumerable<Vector2> globalPath, ICollection<Point> path)
+    public void MoveEntity(EntityNode entity, IList<Vector2> globalPath, IList<Point> path)
     {
-        var targetPoint = path.Last();
-        var startPoint = path.First();
         EntityMoving = true;
-        entity.MoveUntilFinished(globalPath.ToList(), targetPoint);
+        entity.MoveUntilFinished(globalPath, path);
     }
     
     public void RegisterRenderer(EntityNode entity)
@@ -310,7 +310,7 @@ public partial class Entities : Node2D
 
     public void HandleEvent(EntityAttackedEvent @event)
     {
-        var source = GetEntityByInstanceId(@event.SourceId);
+        var source = GetEntityByInstanceId(@event.SourceId) as ActorNode; // TODO how would doodads be able to execute attack?
         var target = GetEntityByInstanceId(@event.TargetId);
 
         if (source is null)
@@ -327,6 +327,7 @@ public partial class Entities : Node2D
             return;
         }
 
+        source.ActionEconomy.Attacked(@event.AttackType);
         target.ReceiveAttack(source, @event.AttackType, false);
     }
 

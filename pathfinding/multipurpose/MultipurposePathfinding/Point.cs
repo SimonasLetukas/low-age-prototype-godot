@@ -11,6 +11,7 @@ namespace MultipurposePathfinding
         public required bool IsHighGround { get; init; }
         public bool IsLowGround => IsHighGround is false;
         public bool IsAscendable => HighGroundAscensionLevel != 100;
+        public float Weight => Configuration.TerrainWeights[CalculatedTerrainIndex];
         
         private bool _isImpassable;
         public bool IsImpassable

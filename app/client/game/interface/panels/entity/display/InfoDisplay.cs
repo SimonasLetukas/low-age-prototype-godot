@@ -182,11 +182,15 @@ public partial class InfoDisplay : MarginContainer
         var rangedArmour = stats.FirstOrDefault(x => x.StatType.Equals(StatType.RangedArmour));
         var actorAttributes = actor.Attributes;
         var player = entity.Player;
+
+        var currentMovement = actor.ActionEconomy.CanMove
+            ? MathF.Max((movement?.CurrentAmount ?? 0) - Constants.Pathfinding.SearchIncrement, 0)
+            : 0;
         
         SetEntityStats(
             health is null ? 0 : (int)health.CurrentAmount, 
             health?.MaxAmount ?? 0, 
-            movement?.CurrentAmount ?? 0, 
+            currentMovement, 
             movement?.MaxAmount ?? 0, 
             initiative is null ? 0 : (int)initiative.CurrentAmount, 
             meleeArmour is null ? 0 : (int)meleeArmour.CurrentAmount, 

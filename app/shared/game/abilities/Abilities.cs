@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
 
 public partial class Abilities : Node2D
 {
@@ -12,6 +13,16 @@ public partial class Abilities : Node2D
         base._Ready();
         Parent = (ActorNode)GetParent();
     }
+
+    public IList<AbilityNode> GetForPlanningPhase() => GetChildren()
+        .OfType<AbilityNode>()
+        .Where(a => a.TurnPhase.Equals(TurnPhase.Planning))
+        .ToList();
+
+    public IList<AbilityNode> GetForActionPhase() => GetChildren()
+        .OfType<AbilityNode>()
+        .Where(a => a.TurnPhase.Equals(TurnPhase.Action))
+        .ToList();
     
     public IList<PassiveNode> GetPassives() => GetChildren().OfType<PassiveNode>().ToList();
     

@@ -245,8 +245,6 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
             TriggersOn = TriggersOnEnum.End;
             Phase = TurnPhase.Action;
         }
-        
-        ResetDuration();
     }
 
     /// <summary>

@@ -17,16 +17,10 @@ public partial class AvailableActionsDisplay : VFlowContainer
 	public override void _Ready()
 	{
 		Reset();
-
-		var economy = new ActionEconomy();
-		economy.Restore();
-		Populate(economy);
 	}
 
 	public void Populate(ActionEconomy actionEconomy)
 	{
-		Reset();
-		
 		for (var i = 0; i < actionEconomy.MeleeAttackActions; i++)
 		{
 			var itemScene = GD.Load<PackedScene>(AvailableActionItem.ScenePath);

@@ -50,7 +50,7 @@ public sealed partial class StructureNode : ActorNode, INodeFromBlueprint<Struct
         FlattenedCenterOffset = Blueprint.FlattenedCenterOffset?.ToGodotVector2();
         CenterPoint = blueprint.CenterPoint;
         WalkableAreasBlueprint = blueprint.WalkableAreas.Select(area => area.TrimTo(EntitySize)).ToList();
-        
+
         Renderer.Initialize(this, false);
         UpdateSprite();
         UpdateVitalsPosition();

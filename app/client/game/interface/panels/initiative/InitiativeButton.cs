@@ -28,12 +28,15 @@ public partial class InitiativeButton : BaseButton
         
         base.Clicked += OnButtonClicked;
         base.Hovering += OnButtonHovering;
+        Actor.ActionEconomy.Updated += OnActorActionEconomyUpdated;
     }
 
     public override void _ExitTree()
     {
         base.Clicked -= OnButtonClicked;
         base.Hovering -= OnButtonHovering;
+        Actor.ActionEconomy.Updated -= OnActorActionEconomyUpdated;
+        
         base._ExitTree();
     }
 
@@ -41,6 +44,14 @@ public partial class InitiativeButton : BaseButton
     {
         Actor = actor;
 
+        if (actor.SpriteLocation != null)
+            SetIcon(GD.Load<Texture2D>(actor.SpriteLocation));
+        
+        Callable.From(() => SetDynamicProperties(actor)).CallDeferred();
+    }
+
+    private void SetDynamicProperties(ActorNode actor)
+    {
         var actorTypeText = actor is UnitNode ? "Unit" : "Structure";
         var numberOfActions = actor.ActionEconomy.NumberOfPossibleActions;
 
@@ -50,10 +61,7 @@ public partial class InitiativeButton : BaseButton
                       $"Player: {actor.Player.Name}\n" + 
                       $"Available Actions: {numberOfActions}";
 
-        if (actor.SpriteLocation != null)
-            SetIcon(GD.Load<Texture2D>(actor.SpriteLocation));
-        
-        Callable.From(() => SetPossibleActions(numberOfActions)).CallDeferred();
+        SetPossibleActions(numberOfActions);
     }
 
     private void SetPossibleActions(int number)
@@ -75,4 +83,6 @@ public partial class InitiativeButton : BaseButton
     private void OnButtonClicked() => Clicked(Actor);
 
     private void OnButtonHovering(bool flag) => Hovering(flag, Actor);
+
+    private void OnActorActionEconomyUpdated() => SetDynamicProperties(Actor);
 }

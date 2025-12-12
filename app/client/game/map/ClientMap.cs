@@ -201,6 +201,9 @@ public partial class ClientMap : Map
 		{
 			UpdateHoveredEntity(mousePosition);
 
+			if (Entities.SelectedEntity is not UnitNode selectedUnit || selectedUnit.ActionEconomy.CanMove is false)
+				return;
+
 			// TODO optimization: only if focused tile changed from above, display path
 			if (_focusedTile.IsWithinTheMap || _hoveredInitiativePanelActor != null)
 			{
@@ -250,7 +253,7 @@ public partial class ClientMap : Map
 			HandleDeselecting();
 		
 		RemoveOccupation(selectedEntity);
-		Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
+		Entities.MoveEntity(selectedEntity, @event.GlobalPath.ToList(), @event.Path.ToList());
 	}
 
 	public void HandleDeselecting()
@@ -275,7 +278,7 @@ public partial class ClientMap : Map
 		if (Input.IsActionJustReleased(Constants.Input.MovementAttackToggle) is false)
 			return;
 		
-		if (_selectionOverlay is not (SelectionOverlay.Movement or SelectionOverlay.Attack)) 
+		if (_selectionOverlay is not (SelectionOverlay.Movement or SelectionOverlay.Attack or SelectionOverlay.None)) 
 			return;
 		
 		var entity = Entities.SelectedEntity!;
@@ -321,7 +324,7 @@ public partial class ClientMap : Map
 
 		if (_selectionOverlay is SelectionOverlay.Placement 
 		    && IsActionAuthorizedForCurrentPlayerOnSelectedEntity()
-		    && TryActivateActionInCurrentPhase())
+		    && CanActivateActionInCurrentPhase())
 		{
 			ExecutePlacement();
 			return;
@@ -343,7 +346,7 @@ public partial class ClientMap : Map
 		
 		if (_selectionOverlay is SelectionOverlay.Movement 
 		    && IsActionAuthorizedForCurrentPlayerOnSelectedEntity()
-		    && TryActivateActionInCurrentPhase())
+		    && CanActivateActionInCurrentPhase())
 		{
 			ExecuteMovement();
 			return;
@@ -351,7 +354,7 @@ public partial class ClientMap : Map
 
 		if (_selectionOverlay is SelectionOverlay.Attack 
 		    && IsActionAuthorizedForCurrentPlayerOnSelectedEntity()
-		    && TryActivateActionInCurrentPhase())
+		    && CanActivateActionInCurrentPhase())
 		{
 			ExecuteAttack();
 			return;
@@ -385,9 +388,29 @@ public partial class ClientMap : Map
 			return;
 
 		Entities.SelectEntity(entity);
-		
-		ClientState.Instance.ResetMovementAttackOverlayToggle(entity);
-		ShowMovementOverlay(entity);
+
+		var initialOverlay = entity is ActorNode actor
+			? actor.ActionEconomy.CanMove
+				? SelectionOverlay.Movement
+				: actor.ActionEconomy.CanMeleeAttack || actor.ActionEconomy.CanRangedAttack
+					? SelectionOverlay.Attack
+					: SelectionOverlay.None
+			: SelectionOverlay.None;
+
+		switch (initialOverlay)
+		{
+			case SelectionOverlay.Movement:
+				ClientState.Instance.ResetMovementAttackOverlayToggle(true, entity);
+				ShowMovementOverlay(entity);
+				return;
+			case SelectionOverlay.Attack:
+				ClientState.Instance.ResetMovementAttackOverlayToggle(false, entity);
+				ShowAttackOverlay(entity);
+				return;
+			default:
+				ClientState.Instance.ResetMovementAttackOverlayToggle(true, entity);
+				return;
+		}
 	}
 
 	private void ShowMovementOverlay(EntityNode entity)
@@ -400,15 +423,19 @@ public partial class ClientMap : Map
 	
 	private void ShowMovementOverlay(UnitNode unit)
 	{
+		if (unit.ActionEconomy.CanMove is false)
+			return;
+		
 		var size = unit.EntitySize.X;
 		var availablePoints = Pathfinding.GetAvailablePoints(
 			unit.EntityPrimaryPosition,
-			unit.Movement,
+			unit.Movement.CurrentAmount,
 			unit.IsOnHighGround,
 			unit.Player.Team,
 			size);
 		_tileMap.Elevatable.ClearAvailableTiles(false);
 		_tileMap.Elevatable.SetAvailableTiles(unit, availablePoints, size, false);
+		
 		_selectionOverlay = SelectionOverlay.Movement;
 	}
 
@@ -422,6 +449,9 @@ public partial class ClientMap : Map
 
 	private void ShowAttackOverlay(ActorNode actor, bool? showMelee = null)
 	{
+		if (actor.CanAttack(showMelee) is false)
+			return;
+		
 		_tileMap.Elevatable.ClearTargetTiles(false);
 		
 		var availablePoints = actor is UnitNode unit 
@@ -433,10 +463,10 @@ public partial class ClientMap : Map
 			unit.EntitySize.X) 
 			: [];
 		
-		var targetMeleeTiles = showMelee is null or true 
+		var targetMeleeTiles = showMelee is null or true && actor.ActionEconomy.CanMeleeAttack
 			? actor.GetMeleeAttackTargetTiles(_mapSize, availablePoints) 
 			: [];
-		var targetRangedTiles = showMelee is null or false 
+		var targetRangedTiles = showMelee is null or false && actor.ActionEconomy.CanRangedAttack
 			? actor.GetRangedAttackTargetTiles(_mapSize) 
 			: [];
 		
@@ -467,24 +497,31 @@ public partial class ClientMap : Map
 		if (_tileMap.Elevatable.IsCurrentlyAvailable(_focusedTile.CurrentTile) is false
 			|| Entities.SelectedEntity!.EntityPrimaryPosition.Equals(_focusedTile.CurrentTile!.Position))
 			return;
+		
+		if (Entities.SelectedEntity is not UnitNode selectedUnit)
+			return;
 
+		if (selectedUnit.ActionEconomy.CanMove is false)
+			return;
+		
 		// TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
 
-		var selectedEntity = Entities.SelectedEntity;
 		var path = Pathfinding.FindPath(
 			_focusedTile.CurrentTile.Point,
-			selectedEntity.Player.Team,
-			selectedEntity.EntitySize.X).ToList();
+			selectedUnit.Player.Team,
+			selectedUnit.EntitySize.X).ToList();
 		var globalPath = _tileMap.GetGlobalPositionsFromMapPoints(path);
-		UnitMovementIssued(new UnitMovedAlongPathEvent(selectedEntity.InstanceId, globalPath, path));
+		UnitMovementIssued(new UnitMovedAlongPathEvent(selectedUnit.InstanceId, globalPath, path));
 		HandleDeselecting();
 	}
 
 	private void ExecuteAttack()
 	{
-		// TODO extract this into a method that would be used in TryActivateActionInCurrentPhase which would use ActionEconomy for the response
+		// TODO extract this into a method that would be used in TryActivateActionInCurrentPhase which
+		// would use ActionEconomy for the response
+		
 		if (_focusedTile.CurrentTile is not { } focusedTile
-			|| focusedTile.TargetType is TargetType.None
+		    || focusedTile.TargetType is TargetType.None
 		    || Entities.HoveredEntity is not { } targetEntity
 		    || Entities.SelectedEntity is not { } selectedEntity)
 			return;
@@ -493,6 +530,13 @@ public partial class ClientMap : Map
 			return;
 		
 		var attackType = focusedTile.TargetType is TargetType.Melee ? AttackType.Melee : AttackType.Ranged;
+		
+		if (selectedEntity is not ActorNode selectedActor) // TODO how would doodads be able to execute attack?
+			return;
+
+		if (selectedActor.CanAttack(attackType) is false)
+			return;
+		
 		EntityAttacked(new EntityAttackedEvent
 		{
 			SourceId = selectedEntity.InstanceId,
@@ -611,10 +655,10 @@ public partial class ClientMap : Map
 	private bool IsActionAuthorizedForCurrentPlayerOnSelectedEntity() 
 		=> Players.Instance.IsActionAllowedForCurrentPlayerOn(Entities.SelectedEntity);
 
-	private bool TryActivateActionInCurrentPhase() => _selectionOverlay switch
+	private bool CanActivateActionInCurrentPhase() => _selectionOverlay switch
 	{
 		SelectionOverlay.Placement // or SelectionOverlay.Ability TODO
-			when _selectedAbility is not null && _selectedAbility.TryActivate(CurrentPhase, ActorInAction) => true,
+			when _selectedAbility is not null && _selectedAbility.CanActivate(CurrentPhase, ActorInAction) => true,
 
 		SelectionOverlay.Movement or SelectionOverlay.Attack
 			when Entities.SelectedEntity!.Equals(ActorInAction) => true,

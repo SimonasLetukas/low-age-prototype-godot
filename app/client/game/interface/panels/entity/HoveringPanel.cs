@@ -9,10 +9,12 @@ public partial class HoveringPanel : Control
 {
     private Vector2 _mapSize;
 
+    private AvailableActionsDisplay _availableActions = null!;
     private InfoDisplay _infoDisplay = null!;
 
     public override void _Ready()
     {
+        _availableActions = GetNode<AvailableActionsDisplay>($"{nameof(AvailableActionsDisplay)}");
         _infoDisplay = GetNode<InfoDisplay>($"{nameof(InfoDisplay)}");
         _infoDisplay.Reset();
         
@@ -50,6 +52,7 @@ public partial class HoveringPanel : Control
             if (occupants is null || occupants.IsEmpty())
             {
                 _infoDisplay.Reset();
+                _availableActions.Reset();
             }
             else
             {
@@ -58,6 +61,10 @@ public partial class HoveringPanel : Control
                 var entity = occupants.Last();
                 _infoDisplay.SetEntityStats(entity);
                 _infoDisplay.ShowView(entity is StructureNode ? View.StructureStats : View.UnitStats, true);
+                
+                _availableActions.Reset();
+                if (entity is ActorNode actor)
+                    _availableActions.Populate(actor.ActionEconomy);
             }
         }
 

@@ -45,18 +45,24 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     public virtual void Preview()
     {
     }
-    
-    public virtual bool TryActivate(TurnPhase currentTurnPhase, ActorNode? actorInAction)
+
+    public virtual bool CanActivate(TurnPhase currentTurnPhase, ActorNode? actorInAction)
     {
         if (IsActive is false 
+            || RemainingCooldown.HasCompleted() is false
             || currentTurnPhase.Equals(TurnPhase) is false 
             || (TurnPhase.Equals(TurnPhase.Action) && OwnerActor.Equals(actorInAction) is false))
             return false;
 
-        IsActive = TryStartCooldown() is false;
+        return true;
+    }
+    
+    public virtual void Activate()
+    {
+        IsActive = false;
+        StartCooldown();
         // TODO start paying and execute ability only after it's paid
         Activated(this);
-        return true;
     }
 
     public override void _ExitTree()
@@ -67,6 +73,8 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
 
     public bool IsPaid()
     {
+        return true; // TODO implement later
+        
         foreach (var paymentRequired in Blueprint.Cost)
         {
             var paid = PaymentPaid.Single(x => x.Resource.Equals(paymentRequired.Resource));
@@ -81,13 +89,9 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
         return true;
     }
 
-    protected virtual bool TryStartCooldown()
+    protected virtual void StartCooldown()
     {
-        if (RemainingCooldown.HasDuration() is false)
-            return false;
-        
         RemainingCooldown.ResetDuration();
-        return true;
     }
     
     protected virtual void OnCooldownEnded()

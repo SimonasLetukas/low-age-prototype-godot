@@ -75,6 +75,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         _movementDuration = GetDurationFromAnimationSpeed();
         EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
         EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
+        EventBus.Instance.PhaseStarted += OnPhaseStarted;
     }
 
     public override void _ExitTree()
@@ -83,6 +84,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
         EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
         EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
+        EventBus.Instance.PhaseStarted -= OnPhaseStarted;
     }
 
     public void SetBlueprint(Entity blueprint)
@@ -219,8 +221,9 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Renderer.ResetElevationOffset();
     }
     
-    public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
+    public virtual void MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Point> path)
     {
+        var resultingPoint = path.Last();
         EntityPrimaryPosition = resultingPoint.Position;
         Renderer.ResetElevationOffset();
         
@@ -276,10 +279,11 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         return result;
     }
 
-    public virtual (int, bool) ReceiveAttack(EntityNode source, AttackType attackType, bool isSimulation) => (0, false);
+    public virtual (int damage, bool isLethal) ReceiveAttack(EntityNode source, AttackType attackType, 
+        bool isSimulation) => (0, false);
 
-    protected virtual (int, bool) ReceiveDamage(EntityNode source, DamageType damageType, int amount, bool isSimulation) 
-        => (0, false);
+    protected virtual (int damage, bool isLethal) ReceiveDamage(EntityNode source, DamageType damageType, 
+        int amount, bool isSimulation) => (0, false);
     
     public void Destroy()
     {
@@ -334,6 +338,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         
         Renderer.UpdateSpriteOffset(EntitySize, (Vector2)centerOffset);
     }
+
+    protected virtual void OnPhaseStarted(int turn, TurnPhase phase) { }
     
     private static bool IsPlacementGenerallyValid(IList<Tiles.TileInstance?> tiles, bool requiresTargetTiles)
     {
