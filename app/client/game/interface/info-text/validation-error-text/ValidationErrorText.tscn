@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsao6s1qgah4g"]
+
+[ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1_fscna"]
+[ext_resource type="Script" uid="uid://d1a5ah2u6pobi" path="res://app/client/game/interface/info-text/validation-error-text/ValidationErrorText.cs" id="2_4yosa"]
+
+[node name="ValidationErrorText" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 14.0
+offset_bottom = 14.0
+mouse_filter = 2
+theme = ExtResource("1_fscna")
+script = ExtResource("2_4yosa")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+clip_contents = false
+layout_mode = 0
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme = ExtResource("1_fscna")
+theme_override_colors/default_color = Color(0.99694544, 6.2329323e-06, 1.540184e-06, 1)
+theme_override_font_sizes/normal_font_size = 17
+text = "Validation error! "
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 2

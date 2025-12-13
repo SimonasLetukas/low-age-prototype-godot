@@ -55,6 +55,8 @@ public partial class ClientGame : Game
         _interface.NextTurnClicked += Turns.OnNextTurnButtonClicked;
         _interface.InitiativePanelActorHovered += _map.OnInitiativePanelActorHovered;
         _interface.InitiativePanelActorSelected += _map.OnInitiativePanelActorSelected;
+        _interface.AbilitySelected += _map.OnInterfaceAbilitySelected;
+        _interface.AbilityDeselected += _map.OnInterfaceAbilityDeselected;
         
         _map.FinishedInitializing += OnMapFinishedInitializing;
         _map.EntityIsBeingPlaced += _interface.OnEntityIsBeingPlaced;
@@ -78,6 +80,8 @@ public partial class ClientGame : Game
         _interface.NextTurnClicked -= Turns.OnNextTurnButtonClicked;
         _interface.InitiativePanelActorHovered -= _map.OnInitiativePanelActorHovered;
         _interface.InitiativePanelActorSelected -= _map.OnInitiativePanelActorSelected;
+        _interface.AbilitySelected -= _map.OnInterfaceAbilitySelected;
+        _interface.AbilityDeselected -= _map.OnInterfaceAbilityDeselected;
         
         _map.FinishedInitializing -= OnMapFinishedInitializing;
         _map.EntityIsBeingPlaced -= _interface.OnEntityIsBeingPlaced;

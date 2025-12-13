@@ -47,8 +47,9 @@ public partial class EntityOverlay : Control
 	{
 		if (target.InstanceId.Equals(_targetInstanceId) && source.InstanceId.Equals(_sourceInstanceId))
 			return;
-		
-		if (target.CanBeTargetedBy(source) is false)
+
+		var canBeTargeted = target.CanBeTargetedBy(source);
+		if (canBeTargeted.IsValid is false)
 			return;
 		
 		_targetInstanceId = target.InstanceId;

@@ -15,6 +15,8 @@ public partial class Interface : CanvasLayer
     public event Action NextTurnClicked = delegate { };
     public event Action<ActorNode?> InitiativePanelActorHovered = delegate { };
     public event Action<ActorNode?> InitiativePanelActorSelected = delegate { };
+    public event Action<AbilityNode> AbilitySelected = delegate { };
+    public event Action AbilityDeselected = delegate { };
     
     private EntityPanel _entityPanel = null!;
     private SelectionPanel _selectionPanel = null!;
@@ -46,6 +48,8 @@ public partial class Interface : CanvasLayer
 
         _entityPanel.AbilityViewOpened += _selectionPanel.OnSelectableAbilityPressed;
         _entityPanel.AbilityViewClosed += _selectionPanel.OnGoBackPressed;
+        _entityPanel.AbilityViewOpened += OnAbilityViewOpened;
+        _entityPanel.AbilityViewClosed += OnAbilityViewClosed;
         _entityPanel.AttackSelected += OnEntityPanelAttackSelected;
         _selectionPanel.SelectedToBuild += OnSelectionPanelSelectedToBuild;
         _turnPanel.NextTurnClicked += OnTurnPanelNextTurnClicked;
@@ -57,6 +61,8 @@ public partial class Interface : CanvasLayer
     {
         _entityPanel.AbilityViewOpened -= _selectionPanel.OnSelectableAbilityPressed;
         _entityPanel.AbilityViewClosed -= _selectionPanel.OnGoBackPressed;
+        _entityPanel.AbilityViewOpened -= OnAbilityViewOpened;
+        _entityPanel.AbilityViewClosed -= OnAbilityViewClosed;
         _entityPanel.AttackSelected -= OnEntityPanelAttackSelected;
         _selectionPanel.SelectedToBuild -= OnSelectionPanelSelectedToBuild;
         _turnPanel.NextTurnClicked -= OnTurnPanelNextTurnClicked;
@@ -120,6 +126,20 @@ public partial class Interface : CanvasLayer
     {
         SelectedToBuild(buildAbility, entityId);
     }
+
+    private void OnAbilityViewOpened(AbilityButton button)
+    {
+        var ability = button.Ability;
+
+        if (ability is IAbilityHasTargetArea)
+        {
+            _informationalText.SwitchTo(InformationalText.InfoTextType.SelectedTarget, ability.OwnerActor);
+        }
+        
+        AbilitySelected(ability);
+    }
+
+    private void OnAbilityViewClosed() => AbilityDeselected();
 
     private void OnEntityPanelAttackSelected(bool started, AttackType? attackType) => AttackSelected(started, attackType);
 

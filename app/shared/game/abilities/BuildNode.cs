@@ -8,7 +8,7 @@ using LowAgeData.Domain.Entities;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
 
-public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelectable
+public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, IAbilityHasSelection, IAbilityHasTargetArea
 {
     public const string ScenePath = @"res://app/shared/game/abilities/BuildNode.tscn";
     public static BuildNode Instance() => (BuildNode) GD.Load<PackedScene>(ScenePath).Instantiate();
@@ -44,10 +44,10 @@ public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, ISelect
         Selection = Blueprint.Selection;
     }
 
-    public bool CanBePlacedOnTheWholeMap() => PlacementArea is LowAgeData.Domain.Common.Shape.Map 
-                                              && Blueprint.UseWalkableTilesAsPlacementArea is false;
+    public bool WholeMapIsTargeted() => PlacementArea is LowAgeData.Domain.Common.Shape.Map 
+                                           && Blueprint.UseWalkableTilesAsPlacementArea is false;
 
-    public IEnumerable<Vector2Int> GetPlacementPositions(EntityNode caster, Vector2Int mapSize)
+    public IEnumerable<Vector2Int> GetTargetPositions(EntityNode caster, Vector2Int mapSize)
     {
         if (Blueprint.UseWalkableTilesAsPlacementArea && caster is StructureNode structure)
         {

@@ -46,15 +46,22 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     {
     }
 
-    public virtual bool CanActivate(TurnPhase currentTurnPhase, ActorNode? actorInAction)
+    public virtual ValidationResult CanActivate(TurnPhase currentTurnPhase, ActorNode? actorInAction)
     {
-        if (IsActive is false 
-            || RemainingCooldown.HasCompleted() is false
-            || currentTurnPhase.Equals(TurnPhase) is false 
-            || (TurnPhase.Equals(TurnPhase.Action) && OwnerActor.Equals(actorInAction) is false))
-            return false;
+        if (IsActive is false)
+            return ValidationResult.Invalid("Cannot activate an ability which is already activated.");
+        
+        if (RemainingCooldown.HasCompleted() is false)
+            return ValidationResult.Invalid("This ability is still on cooldown.");
+        
+        if (currentTurnPhase.Equals(TurnPhase) is false)
+            return ValidationResult.Invalid($"This ability can only be activated in the " +
+                                            $"{TurnPhase.ToDisplayValue()} Phase.");
+        
+        if ((TurnPhase.Equals(TurnPhase.Action) && OwnerActor.Equals(actorInAction) is false))
+            return ValidationResult.Invalid("It's not your turn!");
 
-        return true;
+        return ValidationResult.Valid;
     }
     
     public virtual void Activate()

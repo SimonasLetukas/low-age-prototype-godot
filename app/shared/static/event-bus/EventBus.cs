@@ -28,6 +28,9 @@ public partial class EventBus : Node
     #endregion Singleton
 
     #region Events
+
+    public event Action<string> ValidationError = delegate { };
+    public void RaiseValidationError(string message) => ValidationError(message);
     
     public event Action<int, TurnPhase> PhaseStarted = delegate { };
     public void RaisePhaseStarted(int turn, TurnPhase phase) => PhaseStarted(turn, phase);

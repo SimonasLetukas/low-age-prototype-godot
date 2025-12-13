@@ -7,7 +7,7 @@ public partial class SelectionButton : BaseButton
 {
     public const string ScenePath = @"res://app/client/game/interface/panels/selection/SelectionButton.tscn";
     public static SelectionButton Instance() => (SelectionButton) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static SelectionButton InstantiateAsChild(ISelectable abilityNode, Id selectionId, Node parentNode)
+    public static SelectionButton InstantiateAsChild(IAbilityHasSelection abilityNode, Id selectionId, Node parentNode)
     {
         var selectionButton = Instance();
         selectionButton.SetupSelectionButton(abilityNode, selectionId);
@@ -15,9 +15,9 @@ public partial class SelectionButton : BaseButton
         return selectionButton;
     }
     
-    public new event Action<ISelectable, Id> Clicked = delegate { };
+    public new event Action<IAbilityHasSelection, Id> Clicked = delegate { };
     
-    public ISelectable Ability { get; private set; }
+    public IAbilityHasSelection Ability { get; private set; }
     public Id SelectionId { get; private set; }
     
     public override void _Ready()
@@ -33,7 +33,7 @@ public partial class SelectionButton : BaseButton
         base._ExitTree();
     }
 
-    public void SetupSelectionButton(ISelectable ability, Id selectionId)
+    public void SetupSelectionButton(IAbilityHasSelection ability, Id selectionId)
     {
         Ability = ability;
         SelectionId = selectionId;

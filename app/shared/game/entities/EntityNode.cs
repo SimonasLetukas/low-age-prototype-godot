@@ -245,8 +245,10 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public virtual bool CanBeMovedThroughAt(Point point, Team forTeam) => true;
 
-    public virtual bool CanBeTargetedBy(EntityNode entity) => Player.Team.IsEnemyTo(entity.Player.Team) 
-                                                              || Config.Instance.AllowSameTeamCombat;
+    public virtual ValidationResult CanBeTargetedBy(EntityNode entity) => Player.Team.IsEnemyTo(entity.Player.Team) 
+                                                                          || Config.Instance.AllowSameTeamCombat 
+        ? ValidationResult.Valid 
+        : ValidationResult.Invalid("Target cannot be on the same team!");
     
     public bool HasHighGroundAt(Point point, Team forTeam)
     {

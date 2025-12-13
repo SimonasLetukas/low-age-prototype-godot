@@ -178,10 +178,10 @@ public partial class ElevatableTiles : Node2D
     
     private bool IsCurrentlyAvailable(Point point) => _availableTilesCache.Any(x => x.Point.Id.Equals(point.Id));
 
-    public void SetTargetTiles(IEnumerable<Tiles.TileInstance> targets, bool isPlacementAreaTheWholeMap, 
+    public void SetTargetTiles(IEnumerable<Tiles.TileInstance> targets, bool wholeMapIsTargeted, 
         bool hovering, bool isMelee = false)
     {
-        if (isPlacementAreaTheWholeMap)
+        if (wholeMapIsTargeted)
         {
             if (hovering)
             {
