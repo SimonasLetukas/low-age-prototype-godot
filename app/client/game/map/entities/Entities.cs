@@ -20,7 +20,6 @@ public partial class Entities : Node2D
     
     public event Action<EntityPlacedRequestEvent> EntityPlaced = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
-    public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
     public event Action<EntityNode> EntityDeselected = delegate { };
 
@@ -520,7 +519,7 @@ public partial class Entities : Node2D
         if (IsEntityHovered(entity))
             HoveredEntity = null;
         
-        Destroyed(entity);
+        EventBus.Instance.RaiseEntityDestroyed(entity);
         
         _renderers.UnregisterRenderer(entity.Renderer);
         

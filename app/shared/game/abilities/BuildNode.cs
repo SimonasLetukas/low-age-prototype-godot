@@ -26,16 +26,6 @@ public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, IAbilit
     private Build Blueprint { get; set; }
     private IShape PlacementArea { get; set; }
 
-    public override void _Ready()
-    {
-        base._Ready();
-    }
-
-    public override void _ExitTree()
-    {
-        base._ExitTree();
-    }
-
     public void SetBlueprint(Build blueprint)
     {
         base.SetBlueprint(blueprint);
@@ -44,8 +34,20 @@ public partial class BuildNode : AbilityNode, INodeFromBlueprint<Build>, IAbilit
         Selection = Blueprint.Selection;
     }
 
+    public override void Activate()
+    {
+        if (Blueprint.CasterConsumesAction)
+        {
+            OwnerActor.ActionEconomy.UsedAbilityAction();
+            IsActive = false;
+            StartCooldown();
+        }
+        
+        RaiseActivated();
+    }
+
     public bool WholeMapIsTargeted() => PlacementArea is LowAgeData.Domain.Common.Shape.Map 
-                                           && Blueprint.UseWalkableTilesAsPlacementArea is false;
+                                        && Blueprint.UseWalkableTilesAsPlacementArea is false;
 
     public IEnumerable<Vector2Int> GetTargetPositions(EntityNode caster, Vector2Int mapSize)
     {

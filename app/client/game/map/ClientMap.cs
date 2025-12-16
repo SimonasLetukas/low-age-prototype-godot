@@ -60,13 +60,13 @@ public partial class ClientMap : Map
 		_lines = GetNode<Node2D>($"Lines");
 
 		Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
-		Entities.Destroyed += OnEntitiesDestroyed;
 		_tileMap.FinishedInitialInitializing += OnTileMapFinishedInitialInitializing;
 		_tileMap.FinishedPointInitialization += OnTileMapFinishedPointInitialization;
 		Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing;
 		Pathfinding.PointAdded += OnPathfindingPointAdded;
 		Pathfinding.PointRemoved += OnPathfindingPointRemoved;
 		EventBus.Instance.EntityPlaced += OnEntityPlaced;
+		EventBus.Instance.EntityDestroyed += OnEntityDestroyed;
 		EventBus.Instance.NewTileFocused += OnNewTileFocused;
 		EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
 	}
@@ -74,13 +74,13 @@ public partial class ClientMap : Map
 	public override void _ExitTree()
 	{
 		Entities.NewPositionOccupied -= OnEntitiesNewPositionOccupied;
-		Entities.Destroyed += OnEntitiesDestroyed;
 		_tileMap.FinishedInitialInitializing -= OnTileMapFinishedInitialInitializing;
 		_tileMap.FinishedPointInitialization -= OnTileMapFinishedPointInitialization;
 		Pathfinding.FinishedInitializing -= OnPathfindingFinishedInitializing;
-		Pathfinding.PointAdded += OnPathfindingPointAdded;
-		Pathfinding.PointRemoved += OnPathfindingPointRemoved;
+		Pathfinding.PointAdded -= OnPathfindingPointAdded;
+		Pathfinding.PointRemoved -= OnPathfindingPointRemoved;
 		EventBus.Instance.EntityPlaced -= OnEntityPlaced;
+		EventBus.Instance.EntityDestroyed -= OnEntityDestroyed;
 		EventBus.Instance.NewTileFocused -= OnNewTileFocused;
 		EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
 		
@@ -350,20 +350,15 @@ public partial class ClientMap : Map
 		var canExecuteActionInCurrentPhase = CanExecuteActionInCurrentPhase();
 		if (canExecuteActionInCurrentPhase.IsValid is false)
 			return canExecuteActionInCurrentPhase;
-		
-		switch (_selectionOverlay)
+
+		return _selectionOverlay switch
 		{
-			case SelectionOverlay.Movement:
-				return ExecuteMovement();
-			case SelectionOverlay.Attack:
-				return ExecuteAttack();
-			case SelectionOverlay.Target:
-				return ExecuteTarget();
-			case SelectionOverlay.Placement:
-				return ExecutePlacement();
-			default:
-				return ValidationResult.Invalid("Nothing to execute.");
-		}
+			SelectionOverlay.Movement => ExecuteMovement(),
+			SelectionOverlay.Attack => ExecuteAttack(),
+			SelectionOverlay.Target => ExecuteTarget(),
+			SelectionOverlay.Placement => ExecutePlacement(),
+			_ => ValidationResult.Invalid("Nothing to execute.")
+		};
 	}
 
 	private void ExecuteEntitySelection(bool maintainCurrentlySelectedEntity = false)
@@ -517,9 +512,6 @@ public partial class ClientMap : Map
 
 	private ValidationResult ExecuteAttack()
 	{
-		// TODO extract this into a method that would be used in TryActivateActionInCurrentPhase which
-		// would use ActionEconomy for the response
-		
 		if (_focusedTile.CurrentTile is not { } focusedTile
 		    || focusedTile.TargetType is TargetType.None
 		    || Entities.HoveredEntity is not { } targetEntity
@@ -551,13 +543,39 @@ public partial class ClientMap : Map
 
 	private ValidationResult ExecuteTarget()
 	{
+		if (_selectedAbility is not IAbilityHasTargetArea abilityWithTargetArea)
+		{
+			ExecuteCancellation();
+			return ValidationResult.Invalid("This ability cannot target an area.");
+		}
+		
+		if (Entities.SelectedEntity is not ActorNode selectedActor
+		    || selectedActor.ActionEconomy.CanUseAbilityAction is false)
+			return ValidationResult.Invalid("Ability action is not available!");
+		
+		_selectedAbility.Activate();
+		
 		ExecuteCancellation();
 		return ValidationResult.Valid;
 	}
 	
 	private ValidationResult ExecutePlacement()
 	{
-		Entities.PlaceEntity();
+		if (_selectedAbility is not BuildNode buildAbility)
+		{
+			ExecuteCancellation();
+			return ValidationResult.Invalid("This ability cannot execute placement action.");
+		}
+
+		if (Entities.SelectedEntity is not ActorNode selectedActor
+		    || selectedActor.ActionEconomy.CanUseAbilityAction is false)
+			return ValidationResult.Invalid("Ability action is not available!");
+		
+		var placedEntity = Entities.PlaceEntity();
+		if (placedEntity is null)
+			return ValidationResult.Invalid("Placement is invalid.");
+		
+		buildAbility.Activate();
 
 		if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
 		{
@@ -818,7 +836,7 @@ public partial class ClientMap : Map
 		UpdateLines();
 	}
 	
-	private void OnEntitiesDestroyed(EntityNode entity)
+	private void OnEntityDestroyed(EntityNode entity)
 	{
 		if (Entities.IsEntitySelected(entity))
 			HandleDeselecting();

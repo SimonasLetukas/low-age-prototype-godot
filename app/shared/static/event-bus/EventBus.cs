@@ -61,6 +61,9 @@ public partial class EventBus : Node
     public event Action<EntityNode, int> EntityZIndexUpdated = delegate { };
     public void RaiseEntityZIndexUpdated(EntityNode entity, int zIndex) => EntityZIndexUpdated(entity, zIndex);
 
+    public event Action<EntityNode> EntityDestroyed = delegate { };
+    public void RaiseEntityDestroyed(EntityNode entity) => EntityDestroyed(entity);
+    
     public event Action<IPathfindingUpdatable, bool> PathfindingUpdating = delegate { };
     public void RaisePathfindingUpdating(IPathfindingUpdatable data, bool isAdded) => PathfindingUpdating(data, isAdded);
 

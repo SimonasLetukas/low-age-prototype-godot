@@ -40,6 +40,12 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
         IsActive = IsPaid() && IsResearched;
         HasButton = Blueprint.HasButton;
     }
+    
+    public override void _ExitTree()
+    {
+        RemainingCooldown.Completed -= OnCooldownEnded;
+        base._ExitTree();
+    }
 
     // TODO might not be needed -- need to think of how the "instant" abilities will work first
     public virtual void Preview()
@@ -66,16 +72,11 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     
     public virtual void Activate()
     {
+        OwnerActor.ActionEconomy.UsedAbilityAction();
         IsActive = false;
         StartCooldown();
         // TODO start paying and execute ability only after it's paid
-        Activated(this);
-    }
-
-    public override void _ExitTree()
-    {
-        RemainingCooldown.Completed -= OnCooldownEnded;
-        base._ExitTree();
+        RaiseActivated();
     }
 
     public bool IsPaid()
@@ -95,6 +96,8 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
         IsActive = IsResearched;
         return true;
     }
+
+    protected void RaiseActivated() => Activated(this);
 
     protected virtual void StartCooldown()
     {

@@ -23,7 +23,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         Blueprint = blueprint;
         Description = Blueprint.Description;
         Alignment = Blueprint.Alignment;
-        CurrentDuration = EndsAtNode.InstantiateAsChild(blueprint.EndsAt, this, Parent as ActorNode);
+        CurrentDuration = EndsAtNode.InstantiateAsChild(blueprint.EndsAt, this, Parent);
         CurrentDuration.Completed += OnDurationEnded;
     }
 

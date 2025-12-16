@@ -8,12 +8,12 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
 {
     public const string ScenePath = @"res://app/shared/game/misc/EndsAtNode.tscn";
     public static EndsAtNode Instance() => (EndsAtNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static EndsAtNode InstantiateAsChild(EndsAt blueprint, Node parentNode, ActorNode? ownerActor)
+    public static EndsAtNode InstantiateAsChild(EndsAt blueprint, Node parentNode, EntityNode ownerEntity)
     {
         var endsAt = Instance();
         parentNode.AddChild(endsAt);
         endsAt.SetBlueprint(blueprint);
-        endsAt.ActorToAct = ownerActor;
+        endsAt.OwnerEntity = ownerEntity;
         return endsAt;
     }
     
@@ -26,8 +26,8 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     private int Counter { get; set; }
     private int MaxCounter { get; set; }
     private TriggersOnEnum TriggersOn { get; set; }
-    private TurnPhase? Phase { get; set; }
-    private ActorNode? ActorToAct { get; set; }
+    private TurnPhase? Phase { get; set; } // when null, the timing is implicitly understood as "action" 
+    private EntityNode OwnerEntity { get; set; } = null!;
 
     public override void _Ready()
     {
@@ -37,6 +37,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         EventBus.Instance.PhaseEnded += OnPhaseEnded;
         EventBus.Instance.ActionStarted += OnActionStarted;
         EventBus.Instance.ActionEnded += OnActionEnded;
+        EventBus.Instance.EntityDestroyed += OnEntityDestroyed;
     }
 
     public override void _ExitTree()
@@ -45,6 +46,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         EventBus.Instance.PhaseEnded -= OnPhaseEnded;
         EventBus.Instance.ActionStarted -= OnActionStarted;
         EventBus.Instance.ActionEnded -= OnActionEnded;
+        EventBus.Instance.EntityDestroyed -= OnEntityDestroyed;
         
         base._ExitTree();
     }
@@ -248,12 +250,18 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     }
 
     /// <summary>
-    /// Resets the duration to the full amount if this <see cref="EndsAt"/> <see cref="HasDuration"/>.
+    /// Resets the duration to the full amount if this <see cref="EndsAt"/> <see cref="HasDuration"/>. Otherwise,
+    /// immediately triggers <see cref="Completed"/>
     /// </summary>
     public void ResetDuration()
     {
-        if (HasDuration() && EndsOnDeath is false) 
+        var hasDuration = HasDuration();
+        
+        if (hasDuration && EndsOnDeath is false) 
             Counter = MaxCounter;
+
+        if (hasDuration is false)
+            Completed();
     }
 
     /// <summary>
@@ -278,8 +286,8 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         if (current) text += Counter;
         else text += MaxCounter;
 
-        if (ActorToAct is not null) text += " actions";
-        else if (Phase is not null)
+        if (Phase is null) text += " actions";
+        else
         {
             if (Phase.Equals(TurnPhase.Action)) text += " action phases";
             if (Phase.Equals(TurnPhase.Planning)) text += " planning phases";
@@ -300,7 +308,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         if (EndsOnDeath 
             || IsInstant
             || TriggersOn is TriggersOnEnum.End
-            || ActorToAct is not null
+            || Phase is null
             || turnPhase.Equals(Phase) is false
             || Counter <= 0) 
             return;
@@ -318,7 +326,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         if (EndsOnDeath 
             || IsInstant
             || TriggersOn is TriggersOnEnum.Start
-            || ActorToAct is not null
+            || Phase is null
             || turnPhase.Equals(Phase) is false
             || Counter <= 0) 
             return;
@@ -336,7 +344,8 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         if (EndsOnDeath
             || IsInstant
             || TriggersOn is TriggersOnEnum.End
-            || actor.Equals(ActorToAct) is false
+            || Phase is not null
+            || actor.Equals(OwnerEntity) is false
             || Counter <= 0)
             return;
 
@@ -353,7 +362,8 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         if (EndsOnDeath
             || IsInstant
             || TriggersOn is TriggersOnEnum.Start
-            || actor.Equals(ActorToAct) is false
+            || Phase is not null
+            || actor.Equals(OwnerEntity) is false
             || Counter <= 0)
             return;
 
@@ -362,6 +372,16 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         if (Counter > 0)
             return;
 
+        Completed();
+    }
+
+    private void OnEntityDestroyed(EntityNode entity)
+    {
+        if (EndsOnDeath is false
+            || IsInstant
+            || entity.Equals(OwnerEntity) is false)
+            return;
+        
         Completed();
     }
     
