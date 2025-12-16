@@ -40,6 +40,15 @@ public partial class Camera : Camera2D
         }
 
         SetLimits();
+
+        EventBus.Instance.ActionStarted += OnActionStarted;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus.Instance.ActionStarted -= OnActionStarted;
+        
+        base._ExitTree();
     }
 
     // TODO force camera / map / unit positions into discrete values so that weird artifacts are avoided
@@ -183,6 +192,18 @@ public partial class Camera : Camera2D
         if (GetCurrentBottomBoundary() >= _limitBottom) return false;
         if (mousePos.Y > _viewportSize.Y - MapScrollMargin && MapScrollOnBoundaryEnabled) return true;
         return false;
+    }
+
+    private void OnActionStarted(ActorNode actor)
+    {
+        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(actor) is false)
+            return;
+
+        var tween = CreateTween();
+        tween.TweenProperty(this, "global_position", actor.GlobalPosition, 0.1f)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad)
+            .SetEase(Tween.EaseType.InOut);
     }
 
     private enum ZoomLevel

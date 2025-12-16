@@ -750,6 +750,16 @@ public partial class ClientMap : Map
 		}
 	}
 
+	protected override void OnActionStarted(ActorNode actor)
+	{
+		base.OnActionStarted(actor);
+
+		if (Players.Instance.IsActionAllowedForCurrentPlayerOn(actor) is false)
+			return;
+		
+		ExecuteEntitySelection(actor);
+	}
+
 	private void OnPathfindingUpdating(IPathfindingUpdatable data, bool isAdded)
 	{
 		Pathfinding.ClearCache();

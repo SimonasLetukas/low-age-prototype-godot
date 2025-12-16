@@ -32,19 +32,19 @@ public partial class Map : Node2D
 		base._ExitTree();
 	}
 
-	private void OnPhaseStarted(int turn, TurnPhase phase)
+	protected virtual void OnPhaseStarted(int turn, TurnPhase phase)
 	{
 		CurrentPhase = phase;
 		if (CurrentPhase.Equals(TurnPhase.Planning))
 			ActorInAction = null;
 	}
 
-	private void OnPhaseEnded(int turn, TurnPhase phase)
+	protected virtual void OnPhaseEnded(int turn, TurnPhase phase)
 	{
 		ActorInAction = null;
 	}
 
-	private void OnActionStarted(ActorNode actor)
+	protected virtual void OnActionStarted(ActorNode actor)
 	{
 		ActorInAction = actor;
 	}
