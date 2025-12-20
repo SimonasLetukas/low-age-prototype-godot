@@ -27,7 +27,7 @@ public partial class Entities : Node2D
     public EntityNode? SelectedEntity { get; private set; } = null;
     public EntityNode? EntityInPlacement { get; private set; } = null;
     public EntityNode? HoveredEntity { get; private set; } = null;
-
+    
     private EntityRenderers _renderers = null!;
     private Node2D _units = null!;
     private Node2D _structures = null!;
@@ -525,7 +525,7 @@ public partial class Entities : Node2D
             HoveredEntity = null;
         
         EventBus.Instance.RaiseEntityDestroyed(entity);
-        
+
         _renderers.UnregisterRenderer(entity.Renderer);
         
         entity.FinishedMoving -= OnEntityFinishedMoving;

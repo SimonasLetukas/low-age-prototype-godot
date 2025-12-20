@@ -30,6 +30,15 @@ public partial class Turns : Node2D
 		if (DebugEnabled) GD.Print($"{nameof(Turns)}: entering");
 		
 		base._Ready();
+
+		EventBus.Instance.EntityDestroyed += OnEntityDestroyed;
+	}
+
+	public override void _ExitTree()
+	{
+		EventBus.Instance.EntityDestroyed -= OnEntityDestroyed;
+		
+		base._ExitTree();
 	}
 
 	public void Initialize(Func<IList<ActorNode>> getActorsSortedByInitiative, 
@@ -149,5 +158,29 @@ public partial class Turns : Node2D
 			Turn++;
 		
 		EventBus.Instance.RaisePhaseStarted(Turn, Phase);
+	}
+	
+	private void OnEntityDestroyed(EntityNode entity)
+	{
+		if (InitiativeQueue.IsEmpty() || entity is not ActorNode actor) 
+			return;
+
+		var currentActorInActionWasDestroyed = InitiativeQueue.First().Equals(actor);
+		if (currentActorInActionWasDestroyed)
+		{
+			AdvanceToNextAction(false);
+
+			if (InitiativeQueue.Any()) 
+				return;
+			
+			EventBus.Instance.RaiseInitiativeQueueUpdated([]);
+			AdvanceToNextPhase();
+
+			return;
+		}
+		
+		var removed = InitiativeQueue.Remove(actor);
+		if (removed)
+			EventBus.Instance.RaiseInitiativeQueueUpdated(InitiativeQueue);
 	}
 }
