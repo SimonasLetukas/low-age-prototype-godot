@@ -87,7 +87,7 @@ public partial class Players : Node
     
     public void Reset()
     {
-        _players = new List<Player>();
+        _players = [];
     }
 
     #endregion Setters (should only be accessed by the multiplayer-related nodes)

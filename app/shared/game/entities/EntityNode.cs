@@ -353,7 +353,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         
         if (tiles.Any(tile => tile!.IsOccupiedBy<UnitNode>()))
             return false;
-
+        
         return true;
     }
     

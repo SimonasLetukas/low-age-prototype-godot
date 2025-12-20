@@ -7,7 +7,6 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
 using LowAgeCommon;
-using LowAgeData.Domain.Common;
 using MultipurposePathfinding;
 using Newtonsoft.Json;
 
@@ -104,10 +103,11 @@ public partial class Entities : Node2D
 
     public IList<ActorNode> GetActorsSortedByInitiative()
     {
+        var deterministicInitiative = Config.Instance.DeterministicInitiative;
         var actorsGroupedBySortedInitiative = GetActorInitiativeMap()
-            .OrderByDescending(pair => pair.Value)
+            .OrderByDescending(pair => deterministicInitiative ? (int)pair.Value : pair.Value)
             .ThenBy(pair => pair.Key.CreationToken)
-            .GroupBy(pair => pair.Value)
+            .GroupBy(pair => deterministicInitiative ? (int)pair.Value : pair.Value)
             .Select(group => group.Select(pair => pair.Key));
 
         var finalOrder = ResolveIdenticalInitiatives(actorsGroupedBySortedInitiative);
@@ -444,20 +444,25 @@ public partial class Entities : Node2D
         return unit;
     }
     
-    private Dictionary<ActorNode, int> GetActorInitiativeMap()
+    private Dictionary<ActorNode, float> GetActorInitiativeMap()
     {
         var deterministicInitiative = Config.Instance.DeterministicInitiative;
-        var entityInitiativeMap = new Dictionary<ActorNode, int>();
+        var entityInitiativeMap = new Dictionary<ActorNode, float>();
         
         foreach (var entity in _entitiesByIds.Values.OrderBy(e => e.CreationToken))
         {
             if (entity is not ActorNode actor || actor.HasInitiative is false)
                 continue;
 
-            var initiative = deterministicInitiative 
-                ? (int)actor.Initiative!.CurrentAmount 
-                : Dice.RollMultiple(19, (int)actor.Initiative!.CurrentAmount).Sum();
+            var initiativeBonus = (actor.Initiative!.MaxAmount - actor.Initiative!.CurrentAmount) / 1.5f;
 
+            var initiative = deterministicInitiative 
+                ? actor.Initiative!.MaxAmount 
+                : Mathf.Max((float)Dice.RollMultiple(19, actor.Initiative!.MaxAmount).Sum() / 10 
+                            + initiativeBonus, 0);
+
+            actor.Initiative.CurrentAmount = initiative;
+            
             if (DebugEnabled)
                 GD.Print($"{nameof(Entities)}.{nameof(GetActorInitiativeMap)}: {actor.DisplayName} at " + 
                          $"{actor.EntityPrimaryPosition} {nameof(initiative)} {initiative}");

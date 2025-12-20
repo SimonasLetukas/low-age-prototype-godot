@@ -8,6 +8,14 @@ using MultipurposePathfinding;
 
 public partial class ElevatableTiles : Node2D
 {
+    public enum TargetPurpose
+    {
+        AttackMelee,
+        AttackRanged,
+        Ability,
+        Placement
+    }
+    
     public FocusedTile Focused { get; private set; } = null!;
 
     private Tiles _tiles = null!;
@@ -177,9 +185,9 @@ public partial class ElevatableTiles : Node2D
     public bool IsCurrentlyAvailable(Tiles.TileInstance? tile) => tile != null && IsCurrentlyAvailable(tile.Point);
     
     private bool IsCurrentlyAvailable(Point point) => _availableTilesCache.Any(x => x.Point.Id.Equals(point.Id));
-
+    
     public void SetTargetTiles(IEnumerable<Tiles.TileInstance> targets, bool wholeMapIsTargeted, 
-        bool hovering, bool isMelee = false)
+        bool hovering, TargetPurpose purpose)
     {
         if (wholeMapIsTargeted)
         {
@@ -193,12 +201,12 @@ public partial class ElevatableTiles : Node2D
             return;
         }
         
-        ClearTargetTiles(hovering, isMelee);
+        ClearTargetTiles(hovering, purpose);
 
-        var targetTileInstances = GetUpdatedTargetTileInstances(targets, hovering, isMelee);
+        var targetTileInstances = GetUpdatedTargetTileInstances(targets, hovering, purpose);
         var pointsByElevation = SplitIntoElevations(targetTileInstances);
         var tileMapsByElevation = GetAndPrepareAllElevationsOfTargetTileMap(
-            pointsByElevation.Keys, hovering, isMelee);
+            pointsByElevation.Keys, hovering, purpose is TargetPurpose.AttackMelee);
         
         foreach (var entry in tileMapsByElevation)
         {
@@ -208,7 +216,7 @@ public partial class ElevatableTiles : Node2D
                     (point.Position.ToGodotVector2I(), GetZIndexAt(point.Position, entry.Key)))
                 .ToList();
             
-            entry.Value.SetTiles(targetPositions, hovering, isMelee);
+            entry.Value.SetTiles(targetPositions, hovering, purpose is TargetPurpose.AttackMelee);
         }
     }
     
@@ -264,17 +272,17 @@ public partial class ElevatableTiles : Node2D
     
     public void ClearTargetTiles(bool hovering)
     {
-        ClearTargetTiles(hovering, true);
-        ClearTargetTiles(hovering, false);
+        ClearTargetTiles(hovering, TargetPurpose.AttackMelee);
+        ClearTargetTiles(hovering, TargetPurpose.AttackRanged); // implicitly covers TargetPurpose.Ability
     }
 
-    public void ClearTargetTiles(bool hovering, bool isMelee)
+    public void ClearTargetTiles(bool hovering, TargetPurpose purpose)
     {
         if (hovering)
         {
             _targetMapTilesHovering.Visible = false;
 
-            if (isMelee)
+            if (purpose is TargetPurpose.AttackMelee)
             {
                 foreach (var targetTiles in _targetMeleeTileMapsHovering.Values)
                     targetTiles.Clear();
@@ -290,7 +298,7 @@ public partial class ElevatableTiles : Node2D
         
         _targetMapTiles.Visible = false;
 
-        if (isMelee)
+        if (purpose is TargetPurpose.AttackMelee)
         {
             foreach (var targetTiles in _targetMeleeTileMaps.Values)
                 targetTiles.Clear();
@@ -332,22 +340,24 @@ public partial class ElevatableTiles : Node2D
             .ToVector2();
     
     private HashSet<Tiles.TileInstance> GetUpdatedTargetTileInstances(IEnumerable<Tiles.TileInstance> targets, 
-        bool hovering, bool isMelee)
+        bool hovering, TargetPurpose purpose)
     {
-        var targetTileInstances = isMelee ? _targetMeleeTileInstances : _targetNormalTileInstances;
+        var targetTileInstances = purpose is TargetPurpose.AttackMelee 
+            ? _targetMeleeTileInstances 
+            : _targetNormalTileInstances;
 
         if (hovering) 
             return targetTileInstances;
         
         foreach (var target in targets)
         {
-            if (isMelee is false && _targetMeleeTileInstances.Contains(target))
-                continue;
-
-            var targetType = isMelee ? TargetType.Melee : TargetType.Ranged;
+            var targetType = purpose is TargetPurpose.AttackMelee ? TargetType.Melee : TargetType.Normal;
 
             target.TargetType = targetType;
             targetTileInstances.Add(target);
+
+            if (purpose is TargetPurpose.Placement)
+                continue;
             
             foreach (var occupant in target.GetOccupants())
             {
@@ -358,7 +368,7 @@ public partial class ElevatableTiles : Node2D
                 }
             }
         }
-
+        
         return targetTileInstances;
     }
     

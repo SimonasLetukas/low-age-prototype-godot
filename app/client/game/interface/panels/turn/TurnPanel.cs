@@ -26,6 +26,13 @@ public partial class TurnPanel : Control
 		
 		_nextTurnButton.Clicked += OnNextTurnButtonClicked;
 		EventBus.Instance.PhaseStarted += OnPhaseStarted;
+		EventBus.Instance.ActionStarted += OnActionStarted;
+	}
+
+	private void OnActionStarted(ActorNode actor)
+	{
+		var currentPlayerCanPressNextTurn = Players.Instance.IsActionAllowedForCurrentPlayerOn(actor);
+		_nextTurnButton.SetDisabled(currentPlayerCanPressNextTurn is false);
 	}
 
 	public override void _ExitTree()

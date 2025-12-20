@@ -54,10 +54,16 @@ public partial class InitiativeButton : BaseButton
     {
         var actorTypeText = actor is UnitNode ? "Unit" : "Structure";
         var numberOfActions = actor.ActionEconomy.NumberOfPossibleActions;
+        
+        var initiativeValue = actor.Initiative?.CurrentAmount.Equals((float?)actor.Initiative?.MaxAmount) switch
+        {
+            false => $"{actor.Initiative?.CurrentAmount.ToDisplayFormat()}/{actor.Initiative?.MaxAmount}",
+            _ => actor.Initiative?.MaxAmount.ToString()
+        };
 
         TooltipText = $"{actorTypeText}: {actor.DisplayName}\n" +
                       $"Position: {actor.EntityPrimaryPosition}\n" +
-                      $"Initiative: {actor.Initiative?.MaxAmount}\n" +
+                      $"Initiative: {initiativeValue}\n" +
                       $"Player: {actor.Player.Name}\n" + 
                       $"Available Actions: {numberOfActions}";
 

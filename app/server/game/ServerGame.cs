@@ -213,6 +213,10 @@ public partial class ServerGame : Game
             
             // Tell everyone that the game has ended
             Rpc(nameof(GameEnded));
+            
+            Server.Instance.ResetNetwork();
+            Players.Instance.Reset();
+            
             Callable.From(() => GetTree().ChangeSceneToFile(ServerLobby.ScenePath)).CallDeferred();
         }
         

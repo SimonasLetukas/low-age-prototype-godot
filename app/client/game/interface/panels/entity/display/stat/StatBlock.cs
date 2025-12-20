@@ -21,13 +21,13 @@ public partial class StatBlock : MarginContainer
 
     public void SetValue(int maxValue, bool showCurrentValue = false, float currentValue = -1f)
     {
-        CurrentValue = Mathf.Snapped(currentValue, 0.1f);
+        CurrentValue = currentValue;
         MaxValue = maxValue;
         ShowCurrentValue = showCurrentValue;
 
         var newLabelValue = ShowCurrentValue switch
         {
-            true => $"{currentValue:0.#}/{maxValue.ToString()}",
+            true => $"{CurrentValue.ToDisplayFormat()}/{maxValue.ToString()}",
             false => maxValue.ToString()
         };
 

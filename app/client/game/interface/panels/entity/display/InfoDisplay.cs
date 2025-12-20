@@ -20,7 +20,8 @@ public partial class InfoDisplay : MarginContainer
     private int _valueMaxShields = 0;
     private float _valueCurrentMovement = 99.9f;
     private int _valueMaxMovement = 99;
-    private int _valueInitiative = 99;
+    private float _valueCurrentInitiative = 99.9f;
+    private int _valueMaxInitiative = 99;
     private int _valueMeleeArmour = 99;
     private int _valueRangedArmour = 99;
     private IEnumerable<ActorAttribute> _valueActorAttributes =
@@ -192,7 +193,8 @@ public partial class InfoDisplay : MarginContainer
             health?.MaxAmount ?? 0, 
             currentMovement, 
             movement?.MaxAmount ?? 0, 
-            initiative is null ? 0 : (int)initiative.CurrentAmount, 
+            initiative?.CurrentAmount ?? 0, 
+            initiative?.MaxAmount ?? 0,
             meleeArmour is null ? 0 : (int)meleeArmour.CurrentAmount, 
             rangedArmour is null ? 0 : (int)rangedArmour.CurrentAmount, 
             actorAttributes, 
@@ -206,7 +208,8 @@ public partial class InfoDisplay : MarginContainer
         int maxHealth,
         float currentMovement,
         int maxMovement,
-        int initiative,
+        float currentInitiative,
+        int maxInitiative,
         int meleeArmour,
         int rangedArmour,
         IEnumerable<ActorAttribute> actorAttributes,
@@ -218,7 +221,8 @@ public partial class InfoDisplay : MarginContainer
         _valueMaxHealth = maxHealth;
         _valueCurrentMovement = currentMovement;
         _valueMaxMovement = maxMovement;
-        _valueInitiative = initiative;
+        _valueCurrentInitiative = currentInitiative;
+        _valueMaxInitiative = maxInitiative;
         _valueMeleeArmour = meleeArmour;
         _valueRangedArmour = rangedArmour;
         _valueActorAttributes = actorAttributes;
@@ -316,7 +320,7 @@ public partial class InfoDisplay : MarginContainer
         _leftSideTopHealth.SetValue(_valueMaxHealth, (_valueCurrentHealth == _valueMaxHealth) is false, _valueCurrentHealth);
         _leftSideTopShields.SetValue(_valueMaxShields, (_valueCurrentShields == _valueMaxShields) is false, _valueCurrentShields);
         _leftSideMiddleMovement.SetValue(_valueMaxMovement, (_valueCurrentMovement == _valueMaxMovement) is false, _valueCurrentMovement);
-        _leftSideMiddleInitiative.SetValue(_valueInitiative);
+        _leftSideMiddleInitiative.SetValue(_valueMaxInitiative, (_valueCurrentInitiative == _valueMaxInitiative) is false, _valueCurrentInitiative);
         _leftSideBottomMeleeArmour.SetValue(_valueMeleeArmour);
         _leftSideBottomRangedArmour.SetValue(_valueRangedArmour);
         _actorAttributes.SetTypes(_valueActorAttributes);
@@ -327,7 +331,7 @@ public partial class InfoDisplay : MarginContainer
         _leftSideTopHealth.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _leftSideTopShields.Visible = _valueCurrentShields > 0 || _valueMaxShields > 0;
         _leftSideMiddleMovement.Visible = _valueCurrentMovement > 0 || _valueMaxMovement > 0;
-        _leftSideMiddleInitiative.Visible = _valueInitiative > 0;
+        _leftSideMiddleInitiative.Visible = _valueCurrentInitiative > 0 || _valueMaxInitiative > 0;
         _leftSideBottomMeleeArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _leftSideBottomRangedArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _rightSide.Visible = _showMinimal is false;

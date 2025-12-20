@@ -457,18 +457,20 @@ public partial class ClientMap : Map
 			unit.EntitySize.X) 
 			: [];
 		
-		var targetMeleeTiles = showMelee is null or true && actor.ActionEconomy.CanMeleeAttack
-			? actor.GetMeleeAttackTargetTiles(_mapSize, availablePoints) 
-			: [];
 		var targetRangedTiles = showMelee is null or false && actor.ActionEconomy.CanRangedAttack
 			? actor.GetRangedAttackTargetTiles(_mapSize) 
 			: [];
+		var targetMeleeTiles = showMelee is null or true && actor.ActionEconomy.CanMeleeAttack
+			? actor.GetMeleeAttackTargetTiles(_mapSize, availablePoints) 
+			: [];
 		
-		if (targetMeleeTiles.Count > 0)
-			_tileMap.Elevatable.SetTargetTiles(targetMeleeTiles, false, false, true);
-		
+		// The order is important here, because melee target tiles should always replace ranged ones when both overlap 
 		if (targetRangedTiles.Count > 0)
-			_tileMap.Elevatable.SetTargetTiles(targetRangedTiles, false, false, false);
+			_tileMap.Elevatable.SetTargetTiles(targetRangedTiles, false, false, 
+				ElevatableTiles.TargetPurpose.AttackRanged);
+		if (targetMeleeTiles.Count > 0)
+			_tileMap.Elevatable.SetTargetTiles(targetMeleeTiles, false, false, 
+				ElevatableTiles.TargetPurpose.AttackMelee);
 		
 		_selectionOverlay = SelectionOverlay.Attack;
 	}
@@ -571,9 +573,15 @@ public partial class ClientMap : Map
 		    || selectedActor.ActionEconomy.CanUseAbilityAction is false)
 			return ValidationResult.Invalid("Ability action is not available!");
 		
+		if (Entities.EntityInPlacement is null || Entities.EntityInPlacement.CanBePlaced is false)
+			return ValidationResult.Invalid("Placement is invalid.");
+		
 		var placedEntity = Entities.PlaceEntity();
 		if (placedEntity is null)
-			return ValidationResult.Invalid("Placement is invalid.");
+		{
+			ExecuteCancellation();
+			return ValidationResult.Invalid("Placement was not successful.");
+		}
 		
 		buildAbility.Activate();
 
@@ -880,11 +888,12 @@ public partial class ClientMap : Map
 		_tileMap.Elevatable.ClearPath();
 		_focusedTile.Disable();
 
-		var wholeMapIsTargeted = buildAbility.WholeMapIsTargeted();
 		var targetTiles = buildAbility.GetTargetPositions(Entities.SelectedEntity!, _mapSize)
 			.Select(position => _tileMap.GetTile(position, false))
 			.WhereNotNull();
-		_tileMap.Elevatable.SetTargetTiles(targetTiles, wholeMapIsTargeted, false);
+		var wholeMapIsTargeted = buildAbility.WholeMapIsTargeted();
+		_tileMap.Elevatable.SetTargetTiles(targetTiles, wholeMapIsTargeted, false, 
+			ElevatableTiles.TargetPurpose.Placement);
 
 		var entity = Entities.SetEntityForPlacement(entityId, wholeMapIsTargeted);
 		// TODO pass in the cost to be tracked inside the buildableNode
@@ -947,11 +956,15 @@ public partial class ClientMap : Map
 			_tileMap.Elevatable.ClearTargetTiles(false);
 			_tileMap.Elevatable.ClearPath();
 			
-			var wholeMapIsTargeted = abilityWithTargetArea.WholeMapIsTargeted();
 			var tiles = abilityWithTargetArea.GetTargetPositions(Entities.SelectedEntity!, _mapSize)
 				.Select(position => _tileMap.GetTile(position, false))
 				.WhereNotNull();
-			_tileMap.Elevatable.SetTargetTiles(tiles, wholeMapIsTargeted, false);
+			var wholeMapIsTargeted = abilityWithTargetArea.WholeMapIsTargeted();
+			var targetPurpose = ability is BuildNode
+				? ElevatableTiles.TargetPurpose.Placement
+				: ElevatableTiles.TargetPurpose.Ability;
+			
+			_tileMap.Elevatable.SetTargetTiles(tiles, wholeMapIsTargeted, false, targetPurpose);
 			_selectionOverlay = SelectionOverlay.Target;
 		}
 
