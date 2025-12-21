@@ -97,6 +97,9 @@ public partial class ServerGame : Game
             case EntityPlacedRequestEvent entityPlacedRequestEvent:
                 HandleEvent(entityPlacedRequestEvent);
                 break;
+            case EntityCandidatePlacementCancelledEvent candidatePlacementCancelledEvent:
+                HandleEvent(candidatePlacementCancelledEvent);
+                break;
             case PlanningPhaseEndedRequestEvent planningPhaseEndedRequestEvent:
                 HandleEvent(planningPhaseEndedRequestEvent);
                 break;
@@ -135,6 +138,17 @@ public partial class ServerGame : Game
     private void HandleEvent(EntityPlacedRequestEvent entityPlacedRequestEvent)
     {
         _pendingEntityPlacedRequests.Add(entityPlacedRequestEvent);
+    }
+
+    private void HandleEvent(EntityCandidatePlacementCancelledEvent @event)
+    {
+        var placedRequest = _pendingEntityPlacedRequests.FirstOrDefault(r =>
+            r.InstanceId.Equals(@event.InstanceId) && r.PlayerId.Equals(@event.PlayerId));
+
+        if (placedRequest is null)
+            return;
+
+        _pendingEntityPlacedRequests.Remove(placedRequest);
     }
 
     private void HandleEvent(PlanningPhaseEndedRequestEvent @event)

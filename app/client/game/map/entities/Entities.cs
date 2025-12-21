@@ -18,6 +18,7 @@ public partial class Entities : Node2D
     [Export] public bool DebugEnabled { get; set; } = false;
     
     public event Action<EntityPlacedRequestEvent> EntityPlaced = delegate { };
+    public event Action<EntityCandidatePlacementCancelledEvent> CandidatePlacementCancelled = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
     public event Action<EntityNode> EntityDeselected = delegate { };
@@ -305,6 +306,19 @@ public partial class Entities : Node2D
             
             entity.Destroy();
         }
+    }
+
+    public void OnInterfaceCandidatePlacementCancelled(EntityNode entity)
+    {
+        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(entity) is false)
+            return;
+        
+        CancelCandidateEntities([entity.InstanceId]);
+        CandidatePlacementCancelled(new EntityCandidatePlacementCancelledEvent
+        {
+            InstanceId = entity.InstanceId,
+            PlayerId = entity.Player.Id
+        });
     }
 
     public void HandleEvent(EntityAttackedEvent @event)

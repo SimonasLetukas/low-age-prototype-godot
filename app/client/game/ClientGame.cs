@@ -57,6 +57,7 @@ public partial class ClientGame : Game
         _interface.InitiativePanelActorSelected += _map.OnInitiativePanelActorSelected;
         _interface.AbilitySelected += _map.OnInterfaceAbilitySelected;
         _interface.AbilityDeselected += _map.OnInterfaceAbilityDeselected;
+        _interface.CandidatePlacementCancelled += _map.Entities.OnInterfaceCandidatePlacementCancelled;
         
         _map.FinishedInitializing += OnMapFinishedInitializing;
         _map.EntityIsBeingPlaced += _interface.OnEntityIsBeingPlaced;
@@ -66,6 +67,7 @@ public partial class ClientGame : Game
         _map.UnitMovementIssued += RegisterNewGameEvent;
         _map.EntityAttacked += RegisterNewGameEvent;
         _map.Entities.EntityPlaced += RegisterNewGameEvent;
+        _map.Entities.CandidatePlacementCancelled += RegisterNewGameEvent;
         
         Turns.PlanningPhaseEnded += RegisterNewGameEvent;
         Turns.ActionEnded += RegisterNewGameEvent;
@@ -82,6 +84,7 @@ public partial class ClientGame : Game
         _interface.InitiativePanelActorSelected -= _map.OnInitiativePanelActorSelected;
         _interface.AbilitySelected -= _map.OnInterfaceAbilitySelected;
         _interface.AbilityDeselected -= _map.OnInterfaceAbilityDeselected;
+        _interface.CandidatePlacementCancelled += _map.Entities.OnInterfaceCandidatePlacementCancelled;
         
         _map.FinishedInitializing -= OnMapFinishedInitializing;
         _map.EntityIsBeingPlaced -= _interface.OnEntityIsBeingPlaced;
@@ -91,6 +94,7 @@ public partial class ClientGame : Game
         _map.UnitMovementIssued -= RegisterNewGameEvent;
         _map.EntityAttacked -= RegisterNewGameEvent;
         _map.Entities.EntityPlaced -= RegisterNewGameEvent;
+        _map.Entities.CandidatePlacementCancelled -= RegisterNewGameEvent;
         
         Turns.PlanningPhaseEnded -= RegisterNewGameEvent;
         Turns.ActionEnded -= RegisterNewGameEvent;

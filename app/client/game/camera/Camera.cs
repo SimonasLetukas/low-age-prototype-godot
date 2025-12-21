@@ -30,7 +30,7 @@ public partial class Camera : Camera2D
         _viewportSize = DisplayServer.WindowGetSize();
 
         Position = new Vector2((float)_mapWidthPixels / 2, (float)_mapHeightPixels / 2);
-        UpdateZoom();
+        UpdateZoom(true);
         
         if (DebugEnabled)
         {
@@ -117,28 +117,45 @@ public partial class Camera : Camera2D
 
     private void ZoomIn()
     {
-        var position = GetGlobalMousePosition();
         _currentZoomLevel++;
-        UpdateZoom();
-        PositionSmoothingEnabled = false;
-        Position = position;
-        ResetSmoothing();
-        PositionSmoothingEnabled = true;
+        UpdateZoom(true);
     }
 
     private void ZoomOut(float delta)
     {
         _currentZoomLevel--;
-        UpdateZoom();
+        UpdateZoom(false);
         ClampPositionToBoundaries(delta);
     }
 
-    private void UpdateZoom()
+    private void UpdateZoom(bool zoomingIn)
     {
         var amount = _timesPerZoomLevel[_currentZoomLevel];
 
-        Zoom = new Vector2(amount, amount);
+        var targetZoom = new Vector2(amount, amount);
+        var zoomTween = CreateTween();
+        zoomTween.TweenProperty(this, "zoom", targetZoom, 0.1f)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad)
+            .SetEase(Tween.EaseType.InOut)
+            .Finished += OnZoomTweenCompleted;
+
+        if (zoomingIn is false) 
+            return;
+
+        PositionSmoothingEnabled = false;
+        var targetPosition = GetGlobalMousePosition();
+        var positionTween = CreateTween();
+        positionTween.TweenProperty(this, "position", targetPosition, 0.1f)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad)
+            .SetEase(Tween.EaseType.InOut);
+    }
+
+    private void OnZoomTweenCompleted()
+    {
         _viewportSize = DisplayServer.WindowGetSize();
+        PositionSmoothingEnabled = true;
     }
 
     private void ClampPositionToBoundaries(float delta)

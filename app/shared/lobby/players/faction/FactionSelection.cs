@@ -42,8 +42,11 @@ public partial class FactionSelection : OptionButton
             optionButtonIndex++;
         }
 
-        Selected = _optionButtonIndexesByFactionId.GetValueOrDefault(
-            Config.Instance.StartingFaction, optionButtonIndex);
+        if (OS.HasFeature(nameof(Server).ToLower()))
+            Selected = optionButtonIndex;
+        else
+            Selected = _optionButtonIndexesByFactionId.GetValueOrDefault(
+                Config.Instance.StartingFaction, optionButtonIndex);
     }
 
     private void OnItemSelected(int index)

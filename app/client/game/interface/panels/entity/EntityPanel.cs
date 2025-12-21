@@ -7,6 +7,7 @@ using LowAgeData.Domain.Common;
 
 public partial class EntityPanel : Control
 {
+    public event Action<EntityNode> CandidatePlacementCancelled = delegate { };
     public event Action<AbilityButton> AbilityViewOpened = delegate { };
     public event Action AbilityViewClosed = delegate { };
     public event Action<bool, AttackType?> AttackSelected = delegate { };
@@ -14,6 +15,7 @@ public partial class EntityPanel : Control
     private AvailableActionsDisplay _availableActions = null!;
     private GridContainer _behaviours = null!;
     private EntityName _entityName = null!;
+    private CancelButton _cancelButton = null!;
     private AbilityButtons _abilityButtons = null!;
     private InfoDisplay _display = null!;
     private Text _abilityTextBox = null!;
@@ -26,17 +28,18 @@ public partial class EntityPanel : Control
     private const int YSizeForStructure = 796;
     private const int YSizeForHiding = 1500;
     private const float PanelMoveDuration = 0.1f;
-    private readonly IList<Ability> _abilitiesBlueprint = Data.Instance.Blueprint.Abilities;
 
     public override void _Ready()
     {
         _availableActions = GetNode<AvailableActionsDisplay>($"{nameof(AvailableActionsDisplay)}");
         _behaviours = GetNode<GridContainer>($"Behaviours");
         _entityName = GetNode<EntityName>($"{nameof(EntityName)}");
+        _cancelButton = GetNode<CancelButton>($"{nameof(CancelButton)}");
         _abilityButtons = GetNode<AbilityButtons>($"{nameof(Panel)}/{nameof(AbilityButtons)}");
         _display = GetNode<InfoDisplay>($"{nameof(Panel)}/{nameof(InfoDisplay)}");
         _abilityTextBox = GetNode<Text>($"{nameof(Panel)}/{nameof(InfoDisplay)}/{nameof(VBoxContainer)}/AbilityDescription/{nameof(Text)}");
 
+        _cancelButton.Clicked += OnCancelButtonClicked;
         _abilityButtons.AbilitiesPopulated += OnAbilityButtonsPopulated;
         _display.AbilitiesClosed += OnInfoDisplayAbilitiesClosed;
         _display.AbilityTextResized += OnInfoDisplayTextResized;
@@ -47,6 +50,7 @@ public partial class EntityPanel : Control
 
     public override void _ExitTree()
     {
+        _cancelButton.Clicked -= OnCancelButtonClicked;
         _abilityButtons.AbilitiesPopulated -= OnAbilityButtonsPopulated;
         _display.AbilitiesClosed -= OnInfoDisplayAbilitiesClosed;
         _display.AbilityTextResized -= OnInfoDisplayTextResized;
@@ -63,6 +67,8 @@ public partial class EntityPanel : Control
         
         RemoveAllBehaviours();
         AddBehaviours(_selectedEntity);
+
+        _cancelButton.Visible = _selectedEntity.IsCandidate();
 
         DisconnectAbilityButtons();
         _abilityButtons.Reset();
@@ -220,6 +226,14 @@ public partial class EntityPanel : Control
         {
             BehaviourBox.InstantiateAsChild(behaviour, _behaviours);
         }
+    }
+    
+    private void OnCancelButtonClicked()
+    {
+        if (_selectedEntity is null || _selectedEntity.IsCandidate() is false)
+            return;
+
+        CandidatePlacementCancelled(_selectedEntity);
     }
 
     private void OnAbilityButtonClicked(AbilityButton abilityButton)

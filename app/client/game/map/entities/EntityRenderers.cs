@@ -63,28 +63,44 @@ public partial class EntityRenderers : Node2D
     {
         if (rendererToRemove.Registered is false) 
             return;
-        
+
         if (rendererToRemove.IsDynamic)
-        {
             DynamicRenderers.Remove(rendererToRemove);
-        }
         else
-        {
             StaticRenderers.Remove(rendererToRemove);
-            RemoveStaticDependencies(rendererToRemove);
-        }
+
+        RemoveDependencies(rendererToRemove);
         
         rendererToRemove.Registered = false;
     }
 
-    private static void RemoveStaticDependencies(EntityRenderer rendererToRemove)
+    private static void RemoveDependencies(EntityRenderer rendererToRemove)
     {
+        for (var i = 0; i < rendererToRemove.DynamicDependencies.Count; i++)
+        {
+            var otherRenderer = rendererToRemove.DynamicDependencies[i];
+            otherRenderer.DynamicDependencies.Remove(rendererToRemove);
+        }
+        rendererToRemove.DynamicDependencies.Clear();
+        
         for (var i = 0; i < rendererToRemove.StaticDependencies.Count; i++)
         {
-            var otherSprite = rendererToRemove.StaticDependencies[i];
-            otherSprite.StaticDependencies.Remove(rendererToRemove);
+            var otherRenderer = rendererToRemove.StaticDependencies[i];
+            otherRenderer.StaticDependencies.Remove(rendererToRemove);
         }
         rendererToRemove.StaticDependencies.Clear();
+
+        foreach (var dynamicRenderer in DynamicRenderers)
+        {
+            dynamicRenderer.DynamicDependencies.Remove(rendererToRemove);
+            dynamicRenderer.StaticDependencies.Remove(rendererToRemove);
+        }
+        
+        foreach (var staticRenderer in StaticRenderers)
+        {
+            staticRenderer.DynamicDependencies.Remove(rendererToRemove);
+            staticRenderer.StaticDependencies.Remove(rendererToRemove);
+        }
     }
     
     // Only needed to allow non-anonymous delegate unsubscription in Entities.cs:

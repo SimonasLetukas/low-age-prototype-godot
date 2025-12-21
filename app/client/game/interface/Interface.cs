@@ -17,6 +17,7 @@ public partial class Interface : CanvasLayer
     public event Action<ActorNode?> InitiativePanelActorSelected = delegate { };
     public event Action<AbilityNode> AbilitySelected = delegate { };
     public event Action AbilityDeselected = delegate { };
+    public event Action<EntityNode> CandidatePlacementCancelled = delegate { };
     
     private EntityPanel _entityPanel = null!;
     private SelectionPanel _selectionPanel = null!;
@@ -51,12 +52,13 @@ public partial class Interface : CanvasLayer
         _entityPanel.AbilityViewOpened += OnAbilityViewOpened;
         _entityPanel.AbilityViewClosed += OnAbilityViewClosed;
         _entityPanel.AttackSelected += OnEntityPanelAttackSelected;
+        _entityPanel.CandidatePlacementCancelled += OnCandidatePlacementCancelled;
         _selectionPanel.SelectedToBuild += OnSelectionPanelSelectedToBuild;
         _turnPanel.NextTurnClicked += OnTurnPanelNextTurnClicked;
         _initiativePanel.ActorHovered += OnInitiativePanelActorHovered;
         _initiativePanel.ActorSelected += OnInitiativePanelActorSelected;
     }
-
+    
     public override void _ExitTree()
     {
         _entityPanel.AbilityViewOpened -= _selectionPanel.OnSelectableAbilityPressed;
@@ -64,6 +66,7 @@ public partial class Interface : CanvasLayer
         _entityPanel.AbilityViewOpened -= OnAbilityViewOpened;
         _entityPanel.AbilityViewClosed -= OnAbilityViewClosed;
         _entityPanel.AttackSelected -= OnEntityPanelAttackSelected;
+        _entityPanel.CandidatePlacementCancelled -= OnCandidatePlacementCancelled;
         _selectionPanel.SelectedToBuild -= OnSelectionPanelSelectedToBuild;
         _turnPanel.NextTurnClicked -= OnTurnPanelNextTurnClicked;
         _initiativePanel.ActorHovered -= OnInitiativePanelActorHovered;
@@ -143,6 +146,8 @@ public partial class Interface : CanvasLayer
 
     private void OnEntityPanelAttackSelected(bool started, AttackType? attackType) => AttackSelected(started, attackType);
 
+    private void OnCandidatePlacementCancelled(EntityNode entity) => CandidatePlacementCancelled(entity);
+    
     private void OnTurnPanelNextTurnClicked() => NextTurnClicked();
 
     private void OnInitiativePanelActorHovered(ActorNode? actor) => InitiativePanelActorHovered(actor);
