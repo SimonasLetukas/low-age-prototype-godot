@@ -43,11 +43,17 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public string DisplayName { get; private set; } = null!;
     public string? SpriteLocation => Blueprint.Sprite;
     public bool CanBePlaced { get; protected set; } = false;
+    public bool HasCost { get; private set; } = true;
+    public EntityCreationProgress CreationProgress { get; } = new()
+    {
+        GetMaxHp = () => 0, 
+        GetMaxShields = () => 0
+    };
     public Behaviours Behaviours { get; protected set; } = null!;
     public bool IsBeingDestroyed { get; private set; }
     
-    protected Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; set; } = null!;
-    protected Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; set; } = null!;
+    protected Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; } = GlobalRegistry.Instance.GetHighestTiles;
+    protected Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; } = GlobalRegistry.Instance.GetTile;
     protected bool Selected { get; private set; } = false;
     protected bool Hovered { get; private set; } = false;
     protected State EntityState { get; private set; }
@@ -69,10 +75,15 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public override void _Ready()
     {
+        base._Ready();
+        
         Renderer = GetNode<EntityRenderer>($"{nameof(EntityRenderer)}");
         Behaviours = GetNode<Behaviours>(nameof(Behaviours));
         
         _movementDuration = GetDurationFromAnimationSpeed();
+
+        CreationProgress.Completed += OnCreationProgressCompleted;
+        
         EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
         EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
         EventBus.Instance.PhaseStarted += OnPhaseStarted;
@@ -80,11 +91,13 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public override void _ExitTree()
     {
-        base._ExitTree();
-
+        CreationProgress.Completed -= OnCreationProgressCompleted;
+        
         EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
         EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
         EventBus.Instance.PhaseStarted -= OnPhaseStarted;
+        
+        base._ExitTree();
     }
 
     public void SetBlueprint(Entity blueprint)
@@ -201,19 +214,33 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         EventBus.Instance.RaiseEntityPlaced(this);
         UpdateVisuals();
         
-        Complete(); // TODO should be called outside of this class when e.g. building is finished (payment is completed)
+        if (HasCost is false)
+            Complete();
+        
         return true;
     }
 
-    public virtual void Complete()
-    {
-        if (EntityState != State.Placed)
-            return;
+    private void OnCreationProgressCompleted() => Complete();
 
+    protected virtual void Complete()
+    {
         EntityState = State.Completed;
         UpdateVisuals();
         
         Behaviours.RemoveAll<BuildableNode>();
+    }
+    
+    public bool IsCompleted() => EntityState is State.Completed;
+
+    public virtual void SetCost(int? cost)
+    {
+        if (cost is null)
+        {
+            HasCost = false;
+            return;
+        }
+        
+        CreationProgress.TotalCost = cost.Value;
     }
 
     public virtual void DropDownToLowGround()

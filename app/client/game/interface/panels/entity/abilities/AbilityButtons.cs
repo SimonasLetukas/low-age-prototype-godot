@@ -26,7 +26,7 @@ public partial class AbilityButtons : HBoxContainer
     {
         Reset();
         
-        foreach (var ability in abilities.GetChildren().OfType<AbilityNode>())
+        foreach (var ability in abilities.GetChildren().OfType<IAbilityNode>())
         {
             if (ability.HasButton is false)
                 continue;

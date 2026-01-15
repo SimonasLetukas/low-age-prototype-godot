@@ -7,5 +7,5 @@ using LowAgeCommon;
 public interface IAbilityHasTargetArea
 {
     public bool WholeMapIsTargeted();
-    IEnumerable<Vector2Int> GetTargetPositions(EntityNode caster, Vector2Int mapSize);
+    IEnumerable<Vector2Int> GetTargetPositions(EntityNode caster);
 }

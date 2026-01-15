@@ -175,6 +175,8 @@ public partial class ServerGame : Game
         _pendingEntityPlacedRequests.Clear();
         _planningPhaseEndedEventsByTurn.Clear();
         
+        // TODO Here we could send planning phase abilities
+        
         var planningPhaseEndedResponse = new PlanningPhaseEndedResponseEvent
         {
             Turn = @event.Turn,
@@ -182,7 +184,7 @@ public partial class ServerGame : Game
         };
         OnRegisterServerEvent(planningPhaseEndedResponse);
     }
-
+    
     private static IEnumerable<Guid> GetCancelledCandidates(
         IList<PlanningPhaseEndedRequestEvent> planningPhaseEndedEvents)
     {

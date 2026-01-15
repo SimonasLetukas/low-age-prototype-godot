@@ -1,13 +1,14 @@
 ﻿using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Durations;
+using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeData.Domain.Logic;
 
 namespace LowAgeData.Domain.Behaviours
 {
     /// <summary>
-    /// Can be added to a buildable <see cref="Actor"/> so that further building options could be configured. This
+    /// Can be added to a buildable <see cref="Entity"/> so that further building options could be configured. This
     /// behaviour is automatically removed after building process is finished. Until then it tracks the progress of
     /// how much of the required cost is paid.
     /// 

@@ -102,7 +102,8 @@ namespace LowAgeData.Collections
                         {
                             new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
                         }),
-                    }),
+                    },
+                    maximumHelpers: 1),
                 
                 new Buildable(
                     id: BehaviourId.Shared.Revelators.BuildingStructureBuildable,

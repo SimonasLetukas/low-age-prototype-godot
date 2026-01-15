@@ -11,7 +11,7 @@ public partial class AbilityButton : BaseButton
     public new event Action<bool, AbilityButton> Hovering = delegate { };
     public new event Action<AbilityButton> Clicked = delegate { };
     
-    public AbilityNode Ability { get; private set; }
+    public IAbilityNode Ability { get; private set; }
 
     public override void _Ready()
     {
@@ -28,7 +28,7 @@ public partial class AbilityButton : BaseButton
         base._ExitTree();
     }
 
-    public void SetAbility(AbilityNode ability)
+    public void SetAbility(IAbilityNode ability)
     {
         Ability = ability;
         if (Ability is PassiveNode)

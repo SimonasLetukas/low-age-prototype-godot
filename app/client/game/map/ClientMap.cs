@@ -39,7 +39,7 @@ public partial class ClientMap : Map
 		Placement,
 	}
 
-	private AbilityNode? _selectedAbility;
+	private IAbilityNode? _selectedAbility;
 	private (BuildNode?, EntityId?) _previousBuildSelection = (null, null);
 	private Node2D _lines = null!;
 
@@ -49,6 +49,8 @@ public partial class ClientMap : Map
 	private bool _tileMapPointsInitialized = false;
 
 	private bool _paused = true;
+	
+	private ParabolicArrow _arrow = null!;
 
 	public override void _Ready()
 	{
@@ -58,6 +60,8 @@ public partial class ClientMap : Map
 		_tileMap = GetNode<Tiles>($"{nameof(Tiles)}");
 		Entities = GetNode<Entities>($"{nameof(Entities)}");
 		_lines = GetNode<Node2D>($"Lines");
+		
+		_arrow = ParabolicArrow.InstantiateAsChild(this, Vector2.Zero, Vector2.Zero);
 
 		Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
 		_tileMap.FinishedInitialInitializing += OnTileMapFinishedInitialInitializing;
@@ -107,6 +111,11 @@ public partial class ClientMap : Map
 
 		_lines.Visible = DebugEnabled && DebugLinesEnabled;
 		ResetLines();
+		
+		GlobalRegistry.Instance.ProvideGetCurrentPhase(() => CurrentPhase);
+		GlobalRegistry.Instance.ProvideGetActorInAction(() => ActorInAction);
+		GlobalRegistry.Instance.ProvideGetHighestTiles(_tileMap.GetHighestTiles);
+		GlobalRegistry.Instance.ProvideGetTile(_tileMap.GetTile);
 	}
 
 	private void InitializePathfinding(ICollection<(Vector2Int, TileId)> tiles)
@@ -171,7 +180,7 @@ public partial class ClientMap : Map
 		if (_tileMapPointsInitialized is false)
 			return;
 
-		Entities.Initialize(_tileMap.GetHighestTiles, _tileMap.GetTile);
+		Entities.Initialize();
 		
 		FinishedInitializing();
 	}
@@ -208,6 +217,10 @@ public partial class ClientMap : Map
 			// TODO optimization: only if focused tile changed from above, display path
 			if (_focusedTile.IsWithinTheMap || _hoveredInitiativePanelActor != null)
 			{
+				_arrow.Start = ToLocal(selectedUnit.GlobalPosition);
+				_arrow.End = ToLocal(_focusedTile.GlobalPosition);
+				_arrow.Redraw();
+				
 				var to = _hoveredInitiativePanelActor?.EntityPrimaryTile.Point 
 				         ?? _focusedTile.CurrentTile!.Point;
 				var team = Entities.SelectedEntity!.Player.Team;
@@ -347,10 +360,6 @@ public partial class ClientMap : Map
 		if (isActionAuthorized.IsValid is false)
 			return isActionAuthorized;
 
-		var canExecuteActionInCurrentPhase = CanExecuteActionInCurrentPhase();
-		if (canExecuteActionInCurrentPhase.IsValid is false)
-			return canExecuteActionInCurrentPhase;
-
 		return _selectionOverlay switch
 		{
 			SelectionOverlay.Movement => ExecuteMovement(),
@@ -489,6 +498,9 @@ public partial class ClientMap : Map
 
 	private ValidationResult ExecuteMovement()
 	{
+		if (Entities.SelectedEntity!.Equals(ActorInAction) is false)
+			return ValidationResult.Invalid("It is not your turn!");
+		
 		if (_tileMap.Elevatable.IsCurrentlyAvailable(_focusedTile.CurrentTile) is false
 			|| Entities.SelectedEntity!.EntityPrimaryPosition.Equals(_focusedTile.CurrentTile!.Position))
 			return ValidationResult.Invalid("The target tile is outside of the available movement range.");
@@ -519,6 +531,9 @@ public partial class ClientMap : Map
 		    || Entities.HoveredEntity is not { } targetEntity
 		    || Entities.SelectedEntity is not { } selectedEntity)
 			return ValidationResult.Invalid("Invalid attack target.");
+		
+		if (selectedEntity.Equals(ActorInAction) is false)
+			return ValidationResult.Invalid("It is not your turn!");
 
 		var canBeTargeted = targetEntity.CanBeTargetedBy(selectedEntity);
 		if (canBeTargeted.IsValid is false)
@@ -545,17 +560,32 @@ public partial class ClientMap : Map
 
 	private ValidationResult ExecuteTarget()
 	{
-		if (_selectedAbility is not IAbilityHasTargetArea abilityWithTargetArea)
+		IAbilityActivationRequest? request = _selectedAbility switch
+		{
+			TargetNode => new TargetNode.ActivationRequest
+			{
+				UseConsumableResources = true,
+				TileToTarget = _focusedTile.CurrentTile,
+				EntityToTarget = Entities.HoveredEntity
+			},
+			BuildNode => new BuildNode.ActivationRequest
+			{
+				UseConsumableResources = false, // Should have been consumed when placing
+				EntityAlreadyPlaced = true,
+				EntityToBuild = Entities.HoveredEntity
+			},
+			_ => null
+		};
+
+		if (request is null || _selectedAbility is null)
 		{
 			ExecuteCancellation();
 			return ValidationResult.Invalid("This ability cannot target an area.");
 		}
 		
-		if (Entities.SelectedEntity is not ActorNode selectedActor
-		    || selectedActor.ActionEconomy.CanUseAbilityAction is false)
-			return ValidationResult.Invalid("Ability action is not available!");
-		
-		_selectedAbility.Activate();
+		var result = _selectedAbility.Activate(request);
+		if (result.IsValid is false)
+			return result;
 		
 		ExecuteCancellation();
 		return ValidationResult.Valid;
@@ -569,12 +599,16 @@ public partial class ClientMap : Map
 			return ValidationResult.Invalid("This ability cannot execute placement action.");
 		}
 
-		if (Entities.SelectedEntity is not ActorNode selectedActor
-		    || selectedActor.ActionEconomy.CanUseAbilityAction is false)
-			return ValidationResult.Invalid("Ability action is not available!");
+		var request = new BuildNode.ActivationRequest
+		{
+			UseConsumableResources = true,
+			EntityAlreadyPlaced = false, 
+			EntityToBuild = Entities.EntityInPlacement,
+		};
 		
-		if (Entities.EntityInPlacement is null || Entities.EntityInPlacement.CanBePlaced is false)
-			return ValidationResult.Invalid("Placement is invalid.");
+		var result = buildAbility.Activate(request);
+		if (result.IsValid is false)
+			return result;
 		
 		var placedEntity = Entities.PlaceEntity();
 		if (placedEntity is null)
@@ -582,8 +616,6 @@ public partial class ClientMap : Map
 			ExecuteCancellation();
 			return ValidationResult.Invalid("Placement was not successful.");
 		}
-		
-		buildAbility.Activate();
 
 		if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
 		{
@@ -693,17 +725,6 @@ public partial class ClientMap : Map
 		=> Players.Instance.IsActionAllowedForCurrentPlayerOn(Entities.SelectedEntity) 
 			? ValidationResult.Valid 
 			: ValidationResult.Invalid("Cannot execute actions for another player.");
-
-	private ValidationResult CanExecuteActionInCurrentPhase() => _selectionOverlay switch
-	{
-		SelectionOverlay.Placement or SelectionOverlay.Target when _selectedAbility is not null 
-			=> _selectedAbility.CanActivate(CurrentPhase, ActorInAction),
-
-		SelectionOverlay.Movement or SelectionOverlay.Attack when Entities.SelectedEntity!.Equals(ActorInAction) 
-			=> ValidationResult.Valid,
-
-		_ => ValidationResult.Invalid("It is not your turn!")
-	};
 
 	private void ResetLines()
 	{
@@ -888,14 +909,15 @@ public partial class ClientMap : Map
 		_tileMap.Elevatable.ClearPath();
 		_focusedTile.Disable();
 
-		var targetTiles = buildAbility.GetTargetPositions(Entities.SelectedEntity!, _mapSize)
+		var targetTiles = buildAbility.GetTargetPositions(Entities.SelectedEntity!)
 			.Select(position => _tileMap.GetTile(position, false))
 			.WhereNotNull();
 		var wholeMapIsTargeted = buildAbility.WholeMapIsTargeted();
 		_tileMap.Elevatable.SetTargetTiles(targetTiles, wholeMapIsTargeted, false, 
 			ElevatableTiles.TargetPurpose.Placement);
+		var cost = buildAbility.GetSelectableItemCost(entityId);
 
-		var entity = Entities.SetEntityForPlacement(entityId, wholeMapIsTargeted);
+		var entity = Entities.SetEntityForPlacement(entityId, wholeMapIsTargeted, cost);
 		// TODO pass in the cost to be tracked inside the buildableNode
 
 		_selectedAbility = buildAbility;
@@ -948,7 +970,7 @@ public partial class ClientMap : Map
 
 	internal void OnInitiativePanelActorSelected(ActorNode? actor) => ExecuteEntitySelection(actor);
 
-	internal void OnInterfaceAbilitySelected(AbilityNode ability)
+	internal void OnInterfaceAbilitySelected(IAbilityNode ability)
 	{
 		if (ability is IAbilityHasTargetArea abilityWithTargetArea)
 		{
@@ -956,7 +978,7 @@ public partial class ClientMap : Map
 			_tileMap.Elevatable.ClearTargetTiles(false);
 			_tileMap.Elevatable.ClearPath();
 			
-			var tiles = abilityWithTargetArea.GetTargetPositions(Entities.SelectedEntity!, _mapSize)
+			var tiles = abilityWithTargetArea.GetTargetPositions(Entities.SelectedEntity!)
 				.Select(position => _tileMap.GetTile(position, false))
 				.WhereNotNull();
 			var wholeMapIsTargeted = abilityWithTargetArea.WholeMapIsTargeted();

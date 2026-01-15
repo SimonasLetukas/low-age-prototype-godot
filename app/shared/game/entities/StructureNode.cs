@@ -12,16 +12,12 @@ public sealed partial class StructureNode : ActorNode, INodeFromBlueprint<Struct
 {
     private const string ScenePath = @"res://app/shared/game/entities/StructureNode.tscn";
     public static StructureNode Instance() => (StructureNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static StructureNode InstantiateAsChild(Structure blueprint, Node parentNode, Player player, 
-        Func<Vector2Int, bool, Tiles.TileInstance?> getTile, 
-        Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles)
+    public static StructureNode InstantiateAsChild(Structure blueprint, Node parentNode, Player player)
     {
         var structure = Instance();
         parentNode.AddChild(structure);
         structure.SetBlueprint(blueprint);
         structure.Player = player;
-        structure.GetTile = getTile;
-        structure.GetHighestTiles = getHighestTiles;
         
         return structure;
     }

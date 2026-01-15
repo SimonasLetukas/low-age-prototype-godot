@@ -56,24 +56,36 @@ public class ActionEconomy
         return actionEconomy;
     }
 
-    public void Restore(TurnPhase phase)
+    public void Restore(TurnPhase phase, bool restoringOnlyAbilityAction = false)
     {
         _isPlanning = phase == TurnPhase.Planning;
-
+        
         if (_isPlanning)
         {
             MeleeAttackActions = 0;
             RangedAttackActions = 0;
-            AbilityActions = Config.MaxAbilitiesInPlanningPhase;
+            AbilityActions = restoringOnlyAbilityAction
+                ? Math.Min(AbilityActions + 1, Config.MaxAbilitiesInPlanningPhase)
+                : Config.MaxAbilitiesInPlanningPhase;;
             CanMove = false;
         }
         else
         {
-            MeleeAttackActions = Config.MaxMeleeAttackActions;
-            RangedAttackActions = Config.MaxRangedAttackActions;
-            AbilityActions = Config.MaxAbilitiesInActionPhase;
-            CanMove = Config.MovementAllowed;
-            _movementSpent = 0f;
+            MeleeAttackActions = restoringOnlyAbilityAction 
+                ? MeleeAttackActions 
+                : Config.MaxMeleeAttackActions;
+            RangedAttackActions = restoringOnlyAbilityAction 
+                ? RangedAttackActions 
+                : Config.MaxRangedAttackActions;
+            AbilityActions = restoringOnlyAbilityAction
+                ? Math.Min(AbilityActions + 1, Config.MaxAbilitiesInActionPhase)
+                : Config.MaxAbilitiesInActionPhase;
+            CanMove = restoringOnlyAbilityAction 
+                ? CanMove 
+                : Config.MovementAllowed;
+            _movementSpent = restoringOnlyAbilityAction 
+                ? _movementSpent 
+                : 0f;
         }
         
         Updated();

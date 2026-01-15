@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgbeugxqch62w"]
+
+[ext_resource type="PackedScene" uid="uid://jx4eqsik4hrl" path="res://app/shared/game/abilities/AbilityNode.tscn" id="1_rxk8s"]
+[ext_resource type="Script" uid="uid://51jbnk1dncpd" path="res://app/shared/game/abilities/ToggleNode.cs" id="2_hfa7t"]
+
+[node name="ToggleNode" instance=ExtResource("1_rxk8s")]
+script = ExtResource("2_hfa7t")

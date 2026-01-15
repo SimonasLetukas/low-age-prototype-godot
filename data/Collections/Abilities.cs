@@ -403,7 +403,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(AbilityId.Workshop.Research).CamelCaseToWords(),
                     description: "Open a selection of research available for Revelators to unlock.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    selectionOfResearchToBeUnlocked: new List<Selection<ResearchId>>
+                    selection: new List<Selection<ResearchId>>
                     {
                         new Selection<ResearchId>(name: ResearchId.Revelators.PoisonedSlits,
                             description: $"Unlock {nameof(AbilityId.Quickdraw.Cripple).CamelCaseToWords()} for " +
@@ -460,7 +460,8 @@ namespace LowAgeData.Collections
                                     amount: 60)
                             },
                             grayOutIfAlreadyExists: true),
-                    }),
+                    },
+                    casterConsumesAction: true),
                 
                 new Passive(
                     id: AbilityId.Outpost.Ascendable,
@@ -830,7 +831,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(AbilityId.Armoury.Research).CamelCaseToWords(),
                     description: "Open a selection of research available for UEE to unlock.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    selectionOfResearchToBeUnlocked: new List<Selection<ResearchId>>
+                    selection: new List<Selection<ResearchId>>
                     {
                         new Selection<ResearchId>(name: ResearchId.Uee.HoverboardReignition,
                             description: $"Unlock {nameof(AbilityId.Horrior.Mount).CamelCaseToWords()} for " +
@@ -907,7 +908,8 @@ namespace LowAgeData.Collections
                             {
                                 ResearchId.Uee.CelestiumCoreUpgrade
                             }),
-                    }),
+                    },
+                    casterConsumesAction: true),
                 
                 new Passive(
                     id: AbilityId.Wall.HighGround,

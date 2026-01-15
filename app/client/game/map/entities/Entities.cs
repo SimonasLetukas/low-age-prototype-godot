@@ -19,6 +19,7 @@ public partial class Entities : Node2D
     
     public event Action<EntityPlacedRequestEvent> EntityPlaced = delegate { };
     public event Action<EntityCandidatePlacementCancelledEvent> CandidatePlacementCancelled = delegate { };
+    public event Action<AbilityExecutionRequestedEvent> AbilityExecutionRequested = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
     public event Action<EntityNode> EntityDeselected = delegate { };
@@ -32,8 +33,6 @@ public partial class Entities : Node2D
     private EntityRenderers _renderers = null!;
     private Node2D _units = null!;
     private Node2D _structures = null!;
-    private Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> _getHighestTiles = null!;
-    private Func<Vector2Int, bool, Tiles.TileInstance?> _getTile = null!;
     private PlayerPriority _playerPriority = null!;
 
     private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new();
@@ -48,15 +47,14 @@ public partial class Entities : Node2D
         NewPositionOccupied += _renderers.UpdateSorting;
     }
     
-    public void Initialize(Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles, 
-        Func<Vector2Int, bool, Tiles.TileInstance?> getTile)
+    public void Initialize()
     {
-        _getHighestTiles = getHighestTiles;
-        _getTile = getTile;
         _playerPriority = new PlayerPriority
         {
             Queue = Players.Instance.GetAll().OrderBy(x => x.Id).ToList(),
         };
+        
+        GlobalRegistry.Instance.ProvideGetEntityById(GetEntityByInstanceId);
     }
 
     public void SetupStartingEntities(IList<Vector2Int> startingPositions, FactionId factionId)
@@ -82,7 +80,14 @@ public partial class Entities : Node2D
         {
             unit.FinishedMoving -= OnEntityFinishedMoving;
             unit.Destroyed -= OnEntityDestroyed;
+            unit.Abilities.ExecutionRequested -= OnAbilityExecutionRequested;
         }
+        foreach (var structure in _structures.GetChildren().OfType<StructureNode>())
+        {
+            structure.Destroyed -= OnEntityDestroyed;
+            structure.Abilities.ExecutionRequested -= OnAbilityExecutionRequested;
+        }
+        
         base._ExitTree();
     }
 
@@ -248,12 +253,11 @@ public partial class Entities : Node2D
         _renderers.UpdateSorting();
     }
 
-    public EntityNode SetEntityForPlacement(EntityId entityId, 
-        bool canBePlacedOnTheWholeMap)
+    public EntityNode SetEntityForPlacement(EntityId entityId, bool canBePlacedOnTheWholeMap, int? cost)
     {
         var playerId = Players.Instance.Current.Id;
         var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
-        var newEntity = InstantiateEntity(newEntityBlueprint, playerId);
+        var newEntity = InstantiateEntity(newEntityBlueprint, playerId, cost);
         
         newEntity.SetForPlacement(canBePlacedOnTheWholeMap);
         EntityInPlacement = newEntity;
@@ -321,6 +325,28 @@ public partial class Entities : Node2D
         });
     }
 
+    public void HandleEvent(AbilityExecutionRequestedEvent @event)
+    {
+        var sourceActor = GetEntityByInstanceId(@event.SourceActorId) as ActorNode;
+        if (sourceActor is null)
+        {
+            GD.Print($"{nameof(Entities)} could not apply {nameof(AbilityExecutionRequestedEvent)} because " +
+                     $"{nameof(sourceActor)} '{@event.SourceActorId}' entity was null.");
+            return;
+        }
+
+        var ability = sourceActor.Abilities.GetById(@event.AbilityId);
+        if (ability is null)
+        {
+            GD.Print($"{nameof(Entities)} could not apply {nameof(AbilityExecutionRequestedEvent)} because " +
+                     $"{nameof(ability)} '{@event.AbilityId}' was not found for {nameof(sourceActor)} " +
+                     $"'{@event.SourceActorId}'.");
+            return;
+        }
+        
+        ability.OnExecutionRequested(@event.Focus);
+    }
+
     public void HandleEvent(EntityAttackedEvent @event)
     {
         var source = GetEntityByInstanceId(@event.SourceId) as ActorNode; // TODO how would doodads be able to execute attack?
@@ -355,7 +381,7 @@ public partial class Entities : Node2D
         }
         
         var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
-        entity = InstantiateEntity(entityBlueprint, @event.PlayerId, @event.InstanceId);
+        entity = InstantiateEntity(entityBlueprint, @event.PlayerId, @event.Cost, @event.InstanceId);
         entity.ForcePlace(@event);
         
         NewPositionOccupied(entity);
@@ -380,7 +406,7 @@ public partial class Entities : Node2D
     private EntityNode? PlaceEntity(Entity entityBlueprint, Vector2Int mapPosition)
     {
         var playerId = Players.Instance.Current.Id;
-        var entity = InstantiateEntity(entityBlueprint, playerId);
+        var entity = InstantiateEntity(entityBlueprint, playerId, null);
         entity.EntityPrimaryPosition = mapPosition;
         entity.DeterminePlacementValidity(false);
         return PlaceEntity(entity, true);
@@ -401,6 +427,7 @@ public partial class Entities : Node2D
             {
                 BlueprintId = entity.BlueprintId,
                 MapPosition = entity.EntityPrimaryPosition,
+                Cost = entity.HasCost ? entity.CreationProgress.TotalCost : null,
                 InstanceId = instanceId,
                 ActorRotation = entity is ActorNode actor ? actor.ActorRotation : ActorRotation.BottomRight,
                 PlayerId = entity.Player.Id
@@ -420,7 +447,7 @@ public partial class Entities : Node2D
         return placedSuccessfully;
     }
 
-    private EntityNode InstantiateEntity(Entity entityBlueprint, int playerId, Guid? instanceId = null)
+    private EntityNode InstantiateEntity(Entity entityBlueprint, int playerId, int? cost, Guid? instanceId = null)
     {
         var player = Players.Instance.Get(playerId);
 
@@ -436,24 +463,27 @@ public partial class Entities : Node2D
         if (instanceId != null)
             entity.InstanceId = (Guid)instanceId;
         _entitiesByIds[entity.InstanceId] = entity;
+
+        entity.SetCost(cost);
         
         return entity;
     }
 
     private StructureNode InstantiateStructure(Structure structureBlueprint, Player player)
     {
-        var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures, player, 
-            _getTile, _getHighestTiles);
+        var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures, player);
+
+        structure.Abilities.ExecutionRequested += OnAbilityExecutionRequested;
 
         return structure;
     }
 
     private UnitNode InstantiateUnit(Unit unitBlueprint, Player player)
     {
-        var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units, player, 
-            _getTile, _getHighestTiles);
+        var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units, player);
 
         unit.FinishedMoving += OnEntityFinishedMoving;
+        unit.Abilities.ExecutionRequested += OnAbilityExecutionRequested;
 
         return unit;
     }
@@ -530,6 +560,16 @@ public partial class Entities : Node2D
         EntityMoving = false;
         NewPositionOccupied(entity);
     }
+    
+    private void OnAbilityExecutionRequested(ActorNode sourceActor, IAbilityNode ability, IAbilityFocus focus)
+    {
+        AbilityExecutionRequested(new AbilityExecutionRequestedEvent
+        {
+            SourceActorId = sourceActor.InstanceId,
+            AbilityId = ability.Id,
+            Focus = focus
+        });
+    }
 
     private void OnEntityDestroyed(EntityNode entity)
     {
@@ -544,6 +584,8 @@ public partial class Entities : Node2D
         
         entity.FinishedMoving -= OnEntityFinishedMoving;
         entity.Destroyed -= OnEntityDestroyed;
+        if (entity is ActorNode actor)
+            actor.Abilities.ExecutionRequested -= OnAbilityExecutionRequested;
 
         _entitiesByIds.Remove(entity.InstanceId);
         _entitiesBeingDestroyed.Remove(entity);

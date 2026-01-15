@@ -15,7 +15,7 @@ public partial class Interface : CanvasLayer
     public event Action NextTurnClicked = delegate { };
     public event Action<ActorNode?> InitiativePanelActorHovered = delegate { };
     public event Action<ActorNode?> InitiativePanelActorSelected = delegate { };
-    public event Action<AbilityNode> AbilitySelected = delegate { };
+    public event Action<IAbilityNode> AbilitySelected = delegate { };
     public event Action AbilityDeselected = delegate { };
     public event Action<EntityNode> CandidatePlacementCancelled = delegate { };
     

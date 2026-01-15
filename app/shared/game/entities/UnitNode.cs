@@ -12,16 +12,12 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 {
     private const string ScenePath = @"res://app/shared/game/entities/UnitNode.tscn";
     public static UnitNode Instance() => (UnitNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static UnitNode InstantiateAsChild(Unit blueprint, Node parentNode, Player player,
-        Func<Vector2Int, bool, Tiles.TileInstance?> getTile, 
-        Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles)
+    public static UnitNode InstantiateAsChild(Unit blueprint, Node parentNode, Player player)
     {
         var unit = Instance();
         parentNode.AddChild(unit);
         unit.SetBlueprint(blueprint);
         unit.Player = player;
-        unit.GetTile = getTile;
-        unit.GetHighestTiles = getHighestTiles;
         
         return unit;
     }

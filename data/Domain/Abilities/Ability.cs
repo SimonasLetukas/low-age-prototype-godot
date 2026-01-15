@@ -57,10 +57,9 @@ namespace LowAgeData.Domain.Abilities
         /// <summary>
         /// Has to be paid in full for the <see cref="Ability"/> to start. Triggers once the button is pressed. The
         /// ability is considered inactive while the <see cref="Cost"/> is not fully paid. The timing of the payments
-        /// depends on <see cref="TurnPhase"/>: <see cref="Common.TurnPhase.Passive"/> - always paid at the
-        /// start of the action phase; <see cref="Common.TurnPhase.Planning"/> - always paid at the start of the
-        /// action phase; <see cref="Common.TurnPhase.Action"/> - first paid when activated during the
-        /// <see cref="Actor"/>'s action, then at the start of the action phase.
+        /// depends on <see cref="TurnPhase"/>: <see cref="Common.TurnPhase.Planning"/> - paid at the end of the
+        /// planning phase; <see cref="Common.TurnPhase.Action"/> - paid at the end of <see cref="Actor"/>'s action;
+        /// <see cref="Common.TurnPhase.Passive"/> - cost is not used.
         /// </summary>
         public IList<Payment> Cost { get; }
         

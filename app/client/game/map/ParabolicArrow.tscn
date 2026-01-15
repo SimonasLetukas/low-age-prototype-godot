@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdo1kxnx38axc"]
+
+[ext_resource type="Script" uid="uid://csuvdhnsg60e1" path="res://app/client/game/map/ParabolicArrow.cs" id="1_vh1lw"]
+
+[node name="ParabolicArrow" type="Node2D"]
+script = ExtResource("1_vh1lw")

@@ -14,6 +14,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         return behaviour;
     }
 
+    private IList<BuildNode> BuiltBy { get; set; } = [];
     private Buildable Blueprint { get; set; } = null!;
     
     public void SetBlueprint(Buildable blueprint)
@@ -21,6 +22,10 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
     }
+    
+    public void AddBuilder(BuildNode buildAbility) => BuiltBy.Add(buildAbility);
+    
+    public bool RemoveBuilder(BuildNode buildAbility) => BuiltBy.Remove(buildAbility);
 
     public bool IsPlacementValid(IList<Tiles.TileInstance?> tiles) => ValidationHandler
         .Validate(Blueprint.PlacementValidators)

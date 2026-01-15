@@ -11710,7 +11710,7 @@
           "filters": []
         }
       ],
-      "maximumHelpers": -1,
+      "maximumHelpers": 1,
       "canBeDragged": false,
       "displayName": "Unit In Production Buildable",
       "description": "This unit should be placed in the allowed placement area.",

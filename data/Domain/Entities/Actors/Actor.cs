@@ -27,6 +27,12 @@ namespace LowAgeData.Domain.Entities.Actors
         public IList<Stat> Statistics { get; }
         public FactionId OriginalFaction { get; }
         public IList<ActorAttribute> ActorAttributes { get; }
+        
+        /// <summary>
+        /// List of <see cref="Ability"/>s this <see cref="Actor"/> is able to execute. Every
+        /// <see cref="Ability"/> must be unique, i.e. multiple abilities with the same <see cref="AbilityId"/>
+        /// will not be preserved.
+        /// </summary>
         public IList<AbilityId> Abilities { get; }
     }
 }

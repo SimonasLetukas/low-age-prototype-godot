@@ -1,27 +1,33 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 
-public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
+public abstract partial class AbilityNode<
+    TActivationRequest, 
+    TPreProcessingResult, 
+    TFocus> 
+    : Node2D, INodeFromBlueprint<Ability>, IAbilityNode
+    where TActivationRequest : IAbilityActivationRequest 
+    where TPreProcessingResult : IAbilityActivationPreProcessingResult 
+    where TFocus : IAbilityFocus
 {
-    public event Action<AbilityNode> Activated = delegate { };
-    public event Action<AbilityNode> CooldownEnded = delegate { };
-
+    public event Action<AbilityNode<TActivationRequest, TPreProcessingResult, TFocus>> Activated = delegate { };
+    public event Action<AbilityNode<TActivationRequest, TPreProcessingResult, TFocus>, TFocus> ExecutionRequested = delegate { };
+    public event Action<AbilityNode<TActivationRequest, TPreProcessingResult, TFocus>> CooldownEnded = delegate { };
+    
     public Guid InstanceId { get; set; } = Guid.NewGuid();
-    public AbilityId Id { get; protected set; } = null!;
-    public string DisplayName { get; protected set; } = null!;
-    public string Description { get; protected set; } = null!;
-    public TurnPhase TurnPhase { get; protected set; } = null!;
-    public IList<ResearchId> ResearchNeeded { get; protected set; } = [];
+    public AbilityId Id { get; private set; } = null!;
+    public string DisplayName { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
+    public TurnPhase TurnPhase { get; private set; } = null!;
+    public IList<ResearchId> ResearchNeeded { get; private set; } = [];
     public ActorNode OwnerActor { get; protected set; } = null!;
-    public EndsAtNode RemainingCooldown { get; protected set; } = null!;
-    public List<Payment> PaymentPaid { get; protected set; } = null!;
-    public bool IsResearched { get; protected set; }
-    public bool IsActive { get; protected set; }
-    public bool HasButton { get; protected set; }
+    public EndsAtNode RemainingCooldown { get; private set; } = null!;
+    public bool HasButton { get; private set; }
+
+    protected IList<TFocus> FocusQueue { get; } = new List<TFocus>();
     
     private Ability Blueprint { get; set; } = null!;
 
@@ -32,12 +38,9 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
         DisplayName = Blueprint.DisplayName;
         Description = Blueprint.Description;
         TurnPhase = Blueprint.TurnPhase;
-        ResearchNeeded = Blueprint.ResearchNeeded; // TODO right now never updated, to be fetched from player and updated upon new research
+        ResearchNeeded = Blueprint.ResearchNeeded;
         RemainingCooldown = EndsAtNode.InstantiateAsChild(Blueprint.Cooldown, this, OwnerActor);
         RemainingCooldown.Completed += OnCooldownEnded;
-        PaymentPaid = blueprint.Cost.Select(paymentRequired => new Payment(paymentRequired.Resource)).ToList();
-        IsResearched = (Config.Instance.ResearchEnabled && ResearchNeeded.Any()) is false;
-        IsActive = IsPaid() && IsResearched;
         HasButton = Blueprint.HasButton;
     }
     
@@ -47,56 +50,66 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
         base._ExitTree();
     }
 
-    // TODO might not be needed -- need to think of how the "instant" abilities will work first
-    public virtual void Preview()
+    public ValidationResult Activate(IAbilityActivationRequest request)
     {
+        if (request is not TActivationRequest typedRequest)
+        {
+            GD.PrintErr($"Invalid {nameof(IAbilityActivationRequest)} type. Expected " +
+                        $"'{typeof(TActivationRequest).Name}', but got '{request.GetType().Name}'");
+            return ValidationResult.Invalid("Error in ability activation!");
+        }
+
+        return Activate(typedRequest);
     }
-
-    public virtual ValidationResult CanActivate(TurnPhase currentTurnPhase, ActorNode? actorInAction)
+    
+    private ValidationResult Activate(TActivationRequest request)
     {
-        if (IsActive is false)
-            return ValidationResult.Invalid("Cannot activate an ability which is already activated.");
-        
-        if (RemainingCooldown.HasCompleted() is false)
-            return ValidationResult.Invalid("This ability is still on cooldown.");
-        
-        if (currentTurnPhase.Equals(TurnPhase) is false)
-            return ValidationResult.Invalid($"This ability can only be activated in the " +
-                                            $"{TurnPhase.ToDisplayValue()} Phase.");
-        
-        if ((TurnPhase.Equals(TurnPhase.Action) && OwnerActor.Equals(actorInAction) is false))
-            return ValidationResult.Invalid("It's not your turn!");
+        var validationResult = ValidateActivation(request);
+        if (validationResult.IsValid is false)
+            return validationResult;
 
+        var preProcessingResult = PreProcessActivation(request);
+
+        var focus = CreateFocus(request, preProcessingResult);
+        FocusQueue.Add(focus);
+        
+        RaiseActivated();
         return ValidationResult.Valid;
     }
     
-    public virtual void Activate()
-    {
-        OwnerActor.ActionEconomy.UsedAbilityAction();
-        IsActive = false;
-        StartCooldown();
-        // TODO start paying and execute ability only after it's paid
-        RaiseActivated();
-    }
+    protected abstract ValidationResult ValidateActivation(TActivationRequest request);
 
-    public bool IsPaid()
+    protected virtual TPreProcessingResult PreProcessActivation(TActivationRequest request) => default!;
+
+    protected abstract TFocus CreateFocus(TActivationRequest activationRequest, 
+        TPreProcessingResult preProcessingResult);
+
+    protected void RequestExecution()
     {
-        return true; // TODO implement later
-        
-        foreach (var paymentRequired in Blueprint.Cost)
+        foreach (var focus in FocusQueue)
         {
-            var paid = PaymentPaid.Single(x => x.Resource.Equals(paymentRequired.Resource));
-            if (paid.Amount < paymentRequired.Amount)
-            {
-                IsActive = false;
-                return false;
-            }
+            RequestExecution(focus);
+        }
+    }
+    
+    private void RequestExecution(TFocus focus) => ExecutionRequested(this, focus);
+
+    public void OnExecutionRequested(IAbilityFocus focus)
+    {
+        if (focus is not TFocus typedFocus)
+        {
+            GD.PrintErr($"Invalid {nameof(IAbilityFocus)} type. Expected '{typeof(TFocus).Name}', but got " +
+                        $"'{focus.GetType().Name}'");
+            return;
         }
 
-        IsActive = IsResearched;
-        return true;
+        OnExecutionRequested(typedFocus);
     }
 
+    protected virtual void OnExecutionRequested(TFocus focus) => Complete(focus);
+
+    protected abstract void Complete(TFocus focus);
+    
     protected void RaiseActivated() => Activated(this);
 
     protected virtual void StartCooldown()
@@ -106,10 +119,32 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
     
     protected virtual void OnCooldownEnded()
     {
-        IsActive = IsPaid() && IsResearched;
         CooldownEnded(this);
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is not IAbilityNode other) return false;
+        return Id.Equals(other.Id);
+    }
     
-    public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
-    public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
+    // ReSharper disable once NonReadonlyMemberInGetHashCode
+    public override int GetHashCode() => Id.GetHashCode();
+}
+
+public interface IAbilityActivationRequest
+{
+    
+}
+
+public interface IAbilityActivationPreProcessingResult
+{
+    
+}
+
+public interface IAbilityFocus
+{
+    
 }

@@ -21,11 +21,12 @@ namespace LowAgeData.Domain.Abilities
             IList<Selection<EntityId>> selection,
             bool casterConsumesAction = false,
             bool canHelp = false,
-            float? helpEfficiency = null)
+            float? helpEfficiency = null, 
+            IList<ResearchId>? researchNeeded = null)
             : base(
                 id,
                 TurnPhase.Planning,
-                new List<ResearchId>(),
+                researchNeeded ?? new List<ResearchId>(),
                 true,
                 displayName,
                 description,
@@ -50,28 +51,37 @@ namespace LowAgeData.Domain.Abilities
         public IList<Selection<EntityId>> Selection { get; }
         
         /// <summary>
+        /// <para>
         /// If true, to continue paying for the <see cref="Buildable"/> entity, the caster of this <see cref="Build"/>
         /// <see cref="Ability"/> has to spend its action, effectively meaning that only one <see cref="Entity"/> can
-        /// be worked on at the same time. 
-        ///
+        /// be worked on at the same time.
+        /// </para>
+        /// <para>
         /// False by default.
+        /// </para>
         /// </summary>
         public bool CasterConsumesAction { get; }
         
         /// <summary>
+        /// <para>
         /// If true, multiple <see cref="Entity"/>ies can cast their <see cref="Build"/> on the same placed
         /// <see cref="Entity"/> (if they have that <see cref="Entity"/> as part of their <see cref="Selection"/>),
         /// providing additional amount of production according to <see cref="HelpEfficiency"/>.
-        ///
+        /// </para>
+        /// <para>
         /// False by default.
+        /// </para>
         /// </summary>
         public bool CanHelp { get; }
 
         /// <summary>
+        /// <para>
         /// If <see cref="CanHelp"/> is true, this describes the factor of production each additional helper provides
         /// compared to the previous one.
-        /// 
-        /// E.g. with 0.5 efficiency first builder provides 100% production, second 50%, third 25%, etc. 
+        /// </para>
+        /// <para>
+        /// E.g. with 0.5 efficiency first builder provides 100% production, second 50%, third 25%, etc.
+        /// </para>
         /// </summary>
         public float HelpEfficiency { get; }
     }

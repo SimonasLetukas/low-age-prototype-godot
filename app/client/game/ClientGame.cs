@@ -68,6 +68,7 @@ public partial class ClientGame : Game
         _map.EntityAttacked += RegisterNewGameEvent;
         _map.Entities.EntityPlaced += RegisterNewGameEvent;
         _map.Entities.CandidatePlacementCancelled += RegisterNewGameEvent;
+        _map.Entities.AbilityExecutionRequested += RegisterNewGameEvent;
         
         Turns.PlanningPhaseEnded += RegisterNewGameEvent;
         Turns.ActionEnded += RegisterNewGameEvent;
@@ -95,6 +96,7 @@ public partial class ClientGame : Game
         _map.EntityAttacked -= RegisterNewGameEvent;
         _map.Entities.EntityPlaced -= RegisterNewGameEvent;
         _map.Entities.CandidatePlacementCancelled -= RegisterNewGameEvent;
+        _map.Entities.AbilityExecutionRequested -= RegisterNewGameEvent;
         
         Turns.PlanningPhaseEnded -= RegisterNewGameEvent;
         Turns.ActionEnded -= RegisterNewGameEvent;
@@ -132,6 +134,7 @@ public partial class ClientGame : Game
         switch (gameEvent)
         {
             case MapCreatedEvent mapCreatedEvent:
+                GlobalRegistry.Instance.ProvideMapSize(mapCreatedEvent.MapSize);
                 _camera.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
                 _interface.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
                 _map.Initialize(mapCreatedEvent);
@@ -142,6 +145,9 @@ public partial class ClientGame : Game
                 break;
             case UnitMovedAlongPathEvent unitMovedAlongPathEvent:
                 _map.HandleEvent(unitMovedAlongPathEvent);
+                break;
+            case AbilityExecutionRequestedEvent abilityExecutionRequestedEvent:
+                _map.Entities.HandleEvent(abilityExecutionRequestedEvent);
                 break;
             case EntityAttackedEvent entityAttackedEvent:
                 _map.Entities.HandleEvent(entityAttackedEvent);

@@ -5,6 +5,7 @@ using LowAgeCommon;
 /// </summary>
 public interface IAbilityHasSelection
 {
+    int GetSelectableItemCost(Id selectableItemId);
     string GetSelectableItemText(Id selectableItemId);
     bool IsSelectableItemDisabled(Id selectableItemId);
 }
