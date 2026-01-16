@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bwk63jxs4an13"]
+[gd_scene load_steps=2 format=3 uid="uid://bwk63jxs4an13"]
 
-[ext_resource type="PackedScene" uid="uid://jx4eqsik4hrl" path="res://app/shared/game/abilities/AbilityNode.tscn" id="1_bjhmp"]
 [ext_resource type="Script" uid="uid://cuo45qtnuu554" path="res://app/shared/game/abilities/ResearchNode.cs" id="2_yp0bo"]
 
-[node name="ResearchNode" instance=ExtResource("1_bjhmp")]
+[node name="ResearchNode" type="Node2D"]
 script = ExtResource("2_yp0bo")

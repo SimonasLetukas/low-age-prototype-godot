@@ -26,24 +26,26 @@ public class EntityCreationProgress
         var remainingCost = TotalCost - PaidCost;
         var appliedCost = Math.Min(adjustedValue, remainingCost);
         PaidCost += appliedCost;
-
-        var deltaUnlockedHp = CalculateDeltaUnlockedValue(GetMaxHp(), previousPaidCost);
-        var deltaUnlockedShields = CalculateDeltaUnlockedValue(GetMaxShields(), previousPaidCost);
+        var completed = TotalCost == PaidCost;
+        
+        var deltaUnlockedHp = CalculateDeltaUnlockedValue(GetMaxHp(), previousPaidCost, completed);
+        var deltaUnlockedShields = CalculateDeltaUnlockedValue(GetMaxShields(), previousPaidCost, completed);
         
         Updated(deltaUnlockedHp, deltaUnlockedShields);
 
-        if (TotalCost == PaidCost)
+        if (completed)
             Completed();
     }
 
     /// <summary>
     /// Calculates how much value of vitals should be gained depending on the amount of paid resources
     /// </summary>
-    private int CalculateDeltaUnlockedValue(int maxValue, int previousPaidCost)
+    private int CalculateDeltaUnlockedValue(int maxValue, int previousPaidCost, bool completed)
     {
         var previouslyUnlockedValue = (maxValue * previousPaidCost) / TotalCost;
         var newUnlockedValue = (maxValue * PaidCost) / TotalCost;
-        var deltaUnlockedValue = Math.Max(newUnlockedValue - previouslyUnlockedValue, 0);
+        var completedOffset = completed ? 1 : 0;
+        var deltaUnlockedValue = Math.Max(newUnlockedValue - previouslyUnlockedValue - completedOffset, 0);
         return deltaUnlockedValue;
     }
 

@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using LowAgeCommon;
 using LowAgeData.Domain.Common;
 
 /// <summary>
@@ -200,7 +198,10 @@ public abstract partial class ActiveAbilityNode<
     
     private void OnPhaseEnded(int turn, TurnPhase phase)
     {
-        if (TurnPhase.Equals(TurnPhase.Action) is false)
+        if (TurnPhase.Equals(TurnPhase.Planning) is false)
+            return;
+
+        if (phase.Equals(TurnPhase.Planning) is false)
             return;
         
         RequestExecution();

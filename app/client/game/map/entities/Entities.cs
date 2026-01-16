@@ -7,6 +7,7 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
 using LowAgeCommon;
+using LowAgeData.Domain.Common;
 using MultipurposePathfinding;
 using Newtonsoft.Json;
 
@@ -495,7 +496,11 @@ public partial class Entities : Node2D
         
         foreach (var entity in _entitiesByIds.Values.OrderBy(e => e.CreationToken))
         {
-            if (entity is not ActorNode actor || actor.HasInitiative is false)
+            if (entity is not ActorNode actor 
+                || actor.HasInitiative is false 
+                || actor.IsCompleted() is false
+                || actor.WorkingOn.Any(ability => ability.ConsumesAction 
+                                                  && ability.Timing.Equals(TurnPhase.Planning)))
                 continue;
 
             var initiativeBonus = (actor.Initiative!.MaxAmount - actor.Initiative!.CurrentAmount) / 1.5f;
