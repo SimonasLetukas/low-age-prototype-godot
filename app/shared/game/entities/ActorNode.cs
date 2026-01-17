@@ -60,15 +60,6 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
         _health.Visible = false;
         _shields.Visible = false;
-
-        CreationProgress.Updated += OnCreationProgressUpdated;
-    }
-
-    public override void _ExitTree()
-    {
-        CreationProgress.Updated -= OnCreationProgressUpdated;
-        
-        base._ExitTree();
     }
 
     public void SetBlueprint(Actor blueprint)
@@ -87,6 +78,12 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         ActorRotation = ActorRotation.BottomRight;
         Abilities.PopulateFromBlueprint(Blueprint.Abilities);
         Behaviours.AddOnBuildBehaviours(Abilities.GetPassives());
+        CreationProgress = Behaviours.GetBuildables().FirstOrDefault();
+        if (CreationProgress is not null)
+        {
+            CreationProgress.Updated += OnCreationProgressUpdated;
+            CreationProgress.Completed += OnCreationProgressCompleted;
+        }
         ActionEconomy = ActionEconomy.For(this);
         
         UpdateVitalsValuesForDisplay();
@@ -108,6 +105,17 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     protected override void Complete()
     {
         base.Complete();
+
+        if (CreationProgress is not null)
+        {
+            CreationProgress.Updated -= OnCreationProgressUpdated;
+            CreationProgress.Completed -= OnCreationProgressCompleted;
+
+        }
+        
+        Behaviours.RemoveAll<BuildableNode>();
+        CreationProgress = null;
+        
         Abilities.OnActorBirth();
     }
 
@@ -115,17 +123,13 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     {
         base.SetCost(cost);
         
-        if (HasHealth)
-        {
+        if (HasHealth) 
             Health!.CurrentAmount = HasCost ? 1 : Health!.MaxAmount;
-            CreationProgress.GetMaxHp = () => Health!.MaxAmount;
-        }
 
-        if (HasShields)
-        {
+        if (HasShields) 
             Shields!.CurrentAmount = HasCost ? 1 : Shields!.MaxAmount;
-            CreationProgress.GetMaxShields = () => Shields!.MaxAmount;
-        }
+        
+        UpdateVitalsValuesForDisplay();
     }
 
     public bool CanAttack(bool? isMelee) => isMelee is null 
@@ -323,13 +327,15 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         return (damage, isLethal);
     }
     
-    private void OnCreationProgressUpdated(int deltaHpGained, int deltaShieldsGained)
+    private void OnCreationProgressUpdated((int DeltaGainedHealth, int DeltaGainedShields) delta)
     {
-        Health!.CurrentAmount += deltaHpGained;
+        Health!.CurrentAmount += delta.DeltaGainedHealth;
         
         if (HasShields)
-            Shields!.CurrentAmount += deltaShieldsGained;
+            Shields!.CurrentAmount += delta.DeltaGainedShields;
         
         UpdateVitalsValuesForDisplay();
     }
+    
+    private void OnCreationProgressCompleted() => Complete();
 }

@@ -428,7 +428,7 @@ public partial class Entities : Node2D
             {
                 BlueprintId = entity.BlueprintId,
                 MapPosition = entity.EntityPrimaryPosition,
-                Cost = entity.HasCost ? entity.CreationProgress.TotalCost : null,
+                Cost = entity.HasCost ? entity.CreationProgress?.TotalCost : null,
                 InstanceId = instanceId,
                 ActorRotation = entity is ActorNode actor ? actor.ActorRotation : ActorRotation.BottomRight,
                 PlayerId = entity.Player.Id

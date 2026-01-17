@@ -1,7 +1,6 @@
-using System;
 using Godot;
 
-public partial class ParabolicArrow : Node2D
+public partial class ParabolicArrow : CanvasGroup
 {
 	private const string ScenePath = @"res://app/client/game/map/ParabolicArrow.tscn";
 	public static ParabolicArrow Instance() => (ParabolicArrow) GD.Load<PackedScene>(ScenePath).Instantiate();
@@ -11,7 +10,6 @@ public partial class ParabolicArrow : Node2D
 		arrow.Start = start;
 		arrow.End = end;
 		parentNode.AddChild(arrow);
-		arrow.ZIndex = 4095;
         arrow.Redraw();
 		return arrow;
 	}
@@ -19,11 +17,27 @@ public partial class ParabolicArrow : Node2D
 	public Vector2 Start;
 	public Vector2 End;
 	
-	[Export] public int Segments = 128;
+	[Export] public int Segments = 64;
 	[Export] public float ArcHeight = 30f;
 	[Export] public Color Color = new("e0d1bf");
 	[Export] public float PixelSize = 2f;
 	[Export] public float ArrowHeadSize = 4f;
+
+	private Line2D _line = null!;
+	private Polygon2D _arrowHead = null!;
+
+	public override void _Ready()
+	{
+		base._Ready();
+
+		_line = GetNode<Line2D>($"{nameof(Line2D)}");
+		_arrowHead = GetNode<Polygon2D>($"ArrowHead");
+		
+		_line.DefaultColor = Color;
+		_line.Width = PixelSize;
+		
+		_arrowHead.Color = Color;
+	}
 	
 	public override void _Draw()
 	{
@@ -37,6 +51,8 @@ public partial class ParabolicArrow : Node2D
 	
 	private void DrawArrow()
 	{
+		_line.ClearPoints();
+		
 		var totalLength = ComputeCurveLength();
 		var cutoffLength = totalLength - (ArrowHeadSize / 4);
 
@@ -53,11 +69,13 @@ public partial class ParabolicArrow : Node2D
 			if (traveled + segmentLength >= cutoffLength)
 				break;
 
-			DrawLine(prev, current, Color, PixelSize, false);
+			_line.AddPoint(prev);
 
 			traveled += segmentLength;
 			prev = current;
 		}
+		
+		_line.AddPoint(GetParabolaPoint(0.99f));
 
 		DrawArrowHead();
 	}
@@ -71,14 +89,12 @@ public partial class ParabolicArrow : Node2D
 		var left = dir.Rotated(Mathf.Pi * 0.75f);
 		var right = dir.Rotated(-Mathf.Pi * 0.75f);
 
-		DrawPolygon(
-			[
-				tip,
-				tip + left * ArrowHeadSize,
-				tip + right * ArrowHeadSize
-			],
-			[Color]
-		);
+		_arrowHead.Polygon =
+		[
+			tip,
+			tip + left * ArrowHeadSize,
+			tip + right * ArrowHeadSize
+		];
 	}
 	
 	private float ComputeCurveLength()

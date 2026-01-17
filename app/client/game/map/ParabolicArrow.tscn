@@ -1,6 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://bdo1kxnx38axc"]
+[gd_scene load_steps=3 format=3 uid="uid://bdo1kxnx38axc"]
 
 [ext_resource type="Script" uid="uid://csuvdhnsg60e1" path="res://app/client/game/map/ParabolicArrow.cs" id="1_vh1lw"]
 
-[node name="ParabolicArrow" type="Node2D"]
+[sub_resource type="Curve" id="Curve_vh1lw"]
+_limits = [0.5, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="ParabolicArrow" type="CanvasGroup"]
+self_modulate = Color(1, 1, 1, 0.627451)
+z_index = 4000
 script = ExtResource("1_vh1lw")
+
+[node name="ArrowHead" type="Polygon2D" parent="."]
+color = Color(0.8784314, 0.81960785, 0.7490196, 1)
+
+[node name="ArrowHead2" type="Line2D" parent="."]
+visible = false
+points = PackedVector2Array(75, 59, 76, 54, 71, 56)
+closed = true
+width = 4.0
+default_color = Color(0.8784314, 0.81960785, 0.7490196, 1)
+sharp_limit = 8.0
+round_precision = 1
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(75, 59, 55, 8, 0, 0)
+width = 2.0
+width_curve = SubResource("Curve_vh1lw")
+default_color = Color(0.8784314, 0.81960785, 0.7490196, 1)
+joint_mode = 2
+begin_cap_mode = 2

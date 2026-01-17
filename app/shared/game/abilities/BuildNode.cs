@@ -54,6 +54,21 @@ public partial class BuildNode : ActiveAbilityNode<
         return PlacementArea.ToPositions(caster, mapSize);
     }
 
+    public IEnumerable<Vector2> GetGlobalPositionsOfFocusedTargets()
+    {
+        var globalPositions = new List<Vector2>();
+        foreach (var focus in FocusQueue)
+        {
+            var entityToBuild = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
+            if (entityToBuild is null)
+                continue;
+            
+            globalPositions.Add(entityToBuild.GlobalPosition);
+        }
+        
+        return globalPositions;
+    }
+
     public int GetSelectableItemCost(Id selectableItemId)
     {
         var item = Selection.First(x => x.Name.Equals(selectableItemId));
@@ -101,11 +116,12 @@ public partial class BuildNode : ActiveAbilityNode<
         
         if (buildableEntity is null)
             return;
+
+        var creationProgress = buildableEntity.CreationProgress;
+        creationProgress?.Helpers.Remove(this);
         
-        buildableEntity.CreationProgress.Helpers.Remove(this);
-        
-        if (buildableEntity.IsCandidate() && buildableEntity.CreationProgress.Helpers.IsEmpty())
-            buildableEntity.Destroy();
+        if (buildableEntity.IsCandidate() && creationProgress is not null && creationProgress.Helpers.IsEmpty())
+            buildableEntity.Destroy(); // No one is working on this anymore
         
         // TODO Refund
         // Can be generic (if split into "CanRefund"): Refund consumable resources (if no helpers left AND no payment progress made)
@@ -154,7 +170,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
     protected override AbilityReservationResult HandleReservation(ActivationRequest request)
     {
-        request.EntityToBuild!.CreationProgress.Helpers.Add(this, Blueprint.HelpEfficiency);
+        request.EntityToBuild!.CreationProgress!.Helpers.Add(this, Blueprint.HelpEfficiency);
         
         return base.HandleReservation(request);
     }
@@ -195,8 +211,9 @@ public partial class BuildNode : ActiveAbilityNode<
     {
         var entity = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
 
-        if (entity is null)
-            return true; // For some reason entity was not found, so it is best to try and complete the ability
+        if (entity?.CreationProgress is null)
+            return true; // For some reason entity or creation progress was not found,
+                         // so it is best to try and complete the ability
             
         if (focus.Reservation.IsReservedFor(Players.Instance.Current) is false) 
             entity.CreationProgress.Helpers.Add(this, Blueprint.HelpEfficiency);
@@ -210,7 +227,7 @@ public partial class BuildNode : ActiveAbilityNode<
     {
         var entity = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
         
-        if (entity is null)
+        if (entity?.CreationProgress is null)
             return; // Something is fishy, best to move on
         
         entity.CreationProgress.Helpers.Clear();

@@ -44,11 +44,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     public string? SpriteLocation => Blueprint.Sprite;
     public bool CanBePlaced { get; protected set; } = false;
     public bool HasCost { get; private set; } = true;
-    public EntityCreationProgress CreationProgress { get; } = new()
-    {
-        GetMaxHp = () => 0, 
-        GetMaxShields = () => 0
-    };
+    public BuildableNode? CreationProgress { get; protected set; } 
     public Behaviours Behaviours { get; protected set; } = null!;
     public bool IsBeingDestroyed { get; private set; }
     
@@ -81,8 +77,6 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Behaviours = GetNode<Behaviours>(nameof(Behaviours));
         
         _movementDuration = GetDurationFromAnimationSpeed();
-
-        CreationProgress.Completed += OnCreationProgressCompleted;
         
         EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
         EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
@@ -91,8 +85,6 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public override void _ExitTree()
     {
-        CreationProgress.Completed -= OnCreationProgressCompleted;
-        
         EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
         EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
         EventBus.Instance.PhaseStarted -= OnPhaseStarted;
@@ -219,24 +211,21 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         
         return true;
     }
-
-    private void OnCreationProgressCompleted() => Complete();
-
+    
     protected virtual void Complete()
     {
         EntityState = State.Completed;
         UpdateVisuals();
-        
-        Behaviours.RemoveAll<BuildableNode>();
     }
     
     public bool IsCompleted() => EntityState is State.Completed;
 
     public virtual void SetCost(int? cost)
     {
-        if (cost is null)
+        if (cost is null || CreationProgress is null)
         {
             HasCost = false;
+            CreationProgress = null;
             return;
         }
         

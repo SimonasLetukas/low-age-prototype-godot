@@ -98,13 +98,21 @@ public sealed class AbilityValidator
 
         public ValidationResult Validate()
         {
-            var helpers = EntityToBuild.CreationProgress.Helpers.Keys;
+            var creationProgress = EntityToBuild.CreationProgress;
             
-            if (helpers.IsEmpty())
-                return ValidationResult.Valid; // We are starting, not helping
+            if (creationProgress is null)
+                return ValidationResult.Invalid("This entity cannot be built!");
+            
+            var helpers = creationProgress.Helpers.Keys;
             
             if (helpers.Any(a => a.InstanceId.Equals(HelpingAbilityInstanceId)))
                 return ValidationResult.Invalid("Already working on this.");
+            
+            if (creationProgress.CanAddNewHelper() is false)
+                return ValidationResult.Invalid("Maximum amount of workers are already working on this.");
+            
+            if (helpers.IsEmpty())
+                return ValidationResult.Valid; // We are starting, not helping
             
             if (HelpingAllowed is false)
                 return ValidationResult.Invalid("Helping to work on this is not allowed.");

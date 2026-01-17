@@ -26,10 +26,18 @@ DebugLinesEnabled = false
 
 [node name="Lines" type="Node2D" parent="Map" index="2"]
 
-[node name="Line2D" type="Line2D" parent="Map/Lines" index="0"]
-z_index = 4096
-points = PackedVector2Array(5, 5, 20, 20, 25, 32)
+[node name="CanvasGroup" type="CanvasGroup" parent="Map/Lines" index="0"]
+self_modulate = Color(1, 1, 1, 0.49803922)
+
+[node name="Line2D2" type="Line2D" parent="Map/Lines/CanvasGroup" index="0"]
+points = PackedVector2Array(16, 10, 12, 15, 14, 5, 13, 21)
 width = 1.0
+
+[node name="Line2D" type="Line2D" parent="Map/Lines/CanvasGroup" index="1"]
+points = PackedVector2Array(5, 5, 20, 20, 10, 16, 9, 13)
+width = 1.0
+
+[node name="Arrows" type="Node2D" parent="Map" index="3"]
 
 [node name="Camera" parent="." index="2" instance=ExtResource("4")]
 

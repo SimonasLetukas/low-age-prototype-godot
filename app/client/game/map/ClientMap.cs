@@ -42,6 +42,7 @@ public partial class ClientMap : Map
 	private IAbilityNode? _selectedAbility;
 	private (BuildNode?, EntityId?) _previousBuildSelection = (null, null);
 	private Node2D _lines = null!;
+	private Node2D _arrows = null!;
 
 	private bool _tileMapIsInitialized = false;
 	private bool _pathfindingIsInitialized = false;
@@ -50,8 +51,6 @@ public partial class ClientMap : Map
 
 	private bool _paused = true;
 	
-	private ParabolicArrow _arrow = null!;
-
 	public override void _Ready()
 	{
 		base._Ready();
@@ -60,9 +59,11 @@ public partial class ClientMap : Map
 		_tileMap = GetNode<Tiles>($"{nameof(Tiles)}");
 		Entities = GetNode<Entities>($"{nameof(Entities)}");
 		_lines = GetNode<Node2D>($"Lines");
+		_arrows = GetNode<Node2D>($"Arrows");
 		
-		_arrow = ParabolicArrow.InstantiateAsChild(this, Vector2.Zero, Vector2.Zero);
-
+		ResetLines();
+		ClearArrows();
+		
 		Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
 		_tileMap.FinishedInitialInitializing += OnTileMapFinishedInitialInitializing;
 		_tileMap.FinishedPointInitialization += OnTileMapFinishedPointInitialization;
@@ -110,7 +111,6 @@ public partial class ClientMap : Map
 		_focusedTile = _tileMap.Elevatable.Focused;
 
 		_lines.Visible = DebugEnabled && DebugLinesEnabled;
-		ResetLines();
 		
 		GlobalRegistry.Instance.ProvideGetCurrentPhase(() => CurrentPhase);
 		GlobalRegistry.Instance.ProvideGetActorInAction(() => ActorInAction);
@@ -217,10 +217,6 @@ public partial class ClientMap : Map
 			// TODO optimization: only if focused tile changed from above, display path
 			if (_focusedTile.IsWithinTheMap || _hoveredInitiativePanelActor != null)
 			{
-				_arrow.Start = ToLocal(selectedUnit.GlobalPosition);
-				_arrow.End = ToLocal(_focusedTile.GlobalPosition);
-				_arrow.Redraw();
-				
 				var to = _hoveredInitiativePanelActor?.EntityPrimaryTile.Point 
 				         ?? _focusedTile.CurrentTile!.Point;
 				var team = Entities.SelectedEntity!.Player.Team;
@@ -275,6 +271,7 @@ public partial class ClientMap : Map
 		_tileMap.Elevatable.ClearAvailableTiles(false);
 		_tileMap.Elevatable.ClearTargetTiles(false);
 		_tileMap.Elevatable.ClearPath();
+		ClearArrows();
 		Entities.DeselectEntity();
 		_selectionOverlay = SelectionOverlay.None;
 	}
@@ -412,6 +409,8 @@ public partial class ClientMap : Map
 				ClientState.Instance.ResetMovementAttackOverlayToggle(true, entity);
 				break;
 		}
+
+		ShowArrowsForEntity(entity);
 		
 		Entities.SelectEntity(entity);
 	}
@@ -482,6 +481,49 @@ public partial class ClientMap : Map
 				ElevatableTiles.TargetPurpose.AttackMelee);
 		
 		_selectionOverlay = SelectionOverlay.Attack;
+	}
+	
+	private void ShowArrowsForEntity(EntityNode entity)
+	{
+		if (entity.CreationProgress is not null)
+		{
+			foreach (var helper in entity.CreationProgress.Helpers.Keys)
+			{
+				ShowArrow(helper.OwnerActor.GlobalPosition, entity.GlobalPosition, helper.OwnerActor.Renderer.ZIndex);
+			}
+		}
+
+		if (entity is not ActorNode actor) 
+			return;
+		
+		foreach (var workingOnAbility in actor.WorkingOn)
+		{
+			if (workingOnAbility.Ability is not IAbilityHasTargetArea abilityWithTargetArea)
+				continue;
+				
+			foreach (var targetGlobalPosition in abilityWithTargetArea.GetGlobalPositionsOfFocusedTargets())
+			{
+				ShowArrow(entity.GlobalPosition, targetGlobalPosition, entity.Renderer.ZIndex);
+			}
+		}
+	}
+
+	private void ShowArrow(Vector2 fromGlobalPosition, Vector2 toGlobalPosition, int zIndex)
+	{
+		var arrow = ParabolicArrow.InstantiateAsChild(_arrows, Vector2.Zero, Vector2.Zero);
+
+		arrow.Start = ToLocal(fromGlobalPosition);
+		arrow.End = ToLocal(toGlobalPosition);
+		arrow.ZIndex = zIndex;
+		arrow.Redraw();
+	}
+
+	private void ClearArrows()
+	{
+		foreach (var arrow in _arrows.GetChildren())
+		{
+			arrow.QueueFree();
+		}
 	}
 	
 	private void ExecuteCancellation()
