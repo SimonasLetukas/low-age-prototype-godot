@@ -1,4 +1,6 @@
-﻿namespace LowAgeCommon.Extensions
+﻿using System.Text;
+
+namespace LowAgeCommon.Extensions
 {
     public static class StringExtensions
     {
@@ -6,25 +8,38 @@
             ? input
             : input[..length];
     
-        public static string WrapToLines(this string inputText, int lineLength) 
+        public static string WrapToLines(this string inputText, int lineLength)
         {
-            var stringSplit = inputText.Split(' ');
-            var charCounter = 0;
-            var finalString = "";
- 
-            foreach (var t in stringSplit)
-            {
-                finalString += t + " ";
-                charCounter += t.Length;
+            var lines = inputText.Split('\n');
+            var result = new StringBuilder();
 
-                if (charCounter <= lineLength) 
-                    continue;
-            
-                finalString += "\n";
-                charCounter = 0;
+            foreach (var line in lines)
+            {
+                var words = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                var charCounter = 0;
+
+                foreach (var word in words)
+                {
+                    if (charCounter + word.Length + (charCounter > 0 ? 1 : 0) > lineLength)
+                    {
+                        result.Append('\n');
+                        charCounter = 0;
+                    }
+
+                    if (charCounter > 0)
+                    {
+                        result.Append(' ');
+                        charCounter++;
+                    }
+
+                    result.Append(word);
+                    charCounter += word.Length;
+                }
+
+                result.Append('\n');
             }
-        
-            return finalString;
+
+            return result.ToString().TrimEnd('\n');
         }
 
         public static bool IsNotNullOrEmpty(this string? input) => string.IsNullOrEmpty(input) is false;

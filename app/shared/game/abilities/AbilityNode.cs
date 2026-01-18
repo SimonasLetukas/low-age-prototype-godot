@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 
@@ -127,11 +128,13 @@ public abstract partial class AbilityNode<
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
         if (obj is not IAbilityNode other) return false;
-        return Id.Equals(other.Id);
+        
+        return Id.Equals(other.Id) 
+               && OwnerActor.InstanceId.Equals(other.OwnerActor.InstanceId);
     }
     
-    // ReSharper disable once NonReadonlyMemberInGetHashCode
-    public override int GetHashCode() => Id.GetHashCode();
+    [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
+    public override int GetHashCode() => HashCode.Combine(Id, OwnerActor.InstanceId);
 }
 
 public interface IAbilityActivationRequest

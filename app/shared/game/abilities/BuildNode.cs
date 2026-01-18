@@ -120,6 +120,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
         var creationProgress = buildableEntity.CreationProgress;
         creationProgress?.Helpers.Remove(this);
+        creationProgress?.UpdateDescription(50); // TODO pass in resources
         
         if (buildableEntity.IsCandidate() && creationProgress is not null && creationProgress.Helpers.IsEmpty())
             buildableEntity.Destroy(); // No one is working on this anymore
@@ -172,6 +173,7 @@ public partial class BuildNode : ActiveAbilityNode<
     protected override AbilityReservationResult HandleReservation(ActivationRequest request)
     {
         request.EntityToBuild!.CreationProgress!.Helpers[this] = Blueprint.HelpEfficiency;
+        request.EntityToBuild!.CreationProgress!.UpdateDescription(50); // TODO pass in resources
         
         return base.HandleReservation(request);
     }
@@ -220,6 +222,7 @@ public partial class BuildNode : ActiveAbilityNode<
             entity.CreationProgress.Helpers[this] = Blueprint.HelpEfficiency;
         
         entity.CreationProgress.UpdateProgress(50); // TODO pass in resources
+        entity.CreationProgress.UpdateDescription(50);
 
         var completed = entity.IsCompleted();
         

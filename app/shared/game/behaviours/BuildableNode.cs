@@ -43,22 +43,48 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     /// </summary>
     public bool CanAddNewHelper() => Blueprint.MaximumHelpers < 0 || Helpers.Count < Blueprint.MaximumHelpers;
 
+    public int GetMaximumPotentialAppliedIncome(int income) // TODO into resources
+    {
+        var efficiencyFactor = CalculateEfficiencyFactor();
+        GD.Print($"Income '{income}', efficiency factor '{efficiencyFactor}'");
+        return ((int)Math.Ceiling(income * efficiencyFactor)) * Helpers.Count;
+    }
+    
     public int GetRemainingUpdateCount(int income) // TODO into resources
     {
         if (PaidCost >= TotalCost) // TODO check if ALL resources are paid
             return 0;
+
+        if (Helpers.Count <= 0)
+            return int.MaxValue;
 
         var simulatedPaidCost = PaidCost;
         var counter = 0;
 
         while (simulatedPaidCost < TotalCost)
         {
-            var progress = CalculateProgressStep(simulatedPaidCost, income);
-            simulatedPaidCost = progress.NewPaidCost;
+            for (var i = 0; i < Helpers.Count; i++)
+            {
+                var progress = CalculateProgressStep(simulatedPaidCost, income);
+                simulatedPaidCost = progress.NewPaidCost;
+            }
+            
             counter++;
         }
 
         return counter;
+    }
+
+    public void UpdateDescription(int income) // TODO into resources, could be fetched from GlobalRegistry
+    {
+        var helperText = Helpers.Count == 1 ? "1 helper is" : $"{Helpers.Count} helpers are";
+        var remainingUpdateCount = GetRemainingUpdateCount(income);
+        var remainingUpdateText = remainingUpdateCount == int.MaxValue ? "too many" : remainingUpdateCount.ToString();
+        
+        Description = $"{helperText} currently working to finish this in " +
+                      $"{remainingUpdateText} turns (with a combined production of " +
+                      $"{GetMaximumPotentialAppliedIncome(income)}, which is used to cover " +
+                      $"the remaining {TotalCost - PaidCost} production).\n\n" + Blueprint.Description;
     }
     
     public void UpdateProgress(int income) // TODO into resources
