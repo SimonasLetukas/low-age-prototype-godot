@@ -4762,6 +4762,10 @@
             {
               "resource": "resource-population",
               "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 1
             }
           ],
           "researchNeeded": [],
@@ -4782,6 +4786,10 @@
             {
               "resource": "resource-population",
               "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 1
             }
           ],
           "researchNeeded": [],
@@ -4801,6 +4809,10 @@
             },
             {
               "resource": "resource-population",
+              "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
               "amount": 1
             }
           ],
@@ -4826,6 +4838,10 @@
             {
               "resource": "resource-population",
               "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 1
             }
           ],
           "researchNeeded": [],
@@ -4850,6 +4866,10 @@
             {
               "resource": "resource-population",
               "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 1
             }
           ],
           "researchNeeded": [],
@@ -4869,6 +4889,10 @@
             },
             {
               "resource": "resource-population",
+              "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
               "amount": 1
             }
           ],
@@ -4890,6 +4914,10 @@
             {
               "resource": "resource-population",
               "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 1
             }
           ],
           "researchNeeded": [],
@@ -4909,6 +4937,10 @@
             },
             {
               "resource": "resource-population",
+              "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
               "amount": 1
             }
           ],
@@ -4937,6 +4969,10 @@
             },
             {
               "resource": "resource-population",
+              "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
               "amount": 1
             }
           ],
@@ -5098,7 +5134,7 @@
       "id": "ability-workshop-research",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "selectionOfResearchToBeUnlocked": [
+      "selection": [
         {
           "name": "research-revelators-poisoned-slits",
           "description": "Unlock Cripple for Quickdraw.",
@@ -5180,6 +5216,9 @@
           "grayOutIfAlreadyExists": true
         }
       ],
+      "casterConsumesAction": true,
+      "canHelp": false,
+      "helpEfficiency": 1.0,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
@@ -5921,7 +5960,7 @@
       "id": "ability-armoury-research",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "selectionOfResearchToBeUnlocked": [
+      "selection": [
         {
           "name": "research-uee-hoverboard-reignition",
           "description": "Unlock Mount for Horrior.",
@@ -6013,6 +6052,9 @@
           "grayOutIfAlreadyExists": true
         }
       ],
+      "casterConsumesAction": true,
+      "canHelp": false,
+      "helpEfficiency": 1.0,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],

@@ -110,7 +110,6 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         {
             CreationProgress.Updated -= OnCreationProgressUpdated;
             CreationProgress.Completed -= OnCreationProgressCompleted;
-
         }
         
         Behaviours.RemoveAll<BuildableNode>();
@@ -267,7 +266,9 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
     protected override void OnPhaseStarted(int turn, TurnPhase phase)
     {
-        ActionEconomy.Restore(phase);
+        if (IsCompleted() && WorkingOn.All(w => w.ConsumesAction is false))
+            ActionEconomy.Restore(phase);
+        
         base.OnPhaseStarted(turn, phase);
     }
     

@@ -8,10 +8,11 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
 {
     private const string ScenePath = @"res://app/shared/game/behaviours/BuildableNode.tscn";
     private static BuildableNode Instance() => (BuildableNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static BuildableNode InstantiateAsChild(Buildable blueprint, Node parentNode)
+    public static BuildableNode InstantiateAsChild(Buildable blueprint, Node parentNode, EntityNode parentEntity)
     {
         var behaviour = Instance();
         parentNode.AddChild(behaviour);
+        behaviour.Parent = parentEntity;
         behaviour.SetBlueprint(blueprint);
         return behaviour;
     }
@@ -80,7 +81,6 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         if (currentPaidCost >= TotalCost)
             return new ProgressStep
             {
-                AppliedCost = 0,
                 NewPaidCost = currentPaidCost,
                 Completed = true
             };
@@ -94,7 +94,6 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
 
         return new ProgressStep
         {
-            AppliedCost = appliedCost,
             NewPaidCost = newPaidCost,
             Completed = newPaidCost == TotalCost,
         };
@@ -112,6 +111,9 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         
         var deltaGainedHealth = CalculateDeltaGainedValue(maxHealth, previousPaidCost, completed);
         var deltaGainedShields = CalculateDeltaGainedValue(maxShields, previousPaidCost, completed);
+        
+        GD.Print($"Sending vitals update to {Parent.DisplayName}: health delta '{deltaGainedHealth}', " +
+                 $"shields delta '{deltaGainedShields}'");
         
         Updated((deltaGainedHealth, deltaGainedShields));
     }
@@ -151,7 +153,6 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     
     private readonly struct ProgressStep
     {
-        public required int AppliedCost { get; init; }
         public required int NewPaidCost { get; init; }
         public required bool Completed { get; init; }
     }

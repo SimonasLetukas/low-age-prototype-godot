@@ -267,51 +267,59 @@ namespace LowAgeData.Collections
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 4),
                             new Payment(resource: ResourceId.MeleeWeapon, amount: 1),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Quickdraw, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 9),
                             new Payment(resource: ResourceId.RangedWeapon, amount: 2),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Gorger, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 7),
                             new Payment(resource: ResourceId.MeleeWeapon, amount: 2),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Camou, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 11),
                             new Payment(resource: ResourceId.MeleeWeapon, amount: 2),
                             new Payment(resource: ResourceId.SpecialWeapon, amount: 1),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Shaman, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 10),
                             new Payment(resource: ResourceId.RangedWeapon, amount: 1),
                             new Payment(resource: ResourceId.SpecialWeapon, amount: 2),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Pyre, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 15),
                             new Payment(resource: ResourceId.RangedWeapon, amount: 4),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.BigBadBull, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 14),
                             new Payment(resource: ResourceId.MeleeWeapon, amount: 4),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Mummy, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 29),
                             new Payment(resource: ResourceId.SpecialWeapon, amount: 5),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Parasite, cost: new List<Payment>
                         {
@@ -319,7 +327,8 @@ namespace LowAgeData.Collections
                             new Payment(resource: ResourceId.MeleeWeapon, amount: 2),
                             new Payment(resource: ResourceId.RangedWeapon, amount: 2),
                             new Payment(resource: ResourceId.SpecialWeapon, amount: 2),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                     },
                     casterConsumesAction: false,

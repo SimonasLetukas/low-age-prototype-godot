@@ -38,6 +38,7 @@ public partial class BuildNode : ActiveAbilityNode<
         Blueprint = blueprint;
         PlacementArea = Blueprint.PlacementArea;
         Selection = Blueprint.Selection;
+        CasterConsumesAction = blueprint.CasterConsumesAction;
     }
 
     public bool WholeMapIsTargeted() => PlacementArea is LowAgeData.Domain.Common.Shape.Map 
@@ -170,7 +171,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
     protected override AbilityReservationResult HandleReservation(ActivationRequest request)
     {
-        request.EntityToBuild!.CreationProgress!.Helpers.Add(this, Blueprint.HelpEfficiency);
+        request.EntityToBuild!.CreationProgress!.Helpers[this] = Blueprint.HelpEfficiency;
         
         return base.HandleReservation(request);
     }
@@ -216,21 +217,25 @@ public partial class BuildNode : ActiveAbilityNode<
                          // so it is best to try and complete the ability
             
         if (focus.Reservation.IsReservedFor(Players.Instance.Current) is false) 
-            entity.CreationProgress.Helpers.Add(this, Blueprint.HelpEfficiency);
+            entity.CreationProgress.Helpers[this] = Blueprint.HelpEfficiency;
         
         entity.CreationProgress.UpdateProgress(50); // TODO pass in resources
 
-        return entity.IsCompleted();
+        var completed = entity.IsCompleted();
+        
+        GD.Print($"Building completed: '{completed}'");
+        
+        return completed;
     }
     
     protected override void Complete(Focus focus)
     {
         var entity = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
         
-        if (entity?.CreationProgress is null)
+        if (entity is null)
             return; // Something is fishy, best to move on
         
-        entity.CreationProgress.Helpers.Clear();
+        entity.CreationProgress?.Helpers.Clear(); // It's OK if CreationProgress doesn't even exist at this point
 
         FocusQueue.Remove(focus);
         

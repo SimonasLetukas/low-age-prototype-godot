@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Note: since visualisation in-game is not needed, this abstract class has no node/scene. 
@@ -80,6 +81,9 @@ public abstract partial class ActiveAbilityNode<
         // TODO
         // var resources = ReserveResources(request.UseConsumableResources);
         
+        GD.Print($"Starting reservation, {nameof(CasterConsumesAction)} '{CasterConsumesAction}', " +
+                 $"{nameof(OwnerActor.WorkingOn)} '{JsonConvert.SerializeObject(OwnerActor.WorkingOn.Count)}'");
+        
         var actionWasReserved = false;
         if (CasterConsumesAction)
         {
@@ -96,11 +100,16 @@ public abstract partial class ActiveAbilityNode<
         if (OwnerActor.WorkingOn.Contains(workingOn) is false)
             OwnerActor.WorkingOn.Add(workingOn);
         
-        return new AbilityReservationResult
+        var reservation = new AbilityReservationResult
         {
             PlayerId = OwnerActor.Player.Id,
             ActionWasReserved = actionWasReserved
         };
+        
+        GD.Print($"Returning new reservation '{JsonConvert.SerializeObject(reservation)}' for activation " +
+                 $"request {nameof(request.UseConsumableResources)} '{request.UseConsumableResources}'.");
+        
+        return reservation;
     }
     
     protected abstract TPreProcessingResult CreatePreProcessingResult(TActivationRequest request, 
@@ -108,15 +117,26 @@ public abstract partial class ActiveAbilityNode<
 
     protected override void OnExecutionRequested(TFocus focus)
     {
+        if (FocusQueue.Contains(focus))
+            focus = FocusQueue.First(f => f.Equals(focus));
+        else
+            FocusQueue.Add(focus);
+        
         if (TryExecutePrePayment(focus) is false)
             return;
 
         ExecutePaymentUpdate(focus);
+
+        var paymentCompleted = TryExecutePostPayment(focus);
         
-        if (TryExecutePostPayment(focus))
+        GD.Print($"Payment completed is '{paymentCompleted}' for focus '{JsonConvert.SerializeObject(focus)}'");
+        
+        if (paymentCompleted)
             Complete(focus);
         else
             Requeue(focus);
+        
+        GD.Print($"End of execution current focus queue '{JsonConvert.SerializeObject(FocusQueue)}'");
     }
 
     protected abstract bool TryExecutePrePayment(TFocus focus);
@@ -151,17 +171,26 @@ public abstract partial class ActiveAbilityNode<
 
     private static void Requeue(TFocus focus)
     {
+        GD.Print($"Requeue: reservation player ID '{focus.Reservation.PlayerId}', " +
+                 $"current player ID '{Players.Instance.Current.Id}'");
+        
+        // Only requeue for the owner player for convenience but still allow to cancel if desired,
+        // every other player will receive (or not) a new execution request from the owner player.
         if (focus.Reservation.PlayerId != Players.Instance.Current.Id)
-            return;
+            return; 
         
         focus.Requeued = true;
+        GD.Print($"Requeue successful for focus '{JsonConvert.SerializeObject(focus)}'");
     }
 
     private void HandleRequeuedFocus(TFocus focus)
     {
+        GD.Print($"Handling requeued focus for '{JsonConvert.SerializeObject(focus)}'");
+        
         var activationRequest = focus.ToActivationRequestForRequeue();
         if (activationRequest is not TActivationRequest typedRequest)
         {
+            GD.Print($"Requeue focus was not the correct type");
             FocusQueue.Remove(focus);
             return;
         }
@@ -170,49 +199,74 @@ public abstract partial class ActiveAbilityNode<
         focus.Reservation = reservation;
         focus.Requeued = false;
     }
-
-    private void OnPhaseStarted(int turn, TurnPhase phase)
+    
+    private bool ActionAllowedForPlanningPhase(TurnPhase currentPhase)
     {
         if (TurnPhase.Equals(TurnPhase.Planning) is false)
-            return;
+            return false;
 
-        foreach (var focus in FocusQueue.Where(f => f.Requeued))
+        if (currentPhase.Equals(TurnPhase.Planning) is false)
+            return false;
+
+        return true;
+    }
+
+    private bool ActionAllowedAsAnActionInActionPhase(ActorNode actor)
+    {
+        if (TurnPhase.Equals(TurnPhase.Action) is false)
+            return false;
+        
+        if (OwnerActor.Equals(actor) is false)
+            return false;
+
+        return true;
+    }
+    
+    private void CleanUpNonRequeuedAbilityFocuses()
+    {
+        foreach (var nonRequeuedFocus in FocusQueue.Where(f => f.Requeued is false).ToList())
+        {
+            CancelActivation(nonRequeuedFocus.ToActivationRequestForRequeue());
+        }
+    }
+    
+    private void HandleRequeuedAbilityFocuses()
+    {
+        foreach (var focus in FocusQueue.Where(f => f.Requeued).ToList())
         {
             HandleRequeuedFocus(focus);
         }
     }
 
-    private void OnActionStarted(ActorNode actor)
+    private void OnPhaseStarted(int turn, TurnPhase phase)
     {
-        if (TurnPhase.Equals(TurnPhase.Action) is false)
+        if (ActionAllowedForPlanningPhase(phase) is false)
             return;
         
-        if (OwnerActor.Equals(actor) is false)
-            return;
-        
-        foreach (var focus in FocusQueue.Where(f => f.Requeued))
-        {
-            HandleRequeuedFocus(focus);
-        }
+        CleanUpNonRequeuedAbilityFocuses();
+        HandleRequeuedAbilityFocuses();
     }
     
     private void OnPhaseEnded(int turn, TurnPhase phase)
     {
-        if (TurnPhase.Equals(TurnPhase.Planning) is false)
-            return;
-
-        if (phase.Equals(TurnPhase.Planning) is false)
+        if (ActionAllowedForPlanningPhase(phase) is false)
             return;
         
         RequestExecution();
     }
+    
+    private void OnActionStarted(ActorNode actor)
+    {
+        if (ActionAllowedAsAnActionInActionPhase(actor) is false)
+            return;
+        
+        CleanUpNonRequeuedAbilityFocuses();
+        HandleRequeuedAbilityFocuses();
+    }
 
     private void OnActionEnded(ActorNode actor)
     {
-        if (TurnPhase.Equals(TurnPhase.Action) is false)
-            return;
-
-        if (OwnerActor.Equals(actor) is false)
+        if (ActionAllowedAsAnActionInActionPhase(actor) is false)
             return;
         
         RequestExecution();
