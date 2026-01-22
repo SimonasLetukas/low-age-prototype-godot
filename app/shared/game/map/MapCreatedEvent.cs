@@ -14,7 +14,7 @@ public partial class MapCreatedEvent : IGameEvent
         Tiles = tiles;
     }
 
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; init; } = Guid.NewGuid();
     public Vector2Int MapSize { get; }
     public Dictionary<int, IList<Area>> StartingPositions { get; } // TODO might be better to have a
                                                                    // Dictionary<int, IList<Vector2>> for each

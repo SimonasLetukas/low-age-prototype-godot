@@ -69,8 +69,10 @@ public partial class ClientGame : Game
         _map.Entities.EntityPlaced += RegisterNewGameEvent;
         _map.Entities.CandidatePlacementCancelled += RegisterNewGameEvent;
         _map.Entities.AbilityExecutionRequested += RegisterNewGameEvent;
+        _map.Entities.AbilityExecutionCompleted += RegisterNewGameEvent;
         
         Turns.PlanningPhaseEnded += RegisterNewGameEvent;
+        Turns.PlanningPhaseEndResolved += RegisterNewGameEvent;
         Turns.ActionEnded += RegisterNewGameEvent;
     }
 
@@ -85,7 +87,7 @@ public partial class ClientGame : Game
         _interface.InitiativePanelActorSelected -= _map.OnInitiativePanelActorSelected;
         _interface.AbilitySelected -= _map.OnInterfaceAbilitySelected;
         _interface.AbilityDeselected -= _map.OnInterfaceAbilityDeselected;
-        _interface.CandidatePlacementCancelled += _map.Entities.OnInterfaceCandidatePlacementCancelled;
+        _interface.CandidatePlacementCancelled -= _map.Entities.OnInterfaceCandidatePlacementCancelled;
         
         _map.FinishedInitializing -= OnMapFinishedInitializing;
         _map.EntityIsBeingPlaced -= _interface.OnEntityIsBeingPlaced;
@@ -97,8 +99,10 @@ public partial class ClientGame : Game
         _map.Entities.EntityPlaced -= RegisterNewGameEvent;
         _map.Entities.CandidatePlacementCancelled -= RegisterNewGameEvent;
         _map.Entities.AbilityExecutionRequested -= RegisterNewGameEvent;
-        
+        _map.Entities.AbilityExecutionCompleted -= RegisterNewGameEvent;
+
         Turns.PlanningPhaseEnded -= RegisterNewGameEvent;
+        Turns.PlanningPhaseEndResolved -= RegisterNewGameEvent;
         Turns.ActionEnded -= RegisterNewGameEvent;
     }
 
@@ -159,6 +163,9 @@ public partial class ClientGame : Game
             case PlanningPhaseEndedResponseEvent planningPhaseEndedResponseEvent:
                 _map.Entities.CancelCandidateEntities(planningPhaseEndedResponseEvent.CancelledCandidateEntities);
                 Turns.HandleEvent(planningPhaseEndedResponseEvent);
+                break;
+            case ActionPhaseStartedEvent actionPhaseStartedEvent:
+                Turns.HandleEvent(actionPhaseStartedEvent);
                 break;
             case ActionEndedEvent actionEndedEvent:
                 Turns.HandleEvent(actionEndedEvent);

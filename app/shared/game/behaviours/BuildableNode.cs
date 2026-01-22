@@ -75,22 +75,27 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         return counter;
     }
 
-    public void UpdateDescription(int income) // TODO into resources, could be fetched from GlobalRegistry
+    public void UpdateDescription(int potentialIncome) // TODO into resources, could be fetched from GlobalRegistry
     {
         var helperText = Helpers.Count == 1 ? "1 helper is" : $"{Helpers.Count} helpers are";
-        var remainingUpdateCount = GetRemainingUpdateCount(income);
+        var remainingUpdateCount = GetRemainingUpdateCount(potentialIncome);
         var remainingUpdateText = remainingUpdateCount == int.MaxValue ? "too many" : remainingUpdateCount.ToString();
         
         Description = $"{helperText} currently working to finish this in " +
                       $"{remainingUpdateText} turns (with a combined production of " +
-                      $"{GetMaximumPotentialAppliedIncome(income)}, which is used to cover " +
+                      $"{GetMaximumPotentialAppliedIncome(potentialIncome)}, which is used to cover " +
                       $"the remaining {TotalCost - PaidCost} production).\n\n" + Blueprint.Description;
     }
     
     public void UpdateProgress(int income) // TODO into resources
     {
+        UpdateDescription(income);
+
         if (PaidCost >= TotalCost) // TODO check if ALL resources are paid
+        {
+            Completed();
             return;
+        }
 
         var previousPaidCost = PaidCost;
         var progress = CalculateProgressStep(PaidCost, income);

@@ -15,6 +15,7 @@ public partial class Turns : Node2D
 	[Export] public bool DebugEnabled { get; set; } = false;
 	
 	public event Action<PlanningPhaseEndedRequestEvent> PlanningPhaseEnded = delegate { };
+	public event Action<PlanningPhaseEndResolvedEvent> PlanningPhaseEndResolved = delegate { };
 	public event Action<ActionEndedEvent> ActionEnded = delegate { };
 
 	private int Turn { get; set; }
@@ -89,10 +90,20 @@ public partial class Turns : Node2D
 
 	public void HandleEvent(PlanningPhaseEndedResponseEvent @event)
 	{
+		EventBus.Instance.RaisePhaseEnded(Turn, Phase);
+		
+		PlanningPhaseEndResolved(new PlanningPhaseEndResolvedEvent
+		{
+			PlayerId = Players.Instance.Current.Id
+		});
+	}
+
+	public void HandleEvent(ActionPhaseStartedEvent @event)
+	{
 		_waitingForServerResponse = false;
 		Turn = @event.Turn;
 		
-		AdvanceToNextPhase();
+		AdvanceToNextPhase(false);
 		
 		InitiativeQueue = _getActorsSortedByInitiative is null ? [] : _getActorsSortedByInitiative();
 		
@@ -148,9 +159,10 @@ public partial class Turns : Node2D
 		EventBus.Instance.RaiseActionStarted(InitiativeQueue.First());
 	}
 
-	private void AdvanceToNextPhase()
+	private void AdvanceToNextPhase(bool raiseEndTurnEvent = true)
 	{
-		EventBus.Instance.RaisePhaseEnded(Turn, Phase);
+		if (raiseEndTurnEvent)
+			EventBus.Instance.RaisePhaseEnded(Turn, Phase);
 
 		Phase = Phase.Next();
 

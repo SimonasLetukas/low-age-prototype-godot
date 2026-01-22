@@ -21,6 +21,7 @@ public partial class Entities : Node2D
     public event Action<EntityPlacedRequestEvent> EntityPlaced = delegate { };
     public event Action<EntityCandidatePlacementCancelledEvent> CandidatePlacementCancelled = delegate { };
     public event Action<AbilityExecutionRequestedEvent> AbilityExecutionRequested = delegate { };
+    public event Action<AbilityExecutionCompletedEvent> AbilityExecutionCompleted = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
     public event Action<EntityNode> EntityDeselected = delegate { };
@@ -346,6 +347,11 @@ public partial class Entities : Node2D
         }
         
         ability.OnExecutionRequested(@event.Focus);
+        AbilityExecutionCompleted(new AbilityExecutionCompletedEvent
+        {
+            PlayerId = Players.Instance.Current.Id,
+            AbilityExecutionRequestedEventId = @event.Id
+        });
     }
 
     public void HandleEvent(EntityAttackedEvent @event)

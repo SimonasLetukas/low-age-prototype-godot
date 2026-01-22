@@ -13,6 +13,10 @@ public partial class ServerGame : Game
     private readonly List<EntityPlacedRequestEvent> _pendingEntityPlacedRequests = [];
     private readonly List<PlanningPhaseEndedRequestEvent> _planningPhaseEndedEventsByTurn = [];
     private int _entityCreationTokenCounter;
+    private readonly Dictionary<Guid, List<int>> _pendingPlayersByAbilityExecutions = [];
+    private List<int> _playersPendingPlanningPhaseEndResolution = [];
+    private int _turn;
+    
     private Creator _creator = null!;
     
     public override async void _Ready()
@@ -103,6 +107,15 @@ public partial class ServerGame : Game
             case PlanningPhaseEndedRequestEvent planningPhaseEndedRequestEvent:
                 HandleEvent(planningPhaseEndedRequestEvent);
                 break;
+            case AbilityExecutionRequestedEvent abilityExecutionRequestedEvent:
+                HandleEvent(abilityExecutionRequestedEvent);
+                break;
+            case AbilityExecutionCompletedEvent abilityExecutionCompletedEvent:
+                HandleEvent(abilityExecutionCompletedEvent);
+                break;
+            case PlanningPhaseEndResolvedEvent planningPhaseEndResolvedEvent:
+                HandleEvent(planningPhaseEndResolvedEvent);
+                break;
             default:
                 GD.Print($"{nameof(ServerGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
                          $"'{EventToString(gameEvent).TrimForLogs(50)}...'. Type not implemented or not relevant " +
@@ -174,17 +187,54 @@ public partial class ServerGame : Game
 
         _pendingEntityPlacedRequests.Clear();
         _planningPhaseEndedEventsByTurn.Clear();
+
+        _pendingPlayersByAbilityExecutions.Clear();
+        _playersPendingPlanningPhaseEndResolution = Players.Instance.GetAllIds().ToList();
         
-        // TODO Here we could send planning phase abilities
+        _turn = @event.Turn;
         
         var planningPhaseEndedResponse = new PlanningPhaseEndedResponseEvent
         {
-            Turn = @event.Turn,
             CancelledCandidateEntities = cancelledCandidates.ToList()
         };
         OnRegisterServerEvent(planningPhaseEndedResponse);
     }
+
+    private void HandleEvent(AbilityExecutionRequestedEvent @event)
+    {
+        _pendingPlayersByAbilityExecutions[@event.Id] = Players.Instance.GetAllIds().ToList();
+    }
     
+    private void HandleEvent(AbilityExecutionCompletedEvent @event)
+    {
+        _pendingPlayersByAbilityExecutions[@event.AbilityExecutionRequestedEventId].Remove(@event.PlayerId);
+
+        StartActionPhase();
+    }
+    
+    private void HandleEvent(PlanningPhaseEndResolvedEvent @event)
+    {
+        _playersPendingPlanningPhaseEndResolution.Remove(@event.PlayerId);
+
+        StartActionPhase();
+    }
+
+    private void StartActionPhase()
+    {
+        if (_playersPendingPlanningPhaseEndResolution.Count > 0
+            || AllPlayersCompletedAbilityExecution() is false)
+            return;
+        
+        var actionPhaseStartedEvent = new ActionPhaseStartedEvent
+        {
+            Turn = _turn
+        };
+        OnRegisterServerEvent(actionPhaseStartedEvent);
+    }
+
+    private bool AllPlayersCompletedAbilityExecution() => _pendingPlayersByAbilityExecutions.Values
+        .All(pendingPlayers => pendingPlayers.Count == 0);
+
     private static IEnumerable<Guid> GetCancelledCandidates(
         IList<PlanningPhaseEndedRequestEvent> planningPhaseEndedEvents)
     {

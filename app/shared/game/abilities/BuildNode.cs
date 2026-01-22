@@ -222,7 +222,6 @@ public partial class BuildNode : ActiveAbilityNode<
             entity.CreationProgress.Helpers[this] = Blueprint.HelpEfficiency;
         
         entity.CreationProgress.UpdateProgress(50); // TODO pass in resources
-        entity.CreationProgress.UpdateDescription(50);
 
         var completed = entity.IsCompleted();
         

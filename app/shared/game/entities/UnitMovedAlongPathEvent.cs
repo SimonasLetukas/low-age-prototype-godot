@@ -10,7 +10,7 @@ public partial class UnitMovedAlongPathEvent(
     IEnumerable<Point> path)
     : IGameEvent
 {
-    public Guid Id { get; } = Guid.NewGuid();
+    public Guid Id { get; init; } = Guid.NewGuid();
     public Guid EntityInstanceId { get; } = entityInstanceId;
     public IEnumerable<Vector2> GlobalPath { get; } = globalPath.ToArray(); // TODO perhaps this can be calculated in each client instead?
     public IEnumerable<Point> Path { get; } = path.ToArray();

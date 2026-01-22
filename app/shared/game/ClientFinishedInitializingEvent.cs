@@ -7,6 +7,6 @@ public partial class ClientFinishedInitializingEvent : IGameEvent
         PlayerId = playerId;
     }
 
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; init; } = Guid.NewGuid();
     public int PlayerId { get; }
 }
