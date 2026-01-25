@@ -78,7 +78,7 @@ public partial class InfoDisplay : MarginContainer
     {
         _abilityTitle = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle");
         _researchText = GetNode<Research>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/{nameof(Research)}");
-        _navigationBack = GetNode<NavigationBox>($"{nameof(VBoxContainer)}/TopPart/{nameof(NavigationBox)}");
+        _navigationBack = GetNode<NavigationBox>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/{nameof(NavigationBox)}");
         _leftSide = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/LeftSide");
         _leftSideTop = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/LeftSide/Rows/Top");
         _leftSideTopText = GetNode<TopText>($"{nameof(VBoxContainer)}/TopPart/LeftSide/Rows/{nameof(TopText)}");
@@ -422,7 +422,8 @@ public partial class InfoDisplay : MarginContainer
 
     private void ShowAbility()
     {
-        GetNode<Label>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Label").Text = _valueAbilityName;
+        GetNode<Text>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Text").Text = 
+            "[b]" + _valueAbilityName;
         _researchText.SetResearch(_valueResearchText);
         GetNode<AbilitySubtitle>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(AbilitySubtitle)}")
             .SetAbilitySubtitle(_valueAbilityTurnPhase, _valueAbilityCooldown);
