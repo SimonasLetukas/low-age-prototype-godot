@@ -5,6 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 
+/// <summary>
+/// Note: since visualisation in-game is not needed, this abstract class has no node/scene. 
+/// </summary>
 public abstract partial class AbilityNode<
     TActivationRequest, 
     TPreProcessingResult, 

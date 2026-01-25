@@ -131,6 +131,29 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         UpdateVitalsValuesForDisplay();
     }
 
+    public void AddWorkingOnAbility(IAbilityNode ability, TurnPhase timing, bool consumesAction)
+    {
+        var workingOn = new WorkingOnAbility
+        {
+            Ability = ability,
+            Timing = timing,
+            ConsumesAction = consumesAction
+        };
+        
+        if (WorkingOn.Contains(workingOn) is false)
+            WorkingOn.Add(workingOn);
+    }
+
+    public void RemoveWorkingOnAbility(IAbilityNode ability)
+    {
+        foreach (var workingOnAbility in WorkingOn
+                     .ToList()
+                     .Where(workingOnAbility => workingOnAbility.Ability.Equals(ability)))
+        {
+            WorkingOn.Remove(workingOnAbility);
+        }
+    }
+
     public bool CanAttack(bool? isMelee) => isMelee is null 
         ? CanAttack(AttackType.Melee) || CanAttack(AttackType.Ranged) 
         : CanAttack(isMelee is true ? AttackType.Melee : AttackType.Ranged);

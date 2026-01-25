@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Godot;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
-using LowAgeData.Domain.Tiles;
 
 public partial class TargetNode : ActiveAbilityNode<
         TargetNode.ActivationRequest, 

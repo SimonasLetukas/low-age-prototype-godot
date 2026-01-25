@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Logic;
-using LowAgeCommon.Extensions;
 
 public class ValidationHandler
 {

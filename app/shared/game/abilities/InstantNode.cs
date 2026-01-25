@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using Godot;
 using LowAgeData.Domain.Abilities;
-using LowAgeData.Domain.Common;
 
 public partial class InstantNode : ActiveAbilityNode<
         InstantNode.ActivationRequest, 

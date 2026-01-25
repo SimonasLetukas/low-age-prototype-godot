@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Godot;
-using LowAgeData.Domain.Common;
 using ResearchAbility = LowAgeData.Domain.Abilities.Research;
 
 public partial class ResearchNode : ActiveAbilityNode<

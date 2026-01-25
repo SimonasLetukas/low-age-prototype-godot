@@ -16,6 +16,10 @@ public abstract partial class ActiveAbilityNode<
     where TPreProcessingResult : IActiveAbilityActivationPreProcessingResult
     where TFocus : IActiveAbilityFocus
 {
+    public event Action<IActiveAbilityFocus> Cancelled = delegate { };
+    
+    public bool IsActivated => FocusQueue.Any();
+    
     protected bool CasterConsumesAction { get; set; } = true;
     
     public override void _Ready()
@@ -26,6 +30,7 @@ public abstract partial class ActiveAbilityNode<
         EventBus.Instance.ActionStarted += OnActionStarted;
         EventBus.Instance.PhaseEnded += OnPhaseEnded;
         EventBus.Instance.ActionEnded += OnActionEnded;
+        EventBus.Instance.EntityDestroyed += OnOwnerActorDestroyed;
     }
 
     public override void _ExitTree()
@@ -34,8 +39,18 @@ public abstract partial class ActiveAbilityNode<
         EventBus.Instance.ActionStarted -= OnActionStarted;
         EventBus.Instance.PhaseEnded -= OnPhaseEnded;
         EventBus.Instance.ActionEnded -= OnActionEnded;
-        
+        EventBus.Instance.EntityDestroyed -= OnOwnerActorDestroyed;
+
         base._ExitTree();
+    }
+
+    public void CancelActivations()
+    {
+        foreach (var focus in FocusQueue.ToList())
+        {
+            var request = focus.ToActivationRequest();
+            CancelActivation(request);
+        }
     }
 
     public void CancelActivation(IAbilityActivationRequest request)
@@ -51,6 +66,8 @@ public abstract partial class ActiveAbilityNode<
     }
     
     protected abstract void CancelActivation(TActivationRequest request);
+    
+    protected void RaiseCancelled(IActiveAbilityFocus focus) => Cancelled(focus);
 
     protected void RefundAction()
     {
@@ -90,15 +107,8 @@ public abstract partial class ActiveAbilityNode<
             OwnerActor.ActionEconomy.UsedAbilityAction();
             actionWasReserved = true;
         }
-
-        var workingOn = new WorkingOnAbility
-        {
-            Ability = this,
-            Timing = TurnPhase,
-            ConsumesAction = actionWasReserved
-        };
-        if (OwnerActor.WorkingOn.Contains(workingOn) is false)
-            OwnerActor.WorkingOn.Add(workingOn);
+        
+        OwnerActor.AddWorkingOnAbility(this, TurnPhase, actionWasReserved);
         
         var reservation = new AbilityReservationResult
         {
@@ -190,7 +200,7 @@ public abstract partial class ActiveAbilityNode<
         var activationRequest = focus.ToActivationRequestForRequeue();
         if (activationRequest is not TActivationRequest typedRequest)
         {
-            GD.Print($"Requeue focus was not the correct type");
+            GD.Print("Requeue focus was not the correct type");
             FocusQueue.Remove(focus);
             return;
         }
@@ -270,6 +280,17 @@ public abstract partial class ActiveAbilityNode<
             return;
         
         RequestExecution();
+    }
+    
+    private void OnOwnerActorDestroyed(EntityNode entity)
+    {
+        if (entity is not ActorNode actor)
+            return;
+
+        if (OwnerActor.Equals(actor) is false)
+            return;
+        
+        CancelActivations();
     }
 }
 

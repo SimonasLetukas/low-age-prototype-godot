@@ -9,6 +9,7 @@ public partial class InfoDisplay : MarginContainer
     public event Action AbilitiesClosed = delegate { };
     public event Action AbilityTextResized = delegate { };
     public event Action<bool, AttackType?> AttackSelected = delegate { };
+    public event Action AbilityCancelled = delegate { };
 
     public View CurrentView { get; private set; } = View.UnitStats;
     private View _previousView = View.UnitStats;
@@ -45,6 +46,7 @@ public partial class InfoDisplay : MarginContainer
     private ActorAttribute? _valueRangedBonusType = ActorAttribute.Armoured;
     
     private string _valueAbilityName = "Build";
+    private bool _hasAbilityToCancel = false;
     private TurnPhase _valueAbilityTurnPhase = TurnPhase.Planning;
     private string _valueAbilityText = "Place a ghostly rendition of a selected enemy unit in [b]7[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] to an unoccupied space in a [b]3[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] from the selected target. The rendition has the same amount of [img=15x11]Client/UI/Icons/icon_health_big.png[/img], [img=15x11]Client/UI/Icons/icon_melee_armour_big.png[/img] and [img=15x11]Client/UI/Icons/icon_ranged_armour_big.png[/img] as the selected target, cannot act, can be attacked and stays for [b]2[/b] action phases. [b]50%[/b] of all [img=15x11]Client/UI/Icons/icon_damage_big.png[/img] done to the rendition is done as pure [img=15x11]Client/UI/Icons/icon_damage_big.png[/img]to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals [b]10[/b][img=15x11]Client/UI/Icons/icon_melee_attack.png[/img] and slows all adjacent enemies by [b]50%[/b] until the end of their next action.";
     private EndsAtNode _valueAbilityCooldown = null!;
@@ -52,6 +54,7 @@ public partial class InfoDisplay : MarginContainer
 
     private Control _abilityTitle = null!;
     private Research _researchText = null!;
+    private NavigationBox _cancelAbility = null!;
     private NavigationBox _navigationBack = null!;
     private Control _leftSide = null!;
     private Control _leftSideTop = null!;
@@ -78,6 +81,7 @@ public partial class InfoDisplay : MarginContainer
     {
         _abilityTitle = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle");
         _researchText = GetNode<Research>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/{nameof(Research)}");
+        _cancelAbility = GetNode<NavigationBox>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/CancelAbility");
         _navigationBack = GetNode<NavigationBox>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/{nameof(NavigationBox)}");
         _leftSide = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/LeftSide");
         _leftSideTop = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/LeftSide/Rows/Top");
@@ -104,7 +108,8 @@ public partial class InfoDisplay : MarginContainer
         _rightSideRangedAttack.Clicked += OnRangedClicked;
         _rightSideMeleeAttack.Hovering += OnMeleeHovering;
         _rightSideRangedAttack.Hovering += OnRangedHovering;
-        _navigationBack.Connect(nameof(NavigationBox.Clicked), new Callable(this, nameof(OnNavigationBoxClicked)));
+        _navigationBack.Clicked += OnNavigationBoxClicked;
+        _cancelAbility.Clicked += OnCancelAbilityClicked;
         _abilityText.Connect("finished", new Callable(this, nameof(OnTextResized)));
         
         _leftSideBottomEmptyBlock.SetEmpty();
@@ -117,6 +122,8 @@ public partial class InfoDisplay : MarginContainer
         _rightSideRangedAttack.Clicked -= OnRangedClicked;
         _rightSideMeleeAttack.Hovering -= OnMeleeHovering;
         _rightSideRangedAttack.Hovering -= OnRangedHovering;
+        _navigationBack.Clicked -= OnNavigationBoxClicked;
+        _cancelAbility.Clicked -= OnCancelAbilityClicked;
         
         base._ExitTree();
     }
@@ -268,11 +275,13 @@ public partial class InfoDisplay : MarginContainer
         TurnPhase turnPhase,
         string text,
         EndsAtNode cooldown,
-        IList<ResearchId> research)
+        IList<ResearchId> research,
+        bool hasAbilityToCancel)
     {
         _valueAbilityName = abilityName;
         _valueAbilityTurnPhase = turnPhase;
         _valueAbilityText = text;
+        _hasAbilityToCancel = hasAbilityToCancel;
         _valueResearchText = string.Join(", ", research.Select(x => x.ToString()).ToList()); // TODO add nice display names to research
         _valueAbilityCooldown = cooldown;
     }
@@ -287,6 +296,7 @@ public partial class InfoDisplay : MarginContainer
     {
         _abilityTitle.Visible = false;
         _researchText.Visible = false;
+        _cancelAbility.Visible = false;
         _navigationBack.Visible = false;
         _leftSide.Visible = false;
         _leftSideTop.Visible = false;
@@ -432,6 +442,7 @@ public partial class InfoDisplay : MarginContainer
 
         _abilityTitle.Visible = true;
         _researchText.Visible = string.IsNullOrEmpty(_valueResearchText) is false;
+        _cancelAbility.Visible = _hasAbilityToCancel;
         _navigationBack.Visible = true;
         _abilityDescription.Visible = true;
         
@@ -520,6 +531,8 @@ public partial class InfoDisplay : MarginContainer
         ShowView(_previousView);
         AbilitiesClosed();
     }
+
+    private void OnCancelAbilityClicked() => AbilityCancelled();
 
     private void OnTextResized() => AbilityTextResized();
 }

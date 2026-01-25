@@ -19,6 +19,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     [Export] public Color PlacementColorSuccess { get; set; } = Colors.Green;
     [Export] public Color PlacementColorInvalid { get; set; } = Colors.Red;
 
+    public event Action<EntityNode> Completed = delegate { };
     public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> FinishedMoving = delegate { };
     
@@ -214,6 +215,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     protected virtual void Complete()
     {
+        Completed(this);
         EntityState = State.Completed;
         UpdateVisuals();
     }
@@ -305,6 +307,9 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public void Destroy()
     {
+        if (IsBeingDestroyed)
+            return;
+        
         IsBeingDestroyed = true;
         Destroyed(this);
         QueueFree();

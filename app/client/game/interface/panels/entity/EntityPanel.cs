@@ -1,8 +1,6 @@
 using System;
 using Godot;
-using System.Collections.Generic;
 using System.Linq;
-using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 
 public partial class EntityPanel : Control
@@ -20,6 +18,7 @@ public partial class EntityPanel : Control
     private InfoDisplay _display = null!;
     private Text _abilityTextBox = null!;
     private bool _isShowingAbility;
+    private IAbilityNode? _selectedAbility;
     private bool _isSwitchingBetweenAbilities;
     private EntityNode? _selectedEntity;
     private int _biggestPreviousAbilityTextSize = 0;
@@ -44,6 +43,7 @@ public partial class EntityPanel : Control
         _display.AbilitiesClosed += OnInfoDisplayAbilitiesClosed;
         _display.AbilityTextResized += OnInfoDisplayTextResized;
         _display.AttackSelected += OnInfoDisplayAttackSelected;
+        _display.AbilityCancelled += OnInfoDisplayAbilityCancelled;
         
         HidePanel();
     }
@@ -55,13 +55,14 @@ public partial class EntityPanel : Control
         _display.AbilitiesClosed -= OnInfoDisplayAbilitiesClosed;
         _display.AbilityTextResized -= OnInfoDisplayTextResized;
         _display.AttackSelected -= OnInfoDisplayAttackSelected;
+        _display.AbilityCancelled -= OnInfoDisplayAbilityCancelled;
         
         base._ExitTree();
     }
 
     public void OnEntitySelected(EntityNode selectedEntity)
     {
-        _isShowingAbility = false;
+        UnregisterAbility();
         _isSwitchingBetweenAbilities = false;
         _selectedEntity = selectedEntity;
         
@@ -88,11 +89,12 @@ public partial class EntityPanel : Control
     public void OnEntityDeselected()
     {
         _selectedEntity = null;
+        UnregisterAbility();
         HidePanel();
         AbilityViewClosed();
     }
 
-    private void ChangeDisplay(AbilityButton? clickedAbility = null)
+    private void ChangeDisplay()
     {
         if (_selectedEntity is null)
         {
@@ -100,15 +102,15 @@ public partial class EntityPanel : Control
             return;
         }
         
-        if (_isShowingAbility && clickedAbility != null)
+        if (_isShowingAbility && _selectedAbility != null)
         {
-            var ability = clickedAbility.Ability;
-            var name = ability.DisplayName;
-            var turnPhase = ability.TurnPhase;
-            var text = ability.Description;
-            var research = ability.ResearchNeeded;
-            var cooldown = ability.RemainingCooldown;
-            _display.SetAbilityStats(name, turnPhase, text, cooldown, research);
+            var name = _selectedAbility.DisplayName;
+            var turnPhase = _selectedAbility.TurnPhase;
+            var text = _selectedAbility.Description;
+            var research = _selectedAbility.ResearchNeeded;
+            var cooldown = _selectedAbility.RemainingCooldown;
+            var hasAbilityToCancel = _selectedAbility is IActiveAbilityNode { IsActivated: true };
+            _display.SetAbilityStats(name, turnPhase, text, cooldown, research, hasAbilityToCancel);
             _display.ShowView(View.Ability);
             return;
         }
@@ -227,7 +229,27 @@ public partial class EntityPanel : Control
             BehaviourBox.InstantiateAsChild(behaviour, _behaviours);
         }
     }
-    
+
+    private void RegisterAbility(IAbilityNode ability)
+    {
+        _isShowingAbility = true;
+        _selectedAbility = ability;
+        
+        if (_selectedAbility is IActiveAbilityNode activeAbility)
+            activeAbility.Cancelled += OnAbilityCancelled;
+    }
+
+    private void UnregisterAbility()
+    {
+        if (_selectedAbility is IActiveAbilityNode activeAbility)
+            activeAbility.Cancelled -= OnAbilityCancelled;
+        
+        _isShowingAbility = false;
+        _selectedAbility = null;
+    }
+
+    private void OnAbilityCancelled(IActiveAbilityFocus focus) => ChangeDisplay();
+
     private void OnCancelButtonClicked()
     {
         if (_selectedEntity is null || _selectedEntity.IsCandidate() is false)
@@ -243,7 +265,7 @@ public partial class EntityPanel : Control
         if (abilityButton.IsSelected)
         {
             abilityButton.SetSelected(false);
-            _isShowingAbility = false;
+            UnregisterAbility();
             ChangeDisplay();
             MovePanel();
             AbilityViewClosed();
@@ -255,35 +277,10 @@ public partial class EntityPanel : Control
         
         _abilityButtons.DeselectAll();
         abilityButton.SetSelected(true);
-        _isShowingAbility = true;
-        ChangeDisplay(abilityButton);
+        RegisterAbility(abilityButton.Ability);
+        ChangeDisplay();
         MovePanel();
         AbilityViewOpened(abilityButton);
-    }
-
-    // TODO find out the best UX for handling all types of abilities 
-    private void OnAbilityButtonHovering(bool started, AbilityButton abilityButton)
-    {
-        if (abilityButton.IsSelected)
-            return;
-        
-        if (started)
-        {
-            _isSwitchingBetweenAbilities = true;
-            _isShowingAbility = true;
-            ChangeDisplay(abilityButton);
-            MovePanel();
-            return;
-        }
-
-        var wasAnyAbilitySelected = _abilityButtons.IsAnySelected();
-        _isSwitchingBetweenAbilities = wasAnyAbilitySelected;
-        _isShowingAbility = wasAnyAbilitySelected;
-
-        if (wasAnyAbilitySelected is false && _display.CurrentView != View.Ability)
-            return;
-        
-        _display.ShowPreviousView();
     }
 
     private void OnAbilityButtonsPopulated()
@@ -296,7 +293,7 @@ public partial class EntityPanel : Control
         _isSwitchingBetweenAbilities = false;
         
         _abilityButtons.DeselectAll();
-        _isShowingAbility = false;
+        UnregisterAbility();
         ChangeDisplay();
         MovePanel();
 
@@ -309,4 +306,12 @@ public partial class EntityPanel : Control
     }
 
     private void OnInfoDisplayAttackSelected(bool started, AttackType? attackType) => AttackSelected(started, attackType);
+    
+    private void OnInfoDisplayAbilityCancelled()
+    {
+        if (_selectedAbility is not IActiveAbilityNode activeAbility)
+            return;
+        
+        activeAbility.CancelActivations();
+    }
 }

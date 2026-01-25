@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
-using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 
 public sealed class AbilityValidator

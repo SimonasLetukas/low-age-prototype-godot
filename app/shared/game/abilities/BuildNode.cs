@@ -31,7 +31,21 @@ public partial class BuildNode : ActiveAbilityNode<
     
     private Build Blueprint { get; set; } = null!;
     private IShape PlacementArea { get; set; } = null!;
-    
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        EventBus.Instance.EntityDestroyed += OnEntityDestroyed;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus.Instance.EntityDestroyed -= OnEntityDestroyed;
+        
+        base._ExitTree();
+    }
+
     public void SetBlueprint(Build blueprint)
     {
         base.SetBlueprint(blueprint);
@@ -131,12 +145,15 @@ public partial class BuildNode : ActiveAbilityNode<
         RefundAction();
 
         var focus = FocusQueue.FirstOrDefault(f => f.EntityToBuildId.Equals(buildableEntity.InstanceId));
-        
-        if (focus is not null)
-            FocusQueue.Remove(focus);
 
-        if (FocusQueue.IsEmpty())
-            OwnerActor.WorkingOn = [];
+        if (focus is not null)
+        {
+            FocusQueue.Remove(focus);
+            RaiseCancelled(focus);
+        }
+
+        if (FocusQueue.IsEmpty()) 
+            OwnerActor.RemoveWorkingOnAbility(this);
     }
     
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
@@ -172,6 +189,11 @@ public partial class BuildNode : ActiveAbilityNode<
 
     protected override AbilityReservationResult HandleReservation(ActivationRequest request)
     {
+        // TODO somethign fishy here when there are two helpers
+        // 1. Only the helpers which COULD NOT participate regain their action
+        // 2. All other helpers should continue to spend the turn if their income was used / they participated in progressing the buildable entity
+        // 3. This is handled with requeued focuses, which upon becoming to real focuses should check if the buildable entity still exists && is not completed
+        
         request.EntityToBuild!.CreationProgress!.Helpers[this] = Blueprint.HelpEfficiency;
         request.EntityToBuild!.CreationProgress!.UpdateDescription(50); // TODO pass in resources
         
@@ -242,7 +264,19 @@ public partial class BuildNode : ActiveAbilityNode<
         FocusQueue.Remove(focus);
         
         if (FocusQueue.IsEmpty())
-            OwnerActor.WorkingOn = [];
+            OwnerActor.RemoveWorkingOnAbility(this);
+    }
+    
+    private void OnEntityDestroyed(EntityNode entity)
+    {
+        foreach (var focus in FocusQueue.ToList())
+        {
+            if (focus.EntityToBuildId.Equals(entity.InstanceId) is false)
+                continue;
+
+            var request = focus.ToActivationRequest();
+            CancelActivation(request);
+        }
     }
     
     public class ActivationRequest : IConsumableAbilityActivationRequest

@@ -300,7 +300,7 @@ public partial class Entities : Node2D
         }
     }
 
-    public void CancelCandidateEntities(IEnumerable<Guid> candidateEntities)
+    public void HandleCancelledEntities(IEnumerable<Guid> candidateEntities)
     {
         foreach (var cancelledCandidate in candidateEntities)
         {
@@ -314,12 +314,12 @@ public partial class Entities : Node2D
         }
     }
 
-    public void OnInterfaceCandidatePlacementCancelled(EntityNode entity)
+    public void OnCandidatePlacementCancelled(EntityNode entity)
     {
         if (Players.Instance.IsActionAllowedForCurrentPlayerOn(entity) is false)
             return;
         
-        CancelCandidateEntities([entity.InstanceId]);
+        HandleCancelledEntities([entity.InstanceId]);
         CandidatePlacementCancelled(new EntityCandidatePlacementCancelledEvent
         {
             InstanceId = entity.InstanceId,
@@ -588,6 +588,9 @@ public partial class Entities : Node2D
         
         if (IsEntityHovered(entity))
             HoveredEntity = null;
+        
+        if (entity.IsCandidate())
+            OnCandidatePlacementCancelled(entity);
         
         EventBus.Instance.RaiseEntityDestroyed(entity);
 
