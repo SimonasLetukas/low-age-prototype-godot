@@ -94,7 +94,6 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         ActionEconomy.Moved(movementCost, Movement.CurrentAmount >= 1);
         
         IsOnHighGround = resultingPoint.IsHighGround;
-        UpdateVitalsPosition();
         
         base.MoveUntilFinished(globalPositionPath, path);
         
@@ -102,6 +101,8 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
             IsOnHighGround, 
             GetTile(resultingPoint.Position, resultingPoint.IsHighGround)?.YSpriteOffset, 
             GetEntitiesBelow().OrderByDescending(x => x.Renderer.ZIndex).FirstOrDefault());
+        
+        UpdateVitalsPosition();
     }
     
     public float GetReach()
