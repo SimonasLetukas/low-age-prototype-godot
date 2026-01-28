@@ -116,6 +116,9 @@ public sealed class AbilityValidator
             if (HelpingAllowed is false)
                 return ValidationResult.Invalid("Helping to work on this is not allowed.");
             
+            if (creationProgress.GetRemainingUpdateCount(50) <= 1)
+                return ValidationResult.Invalid("There is enough help to finish this in 1 turn.");
+            
             return ValidationResult.Valid;
         }
     }

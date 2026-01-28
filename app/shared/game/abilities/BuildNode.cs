@@ -109,12 +109,18 @@ public partial class BuildNode : ActiveAbilityNode<
                 => current + $"{researchId}, ");
             research = research.Remove(research.Length - 2);
         }
+        
+        var income = 50; // TODO pass in resources
+        var celestiumCost = item.Cost.FirstOrDefault(x => x.Resource.Equals(ResourceId.Celestium));
+        var turns = celestiumCost is null
+            ? "too long"
+            : $"{(int)Math.Ceiling((float)celestiumCost.Amount / income)} turn(s)";
+        var finish = $"With current income of {income} it will take {turns}.";
 
         return $"Build {entity.DisplayName} \n" +
                $"{research}" +
-               $"\nCost: {cost.WrapToLines(Constants.MaxTooltipCharCount)} \n\n" + // TODO describe how long it will
-                                                                                   // take to build this with the
-                                                                                   // current income
+               $"\nCost: {cost.WrapToLines(Constants.MaxTooltipCharCount)}" + 
+               $"\n{finish}\n\n" + 
                $"{entity.Description.WrapToLines(Constants.MaxTooltipCharCount)}";
     }
 
@@ -141,9 +147,7 @@ public partial class BuildNode : ActiveAbilityNode<
         
         // TODO Refund
         // Can be generic (if split into "CanRefund"): Refund consumable resources (if no helpers left AND no payment progress made)
-
-        RefundAction();
-
+        
         var focus = FocusQueue.FirstOrDefault(f => f.EntityToBuildId.Equals(buildableEntity.InstanceId));
 
         if (focus is not null)
@@ -151,9 +155,12 @@ public partial class BuildNode : ActiveAbilityNode<
             FocusQueue.Remove(focus);
             RaiseCancelled(focus);
         }
-
-        if (FocusQueue.IsEmpty()) 
+        
+        if (FocusQueue.IsEmpty())
+        {
             OwnerActor.RemoveWorkingOnAbility(this);
+            RefundAction();
+        }
     }
     
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
@@ -189,11 +196,6 @@ public partial class BuildNode : ActiveAbilityNode<
 
     protected override AbilityReservationResult HandleReservation(ActivationRequest request)
     {
-        // TODO somethign fishy here when there are two helpers
-        // 1. Only the helpers which COULD NOT participate regain their action
-        // 2. All other helpers should continue to spend the turn if their income was used / they participated in progressing the buildable entity
-        // 3. This is handled with requeued focuses, which upon becoming to real focuses should check if the buildable entity still exists && is not completed
-        
         request.EntityToBuild!.CreationProgress!.Helpers[this] = Blueprint.HelpEfficiency;
         request.EntityToBuild!.CreationProgress!.UpdateDescription(50); // TODO pass in resources
         
@@ -214,24 +216,6 @@ public partial class BuildNode : ActiveAbilityNode<
         EntityToBuildId = activationRequest.EntityToBuild!.InstanceId
     };
 
-    protected override bool TryExecutePrePayment(Focus focus)
-    {
-        var entityToBuild = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
-
-        if (entityToBuild is null)
-            return false;
-
-        if (entityToBuild.IsCompleted())
-        { 
-            // TODO what if there are other conditions? Might need to be tested: destroyed, null (???)
-            CancelActivation(focus.ToActivationRequest());
-            return false;
-        }
-
-        SpendActionAndConsumableResources(focus);
-        return true;
-    }
-
     protected override bool TryExecutePostPayment(Focus focus)
     {
         var entity = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
@@ -251,7 +235,17 @@ public partial class BuildNode : ActiveAbilityNode<
         
         return completed;
     }
-    
+
+    protected override bool WasAlreadyCompleted(Focus focus)
+    {
+        var entity = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
+
+        if (entity?.CreationProgress is null || entity.IsCompleted()) // Meaning that building has completed
+            return true;
+
+        return false;
+    }
+
     protected override void Complete(Focus focus)
     {
         var entity = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
@@ -262,9 +256,12 @@ public partial class BuildNode : ActiveAbilityNode<
         entity.CreationProgress?.Helpers.Clear(); // It's OK if CreationProgress doesn't even exist at this point
 
         FocusQueue.Remove(focus);
-        
+
         if (FocusQueue.IsEmpty())
-            OwnerActor.RemoveWorkingOnAbility(this);
+        {
+            OwnerActor.RemoveWorkingOnAbility(this); 
+            RefundAction();
+        }
     }
     
     private void OnEntityDestroyed(EntityNode entity)

@@ -131,6 +131,12 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         UpdateVitalsValuesForDisplay();
     }
 
+    public void RestoreActionEconomy(TurnPhase phase, bool restoringOnlyAbilityAction)
+    {
+        if (IsCompleted())
+            ActionEconomy.Restore(phase, restoringOnlyAbilityAction);
+    }
+
     public void AddWorkingOnAbility(IAbilityNode ability, TurnPhase timing, bool consumesAction)
     {
         var workingOn = new WorkingOnAbility
@@ -289,8 +295,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
     protected override void OnPhaseStarted(int turn, TurnPhase phase)
     {
-        if (IsCompleted() && WorkingOn.All(w => w.ConsumesAction is false))
-            ActionEconomy.Restore(phase);
+        RestoreActionEconomy(phase, false);
         
         base.OnPhaseStarted(turn, phase);
     }

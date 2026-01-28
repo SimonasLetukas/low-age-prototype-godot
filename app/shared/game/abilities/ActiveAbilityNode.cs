@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
-using Newtonsoft.Json;
 
 /// <summary>
 /// Note: since visualisation in-game is not needed, this abstract class has no node/scene. 
@@ -72,7 +71,7 @@ public abstract partial class ActiveAbilityNode<
     protected void RefundAction()
     {
         var currentPhase = GlobalRegistry.Instance.GetCurrentPhase();
-        OwnerActor.ActionEconomy.Restore(currentPhase, true);
+        OwnerActor.RestoreActionEconomy(currentPhase, true);
 
         if (currentPhase.Equals(TurnPhase.Action))
         {
@@ -98,9 +97,6 @@ public abstract partial class ActiveAbilityNode<
         // TODO
         // var resources = ReserveResources(request.UseConsumableResources);
         
-        GD.Print($"Starting reservation, {nameof(CasterConsumesAction)} '{CasterConsumesAction}', " +
-                 $"{nameof(OwnerActor.WorkingOn)} '{JsonConvert.SerializeObject(OwnerActor.WorkingOn.Count)}'");
-        
         var actionWasReserved = false;
         if (CasterConsumesAction)
         {
@@ -116,9 +112,6 @@ public abstract partial class ActiveAbilityNode<
             ActionWasReserved = actionWasReserved
         };
         
-        GD.Print($"Returning new reservation '{JsonConvert.SerializeObject(reservation)}' for activation " +
-                 $"request {nameof(request.UseConsumableResources)} '{request.UseConsumableResources}'.");
-        
         return reservation;
     }
     
@@ -132,25 +125,16 @@ public abstract partial class ActiveAbilityNode<
         else
             FocusQueue.Add(focus);
         
-        if (TryExecutePrePayment(focus) is false)
-            return;
+        SpendActionAndConsumableResources(focus);
 
         ExecutePaymentUpdate(focus);
 
         var paymentCompleted = TryExecutePostPayment(focus);
         
-        GD.Print($"Payment completed is '{paymentCompleted}' for focus '{JsonConvert.SerializeObject(focus)}'");
-        
-        if (paymentCompleted)
-            Complete(focus);
-        else
+        if (paymentCompleted is false)
             Requeue(focus);
-        
-        GD.Print($"End of execution current focus queue '{JsonConvert.SerializeObject(FocusQueue)}'");
     }
-
-    protected abstract bool TryExecutePrePayment(TFocus focus);
-
+    
     protected void SpendActionAndConsumableResources(TFocus focus)
     {
         if (focus.Reservation.PlayerId == Players.Instance.Current.Id)
@@ -190,12 +174,15 @@ public abstract partial class ActiveAbilityNode<
             return; 
         
         focus.Requeued = true;
-        GD.Print($"Requeue successful for focus '{JsonConvert.SerializeObject(focus)}'");
     }
 
     private void HandleRequeuedFocus(TFocus focus)
     {
-        GD.Print($"Handling requeued focus for '{JsonConvert.SerializeObject(focus)}'");
+        if (WasAlreadyCompleted(focus))
+        {
+            Complete(focus);
+            return;
+        }
         
         var activationRequest = focus.ToActivationRequestForRequeue();
         if (activationRequest is not TActivationRequest typedRequest)
@@ -209,8 +196,13 @@ public abstract partial class ActiveAbilityNode<
         focus.Reservation = reservation;
         focus.Requeued = false;
     }
+
+    /// <summary>
+    /// Relevant for abilities that allow helpers.
+    /// </summary>
+    protected virtual bool WasAlreadyCompleted(TFocus focus) => false;
     
-    private bool ActionAllowedForPlanningPhase(TurnPhase currentPhase)
+    private bool AbilityAllowedForPlanningPhaseGiven(TurnPhase currentPhase)
     {
         if (TurnPhase.Equals(TurnPhase.Planning) is false)
             return false;
@@ -221,7 +213,7 @@ public abstract partial class ActiveAbilityNode<
         return true;
     }
 
-    private bool ActionAllowedAsAnActionInActionPhase(ActorNode actor)
+    private bool AbilityAllowedAsAnActionInActionPhaseFor(ActorNode actor)
     {
         if (TurnPhase.Equals(TurnPhase.Action) is false)
             return false;
@@ -236,7 +228,7 @@ public abstract partial class ActiveAbilityNode<
     {
         foreach (var nonRequeuedFocus in FocusQueue.Where(f => f.Requeued is false).ToList())
         {
-            CancelActivation(nonRequeuedFocus.ToActivationRequestForRequeue());
+            Complete(nonRequeuedFocus);
         }
     }
     
@@ -248,18 +240,18 @@ public abstract partial class ActiveAbilityNode<
         }
     }
 
-    private void OnPhaseStarted(int turn, TurnPhase phase)
+    private void OnPhaseStarted(int turn, TurnPhase currentPhase)
     {
-        if (ActionAllowedForPlanningPhase(phase) is false)
+        if (AbilityAllowedForPlanningPhaseGiven(currentPhase) is false)
             return;
         
         CleanUpNonRequeuedAbilityFocuses();
         HandleRequeuedAbilityFocuses();
     }
     
-    private void OnPhaseEnded(int turn, TurnPhase phase)
+    private void OnPhaseEnded(int turn, TurnPhase currentPhase)
     {
-        if (ActionAllowedForPlanningPhase(phase) is false)
+        if (AbilityAllowedForPlanningPhaseGiven(currentPhase) is false)
             return;
         
         RequestExecution();
@@ -267,7 +259,7 @@ public abstract partial class ActiveAbilityNode<
     
     private void OnActionStarted(ActorNode actor)
     {
-        if (ActionAllowedAsAnActionInActionPhase(actor) is false)
+        if (AbilityAllowedAsAnActionInActionPhaseFor(actor) is false)
             return;
         
         CleanUpNonRequeuedAbilityFocuses();
@@ -276,7 +268,7 @@ public abstract partial class ActiveAbilityNode<
 
     private void OnActionEnded(ActorNode actor)
     {
-        if (ActionAllowedAsAnActionInActionPhase(actor) is false)
+        if (AbilityAllowedAsAnActionInActionPhaseFor(actor) is false)
             return;
         
         RequestExecution();

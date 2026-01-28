@@ -50,11 +50,6 @@ public partial class ToggleNode : ActiveAbilityNode<
         throw new System.NotImplementedException();
     }
 
-    protected override bool TryExecutePrePayment(Focus focus)
-    {
-        throw new System.NotImplementedException();
-    }
-
     protected override bool TryExecutePostPayment(Focus focus)
     {
         throw new System.NotImplementedException();

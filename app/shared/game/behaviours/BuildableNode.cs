@@ -46,7 +46,6 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     public int GetMaximumPotentialAppliedIncome(int income) // TODO into resources
     {
         var efficiencyFactor = CalculateEfficiencyFactor();
-        GD.Print($"Income '{income}', efficiency factor '{efficiencyFactor}'");
         return ((int)Math.Ceiling(income * efficiencyFactor)) * Helpers.Count;
     }
     
@@ -142,9 +141,6 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         
         var deltaGainedHealth = CalculateDeltaGainedValue(maxHealth, previousPaidCost, completed);
         var deltaGainedShields = CalculateDeltaGainedValue(maxShields, previousPaidCost, completed);
-        
-        GD.Print($"Sending vitals update to {Parent.DisplayName}: health delta '{deltaGainedHealth}', " +
-                 $"shields delta '{deltaGainedShields}'");
         
         Updated((deltaGainedHealth, deltaGainedShields));
     }
