@@ -22,16 +22,20 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public bool HasRangedArmour => HasStat(StatType.RangedArmour);
     public CombatStatNode? MeleeArmour => Stats.FirstOrDefault(x => x.StatType == StatType.MeleeArmour);
     public CombatStatNode? RangedArmour => Stats.FirstOrDefault(x => x.StatType == StatType.RangedArmour);
+    public bool HasInitiative => HasStat(StatType.Initiative);
+    public CombatStatNode? Initiative => Stats.FirstOrDefault(x => x.StatType == StatType.Initiative);
     public bool HasMeleeAttack => Attacks.Any(x => x.IsMelee);
     public bool HasRangedAttack => Attacks.Any(x => x.IsRanged);
     public AttackStatNode? MeleeAttack => Attacks.FirstOrDefault(x => x.IsMelee);
     public AttackStatNode? RangedAttack => Attacks.FirstOrDefault(x => x.IsRanged);
     
+    public ActionEconomy ActionEconomy { get; protected set; } = null!;
     public IList<AttackStatNode> Attacks { get; protected set; } = null!;
     public IList<CombatStatNode> Stats { get; protected set; } = null!;
     public IList<ActorAttribute> Attributes { get; protected set; } = null!;
     public ActorRotation ActorRotation { get; protected set; }
     public Abilities Abilities { get; protected set; } = null!;
+    public IList<WorkingOnAbility> WorkingOn { get; set; } = new List<WorkingOnAbility>();
 
     private Actor Blueprint { get; set; } = null!;
     private Node2D StatsNode { get; set; } = null!;
@@ -74,8 +78,15 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         ActorRotation = ActorRotation.BottomRight;
         Abilities.PopulateFromBlueprint(Blueprint.Abilities);
         Behaviours.AddOnBuildBehaviours(Abilities.GetPassives());
+        CreationProgress = Behaviours.GetBuildables().FirstOrDefault();
+        if (CreationProgress is not null)
+        {
+            CreationProgress.Updated += OnCreationProgressUpdated;
+            CreationProgress.Completed += OnCreationProgressCompleted;
+        }
+        ActionEconomy = ActionEconomy.For(this);
         
-        UpdateVitalsValues();
+        UpdateVitalsValuesForDisplay();
     }
 
     public override void SetOutline(bool to)
@@ -85,19 +96,80 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         _shields.Visible = to && HasShields;
     }
 
-    public override void ForcePlace(EntityPlacedEvent @event)
+    public override void ForcePlace(EntityPlacedResponseEvent @event)
     {
         SetActorRotation(@event.ActorRotation);
         base.ForcePlace(@event);
     }
 
-    public override void Complete()
+    protected override void Complete()
     {
         base.Complete();
+
+        if (CreationProgress is not null)
+        {
+            CreationProgress.Updated -= OnCreationProgressUpdated;
+            CreationProgress.Completed -= OnCreationProgressCompleted;
+        }
+        
+        Behaviours.RemoveAll<BuildableNode>();
+        CreationProgress = null;
+        
         Abilities.OnActorBirth();
     }
 
-    public override (int, bool) ReceiveAttack(EntityNode source, AttackType attackType, bool isSimulation)
+    public override void SetCost(int? cost)
+    {
+        base.SetCost(cost);
+        
+        if (HasHealth) 
+            Health!.CurrentAmount = HasCost ? 1 : Health!.MaxAmount;
+
+        if (HasShields) 
+            Shields!.CurrentAmount = HasCost ? 1 : Shields!.MaxAmount;
+        
+        UpdateVitalsValuesForDisplay();
+    }
+
+    public void RestoreActionEconomy(TurnPhase phase, bool restoringOnlyAbilityAction)
+    {
+        if (IsCompleted())
+            ActionEconomy.Restore(phase, restoringOnlyAbilityAction);
+    }
+
+    public void AddWorkingOnAbility(IAbilityNode ability, TurnPhase timing, bool consumesAction)
+    {
+        var workingOn = new WorkingOnAbility
+        {
+            Ability = ability,
+            Timing = timing,
+            ConsumesAction = consumesAction
+        };
+        
+        if (WorkingOn.Contains(workingOn) is false)
+            WorkingOn.Add(workingOn);
+    }
+
+    public void RemoveWorkingOnAbility(IAbilityNode ability)
+    {
+        foreach (var workingOnAbility in WorkingOn
+                     .ToList()
+                     .Where(workingOnAbility => workingOnAbility.Ability.Equals(ability)))
+        {
+            WorkingOn.Remove(workingOnAbility);
+        }
+    }
+
+    public bool CanAttack(bool? isMelee) => isMelee is null 
+        ? CanAttack(AttackType.Melee) || CanAttack(AttackType.Ranged) 
+        : CanAttack(isMelee is true ? AttackType.Melee : AttackType.Ranged);
+
+    public bool CanAttack(AttackType attackType) 
+        => (attackType.Equals(AttackType.Melee) && ActionEconomy.CanMeleeAttack) 
+           || (attackType.Equals(AttackType.Ranged) && ActionEconomy.CanRangedAttack);
+
+    public override (int damage, bool isLethal) ReceiveAttack(EntityNode source, AttackType attackType, 
+        bool isSimulation)
     {
         base.ReceiveAttack(source, attackType, isSimulation);
 
@@ -109,7 +181,8 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         return ReceiveDamage(source, damageType, damage, isSimulation);
     }
 
-    protected override (int, bool) ReceiveDamage(EntityNode source, DamageType damageType, int amount, bool isSimulation)
+    protected override (int damage, bool isLethal) ReceiveDamage(EntityNode source, DamageType damageType, 
+        int amount, bool isSimulation)
     {
         base.ReceiveDamage(source, damageType, amount, isSimulation);
         
@@ -166,7 +239,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         if ((int)Health!.CurrentAmount < 0)
             Destroy();
         
-        UpdateVitalsValues();
+        UpdateVitalsValuesForDisplay();
         return (0, false);
     }
 
@@ -204,7 +277,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     
     protected bool HasStat(StatType statType) => Stats.Any(x => x.StatType.Equals(statType));
 
-    protected void UpdateVitalsValues()
+    protected void UpdateVitalsValuesForDisplay()
     {
         _health.MaxValue = Health?.MaxAmount ?? 0;
         _health.Value = Health?.CurrentAmount ?? 0;
@@ -218,6 +291,13 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         
         _health.Position = new Vector2(_startingHealthPosition.X, -2) + offset;
         _shields.Position = new Vector2(_startingShieldsPosition.X, -3) + offset;
+    }
+
+    protected override void OnPhaseStarted(int turn, TurnPhase phase)
+    {
+        RestoreActionEconomy(phase, false);
+        
+        base.OnPhaseStarted(turn, phase);
     }
     
     private List<Tiles.TileInstance> GetAttackTargetTiles(AttackType attackType, Vector2Int mapSize)
@@ -275,4 +355,16 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         var isLethal = HasHealth && healthAndShields - damage <= 0;
         return (damage, isLethal);
     }
+    
+    private void OnCreationProgressUpdated((int DeltaGainedHealth, int DeltaGainedShields) delta)
+    {
+        Health!.CurrentAmount += delta.DeltaGainedHealth;
+        
+        if (HasShields)
+            Shields!.CurrentAmount += delta.DeltaGainedShields;
+        
+        UpdateVitalsValuesForDisplay();
+    }
+    
+    private void OnCreationProgressCompleted() => Complete();
 }

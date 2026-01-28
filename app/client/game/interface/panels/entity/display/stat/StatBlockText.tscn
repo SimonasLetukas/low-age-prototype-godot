@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dcmabasspvchb"]
 
 [ext_resource type="PackedScene" uid="uid://cptni40atmafw" path="res://app/client/game/interface/panels/entity/display/stat/StatBlock.tscn" id="1"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/stat/StatBlockText.cs" id="2"]
+[ext_resource type="Script" uid="uid://buw4y1b2smwcl" path="res://app/client/game/interface/panels/entity/display/stat/StatBlockText.cs" id="2"]
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="3"]
 [ext_resource type="FontFile" uid="uid://bufso40qbg61j" path="res://assets/fonts/Karla-SemiBold.ttf" id="4"]
 [ext_resource type="FontFile" uid="uid://d0w7npripgnag" path="res://assets/fonts/Karla-Regular.ttf" id="5"]

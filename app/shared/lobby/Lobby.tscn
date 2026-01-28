@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dbtqyiouwicb4"]
 
-[ext_resource type="Script" path="res://app/shared/lobby/Lobby.cs" id="1"]
+[ext_resource type="Script" uid="uid://cm4ppethpckl" path="res://app/shared/lobby/Lobby.cs" id="1"]
 [ext_resource type="FontFile" uid="uid://d0w7npripgnag" path="res://assets/fonts/Karla-Regular.ttf" id="2"]
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="3"]
 

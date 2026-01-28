@@ -6,12 +6,22 @@ using FileAccess = Godot.FileAccess;
 
 public partial class Config : Node
 {
-    public const string SavePath = @"res://data/config.json";
+    public const string SavePath = @"user://config.json";
     public static Config Instance = null!;
     
     public void Save()
     {
-        var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
+        _data ??= new ConfigData();
+        
+        using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
+        
+        if (file == null)
+        {
+            var err = FileAccess.GetOpenError();
+            GD.PrintErr($"Failed to open config file. Error: {err}");
+            return;
+        }
+        
         file.StoreString(ToString());
         file.Close();
     }
@@ -19,9 +29,12 @@ public partial class Config : Node
     public void Load()
     {
         if (FileAccess.FileExists(SavePath) is false)
+        {
+            _data = new ConfigData();
             return;
+        }
 
-        var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Read);
+        using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Read);
         FromString(file.GetAsText());
         file.Close();
     }
@@ -33,10 +46,8 @@ public partial class Config : Node
         try
         {
             var obj = JsonConvert.DeserializeObject<ConfigData>(value);
-            if (obj is null)
-                return false;
-            
-            _data = obj;
+            _data = obj 
+                    ?? throw new Exception($"Config value '{value}' returned null after deserialization.");
             return true;
         }
         catch (Exception e)
@@ -56,12 +67,6 @@ public partial class Config : Node
     {
         get => GetData().ConnectTerrain;
         set => GetData().ConnectTerrain = value;
-    }
-
-    public bool ResearchEnabled
-    {
-        get => GetData().ResearchEnabled;
-        set => GetData().ResearchEnabled = value;
     }
 
     public FactionId StartingFaction
@@ -87,6 +92,18 @@ public partial class Config : Node
         get => GetData().AllowSameTeamCombat;
         set => GetData().AllowSameTeamCombat = value;
     }
+    
+    public bool ResearchEnabled
+    {
+        get => GetData().ResearchEnabled;
+        set => GetData().ResearchEnabled = value;
+    }
+
+    public bool DeterministicInitiative
+    {
+        get => GetData().DeterministicInitiative;
+        set => GetData().DeterministicInitiative = value;
+    }
 
     private ConfigData? _data;
     private ConfigData GetData()
@@ -100,12 +117,14 @@ public partial class Config : Node
     public override void _Ready()
     {
         base._Ready();
+
+        if (OS.HasFeature(nameof(Server).ToLower()))
+            return;
+        
+        GD.Print("User data dir: ", OS.GetUserDataDir());
         
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
         Instance ??= this;
-
-        if (GetMultiplayer().IsServer())
-            return;
         
         Load();
         Save();
@@ -115,11 +134,12 @@ public partial class Config : Node
     {
         public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Fast;
         public bool ConnectTerrain { get; set; } = false;
-        public bool ResearchEnabled { get; set; } = false;
         public FactionId StartingFaction { get; set; } = FactionId.Uee;
         public bool LargeCursor { get; set; } = false;
         public bool ShowHints { get; set; } = true;
         public bool AllowSameTeamCombat { get; set; } = false;
+        public bool ResearchEnabled { get; set; } = false;
+        public bool DeterministicInitiative { get; set; } = false;
     }
 
     public enum AnimationSpeeds

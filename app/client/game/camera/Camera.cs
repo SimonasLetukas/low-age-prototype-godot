@@ -13,7 +13,7 @@ public partial class Camera : Camera2D
 
     private readonly Dictionary<ZoomLevel, int> _timesPerZoomLevel = new()
     {
-        { ZoomLevel.Close, 4 }, { ZoomLevel.Medium, 2 }, { ZoomLevel.Far, 1 }
+        { ZoomLevel.VeryClose, 8 }, { ZoomLevel.Close, 4 }, { ZoomLevel.Medium, 2 }, { ZoomLevel.Far, 1 }
     };
     private ZoomLevel _currentZoomLevel = ZoomLevel.Medium;
     private int _mapWidthPixels = 1;
@@ -30,7 +30,7 @@ public partial class Camera : Camera2D
         _viewportSize = DisplayServer.WindowGetSize();
 
         Position = new Vector2((float)_mapWidthPixels / 2, (float)_mapHeightPixels / 2);
-        UpdateZoom();
+        UpdateZoom(true);
         
         if (DebugEnabled)
         {
@@ -40,6 +40,15 @@ public partial class Camera : Camera2D
         }
 
         SetLimits();
+
+        EventBus.Instance.ActionStarted += OnActionStarted;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus.Instance.ActionStarted -= OnActionStarted;
+        
+        base._ExitTree();
     }
 
     // TODO force camera / map / unit positions into discrete values so that weird artifacts are avoided
@@ -90,7 +99,7 @@ public partial class Camera : Camera2D
     
     private bool ZoomedIn()
     {
-        if (_currentZoomLevel is ZoomLevel.Close) 
+        if (_currentZoomLevel is ZoomLevel.VeryClose) 
             return false;
         if (Input.IsActionJustReleased("ui_zoom_in") is false) 
             return false;
@@ -108,28 +117,45 @@ public partial class Camera : Camera2D
 
     private void ZoomIn()
     {
-        var position = GetGlobalMousePosition();
         _currentZoomLevel++;
-        UpdateZoom();
-        PositionSmoothingEnabled = false;
-        Position = position;
-        ResetSmoothing();
-        PositionSmoothingEnabled = true;
+        UpdateZoom(true);
     }
 
     private void ZoomOut(float delta)
     {
         _currentZoomLevel--;
-        UpdateZoom();
+        UpdateZoom(false);
         ClampPositionToBoundaries(delta);
     }
 
-    private void UpdateZoom()
+    private void UpdateZoom(bool zoomingIn)
     {
         var amount = _timesPerZoomLevel[_currentZoomLevel];
 
-        Zoom = new Vector2(amount, amount);
+        var targetZoom = new Vector2(amount, amount);
+        var zoomTween = CreateTween();
+        zoomTween.TweenProperty(this, "zoom", targetZoom, 0.1f)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad)
+            .SetEase(Tween.EaseType.InOut)
+            .Finished += OnZoomTweenCompleted;
+
+        if (zoomingIn is false) 
+            return;
+
+        PositionSmoothingEnabled = false;
+        var targetPosition = GetGlobalMousePosition();
+        var positionTween = CreateTween();
+        positionTween.TweenProperty(this, "position", targetPosition, 0.1f)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad)
+            .SetEase(Tween.EaseType.InOut);
+    }
+
+    private void OnZoomTweenCompleted()
+    {
         _viewportSize = DisplayServer.WindowGetSize();
+        PositionSmoothingEnabled = true;
     }
 
     private void ClampPositionToBoundaries(float delta)
@@ -185,10 +211,23 @@ public partial class Camera : Camera2D
         return false;
     }
 
+    private void OnActionStarted(ActorNode actor)
+    {
+        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(actor) is false)
+            return;
+
+        var tween = CreateTween();
+        tween.TweenProperty(this, "global_position", actor.GlobalPosition, 0.1f)
+            .FromCurrent()
+            .SetTrans(Tween.TransitionType.Quad)
+            .SetEase(Tween.EaseType.InOut);
+    }
+
     private enum ZoomLevel
     {
         Far,
         Medium,
-        Close
+        Close,
+        VeryClose
     }
 }

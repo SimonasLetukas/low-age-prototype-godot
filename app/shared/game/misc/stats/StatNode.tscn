@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dvq76wh7f6gpo"]
 
-[ext_resource type="Script" path="res://app/shared/game/misc/stats/StatNode.cs" id="1"]
+[ext_resource type="Script" uid="uid://qn2cpog2udlp" path="res://app/shared/game/misc/stats/StatNode.cs" id="1"]
 
 [node name="StatNode" type="Node2D"]
 script = ExtResource("1")

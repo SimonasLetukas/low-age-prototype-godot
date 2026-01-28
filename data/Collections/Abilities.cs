@@ -267,51 +267,59 @@ namespace LowAgeData.Collections
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 4),
                             new Payment(resource: ResourceId.MeleeWeapon, amount: 1),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Quickdraw, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 9),
                             new Payment(resource: ResourceId.RangedWeapon, amount: 2),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Gorger, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 7),
                             new Payment(resource: ResourceId.MeleeWeapon, amount: 2),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Camou, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 11),
                             new Payment(resource: ResourceId.MeleeWeapon, amount: 2),
                             new Payment(resource: ResourceId.SpecialWeapon, amount: 1),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Shaman, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 10),
                             new Payment(resource: ResourceId.RangedWeapon, amount: 1),
                             new Payment(resource: ResourceId.SpecialWeapon, amount: 2),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Pyre, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 15),
                             new Payment(resource: ResourceId.RangedWeapon, amount: 4),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.BigBadBull, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 14),
                             new Payment(resource: ResourceId.MeleeWeapon, amount: 4),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Mummy, cost: new List<Payment>
                         {
                             new Payment(resource: ResourceId.Scraps, amount: 29),
                             new Payment(resource: ResourceId.SpecialWeapon, amount: 5),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                         new Selection<EntityId>(name: UnitId.Parasite, cost: new List<Payment>
                         {
@@ -319,7 +327,8 @@ namespace LowAgeData.Collections
                             new Payment(resource: ResourceId.MeleeWeapon, amount: 2),
                             new Payment(resource: ResourceId.RangedWeapon, amount: 2),
                             new Payment(resource: ResourceId.SpecialWeapon, amount: 2),
-                            new Payment(resource: ResourceId.Population, amount: 1)
+                            new Payment(resource: ResourceId.Population, amount: 1),
+                            new Payment(resource: ResourceId.Celestium, amount: 1)
                         }),
                     },
                     casterConsumesAction: false,
@@ -403,7 +412,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(AbilityId.Workshop.Research).CamelCaseToWords(),
                     description: "Open a selection of research available for Revelators to unlock.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    selectionOfResearchToBeUnlocked: new List<Selection<ResearchId>>
+                    selection: new List<Selection<ResearchId>>
                     {
                         new Selection<ResearchId>(name: ResearchId.Revelators.PoisonedSlits,
                             description: $"Unlock {nameof(AbilityId.Quickdraw.Cripple).CamelCaseToWords()} for " +
@@ -460,7 +469,8 @@ namespace LowAgeData.Collections
                                     amount: 60)
                             },
                             grayOutIfAlreadyExists: true),
-                    }),
+                    },
+                    casterConsumesAction: true),
                 
                 new Passive(
                     id: AbilityId.Outpost.Ascendable,
@@ -830,7 +840,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(AbilityId.Armoury.Research).CamelCaseToWords(),
                     description: "Open a selection of research available for UEE to unlock.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    selectionOfResearchToBeUnlocked: new List<Selection<ResearchId>>
+                    selection: new List<Selection<ResearchId>>
                     {
                         new Selection<ResearchId>(name: ResearchId.Uee.HoverboardReignition,
                             description: $"Unlock {nameof(AbilityId.Horrior.Mount).CamelCaseToWords()} for " +
@@ -907,7 +917,8 @@ namespace LowAgeData.Collections
                             {
                                 ResearchId.Uee.CelestiumCoreUpgrade
                             }),
-                    }),
+                    },
+                    casterConsumesAction: true),
                 
                 new Passive(
                     id: AbilityId.Wall.HighGround,

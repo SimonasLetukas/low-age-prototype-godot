@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -12,22 +11,20 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 {
     private const string ScenePath = @"res://app/shared/game/entities/UnitNode.tscn";
     public static UnitNode Instance() => (UnitNode) GD.Load<PackedScene>(ScenePath).Instantiate();
-    public static UnitNode InstantiateAsChild(Unit blueprint, Node parentNode, Player player,
-        Func<Vector2Int, bool, Tiles.TileInstance?> getTile, 
-        Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles)
+    public static UnitNode InstantiateAsChild(Unit blueprint, Node parentNode, Player player)
     {
         var unit = Instance();
         parentNode.AddChild(unit);
         unit.SetBlueprint(blueprint);
         unit.Player = player;
-        unit.GetTile = getTile;
-        unit.GetHighestTiles = getHighestTiles;
         
         return unit;
     }
     
     public bool IsOnHighGround { get; private set; } = false;
-    public float Movement { get; private set; }
+    public CombatStatNode Movement => Stats.Single(x => x.StatType == StatType.Movement);
+    public override Tiles.TileInstance EntityPrimaryTile => GetHighestTiles([EntityPrimaryPosition])
+        .WhereNotNull().Single();
     public override IList<Tiles.TileInstance> EntityOccupyingTiles => IsOnHighGround
         ? GetHighestTiles(EntityOccupyingPositions).WhereNotNull().ToList()
         : base.EntityOccupyingTiles; 
@@ -39,11 +36,8 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
         EntitySize = Vector2Int.One * Blueprint.Size;
-        Movement = HasStat(StatType.Movement)
-            ? Stats.First(x => x.StatType.Equals(StatType.Movement)).CurrentAmount 
-              + Constants.Pathfinding.SearchIncrement
-            : 0;
-                                  
+
+        RestoreMovement();
         Renderer.Initialize(this, true);
         UpdateSprite();
         UpdateVitalsPosition();
@@ -76,17 +70,6 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         return tiles.Except(filteredTiles).ToList();
     }
 
-    protected override void UpdateVisuals()
-    {
-        base.UpdateVisuals();
-
-        if (Selected || Hovered)
-            return;
-        
-        if (EntityState is State.Completed && ClientState.Instance.Flattened)
-            SetTransparency(true);
-    }
-
     public override void DropDownToLowGround()
     {
         base.DropDownToLowGround();
@@ -102,11 +85,17 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         ReceiveDamage(this, DamageType.Pure, vitalsAmount / 2, false);
     }
 
-    public override void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
+    public override void MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Point> path)
     {
+        var resultingPoint = path.Last();
+
+        var movementCost = CalculateMovementCostFrom(path);
+        Movement.CurrentAmount -= movementCost;
+        ActionEconomy.Moved(movementCost, Movement.CurrentAmount >= 1);
+        
         IsOnHighGround = resultingPoint.IsHighGround;
         
-        base.MoveUntilFinished(globalPositionPath, resultingPoint);
+        base.MoveUntilFinished(globalPositionPath, path);
         
         Renderer.UpdateElevation(
             IsOnHighGround, 
@@ -118,7 +107,7 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     
     public float GetReach()
     {
-        return Movement;
+        return Movement.MaxAmount + Constants.Pathfinding.SearchIncrement;
         
         var blueprint = GetActorBlueprint();
         
@@ -135,12 +124,55 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         var rangedDistance = rangedAttack?.MaximumDistance ?? 0;
 
         var rangedReach = rangedDistance > 0 ? rangedDistance + 1 : 0;
-        var meleeReach = meleeDistance > 0 ? meleeDistance + Movement : 0;
+        var meleeReach = meleeDistance > 0 ? meleeDistance + Movement.CurrentAmount : 0;
         return rangedReach > meleeReach ? rangedReach : meleeReach;
         
         // TODO logic (outside of this method too) needs to be made more intelligent, because right now this doesn't
         // take into account targeting logic (however complex it would be) and everything gets calculated through
         // pathfinding.
+    }
+    
+    protected override void UpdateVisuals()
+    {
+        base.UpdateVisuals();
+
+        if (Selected || Hovered)
+            return;
+        
+        if (EntityState is State.Completed && ClientState.Instance.Flattened)
+            SetTransparency(true);
+    }
+
+    protected override void OnPhaseStarted(int turn, TurnPhase phase)
+    {
+        RestoreMovement();
+        base.OnPhaseStarted(turn, phase);
+    }
+    
+    private void RestoreMovement()
+    {
+        Movement.CurrentAmount = Movement.MaxAmount + Constants.Pathfinding.SearchIncrement;
+    }
+    
+    private static float CalculateMovementCostFrom(IList<Point> path)
+    {
+        if (path.Count <= 1)
+            return 0f;
+
+        var cost = 0f;
+        for (var i = 1; i < path.Count; i++)
+        {
+            var previousPoint = path[i - 1];
+            var currentPoint = path[i];
+
+            var length = previousPoint.Position.IsDiagonalTo(currentPoint.Position)
+                ? Constants.Pathfinding.DiagonalCost
+                : 1f;
+            
+            cost += length * currentPoint.Weight;
+        }
+        
+        return cost;
     }
 
     private List<EntityNode> GetEntitiesBelow()

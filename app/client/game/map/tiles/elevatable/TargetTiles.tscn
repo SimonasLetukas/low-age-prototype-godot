@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dulmh6kru36er"]
 
 [ext_resource type="PackedScene" uid="uid://dcf0dncb4sc76" path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.tscn" id="1"]
-[ext_resource type="Script" path="res://app/client/game/map/tiles/elevatable/TargetTiles.cs" id="2"]
+[ext_resource type="Script" uid="uid://ccorim4746hyf" path="res://app/client/game/map/tiles/elevatable/TargetTiles.cs" id="2"]
 [ext_resource type="Texture2D" uid="uid://4k1tujhc25x5" path="res://assets/sprites/tiles/target-normal-hovering.png" id="3_84dfk"]
 [ext_resource type="Texture2D" uid="uid://7fk55fc56s1a" path="res://assets/sprites/tiles/target-normal.png" id="4_bir0l"]
 

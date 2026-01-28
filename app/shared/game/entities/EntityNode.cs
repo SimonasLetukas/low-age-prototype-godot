@@ -19,16 +19,19 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     [Export] public Color PlacementColorSuccess { get; set; } = Colors.Green;
     [Export] public Color PlacementColorInvalid { get; set; } = Colors.Red;
 
+    public event Action<EntityNode> Completed = delegate { };
     public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> FinishedMoving = delegate { };
     
     public EntityId BlueprintId { get; private set; } = null!;
 
     public Guid InstanceId { get; set; } = Guid.NewGuid();
+    public int CreationToken { get; set; }
 
     public Player Player { get; protected set; } = null!;
     public EntityRenderer Renderer { get; private set; } = null!;
     public Vector2Int EntityPrimaryPosition { get; set; }
+    public virtual Tiles.TileInstance EntityPrimaryTile => GetTile(EntityPrimaryPosition, false)!;
     public Vector2Int EntitySize { get; protected set; } = Vector2Int.One;
     public virtual Area RelativeSize => new(Vector2Int.Zero, EntitySize);
     public IList<Vector2Int> EntityOccupyingPositions => new Area(EntityPrimaryPosition, EntitySize).ToList();
@@ -39,12 +42,15 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
             pair => pair.Value);
     public string DisplayName { get; private set; } = null!;
+    public string? SpriteLocation => Blueprint.Sprite;
     public bool CanBePlaced { get; protected set; } = false;
+    public bool HasCost { get; private set; } = true;
+    public BuildableNode? CreationProgress { get; protected set; } 
     public Behaviours Behaviours { get; protected set; } = null!;
     public bool IsBeingDestroyed { get; private set; }
     
-    protected Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; set; } = null!;
-    protected Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; set; } = null!;
+    protected Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; } = GlobalRegistry.Instance.GetHighestTiles;
+    protected Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; } = GlobalRegistry.Instance.GetTile;
     protected bool Selected { get; private set; } = false;
     protected bool Hovered { get; private set; } = false;
     protected State EntityState { get; private set; }
@@ -66,20 +72,25 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public override void _Ready()
     {
+        base._Ready();
+        
         Renderer = GetNode<EntityRenderer>($"{nameof(EntityRenderer)}");
         Behaviours = GetNode<Behaviours>(nameof(Behaviours));
         
         _movementDuration = GetDurationFromAnimationSpeed();
+        
         EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
         EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
+        EventBus.Instance.PhaseStarted += OnPhaseStarted;
     }
 
     public override void _ExitTree()
     {
-        base._ExitTree();
-
         EventBus.Instance.WhenFlattenedChanged -= OnWhenFlattenedChanged;
         EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
+        EventBus.Instance.PhaseStarted -= OnPhaseStarted;
+        
+        base._ExitTree();
     }
 
     public void SetBlueprint(Entity blueprint)
@@ -172,8 +183,11 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         return true;
     }
 
-    public virtual void ForcePlace(EntityPlacedEvent @event)
+    public bool IsCandidate() => EntityState is State.Candidate;
+
+    public virtual void ForcePlace(EntityPlacedResponseEvent @event)
     {
+        CreationToken = @event.CreationToken;
         EntityPrimaryPosition = @event.MapPosition;
         CanBePlaced = true;
         EntityState = State.Candidate;
@@ -193,19 +207,31 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         EventBus.Instance.RaiseEntityPlaced(this);
         UpdateVisuals();
         
-        Complete(); // TODO should be called outside of this class when e.g. building is finished (payment is completed)
+        if (HasCost is false)
+            Complete();
+        
         return true;
     }
-
-    public virtual void Complete()
+    
+    protected virtual void Complete()
     {
-        if (EntityState != State.Placed)
-            return;
-
+        Completed(this);
         EntityState = State.Completed;
         UpdateVisuals();
+    }
+    
+    public bool IsCompleted() => EntityState is State.Completed;
+
+    public virtual void SetCost(int? cost)
+    {
+        if (cost is null || CreationProgress is null)
+        {
+            HasCost = false;
+            CreationProgress = null;
+            return;
+        }
         
-        Behaviours.RemoveAll<BuildableNode>();
+        CreationProgress.TotalCost = cost.Value;
     }
 
     public virtual void DropDownToLowGround()
@@ -213,8 +239,9 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Renderer.ResetElevationOffset();
     }
     
-    public virtual void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
+    public virtual void MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Point> path)
     {
+        var resultingPoint = path.Last();
         EntityPrimaryPosition = resultingPoint.Position;
         Renderer.ResetElevationOffset();
         
@@ -236,8 +263,10 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
 
     public virtual bool CanBeMovedThroughAt(Point point, Team forTeam) => true;
 
-    public virtual bool CanBeTargetedBy(EntityNode entity) => Player.Team.IsEnemyTo(entity.Player.Team) 
-                                                              || Config.Instance.AllowSameTeamCombat;
+    public virtual ValidationResult CanBeTargetedBy(EntityNode entity) => Player.Team.IsEnemyTo(entity.Player.Team) 
+                                                                          || Config.Instance.AllowSameTeamCombat 
+        ? ValidationResult.Valid 
+        : ValidationResult.Invalid("Target cannot be on the same team!");
     
     public bool HasHighGroundAt(Point point, Team forTeam)
     {
@@ -270,13 +299,17 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         return result;
     }
 
-    public virtual (int, bool) ReceiveAttack(EntityNode source, AttackType attackType, bool isSimulation) => (0, false);
+    public virtual (int damage, bool isLethal) ReceiveAttack(EntityNode source, AttackType attackType, 
+        bool isSimulation) => (0, false);
 
-    protected virtual (int, bool) ReceiveDamage(EntityNode source, DamageType damageType, int amount, bool isSimulation) 
-        => (0, false);
+    protected virtual (int damage, bool isLethal) ReceiveDamage(EntityNode source, DamageType damageType, 
+        int amount, bool isSimulation) => (0, false);
     
     public void Destroy()
     {
+        if (IsBeingDestroyed)
+            return;
+        
         IsBeingDestroyed = true;
         Destroyed(this);
         QueueFree();
@@ -328,6 +361,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         
         Renderer.UpdateSpriteOffset(EntitySize, (Vector2)centerOffset);
     }
+
+    protected virtual void OnPhaseStarted(int turn, TurnPhase phase) { }
     
     private static bool IsPlacementGenerallyValid(IList<Tiles.TileInstance?> tiles, bool requiresTargetTiles)
     {
@@ -339,7 +374,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         
         if (tiles.Any(tile => tile!.IsOccupiedBy<UnitNode>()))
             return false;
-
+        
         return true;
     }
     

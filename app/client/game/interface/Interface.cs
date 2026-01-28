@@ -12,11 +12,19 @@ public partial class Interface : CanvasLayer
     public event Action MouseExited = delegate { };
     public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
     public event Action<bool, AttackType?> AttackSelected = delegate { };
+    public event Action NextTurnClicked = delegate { };
+    public event Action<ActorNode?> InitiativePanelActorHovered = delegate { };
+    public event Action<ActorNode?> InitiativePanelActorSelected = delegate { };
+    public event Action<IAbilityNode> AbilitySelected = delegate { };
+    public event Action AbilityDeselected = delegate { };
+    public event Action<EntityNode> CandidatePlacementCancelled = delegate { };
     
     private EntityPanel _entityPanel = null!;
     private SelectionPanel _selectionPanel = null!;
     private InformationalText _informationalText = null!;
     private HoveringPanel _hoveringPanel = null!;
+    private TurnPanel _turnPanel = null!;
+    private InitiativePanel _initiativePanel = null!;
     
     public override void _Ready()
     {
@@ -26,6 +34,8 @@ public partial class Interface : CanvasLayer
         _selectionPanel = GetNode<SelectionPanel>($"{nameof(SelectionPanel)}");
         _informationalText = GetNode<InformationalText>($"{nameof(InformationalText)}");
         _hoveringPanel = GetNode<HoveringPanel>($"{nameof(HoveringPanel)}");
+        _turnPanel = GetNode<TurnPanel>($"{nameof(TurnPanel)}");
+        _initiativePanel = GetNode<InitiativePanel>($"{nameof(InitiativePanel)}");
 
         foreach (var firstLevel in GetChildren().OfType<Control>())
         {
@@ -39,16 +49,29 @@ public partial class Interface : CanvasLayer
 
         _entityPanel.AbilityViewOpened += _selectionPanel.OnSelectableAbilityPressed;
         _entityPanel.AbilityViewClosed += _selectionPanel.OnGoBackPressed;
+        _entityPanel.AbilityViewOpened += OnAbilityViewOpened;
+        _entityPanel.AbilityViewClosed += OnAbilityViewClosed;
         _entityPanel.AttackSelected += OnEntityPanelAttackSelected;
+        _entityPanel.CandidatePlacementCancelled += OnCandidatePlacementCancelled;
         _selectionPanel.SelectedToBuild += OnSelectionPanelSelectedToBuild;
+        _turnPanel.NextTurnClicked += OnTurnPanelNextTurnClicked;
+        _initiativePanel.ActorHovered += OnInitiativePanelActorHovered;
+        _initiativePanel.ActorSelected += OnInitiativePanelActorSelected;
     }
-
+    
     public override void _ExitTree()
     {
         _entityPanel.AbilityViewOpened -= _selectionPanel.OnSelectableAbilityPressed;
         _entityPanel.AbilityViewClosed -= _selectionPanel.OnGoBackPressed;
+        _entityPanel.AbilityViewOpened -= OnAbilityViewOpened;
+        _entityPanel.AbilityViewClosed -= OnAbilityViewClosed;
         _entityPanel.AttackSelected -= OnEntityPanelAttackSelected;
+        _entityPanel.CandidatePlacementCancelled -= OnCandidatePlacementCancelled;
         _selectionPanel.SelectedToBuild -= OnSelectionPanelSelectedToBuild;
+        _turnPanel.NextTurnClicked -= OnTurnPanelNextTurnClicked;
+        _initiativePanel.ActorHovered -= OnInitiativePanelActorHovered;
+        _initiativePanel.ActorSelected -= OnInitiativePanelActorSelected;
+        
         base._ExitTree();
     }
 
@@ -64,7 +87,7 @@ public partial class Interface : CanvasLayer
             ? InformationalText.InfoTextType.PlacingRotatable 
             : InformationalText.InfoTextType.Placing);
     }
-
+    
     private void OnControlMouseEntered(Control which)
     {
         if (DebugEnabled)
@@ -91,12 +114,15 @@ public partial class Interface : CanvasLayer
                 ? InformationalText.InfoTextType.SelectedMovement
                 : InformationalText.InfoTextType.SelectedAttack;
         _informationalText.SwitchTo(infoTextType, entity);
+
+        _initiativePanel.OnEntitySelected(entity);
     }
 
-    internal void OnEntityDeselected()
+    internal void OnEntityDeselected(EntityNode entity)
     {
         _entityPanel.OnEntityDeselected();
         _informationalText.SwitchToDefault();
+        _initiativePanel.OnEntityDeselected(entity);
     }
 
     private void OnSelectionPanelSelectedToBuild(BuildNode buildAbility, EntityId entityId)
@@ -104,5 +130,27 @@ public partial class Interface : CanvasLayer
         SelectedToBuild(buildAbility, entityId);
     }
 
+    private void OnAbilityViewOpened(AbilityButton button)
+    {
+        var ability = button.Ability;
+
+        if (ability is IAbilityHasTargetArea)
+        {
+            _informationalText.SwitchTo(InformationalText.InfoTextType.SelectedTarget, ability.OwnerActor);
+        }
+        
+        AbilitySelected(ability);
+    }
+
+    private void OnAbilityViewClosed() => AbilityDeselected();
+
     private void OnEntityPanelAttackSelected(bool started, AttackType? attackType) => AttackSelected(started, attackType);
+
+    private void OnCandidatePlacementCancelled(EntityNode entity) => CandidatePlacementCancelled(entity);
+    
+    private void OnTurnPanelNextTurnClicked() => NextTurnClicked();
+
+    private void OnInitiativePanelActorHovered(ActorNode? actor) => InitiativePanelActorHovered(actor);
+    
+    private void OnInitiativePanelActorSelected(ActorNode? actor) => InitiativePanelActorSelected(actor);
 }

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b3ytvqwnxhfxn"]
 
 [ext_resource type="PackedScene" uid="uid://dcf0dncb4sc76" path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.tscn" id="1"]
-[ext_resource type="Script" path="res://app/client/game/map/tiles/elevatable/PathTiles.cs" id="2"]
+[ext_resource type="Script" uid="uid://b1fmk5jni6njr" path="res://app/client/game/map/tiles/elevatable/PathTiles.cs" id="2"]
 [ext_resource type="Texture2D" uid="uid://dj4ltnq34jxm3" path="res://assets/sprites/tiles/path.png" id="3"]
 
 [node name="PathTiles" instance=ExtResource("1")]

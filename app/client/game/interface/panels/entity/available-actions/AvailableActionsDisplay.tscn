@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://dbqjtlnaa724l"]
+
+[ext_resource type="Script" uid="uid://n47g1lq4l7yn" path="res://app/client/game/interface/panels/entity/available-actions/AvailableActionsDisplay.cs" id="1_fmhkv"]
+[ext_resource type="Texture2D" uid="uid://cs3u660upkhcp" path="res://assets/icons/icon_movement_big.png" id="2_kvb4v"]
+[ext_resource type="Texture2D" uid="uid://cywki6wytl5nr" path="res://assets/icons/icon_melee_attack.png" id="3_ki7ae"]
+[ext_resource type="Texture2D" uid="uid://odj33vj7ro4c" path="res://assets/icons/icon_ranged_attack.png" id="4_gbhlo"]
+[ext_resource type="PackedScene" uid="uid://4vfl23b58dni" path="res://app/client/game/interface/panels/entity/available-actions/AvailableActionItem.tscn" id="5_h7jkt"]
+[ext_resource type="Texture2D" uid="uid://cjsr2qaw3wi6l" path="res://assets/icons/icon_arrow_up.png" id="5_kvb4v"]
+
+[node name="AvailableActionsDisplay" type="VFlowContainer"]
+offset_right = 68.0
+offset_bottom = 212.0
+theme_override_constants/h_separation = -4
+script = ExtResource("1_fmhkv")
+Icons = Dictionary[int, Texture2D]({
+0: ExtResource("2_kvb4v"),
+1: ExtResource("3_ki7ae"),
+2: ExtResource("4_gbhlo"),
+3: ExtResource("5_kvb4v")
+})
+
+[node name="AvailableActionItem" parent="." instance=ExtResource("5_h7jkt")]
+layout_mode = 2
+
+[node name="AvailableActionItem2" parent="." instance=ExtResource("5_h7jkt")]
+layout_mode = 2
+
+[node name="AvailableActionItem3" parent="." instance=ExtResource("5_h7jkt")]
+layout_mode = 2
+
+[node name="AvailableActionItem4" parent="." instance=ExtResource("5_h7jkt")]
+layout_mode = 2
+
+[node name="AvailableActionItem5" parent="." instance=ExtResource("5_h7jkt")]
+layout_mode = 2
+
+[node name="AvailableActionItem6" parent="." instance=ExtResource("5_h7jkt")]
+visible = false
+layout_mode = 2
+
+[node name="AvailableActionItem7" parent="." instance=ExtResource("5_h7jkt")]
+visible = false
+layout_mode = 2

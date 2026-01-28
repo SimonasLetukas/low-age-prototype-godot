@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://x3ywxmpogjhq"]
 
 [ext_resource type="PackedScene" uid="uid://pgbvbhmyesbr" path="res://app/shared/game/map/Map.tscn" id="1"]
-[ext_resource type="Script" path="res://app/client/game/map/ClientMap.cs" id="2"]
+[ext_resource type="Script" uid="uid://bycd54134s0ef" path="res://app/client/game/map/ClientMap.cs" id="2"]
 
 [node name="Map" instance=ExtResource("1")]
 script = ExtResource("2")

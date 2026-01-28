@@ -61,13 +61,16 @@ namespace LowAgeData.Domain.Abilities
         public bool FallbackToAttack { get; }
         
         /// <summary>
+        /// <para>
         /// If the execution of this <see cref="Ability"/> is ever delayed (e.g. when <see cref="Ability.Cost"/> is
         /// being paid), <see cref="LeashArea"/> defines what is the biggest possible area for the targeted
         /// <see cref="Actor"/>s to be inside when the execution starts. In other words, if the targeted
         /// <see cref="Actor"/> leaves the <see cref="LeashArea"/> while the execution is delayed, the ability is
         /// cancelled and the <see cref="Ability.Cost"/> is refunded.
-        ///
-        /// By default, the <see cref="LeashArea"/> has the size of the map. 
+        /// </para>
+        /// <para>
+        /// By default, the <see cref="LeashArea"/> has the size of the map.
+        /// </para> 
         /// </summary>
         public IShape LeashArea { get; }
     }

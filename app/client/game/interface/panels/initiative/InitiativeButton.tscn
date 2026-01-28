@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://dawu8746226vm"]
+
+[ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1_hh0s0"]
+[ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="2_u8e48"]
+[ext_resource type="Script" uid="uid://bmldjln43xr3f" path="res://app/client/game/interface/panels/initiative/InitiativeButton.cs" id="3_sfstn"]
+[ext_resource type="PackedScene" uid="uid://cu4tmnnici8bh" path="res://app/client/game/interface/panels/initiative/InitiativePossibleActionItem.tscn" id="4_xap6j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ky5jl"]
+resource_local_to_scene = true
+shader = ExtResource("2_u8e48")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = false
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[node name="InitiativeButton" instance=ExtResource("1_hh0s0")]
+material = SubResource("ShaderMaterial_ky5jl")
+script = ExtResource("3_sfstn")
+
+[node name="GridContainer" type="GridContainer" parent="." index="0"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 36.0
+offset_bottom = 32.0
+columns = 4
+
+[node name="InitiativePossibleActionItem" parent="GridContainer" index="0" instance=ExtResource("4_xap6j")]
+layout_mode = 2
+
+[node name="InitiativePossibleActionItem2" parent="GridContainer" index="1" instance=ExtResource("4_xap6j")]
+layout_mode = 2
+
+[node name="InitiativePossibleActionItem3" parent="GridContainer" index="2" instance=ExtResource("4_xap6j")]
+layout_mode = 2
+
+[node name="InitiativePossibleActionItem4" parent="GridContainer" index="3" instance=ExtResource("4_xap6j")]
+layout_mode = 2
+
+[node name="InitiativePossibleActionItem5" parent="GridContainer" index="4" instance=ExtResource("4_xap6j")]
+layout_mode = 2
+
+[node name="InitiativePossibleActionItem6" parent="GridContainer" index="5" instance=ExtResource("4_xap6j")]
+layout_mode = 2

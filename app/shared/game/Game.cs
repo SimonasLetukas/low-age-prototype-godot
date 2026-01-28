@@ -9,11 +9,18 @@ using Newtonsoft.Json;
 public partial class Game : Node2D
 {
     // In case of out-of-sync, this could be used to get the difference: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/how-to-find-the-set-difference-between-two-lists-linq
-    protected List<IGameEvent> Events { get; set; } = new List<IGameEvent>();
+    protected List<IGameEvent> Events { get; set; } = [];
+
+    protected Turns Turns { get; private set; } = null!;
+    protected string LogPrefix => $"{CurrentPlayerId}.{GetType().Name}";
+
+    private string CurrentPlayerId => Multiplayer.IsServer() 
+        ? "0"
+        : Players.Instance.Current.Id.ToString();
     
     public override void _Ready()
     {
-        GD.Print("Game: entering");
+        Turns = GetNode<Turns>(nameof(Turns));
     }
 
     #region Calls to the server
@@ -23,12 +30,12 @@ public partial class Game : Node2D
     /// </summary>
     protected void MarkAsLoaded()
     {
-        GD.Print($"{nameof(Game)}.{nameof(MarkAsLoaded)}");
+        GD.Print($"{LogPrefix}.{nameof(MarkAsLoaded)}");
         
         if (Multiplayer.IsServer()) 
             return;
         
-        GD.Print($"{nameof(Game)}: calling {nameof(OnClientLoaded)} as Rpc.");
+        GD.Print($"{LogPrefix}: calling {nameof(OnClientLoaded)} as Rpc.");
         RpcId(Constants.ENet.ServerId, nameof(OnClientLoaded), Multiplayer.GetUniqueId());
     }
 
@@ -38,7 +45,7 @@ public partial class Game : Node2D
     /// <param name="gameEvent"></param>
     protected void RegisterNewGameEvent(IGameEvent gameEvent)
     {
-        GD.Print($"{nameof(Game)}.{nameof(RegisterNewGameEvent)}: called with {gameEvent.GetType()} " +
+        GD.Print($"{LogPrefix}.{nameof(RegisterNewGameEvent)}: called with {gameEvent.GetType()} " +
                  $"and properties '{JsonConvert.SerializeObject(gameEvent).TrimForLogs()}'.");
 
         if (Multiplayer.IsServer())
@@ -50,13 +57,13 @@ public partial class Game : Node2D
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     protected virtual void OnClientLoaded(int playerId)
     {
-        GD.Print($"{nameof(Game)}.{nameof(OnClientLoaded)}: '{playerId}' client loaded");
+        GD.Print($"{LogPrefix}.{nameof(OnClientLoaded)}: '{playerId}' client loaded");
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     protected virtual void OnRegisterNewGameEvent(string eventBody)
     {
-        GD.Print($"{nameof(Game)}.{nameof(OnRegisterNewGameEvent)}: registering new game event " +
+        GD.Print($"{LogPrefix}.{nameof(OnRegisterNewGameEvent)}: registering new game event " +
                  $"'{eventBody.TrimForLogs()}'");
     }
 
@@ -67,13 +74,13 @@ public partial class Game : Node2D
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void GameEnded()
     {
-        GD.Print($"{nameof(Game)}.{nameof(GameEnded)}");
+        GD.Print($"{LogPrefix}.{nameof(GameEnded)}");
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void OnNewGameEventRegistered(string eventBody)
     {
-        GD.Print($"{nameof(Game)}.{nameof(OnNewGameEventRegistered)}");
+        GD.Print($"{LogPrefix}.{nameof(OnNewGameEventRegistered)}");
     }
 
     #endregion

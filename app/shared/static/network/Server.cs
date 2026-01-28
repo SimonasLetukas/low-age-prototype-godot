@@ -88,7 +88,13 @@ public partial class Server : Network
         }
 
         Multiplayer.MultiplayerPeer = peer;
-        Multiplayer.PeerConnected += OnPlayerConnected;
+        
+        var onPlayerConnected = new Callable(this, MethodName.OnPlayerConnected);
+        if (Multiplayer.IsConnected(MultiplayerApi.SignalName.PeerConnected, onPlayerConnected) is false)
+        {
+            // Check is needed so that server restarts do not crash when trying to connect already connected signal.
+            Multiplayer.Connect(MultiplayerApi.SignalName.PeerConnected, onPlayerConnected);
+        }
         
         Data.Instance.ReadBlueprint();
         

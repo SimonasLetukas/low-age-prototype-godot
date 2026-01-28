@@ -4,7 +4,7 @@ using Godot;
 using LowAgeCommon;
 using Area = LowAgeCommon.Area;
 
-public partial class EntityRenderer : Node2D
+public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
 {
     [Export]
     public bool DebugEnabled { get; set; } = false;
@@ -408,4 +408,21 @@ public partial class EntityRenderer : Node2D
     }
 
     private void OnWhenFlattenedChanged(bool to) => AdjustElevationOffset();
+
+    public bool Equals(EntityRenderer? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return InstanceId.Equals(other.InstanceId);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != GetType()) return false;
+        return Equals((EntityRenderer)obj);
+    }
+
+    public override int GetHashCode() => InstanceId.GetHashCode();
 }

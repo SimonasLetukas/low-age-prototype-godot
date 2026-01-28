@@ -18,8 +18,7 @@ namespace LowAgeData.Domain.Abilities
             IList<EffectId>? onHitEffects = null,
             IList<AttackType>? onHitAttackTypes = null,
             IList<EffectId>? onBirthEffects = null,
-            BehaviourId? onBuildBehaviour = null,
-            IList<Payment>? cost = null)
+            BehaviourId? onBuildBehaviour = null)
             : base(
                 id,
                 TurnPhase.Passive,
@@ -29,7 +28,7 @@ namespace LowAgeData.Domain.Abilities
                 description,
                 sprite,
                 EndsAt.Instant,
-                cost)
+                new List<Payment>())
         {
             PeriodicEffect = periodicEffect;
             OnHitEffects = onHitEffects ?? new List<EffectId>();

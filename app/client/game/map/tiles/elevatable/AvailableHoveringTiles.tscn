@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bjnfno8is1wf2"]
 
 [ext_resource type="PackedScene" uid="uid://dcf0dncb4sc76" path="res://app/client/game/map/tiles/elevatable/ElevatableTileMap.tscn" id="1"]
-[ext_resource type="Script" path="res://app/client/game/map/tiles/elevatable/AvailableHoveringTiles.cs" id="2"]
+[ext_resource type="Script" uid="uid://dsbo5xtlv11dp" path="res://app/client/game/map/tiles/elevatable/AvailableHoveringTiles.cs" id="2"]
 [ext_resource type="Texture2D" uid="uid://cq184q1tblhs5" path="res://assets/sprites/tiles/available.png" id="3"]
 
 [node name="AvailableHoveringTiles" instance=ExtResource("1")]

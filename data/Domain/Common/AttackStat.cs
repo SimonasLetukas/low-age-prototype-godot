@@ -6,6 +6,7 @@ namespace LowAgeData.Domain.Common
     {
         [JsonConstructor]
         public AttackStat(
+            string displayName,
             int maxAmount,
             AttackType attackType, 
             int minimumDistance, 
@@ -13,6 +14,7 @@ namespace LowAgeData.Domain.Common
             ActorAttribute? bonusTo = null, 
             int bonusAmount = 0) : base(maxAmount, false)
         {
+            DisplayName = displayName;
             AttackType = attackType;
             MinimumDistance = minimumDistance;
             MaximumDistance = maximumDistance;
@@ -20,6 +22,7 @@ namespace LowAgeData.Domain.Common
             BonusAmount = bonusAmount;
         }
 
+        public string DisplayName { get; }
         public AttackType AttackType { get; }
         public int MinimumDistance { get; }
         public int MaximumDistance { get; }

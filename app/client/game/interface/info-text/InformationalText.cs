@@ -7,11 +7,12 @@ public partial class InformationalText : Control
     public enum InfoTextType
     {
         Default,
-        Placing,
-        PlacingRotatable,
         Selected,
         SelectedMovement,
         SelectedAttack,
+        SelectedTarget,
+        Placing,
+        PlacingRotatable,
     }
 
     private Vector2 _textSize = new(300, 20);
@@ -25,12 +26,14 @@ public partial class InformationalText : Control
         SwitchToDefault();
 
         EventBus.Instance.MovementAttackOverlayChanged += OnMovementAttackOverlayChanged;
+        EventBus.Instance.ValidationError += OnValidationError;
     }
 
     public override void _ExitTree()
     {
         EventBus.Instance.MovementAttackOverlayChanged -= OnMovementAttackOverlayChanged;
-        
+        EventBus.Instance.ValidationError += OnValidationError;
+
         base._ExitTree();
     }
 
@@ -51,17 +54,6 @@ public partial class InformationalText : Control
                 AddText($"Left-click: select");
                 AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
                 break;
-            case InfoTextType.PlacingRotatable:
-                AddText($"{GetInput(Constants.Input.Rotate)}: rotate clockwise");
-                AddText($"Left-click: place");
-                AddText($"Right-click: cancel");
-                AddText($"{GetInput(Constants.Input.RepeatPlacement)}: repeated placement");
-                break;
-            case InfoTextType.Placing:
-                AddText($"Left-click: place");
-                AddText($"Right-click: cancel");
-                AddText($"{GetInput(Constants.Input.RepeatPlacement)}: repeated placement");
-                break;
             case InfoTextType.Selected:
                 AddText($"Left-click: select");
                 AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
@@ -79,6 +71,25 @@ public partial class InformationalText : Control
                     AddText($"Right-click: attack");
                 AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
                 AddText($"{GetInput(Constants.Input.MovementAttackToggle)}: switch to movement");
+                break;
+            case InfoTextType.SelectedTarget:
+                AddText($"Left-click: cancel");
+                if (executionAllowed) 
+                    AddText($"Right-click: execute");
+                AddText($"{GetInput(Constants.Input.FocusSelection)}: focus selection");
+                break;
+            case InfoTextType.PlacingRotatable:
+                AddText($"Left-click: cancel");
+                if (executionAllowed) 
+                    AddText($"Right-click: place");
+                AddText($"{GetInput(Constants.Input.Rotate)}: rotate clockwise");
+                AddText($"{GetInput(Constants.Input.RepeatPlacement)}: repeated placement");
+                break;
+            case InfoTextType.Placing:
+                AddText($"Left-click: cancel");
+                if (executionAllowed) 
+                    AddText($"Right-click: place");
+                AddText($"{GetInput(Constants.Input.RepeatPlacement)}: repeated placement");
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -117,4 +128,6 @@ public partial class InformationalText : Control
             ? InfoTextType.SelectedAttack 
             : InfoTextType.SelectedMovement, 
         selectedEntity);
+
+    private void OnValidationError(string message) => ValidationErrorText.InstantiateAsChild(message, this);
 }

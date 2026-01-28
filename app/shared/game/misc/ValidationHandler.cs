@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Logic;
-using LowAgeCommon.Extensions;
 
 public class ValidationHandler
 {
-    public static ValidationHandler Validate(IList<Validator> validators) => new ValidationHandler(validators);
+    public static ValidationHandler Validate(IList<Validator> validators) => new(validators);
     
     private readonly IList<Validator> _validators;
     private IList<Tiles.TileInstance?> _tileSource = new List<Tiles.TileInstance?>();

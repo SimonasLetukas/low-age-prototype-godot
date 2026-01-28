@@ -1,7 +1,12 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://dp1nuutqxoubu"]
+[gd_resource type="Theme" load_steps=24 format=3 uid="uid://dp1nuutqxoubu"]
 
 [ext_resource type="FontFile" uid="uid://d0w7npripgnag" path="res://assets/fonts/Karla-Regular.ttf" id="1"]
 [ext_resource type="Texture2D" uid="uid://dhlym7w4676g2" path="res://assets/sprites/interface/small-panel-smaller-inverted-x4.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://hgsa6r1yopuv" path="res://assets/sprites/interface/panel-extra-small-x4.png" id="2_kq8dl"]
+[ext_resource type="FontFile" uid="uid://bufso40qbg61j" path="res://assets/fonts/Karla-SemiBold.ttf" id="2_s6pg1"]
+[ext_resource type="Texture2D" uid="uid://dv475wcs5rrlr" path="res://assets/sprites/interface/panel-clicked-28x28.png" id="3_gu4fq"]
+[ext_resource type="FontFile" uid="uid://cgipi4wcusibp" path="res://assets/fonts/Karla-Italic.ttf" id="3_ihu48"]
+[ext_resource type="Texture2D" uid="uid://clatd4ysqtpf7" path="res://assets/sprites/interface/h-scrollbar-x4.png" id="4_aqogd"]
 
 [sub_resource type="FontFile" id="1"]
 fallbacks = Array[Font]([ExtResource("1")])
@@ -10,6 +15,56 @@ cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mfot4"]
+texture = ExtResource("2_kq8dl")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vpgdc"]
+texture = ExtResource("3_gu4fq")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 28, 28)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h74ap"]
+texture = ExtResource("2_kq8dl")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ck1w8"]
+texture = ExtResource("4_aqogd")
+texture_margin_left = 8.0
+texture_margin_top = 4.0
+texture_margin_right = 8.0
+texture_margin_bottom = 4.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 412, 8)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3xkk8"]
+texture = ExtResource("4_aqogd")
+texture_margin_left = 8.0
+texture_margin_top = 4.0
+texture_margin_right = 8.0
+texture_margin_bottom = 4.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 412, 8)
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ewky6"]
 color = Color(0.878431, 0.819608, 0.74902, 0.588235)
@@ -190,6 +245,17 @@ Button/styles/focus = null
 Button/styles/hover = null
 Button/styles/normal = null
 Button/styles/pressed = null
+HScrollBar/icons/decrement = null
+HScrollBar/icons/decrement_highlight = null
+HScrollBar/icons/decrement_pressed = null
+HScrollBar/icons/increment = null
+HScrollBar/icons/increment_highlight = null
+HScrollBar/icons/increment_pressed = null
+HScrollBar/styles/grabber = SubResource("StyleBoxTexture_mfot4")
+HScrollBar/styles/grabber_highlight = SubResource("StyleBoxTexture_vpgdc")
+HScrollBar/styles/grabber_pressed = SubResource("StyleBoxTexture_h74ap")
+HScrollBar/styles/scroll = SubResource("StyleBoxTexture_ck1w8")
+HScrollBar/styles/scroll_focus = SubResource("StyleBoxTexture_3xkk8")
 HSeparator/styles/separator = SubResource("StyleBoxLine_ewky6")
 Label/colors/font_color = Color(0.878431, 0.819608, 0.74902, 1)
 Label/colors/font_color_shadow = Color(0, 0, 0, 1)
@@ -251,9 +317,12 @@ RichTextLabel/font_sizes/bold_italics_font_size = 15
 RichTextLabel/font_sizes/italics_font_size = 15
 RichTextLabel/font_sizes/mono_font_size = 15
 RichTextLabel/font_sizes/normal_font_size = 15
+RichTextLabel/fonts/bold_font = ExtResource("2_s6pg1")
+RichTextLabel/fonts/italics_font = ExtResource("3_ihu48")
 RichTextLabel/fonts/normal_font = SubResource("FontVariation_uhlvj")
 RichTextLabel/styles/focus = SubResource("StyleBoxFlat_blmx6")
 RichTextLabel/styles/normal = SubResource("StyleBoxEmpty_y58ab")
+ScrollContainer/styles/panel = null
 TooltipLabel/colors/font_color = Color(0.878431, 0.819608, 0.74902, 1)
 TooltipLabel/colors/font_color_shadow = Color(0, 0, 0, 1)
 TooltipLabel/constants/shadow_offset_x = 2

@@ -9,6 +9,7 @@ public partial class InfoDisplay : MarginContainer
     public event Action AbilitiesClosed = delegate { };
     public event Action AbilityTextResized = delegate { };
     public event Action<bool, AttackType?> AttackSelected = delegate { };
+    public event Action AbilityCancelled = delegate { };
 
     public View CurrentView { get; private set; } = View.UnitStats;
     private View _previousView = View.UnitStats;
@@ -20,7 +21,8 @@ public partial class InfoDisplay : MarginContainer
     private int _valueMaxShields = 0;
     private float _valueCurrentMovement = 99.9f;
     private int _valueMaxMovement = 99;
-    private int _valueInitiative = 99;
+    private float _valueCurrentInitiative = 99.9f;
+    private int _valueMaxInitiative = 99;
     private int _valueMeleeArmour = 99;
     private int _valueRangedArmour = 99;
     private IEnumerable<ActorAttribute> _valueActorAttributes =
@@ -44,6 +46,7 @@ public partial class InfoDisplay : MarginContainer
     private ActorAttribute? _valueRangedBonusType = ActorAttribute.Armoured;
     
     private string _valueAbilityName = "Build";
+    private bool _hasAbilityToCancel = false;
     private TurnPhase _valueAbilityTurnPhase = TurnPhase.Planning;
     private string _valueAbilityText = "Place a ghostly rendition of a selected enemy unit in [b]7[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] to an unoccupied space in a [b]3[/b] [img=15x11]Client/UI/Icons/icon_distance_big.png[/img] from the selected target. The rendition has the same amount of [img=15x11]Client/UI/Icons/icon_health_big.png[/img], [img=15x11]Client/UI/Icons/icon_melee_armour_big.png[/img] and [img=15x11]Client/UI/Icons/icon_ranged_armour_big.png[/img] as the selected target, cannot act, can be attacked and stays for [b]2[/b] action phases. [b]50%[/b] of all [img=15x11]Client/UI/Icons/icon_damage_big.png[/img] done to the rendition is done as pure [img=15x11]Client/UI/Icons/icon_damage_big.png[/img]to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals [b]10[/b][img=15x11]Client/UI/Icons/icon_melee_attack.png[/img] and slows all adjacent enemies by [b]50%[/b] until the end of their next action.";
     private EndsAtNode _valueAbilityCooldown = null!;
@@ -51,6 +54,7 @@ public partial class InfoDisplay : MarginContainer
 
     private Control _abilityTitle = null!;
     private Research _researchText = null!;
+    private NavigationBox _cancelAbility = null!;
     private NavigationBox _navigationBack = null!;
     private Control _leftSide = null!;
     private Control _leftSideTop = null!;
@@ -77,7 +81,8 @@ public partial class InfoDisplay : MarginContainer
     {
         _abilityTitle = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle");
         _researchText = GetNode<Research>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/{nameof(Research)}");
-        _navigationBack = GetNode<NavigationBox>($"{nameof(VBoxContainer)}/TopPart/{nameof(NavigationBox)}");
+        _cancelAbility = GetNode<NavigationBox>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/CancelAbility");
+        _navigationBack = GetNode<NavigationBox>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/{nameof(NavigationBox)}");
         _leftSide = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/LeftSide");
         _leftSideTop = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/LeftSide/Rows/Top");
         _leftSideTopText = GetNode<TopText>($"{nameof(VBoxContainer)}/TopPart/LeftSide/Rows/{nameof(TopText)}");
@@ -103,7 +108,8 @@ public partial class InfoDisplay : MarginContainer
         _rightSideRangedAttack.Clicked += OnRangedClicked;
         _rightSideMeleeAttack.Hovering += OnMeleeHovering;
         _rightSideRangedAttack.Hovering += OnRangedHovering;
-        _navigationBack.Connect(nameof(NavigationBox.Clicked), new Callable(this, nameof(OnNavigationBoxClicked)));
+        _navigationBack.Clicked += OnNavigationBoxClicked;
+        _cancelAbility.Clicked += OnCancelAbilityClicked;
         _abilityText.Connect("finished", new Callable(this, nameof(OnTextResized)));
         
         _leftSideBottomEmptyBlock.SetEmpty();
@@ -116,6 +122,8 @@ public partial class InfoDisplay : MarginContainer
         _rightSideRangedAttack.Clicked -= OnRangedClicked;
         _rightSideMeleeAttack.Hovering -= OnMeleeHovering;
         _rightSideRangedAttack.Hovering -= OnRangedHovering;
+        _navigationBack.Clicked -= OnNavigationBoxClicked;
+        _cancelAbility.Clicked -= OnCancelAbilityClicked;
         
         base._ExitTree();
     }
@@ -182,13 +190,18 @@ public partial class InfoDisplay : MarginContainer
         var rangedArmour = stats.FirstOrDefault(x => x.StatType.Equals(StatType.RangedArmour));
         var actorAttributes = actor.Attributes;
         var player = entity.Player;
+
+        var currentMovement = actor.ActionEconomy.CanMove
+            ? MathF.Max((movement?.CurrentAmount ?? 0) - Constants.Pathfinding.SearchIncrement, 0)
+            : 0;
         
         SetEntityStats(
             health is null ? 0 : (int)health.CurrentAmount, 
             health?.MaxAmount ?? 0, 
-            movement?.CurrentAmount ?? 0, 
+            currentMovement, 
             movement?.MaxAmount ?? 0, 
-            initiative is null ? 0 : (int)initiative.CurrentAmount, 
+            initiative?.CurrentAmount ?? 0, 
+            initiative?.MaxAmount ?? 0,
             meleeArmour is null ? 0 : (int)meleeArmour.CurrentAmount, 
             rangedArmour is null ? 0 : (int)rangedArmour.CurrentAmount, 
             actorAttributes, 
@@ -202,7 +215,8 @@ public partial class InfoDisplay : MarginContainer
         int maxHealth,
         float currentMovement,
         int maxMovement,
-        int initiative,
+        float currentInitiative,
+        int maxInitiative,
         int meleeArmour,
         int rangedArmour,
         IEnumerable<ActorAttribute> actorAttributes,
@@ -214,7 +228,8 @@ public partial class InfoDisplay : MarginContainer
         _valueMaxHealth = maxHealth;
         _valueCurrentMovement = currentMovement;
         _valueMaxMovement = maxMovement;
-        _valueInitiative = initiative;
+        _valueCurrentInitiative = currentInitiative;
+        _valueMaxInitiative = maxInitiative;
         _valueMeleeArmour = meleeArmour;
         _valueRangedArmour = rangedArmour;
         _valueActorAttributes = actorAttributes;
@@ -260,14 +275,14 @@ public partial class InfoDisplay : MarginContainer
         TurnPhase turnPhase,
         string text,
         EndsAtNode cooldown,
-        IList<ResearchId>? research = null)
+        IList<ResearchId> research,
+        bool hasAbilityToCancel)
     {
         _valueAbilityName = abilityName;
         _valueAbilityTurnPhase = turnPhase;
         _valueAbilityText = text;
-        _valueResearchText = research is null
-            ? string.Empty
-            : string.Join(", ", research.Select(x => x.ToString()).ToList()); // TODO add nice display names to research
+        _hasAbilityToCancel = hasAbilityToCancel;
+        _valueResearchText = string.Join(", ", research.Select(x => x.ToString()).ToList()); // TODO add nice display names to research
         _valueAbilityCooldown = cooldown;
     }
     
@@ -281,6 +296,7 @@ public partial class InfoDisplay : MarginContainer
     {
         _abilityTitle.Visible = false;
         _researchText.Visible = false;
+        _cancelAbility.Visible = false;
         _navigationBack.Visible = false;
         _leftSide.Visible = false;
         _leftSideTop.Visible = false;
@@ -314,7 +330,7 @@ public partial class InfoDisplay : MarginContainer
         _leftSideTopHealth.SetValue(_valueMaxHealth, (_valueCurrentHealth == _valueMaxHealth) is false, _valueCurrentHealth);
         _leftSideTopShields.SetValue(_valueMaxShields, (_valueCurrentShields == _valueMaxShields) is false, _valueCurrentShields);
         _leftSideMiddleMovement.SetValue(_valueMaxMovement, (_valueCurrentMovement == _valueMaxMovement) is false, _valueCurrentMovement);
-        _leftSideMiddleInitiative.SetValue(_valueInitiative);
+        _leftSideMiddleInitiative.SetValue(_valueMaxInitiative, (_valueCurrentInitiative == _valueMaxInitiative) is false, _valueCurrentInitiative);
         _leftSideBottomMeleeArmour.SetValue(_valueMeleeArmour);
         _leftSideBottomRangedArmour.SetValue(_valueRangedArmour);
         _actorAttributes.SetTypes(_valueActorAttributes);
@@ -325,7 +341,7 @@ public partial class InfoDisplay : MarginContainer
         _leftSideTopHealth.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _leftSideTopShields.Visible = _valueCurrentShields > 0 || _valueMaxShields > 0;
         _leftSideMiddleMovement.Visible = _valueCurrentMovement > 0 || _valueMaxMovement > 0;
-        _leftSideMiddleInitiative.Visible = _valueInitiative > 0;
+        _leftSideMiddleInitiative.Visible = _valueCurrentInitiative > 0 || _valueMaxInitiative > 0;
         _leftSideBottomMeleeArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _leftSideBottomRangedArmour.Visible = _valueCurrentHealth > 0 || _valueMaxHealth > 0;
         _rightSide.Visible = _showMinimal is false;
@@ -416,7 +432,8 @@ public partial class InfoDisplay : MarginContainer
 
     private void ShowAbility()
     {
-        GetNode<Label>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Label").Text = _valueAbilityName;
+        GetNode<Text>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Text").Text = 
+            "[b]" + _valueAbilityName;
         _researchText.SetResearch(_valueResearchText);
         GetNode<AbilitySubtitle>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(AbilitySubtitle)}")
             .SetAbilitySubtitle(_valueAbilityTurnPhase, _valueAbilityCooldown);
@@ -425,6 +442,7 @@ public partial class InfoDisplay : MarginContainer
 
         _abilityTitle.Visible = true;
         _researchText.Visible = string.IsNullOrEmpty(_valueResearchText) is false;
+        _cancelAbility.Visible = _hasAbilityToCancel;
         _navigationBack.Visible = true;
         _abilityDescription.Visible = true;
         
@@ -513,6 +531,8 @@ public partial class InfoDisplay : MarginContainer
         ShowView(_previousView);
         AbilitiesClosed();
     }
+
+    private void OnCancelAbilityClicked() => AbilityCancelled();
 
     private void OnTextResized() => AbilityTextResized();
 }

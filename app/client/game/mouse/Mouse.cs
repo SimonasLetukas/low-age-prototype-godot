@@ -3,11 +3,10 @@ using Godot;
 /// <summary>
 /// Mouse actions by priority:
 /// 1. SELECT (UI, unit, ability): LEFT-UP
-/// 2. CANCEL / ESCAPE (UI, unit, ability): RIGHT-UP UI; LEFT-UP (when nothing to select)
+/// 2. CANCEL / ESCAPE (UI, unit, ability): LEFT-UP
 /// 3. EXECUTE (movement, attack, ability): RIGHT-UP
 /// 4. DRAG CAMERA: LEFT-DOWN (initiates) -> LEFT-HOLD (disables SELECT and CANCEL)
-/// 5. EXAMINE / ALT-SELECT (statistics, area) - RIGHT-DOWN (initiates) -> 
-///    RIGHT-HOLD (disables EXECUTE) or CTRL-HOLD
+/// 5. EXAMINE / ALT-SELECT (statistics, area): RIGHT-DOWN (initiates) -> RIGHT-HOLD (disables EXECUTE) or CTRL-HOLD
 /// </summary>
 public partial class Mouse : Node2D
 {

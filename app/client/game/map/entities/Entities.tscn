@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfrpqywjxr3el"]
 
-[ext_resource type="Script" path="res://app/client/game/map/entities/Entities.cs" id="1"]
+[ext_resource type="Script" uid="uid://cjib45qqgde2a" path="res://app/client/game/map/entities/Entities.cs" id="1"]
 [ext_resource type="PackedScene" uid="uid://bvyjfor7emrb7" path="res://app/client/game/map/entities/Units.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://0m6ypud6w05u" path="res://app/client/game/map/entities/Structures.tscn" id="3"]
-[ext_resource type="Script" path="res://app/client/game/map/entities/EntityRenderers.cs" id="4"]
+[ext_resource type="Script" uid="uid://d27x11p4rekwf" path="res://app/client/game/map/entities/EntityRenderers.cs" id="4"]
 
 [node name="Entities" type="Node2D"]
 script = ExtResource("1")

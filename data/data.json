@@ -234,7 +234,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -244,6 +244,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Bite",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -304,7 +305,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 28,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -314,6 +315,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Glory Blade",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 2,
@@ -373,7 +375,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 18,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -383,6 +385,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Dagger",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -393,6 +396,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Desert Eagle",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 6,
@@ -453,7 +457,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 26,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -463,6 +467,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Stomach Acid",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -522,7 +527,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 23,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -532,6 +537,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Elongated Claws",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -591,7 +597,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 19,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -601,6 +607,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Staff",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -611,6 +618,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Experimental Grenade",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 4,
@@ -670,7 +678,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 12,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -680,6 +688,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Kick",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -690,6 +699,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Fire Arrows",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 5,
@@ -750,7 +760,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 25,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -760,6 +770,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Hardened Antlers",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -818,7 +829,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 16,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -828,6 +839,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Infected Syringe",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -887,7 +899,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 15,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -897,6 +909,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Corrosive Sting",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -955,7 +968,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 14,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -965,6 +978,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Shrivelling Touch",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1029,7 +1043,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 32,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1039,6 +1053,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Energy Sword",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1104,7 +1119,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 17,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1114,6 +1129,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Punch",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1124,6 +1140,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Sniper Rifle",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 7,
@@ -1189,7 +1206,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 30,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1199,6 +1216,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Energy Sword",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1263,7 +1281,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 21,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1273,6 +1291,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Buttstroke",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1283,6 +1302,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Grenade Launcher",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 5,
@@ -1350,7 +1370,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 45,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1360,6 +1380,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Silver Army Knife",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1426,7 +1447,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 11,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1436,6 +1457,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Crowbar",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1502,7 +1524,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 8,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1512,6 +1534,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Heavy Artillery",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 1,
             "maximumDistance": 10,
@@ -1578,7 +1601,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 27,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1588,6 +1611,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Homing Missile",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 1,
             "maximumDistance": 9,
@@ -1655,7 +1679,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 8,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1722,7 +1746,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 29,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1732,6 +1756,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Electric Blast",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1798,7 +1823,7 @@
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 13,
-            "hasCurrent": false
+            "hasCurrent": true
           },
           {
             "$type": "CombatStat",
@@ -1808,6 +1833,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Purification",
             "attackType": "AttackType.Melee",
             "minimumDistance": 1,
             "maximumDistance": 1,
@@ -1818,6 +1844,7 @@
           },
           {
             "$type": "AttackStat",
+            "displayName": "Purification",
             "attackType": "AttackType.Ranged",
             "minimumDistance": 2,
             "maximumDistance": 4,
@@ -4735,6 +4762,10 @@
             {
               "resource": "resource-population",
               "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 1
             }
           ],
           "researchNeeded": [],
@@ -4755,6 +4786,10 @@
             {
               "resource": "resource-population",
               "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 1
             }
           ],
           "researchNeeded": [],
@@ -4774,6 +4809,10 @@
             },
             {
               "resource": "resource-population",
+              "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
               "amount": 1
             }
           ],
@@ -4799,6 +4838,10 @@
             {
               "resource": "resource-population",
               "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 1
             }
           ],
           "researchNeeded": [],
@@ -4823,6 +4866,10 @@
             {
               "resource": "resource-population",
               "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 1
             }
           ],
           "researchNeeded": [],
@@ -4842,6 +4889,10 @@
             },
             {
               "resource": "resource-population",
+              "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
               "amount": 1
             }
           ],
@@ -4863,6 +4914,10 @@
             {
               "resource": "resource-population",
               "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 1
             }
           ],
           "researchNeeded": [],
@@ -4882,6 +4937,10 @@
             },
             {
               "resource": "resource-population",
+              "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
               "amount": 1
             }
           ],
@@ -4910,6 +4969,10 @@
             },
             {
               "resource": "resource-population",
+              "amount": 1
+            },
+            {
+              "resource": "resource-celestium",
               "amount": 1
             }
           ],
@@ -5071,7 +5134,7 @@
       "id": "ability-workshop-research",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "selectionOfResearchToBeUnlocked": [
+      "selection": [
         {
           "name": "research-revelators-poisoned-slits",
           "description": "Unlock Cripple for Quickdraw.",
@@ -5153,6 +5216,9 @@
           "grayOutIfAlreadyExists": true
         }
       ],
+      "casterConsumesAction": true,
+      "canHelp": false,
+      "helpEfficiency": 1.0,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
@@ -5894,7 +5960,7 @@
       "id": "ability-armoury-research",
       "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
-      "selectionOfResearchToBeUnlocked": [
+      "selection": [
         {
           "name": "research-uee-hoverboard-reignition",
           "description": "Unlock Mount for Horrior.",
@@ -5986,6 +6052,9 @@
           "grayOutIfAlreadyExists": true
         }
       ],
+      "casterConsumesAction": true,
+      "canHelp": false,
+      "helpEfficiency": 1.0,
       "hasButton": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
@@ -11683,7 +11752,7 @@
           "filters": []
         }
       ],
-      "maximumHelpers": -1,
+      "maximumHelpers": 1,
       "canBeDragged": false,
       "displayName": "Unit In Production Buildable",
       "description": "This unit should be placed in the allowed placement area.",

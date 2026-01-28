@@ -29,6 +29,24 @@ public partial class EventBus : Node
 
     #region Events
 
+    public event Action<string> ValidationError = delegate { };
+    public void RaiseValidationError(string message) => ValidationError(message);
+    
+    public event Action<int, TurnPhase> PhaseStarted = delegate { };
+    public void RaisePhaseStarted(int turn, TurnPhase phase) => PhaseStarted(turn, phase);
+    
+    public event Action<int, TurnPhase> PhaseEnded = delegate { };
+    public void RaisePhaseEnded(int turn, TurnPhase phase) => PhaseEnded(turn, phase);
+
+    public event Action<ActorNode> ActionStarted = delegate { };
+    public void RaiseActionStarted(ActorNode actor) => ActionStarted(actor);
+    
+    public event Action<ActorNode> ActionEnded = delegate { };
+    public void RaiseActionEnded(ActorNode actor) => ActionEnded(actor);
+
+    public event Action<IList<ActorNode>> InitiativeQueueUpdated = delegate { };
+    public void RaiseInitiativeQueueUpdated(IList<ActorNode> actors) => InitiativeQueueUpdated(actors);
+
     public event Action<Vector2Int, Terrain, IList<EntityNode>?> NewTileFocused = delegate { };
     public void RaiseNewTileFocused(Vector2Int mapPosition, Terrain terrain, IList<EntityNode>? occupants)
         => NewTileFocused(mapPosition, terrain, occupants);
@@ -43,6 +61,9 @@ public partial class EventBus : Node
     public event Action<EntityNode, int> EntityZIndexUpdated = delegate { };
     public void RaiseEntityZIndexUpdated(EntityNode entity, int zIndex) => EntityZIndexUpdated(entity, zIndex);
 
+    public event Action<EntityNode> EntityDestroyed = delegate { };
+    public void RaiseEntityDestroyed(EntityNode entity) => EntityDestroyed(entity);
+    
     public event Action<IPathfindingUpdatable, bool> PathfindingUpdating = delegate { };
     public void RaisePathfindingUpdating(IPathfindingUpdatable data, bool isAdded) => PathfindingUpdating(data, isAdded);
 

@@ -38,7 +38,7 @@ public partial class SelectionPanel : Control
 
     public void OnSelectableAbilityPressed(AbilityButton abilityButton)
     {
-        if (abilityButton.Ability is ISelectable selectableAbility is false)
+        if (abilityButton.Ability is IAbilityHasSelection selectableAbility is false)
             return;
         
         Reset();
@@ -62,11 +62,11 @@ public partial class SelectionPanel : Control
         _gridContainer.Visible = false;
     }
 
-    private void Populate(ISelectable ability)
+    private void Populate(IAbilityHasSelection ability)
     {
         _selectionAmount = 0;
         var selectionIds = new List<Id>();
-        Action<ISelectable, Id> selectionButtonOnClicked = delegate { };
+        Action<IAbilityHasSelection, Id> selectionButtonOnClicked = delegate { };
         switch (ability)
         {
             case BuildNode build:
@@ -85,7 +85,7 @@ public partial class SelectionPanel : Control
         }
     }
 
-    private void OnBuildSelectionItemPressed(ISelectable abilityNode, Id selectionId)
+    private void OnBuildSelectionItemPressed(IAbilityHasSelection abilityNode, Id selectionId)
     {
         var buildAbility = (BuildNode)abilityNode;
         if (Players.Instance.IsActionAllowedForCurrentPlayerOn(buildAbility.OwnerActor) is false)

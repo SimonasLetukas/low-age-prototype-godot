@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://blr6df0obq6f7"]
 
 [ext_resource type="PackedScene" uid="uid://dc2s7724e4wr2" path="res://app/shared/game/entities/ActorNode.tscn" id="1"]
-[ext_resource type="Script" path="res://app/shared/game/entities/StructureNode.cs" id="2"]
+[ext_resource type="Script" uid="uid://ip7680geivj4" path="res://app/shared/game/entities/StructureNode.cs" id="2"]
 [ext_resource type="Shader" uid="uid://452tnk66kfbl" path="res://app/shared/shaders/SelectionShader.tres" id="4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7l2n7"]
 resource_local_to_scene = true
 shader = ExtResource("4")
-shader_parameter/outline_color = null
-shader_parameter/draw_outline = null
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = false
 shader_parameter/intensity = 50
 shader_parameter/disabled = false
 shader_parameter/disabled_saturation = 0.2

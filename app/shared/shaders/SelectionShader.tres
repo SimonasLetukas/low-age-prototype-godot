@@ -19,8 +19,12 @@ const float precision = 0.0065;
 varying vec2 o;
 varying vec2 f;
 
+varying vec4 modulate;
+
 void vertex()
 {
+	modulate = COLOR;
+
 	if (tint_effect_factor == 0.0)
 	{
 		o = VERTEX;
@@ -112,4 +116,6 @@ void fragment()
 	{
 		COLOR = outlines(TEXTURE, UV, TEXTURE_PIXEL_SIZE);
 	}
+
+	COLOR = modulate * COLOR;
 }"

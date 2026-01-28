@@ -10,9 +10,13 @@ public partial class Text : RichTextLabel
 	
 	[Export]
 	public bool HasOutline { get; set; }
+	
+	[Export]
+	public bool IsBlue { get; set; }
 
 	private Color _defaultFontColor = new("e0d1bf");
 	private Color _brighterFontColor = new("f0e9e0");
+	private Color _blueFontColor = new("c1d7df");
 	private int _outlineSize = 3;
 	
 	private const int DefaultSize = 15;
@@ -26,6 +30,9 @@ public partial class Text : RichTextLabel
 
 		if (IsBrighter) 
 			AddThemeColorOverride("default_color", _brighterFontColor);
+		
+		if (IsBlue)
+			AddThemeColorOverride("default_color", _blueFontColor);
 		
 		if (HasOutline)
 			AddThemeConstantOverride("outline_size", _outlineSize);

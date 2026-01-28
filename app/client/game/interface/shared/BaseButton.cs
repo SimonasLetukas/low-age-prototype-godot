@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class BaseButton : NinePatchRect
+public partial class BaseButton : TextureRect
 {
     [Export] public Texture2D Icon { get; set; }
     [Export] public Texture2D TextureNormal { get; set; }
@@ -56,6 +56,21 @@ public partial class BaseButton : NinePatchRect
         Highlight(IsSelected);
     }
 
+    public bool SetHovering(bool to)
+    {
+        if (ClientState.Instance.UiLoading)
+            return false;
+        
+        if (to is false)
+            SetClicked(false);
+        
+        if (IsSelected)
+            return false;
+        
+        Highlight(to);
+        return true;
+    }
+
     public void SetTint(bool to)
     {
         TextureRect.SelfModulate = to ? TintColor : Colors.White;
@@ -90,30 +105,15 @@ public partial class BaseButton : NinePatchRect
 
         TextureRect.Modulate = new Color(Colors.White, to ? 0.5f : 1);
     }
-
-    private void OnBaseButtonMouseEntered()
+    
+    private void SetHoveringInternal(bool to)
     {
-        if (ClientState.Instance.UiLoading)
-            return;
-        
-        if (IsSelected)
-            return;
-        
-        Highlight(true);
-        Hovering(true);
+        var success = SetHovering(to);
+        if (success)
+            Hovering(to);
     }
 
-    private void OnBaseButtonMouseExited()
-    {
-        if (ClientState.Instance.UiLoading)
-            return;
-        
-        SetClicked(false);
-        
-        if (IsSelected)
-            return;
-        
-        Highlight(false);
-        Hovering(false);
-    }
+    private void OnBaseButtonMouseEntered() => SetHoveringInternal(true);
+
+    private void OnBaseButtonMouseExited() => SetHoveringInternal(false);
 }

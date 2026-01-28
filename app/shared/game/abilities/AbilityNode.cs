@@ -1,25 +1,37 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
-using LowAgeData.Domain.Common.Durations;
 
-public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
+/// <summary>
+/// Note: since visualisation in-game is not needed, this abstract class has no node/scene. 
+/// </summary>
+public abstract partial class AbilityNode<
+    TActivationRequest, 
+    TPreProcessingResult, 
+    TFocus> 
+    : Node2D, INodeFromBlueprint<Ability>, IAbilityNode
+    where TActivationRequest : IAbilityActivationRequest 
+    where TPreProcessingResult : IAbilityActivationPreProcessingResult 
+    where TFocus : IAbilityFocus
 {
-    public event Action<AbilityNode> Activated = delegate { };
-    public event Action<AbilityNode> CooldownEnded = delegate { };
-
+    public event Action<AbilityNode<TActivationRequest, TPreProcessingResult, TFocus>> Activated = delegate { };
+    public event Action<AbilityNode<TActivationRequest, TPreProcessingResult, TFocus>, TFocus> ExecutionRequested = delegate { };
+    public event Action<AbilityNode<TActivationRequest, TPreProcessingResult, TFocus>> CooldownEnded = delegate { };
+    
     public Guid InstanceId { get; set; } = Guid.NewGuid();
-    public AbilityId Id { get; protected set; } = null!;
-    public string DisplayName { get; protected set; } = null!;
+    public AbilityId Id { get; private set; } = null!;
+    public string DisplayName { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
+    public TurnPhase TurnPhase { get; private set; } = null!;
+    public IList<ResearchId> ResearchNeeded { get; private set; } = [];
     public ActorNode OwnerActor { get; protected set; } = null!;
-    public EndsAtNode RemainingCooldown { get; protected set; } = null!;
-    public List<Payment> PaymentPaid { get; protected set; } = null!;
-    public bool IsResearched { get; protected set; }
-    public bool IsActive { get; protected set; }
-    public bool HasButton { get; protected set; }
+    public EndsAtNode RemainingCooldown { get; private set; } = null!;
+    public bool HasButton { get; private set; }
+
+    protected IList<TFocus> FocusQueue { get; } = new List<TFocus>();
     
     private Ability Blueprint { get; set; } = null!;
 
@@ -28,65 +40,117 @@ public partial class AbilityNode : Node2D, INodeFromBlueprint<Ability>
         Blueprint = blueprint;
         Id = Blueprint.Id;
         DisplayName = Blueprint.DisplayName;
-        RemainingCooldown = EndsAtNode.InstantiateAsChild(Blueprint.Cooldown, this);
+        Description = Blueprint.Description;
+        TurnPhase = Blueprint.TurnPhase;
+        ResearchNeeded = Blueprint.ResearchNeeded;
+        RemainingCooldown = EndsAtNode.InstantiateAsChild(Blueprint.Cooldown, this, OwnerActor);
         RemainingCooldown.Completed += OnCooldownEnded;
-        PaymentPaid = blueprint.Cost.Select(paymentRequired => new Payment(paymentRequired.Resource)).ToList();
-        IsResearched = true; // TODO fetch from player
-        IsActive = IsPaid() && IsResearched;
         HasButton = Blueprint.HasButton;
     }
-
-    public virtual void Preview()
-    {
-    }
     
-    public virtual bool TryActivate()
-    {
-        if (IsActive is false)
-            return false;
-
-        IsActive = TryStartCooldown() is false;
-        Activated(this);
-        return true;
-    }
-
     public override void _ExitTree()
     {
         RemainingCooldown.Completed -= OnCooldownEnded;
         base._ExitTree();
     }
 
-    public bool IsPaid()
+    public ValidationResult Activate(IAbilityActivationRequest request)
     {
-        foreach (var paymentRequired in Blueprint.Cost)
+        if (request is not TActivationRequest typedRequest)
         {
-            var paid = PaymentPaid.Single(x => x.Resource.Equals(paymentRequired.Resource));
-            if (paid.Amount < paymentRequired.Amount)
-            {
-                IsActive = false;
-                return false;
-            }
+            GD.PrintErr($"Invalid {nameof(IAbilityActivationRequest)} type. Expected " +
+                        $"'{typeof(TActivationRequest).Name}', but got '{request.GetType().Name}'");
+            return ValidationResult.Invalid("Error in ability activation!");
         }
 
-        IsActive = IsResearched;
-        return true;
+        return Activate(typedRequest);
+    }
+    
+    private ValidationResult Activate(TActivationRequest request)
+    {
+        var validationResult = ValidateActivation(request);
+        if (validationResult.IsValid is false)
+            return validationResult;
+
+        var preProcessingResult = PreProcessActivation(request);
+
+        var focus = CreateFocus(request, preProcessingResult);
+        FocusQueue.Add(focus);
+        
+        RaiseActivated();
+        return ValidationResult.Valid;
+    }
+    
+    protected abstract ValidationResult ValidateActivation(TActivationRequest request);
+
+    protected virtual TPreProcessingResult PreProcessActivation(TActivationRequest request) => default!;
+
+    protected abstract TFocus CreateFocus(TActivationRequest activationRequest, 
+        TPreProcessingResult preProcessingResult);
+
+    protected void RequestExecution()
+    {
+        foreach (var focus in FocusQueue)
+        {
+            RequestExecution(focus);
+        }
+    }
+    
+    private void RequestExecution(TFocus focus) => ExecutionRequested(this, focus);
+
+    public void OnExecutionRequested(IAbilityFocus focus)
+    {
+        if (focus is not TFocus typedFocus)
+        {
+            GD.PrintErr($"Invalid {nameof(IAbilityFocus)} type. Expected '{typeof(TFocus).Name}', but got " +
+                        $"'{focus.GetType().Name}'");
+            return;
+        }
+
+        OnExecutionRequested(typedFocus);
     }
 
-    protected virtual bool TryStartCooldown()
+    protected virtual void OnExecutionRequested(TFocus focus) => Complete(focus);
+
+    protected abstract void Complete(TFocus focus);
+    
+    protected void RaiseActivated() => Activated(this);
+
+    protected virtual void StartCooldown()
     {
-        if (Blueprint.Cooldown.Equals(EndsAt.Instant))
-            return false;
-        
-        RemainingCooldown.SetBlueprint(Blueprint.Cooldown);
-        return true;
+        RemainingCooldown.ResetDuration();
     }
     
     protected virtual void OnCooldownEnded()
     {
-        IsActive = IsResearched;
         CooldownEnded(this);
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is not IAbilityNode other) return false;
+        
+        return Id.Equals(other.Id) 
+               && OwnerActor.InstanceId.Equals(other.OwnerActor.InstanceId);
+    }
     
-    public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
-    public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
+    [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
+    public override int GetHashCode() => HashCode.Combine(Id, OwnerActor.InstanceId);
+}
+
+public interface IAbilityActivationRequest
+{
+    
+}
+
+public interface IAbilityActivationPreProcessingResult
+{
+    
+}
+
+public interface IAbilityFocus
+{
+    
 }

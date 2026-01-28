@@ -1,13 +1,27 @@
-[gd_scene load_steps=11 format=3 uid="uid://cai8kctsxyqal"]
+[gd_scene load_steps=16 format=3 uid="uid://cai8kctsxyqal"]
 
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/EntityPanel.cs" id="1"]
+[ext_resource type="Script" uid="uid://b06c2ifjbxkf1" path="res://app/client/game/interface/panels/entity/EntityPanel.cs" id="1"]
 [ext_resource type="PackedScene" uid="uid://dhihaeur1rr0g" path="res://app/client/game/interface/panels/entity/EntityName.tscn" id="2"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/abilities/AbilityButtons.cs" id="3"]
+[ext_resource type="Script" uid="uid://66fohf5kqs4d" path="res://app/client/game/interface/panels/entity/abilities/AbilityButtons.cs" id="3"]
+[ext_resource type="PackedScene" uid="uid://dbqjtlnaa724l" path="res://app/client/game/interface/panels/entity/available-actions/AvailableActionsDisplay.tscn" id="3_agyqn"]
+[ext_resource type="PackedScene" uid="uid://gbxhbl8osgmi" path="res://app/client/game/interface/panels/entity/CancelButton.tscn" id="7_gncu0"]
 [ext_resource type="PackedScene" uid="uid://ba8roqfkqi5rh" path="res://app/client/game/interface/panels/entity/abilities/AbilityButton.tscn" id="8"]
+[ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="8_fvyl3"]
 [ext_resource type="Texture2D" uid="uid://c8yg71tnayeuw" path="res://assets/sprites/interface/panel.png" id="9"]
 [ext_resource type="PackedScene" uid="uid://c06ip2burr08v" path="res://app/client/game/interface/panels/entity/display/InfoDisplay.tscn" id="10"]
 [ext_resource type="Texture2D" uid="uid://bftermtjj8sep" path="res://assets/sprites/interface/stats-panel.png" id="13"]
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="14"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_27c1r"]
+resource_local_to_scene = true
+shader = ExtResource("8_fvyl3")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = false
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
 
 [sub_resource type="Shader" id="2"]
 code = "shader_type canvas_item;
@@ -81,6 +95,12 @@ shader = SubResource("2")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/enabled = false
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d35yb"]
+resource_local_to_scene = true
+shader = SubResource("2")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/enabled = false
+
 [node name="EntityPanel" type="Control"]
 layout_mode = 3
 anchors_preset = 3
@@ -96,6 +116,21 @@ grow_vertical = 0
 mouse_filter = 2
 theme = ExtResource("14")
 script = ExtResource("1")
+
+[node name="AvailableActionsDisplay" parent="." instance=ExtResource("3_agyqn")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -336.0
+offset_top = -233.0
+offset_right = -268.0
+offset_bottom = -21.0
+grow_horizontal = 0
+grow_vertical = 0
+reverse_fill = true
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
@@ -153,6 +188,21 @@ offset_bottom = -218.0
 grow_horizontal = 0
 grow_vertical = 0
 
+[node name="CancelButton" parent="." instance=ExtResource("7_gncu0")]
+material = SubResource("ShaderMaterial_27c1r")
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -268.0
+offset_top = -229.0
+offset_right = -240.0
+offset_bottom = -205.0
+grow_horizontal = 0
+grow_vertical = 0
+
 [node name="Panel" type="VBoxContainer" parent="."]
 layout_mode = 0
 anchor_left = 1.0
@@ -182,6 +232,10 @@ AbilityIconPaths = {
 
 [node name="AbilityButton" parent="Panel/AbilityButtons" instance=ExtResource("8")]
 material = SubResource("3")
+layout_mode = 2
+
+[node name="AbilityButton2" parent="Panel/AbilityButtons" instance=ExtResource("8")]
+material = SubResource("ShaderMaterial_d35yb")
 layout_mode = 2
 
 [node name="InfoDisplay" parent="Panel" instance=ExtResource("10")]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ju17lnpl6usx"]
 
-[ext_resource type="Script" path="res://app/shared/lobby/players/team/TeamSelection.cs" id="1_ti2l4"]
+[ext_resource type="Script" uid="uid://bmmo3xnyeymp6" path="res://app/shared/lobby/players/team/TeamSelection.cs" id="1_ti2l4"]
 
 [node name="Team" type="OptionButton"]
 custom_minimum_size = Vector2(120, 0)

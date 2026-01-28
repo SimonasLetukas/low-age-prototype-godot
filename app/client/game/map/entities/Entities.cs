@@ -7,7 +7,9 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
 using LowAgeCommon;
+using LowAgeData.Domain.Common;
 using MultipurposePathfinding;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Parent of all entities (units & structures) and their rendering on the map.
@@ -16,23 +18,24 @@ public partial class Entities : Node2D
 {
     [Export] public bool DebugEnabled { get; set; } = false;
     
-    public event Action<EntityPlacedEvent> EntityPlaced = delegate { };
+    public event Action<EntityPlacedRequestEvent> EntityPlaced = delegate { };
+    public event Action<EntityCandidatePlacementCancelledEvent> CandidatePlacementCancelled = delegate { };
+    public event Action<AbilityExecutionRequestedEvent> AbilityExecutionRequested = delegate { };
+    public event Action<AbilityExecutionCompletedEvent> AbilityExecutionCompleted = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
-    public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
-    public event Action EntityDeselected = delegate { };
+    public event Action<EntityNode> EntityDeselected = delegate { };
 
     public bool EntitiesBeingDestroyed => _entitiesBeingDestroyed.Count != 0;
     public bool EntityMoving { get; private set; } = false;
     public EntityNode? SelectedEntity { get; private set; } = null;
     public EntityNode? EntityInPlacement { get; private set; } = null;
     public EntityNode? HoveredEntity { get; private set; } = null;
-
+    
     private EntityRenderers _renderers = null!;
     private Node2D _units = null!;
     private Node2D _structures = null!;
-    private Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> _getHighestTiles = null!;
-    private Func<Vector2Int, bool, Tiles.TileInstance?> _getTile = null!;
+    private PlayerPriority _playerPriority = null!;
 
     private readonly Dictionary<Guid, EntityNode> _entitiesByIds = new();
     private readonly List<EntityNode> _entitiesBeingDestroyed = [];
@@ -46,11 +49,14 @@ public partial class Entities : Node2D
         NewPositionOccupied += _renderers.UpdateSorting;
     }
     
-    public void Initialize(Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles, 
-        Func<Vector2Int, bool, Tiles.TileInstance?> getTile)
+    public void Initialize()
     {
-        _getHighestTiles = getHighestTiles;
-        _getTile = getTile;
+        _playerPriority = new PlayerPriority
+        {
+            Queue = Players.Instance.GetAll().OrderBy(x => x.Id).ToList(),
+        };
+        
+        GlobalRegistry.Instance.ProvideGetEntityById(GetEntityByInstanceId);
     }
 
     public void SetupStartingEntities(IList<Vector2Int> startingPositions, FactionId factionId)
@@ -71,11 +77,19 @@ public partial class Entities : Node2D
     public override void _ExitTree()
     {
         NewPositionOccupied -= _renderers.UpdateSorting;
+        
         foreach (var unit in _units.GetChildren().OfType<UnitNode>())
         {
             unit.FinishedMoving -= OnEntityFinishedMoving;
             unit.Destroyed -= OnEntityDestroyed;
+            unit.Abilities.ExecutionRequested -= OnAbilityExecutionRequested;
         }
+        foreach (var structure in _structures.GetChildren().OfType<StructureNode>())
+        {
+            structure.Destroyed -= OnEntityDestroyed;
+            structure.Abilities.ExecutionRequested -= OnAbilityExecutionRequested;
+        }
+        
         base._ExitTree();
     }
 
@@ -94,6 +108,33 @@ public partial class Entities : Node2D
     public EntityNode? GetEntityByInstanceId(Guid instanceId) => _entitiesByIds.ContainsKey(instanceId)
         ? _entitiesByIds[instanceId]
         : null;
+
+    public IList<ActorNode> GetActorsSortedByInitiative()
+    {
+        var deterministicInitiative = Config.Instance.DeterministicInitiative;
+        var actorsGroupedBySortedInitiative = GetActorInitiativeMap()
+            .OrderByDescending(pair => deterministicInitiative ? (int)pair.Value : pair.Value)
+            .ThenBy(pair => pair.Key.CreationToken)
+            .GroupBy(pair => deterministicInitiative ? (int)pair.Value : pair.Value)
+            .Select(group => group.Select(pair => pair.Key));
+
+        var finalOrder = ResolveIdenticalInitiatives(actorsGroupedBySortedInitiative);
+        
+        if (DebugEnabled)
+            GD.Print($"{nameof(Entities)}.{nameof(GetActorsSortedByInitiative)}: Final order of actors sorted " +
+                     $"by initiative: {JsonConvert.SerializeObject(finalOrder.Select(x => new
+                     {
+                         Id = x.InstanceId, 
+                         Name = x.DisplayName, 
+                         Position = x.EntityPrimaryPosition 
+                     }).ToList())}");
+        
+        return finalOrder;
+    }
+
+    public IList<EntityNode> GetCandidateEntities() => _entitiesByIds.Values
+        .Where(e => e.IsCandidate())
+        .ToList();
 
     public void AdjustGlobalPosition(EntityNode entity, Vector2 globalPosition) => entity.SnapTo(globalPosition);
 
@@ -114,10 +155,12 @@ public partial class Entities : Node2D
     {
         if (IsEntitySelected() is false) 
             return;
-        
-        SelectedEntity!.SetSelected(false);
+
+        var unselectedEntity = SelectedEntity;
+        unselectedEntity!.SetSelected(false);
         SelectedEntity = null;
-        EntityDeselected();
+        
+        EntityDeselected(unselectedEntity);
     }
 
     public bool IsEntitySelected() => SelectedEntity != null;
@@ -140,11 +183,18 @@ public partial class Entities : Node2D
 
     public bool IsEntityHovered(EntityNode entity) => IsEntityHovered() && HoveredEntity!.Equals(entity);
 
+    public bool TryHoveringEntity(EntityNode entity)
+    {
+        HoveredEntity?.SetTileHovered(false);
+        entity.SetTileHovered(true);
+        HoveredEntity = entity;
+        return true;
+    }
+    
     public bool TryHoveringEntityOn(Tiles.TileInstance tile)
     {
         if (EntityMoving)
             return false;
-
         
         var occupationExists = tile.IsOccupied();
         var occupantEntity = tile.GetLastOccupantOrNull();
@@ -187,18 +237,16 @@ public partial class Entities : Node2D
             topEntity = entity;
         }
         
-        if (DebugEnabled && topEntity != null)
-            GD.Print($"{nameof(Entities)}.{nameof(GetTopEntity)}: entity found '{topEntity.DisplayName}'");
+        //if (DebugEnabled && topEntity != null)
+            //GD.Print($"{nameof(Entities)}.{nameof(GetTopEntity)}: entity found '{topEntity.DisplayName}'");
 
         return topEntity;
     }
     
-    public void MoveEntity(EntityNode entity, IEnumerable<Vector2> globalPath, ICollection<Point> path)
+    public void MoveEntity(EntityNode entity, IList<Vector2> globalPath, IList<Point> path)
     {
-        var targetPoint = path.Last();
-        var startPoint = path.First();
         EntityMoving = true;
-        entity.MoveUntilFinished(globalPath.ToList(), targetPoint);
+        entity.MoveUntilFinished(globalPath, path);
     }
     
     public void RegisterRenderer(EntityNode entity)
@@ -207,12 +255,11 @@ public partial class Entities : Node2D
         _renderers.UpdateSorting();
     }
 
-    public EntityNode SetEntityForPlacement(EntityId entityId, 
-        bool canBePlacedOnTheWholeMap)
+    public EntityNode SetEntityForPlacement(EntityId entityId, bool canBePlacedOnTheWholeMap, int? cost)
     {
         var playerId = Players.Instance.Current.Id;
         var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
-        var newEntity = InstantiateEntity(newEntityBlueprint, playerId);
+        var newEntity = InstantiateEntity(newEntityBlueprint, playerId, cost);
         
         newEntity.SetForPlacement(canBePlacedOnTheWholeMap);
         EntityInPlacement = newEntity;
@@ -253,9 +300,63 @@ public partial class Entities : Node2D
         }
     }
 
+    public void HandleCancelledEntities(IEnumerable<Guid> candidateEntities)
+    {
+        foreach (var cancelledCandidate in candidateEntities)
+        {
+            if (_entitiesByIds.TryGetValue(cancelledCandidate, out var entity) is false)
+                continue;
+
+            if (entity.IsCandidate() is false)
+                continue;
+            
+            entity.Destroy();
+        }
+    }
+
+    public void OnCandidatePlacementCancelled(EntityNode entity)
+    {
+        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(entity) is false)
+            return;
+        
+        HandleCancelledEntities([entity.InstanceId]);
+        CandidatePlacementCancelled(new EntityCandidatePlacementCancelledEvent
+        {
+            InstanceId = entity.InstanceId,
+            PlayerId = entity.Player.Id
+        });
+    }
+
+    public void HandleEvent(AbilityExecutionRequestedEvent @event)
+    {
+        var sourceActor = GetEntityByInstanceId(@event.SourceActorId) as ActorNode;
+        if (sourceActor is null)
+        {
+            GD.Print($"{nameof(Entities)} could not apply {nameof(AbilityExecutionRequestedEvent)} because " +
+                     $"{nameof(sourceActor)} '{@event.SourceActorId}' entity was null.");
+            return;
+        }
+
+        var ability = sourceActor.Abilities.GetById(@event.AbilityId);
+        if (ability is null)
+        {
+            GD.Print($"{nameof(Entities)} could not apply {nameof(AbilityExecutionRequestedEvent)} because " +
+                     $"{nameof(ability)} '{@event.AbilityId}' was not found for {nameof(sourceActor)} " +
+                     $"'{@event.SourceActorId}'.");
+            return;
+        }
+        
+        ability.OnExecutionRequested(@event.Focus);
+        AbilityExecutionCompleted(new AbilityExecutionCompletedEvent
+        {
+            PlayerId = Players.Instance.Current.Id,
+            AbilityExecutionRequestedEventId = @event.Id
+        });
+    }
+
     public void HandleEvent(EntityAttackedEvent @event)
     {
-        var source = GetEntityByInstanceId(@event.SourceId);
+        var source = GetEntityByInstanceId(@event.SourceId) as ActorNode; // TODO how would doodads be able to execute attack?
         var target = GetEntityByInstanceId(@event.TargetId);
 
         if (source is null)
@@ -272,20 +373,22 @@ public partial class Entities : Node2D
             return;
         }
 
+        source.ActionEconomy.Attacked(@event.AttackType);
         target.ReceiveAttack(source, @event.AttackType, false);
     }
 
-    public void HandleEvent(EntityPlacedEvent @event)
+    public void HandleEvent(EntityPlacedResponseEvent @event)
     {
         var entity = GetEntityByInstanceId(@event.InstanceId);
         if (entity != null)
         {
+            entity.CreationToken = @event.CreationToken;
             PlaceEntity(entity, false);
             return;
         }
         
         var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
-        entity = InstantiateEntity(entityBlueprint, @event.PlayerId, @event.InstanceId);
+        entity = InstantiateEntity(entityBlueprint, @event.PlayerId, @event.Cost, @event.InstanceId);
         entity.ForcePlace(@event);
         
         NewPositionOccupied(entity);
@@ -310,7 +413,7 @@ public partial class Entities : Node2D
     private EntityNode? PlaceEntity(Entity entityBlueprint, Vector2Int mapPosition)
     {
         var playerId = Players.Instance.Current.Id;
-        var entity = InstantiateEntity(entityBlueprint, playerId);
+        var entity = InstantiateEntity(entityBlueprint, playerId, null);
         entity.EntityPrimaryPosition = mapPosition;
         entity.DeterminePlacementValidity(false);
         return PlaceEntity(entity, true);
@@ -327,10 +430,11 @@ public partial class Entities : Node2D
             return null;
         
         if (placeAsCandidate)
-            EntityPlaced(new EntityPlacedEvent
+            EntityPlaced(new EntityPlacedRequestEvent
             {
                 BlueprintId = entity.BlueprintId,
                 MapPosition = entity.EntityPrimaryPosition,
+                Cost = entity.HasCost ? entity.CreationProgress?.TotalCost : null,
                 InstanceId = instanceId,
                 ActorRotation = entity is ActorNode actor ? actor.ActorRotation : ActorRotation.BottomRight,
                 PlayerId = entity.Player.Id
@@ -350,7 +454,7 @@ public partial class Entities : Node2D
         return placedSuccessfully;
     }
 
-    private EntityNode InstantiateEntity(Entity entityBlueprint, int playerId, Guid? instanceId = null)
+    private EntityNode InstantiateEntity(Entity entityBlueprint, int playerId, int? cost, Guid? instanceId = null)
     {
         var player = Players.Instance.Get(playerId);
 
@@ -366,32 +470,116 @@ public partial class Entities : Node2D
         if (instanceId != null)
             entity.InstanceId = (Guid)instanceId;
         _entitiesByIds[entity.InstanceId] = entity;
+
+        entity.SetCost(cost);
         
         return entity;
     }
 
     private StructureNode InstantiateStructure(Structure structureBlueprint, Player player)
     {
-        var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures, player, 
-            _getTile, _getHighestTiles);
+        var structure = StructureNode.InstantiateAsChild(structureBlueprint, _structures, player);
+
+        structure.Abilities.ExecutionRequested += OnAbilityExecutionRequested;
 
         return structure;
     }
 
     private UnitNode InstantiateUnit(Unit unitBlueprint, Player player)
     {
-        var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units, player, 
-            _getTile, _getHighestTiles);
+        var unit = UnitNode.InstantiateAsChild(unitBlueprint, _units, player);
 
         unit.FinishedMoving += OnEntityFinishedMoving;
+        unit.Abilities.ExecutionRequested += OnAbilityExecutionRequested;
 
         return unit;
+    }
+    
+    private Dictionary<ActorNode, float> GetActorInitiativeMap()
+    {
+        var deterministicInitiative = Config.Instance.DeterministicInitiative;
+        var entityInitiativeMap = new Dictionary<ActorNode, float>();
+        
+        foreach (var entity in _entitiesByIds.Values.OrderBy(e => e.CreationToken))
+        {
+            if (entity is not ActorNode actor 
+                || actor.HasInitiative is false 
+                || actor.IsCompleted() is false
+                || actor.WorkingOn.Any(ability => ability.ConsumesAction 
+                                                  && ability.Timing.Equals(TurnPhase.Planning)))
+                continue;
+
+            var initiativeBonus = (actor.Initiative!.MaxAmount - actor.Initiative!.CurrentAmount) / 1.5f;
+
+            var initiative = deterministicInitiative 
+                ? actor.Initiative!.MaxAmount 
+                : Mathf.Max((float)Dice.RollMultiple(19, actor.Initiative!.MaxAmount).Sum() / 10 
+                            + initiativeBonus, 0);
+
+            actor.Initiative.CurrentAmount = initiative;
+            
+            if (DebugEnabled)
+                GD.Print($"{nameof(Entities)}.{nameof(GetActorInitiativeMap)}: {actor.DisplayName} at " + 
+                         $"{actor.EntityPrimaryPosition} {nameof(initiative)} {initiative}");
+            
+            entityInitiativeMap[actor] = initiative;
+        }
+        
+        return entityInitiativeMap;
+    }
+
+    private List<ActorNode> ResolveIdenticalInitiatives(
+        IEnumerable<IEnumerable<ActorNode>> entitiesGroupedBySortedInitiative)
+    {
+        var finalOrder = new List<ActorNode>();
+
+        foreach (var group in entitiesGroupedBySortedInitiative)
+        {
+            var entitiesByPlayer = new Dictionary<Player, List<ActorNode>>();
+            foreach (var entity in group)
+            {
+                if (entitiesByPlayer.ContainsKey(entity.Player) is false)
+                    entitiesByPlayer[entity.Player] = [];
+                
+                entitiesByPlayer[entity.Player].Add(entity);
+            }
+
+            while (entitiesByPlayer.Values.Any(entities => entities.Count > 0))
+            {
+                var uniquePlayerEntityGroup = new List<ActorNode>();
+                foreach (var player in entitiesByPlayer.Keys
+                             .Where(player => entitiesByPlayer[player].Count > 0)
+                             .OrderBy(player => player.Id))
+                {
+                    uniquePlayerEntityGroup.Add(entitiesByPlayer[player].First());
+                    entitiesByPlayer[player].RemoveAt(0);
+                }
+
+                uniquePlayerEntityGroup.Sort((entityA, entityB) => 
+                    _playerPriority.Compare(entityA.Player, entityB.Player));
+                _playerPriority.Rotate();
+                
+                finalOrder.AddRange(uniquePlayerEntityGroup);
+            }
+        }
+
+        return finalOrder;
     }
 
     private void OnEntityFinishedMoving(EntityNode entity)
     {
         EntityMoving = false;
         NewPositionOccupied(entity);
+    }
+    
+    private void OnAbilityExecutionRequested(ActorNode sourceActor, IAbilityNode ability, IAbilityFocus focus)
+    {
+        AbilityExecutionRequested(new AbilityExecutionRequestedEvent
+        {
+            SourceActorId = sourceActor.InstanceId,
+            AbilityId = ability.Id,
+            Focus = focus
+        });
     }
 
     private void OnEntityDestroyed(EntityNode entity)
@@ -401,14 +589,36 @@ public partial class Entities : Node2D
         if (IsEntityHovered(entity))
             HoveredEntity = null;
         
-        Destroyed(entity);
+        if (entity.IsCandidate())
+            OnCandidatePlacementCancelled(entity);
         
+        EventBus.Instance.RaiseEntityDestroyed(entity);
+
         _renderers.UnregisterRenderer(entity.Renderer);
         
         entity.FinishedMoving -= OnEntityFinishedMoving;
         entity.Destroyed -= OnEntityDestroyed;
+        if (entity is ActorNode actor)
+            actor.Abilities.ExecutionRequested -= OnAbilityExecutionRequested;
 
         _entitiesByIds.Remove(entity.InstanceId);
         _entitiesBeingDestroyed.Remove(entity);
+    }
+    
+    private class PlayerPriority
+    {
+        public required IList<Player> Queue { private get; init; }
+
+        public int Compare(Player p1, Player p2) => Queue.IndexOf(p1).CompareTo(Queue.IndexOf(p2));
+
+        public void Rotate()
+        {
+            if (Queue.Count < 1)
+                return;
+            
+            var firstPlayer = Queue.First();
+            Queue.RemoveAt(0);
+            Queue.Add(firstPlayer);
+        }
     }
 }

@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://bffqjqh3owpyh" path="res://assets/sprites/interface/horizontal_gradient.png" id="3"]
 [ext_resource type="Material" uid="uid://d3svarnqweyvn" path="res://app/shared/shaders/OffsetShadow.tres" id="4"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/stat/StatBlock.cs" id="5"]
+[ext_resource type="Script" uid="uid://cca4jmwcw5iug" path="res://app/client/game/interface/panels/entity/display/stat/StatBlock.cs" id="5"]
 
 [node name="StatBlock" type="MarginContainer"]
 custom_minimum_size = Vector2(100, 32)

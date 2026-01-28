@@ -27,18 +27,22 @@ public partial class ClientMap : Map
 	private Vector2Int _mapSize = Vector2Int.Max;
 	private Tiles _tileMap = null!;
 	private FocusedTile _focusedTile = null!;
+	private ActorNode? _hoveredInitiativePanelActor;
 	private SelectionOverlay _selectionOverlay = SelectionOverlay.None;
 
 	private enum SelectionOverlay
 	{
 		None,
 		Movement,
+		Attack,
+		Target,
 		Placement,
-		Attack
 	}
 
+	private IAbilityNode? _selectedAbility;
 	private (BuildNode?, EntityId?) _previousBuildSelection = (null, null);
 	private Node2D _lines = null!;
+	private Node2D _arrows = null!;
 
 	private bool _tileMapIsInitialized = false;
 	private bool _pathfindingIsInitialized = false;
@@ -46,7 +50,7 @@ public partial class ClientMap : Map
 	private bool _tileMapPointsInitialized = false;
 
 	private bool _paused = true;
-
+	
 	public override void _Ready()
 	{
 		base._Ready();
@@ -55,15 +59,19 @@ public partial class ClientMap : Map
 		_tileMap = GetNode<Tiles>($"{nameof(Tiles)}");
 		Entities = GetNode<Entities>($"{nameof(Entities)}");
 		_lines = GetNode<Node2D>($"Lines");
-
+		_arrows = GetNode<Node2D>($"Arrows");
+		
+		ResetLines();
+		ClearArrows();
+		
 		Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
-		Entities.Destroyed += OnEntitiesDestroyed;
 		_tileMap.FinishedInitialInitializing += OnTileMapFinishedInitialInitializing;
 		_tileMap.FinishedPointInitialization += OnTileMapFinishedPointInitialization;
 		Pathfinding.FinishedInitializing += OnPathfindingFinishedInitializing;
 		Pathfinding.PointAdded += OnPathfindingPointAdded;
 		Pathfinding.PointRemoved += OnPathfindingPointRemoved;
 		EventBus.Instance.EntityPlaced += OnEntityPlaced;
+		EventBus.Instance.EntityDestroyed += OnEntityDestroyed;
 		EventBus.Instance.NewTileFocused += OnNewTileFocused;
 		EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
 	}
@@ -71,15 +79,16 @@ public partial class ClientMap : Map
 	public override void _ExitTree()
 	{
 		Entities.NewPositionOccupied -= OnEntitiesNewPositionOccupied;
-		Entities.Destroyed += OnEntitiesDestroyed;
 		_tileMap.FinishedInitialInitializing -= OnTileMapFinishedInitialInitializing;
 		_tileMap.FinishedPointInitialization -= OnTileMapFinishedPointInitialization;
 		Pathfinding.FinishedInitializing -= OnPathfindingFinishedInitializing;
-		Pathfinding.PointAdded += OnPathfindingPointAdded;
-		Pathfinding.PointRemoved += OnPathfindingPointRemoved;
+		Pathfinding.PointAdded -= OnPathfindingPointAdded;
+		Pathfinding.PointRemoved -= OnPathfindingPointRemoved;
 		EventBus.Instance.EntityPlaced -= OnEntityPlaced;
+		EventBus.Instance.EntityDestroyed -= OnEntityDestroyed;
 		EventBus.Instance.NewTileFocused -= OnNewTileFocused;
 		EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
+		
 		base._ExitTree();
 	}
 
@@ -102,7 +111,11 @@ public partial class ClientMap : Map
 		_focusedTile = _tileMap.Elevatable.Focused;
 
 		_lines.Visible = DebugEnabled && DebugLinesEnabled;
-		ResetLines();
+		
+		GlobalRegistry.Instance.ProvideGetCurrentPhase(() => CurrentPhase);
+		GlobalRegistry.Instance.ProvideGetActorInAction(() => ActorInAction);
+		GlobalRegistry.Instance.ProvideGetHighestTiles(_tileMap.GetHighestTiles);
+		GlobalRegistry.Instance.ProvideGetTile(_tileMap.GetTile);
 	}
 
 	private void InitializePathfinding(ICollection<(Vector2Int, TileId)> tiles)
@@ -167,7 +180,7 @@ public partial class ClientMap : Map
 		if (_tileMapPointsInitialized is false)
 			return;
 
-		Entities.Initialize(_tileMap.GetHighestTiles, _tileMap.GetTile);
+		Entities.Initialize();
 		
 		FinishedInitializing();
 	}
@@ -198,19 +211,22 @@ public partial class ClientMap : Map
 		{
 			UpdateHoveredEntity(mousePosition);
 
+			if (Entities.SelectedEntity is not UnitNode selectedUnit || selectedUnit.ActionEconomy.CanMove is false)
+				return;
+
 			// TODO optimization: only if focused tile changed from above, display path
-			if (_focusedTile.IsWithinTheMap)
+			if (_focusedTile.IsWithinTheMap || _hoveredInitiativePanelActor != null)
 			{
+				var to = _hoveredInitiativePanelActor?.EntityPrimaryTile.Point 
+				         ?? _focusedTile.CurrentTile!.Point;
+				var team = Entities.SelectedEntity!.Player.Team;
 				var size = Entities.SelectedEntity!.EntitySize.X;
-				var path = Pathfinding.FindPath(
-					_focusedTile.CurrentTile!.Point,
-					Entities.SelectedEntity.Player.Team,
-					size);
+				var path = Pathfinding.FindPath(to, team, size);
 				_tileMap.Elevatable.SetPathTiles(path, size);
 			}
 		}
 
-		if (_selectionOverlay is SelectionOverlay.Attack)
+		if (_selectionOverlay is SelectionOverlay.Attack or SelectionOverlay.Target)
 		{
 			var hoveredEntity = UpdateHoveredEntity(mousePosition);
 			UpdateTargetedEntity(hoveredEntity, Entities.SelectedEntity);
@@ -247,7 +263,7 @@ public partial class ClientMap : Map
 			HandleDeselecting();
 		
 		RemoveOccupation(selectedEntity);
-		Entities.MoveEntity(selectedEntity, @event.GlobalPath, @event.Path.ToList());
+		Entities.MoveEntity(selectedEntity, @event.GlobalPath.ToList(), @event.Path.ToList());
 	}
 
 	public void HandleDeselecting()
@@ -255,6 +271,7 @@ public partial class ClientMap : Map
 		_tileMap.Elevatable.ClearAvailableTiles(false);
 		_tileMap.Elevatable.ClearTargetTiles(false);
 		_tileMap.Elevatable.ClearPath();
+		ClearArrows();
 		Entities.DeselectEntity();
 		_selectionOverlay = SelectionOverlay.None;
 	}
@@ -272,7 +289,7 @@ public partial class ClientMap : Map
 		if (Input.IsActionJustReleased(Constants.Input.MovementAttackToggle) is false)
 			return;
 		
-		if (_selectionOverlay is not (SelectionOverlay.Movement or SelectionOverlay.Attack)) 
+		if (_selectionOverlay is not (SelectionOverlay.Movement or SelectionOverlay.Attack or SelectionOverlay.None)) 
 			return;
 		
 		var entity = Entities.SelectedEntity!;
@@ -316,64 +333,86 @@ public partial class ClientMap : Map
 			return;
 		}
 
-		if (_selectionOverlay is SelectionOverlay.Placement && IsActionAllowedForCurrentPlayerOnSelectedEntity())
-		{
-			ExecutePlacement();
-			return;
-		}
-	}
-	
-	private void HandleRightClick()
-	{
-		if (_focusedTile.IsWithinTheMap is false)
-			return;
-
-		if (Entities.EntityMoving)
-			return;
-
-		if (_selectionOverlay is SelectionOverlay.None)
-			return;
-
-		if (_selectionOverlay is SelectionOverlay.Movement && IsActionAllowedForCurrentPlayerOnSelectedEntity())
-		{
-			_focusedTile.UpdateTile();
-			ExecuteMovement();
-			return;
-		}
-
-		if (_selectionOverlay is SelectionOverlay.Attack && IsActionAllowedForCurrentPlayerOnSelectedEntity())
-		{
-			_focusedTile.UpdateTile();
-			ExecuteAttack();
-			return;
-		}
-
-		if (_selectionOverlay is SelectionOverlay.Placement)
+		if (_selectionOverlay is SelectionOverlay.Target or SelectionOverlay.Placement)
 		{
 			ExecuteCancellation();
 			return;
 		}
 	}
+	
+	private ValidationResult HandleRightClick()
+	{
+		if (_focusedTile.IsWithinTheMap is false)
+			return ValidationResult.Invalid("This action is outside of the map boundaries!");
 
-	private void ExecuteEntitySelection(bool maintainSelection = false)
+		if (Entities.EntityMoving)
+			return ValidationResult.Invalid("Cannot execute while another unit is moving.");
+
+		if (_selectionOverlay is SelectionOverlay.None)
+			return ValidationResult.Invalid("Nothing to execute.");
+		
+		_focusedTile.UpdateTile();
+
+		var isActionAuthorized = IsActionAuthorizedForCurrentPlayerOnSelectedEntity();
+		if (isActionAuthorized.IsValid is false)
+			return isActionAuthorized;
+
+		return _selectionOverlay switch
+		{
+			SelectionOverlay.Movement => ExecuteMovement(),
+			SelectionOverlay.Attack => ExecuteAttack(),
+			SelectionOverlay.Target => ExecuteTarget(),
+			SelectionOverlay.Placement => ExecutePlacement(),
+			_ => ValidationResult.Invalid("Nothing to execute.")
+		};
+	}
+
+	private void ExecuteEntitySelection(bool maintainCurrentlySelectedEntity = false)
 	{
 		var mousePosition = GetGlobalMousePosition();
-		var entity = maintainSelection
+		var entity = maintainCurrentlySelectedEntity
 			? Entities.SelectedEntity
 			: UpdateHoveredEntity(mousePosition);
 
-		if (maintainSelection is false)
+		if (maintainCurrentlySelectedEntity is false)
 			_tileMap.Elevatable.ClearTargetTiles(false);
 		
+		ExecuteEntitySelection(entity);
+	}
+	
+	private void ExecuteEntitySelection(EntityNode? entity)
+	{
 		HandleDeselecting();
 
 		if (entity is null)
 			return;
 
-		Entities.SelectEntity(entity);
+		var initialOverlay = entity is ActorNode actor
+			? actor.ActionEconomy.CanMove
+				? SelectionOverlay.Movement
+				: actor.ActionEconomy.CanMeleeAttack || actor.ActionEconomy.CanRangedAttack
+					? SelectionOverlay.Attack
+					: SelectionOverlay.None
+			: SelectionOverlay.None;
+
+		switch (initialOverlay)
+		{
+			case SelectionOverlay.Movement:
+				ClientState.Instance.ResetMovementAttackOverlayToggle(true, entity);
+				ShowMovementOverlay(entity);
+				break;
+			case SelectionOverlay.Attack:
+				ClientState.Instance.ResetMovementAttackOverlayToggle(false, entity);
+				ShowAttackOverlay(entity);
+				break;
+			default:
+				ClientState.Instance.ResetMovementAttackOverlayToggle(true, entity);
+				break;
+		}
+
+		ShowArrowsForEntity(entity);
 		
-		ClientState.Instance.ResetMovementAttackOverlayToggle(entity);
-		ShowMovementOverlay(entity);
+		Entities.SelectEntity(entity);
 	}
 
 	private void ShowMovementOverlay(EntityNode entity)
@@ -386,15 +425,19 @@ public partial class ClientMap : Map
 	
 	private void ShowMovementOverlay(UnitNode unit)
 	{
+		if (unit.ActionEconomy.CanMove is false)
+			return;
+		
 		var size = unit.EntitySize.X;
 		var availablePoints = Pathfinding.GetAvailablePoints(
 			unit.EntityPrimaryPosition,
-			unit.Movement,
+			unit.Movement.CurrentAmount,
 			unit.IsOnHighGround,
 			unit.Player.Team,
 			size);
 		_tileMap.Elevatable.ClearAvailableTiles(false);
 		_tileMap.Elevatable.SetAvailableTiles(unit, availablePoints, size, false);
+		
 		_selectionOverlay = SelectionOverlay.Movement;
 	}
 
@@ -408,6 +451,9 @@ public partial class ClientMap : Map
 
 	private void ShowAttackOverlay(ActorNode actor, bool? showMelee = null)
 	{
+		if (actor.CanAttack(showMelee) is false)
+			return;
+		
 		_tileMap.Elevatable.ClearTargetTiles(false);
 		
 		var availablePoints = actor is UnitNode unit 
@@ -419,74 +465,67 @@ public partial class ClientMap : Map
 			unit.EntitySize.X) 
 			: [];
 		
-		var targetMeleeTiles = showMelee is null or true 
-			? actor.GetMeleeAttackTargetTiles(_mapSize, availablePoints) 
-			: [];
-		var targetRangedTiles = showMelee is null or false 
+		var targetRangedTiles = showMelee is null or false && actor.ActionEconomy.CanRangedAttack
 			? actor.GetRangedAttackTargetTiles(_mapSize) 
 			: [];
+		var targetMeleeTiles = showMelee is null or true && actor.ActionEconomy.CanMeleeAttack
+			? actor.GetMeleeAttackTargetTiles(_mapSize, availablePoints) 
+			: [];
 		
-		if (targetMeleeTiles.Count > 0)
-			_tileMap.Elevatable.SetTargetTiles(targetMeleeTiles, false, false, true);
-		
+		// The order is important here, because melee target tiles should always replace ranged ones when both overlap 
 		if (targetRangedTiles.Count > 0)
-			_tileMap.Elevatable.SetTargetTiles(targetRangedTiles, false, false, false);
+			_tileMap.Elevatable.SetTargetTiles(targetRangedTiles, false, false, 
+				ElevatableTiles.TargetPurpose.AttackRanged);
+		if (targetMeleeTiles.Count > 0)
+			_tileMap.Elevatable.SetTargetTiles(targetMeleeTiles, false, false, 
+				ElevatableTiles.TargetPurpose.AttackMelee);
 		
 		_selectionOverlay = SelectionOverlay.Attack;
 	}
-
-	private void ExecutePlacement()
+	
+	private void ShowArrowsForEntity(EntityNode entity)
 	{
-		Entities.PlaceEntity();
-
-		if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
+		if (entity.CreationProgress is not null)
 		{
-			OnInterfaceSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2!);
-			return;
+			foreach (var helper in entity.CreationProgress.Helpers.Keys)
+			{
+				ShowArrow(helper.OwnerActor.GlobalPosition, entity.GlobalPosition, helper.OwnerActor.Renderer.ZIndex);
+			}
 		}
 
-		ExecuteCancellation();
-	}
-
-	private void ExecuteMovement()
-	{
-		if (_tileMap.Elevatable.IsCurrentlyAvailable(_focusedTile.CurrentTile) is false
-			|| Entities.SelectedEntity!.EntityPrimaryPosition.Equals(_focusedTile.CurrentTile!.Position))
-			return;
-
-		// TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
-
-		var selectedEntity = Entities.SelectedEntity;
-		var path = Pathfinding.FindPath(
-			_focusedTile.CurrentTile.Point,
-			selectedEntity.Player.Team,
-			selectedEntity.EntitySize.X).ToList();
-		var globalPath = _tileMap.GetGlobalPositionsFromMapPoints(path);
-		UnitMovementIssued(new UnitMovedAlongPathEvent(selectedEntity.InstanceId, globalPath, path));
-		HandleDeselecting();
-	}
-
-	private void ExecuteAttack()
-	{
-		if (_focusedTile.CurrentTile is not { } focusedTile
-			|| focusedTile.TargetType is TargetType.None
-		    || Entities.HoveredEntity is not { } targetEntity
-		    || Entities.SelectedEntity is not { } selectedEntity)
-			return;
-
-		if (targetEntity.CanBeTargetedBy(selectedEntity) is false)
+		if (entity is not ActorNode actor) 
 			return;
 		
-		var attackType = focusedTile.TargetType is TargetType.Melee ? AttackType.Melee : AttackType.Ranged;
-		EntityAttacked(new EntityAttackedEvent
+		foreach (var workingOnAbility in actor.WorkingOn)
 		{
-			SourceId = selectedEntity.InstanceId,
-			TargetId = targetEntity.InstanceId,
-			AttackType = attackType
-		});
-		HandleDeselecting();
+			if (workingOnAbility.Ability is not IAbilityHasTargetArea abilityWithTargetArea)
+				continue;
+				
+			foreach (var targetGlobalPosition in abilityWithTargetArea.GetGlobalPositionsOfFocusedTargets())
+			{
+				ShowArrow(entity.GlobalPosition, targetGlobalPosition, entity.Renderer.ZIndex);
+			}
+		}
 	}
 
+	private void ShowArrow(Vector2 fromGlobalPosition, Vector2 toGlobalPosition, int zIndex)
+	{
+		var arrow = ParabolicArrow.InstantiateAsChild(_arrows, Vector2.Zero, Vector2.Zero);
+
+		arrow.Start = ToLocal(fromGlobalPosition);
+		arrow.End = ToLocal(toGlobalPosition);
+		arrow.ZIndex = zIndex;
+		arrow.Redraw();
+	}
+
+	private void ClearArrows()
+	{
+		foreach (var arrow in _arrows.GetChildren())
+		{
+			arrow.QueueFree();
+		}
+	}
+	
 	private void ExecuteCancellation()
 	{
 		Pathfinding.ClearCache();
@@ -494,12 +533,153 @@ public partial class ClientMap : Map
 		_tileMap.Elevatable.ClearTargetTiles(false);
 		Entities.CancelPlacement();
 		_previousBuildSelection = (null, null);
+		_selectedAbility = null;
 		_focusedTile.Enable();
 		ExecuteEntitySelection(true);
 	}
 
+	private ValidationResult ExecuteMovement()
+	{
+		if (Entities.SelectedEntity!.Equals(ActorInAction) is false)
+			return ValidationResult.Invalid("It is not your turn!");
+		
+		if (_tileMap.Elevatable.IsCurrentlyAvailable(_focusedTile.CurrentTile) is false
+			|| Entities.SelectedEntity!.EntityPrimaryPosition.Equals(_focusedTile.CurrentTile!.Position))
+			return ValidationResult.Invalid("The target tile is outside of the available movement range.");
+		
+		if (Entities.SelectedEntity is not UnitNode selectedUnit)
+			return ValidationResult.Invalid("Movement is impossible!");
+
+		if (selectedUnit.ActionEconomy.CanMove is false)
+			return ValidationResult.Invalid("Can't move!");
+		
+		// TODO automatically move and melee attack enemy unit; ranged attacks are more tricky
+
+		var path = Pathfinding.FindPath(
+			_focusedTile.CurrentTile.Point,
+			selectedUnit.Player.Team,
+			selectedUnit.EntitySize.X).ToList();
+		var globalPath = _tileMap.GetGlobalPositionsFromMapPoints(path);
+		UnitMovementIssued(new UnitMovedAlongPathEvent(selectedUnit.InstanceId, globalPath, path));
+		HandleDeselecting();
+		
+		return ValidationResult.Valid;
+	}
+
+	private ValidationResult ExecuteAttack()
+	{
+		if (_focusedTile.CurrentTile is not { } focusedTile
+		    || focusedTile.TargetType is TargetType.None
+		    || Entities.HoveredEntity is not { } targetEntity
+		    || Entities.SelectedEntity is not { } selectedEntity)
+			return ValidationResult.Invalid("Invalid attack target.");
+		
+		if (selectedEntity.Equals(ActorInAction) is false)
+			return ValidationResult.Invalid("It is not your turn!");
+
+		var canBeTargeted = targetEntity.CanBeTargetedBy(selectedEntity);
+		if (canBeTargeted.IsValid is false)
+			return canBeTargeted;
+		
+		var attackType = focusedTile.TargetType is TargetType.Melee ? AttackType.Melee : AttackType.Ranged;
+		
+		if (selectedEntity is not ActorNode selectedActor) // TODO how would doodads be able to execute attack?
+			return ValidationResult.Invalid("This unit cannot attack!");
+
+		if (selectedActor.CanAttack(attackType) is false)
+			return ValidationResult.Invalid($"This unit has no action for a {attackType} attack.");
+		
+		EntityAttacked(new EntityAttackedEvent
+		{
+			SourceId = selectedEntity.InstanceId,
+			TargetId = targetEntity.InstanceId,
+			AttackType = attackType
+		});
+		HandleDeselecting();
+		
+		return ValidationResult.Valid;
+	}
+
+	private ValidationResult ExecuteTarget()
+	{
+		IAbilityActivationRequest? request = _selectedAbility switch
+		{
+			TargetNode => new TargetNode.ActivationRequest
+			{
+				UseConsumableResources = true,
+				TileToTarget = _focusedTile.CurrentTile,
+				EntityToTarget = Entities.HoveredEntity
+			},
+			BuildNode => new BuildNode.ActivationRequest
+			{
+				UseConsumableResources = false, // Should have been consumed when placing
+				EntityAlreadyPlaced = true,
+				EntityToBuild = Entities.HoveredEntity
+			},
+			_ => null
+		};
+
+		if (request is null || _selectedAbility is null)
+		{
+			ExecuteCancellation();
+			return ValidationResult.Invalid("This ability cannot target an area.");
+		}
+		
+		var result = _selectedAbility.Activate(request);
+		if (result.IsValid is false)
+			return result;
+		
+		ExecuteCancellation();
+		return ValidationResult.Valid;
+	}
+	
+	private ValidationResult ExecutePlacement()
+	{
+		if (_selectedAbility is not BuildNode buildAbility)
+		{
+			ExecuteCancellation();
+			return ValidationResult.Invalid("This ability cannot execute placement action.");
+		}
+
+		var request = new BuildNode.ActivationRequest
+		{
+			UseConsumableResources = true,
+			EntityAlreadyPlaced = false, 
+			EntityToBuild = Entities.EntityInPlacement,
+		};
+		
+		var result = buildAbility.Activate(request);
+		if (result.IsValid is false)
+			return result;
+		
+		var placedEntity = Entities.PlaceEntity();
+		if (placedEntity is null)
+		{
+			ExecuteCancellation();
+			return ValidationResult.Invalid("Placement was not successful.");
+		}
+
+		if (Input.IsActionPressed(Constants.Input.RepeatPlacement) && _previousBuildSelection.Item1 != null)
+		{
+			OnInterfaceSelectedToBuild(_previousBuildSelection.Item1, _previousBuildSelection.Item2!);
+			return ValidationResult.Valid;
+		}
+
+		ExecuteCancellation();
+		return ValidationResult.Valid;
+	}
+
 	private EntityNode? UpdateHoveredEntity(Vector2 mousePosition)
 	{
+		if (_hoveredInitiativePanelActor != null)
+		{
+			_focusedTile.FocusEntity(_hoveredInitiativePanelActor);
+			_focusedTile.UpdateTile();
+			return Entities.TryHoveringEntity(_hoveredInitiativePanelActor) 
+				? Entities.HoveredEntity 
+				: null;
+		}
+		
 		if (_focusedTile.IsWithinTheMap is false)
 			return null;
 
@@ -583,8 +763,10 @@ public partial class ClientMap : Map
 		Entities.DropDownToLowGround(entities);
 	}
 	
-	private bool IsActionAllowedForCurrentPlayerOnSelectedEntity() 
-		=> Players.Instance.IsActionAllowedForCurrentPlayerOn(Entities.SelectedEntity);
+	private ValidationResult IsActionAuthorizedForCurrentPlayerOnSelectedEntity() 
+		=> Players.Instance.IsActionAllowedForCurrentPlayerOn(Entities.SelectedEntity) 
+			? ValidationResult.Valid 
+			: ValidationResult.Invalid("Cannot execute actions for another player.");
 
 	private void ResetLines()
 	{
@@ -639,6 +821,16 @@ public partial class ClientMap : Map
 		}
 	}
 
+	protected override void OnActionStarted(ActorNode actor)
+	{
+		base.OnActionStarted(actor);
+
+		if (Players.Instance.IsActionAllowedForCurrentPlayerOn(actor) is false)
+			return;
+		
+		ExecuteEntitySelection(actor);
+	}
+
 	private void OnPathfindingUpdating(IPathfindingUpdatable data, bool isAdded)
 	{
 		Pathfinding.ClearCache();
@@ -682,21 +874,21 @@ public partial class ClientMap : Map
 
 	private void OnNewTileFocused(Vector2Int mapPosition, Terrain terrain, IList<EntityNode>? occupants)
 	{
-		if (_focusedTile.IsWithinTheMap is false)
+		if (_focusedTile.IsWithinTheMap is false && _hoveredInitiativePanelActor is null)
 			return;
 
-		if (occupants is null || occupants.IsEmpty())
+		var occupant = _hoveredInitiativePanelActor ?? occupants?.LastOrDefault();
+
+		if (occupant is null)
 		{
 			_tileMap.Elevatable.ClearAvailableTiles(true);
 			return;
 		}
 
-		if (occupants.Last() is UnitNode unit)
+		if (occupant is UnitNode unit)
 		{
 			if (Entities.IsEntitySelected(unit))
 				return;
-			
-			// TODO also show target hovering tiles
 			
 			var temporaryAvailablePoints = Pathfinding.GetAvailablePoints(
 				unit.EntityPrimaryPosition,
@@ -706,6 +898,7 @@ public partial class ClientMap : Map
 				unit.EntitySize.X,
 				true);
 
+			// TODO also show target hovering tiles
 			_tileMap.Elevatable.SetAvailableTiles(unit, temporaryAvailablePoints, unit.EntitySize.X, true);
 		}
 		else
@@ -724,7 +917,7 @@ public partial class ClientMap : Map
 		UpdateLines();
 	}
 	
-	private void OnEntitiesDestroyed(EntityNode entity)
+	private void OnEntityDestroyed(EntityNode entity)
 	{
 		if (Entities.IsEntitySelected(entity))
 			HandleDeselecting();
@@ -742,7 +935,10 @@ public partial class ClientMap : Map
 
 	internal void OnMouseRightReleasedWithoutExamine()
 	{
-		HandleRightClick();
+		var result = HandleRightClick();
+		
+		if (result.IsValid is false)
+			EventBus.Instance.RaiseValidationError(result.Message);
 	}
 
 	internal void OnInterfaceSelectedToBuild(BuildNode buildAbility, EntityId entityId)
@@ -751,18 +947,22 @@ public partial class ClientMap : Map
 
 		Entities.CancelPlacement();
 		_tileMap.Elevatable.ClearAvailableTiles(false);
+		_tileMap.Elevatable.ClearTargetTiles(false);
 		_tileMap.Elevatable.ClearPath();
 		_focusedTile.Disable();
 
-		var canBePlacedOnTheWholeMap = buildAbility.CanBePlacedOnTheWholeMap();
-		var placementTiles = buildAbility.GetPlacementPositions(Entities.SelectedEntity!, _mapSize)
+		var targetTiles = buildAbility.GetTargetPositions(Entities.SelectedEntity!)
 			.Select(position => _tileMap.GetTile(position, false))
 			.WhereNotNull();
-		_tileMap.Elevatable.SetTargetTiles(placementTiles, canBePlacedOnTheWholeMap, false);
+		var wholeMapIsTargeted = buildAbility.WholeMapIsTargeted();
+		_tileMap.Elevatable.SetTargetTiles(targetTiles, wholeMapIsTargeted, false, 
+			ElevatableTiles.TargetPurpose.Placement);
+		var cost = buildAbility.GetSelectableItemCost(entityId);
 
-		var entity = Entities.SetEntityForPlacement(entityId, canBePlacedOnTheWholeMap);
+		var entity = Entities.SetEntityForPlacement(entityId, wholeMapIsTargeted, cost);
 		// TODO pass in the cost to be tracked inside the buildableNode
 
+		_selectedAbility = buildAbility;
 		_selectionOverlay = SelectionOverlay.Placement;
 		EntityIsBeingPlaced(entity);
 	}
@@ -775,7 +975,7 @@ public partial class ClientMap : Map
 		ExecuteCancellation();
 	}
 
-	public void OnInterfaceAttackSelected(bool started, AttackType? attackType)
+	internal void OnInterfaceAttackSelected(bool started, AttackType? attackType)
 	{
 		if (_selectionOverlay is SelectionOverlay.None or SelectionOverlay.Placement 
 		    || Entities.SelectedEntity is not ActorNode actor)
@@ -807,4 +1007,33 @@ public partial class ClientMap : Map
 		};
 		ShowAttackOverlay(actor, showMelee);
 	}
+
+	internal void OnInitiativePanelActorHovered(ActorNode? actor) => _hoveredInitiativePanelActor = actor;
+
+	internal void OnInitiativePanelActorSelected(ActorNode? actor) => ExecuteEntitySelection(actor);
+
+	internal void OnInterfaceAbilitySelected(IAbilityNode ability)
+	{
+		if (ability is IAbilityHasTargetArea abilityWithTargetArea)
+		{
+			_tileMap.Elevatable.ClearAvailableTiles(false);
+			_tileMap.Elevatable.ClearTargetTiles(false);
+			_tileMap.Elevatable.ClearPath();
+			
+			var tiles = abilityWithTargetArea.GetTargetPositions(Entities.SelectedEntity!)
+				.Select(position => _tileMap.GetTile(position, false))
+				.WhereNotNull();
+			var wholeMapIsTargeted = abilityWithTargetArea.WholeMapIsTargeted();
+			var targetPurpose = ability is BuildNode
+				? ElevatableTiles.TargetPurpose.Placement
+				: ElevatableTiles.TargetPurpose.Ability;
+			
+			_tileMap.Elevatable.SetTargetTiles(tiles, wholeMapIsTargeted, false, targetPurpose);
+			_selectionOverlay = SelectionOverlay.Target;
+		}
+
+		_selectedAbility = ability;
+	}
+
+	internal void OnInterfaceAbilityDeselected() => _selectedAbility = null;
 }

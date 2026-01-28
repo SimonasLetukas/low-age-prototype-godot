@@ -98,8 +98,7 @@ public partial class MainMenu : Control
 
     protected void OnPlayLocallyPressed()
     {
-        var thread = new GodotThread();
-        thread.Start(new Callable(Server.Instance, nameof(Server.Instance.RunLocalServerInstance)));
+        Server.Instance.RunLocalServerInstance();
         Client.Instance.QuickStartEnabled = QuickStartCheckBox.IsPressed();
         Constants.ENet.SetLocalServer();
         Callable.From(ConnectToServer).CallDeferred();

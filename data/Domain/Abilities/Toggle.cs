@@ -5,9 +5,13 @@ using LowAgeData.Domain.Effects;
 namespace LowAgeData.Domain.Abilities
 {
     /// <summary>
+    /// <para>
     /// Used when the <see cref="Ability"/> should have two modes: activated and deactivated (default).
-    ///
-    /// <see cref="Ability.Cooldown"/> is used to control activation only. 
+    /// </para>
+    /// <para>
+    /// <see cref="Ability.Cooldown"/> is used to control activation only. <see cref="Ability.Cost"/> also is
+    /// paid for the activation only.
+    /// </para>
     /// </summary>
     public class Toggle : Ability
     {
@@ -40,12 +44,13 @@ namespace LowAgeData.Domain.Abilities
         }
         
         /// <summary>
-        /// <see cref="Effect"/>s executed when the <see cref="Toggle"/> is activated.
+        /// <see cref="Effect"/>s executed after the <see cref="Toggle"/> is activated and
+        /// the <see cref="Ability.Cost"/> is paid.
         /// </summary>
         public IList<EffectId> OnActivatedEffects { get; }
         
         /// <summary>
-        /// <see cref="Effect"/>s executed when the <see cref="Toggle"/> is deactivated.
+        /// <see cref="Effect"/>s executed after the <see cref="Toggle"/> is deactivated.
         /// </summary>
         public IList<EffectId> OnDeactivatedEffects { get; }
         

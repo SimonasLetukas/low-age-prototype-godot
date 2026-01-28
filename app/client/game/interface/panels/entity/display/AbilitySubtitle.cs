@@ -3,9 +3,20 @@ using LowAgeData.Domain.Common;
 
 public partial class AbilitySubtitle : MarginContainer
 {
-    public void SetAbilitySubtitle(TurnPhase abilityType, EndsAtNode cooldown)
+    private Text _text = null!;
+    
+    public override void _Ready()
     {
-        var newText = abilityType.ToDisplayValue().Capitalize();
+        base._Ready();
+
+        _text = GetNode<Text>($"{nameof(Text)}");
+        
+        _text.IsBlue = true;
+    }
+
+    public void SetAbilitySubtitle(TurnPhase phase, EndsAtNode cooldown)
+    {
+        var newText = "[i]" + phase.ToDisplayValue().Capitalize();
         if (cooldown.HasCompleted() is false)
         {
             newText += $" (cooldown remaining: {cooldown.GetText()})";
@@ -15,11 +26,11 @@ public partial class AbilitySubtitle : MarginContainer
             newText += $" (cooldown: {cooldown.GetText(false)})";
         }
 
-        GetNode<Label>("Label").Text = newText;
+        _text.Text = newText;
     }
 
     public void SetSubtitle(string text)
     {
-        GetNode<Label>("Label").Text = text;
+        _text.Text = text;
     }
 }

@@ -6,7 +6,7 @@ using LowAgeData.Domain.Behaviours;
 
 public partial class Behaviours : Node2D
 {
-    private EntityNode Parent { get; set; }
+    private EntityNode Parent { get; set; } = null!;
 
     public override void _Ready()
     {
@@ -29,7 +29,7 @@ public partial class Behaviours : Node2D
                 continue;
 
             var blueprint = allBehaviours.First(x => x.Id.Equals(onBuildBehaviourId));
-            BuildableNode.InstantiateAsChild((Buildable)blueprint, this);
+            BuildableNode.InstantiateAsChild((Buildable)blueprint, this, Parent);
         }
     }
 

@@ -1,12 +1,13 @@
+using System;
 using Godot;
 
 public partial class NavigationBox : MarginContainer
 {
-    [Export] public Texture2D Icon { get; set; }
+    [Export] public Texture2D Icon { get; set; } = null!;
     
-    [Signal] public delegate void ClickedEventHandler();
+    public event Action Clicked = delegate { };
 
-    private NavigationBoxPanel _navigationBoxPanel;
+    private NavigationBoxPanel _navigationBoxPanel = null!;
 
     public override void _Ready()
     {
@@ -52,6 +53,6 @@ public partial class NavigationBox : MarginContainer
         
         _navigationBoxPanel.SetClicked(false);
         Highlight(false);
-        EmitSignal(nameof(Clicked));
+        Clicked();
     }
 }

@@ -1,22 +1,24 @@
 using System;
 using Godot;
-using System.Collections.Generic;
 using System.Linq;
-using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 
 public partial class EntityPanel : Control
 {
+    public event Action<EntityNode> CandidatePlacementCancelled = delegate { };
     public event Action<AbilityButton> AbilityViewOpened = delegate { };
     public event Action AbilityViewClosed = delegate { };
     public event Action<bool, AttackType?> AttackSelected = delegate { };
 
+    private AvailableActionsDisplay _availableActions = null!;
     private GridContainer _behaviours = null!;
     private EntityName _entityName = null!;
+    private CancelButton _cancelButton = null!;
     private AbilityButtons _abilityButtons = null!;
     private InfoDisplay _display = null!;
     private Text _abilityTextBox = null!;
     private bool _isShowingAbility;
+    private IAbilityNode? _selectedAbility;
     private bool _isSwitchingBetweenAbilities;
     private EntityNode? _selectedEntity;
     private int _biggestPreviousAbilityTextSize = 0;
@@ -25,48 +27,57 @@ public partial class EntityPanel : Control
     private const int YSizeForStructure = 796;
     private const int YSizeForHiding = 1500;
     private const float PanelMoveDuration = 0.1f;
-    private readonly IList<Ability> _abilitiesBlueprint = Data.Instance.Blueprint.Abilities;
 
     public override void _Ready()
     {
+        _availableActions = GetNode<AvailableActionsDisplay>($"{nameof(AvailableActionsDisplay)}");
         _behaviours = GetNode<GridContainer>($"Behaviours");
         _entityName = GetNode<EntityName>($"{nameof(EntityName)}");
+        _cancelButton = GetNode<CancelButton>($"{nameof(CancelButton)}");
         _abilityButtons = GetNode<AbilityButtons>($"{nameof(Panel)}/{nameof(AbilityButtons)}");
         _display = GetNode<InfoDisplay>($"{nameof(Panel)}/{nameof(InfoDisplay)}");
         _abilityTextBox = GetNode<Text>($"{nameof(Panel)}/{nameof(InfoDisplay)}/{nameof(VBoxContainer)}/AbilityDescription/{nameof(Text)}");
 
+        _cancelButton.Clicked += OnCancelButtonClicked;
         _abilityButtons.AbilitiesPopulated += OnAbilityButtonsPopulated;
         _display.AbilitiesClosed += OnInfoDisplayAbilitiesClosed;
         _display.AbilityTextResized += OnInfoDisplayTextResized;
         _display.AttackSelected += OnInfoDisplayAttackSelected;
+        _display.AbilityCancelled += OnInfoDisplayAbilityCancelled;
         
         HidePanel();
     }
 
     public override void _ExitTree()
     {
+        _cancelButton.Clicked -= OnCancelButtonClicked;
         _abilityButtons.AbilitiesPopulated -= OnAbilityButtonsPopulated;
         _display.AbilitiesClosed -= OnInfoDisplayAbilitiesClosed;
         _display.AbilityTextResized -= OnInfoDisplayTextResized;
         _display.AttackSelected -= OnInfoDisplayAttackSelected;
+        _display.AbilityCancelled -= OnInfoDisplayAbilityCancelled;
         
         base._ExitTree();
     }
 
     public void OnEntitySelected(EntityNode selectedEntity)
     {
-        _isShowingAbility = false;
+        UnregisterAbility();
         _isSwitchingBetweenAbilities = false;
         _selectedEntity = selectedEntity;
         
         RemoveAllBehaviours();
         AddBehaviours(_selectedEntity);
 
+        _cancelButton.Visible = _selectedEntity.IsCandidate();
+
         DisconnectAbilityButtons();
         _abilityButtons.Reset();
+        _availableActions.Reset();
         if (selectedEntity is ActorNode selectedActor)
         {
             _abilityButtons.Populate(selectedActor.Abilities); 
+            _availableActions.Populate(selectedActor.ActionEconomy);
         }
         
         _entityName.SetValue(selectedEntity.DisplayName);
@@ -78,11 +89,12 @@ public partial class EntityPanel : Control
     public void OnEntityDeselected()
     {
         _selectedEntity = null;
+        UnregisterAbility();
         HidePanel();
         AbilityViewClosed();
     }
 
-    private void ChangeDisplay(AbilityButton? clickedAbility = null)
+    private void ChangeDisplay()
     {
         if (_selectedEntity is null)
         {
@@ -90,17 +102,15 @@ public partial class EntityPanel : Control
             return;
         }
         
-        if (_isShowingAbility && clickedAbility != null)
+        if (_isShowingAbility && _selectedAbility != null)
         {
-            var abilityBlueprint = _abilitiesBlueprint.First(x => x.Id.Equals(clickedAbility.Ability.Id));
-            // TODO should probably get all of these properties from AbilityNode instead of all blueprints 
-            var abilityInstance = clickedAbility.Ability;
-            var name = abilityBlueprint.DisplayName;
-            var turnPhase = abilityBlueprint.TurnPhase;
-            var text = abilityBlueprint.Description;
-            var research = abilityBlueprint.ResearchNeeded;
-            var cooldown = abilityInstance.RemainingCooldown;
-            _display.SetAbilityStats(name, turnPhase, text, cooldown, research);
+            var name = _selectedAbility.DisplayName;
+            var turnPhase = _selectedAbility.TurnPhase;
+            var text = _selectedAbility.Description;
+            var research = _selectedAbility.ResearchNeeded;
+            var cooldown = _selectedAbility.RemainingCooldown;
+            var hasAbilityToCancel = _selectedAbility is IActiveAbilityNode { IsActivated: true };
+            _display.SetAbilityStats(name, turnPhase, text, cooldown, research, hasAbilityToCancel);
             _display.ShowView(View.Ability);
             return;
         }
@@ -120,11 +130,11 @@ public partial class EntityPanel : Control
             foreach (var attack in selectedUnit.Attacks)
             {
                 if (attack.IsMelee) 
-                    _display.SetMeleeAttackStats(true, "Melee Attack", attack.MaximumDistance,
+                    _display.SetMeleeAttackStats(true, attack.DisplayName, attack.MaximumDistance,
                         attack.Damage, attack.BonusDamage, attack.BonusTo);
                 
                 if (attack.IsRanged) 
-                    _display.SetRangedAttackStats(true, "Ranged Attack", attack.MaximumDistance, 
+                    _display.SetRangedAttackStats(true, attack.DisplayName, attack.MaximumDistance, 
                         attack.Damage, attack.BonusDamage, attack.BonusTo);
             }
             
@@ -220,6 +230,34 @@ public partial class EntityPanel : Control
         }
     }
 
+    private void RegisterAbility(IAbilityNode ability)
+    {
+        _isShowingAbility = true;
+        _selectedAbility = ability;
+        
+        if (_selectedAbility is IActiveAbilityNode activeAbility)
+            activeAbility.Cancelled += OnAbilityCancelled;
+    }
+
+    private void UnregisterAbility()
+    {
+        if (_selectedAbility is IActiveAbilityNode activeAbility)
+            activeAbility.Cancelled -= OnAbilityCancelled;
+        
+        _isShowingAbility = false;
+        _selectedAbility = null;
+    }
+
+    private void OnAbilityCancelled(IActiveAbilityFocus focus) => ChangeDisplay();
+
+    private void OnCancelButtonClicked()
+    {
+        if (_selectedEntity is null || _selectedEntity.IsCandidate() is false)
+            return;
+
+        CandidatePlacementCancelled(_selectedEntity);
+    }
+
     private void OnAbilityButtonClicked(AbilityButton abilityButton)
     {
         _isSwitchingBetweenAbilities = false;
@@ -227,7 +265,7 @@ public partial class EntityPanel : Control
         if (abilityButton.IsSelected)
         {
             abilityButton.SetSelected(false);
-            _isShowingAbility = false;
+            UnregisterAbility();
             ChangeDisplay();
             MovePanel();
             AbilityViewClosed();
@@ -239,35 +277,10 @@ public partial class EntityPanel : Control
         
         _abilityButtons.DeselectAll();
         abilityButton.SetSelected(true);
-        _isShowingAbility = true;
-        ChangeDisplay(abilityButton);
+        RegisterAbility(abilityButton.Ability);
+        ChangeDisplay();
         MovePanel();
         AbilityViewOpened(abilityButton);
-    }
-
-    // TODO find out the best UX for handling all types of abilities 
-    private void OnAbilityButtonHovering(bool started, AbilityButton abilityButton)
-    {
-        if (abilityButton.IsSelected)
-            return;
-        
-        if (started)
-        {
-            _isSwitchingBetweenAbilities = true;
-            _isShowingAbility = true;
-            ChangeDisplay(abilityButton);
-            MovePanel();
-            return;
-        }
-
-        var wasAnyAbilitySelected = _abilityButtons.IsAnySelected();
-        _isSwitchingBetweenAbilities = wasAnyAbilitySelected;
-        _isShowingAbility = wasAnyAbilitySelected;
-
-        if (wasAnyAbilitySelected is false && _display.CurrentView != View.Ability)
-            return;
-        
-        _display.ShowPreviousView();
     }
 
     private void OnAbilityButtonsPopulated()
@@ -280,7 +293,7 @@ public partial class EntityPanel : Control
         _isSwitchingBetweenAbilities = false;
         
         _abilityButtons.DeselectAll();
-        _isShowingAbility = false;
+        UnregisterAbility();
         ChangeDisplay();
         MovePanel();
 
@@ -293,4 +306,12 @@ public partial class EntityPanel : Control
     }
 
     private void OnInfoDisplayAttackSelected(bool started, AttackType? attackType) => AttackSelected(started, attackType);
+    
+    private void OnInfoDisplayAbilityCancelled()
+    {
+        if (_selectedAbility is not IActiveAbilityNode activeAbility)
+            return;
+        
+        activeAbility.CancelActivations();
+    }
 }

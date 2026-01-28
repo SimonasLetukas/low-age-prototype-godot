@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://dr2lf4wh6a7b0"]
 
 [ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/selection/SelectionButton.cs" id="2"]
+[ext_resource type="Script" uid="uid://bcswlop3cj0g2" path="res://app/client/game/interface/panels/selection/SelectionButton.cs" id="2"]
 [ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="2_m57bl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5773j"]
 resource_local_to_scene = true
 shader = ExtResource("2_m57bl")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/draw_outline = null
+shader_parameter/draw_outline = false
 shader_parameter/intensity = 250
 shader_parameter/disabled = false
 shader_parameter/disabled_saturation = 0.2

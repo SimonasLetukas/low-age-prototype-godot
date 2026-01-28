@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://doimx2uu8i3fs" path="res://assets/sprites/interface/selection-panel.png" id="1"]
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="2"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/selection/SelectionPanel.cs" id="3"]
+[ext_resource type="Script" uid="uid://b015y8ow43une" path="res://app/client/game/interface/panels/selection/SelectionPanel.cs" id="3"]
 [ext_resource type="PackedScene" uid="uid://dax8eksfbotqw" path="res://app/client/game/interface/shared/Text.tscn" id="4_fcdsc"]
 
 [node name="SelectionPanel" type="Control"]
@@ -12,9 +12,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -592.0
+offset_left = -648.0
 offset_top = -184.0
-offset_right = -276.0
+offset_right = -332.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("2")

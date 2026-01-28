@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://x8mx3r2yg7u7"]
 
-[ext_resource type="Script" path="res://app/client/menu/MainMenu.cs" id="1"]
+[ext_resource type="Script" uid="uid://dci6rkqib3goo" path="res://app/client/menu/MainMenu.cs" id="1"]
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="2"]
 [ext_resource type="FontFile" uid="uid://d0w7npripgnag" path="res://assets/fonts/Karla-Regular.ttf" id="3"]
 [ext_resource type="PackedScene" uid="uid://b2njs71bqtlfm" path="res://app/shared/lobby/players/faction/FactionSelection.tscn" id="4"]

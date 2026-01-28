@@ -1,24 +1,19 @@
 [gd_scene load_steps=6 format=3 uid="uid://b2me7lpqetnom"]
 
-[ext_resource type="Script" path="res://app/client/game/interface/shared/BaseButton.cs" id="1"]
+[ext_resource type="Script" uid="uid://cxnu60csnxx2q" path="res://app/client/game/interface/shared/BaseButton.cs" id="1"]
 [ext_resource type="Material" uid="uid://cbiftuoxjvf1s" path="res://app/shared/shaders/InterfaceMaterial.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://dy5m8n2l4paaa" path="res://assets/sprites/interface/small-panel-x4.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://dhlym7w4676g2" path="res://assets/sprites/interface/small-panel-smaller-inverted-x4.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://cowuxof271j4d" path="res://assets/icons/icon_ability_build.png" id="5"]
 
-[node name="BaseButton" type="NinePatchRect"]
+[node name="BaseButton" type="TextureRect"]
 material = ExtResource("2")
 custom_minimum_size = Vector2(40, 40)
-offset_right = 30.0
-offset_bottom = 30.0
-mouse_filter = 1
+offset_right = 40.0
+offset_bottom = 40.0
 texture = ExtResource("3")
-patch_margin_left = 20
-patch_margin_top = 20
-patch_margin_right = 20
-patch_margin_bottom = 20
-axis_stretch_horizontal = 2
-axis_stretch_vertical = 2
+expand_mode = 1
+stretch_mode = 5
 script = ExtResource("1")
 TextureNormal = ExtResource("3")
 TextureClicked = ExtResource("4")

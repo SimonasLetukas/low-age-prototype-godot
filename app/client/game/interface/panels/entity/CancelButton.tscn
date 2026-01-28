@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://gbxhbl8osgmi"]
+
+[ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1_2hu80"]
+[ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="2_alamt"]
+[ext_resource type="Script" uid="uid://c41optmfmdym4" path="res://app/client/game/interface/panels/entity/CancelButton.cs" id="3_alamt"]
+[ext_resource type="Texture2D" uid="uid://bdo74tptfnc6t" path="res://assets/sprites/interface/cancel-icon-alt.png" id="3_kuceg"]
+[ext_resource type="Texture2D" uid="uid://c7udh1oyjcner" path="res://assets/sprites/interface/cancel-icon.png" id="5_f2o7v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2hu80"]
+resource_local_to_scene = true
+shader = ExtResource("2_alamt")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = false
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[node name="CancelButton" instance=ExtResource("1_2hu80")]
+material = SubResource("ShaderMaterial_2hu80")
+custom_minimum_size = Vector2(28, 24)
+offset_right = 7.0
+offset_bottom = 6.0
+tooltip_text = "Cancel candidate placement"
+texture = ExtResource("3_kuceg")
+script = ExtResource("3_alamt")
+TextureNormal = ExtResource("3_kuceg")
+TextureClicked = ExtResource("5_f2o7v")
+
+[node name="TextureRect" parent="." index="0"]
+visible = false
