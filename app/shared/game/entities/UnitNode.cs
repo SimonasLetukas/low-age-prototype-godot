@@ -105,7 +105,6 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     public override void MoveUntilFinished(List<Vector2> globalPositionPath, Point resultingPoint)
     {
         IsOnHighGround = resultingPoint.IsHighGround;
-        UpdateVitalsPosition();
         
         base.MoveUntilFinished(globalPositionPath, resultingPoint);
         
@@ -113,6 +112,8 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
             IsOnHighGround, 
             GetTile(resultingPoint.Position, resultingPoint.IsHighGround)?.YSpriteOffset, 
             GetEntitiesBelow().OrderByDescending(x => x.Renderer.ZIndex).FirstOrDefault());
+        
+        UpdateVitalsPosition();
     }
     
     public float GetReach()
