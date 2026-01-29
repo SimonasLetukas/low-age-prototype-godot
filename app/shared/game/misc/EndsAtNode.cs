@@ -16,8 +16,9 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         endsAt.OwnerEntity = ownerEntity;
         return endsAt;
     }
-    
-    public event Action Completed = delegate { };
+
+    public event Action<EndsAtNode> Updated = delegate { };
+    public event Action<EndsAtNode> Completed = delegate { };
 
     public Guid InstanceId { get; set; } = Guid.NewGuid();
 
@@ -260,8 +261,10 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         if (hasDuration && EndsOnDeath is false) 
             Counter = MaxCounter;
 
+        Updated(this);
+        
         if (hasDuration is false)
-            Completed();
+            Completed(this);
     }
 
     /// <summary>
@@ -299,10 +302,35 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
             ? string.Concat(text[0].ToString().ToUpper(), text.AsSpan(1)) 
             : text;
     }
+
+    public string GetCounterOrEmpty(bool current = true)
+    {
+        if (HasCompleted())
+            return string.Empty;
+
+        if (EndsOnDeath)
+            return "D";
+
+        return current 
+            ? Counter.ToString() 
+            : MaxCounter.ToString();
+    }
     
     public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
     public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
 
+    private void ReduceCounter()
+    {
+        Counter--;
+        
+        Updated(this);
+
+        if (Counter > 0)
+            return;
+
+        Completed(this);
+    }
+    
     private void OnPhaseStarted(int turn, TurnPhase turnPhase)
     {
         if (EndsOnDeath 
@@ -313,12 +341,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
             || Counter <= 0) 
             return;
 
-        Counter--;
-
-        if (Counter > 0)
-            return;
-
-        Completed();
+        ReduceCounter();
     }
     
     private void OnPhaseEnded(int turn, TurnPhase turnPhase)
@@ -331,12 +354,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
             || Counter <= 0) 
             return;
 
-        Counter--;
-
-        if (Counter > 0)
-            return;
-
-        Completed();
+        ReduceCounter();
     }
     
     private void OnActionStarted(ActorNode actor)
@@ -349,12 +367,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
             || Counter <= 0)
             return;
 
-        Counter--;
-        
-        if (Counter > 0)
-            return;
-
-        Completed();
+        ReduceCounter();
     }
     
     private void OnActionEnded(ActorNode actor)
@@ -367,12 +380,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
             || Counter <= 0)
             return;
 
-        Counter--;
-
-        if (Counter > 0)
-            return;
-
-        Completed();
+        ReduceCounter();
     }
 
     private void OnEntityDestroyed(EntityNode entity)
@@ -382,7 +390,8 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
             || entity.Equals(OwnerEntity) is false)
             return;
         
-        Completed();
+        Updated(this);
+        Completed(this);
     }
     
     private enum TriggersOnEnum

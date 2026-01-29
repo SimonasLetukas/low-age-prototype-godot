@@ -37,7 +37,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     public bool IsParentEntity(EntityNode entity) => Parent.InstanceId.Equals(entity.InstanceId);
     
-    protected virtual void OnDurationEnded()
+    protected virtual void OnDurationEnded(EndsAtNode duration)
     {
         Ended(this);
     }

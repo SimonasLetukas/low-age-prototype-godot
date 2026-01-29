@@ -121,7 +121,7 @@ public abstract partial class AbilityNode<
         RemainingCooldown.ResetDuration();
     }
     
-    protected virtual void OnCooldownEnded()
+    protected virtual void OnCooldownEnded(EndsAtNode cooldown)
     {
         CooldownEnded(this);
     }

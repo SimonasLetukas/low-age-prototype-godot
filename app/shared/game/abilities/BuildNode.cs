@@ -165,10 +165,9 @@ public partial class BuildNode : ActiveAbilityNode<
     
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
             // TODO missing validations: research, consumable resources
-            new AbilityValidator.BuildableEntityCanBePlaced
+            new AbilityValidator.CooldownCompleted
             {
-                Entity = request.EntityToBuild,
-                AlreadyPlaced = request.EntityAlreadyPlaced
+                Cooldown = RemainingCooldown
             },
             new AbilityValidator.CorrectTurnPhase
             {
@@ -179,6 +178,11 @@ public partial class BuildNode : ActiveAbilityNode<
             {
                 Actor = OwnerActor,
                 ActionNeeded = CasterConsumesAction
+            },
+            new AbilityValidator.BuildableEntityCanBePlaced
+            {
+                Entity = request.EntityToBuild,
+                AlreadyPlaced = request.EntityAlreadyPlaced
             },
             new AbilityValidator.TargetWithinArea
             {

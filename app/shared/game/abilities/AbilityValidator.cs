@@ -32,26 +32,17 @@ public sealed class AbilityValidator
         
         return ValidationResult.Valid;
     }
-
-    public sealed class BuildableEntityCanBePlaced : IAbilityValidatorItem
+    
+    public sealed class CooldownCompleted : IAbilityValidatorItem
     {
-        public required EntityNode? Entity { get; init; }
-        public required bool AlreadyPlaced { get; init; }
+        public required EndsAtNode Cooldown { get; init; }
 
-        public ValidationResult Validate()
-        {
-            if (Entity is null)
-                return ValidationResult.Invalid("There is nothing to build!");
-            
-            if (AlreadyPlaced)
-                return ValidationResult.Valid;
-
-            return Entity.CanBePlaced
-                ? ValidationResult.Valid
-                : ValidationResult.Invalid("Cannot be placed here!");
-        }
+        public ValidationResult Validate() => Cooldown.HasCompleted()
+            ? ValidationResult.Valid 
+            : ValidationResult.Invalid($"Ability cannot be activated until cooldown " +
+                                       $"completes (remaining: {Cooldown.GetText()}).");
     }
-
+    
     public sealed class CorrectTurnPhase : IAbilityValidatorItem
     {
         public required TurnPhase CurrentTurnPhase { get; init; }
@@ -75,6 +66,25 @@ public sealed class AbilityValidator
             return Actor.ActionEconomy.CanUseAbilityAction 
                 ? ValidationResult.Valid 
                 : ValidationResult.Invalid("Ability action is not available.");
+        }
+    }
+
+    public sealed class BuildableEntityCanBePlaced : IAbilityValidatorItem
+    {
+        public required EntityNode? Entity { get; init; }
+        public required bool AlreadyPlaced { get; init; }
+
+        public ValidationResult Validate()
+        {
+            if (Entity is null)
+                return ValidationResult.Invalid("There is nothing to build!");
+            
+            if (AlreadyPlaced)
+                return ValidationResult.Valid;
+
+            return Entity.CanBePlaced
+                ? ValidationResult.Valid
+                : ValidationResult.Invalid("Cannot be placed here!");
         }
     }
 

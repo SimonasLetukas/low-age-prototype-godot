@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ba8roqfkqi5rh"]
+[gd_scene load_steps=9 format=3 uid="uid://ba8roqfkqi5rh"]
 
 [ext_resource type="PackedScene" uid="uid://b2me7lpqetnom" path="res://app/client/game/interface/shared/BaseButton.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://cowuxof271j4d" path="res://assets/icons/icon_ability_build.png" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bqboejckuj6au" path="res://app/client/game/interface/panels/entity/abilities/AbilityButton.cs" id="4"]
 [ext_resource type="Texture2D" uid="uid://b1tiga6d3y0ru" path="res://assets/sprites/interface/small-panel-borderless-inverted-x4.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://b03h6jrccyqp0" path="res://assets/sprites/interface/small-panel-borderless-x4.png" id="6"]
+[ext_resource type="PackedScene" uid="uid://dax8eksfbotqw" path="res://app/client/game/interface/shared/Text.tscn" id="7_7a1pl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o2at3"]
 resource_local_to_scene = true
@@ -24,3 +25,15 @@ script = ExtResource("4")
 TexturePassiveNormal = ExtResource("5")
 TexturePassiveClicked = ExtResource("6")
 Icon = ExtResource("2")
+
+[node name="Text" parent="." index="1" instance=ExtResource("7_7a1pl")]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_font_sizes/bold_font_size = 18
+text = "[b]99"
+horizontal_alignment = 1
+vertical_alignment = 1
+HasOutline = true
+IsBlue = true

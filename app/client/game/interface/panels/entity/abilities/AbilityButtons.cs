@@ -31,15 +31,14 @@ public partial class AbilityButtons : HBoxContainer
             if (ability.HasButton is false)
                 continue;
             
-            var abilityButtonScene = GD.Load<PackedScene>(AbilityButton.ScenePath);
-            var abilityButton = abilityButtonScene.Instantiate<AbilityButton>();
+            var abilityButton = AbilityButton.InstantiateAsChild(this);
+            
             if (_abilityIcons.TryGetValue(ability.Id, out var icon) is false)
             {
                 icon = _abilityIcons.Values.First();
             }
             abilityButton.SetIcon(icon);
             abilityButton.SetAbility(ability);
-            AddChild(abilityButton);
         }
         
         AbilitiesPopulated();

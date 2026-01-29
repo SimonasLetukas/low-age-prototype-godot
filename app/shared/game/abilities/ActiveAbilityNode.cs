@@ -133,6 +133,8 @@ public abstract partial class ActiveAbilityNode<
         
         if (paymentCompleted is false)
             Requeue(focus);
+        
+        RemainingCooldown.ResetDuration();
     }
     
     protected void SpendActionAndConsumableResources(TFocus focus)
