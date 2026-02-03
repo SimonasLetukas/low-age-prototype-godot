@@ -53,10 +53,10 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 3,
                             resource: ResourceId.Scraps),
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 7,
                             resource: ResourceId.Celestium)
                     }),
@@ -68,7 +68,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 5,
                             resource: ResourceId.Scraps)
                     }),
@@ -81,7 +81,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 5,
                             resource: ResourceId.Celestium)
                     },
@@ -322,10 +322,10 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 4,
                             resource: ResourceId.Population),
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 4,
                             resource: ResourceId.Weapons)
                     }),
@@ -429,7 +429,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 2,
                             resource: ResourceId.Population)
                     }),
@@ -442,7 +442,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 1,
                             resource: ResourceId.MeleeWeapon)
                     },
@@ -461,7 +461,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 1,
                             resource: ResourceId.RangedWeapon)
                     },
@@ -480,7 +480,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 1,
                             resource: ResourceId.SpecialWeapon)
                     },
@@ -498,7 +498,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 4,
                             resource: ResourceId.Weapons)
                     }),
@@ -745,7 +745,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent,
+                        new ResourceModification(
                             amount: 2,
                             resource: ResourceId.Scraps),
                     },
@@ -895,7 +895,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {
-                        new ResourceModification(change: Change.AddCurrent, amount: 1, resource: ResourceId.Faith)
+                        new ResourceModification(amount: 1, resource: ResourceId.Faith)
                     }),
                 
                 new HighGround(

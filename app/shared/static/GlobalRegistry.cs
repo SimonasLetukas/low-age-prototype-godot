@@ -24,7 +24,11 @@ public partial class GlobalRegistry : Node
     public Func<ActorNode?> GetActorInAction { get; private set; } = null!;
     public Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; private set; } = null!;
     public Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; private set; } = null!;
-
+    public Func<Player, IList<Payment>> GetCurrentPlayerStockpile { get; private set; } = null!;
+    public Func<IList<Payment>, IList<Payment>, IList<Payment>, (IList<Payment> ResourcesSpent, IList<Payment> UpdatedPayment)> SimulatePayment { get; private set; } = null!;
+    public Func<IList<Payment>, IList<Payment>, bool> IsPaymentComplete { get; private set; } = null!;
+    public Func<IList<Payment>, IList<Payment>, bool> CanSubtractResources { get; private set; } = null!;
+    
     #endregion Resolvers
 
     #region Providers
@@ -35,6 +39,10 @@ public partial class GlobalRegistry : Node
     public void ProvideGetActorInAction(Func<ActorNode?> getActorInAction) => GetActorInAction = getActorInAction;
     public void ProvideGetHighestTiles(Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles) => GetHighestTiles = getHighestTiles;
     public void ProvideGetTile(Func<Vector2Int, bool, Tiles.TileInstance?> getTile) => GetTile = getTile;
-
+    public void ProvideGetCurrentPlayerStockpile(Func<Player, IList<Payment>> getCurrentPlayerStockpile) => GetCurrentPlayerStockpile = getCurrentPlayerStockpile;
+    public void ProvideSimulatePayment(Func<IList<Payment>, IList<Payment>, IList<Payment>, (IList<Payment> ResourcesSpent, IList<Payment>UpdatedPayment)> simulatePayment) => SimulatePayment = simulatePayment;
+    public void ProvideIsPaymentComplete(Func<IList<Payment>, IList<Payment>, bool> isPaymentComplete) => IsPaymentComplete = isPaymentComplete;
+    public void ProvideCanSubtractResources(Func<IList<Payment>, IList<Payment>, bool> canSubtractResources) => CanSubtractResources = canSubtractResources;
+    
     #endregion Providers
 }

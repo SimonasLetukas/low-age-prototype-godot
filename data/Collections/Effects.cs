@@ -1025,8 +1025,7 @@ namespace LowAgeData.Collections
                     resourceModifications: new List<ResourceModification>
                     {
                         new ResourceModification(
-                            change: Change.AddCurrent,
-                            amount: 2.0f,
+                            amount: 2,
                             resource: ResourceId.Scraps)
                     }),
 

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtnyrjg857j7p"]
+
+[ext_resource type="PackedScene" uid="uid://c27u5adjari35" path="res://app/shared/game/behaviours/BehaviourNode.tscn" id="1_8jyoe"]
+[ext_resource type="Script" uid="uid://h6fmebopudq8" path="res://app/shared/game/behaviours/IncomeNode.cs" id="2_p3eq1"]
+
+[node name="IncomeNode" instance=ExtResource("1_8jyoe")]
+script = ExtResource("2_p3eq1")

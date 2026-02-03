@@ -11,8 +11,8 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
     [Export]
     public bool DebugEnabled { get; set; } = false;
     
-    public const string ScenePath = @"res://app/shared/game/behaviours/AscendableNode.tscn";
-    public static AscendableNode Instance() => (AscendableNode) GD.Load<PackedScene>(ScenePath).Instantiate();
+    private const string ScenePath = @"res://app/shared/game/behaviours/AscendableNode.tscn";
+    private static AscendableNode Instance() => (AscendableNode) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static AscendableNode InstantiateAsChild(Ascendable blueprint, Node parentNode, Effects history, 
         EntityNode parentEntity)
     {

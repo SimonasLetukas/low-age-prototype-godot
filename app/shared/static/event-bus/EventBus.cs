@@ -74,6 +74,20 @@ public partial class EventBus : Node
     public event Action<Point> HighGroundPointRemoved = delegate { };
     public void RaiseHighGroundPointRemoved(Point point) => HighGroundPointRemoved(point);
 
+    public event Action<Player, IList<Payment>> PlayerResourcesUpdated = delegate { };
+    public void RaisePlayerResourcesUpdated(Player player, IList<Payment> currentStockpile) 
+        => PlayerResourcesUpdated(player, currentStockpile);
+
+    public event Action<Player, IList<Payment>> PaymentRequested = delegate { };
+    public void RaisePaymentRequested(Player player, IList<Payment> resourcesSpent) 
+        => PaymentRequested(player, resourcesSpent);
+    
+    public event Action<IncomeProvider> IncomeProviderRegistered = delegate { };
+    public void RaiseIncomeProviderRegistered(IncomeProvider provider) => IncomeProviderRegistered(provider);
+    
+    public event Action<IncomeProvider> IncomeProviderUnregistered = delegate { };
+    public void RaiseIncomeProviderUnregistered(IncomeProvider provider) => IncomeProviderUnregistered(provider);
+
     public event Action<bool> WhenFlattenedChanged = delegate { };
     public void RaiseWhenFlattenedChanged(bool to) => WhenFlattenedChanged(to);
     

@@ -67,6 +67,9 @@ public partial class Behaviours : Node2D
             case HighGround highGround:
                 return HighGroundNode.InstantiateAsChild(highGround, this, history, Parent);
             
+            case Income income:
+                return IncomeNode.InstantiateAsChild(income, this, history, Parent);
+            
             default:
                 return null;
                 // TODO once all types are implemented switch to (and change constructor access to protected):

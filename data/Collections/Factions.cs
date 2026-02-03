@@ -24,7 +24,8 @@ namespace LowAgeData.Collections
                         ResourceId.Population,
                         ResourceId.MeleeWeapon,
                         ResourceId.RangedWeapon,
-                        ResourceId.SpecialWeapon
+                        ResourceId.SpecialWeapon,
+                        ResourceId.Weapons
                     },
                     startingEntities: new List<EntityId>
                     {

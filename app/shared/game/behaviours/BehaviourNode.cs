@@ -8,15 +8,15 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     public event Action<BehaviourNode> Ended = delegate { };
     
     public Guid InstanceId { get; set; } = Guid.NewGuid();
-    public string Description { get; protected set; }
-    public Alignment Alignment { get; protected set; }
+    public string Description { get; protected set; } = null!;
+    public Alignment Alignment { get; protected set; } = null!;
     public Guid? OwnerActorId { get; protected set; }
-    public EndsAtNode CurrentDuration { get; protected set; }
-    
-    protected EntityNode Parent { get; set; }
-    protected Effects History { get; set; }
-    
-    private Behaviour Blueprint { get; set; }
+    public EndsAtNode CurrentDuration { get; protected set; } = null!;
+
+    protected EntityNode Parent { get; set; } = null!;
+    protected Effects History { get; set; } = null!;
+
+    private Behaviour Blueprint { get; set; } = null!;
     
     public void SetBlueprint(Behaviour blueprint)
     {

@@ -55,9 +55,9 @@ namespace LowAgeData.Domain.Behaviours
         public int DiminishingReturn { get; }
         
         /// <summary>
-        /// Deducted just before the start of each planning phase. If the <see cref="Cost"/> is fulfilled then
-        /// <see cref="Resources"/> are gained as <see cref="Income"/>. Otherwise, <see cref="Cost"/> accumulates
-        /// until it is fulfilled.
+        /// Deducted before updating the income at the start of each planning phase. If the <see cref="Cost"/> is
+        /// fulfilled then <see cref="Resources"/> are gained as <see cref="Income"/>. Otherwise, <see cref="Cost"/>
+        /// accumulates until it is fulfilled.
         /// </summary>
         public IList<Payment> Cost { get; }
         

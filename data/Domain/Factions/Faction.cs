@@ -44,6 +44,7 @@ namespace LowAgeData.Domain.Factions
         
         /// <summary>
         /// <see cref="Resource"/> added on game start to the default starting <see cref="Resource"/>s.
+        /// Limits are ignored.
         /// </summary>
         public IList<Payment> BonusStartingResources { get; }
     }

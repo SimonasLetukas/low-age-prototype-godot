@@ -8,8 +8,8 @@ using MultipurposePathfinding;
 
 public partial class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGround>, IPathfindingUpdatable
 {
-    public const string ScenePath = @"res://app/shared/game/behaviours/HighGroundNode.tscn";
-    public static HighGroundNode Instance() => (HighGroundNode) GD.Load<PackedScene>(ScenePath).Instantiate();
+    private const string ScenePath = @"res://app/shared/game/behaviours/HighGroundNode.tscn";
+    private static HighGroundNode Instance() => (HighGroundNode) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static HighGroundNode InstantiateAsChild(HighGround blueprint, Node parentNode, Effects history, 
         EntityNode parentEntity)
     {
