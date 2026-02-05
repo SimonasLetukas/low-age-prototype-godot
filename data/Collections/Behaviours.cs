@@ -327,7 +327,7 @@ namespace LowAgeData.Collections
                             resource: ResourceId.Population),
                         new ResourceModification(
                             amount: 4,
-                            resource: ResourceId.Weapons)
+                            resource: ResourceId.WeaponStorage)
                     }),
 
                 new Ascendable(
@@ -500,7 +500,7 @@ namespace LowAgeData.Collections
                     {
                         new ResourceModification(
                             amount: 4,
-                            resource: ResourceId.Weapons)
+                            resource: ResourceId.WeaponStorage)
                     }),
                 
                 new Ascendable(

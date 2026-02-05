@@ -187,7 +187,7 @@ public partial class BuildNode : ActiveAbilityNode<
             new AbilityValidator.TargetWithinArea
             {
                 AvailablePositions = GetTargetPositions(OwnerActor),
-                TargetPositions = request.EntityToBuild!.EntityOccupyingPositions
+                TargetPositions = request.EntityToBuild?.EntityOccupyingPositions
             },
             new AbilityValidator.HelpApplicableAndAllowed
             {

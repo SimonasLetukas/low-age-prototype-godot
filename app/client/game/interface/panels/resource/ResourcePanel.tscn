@@ -1,75 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://xuo5vjwxjxjb"]
+[gd_scene load_steps=4 format=3 uid="uid://xuo5vjwxjxjb"]
 
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="1_43tqf"]
-[ext_resource type="Texture2D" uid="uid://dy7eo7p5gde74" path="res://assets/sprites/interface/resource-panel.png" id="1_lg7ac"]
-[ext_resource type="Texture2D" uid="uid://ct638siicqq8g" path="res://assets/sprites/resources/celestium indexed.png" id="3_iw158"]
-[ext_resource type="Texture2D" uid="uid://pooxciw1hh7o" path="res://assets/sprites/resources/scraps indexed.png" id="4_qqbju"]
+[ext_resource type="Script" uid="uid://rsnha4ov0njn" path="res://app/client/game/interface/panels/resource/ResourcePanel.cs" id="2_c25pe"]
+[ext_resource type="PackedScene" uid="uid://bajaqemcu0rgp" path="res://app/client/game/interface/panels/resource/ResourceItem.tscn" id="2_ka77m"]
 
-[node name="ResourcePanel" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-theme = ExtResource("1_43tqf")
-
-[node name="ResourceBackground" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 88.0
-offset_bottom = 36.0
-texture = ExtResource("1_lg7ac")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="TextureRect" type="TextureRect" parent="ResourceBackground"]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 48.0
-offset_bottom = 40.0
-texture = ExtResource("3_iw158")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="ResourceBackground"]
-layout_mode = 0
-offset_left = 48.0
-offset_top = 16.0
-offset_right = 84.0
-offset_bottom = 36.0
-theme_override_font_sizes/normal_font_size = 16
-bbcode_enabled = true
-text = "[center]999"
-fit_content = true
-scroll_active = false
-
-[node name="ResourceBackground2" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 80.0
-offset_top = -8.0
+[node name="ResourcePanel" type="GridContainer"]
 offset_right = 176.0
-offset_bottom = 36.0
-texture = ExtResource("1_lg7ac")
-expand_mode = 1
-stretch_mode = 5
+offset_bottom = 76.0
+theme = ExtResource("1_43tqf")
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 3
+script = ExtResource("2_c25pe")
 
-[node name="TextureRect" type="TextureRect" parent="ResourceBackground2"]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 48.0
-offset_bottom = 40.0
-texture = ExtResource("4_qqbju")
-expand_mode = 1
-stretch_mode = 5
+[node name="ResourceItem" parent="." instance=ExtResource("2_ka77m")]
+layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ResourceBackground2"]
-layout_mode = 0
-offset_left = 48.0
-offset_top = 16.0
-offset_right = 84.0
-offset_bottom = 36.0
-theme_override_font_sizes/normal_font_size = 16
-bbcode_enabled = true
-text = "[center]999"
-fit_content = true
-scroll_active = false
+[node name="ResourceItem2" parent="." instance=ExtResource("2_ka77m")]
+layout_mode = 2
+
+[node name="ResourceItem3" parent="." instance=ExtResource("2_ka77m")]
+layout_mode = 2
+
+[node name="ResourceItem4" parent="." instance=ExtResource("2_ka77m")]
+layout_mode = 2

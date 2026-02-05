@@ -13,7 +13,7 @@ namespace LowAgeData.Domain.Resources
 
         public static ResourceId Scraps => new ResourceId($"{nameof(Scraps)}".ToKebabCase(), true);
         public static ResourceId Celestium => new ResourceId($"{nameof(Celestium)}".ToKebabCase(), true);
-        public static ResourceId Weapons => new ResourceId($"{nameof(Weapons)}".ToKebabCase(), true);
+        public static ResourceId WeaponStorage => new ResourceId($"{nameof(WeaponStorage)}".ToKebabCase(), true);
         public static ResourceId MeleeWeapon => new ResourceId($"{nameof(MeleeWeapon)}".ToKebabCase(), true);
         public static ResourceId RangedWeapon => new ResourceId($"{nameof(RangedWeapon)}".ToKebabCase(), true);
         public static ResourceId SpecialWeapon => new ResourceId($"{nameof(SpecialWeapon)}".ToKebabCase(), true);

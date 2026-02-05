@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://bajaqemcu0rgp"]
+
+[ext_resource type="Script" uid="uid://dsbckfoba4wih" path="res://app/client/game/interface/panels/resource/ResourceItem.cs" id="1_5kutd"]
+[ext_resource type="Texture2D" uid="uid://dy7eo7p5gde74" path="res://assets/sprites/interface/resource-panel.png" id="1_yhnso"]
+[ext_resource type="Texture2D" uid="uid://ct638siicqq8g" path="res://assets/sprites/resources/celestium indexed.png" id="2_5kutd"]
+[ext_resource type="PackedScene" uid="uid://dax8eksfbotqw" path="res://app/client/game/interface/shared/Text.tscn" id="3_iamkf"]
+
+[node name="ResourceItem" type="Control"]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5kutd")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 16.0
+offset_bottom = 3.0
+scale = Vector2(4, 4)
+texture = ExtResource("1_yhnso")
+stretch_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 40.0
+offset_bottom = 32.0
+texture = ExtResource("2_5kutd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Text" parent="." instance=ExtResource("3_iamkf")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 0
+offset_left = 39.0
+offset_top = 8.0
+offset_right = 75.0
+offset_bottom = 22.0
+theme_override_font_sizes/normal_font_size = 16
+text = "[center]999"

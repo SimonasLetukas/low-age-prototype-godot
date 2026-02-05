@@ -26,6 +26,8 @@ public partial class Resources : Node2D
         base._Ready();
         
         GlobalRegistry.Instance.ProvideGetCurrentPlayerStockpile(GetCurrentPlayerStockpile);
+        GlobalRegistry.Instance.ProvideGetCurrentPlayerIncome(GetCurrentPlayerIncome);
+        GlobalRegistry.Instance.ProvideGetResourcesStoredAs(GetResourcesStoredAs);
         GlobalRegistry.Instance.ProvideSimulatePayment(SimulatePayment);
         GlobalRegistry.Instance.ProvideIsPaymentComplete(IsPaymentComplete);
         GlobalRegistry.Instance.ProvideCanSubtractResources(CanSubtractResources);
@@ -49,7 +51,28 @@ public partial class Resources : Node2D
     }
 
     public IList<Payment> GetCurrentPlayerStockpile(Player player) => ResourceCalculator.ToList(
-        _resourcesStockpiledByPlayer.GetValueOrDefault(player, []));
+        _resourcesStockpiledByPlayer.GetValueOrDefault(player, new Dictionary<ResourceId, int>()));
+
+    public IList<Payment> GetCurrentPlayerIncome(Player player)
+    {
+        var playerIncomeProviders = _currentPaymentByIncomeProvider.Keys
+            .Where(p => p.Player.Equals(player));
+        var result = new Dictionary<ResourceId, int>();
+        foreach (var playerIncomeProvider in playerIncomeProviders)
+        {
+            foreach (var resourceGained in playerIncomeProvider.ResourcesGained)
+            {
+                result[resourceGained.Resource] = 
+                    result.GetValueOrDefault(resourceGained.Resource) + resourceGained.Amount;
+            }
+        }
+        
+        return ResourceCalculator.ToList(result);
+    }
+
+    public IList<Payment> GetResourcesStoredAs(ResourceId resource, IList<Payment> stockpile) =>
+        ResourceCalculator.ToList(ResourceCalculator.GetResourcesStoredAs(resource, 
+            ResourceCalculator.ToDictionary(stockpile), _resourceBlueprints));
 
     public static (IList<Payment> ResourcesSpent, IList<Payment> UpdatedPayment) SimulatePayment(
         IList<Payment> cost, IList<Payment> stockpile, IList<Payment> paidSoFar)
@@ -85,16 +108,15 @@ public partial class Resources : Node2D
             var faction = player.Faction;
             var factionBlueprint = blueprint.Factions.First(f => f.Id.Equals(faction));
             var factionResources = factionBlueprint.AvailableResources;
-            var startingResources = new List<Payment>();
+            var startingResources = new Dictionary<ResourceId, int>();
             
             foreach (var factionResource in factionResources)
             {
                 var amount = GetStartingResourceAmount(factionBlueprint, factionResource);
-                var startingResource = new Payment(factionResource, amount);
-                startingResources.Add(startingResource);
+                startingResources[factionResource] = amount;
             }
             
-            _resourcesStockpiledByPlayer[player] = ResourceCalculator.ToDictionary(startingResources);
+            _resourcesStockpiledByPlayer[player] = startingResources;
         }
     }
 
@@ -127,6 +149,7 @@ public partial class Resources : Node2D
 
             stockpile = resultingStockpile;
             _currentPaymentByIncomeProvider[provider] = updatedPayment;
+            EventBus.Instance.RaiseIncomeProviderPaymentUpdated(provider, ResourceCalculator.ToList(updatedPayment));
         }
 
         return stockpile;
@@ -141,8 +164,12 @@ public partial class Resources : Node2D
         var (updatedStockpile, usedIncomeProviders) = ResourceCalculator
             .AddResources(stockpile, paymentsByProviders, _resourceBlueprints);
 
-        foreach (var usedIncomeProvider in usedIncomeProviders) 
-            _currentPaymentByIncomeProvider[usedIncomeProvider] = [];
+        foreach (var usedIncomeProvider in usedIncomeProviders)
+        {
+            _currentPaymentByIncomeProvider[usedIncomeProvider] = new Dictionary<ResourceId, int>();
+            EventBus.Instance.RaiseIncomeProviderPaymentUpdated(usedIncomeProvider, 
+                ResourceCalculator.ToList(_currentPaymentByIncomeProvider[usedIncomeProvider]));
+        }
 
         return updatedStockpile;
     }
@@ -187,7 +214,9 @@ public partial class Resources : Node2D
 
     private void OnIncomeProviderRegistered(IncomeProvider provider)
     {
-        _currentPaymentByIncomeProvider[provider] = [];
+        _currentPaymentByIncomeProvider[provider] = new Dictionary<ResourceId, int>();
+        EventBus.Instance.RaiseIncomeProviderPaymentUpdated(provider, 
+            ResourceCalculator.ToList(_currentPaymentByIncomeProvider[provider]));
     }
     
     private void OnIncomeProviderUnregistered(IncomeProvider provider)

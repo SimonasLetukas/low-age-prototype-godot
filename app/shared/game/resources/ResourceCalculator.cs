@@ -59,6 +59,23 @@ public static class ResourceCalculator
 
         return true;
     }
+    
+    public static Dictionary<ResourceId, int> GetResourcesStoredAs(ResourceId resource,
+        IReadOnlyDictionary<ResourceId, int> stockpile, IReadOnlyDictionary<ResourceId, Resource> resourceBlueprints)
+    {
+        var resources = new Dictionary<ResourceId, int>();
+        foreach (var (otherResource, amount) in stockpile)
+        {
+            var otherResourceBlueprint = resourceBlueprints[otherResource];
+            if (otherResourceBlueprint.StoredAs.Equals(resource) is false 
+                || otherResourceBlueprint.Id.Equals(resource))
+                continue;
+            
+            resources[otherResource] = amount;
+        }
+        
+        return resources;
+    }
 
     public static bool TrySubtractResources(IReadOnlyDictionary<ResourceId, int> from,
         IReadOnlyDictionary<ResourceId, int> amount, IReadOnlyDictionary<ResourceId, Resource> resourceBlueprints,
@@ -225,7 +242,7 @@ public static class ResourceCalculator
                 stockpile, resourceBlueprints);
             var maxStorageAmount = stockpile.GetValueOrDefault(resourceBlueprint.StoredAs);
             var currentStoredAmount = allResourcesStoredAsThis.Values.Sum();
-            if (currentStoredAmount < maxStorageAmount)
+            if (currentStoredAmount <= maxStorageAmount)
                 continue;
 
             foreach (var (resourceOverLimit, fullAmount) in allResourcesStoredAsThis)
@@ -242,22 +259,6 @@ public static class ResourceCalculator
             .ToList();
         
         return true;
-    }
-
-    private static Dictionary<ResourceId, int> GetResourcesStoredAs(ResourceId resource,
-        IReadOnlyDictionary<ResourceId, int> stockpile, IReadOnlyDictionary<ResourceId, Resource> resourceBlueprints)
-    {
-        var resources = new Dictionary<ResourceId, int>();
-        foreach (var (otherResource, amount) in stockpile)
-        {
-            var otherResourceBlueprint = resourceBlueprints[otherResource];
-            if (otherResourceBlueprint.StoredAs.Equals(resource) is false)
-                continue;
-            
-            resources[otherResource] = amount;
-        }
-        
-        return resources;
     }
     
     private static Dictionary<ResourceId, IncomeProvider> GetIncomeProvidersByResourcesToReject(

@@ -87,6 +87,9 @@ public partial class EventBus : Node
     
     public event Action<IncomeProvider> IncomeProviderUnregistered = delegate { };
     public void RaiseIncomeProviderUnregistered(IncomeProvider provider) => IncomeProviderUnregistered(provider);
+    
+    public event Action<IncomeProvider, IList<Payment>> IncomeProviderPaymentUpdated = delegate { };
+    public void RaiseIncomeProviderPaymentUpdated(IncomeProvider provider, IList<Payment> updatedPayment) => IncomeProviderPaymentUpdated(provider, updatedPayment);
 
     public event Action<bool> WhenFlattenedChanged = delegate { };
     public void RaiseWhenFlattenedChanged(bool to) => WhenFlattenedChanged(to);

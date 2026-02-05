@@ -60,13 +60,13 @@
       }
     },
     {
-      "id": "resource-weapons",
-      "displayName": "Weapons",
+      "id": "resource-weapon-storage",
+      "displayName": "Weapon Storage",
       "description": "Maximum amount of storage for all melee, ranged and special weapons. The most valuable weapons are lost if the maximum storage is decreased for any reason.",
       "hasLimit": false,
       "isConsumable": false,
       "hasBank": false,
-      "storedAs": "resource-weapons",
+      "storedAs": "resource-weapon-storage",
       "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
@@ -85,7 +85,7 @@
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
-      "storedAs": "resource-weapons",
+      "storedAs": "resource-weapon-storage",
       "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
@@ -99,12 +99,12 @@
     },
     {
       "id": "resource-ranged-weapon",
-      "displayName": "Melee Weapon",
+      "displayName": "Ranged Weapon",
       "description": "Weapon used for promotion of units with ranged qualities.",
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
-      "storedAs": "resource-weapons",
+      "storedAs": "resource-weapon-storage",
       "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
@@ -118,12 +118,12 @@
     },
     {
       "id": "resource-special-weapon",
-      "displayName": "Melee Weapon",
+      "displayName": "Special Weapon",
       "description": "Weapon used for promotion of units with special qualities.",
       "hasLimit": true,
       "isConsumable": true,
       "hasBank": true,
-      "storedAs": "resource-weapons",
+      "storedAs": "resource-weapon-storage",
       "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
@@ -168,7 +168,8 @@
         "resource-population",
         "resource-melee-weapon",
         "resource-ranged-weapon",
-        "resource-special-weapon"
+        "resource-special-weapon",
+        "resource-weapon-storage"
       ],
       "startingEntities": [
         "unit-slave",
@@ -12168,7 +12169,7 @@
           "amount": 4.0
         },
         {
-          "resource": "resource-weapons",
+          "resource": "resource-weapon-storage",
           "change": "Change.AddCurrent",
           "amount": 4.0
         }
@@ -12526,7 +12527,7 @@
       "id": "behaviour-depot-weapon-storage-income",
       "resources": [
         {
-          "resource": "resource-weapons",
+          "resource": "resource-weapon-storage",
           "change": "Change.AddCurrent",
           "amount": 4.0
         }

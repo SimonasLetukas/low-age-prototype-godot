@@ -5,7 +5,7 @@ namespace LowAgeData.Domain.Common.Modifications
     public class ResourceModification : Modification
     {
         public ResourceModification(
-            int amount,
+            float amount,
             ResourceId resource) : base(Change.AddCurrent, amount)
         {
             Resource = resource;

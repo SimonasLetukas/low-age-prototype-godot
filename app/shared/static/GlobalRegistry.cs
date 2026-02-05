@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using LowAgeCommon;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Resources;
 
 public partial class GlobalRegistry : Node
 {
@@ -25,6 +26,8 @@ public partial class GlobalRegistry : Node
     public Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; private set; } = null!;
     public Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; private set; } = null!;
     public Func<Player, IList<Payment>> GetCurrentPlayerStockpile { get; private set; } = null!;
+    public Func<Player, IList<Payment>> GetCurrentPlayerIncome { get; private set; } = null!;
+    public Func<ResourceId, IList<Payment>, IList<Payment>> GetResourcesStoredAs { get; private set; } = null!;
     public Func<IList<Payment>, IList<Payment>, IList<Payment>, (IList<Payment> ResourcesSpent, IList<Payment> UpdatedPayment)> SimulatePayment { get; private set; } = null!;
     public Func<IList<Payment>, IList<Payment>, bool> IsPaymentComplete { get; private set; } = null!;
     public Func<IList<Payment>, IList<Payment>, bool> CanSubtractResources { get; private set; } = null!;
@@ -40,6 +43,8 @@ public partial class GlobalRegistry : Node
     public void ProvideGetHighestTiles(Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles) => GetHighestTiles = getHighestTiles;
     public void ProvideGetTile(Func<Vector2Int, bool, Tiles.TileInstance?> getTile) => GetTile = getTile;
     public void ProvideGetCurrentPlayerStockpile(Func<Player, IList<Payment>> getCurrentPlayerStockpile) => GetCurrentPlayerStockpile = getCurrentPlayerStockpile;
+    public void ProvideGetCurrentPlayerIncome(Func<Player, IList<Payment>> getCurrentPlayerIncome) => GetCurrentPlayerIncome = getCurrentPlayerIncome;
+    public void ProvideGetResourcesStoredAs(Func<ResourceId, IList<Payment>, IList<Payment>> getResourcesStoredAs) => GetResourcesStoredAs = getResourcesStoredAs;
     public void ProvideSimulatePayment(Func<IList<Payment>, IList<Payment>, IList<Payment>, (IList<Payment> ResourcesSpent, IList<Payment>UpdatedPayment)> simulatePayment) => SimulatePayment = simulatePayment;
     public void ProvideIsPaymentComplete(Func<IList<Payment>, IList<Payment>, bool> isPaymentComplete) => IsPaymentComplete = isPaymentComplete;
     public void ProvideCanSubtractResources(Func<IList<Payment>, IList<Payment>, bool> canSubtractResources) => CanSubtractResources = canSubtractResources;

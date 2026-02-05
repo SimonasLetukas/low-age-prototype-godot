@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
 
@@ -19,18 +21,27 @@ public partial class IncomeNode : BehaviourNode, INodeFromBlueprint<Income>
     }
     
     private Income Blueprint { get; set; } = null!;
+    
+    private IncomeProvider _provider = null!;
+    private IList<Payment> _currentPayment = null!;
 
     public void SetBlueprint(Income blueprint)
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+
+        _provider = GetProvider();
         
-        EventBus.Instance.RaiseIncomeProviderRegistered(GetProvider());
+        EventBus.Instance.RaiseIncomeProviderRegistered(_provider);
+
+        EventBus.Instance.IncomeProviderPaymentUpdated += OnIncomeProviderPaymentUpdated;
     }
 
     public override void _ExitTree()
     {
-        EventBus.Instance.RaiseIncomeProviderUnregistered(GetProvider());
+        EventBus.Instance.RaiseIncomeProviderUnregistered(_provider);
+        
+        EventBus.Instance.IncomeProviderPaymentUpdated -= OnIncomeProviderPaymentUpdated;
         
         base._ExitTree();
     }
@@ -48,4 +59,39 @@ public partial class IncomeNode : BehaviourNode, INodeFromBlueprint<Income>
         Cost = Blueprint.Cost,
         WaitForAvailableStorage = Blueprint.WaitForAvailableStorage
     };
+
+    private void UpdateDescription()
+    {
+        Description = _currentPayment.IsEmpty()
+            ? Blueprint.Description
+            : Blueprint.Description + GetCurrentPaymentDescription();
+    }
+
+    private string GetCurrentPaymentDescription()
+    {
+        var result = "\n\nCurrently paid: ";
+        for (var i = 0; i < _currentPayment.Count; i++)
+        {
+            var amount = _currentPayment[i].Amount;
+            var resource = Data.Instance.Blueprint.Resources.FirstOrDefault(r => 
+                r.Id.Equals(_currentPayment[i].Resource));
+            if (resource is null)
+                continue;
+
+            result += $"{amount} {resource.DisplayName}";
+            if (i < _currentPayment.Count - 1)
+                result += ", ";
+        }
+
+        return result + ".";
+    }
+    
+    private void OnIncomeProviderPaymentUpdated(IncomeProvider incomeProvider, IList<Payment> updatedPayment)
+    {
+        if (incomeProvider.Equals(_provider) is false)
+            return;
+
+        _currentPayment = updatedPayment;
+        UpdateDescription();
+    }
 }
