@@ -26,7 +26,8 @@ public static class ResourceCalculator
         IReadOnlyDictionary<ResourceId, int> UpdatedPayment) SimulatePayment(
             IReadOnlyDictionary<ResourceId, int> cost, 
             IReadOnlyDictionary<ResourceId, int> stockpile, 
-            IReadOnlyDictionary<ResourceId, int> paidSoFar)
+            IReadOnlyDictionary<ResourceId, int> paidSoFar,
+            float efficiencyFactor)
     {
         var resourcesSpent = new Dictionary<ResourceId, int>();
         var updatedPayment = paidSoFar.ToDictionary();
@@ -37,7 +38,7 @@ public static class ResourceCalculator
             var amountRemaining = amountNeeded - amountPaid;
             if (amountRemaining <= 0) continue;
 
-            var amountAvailable = stockpile.GetValueOrDefault(resource);
+            var amountAvailable = (int)Math.Ceiling(stockpile.GetValueOrDefault(resource) * efficiencyFactor);
             var amountUsed = Math.Min(amountRemaining, amountAvailable);
 
             resourcesSpent[resource] = amountUsed;
@@ -45,6 +46,35 @@ public static class ResourceCalculator
         }
 
         return (resourcesSpent, updatedPayment);
+    }
+    
+    public static int GetSimulatedProductionLength(IReadOnlyDictionary<ResourceId, int> nonConsumableCost, 
+        IReadOnlyDictionary<ResourceId, int> stockpile, 
+        IReadOnlyDictionary<ResourceId, int> paidSoFar,
+        float efficiencyFactor)
+    {
+        if (IsPaymentComplete(nonConsumableCost, paidSoFar))
+            return 0;
+
+        var simulatedPaidSoFar = paidSoFar.ToDictionary();
+        var counter = 0;
+
+        while (IsPaymentComplete(nonConsumableCost, simulatedPaidSoFar) is false)
+        {
+            var (_, updatedPayment) = SimulatePayment(nonConsumableCost, 
+                stockpile, simulatedPaidSoFar, efficiencyFactor);
+            
+            simulatedPaidSoFar = updatedPayment.ToDictionary();
+            counter++;
+
+            if (counter > 100)
+            {
+                counter = int.MaxValue;
+                break;
+            }
+        }
+
+        return counter;
     }
 
     public static bool IsPaymentComplete(IReadOnlyDictionary<ResourceId, int> cost,
@@ -187,7 +217,7 @@ public static class ResourceCalculator
         return (updatedStockpile, contributingIncomeProviders.Keys);
     }
 
-    private static Dictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>> GetContributingIncomeProviders(
+    public static Dictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>> GetContributingIncomeProviders(
         IReadOnlyDictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>> paymentsByProviders)
     {
         var adjustedIncomeByIncomeProviders = new Dictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>>();
@@ -220,6 +250,26 @@ public static class ResourceCalculator
         }
 
         return adjustedIncomeByIncomeProviders;
+    }
+
+    public static IReadOnlyDictionary<ResourceId, int> GetSummedIncomeProviderResources(
+        IEnumerable<IReadOnlyDictionary<ResourceId, int>> providers, float efficiencyFactor, int helpers)
+    {
+        var income = new Dictionary<ResourceId, int>();
+        foreach (var provider in providers)
+        {
+            foreach (var (resource, amount) in provider)
+            {
+                income[resource] = income.GetValueOrDefault(resource) + amount;
+            }
+        }
+
+        var result = new Dictionary<ResourceId, int>();
+        foreach (var (resource, amount) in income)
+        {
+            result[resource] = (int)Math.Ceiling(amount * efficiencyFactor) * helpers;
+        }
+        return result;
     }
 
     private static bool StockpileIsOverLimit(IReadOnlyDictionary<ResourceId, int> stockpile,

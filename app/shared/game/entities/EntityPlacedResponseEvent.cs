@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using LowAgeCommon;
+using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;
 
 public class EntityPlacedResponseEvent : IGameEvent
@@ -7,7 +9,7 @@ public class EntityPlacedResponseEvent : IGameEvent
     public Guid Id { get; init; } = Guid.NewGuid();
     public required EntityId BlueprintId { get; init; }
     public required Vector2Int MapPosition { get; init; }
-    public required int? Cost { get; init; }
+    public required List<Payment> Cost { get; init; }
     public required Guid InstanceId { get; init; }
     public required ActorRotation ActorRotation { get; init; }
     public required int PlayerId { get; init; }

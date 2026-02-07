@@ -76,7 +76,7 @@ public partial class ResourceItem : Control
 		var resourceAmount = stockpile.FirstOrDefault(p => p.Resource.Equals(_resource.Id))?.Amount 
 		                     ?? 0;
 		
-		var income = GlobalRegistry.Instance.GetCurrentPlayerIncome(_player);
+		var income = GlobalRegistry.Instance.GetMaximumPlayerIncome(_player);
 		var incomeAmount = income.FirstOrDefault(p => p.Resource.Equals(_resource.Id))?.Amount ?? 0;
 
 		var incomeText = _resource.IsConsumable

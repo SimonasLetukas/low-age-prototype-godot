@@ -68,6 +68,25 @@ public sealed class AbilityValidator
                 : ValidationResult.Invalid("Ability action is not available.");
         }
     }
+    
+    public sealed class HasEnoughConsumableResources : IAbilityValidatorItem
+    {
+        public required IList<Payment> Cost { get; init; }
+        public required Player Player { get; init; }
+        
+        public ValidationResult Validate()
+        {
+            if (Cost.IsEmpty())
+                return ValidationResult.Valid;
+
+            var stockpile = GlobalRegistry.Instance.GetCurrentPlayerStockpile(Player);
+            var canSubtractResources = GlobalRegistry.Instance.CanSubtractResources(stockpile, Cost);
+            
+            return canSubtractResources
+                ? ValidationResult.Valid 
+                : ValidationResult.Invalid("Not enough resources.");
+        }
+    }
 
     public sealed class BuildableEntityCanBePlaced : IAbilityValidatorItem
     {
@@ -104,6 +123,7 @@ public sealed class AbilityValidator
         public required EntityNode EntityToBuild { get; init; }
         public required Guid HelpingAbilityInstanceId { get; init; }
         public required bool HelpingAllowed { get; init; }
+        public required IList<Payment> NonConsumableStockpile { get; init; }
 
         public ValidationResult Validate()
         {
@@ -126,7 +146,7 @@ public sealed class AbilityValidator
             if (HelpingAllowed is false)
                 return ValidationResult.Invalid("Helping to work on this is not allowed.");
             
-            if (creationProgress.GetRemainingUpdateCount(50) <= 1)
+            if (creationProgress.GetRemainingProductionLength(NonConsumableStockpile) <= 1)
                 return ValidationResult.Invalid("There is enough help to finish this in 1 turn.");
             
             return ValidationResult.Valid;

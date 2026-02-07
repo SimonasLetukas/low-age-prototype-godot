@@ -222,16 +222,16 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
     
     public bool IsCompleted() => EntityState is State.Completed;
 
-    public virtual void SetCost(int? cost)
+    public virtual void SetCost(IList<Payment> cost)
     {
-        if (cost is null || CreationProgress is null)
+        if (cost.IsEmpty() || CreationProgress is null)
         {
             HasCost = false;
             CreationProgress = null;
             return;
         }
         
-        CreationProgress.TotalCost = cost.Value;
+        CreationProgress.TotalCost = cost.ToList();
     }
 
     public virtual void DropDownToLowGround()

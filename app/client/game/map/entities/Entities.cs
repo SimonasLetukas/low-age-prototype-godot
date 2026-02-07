@@ -255,7 +255,7 @@ public partial class Entities : Node2D
         _renderers.UpdateSorting();
     }
 
-    public EntityNode SetEntityForPlacement(EntityId entityId, bool canBePlacedOnTheWholeMap, int? cost)
+    public EntityNode SetEntityForPlacement(EntityId entityId, bool canBePlacedOnTheWholeMap, IList<Payment> cost)
     {
         var playerId = Players.Instance.Current.Id;
         var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
@@ -413,7 +413,7 @@ public partial class Entities : Node2D
     private EntityNode? PlaceEntity(Entity entityBlueprint, Vector2Int mapPosition)
     {
         var playerId = Players.Instance.Current.Id;
-        var entity = InstantiateEntity(entityBlueprint, playerId, null);
+        var entity = InstantiateEntity(entityBlueprint, playerId, []);
         entity.EntityPrimaryPosition = mapPosition;
         entity.DeterminePlacementValidity(false);
         return PlaceEntity(entity, true);
@@ -434,7 +434,7 @@ public partial class Entities : Node2D
             {
                 BlueprintId = entity.BlueprintId,
                 MapPosition = entity.EntityPrimaryPosition,
-                Cost = entity.HasCost ? entity.CreationProgress?.TotalCost : null,
+                Cost = entity.HasCost ? entity.CreationProgress?.TotalCost ?? [] : [],
                 InstanceId = instanceId,
                 ActorRotation = entity is ActorNode actor ? actor.ActorRotation : ActorRotation.BottomRight,
                 PlayerId = entity.Player.Id
@@ -454,7 +454,8 @@ public partial class Entities : Node2D
         return placedSuccessfully;
     }
 
-    private EntityNode InstantiateEntity(Entity entityBlueprint, int playerId, int? cost, Guid? instanceId = null)
+    private EntityNode InstantiateEntity(Entity entityBlueprint, int playerId, IList<Payment> cost, 
+        Guid? instanceId = null)
     {
         var player = Players.Instance.Get(playerId);
 

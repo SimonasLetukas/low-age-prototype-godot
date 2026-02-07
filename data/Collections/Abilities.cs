@@ -1045,7 +1045,7 @@ namespace LowAgeData.Collections
                                  "can build the structure, each additional one after the first provides half of the " +
                                  "Celestium production to the construction than the previous Slave.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    placementArea: new Circle(radius: 1, ignoreRadius: 0),
+                    placementArea: new Circle(radius: 2, ignoreRadius: 0),
                     useWalkableTilesAsPlacementArea: false,
                     selection: new List<Selection<EntityId>>
                     {

@@ -228,7 +228,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 5,
+            "maxAmount": 7,
             "hasCurrent": true
           },
           {
@@ -276,7 +276,7 @@
       },
       {
         "id": "unit-leader",
-        "size": 1,
+        "size": 2,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -428,7 +428,7 @@
       },
       {
         "id": "unit-gorger",
-        "size": 1,
+        "size": 2,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -731,7 +731,7 @@
       },
       {
         "id": "unit-big-bad-bull",
-        "size": 2,
+        "size": 3,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -800,7 +800,7 @@
       },
       {
         "id": "unit-mummy",
-        "size": 1,
+        "size": 2,
         "statistics": [
           {
             "$type": "CombatStat",
@@ -6308,7 +6308,7 @@
       "researchNeeded": [],
       "placementArea": {
         "$type": "Circle",
-        "radius": 1,
+        "radius": 2,
         "ignoreRadius": 0
       },
       "useWalkableTilesAsPlacementArea": false,

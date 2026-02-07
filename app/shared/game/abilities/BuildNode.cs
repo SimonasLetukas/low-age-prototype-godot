@@ -31,6 +31,7 @@ public partial class BuildNode : ActiveAbilityNode<
     
     private Build Blueprint { get; set; } = null!;
     private IShape PlacementArea { get; set; } = null!;
+    private GlobalRegistry Registry { get; } = GlobalRegistry.Instance;
 
     public override void _Ready()
     {
@@ -65,7 +66,7 @@ public partial class BuildNode : ActiveAbilityNode<
             return structure.WalkablePositions;
         }
 
-        var mapSize = GlobalRegistry.Instance.MapSize;
+        var mapSize = Registry.MapSize;
         return PlacementArea.ToPositions(caster, mapSize);
     }
 
@@ -74,7 +75,7 @@ public partial class BuildNode : ActiveAbilityNode<
         var globalPositions = new List<Vector2>();
         foreach (var focus in FocusQueue)
         {
-            var entityToBuild = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
+            var entityToBuild = Registry.GetEntityById(focus.EntityToBuildId);
             if (entityToBuild is null)
                 continue;
             
@@ -84,11 +85,11 @@ public partial class BuildNode : ActiveAbilityNode<
         return globalPositions;
     }
 
-    public int GetSelectableItemCost(Id selectableItemId)
+    public IList<Payment> GetSelectableItemNonConsumableCost(Id selectableItemId)
     {
         var item = Selection.First(x => x.Name.Equals(selectableItemId));
-        var celestium = item.Cost.FirstOrDefault(i => i.Resource.Equals(ResourceId.Celestium));
-        return celestium?.Amount ?? 0;
+        var nonConsumableCost = Registry.GetNonConsumableResources(item.Cost);
+        return nonConsumableCost;
     }
 
     public string GetSelectableItemText(Id selectableItemId)
@@ -109,18 +110,19 @@ public partial class BuildNode : ActiveAbilityNode<
                 => current + $"{researchId}, ");
             research = research.Remove(research.Length - 2);
         }
+
+        var stockpile = Registry.GetCurrentPlayerStockpile(OwnerActor.Player);
+        var turnsNeeded = Registry.SimulateProductionLength(item.Cost, stockpile, [], 1);
         
-        var income = 50; // TODO pass in resources
-        var celestiumCost = item.Cost.FirstOrDefault(x => x.Resource.Equals(ResourceId.Celestium));
-        var turns = celestiumCost is null
+        var turns = turnsNeeded == int.MaxValue
             ? "too long"
-            : $"{(int)Math.Ceiling((float)celestiumCost.Amount / income)} turn(s)";
-        var finish = $"With current income of {income} it will take {turns}.";
+            : $"{turnsNeeded} turn(s) to produce";
+        var finish = $"With the current income it will take {turns}.";
 
         return $"Build {entity.DisplayName} \n" +
                $"{research}" +
-               $"\nCost: {cost.WrapToLines(Constants.MaxTooltipCharCount)}" + 
-               $"\n{finish}\n\n" + 
+               $"\nCost: {cost.WrapToLines(Constants.MaxTooltipCharCount)}." + 
+               $"\n\n{finish}\n\n" + 
                $"{entity.Description.WrapToLines(Constants.MaxTooltipCharCount)}";
     }
 
@@ -140,7 +142,8 @@ public partial class BuildNode : ActiveAbilityNode<
 
         var creationProgress = buildableEntity.CreationProgress;
         creationProgress?.Helpers.Remove(this);
-        creationProgress?.UpdateDescription(50); // TODO pass in resources
+        var nonConsumableStockpile = GetNonConsumableStockpile();
+        creationProgress?.UpdateDescription(nonConsumableStockpile);
         
         if (buildableEntity.IsCandidate() && creationProgress is not null && creationProgress.Helpers.IsEmpty())
             buildableEntity.Destroy(); // No one is working on this anymore
@@ -164,14 +167,14 @@ public partial class BuildNode : ActiveAbilityNode<
     }
     
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
-            // TODO missing validations: research, consumable resources
+            // TODO missing validations: research
             new AbilityValidator.CooldownCompleted
             {
                 Cooldown = RemainingCooldown
             },
             new AbilityValidator.CorrectTurnPhase
             {
-                CurrentTurnPhase = GlobalRegistry.Instance.GetCurrentPhase(),
+                CurrentTurnPhase = Registry.GetCurrentPhase(),
                 RequiredTurnPhase = Blueprint.TurnPhase
             },
             new AbilityValidator.ActorHasEnoughAction
@@ -184,16 +187,22 @@ public partial class BuildNode : ActiveAbilityNode<
                 Entity = request.EntityToBuild,
                 AlreadyPlaced = request.EntityAlreadyPlaced
             },
+            new AbilityValidator.HasEnoughConsumableResources
+            {
+                Cost = Selection.First(s => s.Name.Equals(request.EntityToBuild?.BlueprintId)).Cost,
+                Player = OwnerActor.Player
+            },
             new AbilityValidator.TargetWithinArea
             {
                 AvailablePositions = GetTargetPositions(OwnerActor),
-                TargetPositions = request.EntityToBuild?.EntityOccupyingPositions
+                TargetPositions = request.EntityToBuild?.EntityOccupyingPositions!
             },
             new AbilityValidator.HelpApplicableAndAllowed
             {
-                EntityToBuild = request.EntityToBuild,
+                EntityToBuild = request.EntityToBuild!,
                 HelpingAbilityInstanceId = InstanceId,
-                HelpingAllowed = Blueprint.CanHelp
+                HelpingAllowed = Blueprint.CanHelp,
+                NonConsumableStockpile = GetNonConsumableStockpile()
             }
         ])
         .Validate();
@@ -201,7 +210,9 @@ public partial class BuildNode : ActiveAbilityNode<
     protected override AbilityReservationResult HandleReservation(ActivationRequest request)
     {
         request.EntityToBuild!.CreationProgress!.Helpers[this] = Blueprint.HelpEfficiency;
-        request.EntityToBuild!.CreationProgress!.UpdateDescription(50); // TODO pass in resources
+        
+        var nonConsumableStockpile = GetNonConsumableStockpile();
+        request.EntityToBuild!.CreationProgress!.UpdateDescription(nonConsumableStockpile);
         
         return base.HandleReservation(request);
     }
@@ -222,7 +233,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
     protected override bool TryExecutePostPayment(Focus focus)
     {
-        var entity = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
+        var entity = Registry.GetEntityById(focus.EntityToBuildId);
 
         if (entity?.CreationProgress is null)
             return true; // For some reason entity or creation progress was not found,
@@ -231,7 +242,8 @@ public partial class BuildNode : ActiveAbilityNode<
         if (focus.Reservation.IsReservedFor(Players.Instance.Current) is false) 
             entity.CreationProgress.Helpers[this] = Blueprint.HelpEfficiency;
         
-        entity.CreationProgress.UpdateProgress(50); // TODO pass in resources
+        var nonConsumableStockpile = GetNonConsumableStockpile();
+        entity.CreationProgress.UpdateProgress(nonConsumableStockpile);
 
         var completed = entity.IsCompleted();
         
@@ -242,7 +254,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
     protected override bool WasAlreadyCompleted(Focus focus)
     {
-        var entity = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
+        var entity = Registry.GetEntityById(focus.EntityToBuildId);
 
         if (entity?.CreationProgress is null || entity.IsCompleted()) // Meaning that building has completed
             return true;
@@ -252,7 +264,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
     protected override void Complete(Focus focus)
     {
-        var entity = GlobalRegistry.Instance.GetEntityById(focus.EntityToBuildId);
+        var entity = Registry.GetEntityById(focus.EntityToBuildId);
         
         if (entity is null)
             return; // Something is fishy, best to move on
@@ -267,7 +279,10 @@ public partial class BuildNode : ActiveAbilityNode<
             RefundAction();
         }
     }
-    
+
+    private IList<Payment> GetNonConsumableStockpile() => Registry.GetNonConsumableResources(
+        Registry.GetCurrentPlayerStockpile(OwnerActor.Player));
+
     private void OnEntityDestroyed(EntityNode entity)
     {
         foreach (var focus in FocusQueue.ToList())

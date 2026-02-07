@@ -23,7 +23,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 6, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 7, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 20, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -81,7 +81,8 @@ namespace LowAgeData.Collections
                         AbilityId.Leader.AllForOne,
                         AbilityId.Leader.MenacingPresence,
                         AbilityId.Leader.OneForAll
-                    }),
+                    },
+                    size: 2),
 
                 new Unit(
                     id: UnitId.Quickdraw,
@@ -160,7 +161,8 @@ namespace LowAgeData.Collections
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Gorger.FanaticSuicide,
                         AbilityId.Gorger.FanaticSuicidePassive
-                    }),
+                    },
+                    size: 2),
 
                 new Unit(
                     id: UnitId.Camou,
@@ -317,7 +319,7 @@ namespace LowAgeData.Collections
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.BigBadBull.UnleashTheRage
                     },
-                    size: 2),
+                    size: 3),
 
                 new Unit(
                     id: UnitId.Mummy,
@@ -351,7 +353,8 @@ namespace LowAgeData.Collections
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Mummy.SpawnRoach,
                         AbilityId.Mummy.LeapOfHunger
-                    }),
+                    },
+                    size: 2),
 
                 new Unit(
                     id: UnitId.Roach,

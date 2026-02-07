@@ -24,13 +24,18 @@ public partial class Resources : Node2D
     public override void _Ready()
     {
         base._Ready();
-        
+
+        GlobalRegistry.Instance.ProvideStringifyResources(StringifyResources);
+        GlobalRegistry.Instance.ProvideGetNonConsumableResources(GetNonConsumableResources);
         GlobalRegistry.Instance.ProvideGetCurrentPlayerStockpile(GetCurrentPlayerStockpile);
-        GlobalRegistry.Instance.ProvideGetCurrentPlayerIncome(GetCurrentPlayerIncome);
+        GlobalRegistry.Instance.ProvideGetMaximumPlayerIncome(GetMaximumPlayerIncome);
+        GlobalRegistry.Instance.ProvideGetActualPlayerIncome(GetActualPlayerIncome);
         GlobalRegistry.Instance.ProvideGetResourcesStoredAs(GetResourcesStoredAs);
+        GlobalRegistry.Instance.ProvideSimulateProductionLength(SimulateProductionLength);
         GlobalRegistry.Instance.ProvideSimulatePayment(SimulatePayment);
         GlobalRegistry.Instance.ProvideIsPaymentComplete(IsPaymentComplete);
         GlobalRegistry.Instance.ProvideCanSubtractResources(CanSubtractResources);
+        GlobalRegistry.Instance.ProvideSubtractResources(SubtractResources);
 
         PopulatePlayerResources();
 
@@ -50,10 +55,33 @@ public partial class Resources : Node2D
         base._ExitTree();
     }
 
+    public string StringifyResources(IList<Payment> resources)
+    {
+        if (resources.Count == 0)
+            return "0 resources";
+        
+        var result = string.Empty;
+        for (var i = 0; i < resources.Count; i++)
+        {
+            var resource = _resourceBlueprints[resources[i].Resource];
+            result += $"{resources[i].Amount} {resource.DisplayName}";
+            if (i < resources.Count - 1)
+                result += ", ";
+        }
+
+        return result;
+    }
+
+    public IList<Payment> GetNonConsumableResources(IList<Payment> resources) => resources
+        .Select(resource => new { resource, resourceBlueprint = _resourceBlueprints[resource.Resource] })
+        .Where(r => r.resourceBlueprint.IsConsumable is false)
+        .Select(r => r.resource)
+        .ToList();
+
     public IList<Payment> GetCurrentPlayerStockpile(Player player) => ResourceCalculator.ToList(
         _resourcesStockpiledByPlayer.GetValueOrDefault(player, new Dictionary<ResourceId, int>()));
 
-    public IList<Payment> GetCurrentPlayerIncome(Player player)
+    public IList<Payment> GetMaximumPlayerIncome(Player player)
     {
         var playerIncomeProviders = _currentPaymentByIncomeProvider.Keys
             .Where(p => p.Player.Equals(player));
@@ -70,18 +98,47 @@ public partial class Resources : Node2D
         return ResourceCalculator.ToList(result);
     }
 
+    public IList<Payment> GetActualPlayerIncome(Player player, float efficiencyFactor, int helpers)
+    {
+        var playerPaymentByIncomeProvider = _currentPaymentByIncomeProvider
+            .Where(p => p.Key.Player.Equals(player))
+            .ToDictionary(p => p.Key, p => p.Value);
+        
+        var contributingIncomeProviders = ResourceCalculator
+            .GetContributingIncomeProviders(playerPaymentByIncomeProvider);
+        
+        var summedResources = ResourceCalculator.GetSummedIncomeProviderResources(
+            contributingIncomeProviders.Values, efficiencyFactor, helpers);
+
+        return ResourceCalculator.ToList(summedResources);
+    }
+
     public IList<Payment> GetResourcesStoredAs(ResourceId resource, IList<Payment> stockpile) =>
         ResourceCalculator.ToList(ResourceCalculator.GetResourcesStoredAs(resource, 
             ResourceCalculator.ToDictionary(stockpile), _resourceBlueprints));
+    
+    public int SimulateProductionLength(IList<Payment> cost, IList<Payment> stockpile, IList<Payment> paidSoFar, 
+        float efficiencyFactor)
+    {
+        var nonConsumableCost = GetNonConsumableResources(cost);
+        var turnsNeeded = ResourceCalculator.GetSimulatedProductionLength(
+            ResourceCalculator.ToDictionary(nonConsumableCost),
+            ResourceCalculator.ToDictionary(stockpile), 
+            ResourceCalculator.ToDictionary(paidSoFar),
+            efficiencyFactor);
+
+        return turnsNeeded;
+    }
 
     public static (IList<Payment> ResourcesSpent, IList<Payment> UpdatedPayment) SimulatePayment(
-        IList<Payment> cost, IList<Payment> stockpile, IList<Payment> paidSoFar)
+        IList<Payment> cost, IList<Payment> stockpile, IList<Payment> paidSoFar, float efficiencyFactor)
     {
         var (resourcesSpent, updatedPayment) = ResourceCalculator
             .SimulatePayment(
                 ResourceCalculator.ToDictionary(cost), 
                 ResourceCalculator.ToDictionary(stockpile), 
-                ResourceCalculator.ToDictionary(paidSoFar));
+                ResourceCalculator.ToDictionary(paidSoFar),
+                efficiencyFactor);
 
         return (ResourceCalculator.ToList(resourcesSpent), 
             ResourceCalculator.ToList(updatedPayment));
@@ -97,6 +154,12 @@ public partial class Resources : Node2D
             ResourceCalculator.ToDictionary(from),
             ResourceCalculator.ToDictionary(amount),
             _resourceBlueprints);
+    
+    public IList<Payment> SubtractResources(IList<Payment> from, IList<Payment> amount) => ResourceCalculator
+        .ToList(ResourceCalculator.SubtractResources(
+            ResourceCalculator.ToDictionary(from), 
+            ResourceCalculator.ToDictionary(amount), 
+            _resourceBlueprints));
 
     private void PopulatePlayerResources()
     {
@@ -141,7 +204,7 @@ public partial class Resources : Node2D
                 continue;
 
             var (resourcesSpent, updatedPayment) = ResourceCalculator
-                .SimulatePayment(cost, stockpile, paidSoFar);
+                .SimulatePayment(cost, stockpile, paidSoFar, 1);
 
             if (ResourceCalculator.TrySubtractResources(stockpile, resourcesSpent, _resourceBlueprints, 
                     out var resultingStockpile) is false)

@@ -118,7 +118,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         Abilities.OnActorBirth();
     }
 
-    public override void SetCost(int? cost)
+    public override void SetCost(IList<Payment> cost)
     {
         base.SetCost(cost);
         
