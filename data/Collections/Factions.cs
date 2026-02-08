@@ -29,13 +29,15 @@ namespace LowAgeData.Collections
                     },
                     startingEntities: new List<EntityId>
                     {
-                        UnitId.Slave,
-                        UnitId.Slave,
-                        UnitId.Leader,
                         StructureId.Citadel,
+                        UnitId.Leader,
+                        UnitId.Slave,
+                        UnitId.Slave,
+                        UnitId.Slave,
                     },
                     bonusStartingResources: new List<Payment>
                     {
+                        new Payment(resource: ResourceId.Scraps, amount: 17),
                         new Payment(resource: ResourceId.MeleeWeapon, amount: 4)
                     }),
 
@@ -50,9 +52,13 @@ namespace LowAgeData.Collections
                     },
                     startingEntities: new List<EntityId>
                     {
+                        StructureId.BatteryCore,
                         UnitId.Marksman,
                         UnitId.Horrior,
-                        StructureId.BatteryCore
+                    },
+                    bonusStartingResources: new List<Payment>
+                    {
+                        new Payment(resource: ResourceId.Scraps, amount: 17),
                     })
             };
         }

@@ -277,19 +277,19 @@ o center:   | 1,1		| 1,1       | 1,1       | 1,1
         {
             _structure.SetBlueprint(_blueprint.Create());
 
-            _structure.ActorRotation.Should().Be(ActorRotation.BottomRight);
+            _structure.ActorRotation.Should().Be(IsometricRotation.BottomRight);
             
             _structure.Rotate();
-            _structure.ActorRotation.Should().Be(ActorRotation.BottomLeft);
+            _structure.ActorRotation.Should().Be(IsometricRotation.BottomLeft);
             
             _structure.Rotate();
-            _structure.ActorRotation.Should().Be(ActorRotation.TopLeft);
+            _structure.ActorRotation.Should().Be(IsometricRotation.TopLeft);
             
             _structure.Rotate();
-            _structure.ActorRotation.Should().Be(ActorRotation.TopRight);
+            _structure.ActorRotation.Should().Be(IsometricRotation.TopRight);
             
             _structure.Rotate();
-            _structure.ActorRotation.Should().Be(ActorRotation.BottomRight);
+            _structure.ActorRotation.Should().Be(IsometricRotation.BottomRight);
         }
     }
 }

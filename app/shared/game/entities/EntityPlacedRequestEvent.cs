@@ -11,6 +11,6 @@ public class EntityPlacedRequestEvent : IGameEvent
     public required Vector2Int MapPosition { get; init; }
     public required List<Payment> Cost { get; init; }
     public required Guid InstanceId { get; init; }
-    public required ActorRotation ActorRotation { get; init; }
+    public required IsometricRotation ActorRotation { get; init; }
     public required int PlayerId { get; init; }
 }

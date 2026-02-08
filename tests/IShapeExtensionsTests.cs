@@ -63,7 +63,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -83,7 +83,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -103,7 +103,7 @@ namespace LowAgeTests
                 new Vector2Int(2, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -123,7 +123,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 2),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -143,7 +143,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -163,7 +163,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -182,7 +182,7 @@ namespace LowAgeTests
                 new Vector2Int(2, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -202,7 +202,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 2),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -221,7 +221,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -241,7 +241,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -259,7 +259,7 @@ namespace LowAgeTests
                 new Vector2Int(2, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -279,7 +279,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 2),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 1),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -297,7 +297,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -317,7 +317,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -337,7 +337,7 @@ namespace LowAgeTests
                 new Vector2Int(1, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -357,7 +357,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 1),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -377,7 +377,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -397,7 +397,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -415,7 +415,7 @@ namespace LowAgeTests
                 new Vector2Int(1, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -435,7 +435,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 1),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -453,7 +453,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -474,7 +474,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -492,7 +492,7 @@ namespace LowAgeTests
                 new Vector2Int(2, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -513,7 +513,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 2),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -532,7 +532,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -553,7 +553,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -574,7 +574,7 @@ namespace LowAgeTests
                 new Vector2Int(2, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -595,7 +595,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 2),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -616,7 +616,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -637,7 +637,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -657,7 +657,7 @@ namespace LowAgeTests
                 new Vector2Int(2, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -678,7 +678,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 2),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -698,7 +698,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -719,7 +719,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -738,7 +738,7 @@ namespace LowAgeTests
                 new Vector2Int(2, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(1, 2),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -759,7 +759,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 2),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 1),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -779,7 +779,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 3),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -801,7 +801,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(3, 2),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -823,7 +823,7 @@ namespace LowAgeTests
                 new Vector2Int(1, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 3),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -845,7 +845,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 1),
                 new Vector2Int(4, 5),
                 new Vector2Int(3, 2),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -867,7 +867,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 3),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -889,7 +889,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(3, 2),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -909,7 +909,7 @@ namespace LowAgeTests
                 new Vector2Int(1, 0),
                 new Vector2Int(4, 5),
                 new Vector2Int(2, 3),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -931,7 +931,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 1),
                 new Vector2Int(4, 5),
                 new Vector2Int(3, 2),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -951,7 +951,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(5, 5),
                 new Vector2Int(2, 3),
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 
                 // Expected:
                 new []
@@ -975,7 +975,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 0),
                 new Vector2Int(5, 5),
                 new Vector2Int(3, 2),
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomLeft,
                 
                 // Expected:
                 new []
@@ -996,7 +996,7 @@ namespace LowAgeTests
                 new Vector2Int(3, 0),
                 new Vector2Int(5, 5),
                 new Vector2Int(2, 3),
-                ActorRotation.TopLeft,
+                IsometricRotation.TopLeft,
                 
                 // Expected:
                 new []
@@ -1020,7 +1020,7 @@ namespace LowAgeTests
                 new Vector2Int(0, 3),
                 new Vector2Int(5, 5),
                 new Vector2Int(3, 2),
-                ActorRotation.TopRight,
+                IsometricRotation.TopRight,
                 
                 // Expected:
                 new []
@@ -1034,7 +1034,7 @@ namespace LowAgeTests
         [Theory]
         [MemberData(nameof(GetExpectedPositionsByLineShape))]
         public void ToPositions_ShouldReturnExpectedPositions_WhenShapeIsLine(Line line, Vector2Int centerPoint, 
-            Vector2Int mapSize, Vector2Int actorSize, ActorRotation actorRotation, 
+            Vector2Int mapSize, Vector2Int actorSize, IsometricRotation actorRotation, 
             Vector2Int[] expectedPositions)
         {
             line.ToPositions(centerPoint, mapSize, actorSize, actorRotation).Should().BeEquivalentTo(expectedPositions);

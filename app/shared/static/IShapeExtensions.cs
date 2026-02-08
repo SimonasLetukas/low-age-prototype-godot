@@ -24,7 +24,7 @@ public static class IShapeExtensions
             entity.EntitySize,
             entity is ActorNode actor 
                 ? actor.ActorRotation 
-                : ActorRotation.BottomRight);
+                : IsometricRotation.BottomRight);
     }
     
     public static IEnumerable<Vector2Int> ToPositions(this IShape shape, ActorNode actor, 
@@ -38,19 +38,19 @@ public static class IShapeExtensions
     }
     
     public static IEnumerable<Vector2Int> ToPositions(this IShape shape, Vector2Int centerPoint, 
-        Vector2Int mapSize, Vector2Int? actorSize = null, ActorRotation? actorRotation = null)
+        Vector2Int mapSize, Vector2Int? pointSize = null, IsometricRotation? pointRotation = null)
     {
         List<Vector2Int> positions;
         switch (shape)
         {
             case Circle circle:
-                positions = GetPositionsForCircle(circle, centerPoint, actorSize);
+                positions = GetPositionsForCircle(circle, centerPoint, pointSize);
                 break;
             case Custom custom:
-                positions = GetPositionsForCustom(custom, centerPoint, actorRotation);
+                positions = GetPositionsForCustom(custom, centerPoint, pointRotation);
                 break;
             case Line line:
-                positions = GetPositionsForLine(line, centerPoint, actorSize, actorRotation);
+                positions = GetPositionsForLine(line, centerPoint, pointSize, pointRotation);
                 break;
             case LowAgeData.Domain.Common.Shape.Map _:
                 return GetPositionsForMap(mapSize);
@@ -118,7 +118,7 @@ public static class IShapeExtensions
     }
 
     private static List<Vector2Int> GetPositionsForCustom(Custom custom, Vector2Int centerPoint, 
-        ActorRotation? actorRotation = null)
+        IsometricRotation? actorRotation = null)
     {
         // TODO implement rotation, be careful about non-symmetrical custom areas -- add unit tests
         var positions = new HashSet<Vector2Int>();
@@ -137,13 +137,13 @@ public static class IShapeExtensions
     }
     
     private static List<Vector2Int> GetPositionsForLine(Line line, Vector2Int centerPoint, 
-        Vector2Int? actorSize = null, ActorRotation? actorRotation = null)
+        Vector2Int? actorSize = null, IsometricRotation? actorRotation = null)
     {
         var positions = new List<Vector2Int>();
         var size = actorSize ?? Vector2Int.One;
-        actorRotation ??= ActorRotation.BottomRight;
-        var xAxis = actorRotation is ActorRotation.BottomRight or ActorRotation.TopLeft;
-        var positiveGrowth = actorRotation is ActorRotation.BottomRight or ActorRotation.BottomLeft;
+        actorRotation ??= IsometricRotation.BottomRight;
+        var xAxis = actorRotation is IsometricRotation.BottomRight or IsometricRotation.TopLeft;
+        var positiveGrowth = actorRotation is IsometricRotation.BottomRight or IsometricRotation.BottomLeft;
         var offset = positiveGrowth
             ? xAxis 
                 ? size.X 

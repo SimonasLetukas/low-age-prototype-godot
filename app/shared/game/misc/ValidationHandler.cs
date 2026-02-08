@@ -37,7 +37,8 @@ public class ValidationHandler
 
     private bool Handle(TileCondition tileCondition)
     {
-        var counter = _tileSource.Count(tile => tile.Blueprint.Equals(tileCondition.ConditionedTile));
+        var counter = _tileSource.Count(tile => tile is not null 
+                                                && tile.Blueprint.Equals(tileCondition.ConditionedTile));
         
         if (tileCondition.ConditionFlag.Equals(ConditionFlag.Exists))
             return counter >= tileCondition.AmountOfTilesRequired;

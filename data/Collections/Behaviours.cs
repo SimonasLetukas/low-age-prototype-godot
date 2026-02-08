@@ -88,6 +88,28 @@ namespace LowAgeData.Collections
                     diminishingReturn: 2),
                 
                 new Buildable(
+                    id: BehaviourId.Shared.StartingEntityBuildable,
+                    displayName: nameof(BehaviourId.Shared.StartingEntityBuildable).CamelCaseToWords(),
+                    description: "Used for initializing entities. Do not remove.",
+                    sprite: "res://assets/icons/icon_ability_build.png", 
+                    placementValidators: new List<Validator>
+                    {
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsUnoccupied)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new Condition(conditionFlag: ConditionFlag.TargetIsLowGround)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Mountains)
+                        }),
+                    },
+                    maximumHelpers: 1),
+                
+                new Buildable(
                     id: BehaviourId.Shared.UnitInProductionBuildable,
                     displayName: nameof(BehaviourId.Shared.UnitInProductionBuildable).CamelCaseToWords(),
                     description: "This unit should be placed in the allowed placement area.",

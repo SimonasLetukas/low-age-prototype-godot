@@ -33,7 +33,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public IList<AttackStatNode> Attacks { get; protected set; } = null!;
     public IList<CombatStatNode> Stats { get; protected set; } = null!;
     public IList<ActorAttribute> Attributes { get; protected set; } = null!;
-    public ActorRotation ActorRotation { get; protected set; }
+    public IsometricRotation ActorRotation { get; protected set; }
     public Abilities Abilities { get; protected set; } = null!;
     public IList<WorkingOnAbility> WorkingOn { get; set; } = new List<WorkingOnAbility>();
 
@@ -75,7 +75,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             .Select(stat => CombatStatNode.InstantiateAsChild((CombatStat)stat, StatsNode))
             .ToList();
         Attributes = blueprint.ActorAttributes;
-        ActorRotation = ActorRotation.BottomRight;
+        ActorRotation = IsometricRotation.BottomRight;
         Abilities.PopulateFromBlueprint(Blueprint.Abilities);
         Behaviours.AddOnBuildBehaviours(Abilities.GetPassives());
         CreationProgress = Behaviours.GetBuildables().FirstOrDefault();
@@ -247,10 +247,10 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     {
         ActorRotation = ActorRotation switch
         {
-            ActorRotation.BottomRight => ActorRotation.BottomLeft,
-            ActorRotation.BottomLeft => ActorRotation.TopLeft,
-            ActorRotation.TopLeft => ActorRotation.TopRight,
-            ActorRotation.TopRight => ActorRotation.BottomRight,
+            IsometricRotation.BottomRight => IsometricRotation.BottomLeft,
+            IsometricRotation.BottomLeft => IsometricRotation.TopLeft,
+            IsometricRotation.TopLeft => IsometricRotation.TopRight,
+            IsometricRotation.TopRight => IsometricRotation.BottomRight,
             _ => throw new ArgumentOutOfRangeException()
         };
 
@@ -258,7 +258,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         UpdateVitalsPosition();
     }
 
-    public void SetActorRotation(ActorRotation targetRotation)
+    public void SetActorRotation(IsometricRotation targetRotation)
     {
         var startingRotation = ActorRotation;
         for (var r = 0; r < startingRotation.CountTo(targetRotation); r++)

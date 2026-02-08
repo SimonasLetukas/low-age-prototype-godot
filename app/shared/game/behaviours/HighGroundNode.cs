@@ -58,15 +58,14 @@ public partial class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGrou
     
     private void SetupPositions()
     {
-        var startingRotation = ActorRotation.BottomRight;
+        var startingRotation = IsometricRotation.BottomRight;
         var finalRotation = Parent is ActorNode actor ? actor.ActorRotation : startingRotation;
         var rotationCount = startingRotation.CountTo(finalRotation);
 
         var leveledRectsBlueprint = Blueprint.HighGroundAreas.Select(step => 
             (step.Area, step.SpriteOffset.Y)).ToList();
         
-        var entityBoundsBeforeRotation = finalRotation is ActorRotation.BottomLeft 
-                                         || finalRotation is ActorRotation.TopRight 
+        var entityBoundsBeforeRotation = finalRotation is IsometricRotation.BottomLeft or IsometricRotation.TopRight 
             ? new Vector2Int(Parent.EntitySize.Y, Parent.EntitySize.X) 
             : Parent.EntitySize;
         

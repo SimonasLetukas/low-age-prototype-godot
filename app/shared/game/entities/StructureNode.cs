@@ -116,8 +116,8 @@ public sealed partial class StructureNode : ActorNode, INodeFromBlueprint<Struct
 
     protected override void UpdateSprite()
     {
-        var needsBackSprite = ActorRotation is ActorRotation.TopLeft or ActorRotation.TopRight;
-        var needsFlipping = ActorRotation is ActorRotation.BottomLeft or ActorRotation.TopRight;
+        var needsBackSprite = ActorRotation is IsometricRotation.TopLeft or IsometricRotation.TopRight;
+        var needsFlipping = ActorRotation is IsometricRotation.BottomLeft or IsometricRotation.TopRight;
         
         var spriteLocation = needsBackSprite ? Blueprint.BackSideSprite : Blueprint.Sprite;
         if (spriteLocation.IsNotNullOrEmpty())

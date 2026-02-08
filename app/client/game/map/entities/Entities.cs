@@ -7,7 +7,9 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Factions;
 using LowAgeCommon;
+using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Shape;
 using MultipurposePathfinding;
 using Newtonsoft.Json;
 
@@ -59,21 +61,6 @@ public partial class Entities : Node2D
         GlobalRegistry.Instance.ProvideGetEntityById(GetEntityByInstanceId);
     }
 
-    public void SetupStartingEntities(IList<Vector2Int> startingPositions, FactionId factionId)
-    {
-        var startingEntities = Data.Instance.Blueprint.Factions.First(x => x.Id.Equals(factionId))
-            .StartingEntities;
-
-        for (var i = 0; i < startingPositions.Count; i++)
-        {
-            if (i >= startingEntities.Count)
-                continue;
-
-            var entityBlueprint = Data.Instance.GetEntityBlueprintById(startingEntities[i]);
-            PlaceEntity(entityBlueprint, startingPositions[i]);
-        }
-    }
-    
     public override void _ExitTree()
     {
         NewPositionOccupied -= _renderers.UpdateSorting;
@@ -104,6 +91,87 @@ public partial class Entities : Node2D
         if (EntityMoving || EntityInPlacement != null)
             _renderers.UpdateSorting();
     }
+    
+    #region Setup Starting Entities
+
+    public void SetupStartingEntities(Area startingArea, FactionId factionId)
+    {
+        var mapSize = GlobalRegistry.Instance.MapSize.ToGodotVector2();
+        var mapCenter = new Vector2((mapSize.X - 1) / 2f, (mapSize.Y - 1) / 2f);
+
+        var startingRect = startingArea.ToGodotRect2();
+        var startingRectCenter = startingRect.GetCenter();
+
+        var toMapCenter = (mapCenter - startingRectCenter).Normalized();
+        var facing = GetRotationFacingTowards(toMapCenter);
+
+        var startingPositions = startingArea.ToVectors();
+        var orderedPositions = GetPositionsFarthestFromMapCenter(startingPositions, mapCenter, 
+            startingRectCenter);
+
+        var data = Data.Instance;
+        var startingEntities = data.Blueprint.Factions.First(x => x.Id.Equals(factionId))
+            .StartingEntities;
+
+        for (var i = 0; i < startingEntities.Count; i++)
+        {
+            var entityBlueprint = data.GetEntityBlueprintById(startingEntities[i]);
+            var seedIndex = i % orderedPositions.Count;
+            PlaceEntityUntilSuccessful(entityBlueprint, orderedPositions[seedIndex], facing, mapCenter, 
+                startingRectCenter);
+        }
+    }
+
+    private static IsometricRotation GetRotationFacingTowards(Vector2 target)
+    {
+        if (Mathf.Abs(target.X) > Mathf.Abs(target.Y))
+        {
+            return target.X > 0
+                ? IsometricRotation.BottomRight
+                : IsometricRotation.TopLeft;
+        }
+
+        return target.Y > 0
+            ? IsometricRotation.BottomLeft
+            : IsometricRotation.TopRight;
+    }
+    
+    private static List<Vector2Int> GetPositionsFarthestFromMapCenter(IEnumerable<Vector2Int> positions, 
+        Vector2 mapCenter, Vector2 startingRectCenter) => positions
+        .OrderByDescending(p => p.ToGodotVector2().DistanceSquaredTo(mapCenter))
+        .ThenBy(p => p.ToGodotVector2().DistanceSquaredTo(startingRectCenter))
+        .ThenBy(p => p.X)
+        .ThenBy(p => p.Y)
+        .ToList();
+    
+    private void PlaceEntityUntilSuccessful(
+        Entity blueprint,
+        Vector2Int seedPosition,
+        IsometricRotation facing,
+        Vector2 mapCenter,
+        Vector2 startingRectCenter)
+    {
+        if (PlaceEntity(blueprint, seedPosition, facing) is not null)
+            return;
+
+        var mapSize = GlobalRegistry.Instance.MapSize;
+        const int maxPlacementRadius = 10;
+        for (var radius = 1; radius < maxPlacementRadius; radius++)
+        {
+            var circle = new Circle(radius, radius - 1);
+            var positions = circle.ToPositions(seedPosition, mapSize);
+            var orderedPositions = GetPositionsFarthestFromMapCenter(positions, mapCenter, 
+                startingRectCenter);
+            
+            foreach (var position in orderedPositions)
+            {
+                if (PlaceEntity(blueprint, position, facing) is not null)
+                    return;
+            }
+        }
+    }
+
+    #endregion Setup Starting Entities
 
     public EntityNode? GetEntityByInstanceId(Guid instanceId) => _entitiesByIds.ContainsKey(instanceId)
         ? _entitiesByIds[instanceId]
@@ -410,12 +478,18 @@ public partial class Entities : Node2D
         return PlaceEntity(entity, true);
     }
     
-    private EntityNode? PlaceEntity(Entity entityBlueprint, Vector2Int mapPosition)
+    /// <summary>
+    /// Used for initializing starting entities
+    /// </summary>
+    private EntityNode? PlaceEntity(Entity entityBlueprint, Vector2Int mapPosition, IsometricRotation rotation)
     {
         var playerId = Players.Instance.Current.Id;
         var entity = InstantiateEntity(entityBlueprint, playerId, []);
         entity.EntityPrimaryPosition = mapPosition;
+        entity.Behaviours.AddOnBuildBehaviour(BehaviourId.Shared.StartingEntityBuildable);
         entity.DeterminePlacementValidity(false);
+        if (entity is ActorNode actor)
+            actor.SetActorRotation(rotation);
         return PlaceEntity(entity, true);
     }
 
@@ -436,7 +510,7 @@ public partial class Entities : Node2D
                 MapPosition = entity.EntityPrimaryPosition,
                 Cost = entity.HasCost ? entity.CreationProgress?.TotalCost ?? [] : [],
                 InstanceId = instanceId,
-                ActorRotation = entity is ActorNode actor ? actor.ActorRotation : ActorRotation.BottomRight,
+                ActorRotation = entity is ActorNode actor ? actor.ActorRotation : IsometricRotation.BottomRight,
                 PlayerId = entity.Player.Id
             });
         

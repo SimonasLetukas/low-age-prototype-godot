@@ -6,7 +6,7 @@ using Area = LowAgeCommon.Area;
 
 public partial class MapCreatedEvent : IGameEvent
 {
-    public MapCreatedEvent(Vector2Int mapSize, Dictionary<int, IList<Area>> startingPositions, 
+    public MapCreatedEvent(Vector2Int mapSize, Dictionary<int, Area> startingPositions, 
         ICollection<(Vector2Int, TileId)> tiles)
     {
         MapSize = mapSize;
@@ -16,10 +16,6 @@ public partial class MapCreatedEvent : IGameEvent
 
     public Guid Id { get; init; } = Guid.NewGuid();
     public Vector2Int MapSize { get; }
-    public Dictionary<int, IList<Area>> StartingPositions { get; } // TODO might be better to have a
-                                                                   // Dictionary<int, IList<Vector2>> for each
-                                                                   // player ID instead and to use flood fill
-                                                                   // algorithms to be able to have non-square
-                                                                   // starting positions
+    public Dictionary<int, Area> StartingPositions { get; } 
     public ICollection<(Vector2Int, TileId)> Tiles { get; }
 }

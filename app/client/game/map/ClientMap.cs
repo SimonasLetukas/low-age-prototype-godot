@@ -23,7 +23,7 @@ public partial class ClientMap : Map
 	private Pathfinding Pathfinding { get; set; } = new();
 
 	private Player _currentPlayer = null!;
-	private IList<Area> _startingPositions = new List<Area>();
+	private Area _startingPositions;
 	private Vector2Int _mapSize = Vector2Int.Max;
 	private Tiles _tileMap = null!;
 	private FocusedTile _focusedTile = null!;
@@ -99,7 +99,7 @@ public partial class ClientMap : Map
 		if (DebugEnabled)
 			GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} {nameof(ClientMap)}.{nameof(Initialize)}");
 
-        _currentPlayer = Players.Instance.Current;
+		_currentPlayer = Players.Instance.Current;
 		_mapSize = @event.MapSize;
 		_startingPositions = @event.StartingPositions[_currentPlayer.Id];
 
@@ -245,7 +245,7 @@ public partial class ClientMap : Map
 
 	public void SetupFactionStart()
 	{
-		Entities.SetupStartingEntities(_startingPositions.First().ToList(), _currentPlayer.Faction);
+		Entities.SetupStartingEntities(_startingPositions, _currentPlayer.Faction);
 	}
 
 	public void SetPaused(bool to)

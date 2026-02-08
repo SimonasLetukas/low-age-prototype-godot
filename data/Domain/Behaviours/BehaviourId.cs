@@ -17,6 +17,7 @@ namespace LowAgeData.Domain.Behaviours
             public static BehaviourId PassiveIncomeIncome => new BehaviourId($"{nameof(Shared)}{nameof(PassiveIncomeIncome)}".ToKebabCase(), true);
             public static BehaviourId ScrapsIncomeIncome => new BehaviourId($"{nameof(Shared)}{nameof(ScrapsIncomeIncome)}".ToKebabCase(), true);
             public static BehaviourId CelestiumIncomeIncome => new BehaviourId($"{nameof(Shared)}{nameof(CelestiumIncomeIncome)}".ToKebabCase(), true);
+            public static BehaviourId StartingEntityBuildable => new BehaviourId($"{nameof(Shared)}{nameof(StartingEntityBuildable)}".ToKebabCase(), true);
             public static BehaviourId UnitInProductionBuildable => new BehaviourId($"{nameof(Shared)}{nameof(UnitInProductionBuildable)}".ToKebabCase(), true);
 
             public static class Revelators

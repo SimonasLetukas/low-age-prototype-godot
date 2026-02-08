@@ -172,12 +172,17 @@
         "resource-weapon-storage"
       ],
       "startingEntities": [
-        "unit-slave",
-        "unit-slave",
+        "structure-citadel",
         "unit-leader",
-        "structure-citadel"
+        "unit-slave",
+        "unit-slave",
+        "unit-slave"
       ],
       "bonusStartingResources": [
+        {
+          "resource": "resource-scraps",
+          "amount": 17
+        },
         {
           "resource": "resource-melee-weapon",
           "amount": 4
@@ -194,11 +199,16 @@
         "resource-faith"
       ],
       "startingEntities": [
+        "structure-battery-core",
         "unit-marksman",
-        "unit-horrior",
-        "structure-battery-core"
+        "unit-horrior"
       ],
-      "bonusStartingResources": []
+      "bonusStartingResources": [
+        {
+          "resource": "resource-scraps",
+          "amount": 17
+        }
+      ]
     }
   ],
   "entities": {
@@ -11716,6 +11726,57 @@
       "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1).",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Positive",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "$type": "Buildable",
+      "id": "behaviour-shared-starting-entity-buildable",
+      "placementValidators": [
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsUnoccupied"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsLowGround"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TileCondition",
+              "conditionedTile": "tile-mountains",
+              "amountOfTilesRequired": 1,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
+        }
+      ],
+      "maximumHelpers": 1,
+      "canBeDragged": false,
+      "displayName": "Starting Entity Buildable",
+      "description": "Used for initializing entities. Do not remove.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Neutral",
       "canStack": false,
       "canResetDuration": false,
       "triggers": [],

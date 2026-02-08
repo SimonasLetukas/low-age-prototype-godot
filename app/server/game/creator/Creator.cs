@@ -78,13 +78,18 @@ public partial class Creator : Node2D
         MapCreated(new MapCreatedEvent(mapSize, AssignStartingPositions(startingPositions.ToSquareRects()), tiles));
     }
 
-    private static Dictionary<int, IList<Area>> AssignStartingPositions(IList<Area> positions)
+    private static Dictionary<int, Area> AssignStartingPositions(IList<Area> positions)
     {
-        var assigned = new Dictionary<int, IList<Area>>();
+        var random = SharedRandom.Instance;
+        var shuffledPositionsArray = positions.ToArray();
+        random.Shuffle(shuffledPositionsArray);
+        var shuffledPositions = shuffledPositionsArray.ToList();
+        
+        var assigned = new Dictionary<int, Area>();
         foreach (var playerId in Players.Instance.GetAllIds())
         {
-            assigned[playerId] = new List<Area> { positions.First() };
-            positions.RemoveAt(0);
+            assigned[playerId] =  shuffledPositions.First();
+            shuffledPositions.RemoveAt(0);
         }
 
         return assigned;

@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://di583obkx1njc"
+path="res://.godot/imported/Mandelbrot.png-a7269c631a6023ad92a3d2a8344e88b0.image"
+
+[deps]
+
+source_file="res://assets/maps/Mandelbrot.png"
+dest_files=["res://.godot/imported/Mandelbrot.png-a7269c631a6023ad92a3d2a8344e88b0.image"]
+
+[params]
+

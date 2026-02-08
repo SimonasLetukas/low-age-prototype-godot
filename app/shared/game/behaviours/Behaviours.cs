@@ -20,7 +20,6 @@ public partial class Behaviours : Node2D
 
     public void AddOnBuildBehaviours(IEnumerable<PassiveNode> passiveAbilities)
     {
-        var allBehaviours = Data.Instance.Blueprint.Behaviours;
         foreach (var passive in passiveAbilities)
         {
             var onBuildBehaviourId = passive.GetOnBuildBehaviourOrDefault();
@@ -28,9 +27,18 @@ public partial class Behaviours : Node2D
             if (onBuildBehaviourId is null)
                 continue;
 
-            var blueprint = allBehaviours.First(x => x.Id.Equals(onBuildBehaviourId));
-            BuildableNode.InstantiateAsChild((Buildable)blueprint, this, Parent);
+            AddOnBuildBehaviour(onBuildBehaviourId);
         }
+    }
+
+    public void AddOnBuildBehaviour(BehaviourId onBuildBehaviourId)
+    {
+        var allBehaviours = Data.Instance.Blueprint.Behaviours;
+        var blueprint = allBehaviours.FirstOrDefault(x => x.Id.Equals(onBuildBehaviourId));
+        if (blueprint is not Buildable buildable)
+            return;
+        
+        BuildableNode.InstantiateAsChild(buildable, this, Parent);
     }
 
     public void AddBehaviours(IEnumerable<BehaviourId> behaviourIds, Effects history)

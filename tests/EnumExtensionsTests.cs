@@ -9,64 +9,64 @@ namespace LowAgeTests
         {
             yield return new object[]
             {
-                ActorRotation.BottomRight,
-                ActorRotation.BottomLeft,
+                IsometricRotation.BottomRight,
+                IsometricRotation.BottomLeft,
                 // Expected:
                 1
             };
             
             yield return new object[]
             {
-                ActorRotation.BottomRight,
-                ActorRotation.TopLeft,
+                IsometricRotation.BottomRight,
+                IsometricRotation.TopLeft,
                 // Expected:
                 2
             };
             
             yield return new object[]
             {
-                ActorRotation.BottomRight,
-                ActorRotation.TopRight,
+                IsometricRotation.BottomRight,
+                IsometricRotation.TopRight,
                 // Expected:
                 3
             };
             
             yield return new object[]
             {
-                ActorRotation.BottomRight,
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomRight,
+                IsometricRotation.BottomRight,
                 // Expected:
                 0
             };
             
             yield return new object[]
             {
-                ActorRotation.TopRight,
-                ActorRotation.BottomRight,
+                IsometricRotation.TopRight,
+                IsometricRotation.BottomRight,
                 // Expected:
                 1
             };
             
             yield return new object[]
             {
-                ActorRotation.TopLeft,
-                ActorRotation.BottomRight,
+                IsometricRotation.TopLeft,
+                IsometricRotation.BottomRight,
                 // Expected:
                 2
             };
             
             yield return new object[]
             {
-                ActorRotation.BottomLeft,
-                ActorRotation.BottomRight,
+                IsometricRotation.BottomLeft,
+                IsometricRotation.BottomRight,
                 // Expected:
                 3
             };
             
             yield return new object[]
             {
-                ActorRotation.TopRight,
-                ActorRotation.TopLeft,
+                IsometricRotation.TopRight,
+                IsometricRotation.TopLeft,
                 // Expected:
                 3
             };
@@ -74,8 +74,8 @@ namespace LowAgeTests
 
         [Theory]
         [MemberData(nameof(GetExpectedCountsByGivenRotations))]
-        public void CountTo_ShouldReturnCorrectResult_ForGivenRotations(ActorRotation rotation, 
-            ActorRotation targetRotation, int expectedCount)
+        public void CountTo_ShouldReturnCorrectResult_ForGivenRotations(IsometricRotation rotation, 
+            IsometricRotation targetRotation, int expectedCount)
         {
             rotation.CountTo(targetRotation).Should().Be(expectedCount);
         }

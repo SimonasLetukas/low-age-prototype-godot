@@ -86,7 +86,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         var remainingUpdateCount = GetRemainingProductionLength(nonConsumableStockpile);
         var remainingUpdateText = remainingUpdateCount == int.MaxValue ? "too many" : remainingUpdateCount.ToString();
         var appliedIncomeText = Registry.StringifyResources(GetAppliedIncome());
-        var remainingCostText = Registry.StringifyResources(Registry.SubtractResources(TotalCost, PaidCost));
+        var remainingCostText = Registry.StringifyResources(Registry.SubtractResources(TotalCost, PaidCost)); // TODO for some reason PaidCost is ignored
         
         Description = $"{helperText} currently working to finish this in " +
                       $"{remainingUpdateText} turns (with a combined production of " +

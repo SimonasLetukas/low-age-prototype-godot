@@ -1,4 +1,4 @@
-public enum ActorRotation
+public enum IsometricRotation
 {
     BottomRight, // x++
     BottomLeft,  // y++
