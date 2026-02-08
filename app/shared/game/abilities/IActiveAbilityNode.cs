@@ -1,6 +1,6 @@
 using System;
 
-public interface IActiveAbilityNode
+public interface IActiveAbilityNode : IAbilityNode
 {
     event Action<IActiveAbilityFocus> Cancelled;
     

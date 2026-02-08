@@ -238,7 +238,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 7,
+            "maxAmount": 14,
             "hasCurrent": true
           },
           {
@@ -309,7 +309,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 3,
+            "maxAmount": 7,
             "hasCurrent": true
           },
           {
@@ -379,7 +379,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 4,
+            "maxAmount": 8,
             "hasCurrent": true
           },
           {
@@ -461,7 +461,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 4,
+            "maxAmount": 9,
             "hasCurrent": true
           },
           {
@@ -531,7 +531,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 4,
+            "maxAmount": 10,
             "hasCurrent": true
           },
           {
@@ -601,7 +601,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 4,
+            "maxAmount": 8,
             "hasCurrent": true
           },
           {
@@ -682,7 +682,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 5,
+            "maxAmount": 11,
             "hasCurrent": true
           },
           {
@@ -764,7 +764,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 4,
+            "maxAmount": 9,
             "hasCurrent": true
           },
           {
@@ -833,7 +833,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 2,
+            "maxAmount": 4,
             "hasCurrent": true
           },
           {
@@ -903,7 +903,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 5,
+            "maxAmount": 10,
             "hasCurrent": true
           },
           {
@@ -972,7 +972,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 6,
+            "maxAmount": 12,
             "hasCurrent": true
           },
           {
@@ -1047,7 +1047,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 2,
+            "maxAmount": 4,
             "hasCurrent": true
           },
           {
@@ -1123,7 +1123,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 5,
+            "maxAmount": 10,
             "hasCurrent": true
           },
           {
@@ -1210,7 +1210,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 5,
+            "maxAmount": 11,
             "hasCurrent": true
           },
           {
@@ -1285,7 +1285,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 4,
+            "maxAmount": 8,
             "hasCurrent": true
           },
           {
@@ -1374,7 +1374,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 4,
+            "maxAmount": 8,
             "hasCurrent": true
           },
           {
@@ -1451,7 +1451,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 4,
+            "maxAmount": 8,
             "hasCurrent": true
           },
           {
@@ -1750,7 +1750,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 3,
+            "maxAmount": 6,
             "hasCurrent": true
           },
           {
@@ -1827,7 +1827,7 @@
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
-            "maxAmount": 5,
+            "maxAmount": 10,
             "hasCurrent": true
           },
           {

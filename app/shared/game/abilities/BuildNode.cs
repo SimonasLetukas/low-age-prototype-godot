@@ -8,7 +8,6 @@ using LowAgeData.Domain.Common.Shape;
 using LowAgeData.Domain.Entities;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
-using LowAgeData.Domain.Resources;
 
 public partial class BuildNode : ActiveAbilityNode<
         BuildNode.ActivationRequest, 
@@ -85,11 +84,10 @@ public partial class BuildNode : ActiveAbilityNode<
         return globalPositions;
     }
 
-    public IList<Payment> GetSelectableItemNonConsumableCost(Id selectableItemId)
+    public IList<Payment> GetSelectableItemCost(Id selectableItemId)
     {
         var item = Selection.First(x => x.Name.Equals(selectableItemId));
-        var nonConsumableCost = Registry.GetNonConsumableResources(item.Cost);
-        return nonConsumableCost;
+        return item.Cost;
     }
 
     public string GetSelectableItemText(Id selectableItemId)
@@ -144,17 +142,26 @@ public partial class BuildNode : ActiveAbilityNode<
         creationProgress?.Helpers.Remove(this);
         var nonConsumableStockpile = GetNonConsumableStockpile();
         creationProgress?.UpdateDescription(nonConsumableStockpile);
-        
+
+        var costOfDestroyedEntity = new List<Payment>();
         if (buildableEntity.IsCandidate() && creationProgress is not null && creationProgress.Helpers.IsEmpty())
-            buildableEntity.Destroy(); // No one is working on this anymore
-        
-        // TODO Refund
-        // Can be generic (if split into "CanRefund"): Refund consumable resources (if no helpers left AND no payment progress made)
+        {
+            // No one is working on this anymore
+            buildableEntity.Destroy(); 
+            costOfDestroyedEntity = creationProgress.TotalCost;
+        }
         
         var focus = FocusQueue.FirstOrDefault(f => f.EntityToBuildId.Equals(buildableEntity.InstanceId));
 
         if (focus is not null)
         {
+            if (costOfDestroyedEntity.Count != 0)
+            {
+                RefundResources(costOfDestroyedEntity);
+                var resourcesStringified = Registry.StringifyResources(costOfDestroyedEntity);
+                GD.Print($"Refunding {resourcesStringified} for entity {OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition}");
+            }
+            
             FocusQueue.Remove(focus);
             RaiseCancelled(focus);
         }
@@ -185,11 +192,13 @@ public partial class BuildNode : ActiveAbilityNode<
             new AbilityValidator.BuildableEntityCanBePlaced
             {
                 Entity = request.EntityToBuild,
-                AlreadyPlaced = request.EntityAlreadyPlaced
+                AlreadyPlaced = request.EntityAlreadyPlaced,
+                Selection = Selection
             },
             new AbilityValidator.HasEnoughConsumableResources
             {
-                Cost = Selection.First(s => s.Name.Equals(request.EntityToBuild?.BlueprintId)).Cost,
+                UseConsumableResources = request.UseConsumableResources,
+                Cost = GetCostForSelectedEntity(request.EntityToBuild),
                 Player = OwnerActor.Player
             },
             new AbilityValidator.TargetWithinArea
@@ -215,6 +224,16 @@ public partial class BuildNode : ActiveAbilityNode<
         request.EntityToBuild!.CreationProgress!.UpdateDescription(nonConsumableStockpile);
         
         return base.HandleReservation(request);
+    }
+
+    protected override IList<Payment> ReserveResources(ActivationRequest request)
+    {
+        if (request.UseConsumableResources is false)
+            return [];
+
+        var cost = GetCostForSelectedEntity(request.EntityToBuild);
+        EventBus.Instance.RaisePaymentRequested(OwnerActor.Player, cost, false);
+        return cost;
     }
 
     protected override PreProcessingResult CreatePreProcessingResult(ActivationRequest request,
@@ -280,6 +299,9 @@ public partial class BuildNode : ActiveAbilityNode<
         }
     }
 
+    private IList<Payment> GetCostForSelectedEntity(EntityNode? entityToBuild) => Selection
+        .First(s => s.Name.Equals(entityToBuild?.BlueprintId)).Cost;
+
     private IList<Payment> GetNonConsumableStockpile() => Registry.GetNonConsumableResources(
         Registry.GetCurrentPlayerStockpile(OwnerActor.Player));
 
@@ -304,7 +326,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
     public class PreProcessingResult : IActiveAbilityActivationPreProcessingResult
     {
-        public AbilityReservationResult Reservation { get; init; }
+        public AbilityReservationResult Reservation { get; init; } = null!;
     }
 
     public class Focus : IActiveAbilityFocus

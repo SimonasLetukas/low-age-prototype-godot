@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
@@ -85,6 +86,11 @@ public abstract partial class ActiveAbilityNode<
         }
     }
 
+    protected void RefundResources(IList<Payment> resources)
+    {
+        EventBus.Instance.RaisePaymentRequested(OwnerActor.Player, resources, true);
+    }
+
     protected override TPreProcessingResult PreProcessActivation(TActivationRequest request)
     {
         CancelActivation(request);
@@ -94,8 +100,7 @@ public abstract partial class ActiveAbilityNode<
 
     protected virtual AbilityReservationResult HandleReservation(TActivationRequest request)
     {
-        // TODO
-        // var resources = ReserveResources(request.UseConsumableResources);
+        var reservedResources = ReserveResources(request);
         
         var actionWasReserved = false;
         if (CasterConsumesAction)
@@ -109,11 +114,14 @@ public abstract partial class ActiveAbilityNode<
         var reservation = new AbilityReservationResult
         {
             PlayerId = OwnerActor.Player.Id,
-            ActionWasReserved = actionWasReserved
+            ActionWasReserved = actionWasReserved,
+            ReservedResources = reservedResources
         };
         
         return reservation;
     }
+    
+    protected abstract IList<Payment> ReserveResources(TActivationRequest request);
     
     protected abstract TPreProcessingResult CreatePreProcessingResult(TActivationRequest request, 
         AbilityReservationResult reservation);
@@ -290,9 +298,9 @@ public abstract partial class ActiveAbilityNode<
 
 public record AbilityReservationResult
 {
-    // TODO public required Resources ReservedConsumableResources { get; init; }
     public required int PlayerId { get; init; }
     public required bool ActionWasReserved { get; init; }
+    public required IList<Payment> ReservedResources { get; init; }
 
     public bool IsReservedFor(Player player) => player.Id == PlayerId;
 }

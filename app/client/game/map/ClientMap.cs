@@ -957,7 +957,7 @@ public partial class ClientMap : Map
 		var wholeMapIsTargeted = buildAbility.WholeMapIsTargeted();
 		_tileMap.Elevatable.SetTargetTiles(targetTiles, wholeMapIsTargeted, false, 
 			ElevatableTiles.TargetPurpose.Placement);
-		var cost = buildAbility.GetSelectableItemNonConsumableCost(entityId);
+		var cost = buildAbility.GetSelectableItemCost(entityId);
 
 		var entity = Entities.SetEntityForPlacement(entityId, wholeMapIsTargeted, cost);
 

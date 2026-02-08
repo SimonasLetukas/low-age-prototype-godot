@@ -44,6 +44,11 @@ public partial class ToggleNode : ActiveAbilityNode<
     {
         throw new System.NotImplementedException();
     }
+    
+    protected override IList<Payment> ReserveResources(ActivationRequest request)
+    {
+        throw new System.NotImplementedException();
+    }
 
     protected override PreProcessingResult CreatePreProcessingResult(ActivationRequest request, AbilityReservationResult reservation)
     {

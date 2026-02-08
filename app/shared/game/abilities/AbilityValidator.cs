@@ -4,6 +4,7 @@ using System.Linq;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Entities;
 
 public sealed class AbilityValidator
 {
@@ -71,12 +72,13 @@ public sealed class AbilityValidator
     
     public sealed class HasEnoughConsumableResources : IAbilityValidatorItem
     {
+        public required bool UseConsumableResources { get; init; }
         public required IList<Payment> Cost { get; init; }
         public required Player Player { get; init; }
         
         public ValidationResult Validate()
         {
-            if (Cost.IsEmpty())
+            if (UseConsumableResources is false || Cost.IsEmpty())
                 return ValidationResult.Valid;
 
             var stockpile = GlobalRegistry.Instance.GetCurrentPlayerStockpile(Player);
@@ -92,11 +94,15 @@ public sealed class AbilityValidator
     {
         public required EntityNode? Entity { get; init; }
         public required bool AlreadyPlaced { get; init; }
+        public required IList<Selection<EntityId>> Selection { get; init; } 
 
         public ValidationResult Validate()
         {
             if (Entity is null)
                 return ValidationResult.Invalid("There is nothing to build!");
+            
+            if (Selection.Any(s => s.Name.Equals(Entity.BlueprintId)) is false)
+                return ValidationResult.Invalid("Can only work on something from the available selection.");
             
             if (AlreadyPlaced)
                 return ValidationResult.Valid;

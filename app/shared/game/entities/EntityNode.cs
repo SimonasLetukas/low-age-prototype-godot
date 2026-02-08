@@ -231,7 +231,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
             return;
         }
         
-        CreationProgress.TotalCost = cost.ToList();
+        CreationProgress.SetTotalCost(cost);
     }
 
     public virtual void DropDownToLowGround()

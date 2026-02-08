@@ -311,6 +311,13 @@ public partial class EntityPanel : Control
     {
         if (_selectedAbility is not IActiveAbilityNode activeAbility)
             return;
+
+        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(activeAbility.OwnerActor) is false)
+            return;
+        
+        var currentPhase = GlobalRegistry.Instance.GetCurrentPhase();
+        if (currentPhase.Equals(activeAbility.TurnPhase) is false)
+            return;
         
         activeAbility.CancelActivations();
     }

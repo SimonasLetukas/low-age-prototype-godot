@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Godot;
+using LowAgeData.Domain.Common;
 using ResearchAbility = LowAgeData.Domain.Abilities.Research;
 
 public partial class ResearchNode : ActiveAbilityNode<
@@ -37,6 +39,11 @@ public partial class ResearchNode : ActiveAbilityNode<
     }
 
     protected override Focus CreateFocus(ActivationRequest activationRequest, PreProcessingResult? preProcessingResult)
+    {
+        throw new System.NotImplementedException();
+    }
+    
+    protected override IList<Payment> ReserveResources(ActivationRequest request)
     {
         throw new System.NotImplementedException();
     }

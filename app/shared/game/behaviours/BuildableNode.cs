@@ -21,9 +21,10 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     public event Action<(int DeltaGainedHealth, int DeltaGainedShields)> Updated = delegate { };
     public event Action Completed = delegate { };
     
-    public Dictionary<BuildNode, float> Helpers { get; set; } = new();
-    public List<Payment> TotalCost { get; set; } = [];
-    public List<Payment> PaidCost { get; private set; } = [];
+    public Dictionary<BuildNode, float> Helpers { get; } = new();
+    public List<Payment> TotalCost { get; private set; } = [];
+    private List<Payment> NonConsumableCost { get; set; } = [];
+    private List<Payment> PaidCost { get; set; } = [];
 
     private Buildable Blueprint { get; set; } = null!;
     private GlobalRegistry Registry { get; } = GlobalRegistry.Instance;
@@ -32,6 +33,12 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+    }
+
+    public void SetTotalCost(IList<Payment> cost)
+    {
+        TotalCost = cost.ToList();
+        NonConsumableCost = Registry.GetNonConsumableResources(cost).ToList();
     }
 
     public bool IsPlacementValid(IList<Tiles.TileInstance?> tiles) => ValidationHandler
@@ -50,7 +57,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         if (GetResourcesSum(nonConsumableStockpile) <= 0)
             return int.MaxValue;
         
-        var isPaymentComplete = Registry.IsPaymentComplete(TotalCost, PaidCost);
+        var isPaymentComplete = Registry.IsPaymentComplete(NonConsumableCost, PaidCost);
         if (isPaymentComplete)
             return 0;
 
@@ -60,7 +67,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         var simulatedPaidCost = PaidCost.ToList();
         var counter = 0;
 
-        while (Registry.IsPaymentComplete(TotalCost, simulatedPaidCost) is false)
+        while (Registry.IsPaymentComplete(NonConsumableCost, simulatedPaidCost) is false)
         {
             for (var i = 0; i < Helpers.Count; i++)
             {
@@ -86,7 +93,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         var remainingUpdateCount = GetRemainingProductionLength(nonConsumableStockpile);
         var remainingUpdateText = remainingUpdateCount == int.MaxValue ? "too many" : remainingUpdateCount.ToString();
         var appliedIncomeText = Registry.StringifyResources(GetAppliedIncome());
-        var remainingCostText = Registry.StringifyResources(Registry.SubtractResources(TotalCost, PaidCost)); // TODO for some reason PaidCost is ignored
+        var remainingCostText = Registry.StringifyResources(Registry.SubtractResources(NonConsumableCost, PaidCost)); // TODO for some reason PaidCost is ignored
         
         Description = $"{helperText} currently working to finish this in " +
                       $"{remainingUpdateText} turns (with a combined production of " +
@@ -100,7 +107,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         var actualIncome = Registry.GetActualPlayerIncome(Parent.Player, efficiencyFactor, Helpers.Count);
         var nonConsumableIncome = Registry.GetNonConsumableResources(actualIncome);
         var filteredIncome = nonConsumableIncome
-            .Where(i => TotalCost.Any(c => c.Resource.Equals(i.Resource)))
+            .Where(i => NonConsumableCost.Any(c => c.Resource.Equals(i.Resource)))
             .ToList();
         
         return filteredIncome;
@@ -110,7 +117,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     {
         UpdateDescription(nonConsumableStockpile);
 
-        var isPaymentComplete = Registry.IsPaymentComplete(TotalCost, PaidCost);
+        var isPaymentComplete = Registry.IsPaymentComplete(NonConsumableCost, PaidCost);
         if (isPaymentComplete)
         {
             Completed();
@@ -129,7 +136,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     
     private ProgressStep CalculateProgressStep(IList<Payment> paidSoFar, IList<Payment> nonConsumableStockpile)
     {
-        var isPaymentComplete = Registry.IsPaymentComplete(TotalCost, paidSoFar);
+        var isPaymentComplete = Registry.IsPaymentComplete(NonConsumableCost, paidSoFar);
         if (isPaymentComplete)
             return new ProgressStep
             {
@@ -138,13 +145,13 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
             };
 
         var efficiencyFactor = CalculateEfficiencyFactor();
-        var (_, updatedPaidSoFar) = Registry.SimulatePayment(TotalCost,
+        var (_, updatedPaidSoFar) = Registry.SimulatePayment(NonConsumableCost,
             nonConsumableStockpile, paidSoFar, efficiencyFactor);
 
         return new ProgressStep
         {
             NewPaidSoFar = updatedPaidSoFar,
-            Completed = Registry.IsPaymentComplete(TotalCost, updatedPaidSoFar)
+            Completed = Registry.IsPaymentComplete(NonConsumableCost, updatedPaidSoFar)
         };
     }
 
@@ -171,7 +178,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     {
         var previousPaidCostSum = GetResourcesSum(previousPaidCost);
         var paidCostSum = GetResourcesSum(PaidCost);
-        var totalCostSum = GetResourcesSum(TotalCost);
+        var totalCostSum = GetResourcesSum(NonConsumableCost);
         
         var previouslyGainedValue = (maxValue * previousPaidCostSum) / totalCostSum;
         var newGainedValue = (maxValue * paidCostSum) / totalCostSum;

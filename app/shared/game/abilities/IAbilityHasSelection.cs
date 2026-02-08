@@ -7,7 +7,7 @@ using LowAgeData.Domain.Common;
 /// </summary>
 public interface IAbilityHasSelection
 {
-    IList<Payment> GetSelectableItemNonConsumableCost(Id selectableItemId);
+    IList<Payment> GetSelectableItemCost(Id selectableItemId);
     string GetSelectableItemText(Id selectableItemId);
     bool IsSelectableItemDisabled(Id selectableItemId);
 }

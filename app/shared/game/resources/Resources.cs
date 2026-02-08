@@ -153,13 +153,15 @@ public partial class Resources : Node2D
         .CanSubtractResources(
             ResourceCalculator.ToDictionary(from),
             ResourceCalculator.ToDictionary(amount),
-            _resourceBlueprints);
+            _resourceBlueprints,
+            false);
     
     public IList<Payment> SubtractResources(IList<Payment> from, IList<Payment> amount) => ResourceCalculator
         .ToList(ResourceCalculator.SubtractResources(
             ResourceCalculator.ToDictionary(from), 
             ResourceCalculator.ToDictionary(amount), 
-            _resourceBlueprints));
+            _resourceBlueprints,
+            false));
 
     private void PopulatePlayerResources()
     {
@@ -207,7 +209,7 @@ public partial class Resources : Node2D
                 .SimulatePayment(cost, stockpile, paidSoFar, 1);
 
             if (ResourceCalculator.TrySubtractResources(stockpile, resourcesSpent, _resourceBlueprints, 
-                    out var resultingStockpile) is false)
+                    false, out var resultingStockpile) is false)
                 continue; // Try to pay for the income provider next time
 
             stockpile = resultingStockpile;
@@ -236,6 +238,12 @@ public partial class Resources : Node2D
 
         return updatedStockpile;
     }
+    
+    private void RaisePlayerResourcesUpdated(Player player)
+    {
+        var currentStockpile = ResourceCalculator.ToList(_resourcesStockpiledByPlayer[player]);
+        EventBus.Instance.RaisePlayerResourcesUpdated(player, currentStockpile);
+    }
 
     private void OnPhaseStarted(int turn, TurnPhase phase)
     {
@@ -259,20 +267,20 @@ public partial class Resources : Node2D
             _resourcesStockpiledByPlayer[player] = GetUpdatedStockpileAfterIncome(
                 providers, _resourcesStockpiledByPlayer[player]);
 
-            var currentStockpile = ResourceCalculator.ToList(_resourcesStockpiledByPlayer[player]);
-            EventBus.Instance.RaisePlayerResourcesUpdated(player, currentStockpile);
+            RaisePlayerResourcesUpdated(player);
         }
     }
 
-    private void OnPaymentRequested(Player player, IList<Payment> resourcesSpent)
+    private void OnPaymentRequested(Player player, IList<Payment> resourcesSpent, bool isRefund)
     {
         var stockpile = _resourcesStockpiledByPlayer[player];
         if (ResourceCalculator.TrySubtractResources(stockpile, 
                 ResourceCalculator.ToDictionary(resourcesSpent), _resourceBlueprints, 
-                out var resultingStockpile) is false)
+                isRefund, out var resultingStockpile) is false)
             return;
 
         _resourcesStockpiledByPlayer[player] = resultingStockpile;
+        RaisePlayerResourcesUpdated(player);
     }
 
     private void OnIncomeProviderRegistered(IncomeProvider provider)

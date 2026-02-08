@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Godot;
 using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
 
 public partial class InstantNode : ActiveAbilityNode<
         InstantNode.ActivationRequest, 
@@ -37,6 +39,11 @@ public partial class InstantNode : ActiveAbilityNode<
     }
 
     protected override Focus CreateFocus(ActivationRequest activationRequest, PreProcessingResult? preProcessingResult)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override IList<Payment> ReserveResources(ActivationRequest request)
     {
         throw new System.NotImplementedException();
     }

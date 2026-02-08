@@ -23,7 +23,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 6, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 7, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 14, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 20, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -58,7 +58,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 50, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 3, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 7, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 28, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -95,7 +95,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 13, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 8, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 18, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -138,7 +138,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 7, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 2, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 9, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 26, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -175,7 +175,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 19, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 23, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -211,7 +211,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 18, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 8, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 19, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -253,7 +253,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 22, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 11, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 12, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -296,7 +296,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 40, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 9, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 25, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 6, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -332,7 +332,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 39, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 2, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 16, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -367,7 +367,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 2, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 15, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -402,7 +402,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 36, hasCurrent: true, combatType: StatType.Health),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 6, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 12, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 14, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -436,7 +436,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 12, hasCurrent: true, combatType: StatType.Shields),
                         new CombatStat(maxAmount: 3, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 2, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 32, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -473,7 +473,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Shields),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 17, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -516,7 +516,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 2, hasCurrent: true, combatType: StatType.Shields),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 11, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 30, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -552,7 +552,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Shields),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 8, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 21, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -597,7 +597,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Shields),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 0, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 8, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 45, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -635,7 +635,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Shields),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 4, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 8, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 11, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -782,7 +782,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Shields),
                         new CombatStat(maxAmount: 2, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 2, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 3, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 6, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 29, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 6, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(
@@ -821,7 +821,7 @@ namespace LowAgeData.Collections
                         new CombatStat(maxAmount: 20, hasCurrent: true, combatType: StatType.Shields),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.MeleeArmour),
                         new CombatStat(maxAmount: 1, hasCurrent: false, combatType: StatType.RangedArmour),
-                        new CombatStat(maxAmount: 5, hasCurrent: true, combatType: StatType.Movement),
+                        new CombatStat(maxAmount: 10, hasCurrent: true, combatType: StatType.Movement),
                         new CombatStat(maxAmount: 13, hasCurrent: true, combatType: StatType.Initiative),
                         new CombatStat(maxAmount: 5, hasCurrent: false, combatType: StatType.Vision),
                         new AttackStat(

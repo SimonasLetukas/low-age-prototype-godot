@@ -109,19 +109,23 @@ public static class ResourceCalculator
 
     public static bool TrySubtractResources(IReadOnlyDictionary<ResourceId, int> from,
         IReadOnlyDictionary<ResourceId, int> amount, IReadOnlyDictionary<ResourceId, Resource> resourceBlueprints,
-        out IReadOnlyDictionary<ResourceId, int> result)
+        bool isRefund, out IReadOnlyDictionary<ResourceId, int> result)
     {
         result = new Dictionary<ResourceId, int>();
-        if (CanSubtractResources(from, amount, resourceBlueprints) is false)
+        if (CanSubtractResources(from, amount, resourceBlueprints, isRefund) is false)
             return false;
             
-        result = SubtractResources(from, amount, resourceBlueprints);
+        result = SubtractResources(from, amount, resourceBlueprints, isRefund);
         return true;
     }
 
     public static bool CanSubtractResources(IReadOnlyDictionary<ResourceId, int> from,
-        IReadOnlyDictionary<ResourceId, int> amount, IReadOnlyDictionary<ResourceId, Resource> resourceBlueprints)
+        IReadOnlyDictionary<ResourceId, int> amount, IReadOnlyDictionary<ResourceId, Resource> resourceBlueprints,
+        bool isRefund)
     {
+        if (isRefund)
+            return true;
+        
         foreach (var (resource, value) in amount)
         {
             var blueprint = resourceBlueprints[resource];
@@ -140,7 +144,8 @@ public static class ResourceCalculator
     }
 
     public static IReadOnlyDictionary<ResourceId, int> SubtractResources(IReadOnlyDictionary<ResourceId, int> from,
-        IReadOnlyDictionary<ResourceId, int> amount, IReadOnlyDictionary<ResourceId, Resource> resourceBlueprints)
+        IReadOnlyDictionary<ResourceId, int> amount, IReadOnlyDictionary<ResourceId, Resource> resourceBlueprints,
+        bool isRefund)
     {
         var result = from.ToDictionary();
         foreach (var (resource, value) in amount)
@@ -153,7 +158,7 @@ public static class ResourceCalculator
                 continue;
 
             var amountAvailable = result.GetValueOrDefault(resource);
-            var newValue = Math.Max(amountAvailable - value, 0);
+            var newValue = isRefund ? amountAvailable + value : amountAvailable - value;
             result[resource] = newValue;
         }
 
