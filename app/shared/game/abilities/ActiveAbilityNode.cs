@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Note: since visualisation in-game is not needed, this abstract class has no node/scene. 
@@ -118,6 +120,10 @@ public abstract partial class ActiveAbilityNode<
             ReservedResources = reservedResources
         };
         
+        if (DebugEnabled)
+            GD.Print($"DONE: {OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} finishing to " +
+                     $"reserve with result '{JsonConvert.SerializeObject(reservation)}'");
+        
         return reservation;
     }
     
@@ -173,10 +179,12 @@ public abstract partial class ActiveAbilityNode<
     
     protected abstract bool TryExecutePostPayment(TFocus focus);
 
-    private static void Requeue(TFocus focus)
+    private void Requeue(TFocus focus)
     {
-        GD.Print($"Requeue: reservation player ID '{focus.Reservation.PlayerId}', " +
-                 $"current player ID '{Players.Instance.Current.Id}'");
+        if (DebugEnabled)
+            GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} requeue: " +
+                     $"reservation player ID '{focus.Reservation.PlayerId}', current player ID " +
+                     $"'{Players.Instance.Current.Id}', focus '{JsonConvert.SerializeObject(focus)}'");
         
         // Only requeue for the owner player for convenience but still allow to cancel if desired,
         // every other player will receive (or not) a new execution request from the owner player.
@@ -190,6 +198,9 @@ public abstract partial class ActiveAbilityNode<
     {
         if (WasAlreadyCompleted(focus))
         {
+            if (DebugEnabled)
+                GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} requeued focus " +
+                         $"'{JsonConvert.SerializeObject(focus)}' will not be handled because it was completed");
             Complete(focus);
             return;
         }
@@ -197,7 +208,8 @@ public abstract partial class ActiveAbilityNode<
         var activationRequest = focus.ToActivationRequestForRequeue();
         if (activationRequest is not TActivationRequest typedRequest)
         {
-            GD.Print("Requeue focus was not the correct type");
+            if (DebugEnabled)
+                GD.Print("Requeue focus was not the correct type");
             FocusQueue.Remove(focus);
             return;
         }
@@ -205,6 +217,21 @@ public abstract partial class ActiveAbilityNode<
         var reservation = HandleReservation(typedRequest);
         focus.Reservation = reservation;
         focus.Requeued = false;
+        
+        if (DebugEnabled)
+            GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} requeued focus " + 
+                     $"'{JsonConvert.SerializeObject(focus)}' was handled");
+    }
+
+    protected void CleanUpCompletedFocus(TFocus focus)
+    {
+        FocusQueue.Remove(focus);
+        
+        if (FocusQueue.IsEmpty())
+        {
+            OwnerActor.RemoveWorkingOnAbility(this); 
+            RefundAction();
+        }
     }
 
     /// <summary>

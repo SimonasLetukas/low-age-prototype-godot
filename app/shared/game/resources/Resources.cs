@@ -4,6 +4,7 @@ using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Factions;
 using LowAgeData.Domain.Resources;
+using Newtonsoft.Json;
 using Resource = LowAgeData.Domain.Resources.Resource;
 
 /// <summary>
@@ -17,6 +18,8 @@ using Resource = LowAgeData.Domain.Resources.Resource;
 /// </summary>
 public partial class Resources : Node2D
 {
+    private static bool DebugEnabled => true;
+    
     private readonly Dictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>> _currentPaymentByIncomeProvider = new();
     private readonly Dictionary<Player, IReadOnlyDictionary<ResourceId, int>> _resourcesStockpiledByPlayer = new();
     private Dictionary<ResourceId, Resource> _resourceBlueprints = [];
@@ -133,6 +136,11 @@ public partial class Resources : Node2D
     public static (IList<Payment> ResourcesSpent, IList<Payment> UpdatedPayment) SimulatePayment(
         IList<Payment> cost, IList<Payment> stockpile, IList<Payment> paidSoFar, float efficiencyFactor)
     {
+        if (DebugEnabled)
+            GD.Print($"Received request to simulate payment: cost '{JsonConvert.SerializeObject(cost)}', " +
+                     $"stockpile '{JsonConvert.SerializeObject(stockpile)}', paid so far " +
+                     $"'{JsonConvert.SerializeObject(paidSoFar)}', efficiency factor '{efficiencyFactor}'");
+        
         var (resourcesSpent, updatedPayment) = ResourceCalculator
             .SimulatePayment(
                 ResourceCalculator.ToDictionary(cost), 

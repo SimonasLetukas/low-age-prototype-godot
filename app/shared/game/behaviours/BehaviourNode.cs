@@ -13,6 +13,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     public Guid? OwnerActorId { get; protected set; }
     public EndsAtNode CurrentDuration { get; protected set; } = null!;
 
+    protected bool DebugEnabled => true;
     protected EntityNode Parent { get; set; } = null!;
     protected Effects History { get; set; } = null!;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
+using Newtonsoft.Json;
 
 public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable>
 {
@@ -101,7 +102,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
                       $"the remaining {remainingCostText} production).\n\n" + Blueprint.Description;
     }
     
-    private IList<Payment> GetAppliedIncome()
+    private List<Payment> GetAppliedIncome()
     {
         var efficiencyFactor = CalculateEfficiencyFactor();
         var actualIncome = Registry.GetActualPlayerIncome(Parent.Player, efficiencyFactor, Helpers.Count);
@@ -118,6 +119,13 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         UpdateDescription(nonConsumableStockpile);
 
         var isPaymentComplete = Registry.IsPaymentComplete(NonConsumableCost, PaidCost);
+        
+        if (DebugEnabled)
+            GD.Print($"A helper wants to update building progress of {Parent.DisplayName} at " +
+                     $"{Parent.EntityPrimaryPosition}: stockpile '{JsonConvert.SerializeObject(nonConsumableStockpile)}', " +
+                     $"paid cost '{JsonConvert.SerializeObject(PaidCost)}', total cost " +
+                     $"'{JsonConvert.SerializeObject(TotalCost)}', is payment complete {isPaymentComplete}");
+        
         if (isPaymentComplete)
         {
             Completed();
@@ -127,6 +135,10 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         var previousPaidCost = PaidCost;
         var progress = CalculateProgressStep(PaidCost, nonConsumableStockpile);
         PaidCost = progress.NewPaidSoFar.ToList();
+        
+        if (DebugEnabled)
+            GD.Print($"{Parent.DisplayName} at {Parent.EntityPrimaryPosition} updated building progress: " +
+                     $"{JsonConvert.SerializeObject(progress)}");
 
         UpdateVitals(previousPaidCost, progress.Completed);
 
@@ -167,6 +179,12 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         
         var deltaGainedHealth = CalculateDeltaGainedValue(maxHealth, previousPaidCost, completed);
         var deltaGainedShields = CalculateDeltaGainedValue(maxShields, previousPaidCost, completed);
+        
+        if (DebugEnabled)
+            GD.Print($"{Parent.DisplayName} at {Parent.EntityPrimaryPosition} building progress updates " +
+                     $"vitals: previous paid cost '{JsonConvert.SerializeObject(previousPaidCost)}', current paid " +
+                     $"cost {JsonConvert.SerializeObject(PaidCost)}, is complete {completed}. Gained health " +
+                     $"{deltaGainedHealth} and shields {deltaGainedShields}.");
         
         Updated((deltaGainedHealth, deltaGainedShields));
     }

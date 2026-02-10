@@ -8,6 +8,7 @@ using LowAgeData.Domain.Common.Shape;
 using LowAgeData.Domain.Entities;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
+using Newtonsoft.Json;
 
 public partial class BuildNode : ActiveAbilityNode<
         BuildNode.ActivationRequest, 
@@ -155,12 +156,8 @@ public partial class BuildNode : ActiveAbilityNode<
 
         if (focus is not null)
         {
-            if (costOfDestroyedEntity.Count != 0)
-            {
+            if (costOfDestroyedEntity.Count != 0) 
                 RefundResources(costOfDestroyedEntity);
-                var resourcesStringified = Registry.StringifyResources(costOfDestroyedEntity);
-                GD.Print($"Refunding {resourcesStringified} for entity {OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition}");
-            }
             
             FocusQueue.Remove(focus);
             RaiseCancelled(focus);
@@ -218,6 +215,21 @@ public partial class BuildNode : ActiveAbilityNode<
 
     protected override AbilityReservationResult HandleReservation(ActivationRequest request)
     {
+        if (DebugEnabled)
+            GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} trying to reserve request " +
+                     $"({request.EntityToBuild?.DisplayName}, {request.EntityToBuild?.EntityPrimaryPosition}, already " +
+                     $"placed {request.EntityAlreadyPlaced}, use consumables {request.UseConsumableResources}). Creation " +
+                     $"progress (completed {request.EntityToBuild?.IsCompleted()}, helpers " +
+                     $"{request.EntityToBuild?.CreationProgress?.Helpers.Count})");
+
+        if (request.EntityToBuild is null || request.EntityToBuild.IsCompleted())
+        {
+            // This may be true for non-current player clients, in which case just try to pay whatever they paid,
+            // even if one of the helpers managed to complete building in the same timing window just before this
+            // execution.
+            return base.HandleReservation(request);
+        } 
+        
         request.EntityToBuild!.CreationProgress!.Helpers[this] = Blueprint.HelpEfficiency;
         
         var nonConsumableStockpile = GetNonConsumableStockpile();
@@ -266,7 +278,8 @@ public partial class BuildNode : ActiveAbilityNode<
 
         var completed = entity.IsCompleted();
         
-        GD.Print($"Building completed: '{completed}'");
+        if (DebugEnabled)
+            GD.Print($"Building completed: '{completed}'");
         
         return completed;
     }
@@ -286,17 +299,20 @@ public partial class BuildNode : ActiveAbilityNode<
         var entity = Registry.GetEntityById(focus.EntityToBuildId);
         
         if (entity is null)
-            return; // Something is fishy, best to move on
+        {
+            // Something is fishy, best to move on
+            CleanUpCompletedFocus(focus);
+            return; 
+        }
         
         entity.CreationProgress?.Helpers.Clear(); // It's OK if CreationProgress doesn't even exist at this point
 
-        FocusQueue.Remove(focus);
-
-        if (FocusQueue.IsEmpty())
-        {
-            OwnerActor.RemoveWorkingOnAbility(this); 
-            RefundAction();
-        }
+        CleanUpCompletedFocus(focus);
+        
+        if (DebugEnabled)
+            GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} completed focus " +
+                     $"'{JsonConvert.SerializeObject(focus)}'. Focus queue {FocusQueue.Count}. Entity is " +
+                     $"completed {entity.IsCompleted()}");
     }
 
     private IList<Payment> GetCostForSelectedEntity(EntityNode? entityToBuild) => Selection
