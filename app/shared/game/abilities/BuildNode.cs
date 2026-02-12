@@ -262,6 +262,14 @@ public partial class BuildNode : ActiveAbilityNode<
         EntityToBuildId = activationRequest.EntityToBuild!.InstanceId
     };
 
+    protected override void RequestExecution(Focus focus)
+    {
+        var entity = Registry.GetEntityById(focus.EntityToBuildId);
+        focus.EfficiencyFactor = entity?.CreationProgress?.CalculateEfficiencyFactor();
+        
+        base.RequestExecution(focus);
+    }
+
     protected override bool TryExecutePostPayment(Focus focus)
     {
         var entity = Registry.GetEntityById(focus.EntityToBuildId);
@@ -274,7 +282,7 @@ public partial class BuildNode : ActiveAbilityNode<
             entity.CreationProgress.Helpers[this] = Blueprint.HelpEfficiency;
         
         var nonConsumableStockpile = GetNonConsumableStockpile();
-        entity.CreationProgress.UpdateProgress(nonConsumableStockpile);
+        entity.CreationProgress.UpdateProgress(nonConsumableStockpile, focus.EfficiencyFactor);
 
         var completed = entity.IsCompleted();
         
@@ -349,7 +357,7 @@ public partial class BuildNode : ActiveAbilityNode<
     {
         public bool Requeued { get; set; }
         public required AbilityReservationResult Reservation { get; set; }
-        
+        public float? EfficiencyFactor { get; set; }
         public required Guid EntityToBuildId { get; init; }
         //public required IList<Payment> Cost { get; init; }
         //public required IList<Payment> PaymentPaid { get; init; }

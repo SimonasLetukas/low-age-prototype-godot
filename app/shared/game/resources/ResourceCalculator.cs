@@ -115,7 +115,7 @@ public static class ResourceCalculator
         if (CanSubtractResources(from, amount, resourceBlueprints, isRefund) is false)
             return false;
             
-        result = SubtractResources(from, amount, resourceBlueprints, isRefund);
+        result = SubtractResources(from, amount, resourceBlueprints, isRefund, false);
         return true;
     }
 
@@ -145,13 +145,13 @@ public static class ResourceCalculator
 
     public static IReadOnlyDictionary<ResourceId, int> SubtractResources(IReadOnlyDictionary<ResourceId, int> from,
         IReadOnlyDictionary<ResourceId, int> amount, IReadOnlyDictionary<ResourceId, Resource> resourceBlueprints,
-        bool isRefund)
+        bool isRefund, bool subtractNonConsumables)
     {
         var result = from.ToDictionary();
         foreach (var (resource, value) in amount)
         {
             var blueprint = resourceBlueprints[resource];
-            if (blueprint.IsConsumable is false)
+            if (blueprint.IsConsumable is false && subtractNonConsumables is false)
                 continue;
 
             if (result.ContainsKey(resource) is false)

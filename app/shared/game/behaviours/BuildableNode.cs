@@ -72,7 +72,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         {
             for (var i = 0; i < Helpers.Count; i++)
             {
-                var progress = CalculateProgressStep(simulatedPaidCost, nonConsumableStockpile);
+                var progress = CalculateProgressStep(simulatedPaidCost, nonConsumableStockpile, null);
                 simulatedPaidCost = progress.NewPaidSoFar.ToList();
             }
             
@@ -94,46 +94,59 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         var remainingUpdateCount = GetRemainingProductionLength(nonConsumableStockpile);
         var remainingUpdateText = remainingUpdateCount == int.MaxValue ? "too many" : remainingUpdateCount.ToString();
         var appliedIncomeText = Registry.StringifyResources(GetAppliedIncome());
-        var remainingCostText = Registry.StringifyResources(Registry.SubtractResources(NonConsumableCost, PaidCost)); // TODO for some reason PaidCost is ignored
+        var remainingCostText = Registry.StringifyResources(Registry.SubtractResources(NonConsumableCost, 
+            PaidCost, true));
         
-        Description = $"{helperText} currently working to finish this in " +
-                      $"{remainingUpdateText} turns (with a combined production of " +
-                      $"{appliedIncomeText}, which is used to cover " + 
-                      $"the remaining {remainingCostText} production).\n\n" + Blueprint.Description;
+        var allyText = $"{helperText} currently working to finish this in " +
+                       $"{remainingUpdateText} turns (with a combined production of " +
+                       $"{appliedIncomeText}, which is used to cover " + 
+                       $"the remaining {remainingCostText} production).\n\n" + Blueprint.Description;
+        var enemyText = $"{helperText} currently working to finish this by covering " + 
+                        $"the remaining {remainingCostText} production.\n\n" + Blueprint.Description;
+        Description = Players.Instance.IsCurrentPlayerAllyTo(Parent.Player) ? allyText : enemyText;
     }
     
-    private List<Payment> GetAppliedIncome()
+    /// <summary>
+    /// Calculates the average efficiency factor given all the current helpers
+    /// </summary>
+    public float CalculateEfficiencyFactor()
     {
-        var efficiencyFactor = CalculateEfficiencyFactor();
-        var actualIncome = Registry.GetActualPlayerIncome(Parent.Player, efficiencyFactor, Helpers.Count);
-        var nonConsumableIncome = Registry.GetNonConsumableResources(actualIncome);
-        var filteredIncome = nonConsumableIncome
-            .Where(i => NonConsumableCost.Any(c => c.Resource.Equals(i.Resource)))
-            .ToList();
+        var helpers = Helpers.Values
+            .OrderDescending()
+            .Skip(1); // First one is the main builder so it does not suffer from efficiency loss
         
-        return filteredIncome;
-    }
-    
-    public void UpdateProgress(IList<Payment> nonConsumableStockpile)
-    {
-        UpdateDescription(nonConsumableStockpile);
+        float currentProductionFactor = 1;
+        float summedProductionBonus = 1;
 
+        foreach (var helperEfficiency in helpers)
+        {
+            currentProductionFactor *= helperEfficiency;
+            summedProductionBonus += currentProductionFactor;
+        }
+
+        return MathF.Round(summedProductionBonus / Helpers.Count, 4);
+    }
+    
+    public void UpdateProgress(IList<Payment> nonConsumableStockpile, float? efficiencyFactor)
+    {
         var isPaymentComplete = Registry.IsPaymentComplete(NonConsumableCost, PaidCost);
         
         if (DebugEnabled)
             GD.Print($"A helper wants to update building progress of {Parent.DisplayName} at " +
                      $"{Parent.EntityPrimaryPosition}: stockpile '{JsonConvert.SerializeObject(nonConsumableStockpile)}', " +
                      $"paid cost '{JsonConvert.SerializeObject(PaidCost)}', total cost " +
-                     $"'{JsonConvert.SerializeObject(TotalCost)}', is payment complete {isPaymentComplete}");
+                     $"'{JsonConvert.SerializeObject(TotalCost)}', is payment complete {isPaymentComplete}, helpers " +
+                     $"{Helpers.Count}, efficiency factor {CalculateEfficiencyFactor()}");
         
         if (isPaymentComplete)
         {
+            UpdateDescription(nonConsumableStockpile);
             Completed();
             return;
         }
 
         var previousPaidCost = PaidCost;
-        var progress = CalculateProgressStep(PaidCost, nonConsumableStockpile);
+        var progress = CalculateProgressStep(PaidCost, nonConsumableStockpile, efficiencyFactor);
         PaidCost = progress.NewPaidSoFar.ToList();
         
         if (DebugEnabled)
@@ -141,12 +154,14 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
                      $"{JsonConvert.SerializeObject(progress)}");
 
         UpdateVitals(previousPaidCost, progress.Completed);
-
+        UpdateDescription(nonConsumableStockpile);
+        
         if (progress.Completed)
             Completed();
     }
     
-    private ProgressStep CalculateProgressStep(IList<Payment> paidSoFar, IList<Payment> nonConsumableStockpile)
+    private ProgressStep CalculateProgressStep(IList<Payment> paidSoFar, IList<Payment> nonConsumableStockpile,
+        float? efficiencyFactor)
     {
         var isPaymentComplete = Registry.IsPaymentComplete(NonConsumableCost, paidSoFar);
         if (isPaymentComplete)
@@ -156,9 +171,9 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
                 Completed = true
             };
 
-        var efficiencyFactor = CalculateEfficiencyFactor();
+        efficiencyFactor ??= CalculateEfficiencyFactor();
         var (_, updatedPaidSoFar) = Registry.SimulatePayment(NonConsumableCost,
-            nonConsumableStockpile, paidSoFar, efficiencyFactor);
+            nonConsumableStockpile, paidSoFar, efficiencyFactor.Value);
 
         return new ProgressStep
         {
@@ -209,25 +224,16 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         .Select(r => r.Amount)
         .Sum();
 
-    /// <summary>
-    /// Calculates the average efficiency factor given all the current helpers
-    /// </summary>
-    private float CalculateEfficiencyFactor()
+    private List<Payment> GetAppliedIncome()
     {
-        var helpers = Helpers.Values
-            .OrderDescending()
-            .Skip(1); // First one is the main builder so it does not suffer from efficiency loss
+        var efficiencyFactor = CalculateEfficiencyFactor();
+        var actualIncome = Registry.GetActualPlayerIncome(Parent.Player, efficiencyFactor, Helpers.Count);
+        var nonConsumableIncome = Registry.GetNonConsumableResources(actualIncome);
+        var filteredIncome = nonConsumableIncome
+            .Where(i => NonConsumableCost.Any(c => c.Resource.Equals(i.Resource)))
+            .ToList();
         
-        float currentProductionFactor = 1;
-        float summedProductionBonus = 1;
-
-        foreach (var helperEfficiency in helpers)
-        {
-            currentProductionFactor *= helperEfficiency;
-            summedProductionBonus += currentProductionFactor;
-        }
-
-        return summedProductionBonus / Helpers.Count;
+        return filteredIncome;
     }
     
     private readonly struct ProgressStep

@@ -164,12 +164,13 @@ public partial class Resources : Node2D
             _resourceBlueprints,
             false);
     
-    public IList<Payment> SubtractResources(IList<Payment> from, IList<Payment> amount) => ResourceCalculator
+    public IList<Payment> SubtractResources(IList<Payment> from, IList<Payment> amount, bool subtractNonConsumable) => ResourceCalculator
         .ToList(ResourceCalculator.SubtractResources(
             ResourceCalculator.ToDictionary(from), 
             ResourceCalculator.ToDictionary(amount), 
             _resourceBlueprints,
-            false));
+            false,
+            subtractNonConsumable));
 
     private void PopulatePlayerResources()
     {

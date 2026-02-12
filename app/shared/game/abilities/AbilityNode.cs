@@ -97,7 +97,10 @@ public abstract partial class AbilityNode<
         }
     }
     
-    private void RequestExecution(TFocus focus) => ExecutionRequested(this, focus);
+    protected virtual void RequestExecution(TFocus focus)
+    {
+        ExecutionRequested(this, focus);
+    }
 
     public void OnExecutionRequested(IAbilityFocus focus)
     {

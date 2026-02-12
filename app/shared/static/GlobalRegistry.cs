@@ -35,7 +35,7 @@ public partial class GlobalRegistry : Node
     public Func<IList<Payment>, IList<Payment>, IList<Payment>, float, (IList<Payment> ResourcesSpent, IList<Payment> UpdatedPayment)> SimulatePayment { get; private set; } = null!;
     public Func<IList<Payment>, IList<Payment>, bool> IsPaymentComplete { get; private set; } = null!;
     public Func<IList<Payment>, IList<Payment>, bool> CanSubtractResources { get; private set; } = null!;
-    public Func<IList<Payment>, IList<Payment>, IList<Payment>> SubtractResources { get; private set; } = null!;
+    public Func<IList<Payment>, IList<Payment>, bool, IList<Payment>> SubtractResources { get; private set; } = null!;
     
     #endregion Resolvers
 
@@ -57,7 +57,7 @@ public partial class GlobalRegistry : Node
     public void ProvideSimulatePayment(Func<IList<Payment>, IList<Payment>, IList<Payment>, float, (IList<Payment> ResourcesSpent, IList<Payment> UpdatedPayment)> simulatePayment) => SimulatePayment = simulatePayment;
     public void ProvideIsPaymentComplete(Func<IList<Payment>, IList<Payment>, bool> isPaymentComplete) => IsPaymentComplete = isPaymentComplete;
     public void ProvideCanSubtractResources(Func<IList<Payment>, IList<Payment>, bool> canSubtractResources) => CanSubtractResources = canSubtractResources;
-    public void ProvideSubtractResources(Func<IList<Payment>, IList<Payment>, IList<Payment>> subtractResources) => SubtractResources = subtractResources;
+    public void ProvideSubtractResources(Func<IList<Payment>, IList<Payment>, bool, IList<Payment>> subtractResources) => SubtractResources = subtractResources;
     
     #endregion Providers
 }
