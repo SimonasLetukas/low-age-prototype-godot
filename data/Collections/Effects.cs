@@ -81,6 +81,14 @@ namespace LowAgeData.Collections
                         BehaviourId.Shared.CelestiumIncomeIncome
                     },
                     target: Location.Self),
+                
+                new ApplyBehaviour(
+                    id: EffectId.Shared.Revelators.PopulationCostApplyBehaviour,
+                    behavioursToApply: new List<BehaviourId>
+                    {
+                        BehaviourId.Shared.Revelators.PopulationCostIncome
+                    },
+                    target: Location.Self),
 
                 new Search(
                     id: EffectId.Shared.Revelators.NoPopulationSpaceSearch,

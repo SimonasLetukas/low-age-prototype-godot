@@ -20,6 +20,7 @@ namespace LowAgeData.Domain.Behaviours
             IList<ResourceModification> resources,
             int? diminishingReturn = null,
             EndsAt? endsAt = null,
+            Alignment? alignment = null,
             IList<Payment>? cost = null,
             bool? waitForAvailableStorage = null,
             IList<Trigger>? triggers = null,
@@ -31,7 +32,7 @@ namespace LowAgeData.Domain.Behaviours
                 description, 
                 sprite,
                 endsAt ?? EndsAt.Death,
-                Alignment.Positive,
+                alignment ?? Alignment.Positive,
                 triggers: triggers,
                 removeOnConditionsMet: removeOnConditionsMet,
                 conditionalEffects: conditionalEffects)

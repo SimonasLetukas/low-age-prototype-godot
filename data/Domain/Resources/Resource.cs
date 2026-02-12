@@ -16,7 +16,6 @@ namespace LowAgeData.Domain.Resources
             bool hasLimit, 
             bool isConsumable, 
             bool hasBank, ResourceId? storedAs = null,
-            bool? attachesToNewActors = null,
             IList<EffectId>? positiveIncomeEffects = null,
             IList<EffectId>? negativeIncomeEffects = null,
             string? negativeIncomeDescription = null,
@@ -31,7 +30,6 @@ namespace LowAgeData.Domain.Resources
             IsConsumable = isConsumable;
             HasBank = hasBank;
             StoredAs = storedAs ?? id;
-            AttachesToNewActors = attachesToNewActors ?? false;
             PositiveIncomeEffects = positiveIncomeEffects ?? new List<EffectId>();
             NegativeIncomeEffects = negativeIncomeEffects ?? new List<EffectId>();
             NegativeIncomeDescription = negativeIncomeDescription ?? string.Empty;
@@ -44,6 +42,9 @@ namespace LowAgeData.Domain.Resources
 
         /// <summary>
         /// If true, max and current values are separate and going over the max value normally is not allowed.
+        ///
+        /// Note: Currently, not fully functional, limits only work when <see cref="StoredAs"/> is different from the
+        /// current <see cref="Resource"/>.
         /// </summary>
         public bool HasLimit { get; }
         
@@ -66,15 +67,6 @@ namespace LowAgeData.Domain.Resources
         /// be stored together. <see cref="StoredAs"/> is identical to the <see cref="Id"/> by default.
         /// </summary>
         public ResourceId StoredAs { get; }
-        
-        /// <summary>
-        /// If true, spending this resource as part of <see cref="Payment"/> during <see cref="Selection{T}"/> retains the
-        /// value spent for as long as the <see cref="Actor"/> that was spawned is not destroyed (technically, each
-        /// such <see cref="Actor"/> gets a negative <see cref="Income"/> for as long as it's not destroyed, so it
-        /// mostly makes sense to use this property together with <see cref="HasBank"/> set to false, unless funky
-        /// behaviour is required). False by default.
-        /// </summary>
-        public bool AttachesToNewActors { get; }
         
         /// <summary>
         /// List of <see cref="Effect"/>s to be executed at the start of each action phase if the current value of this

@@ -63,6 +63,17 @@ namespace LowAgeData.Collections
                     onBuildBehaviour: BehaviourId.Shared.UnitInProductionBuildable),
                 
                 new Passive(
+                    id: AbilityId.Shared.Revelators.PopulationCost,
+                    displayName: nameof(AbilityId.Shared.Revelators.PopulationCost).CamelCaseToWords(),
+                    description: "",
+                    hasButton: false,
+                    sprite: null,
+                    onBirthEffects: new List<EffectId>
+                    {
+                        EffectId.Shared.Revelators.PopulationCostApplyBehaviour
+                    }),
+                
+                new Passive(
                     id: AbilityId.Shared.Revelators.BuildingStructure,
                     displayName: nameof(AbilityId.Shared.Revelators.BuildingStructure).CamelCaseToWords(),
                     description: "",

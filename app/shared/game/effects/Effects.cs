@@ -13,8 +13,8 @@ public class Effects
 {
     private IList<EffectNode> Chain { get; set; } = new List<EffectNode>();
 
-    public EntityNode SourceOrNull => Chain.LastOrDefault()?.Initiator;
-    public EntityNode OriginOrNull => Chain.FirstOrDefault()?.Initiator;
+    public EntityNode? SourceOrNull => Chain.LastOrDefault()?.Initiator;
+    public EntityNode? OriginOrNull => Chain.FirstOrDefault()?.Initiator;
     
     public Effects(EffectId effectId, EntityNode initiator)
     {

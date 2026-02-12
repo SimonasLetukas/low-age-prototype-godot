@@ -152,6 +152,19 @@ namespace LowAgeData.Collections
                             new TileCondition(conditionFlag: ConditionFlag.DoesNotExist, conditionedTile: TileId.Marsh, amountOfTilesRequired: 3)
                         }),
                     }),
+                
+                new Income(
+                    id: BehaviourId.Shared.Revelators.PopulationCostIncome,
+                    displayName: nameof(BehaviourId.Shared.Revelators.PopulationCostIncome).CamelCaseToWords(),
+                    description: "This unit costs 1 population.",
+                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    resources: new List<ResourceModification>
+                    {
+                        new ResourceModification(
+                            amount: -1, 
+                            resource: ResourceId.Population)
+                    },
+                    alignment: Alignment.Negative),
 
                 new InterceptDamage(
                     id: BehaviourId.Shared.Revelators.NoPopulationSpaceInterceptDamage,

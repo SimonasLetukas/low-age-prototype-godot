@@ -21,6 +21,7 @@ namespace LowAgeData.Domain.Effects
 
             public static class Revelators
             {
+                public static EffectId PopulationCostApplyBehaviour => new EffectId($"{nameof(Shared)}{nameof(Revelators)}{nameof(PopulationCostApplyBehaviour)}".ToKebabCase(), true);
                 public static EffectId NoPopulationSpaceSearch => new EffectId($"{nameof(Shared)}{nameof(Revelators)}{nameof(NoPopulationSpaceSearch)}".ToKebabCase(), true);
                 public static EffectId NoPopulationSpaceApplyBehaviour => new EffectId($"{nameof(Shared)}{nameof(Revelators)}{nameof(NoPopulationSpaceApplyBehaviour)}".ToKebabCase(), true);
             }

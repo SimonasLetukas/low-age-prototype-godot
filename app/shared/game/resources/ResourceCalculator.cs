@@ -243,9 +243,13 @@ public static class ResourceCalculator
                 var providedResources = ToDictionary(incomeProvider.ResourcesGained);
                 
                 var adjustedResources = new Dictionary<ResourceId, int>();
-                foreach (var (resource, currentAmount) in providedResources)
+                foreach (var (resource, amount) in providedResources)
                 {
-                    var adjustedAmount = Math.Max(currentAmount - diminisher, 1);
+                    // TODO adjust in the future to support Change.SubtractCurrent instead
+                    var adjustedAmount = amount < 0 
+                        ? Math.Min(amount + diminisher, -1) 
+                        : Math.Max(amount - diminisher, 1);
+                    
                     adjustedResources[resource] = adjustedAmount;
                 }
 
@@ -289,7 +293,7 @@ public static class ResourceCalculator
             if (resourceBlueprint.HasLimit is false)
                 continue;
 
-            // TODO adjust in the future if AddMax is ever supported for ResourceModification
+            // TODO adjust in the future if Change.AddMax is ever supported for ResourceModification
             if (resourceBlueprint.StoredAs.Equals(resource))
                 continue;
 

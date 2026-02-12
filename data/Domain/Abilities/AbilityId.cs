@@ -20,6 +20,7 @@ namespace LowAgeData.Domain.Abilities
 
             public static class Revelators
             {
+                public static AbilityId PopulationCost => new AbilityId($"{nameof(Shared)}{nameof(Revelators)}{nameof(PopulationCost)}".ToKebabCase(), true);
                 public static AbilityId BuildingStructure => new AbilityId($"{nameof(Shared)}{nameof(Revelators)}{nameof(BuildingStructure)}".ToKebabCase(), true);
             }
 

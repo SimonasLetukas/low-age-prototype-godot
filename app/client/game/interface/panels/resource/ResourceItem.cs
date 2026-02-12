@@ -79,7 +79,7 @@ public partial class ResourceItem : Control
 		var income = GlobalRegistry.Instance.GetMaximumPlayerIncome(_player);
 		var incomeAmount = income.FirstOrDefault(p => p.Resource.Equals(_resource.Id))?.Amount ?? 0;
 
-		var incomeText = _resource.IsConsumable
+		var incomeText = _resource is { IsConsumable: true, HasBank: true }
 			? $"\nGain: {incomeAmount} (at the start of each planning phase)"
 			: string.Empty;
 		

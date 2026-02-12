@@ -23,6 +23,7 @@ namespace LowAgeData.Domain.Behaviours
             public static class Revelators
             {
                 public static BehaviourId BuildingStructureBuildable => new BehaviourId($"{nameof(Shared)}{nameof(Revelators)}{nameof(BuildingStructureBuildable)}".ToKebabCase(), true);
+                public static BehaviourId PopulationCostIncome => new BehaviourId($"{nameof(Shared)}{nameof(Revelators)}{nameof(PopulationCostIncome)}".ToKebabCase(), true);
                 public static BehaviourId NoPopulationSpaceInterceptDamage => new BehaviourId($"{nameof(Shared)}{nameof(Revelators)}{nameof(NoPopulationSpaceInterceptDamage)}".ToKebabCase(), true);
             }
             

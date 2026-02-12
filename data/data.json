@@ -8,7 +8,6 @@
       "isConsumable": true,
       "hasBank": true,
       "storedAs": "resource-scraps",
-      "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
@@ -27,7 +26,6 @@
       "isConsumable": false,
       "hasBank": false,
       "storedAs": "resource-celestium",
-      "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
@@ -46,7 +44,6 @@
       "isConsumable": true,
       "hasBank": false,
       "storedAs": "resource-population",
-      "attachesToNewActors": true,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [
         "effect-shared-revelators-no-population-space-search"
@@ -67,7 +64,6 @@
       "isConsumable": false,
       "hasBank": false,
       "storedAs": "resource-weapon-storage",
-      "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
@@ -86,7 +82,6 @@
       "isConsumable": true,
       "hasBank": true,
       "storedAs": "resource-weapon-storage",
-      "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
@@ -105,7 +100,6 @@
       "isConsumable": true,
       "hasBank": true,
       "storedAs": "resource-weapon-storage",
-      "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
@@ -124,7 +118,6 @@
       "isConsumable": true,
       "hasBank": true,
       "storedAs": "resource-weapon-storage",
-      "attachesToNewActors": false,
       "positiveIncomeEffects": [],
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
@@ -143,7 +136,6 @@
       "isConsumable": false,
       "hasBank": false,
       "storedAs": "resource-faith",
-      "attachesToNewActors": false,
       "positiveIncomeEffects": [
         "effect-shared-uee-positive-faith-search"
       ],
@@ -272,6 +264,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
+          "ability-shared-revelators-population-cost",
           "ability-slave-build",
           "ability-slave-repair",
           "ability-slave-manual-labour"
@@ -342,6 +335,7 @@
           "ActorAttribute.Celestial"
         ],
         "abilities": [
+          "ability-shared-revelators-population-cost",
           "ability-leader-all-for-one",
           "ability-leader-menacing-presence",
           "ability-leader-one-for-all"
@@ -425,6 +419,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
+          "ability-shared-revelators-population-cost",
           "ability-quickdraw-doubleshot",
           "ability-quickdraw-cripple"
         ],
@@ -495,6 +490,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
+          "ability-shared-revelators-population-cost",
           "ability-gorger-fanatic-suicide",
           "ability-gorger-fanatic-suicide-passive"
         ],
@@ -565,6 +561,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
+          "ability-shared-revelators-population-cost",
           "ability-camou-silent-assassin",
           "ability-camou-climb"
         ],
@@ -647,6 +644,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
+          "ability-shared-revelators-population-cost",
           "ability-shaman-wondrous-goo"
         ],
         "displayName": "Shaman",
@@ -728,6 +726,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
+          "ability-shared-revelators-population-cost",
           "ability-pyre-wall-of-flames",
           "ability-pyre-phantom-menace"
         ],
@@ -798,6 +797,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
+          "ability-shared-revelators-population-cost",
           "ability-big-bad-bull-unleash-the-rage"
         ],
         "displayName": "Big Bad Bull",
@@ -867,6 +867,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
+          "ability-shared-revelators-population-cost",
           "ability-mummy-spawn-roach",
           "ability-mummy-leap-of-hunger"
         ],
@@ -1006,6 +1007,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
+          "ability-shared-revelators-population-cost",
           "ability-parasite-paralysing-grasp"
         ],
         "displayName": "Parasite",
@@ -4280,6 +4282,29 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Unit In Production",
+      "description": "",
+      "sprite": null,
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "$type": "Passive",
+      "id": "ability-shared-revelators-population-cost",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffects": [
+        "effect-shared-revelators-population-cost-apply-behaviour"
+      ],
+      "onBuildBehaviour": null,
+      "hasButton": false,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Population Cost",
       "description": "",
       "sprite": null,
       "centerOffset": {
@@ -7935,6 +7960,18 @@
       "id": "effect-shared-celestium-income-apply-behaviour",
       "behavioursToApply": [
         "behaviour-shared-celestium-income-income"
+      ],
+      "target": "Location.Self",
+      "filters": [],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "validators": []
+    },
+    {
+      "$type": "ApplyBehaviour",
+      "id": "effect-shared-revelators-population-cost-apply-behaviour",
+      "behavioursToApply": [
+        "behaviour-shared-revelators-population-cost-income"
       ],
       "target": "Location.Self",
       "filters": [],
@@ -11882,6 +11919,36 @@
       "description": "This building can only be placed on the low ground and can be built by multiple Slaves simultaneously. The placement can include a maximum of 2 marsh tiles.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "$type": "Income",
+      "id": "behaviour-shared-revelators-population-cost-income",
+      "resources": [
+        {
+          "resource": "resource-population",
+          "change": "Change.AddCurrent",
+          "amount": -1.0
+        }
+      ],
+      "diminishingReturn": 0,
+      "cost": [],
+      "waitForAvailableStorage": false,
+      "displayName": "Population Cost Income",
+      "description": "This unit costs 1 population.",
+      "endsAt": "EndsAt.Death",
+      "alignment": "Alignment.Negative",
       "canStack": false,
       "canResetDuration": false,
       "triggers": [],

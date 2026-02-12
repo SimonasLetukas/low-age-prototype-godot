@@ -36,7 +36,6 @@ namespace LowAgeData.Collections
                     hasLimit: false,
                     isConsumable: true,
                     hasBank: false,
-                    attachesToNewActors: true,
                     negativeIncomeEffects: new List<EffectId>
                     {
                         EffectId.Shared.Revelators.NoPopulationSpaceSearch

@@ -42,6 +42,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
+                        AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Slave.Build,
                         AbilityId.Slave.Repair,
                         AbilityId.Slave.ManualLabour
@@ -78,6 +79,7 @@ namespace LowAgeData.Collections
                     },
                     abilities: new List<AbilityId>
                     {
+                        AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Leader.AllForOne,
                         AbilityId.Leader.MenacingPresence,
                         AbilityId.Leader.OneForAll
@@ -123,6 +125,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
+                        AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Quickdraw.Doubleshot,
                         AbilityId.Quickdraw.Cripple
                     }),
@@ -159,6 +162,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
+                        AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Gorger.FanaticSuicide,
                         AbilityId.Gorger.FanaticSuicidePassive
                     },
@@ -196,6 +200,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
+                        AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Camou.SilentAssassin,
                         AbilityId.Camou.Climb
                     }),
@@ -239,6 +244,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
+                        AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Shaman.WondrousGoo
                     }),
 
@@ -281,6 +287,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
+                        AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Pyre.WallOfFlames,
                         AbilityId.Pyre.PhantomMenace
                     }),
@@ -317,6 +324,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
+                        AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.BigBadBull.UnleashTheRage
                     },
                     size: 3),
@@ -351,6 +359,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
+                        AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Mummy.SpawnRoach,
                         AbilityId.Mummy.LeapOfHunger
                     },
@@ -421,6 +430,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
+                        AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Parasite.ParalysingGrasp
                     }),
 
