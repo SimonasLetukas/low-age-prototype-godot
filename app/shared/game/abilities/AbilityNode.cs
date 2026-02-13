@@ -32,7 +32,7 @@ public abstract partial class AbilityNode<
     public bool HasButton { get; private set; }
 
     protected IList<TFocus> FocusQueue { get; } = new List<TFocus>();
-    protected bool DebugEnabled => true;
+    protected bool DebugEnabled => false;
     
     private Ability Blueprint { get; set; } = null!;
 

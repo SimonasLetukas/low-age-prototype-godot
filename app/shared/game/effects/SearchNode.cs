@@ -31,7 +31,14 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
         if (base.Execute() is false)
             return false;
 
-        foreach (var target in Targets)
+        var targets = FilterEvaluator.Apply(Targets, Blueprint.Filters, new FilterContext
+        {
+            Initiator = InitiatorEntity,
+            CurrentPlayer = Players.Instance.Current,
+            Chain = History
+        });
+        
+        foreach (var target in targets)
         {
             foreach (var effectId in Blueprint.Effects)
             {
@@ -45,10 +52,10 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
         return true;
     }
 
-    protected override IList<EntityNode> GetInheritedTargets(Player initiator)
+    protected override IEnumerable<EntityNode> GetInheritedTargets()
     {
         return Blueprint.Shape is LowAgeData.Domain.Common.Shape.Map 
-            ? base.GetInheritedTargets(initiator) 
+            ? base.GetInheritedTargets() 
             : [];
     }
 }

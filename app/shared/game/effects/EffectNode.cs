@@ -51,19 +51,18 @@ public class EffectNode : INodeFromBlueprint<Effect>
         return IsValidated;
     }
     
-    protected virtual IList<EntityNode> GetInheritedTargets(EntityNode initiator) => [initiator];
+    protected virtual IEnumerable<EntityNode> GetInheritedTargets(EntityNode initiator) => [initiator];
     
-    protected virtual IList<EntityNode> GetInheritedTargets(Player initiator) => GetAllPlayerEntities(initiator);
+    protected virtual IEnumerable<EntityNode> GetInheritedTargets() => GetAllEntities();
     
-    protected static IList<EntityNode> GetAllPlayerEntities(Player player) 
-        => GlobalRegistry.Instance.GetEntitiesByPlayer(player).ToList();
+    protected static IEnumerable<EntityNode> GetAllEntities() => GlobalRegistry.Instance.GetEntities();
     
     // TODO instead of these different overloads, try to introduce ITargetable to Tile, Player, Entity
     private IList<EntityNode> GetTargets(Location location, EntityNode initiator)
     {
         return location switch
         {
-            _ when location.Equals(Location.Inherited) => GetInheritedTargets(initiator),
+            _ when location.Equals(Location.Inherited) => GetInheritedTargets(initiator).ToList(),
             _ when location.Equals(Location.Self) => [initiator],
             _ when location.Equals(Location.Source) => [History.SourceEntityOrNull ?? initiator],
             _ when location.Equals(Location.Origin) => [History.OriginEntityOrNull ?? initiator],
@@ -76,14 +75,10 @@ public class EffectNode : INodeFromBlueprint<Effect>
     {
         return location switch
         {
-            _ when location.Equals(Location.Inherited) => GetInheritedTargets(initiator),
-            _ when location.Equals(Location.Self) => GetAllPlayerEntities(initiator),
-            _ when location.Equals(Location.Source) => GetAllPlayerEntities(History.SourcePlayerOrNull 
-                                                                            ?? History.SourceEntityOrNull?.Player 
-                                                                            ?? initiator),
-            _ when location.Equals(Location.Origin) => GetAllPlayerEntities(History.OriginPlayerOrNull 
-                                                                            ?? History.OriginEntityOrNull?.Player 
-                                                                            ?? initiator),
+            _ when location.Equals(Location.Inherited) => GetInheritedTargets().ToList(),
+            _ when location.Equals(Location.Self) => GetAllEntities().ToList(),
+            _ when location.Equals(Location.Source) => GetAllEntities().ToList(),
+            _ when location.Equals(Location.Origin) => GetAllEntities().ToList(),
             _ => throw new NotImplementedException($"{nameof(Effects)}.{nameof(GetTargets)}: Could not find " +
                                                    $"{nameof(Location)} of value '{location}'")
         };

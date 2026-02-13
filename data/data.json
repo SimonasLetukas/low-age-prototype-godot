@@ -7989,15 +7989,8 @@
       "searchFlags": [],
       "filters": [
         {
-          "$type": "FilterGroup",
-          "policy": "Include",
-          "quantifier": "Any",
-          "items": [
-            {
-              "$type": "SpecificFlag",
-              "value": "FilterFlag.Player"
-            }
-          ]
+          "$type": "SpecificFlag",
+          "value": "FilterFlag.Player"
         },
         {
           "$type": "SpecificFlag",

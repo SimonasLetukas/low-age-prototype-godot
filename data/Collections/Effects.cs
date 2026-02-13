@@ -96,13 +96,7 @@ namespace LowAgeData.Collections
                     searchFlags: new List<SearchFlag>(),
                     filters: new List<IFilterItem>
                     {
-                        new FilterGroup(
-                            policy: Policy.Include, 
-                            quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
-                            {
-                                new SpecificFlag(value: FilterFlag.Player)
-                            }),
+                        new SpecificFlag(value: FilterFlag.Player),
                         new SpecificFlag(value: FilterFlag.Unit)
                     },
                     effects: new List<EffectId>

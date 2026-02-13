@@ -7,6 +7,7 @@ using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common.Shape;
+using LowAgeData.Domain.Factions;
 using MultipurposePathfinding;
 
 /// <summary>
@@ -130,6 +131,8 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         
         UpdateVitalsValuesForDisplay();
     }
+
+    public bool IsOriginallyFrom(FactionId faction) => Blueprint.OriginalFaction.Equals(faction);
 
     public void RestoreActionEconomy(TurnPhase phase, bool restoringOnlyAbilityAction)
     {

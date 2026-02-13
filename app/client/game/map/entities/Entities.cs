@@ -59,7 +59,7 @@ public partial class Entities : Node2D
         };
         
         GlobalRegistry.Instance.ProvideGetEntityById(GetEntityByInstanceId);
-        GlobalRegistry.Instance.ProvideGetEntitiesByPlayer(GetEntitiesByPlayer);
+        GlobalRegistry.Instance.ProvideGetEntities(GetEntities);
     }
 
     public override void _ExitTree()
@@ -178,8 +178,7 @@ public partial class Entities : Node2D
         ? _entitiesByIds[instanceId]
         : null;
 
-    public IEnumerable<EntityNode> GetEntitiesByPlayer(Player player) => _entitiesByIds.Values
-        .Where(e => e.Player.Equals(player));
+    public IEnumerable<EntityNode> GetEntities() => _entitiesByIds.Values;
 
     public IList<ActorNode> GetActorsSortedByInitiative()
     {
