@@ -1,4 +1,5 @@
 ﻿using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeData.Domain.Logic;
 
@@ -9,7 +10,11 @@ namespace LowAgeData.Domain.Effects
         public Teleport(
             EffectId id,
             BehaviourId? waitBefore = null, 
-            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
+            IList<Validator>? validators = null) 
+            : base(
+                id, 
+                Location.Point, 
+                validators ?? new List<Validator>())
         {
             WaitBefore = waitBefore;
         }

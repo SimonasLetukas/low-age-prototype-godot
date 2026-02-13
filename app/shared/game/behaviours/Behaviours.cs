@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Common;
 
 public partial class Behaviours : Node2D
 {
@@ -78,11 +79,34 @@ public partial class Behaviours : Node2D
             case Income income:
                 return IncomeNode.InstantiateAsChild(income, this, history, Parent);
             
+            case InterceptDamage interceptDamage:
+                return InterceptDamageNode.InstantiateAsChild(interceptDamage, this, history, Parent);
+            
             default:
                 return null;
                 // TODO once all types are implemented switch to (and change constructor access to protected):
                 throw new NotImplementedException($"{nameof(Behaviours)}.{nameof(AddBehaviour)}: Could not find " +
                                                   $"{nameof(Behaviour)} of type '{behaviourBlueprint?.GetType()}'");
         }
+    }
+
+    public (int Amount, DamageType Type) InterceptDamage(int damage, DamageType type, ActorNode from)
+    {
+        var interceptDamageBehaviours = GetChildren().OfType<InterceptDamageNode>()
+            .OrderBy(i => i.HasMultiplication())
+            .ToList();
+
+        if (interceptDamageBehaviours.Count == 0)
+            return (damage, type);
+
+        var currentDamage = damage;
+        var currentType = type;
+        foreach (var interceptDamage in interceptDamageBehaviours)
+        {
+            var (resolvedDamage, resolvedType) = Parent.ResolveDamageType(currentDamage, currentType, from);
+            (currentDamage, currentType) = interceptDamage.Resolve(resolvedDamage, resolvedType, from);
+        }
+
+        return (currentDamage, currentType);
     }
 }

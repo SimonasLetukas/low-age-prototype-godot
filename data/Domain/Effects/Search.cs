@@ -15,15 +15,19 @@ namespace LowAgeData.Domain.Effects
             IList<SearchFlag> searchFlags,
             IList<IFilterItem> filters,
             IList<EffectId>? effects = null,
-            Location? location = null,
+            Location? target = null,
             IList<Validator>? validators = null,
-            bool? usedForValidator = null) : base(id, validators ?? new List<Validator>())
+            bool? usedForValidator = null) 
+            : base(
+                id, 
+                target ?? Location.Inherited,
+                validators ?? new List<Validator>())
         {
             Shape = shape;
             SearchFlags = searchFlags;
             Filters = filters;
             Effects = effects ?? new List<EffectId>();
-            Location = location ?? Location.Inherited;
+            Location = target ?? Location.Inherited;
             UsedForValidator = usedForValidator ?? false;
         }
         
@@ -48,7 +52,9 @@ namespace LowAgeData.Domain.Effects
         public IList<EffectId> Effects { get; } 
         
         /// <summary>
-        /// Indicates where the <see cref="Search"/> originates from. Can be used to display selection overlays. 
+        /// Indicates where the <see cref="Search"/> originates from. Can be used to display selection overlays.
+        ///
+        /// Note: Used for documentation purposes only, will be automatically resolved to <see cref="Effect.Target"/>.
         /// </summary>
         public Location Location { get; }
 

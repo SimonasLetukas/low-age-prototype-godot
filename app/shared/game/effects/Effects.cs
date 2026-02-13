@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using LowAgeData.Domain.Common;
+using LowAge.app.shared.game.effects;
 using LowAgeData.Domain.Effects;
 
 /// <summary>
@@ -13,8 +13,17 @@ public class Effects
 {
     private IList<EffectNode> Chain { get; set; } = new List<EffectNode>();
 
-    public EntityNode? SourceOrNull => Chain.LastOrDefault()?.Initiator;
-    public EntityNode? OriginOrNull => Chain.FirstOrDefault()?.Initiator;
+    public Player? SourcePlayerOrNull => Chain.LastOrDefault()?.InitiatorPlayer;
+    public Player? OriginPlayerOrNull => Chain.FirstOrDefault()?.InitiatorPlayer;
+    public EntityNode? SourceEntityOrNull => Chain.LastOrDefault()?.InitiatorEntity;
+    public EntityNode? OriginEntityOrNull => Chain.FirstOrDefault()?.InitiatorEntity;
+
+    public Effects(EffectId effectId, Player initiator)
+    {
+        var effect = CreateEffect(effectId, initiator);
+        
+        Chain.Add(effect);
+    }
     
     public Effects(EffectId effectId, EntityNode initiator)
     {
@@ -34,41 +43,43 @@ public class Effects
     public bool ValidateLast() => Chain.LastOrDefault()?.Validate() ?? false;
 
     public void ExecuteLast() => Chain.LastOrDefault()?.Execute();
-
-    private EffectNode CreateEffect(EffectId effectId, EntityNode initiator)
+    
+    private EffectNode CreateEffect(EffectId effectId, Player initiator)
     {
-        var allEffects = Data.Instance.Blueprint.Effects;
-        var foundEffect = allEffects.FirstOrDefault(x => x.Id.Equals(effectId));
-        
+        var foundEffect = FindEffectBlueprint(effectId);
         switch (foundEffect)
         {
-            case ApplyBehaviour applyBehaviour:
-                var effect = new ApplyBehaviourNode(applyBehaviour, initiator, this);
-                var target = GetTarget(applyBehaviour.Target, initiator);
-                effect.SetTarget(target);
+            case Search search:
+                var effect = new SearchNode(search, initiator, this);
                 return effect;
             default:
-                return new EffectNode(this);
+                return new EffectNode(this, initiator);
                 // TODO once all types are implemented switch to (and change constructor access to protected):
                 throw new NotImplementedException($"{nameof(Effects)}.{nameof(CreateEffect)}: Could not find " +
                                                   $"{nameof(Effect)} of type '{foundEffect?.GetType()}'");
         }
     }
-    
-    private EntityNode GetTarget(Location location, EntityNode initiator)
-    { 
-        switch (location)
+
+    private EffectNode CreateEffect(EffectId effectId, EntityNode initiator)
+    {
+        var foundEffect = FindEffectBlueprint(effectId);
+        switch (foundEffect)
         {
-            case var _ when location.Equals(Location.Inherited): // TODO
-            case var _ when location.Equals(Location.Self):
-                return initiator;
-            case var _ when location.Equals(Location.Source):
-                return SourceOrNull ?? initiator;
-            case var _ when location.Equals(Location.Origin):
-                return OriginOrNull ?? initiator;
+            case ApplyBehaviour applyBehaviour:
+                var effect = new ApplyBehaviourNode(applyBehaviour, initiator, this);
+                return effect;
             default:
-                throw new NotImplementedException($"{nameof(Effects)}.{nameof(GetTarget)}: Could not find " +
-                                                  $"{nameof(Location)} of value '{location}'");
+                return new EffectNode(this, initiator);
+                // TODO once all types are implemented switch to (and change constructor access to protected):
+                throw new NotImplementedException($"{nameof(Effects)}.{nameof(CreateEffect)}: Could not find " +
+                                                  $"{nameof(Effect)} of type '{foundEffect?.GetType()}'");
         }
+    }
+
+    private static Effect? FindEffectBlueprint(EffectId effectId)
+    {
+        var allEffects = Data.Instance.Blueprint.Effects;
+        var foundEffect = allEffects.FirstOrDefault(x => x.Id.Equals(effectId));
+        return foundEffect;
     }
 }

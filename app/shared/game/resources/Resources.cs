@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Factions;
 using LowAgeData.Domain.Resources;
@@ -18,7 +19,7 @@ using Resource = LowAgeData.Domain.Resources.Resource;
 /// </summary>
 public partial class Resources : Node2D
 {
-    private static bool DebugEnabled => true;
+    private static bool DebugEnabled => false;
     
     private readonly Dictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>> _currentPaymentByIncomeProvider = new();
     private readonly Dictionary<Player, IReadOnlyDictionary<ResourceId, int>> _resourcesStockpiledByPlayer = new();
@@ -256,9 +257,15 @@ public partial class Resources : Node2D
 
     private void OnPhaseStarted(int turn, TurnPhase phase)
     {
-        if (phase.Equals(TurnPhase.Planning) is false)
-            return;
+        if (phase.Equals(TurnPhase.Planning))
+            OnPlanningPhaseStarted();
         
+        if (phase.Equals(TurnPhase.Action))
+            OnActionPhaseStarted();
+    }
+
+    private void OnPlanningPhaseStarted()
+    {
         var providersByPlayer = _currentPaymentByIncomeProvider.Keys
             .OrderBy(p => p.Player.Id) // Ensure determinism across clients
             .GroupBy(p => p.Player)
@@ -277,6 +284,40 @@ public partial class Resources : Node2D
                 providers, _resourcesStockpiledByPlayer[player]);
 
             RaisePlayerResourcesUpdated(player);
+        }
+    }
+
+    private void OnActionPhaseStarted()
+    {
+        foreach (var (player, stockpile) in _resourcesStockpiledByPlayer)
+        {
+            foreach (var (resourceId, amount) in stockpile)
+            {
+                if (amount == 0)
+                    continue;
+                
+                var resource = _resourceBlueprints[resourceId];
+                if (resource.PositiveIncomeEffects.IsEmpty() && resource.NegativeIncomeEffects.IsEmpty())
+                    continue;
+                
+                var effects = amount > 0 
+                    ? resource.PositiveIncomeEffects 
+                    : resource.NegativeIncomeEffects;
+
+                var count = resource.EffectAmountMultipliedByResourceAmount 
+                    ? effects.Count 
+                    : 1;
+
+                for (var i = 0; i < count; i++)
+                {
+                    foreach (var effectId in effects)
+                    {
+                        var chain = new Effects(effectId, player);
+                        if (chain.ValidateLast())
+                            chain.ExecuteLast();
+                    }
+                }
+            }
         }
     }
 

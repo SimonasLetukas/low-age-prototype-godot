@@ -9,14 +9,16 @@ namespace LowAgeData.Domain.Effects
         public Reload(
             EffectId id, 
             BehaviourId ammunitionToTarget,
-            Location? location = null,
-            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
+            Location? target = null,
+            IList<Validator>? validators = null) 
+            : base(
+                id, 
+                target ?? Location.Inherited,
+                validators ?? new List<Validator>())
         {
             AmmunitionToTarget = ammunitionToTarget;
-            Location = location ?? Location.Inherited;
         }
         
         public BehaviourId AmmunitionToTarget { get; }
-        public Location Location { get; }
     }
 }

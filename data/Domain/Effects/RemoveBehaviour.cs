@@ -10,24 +10,23 @@ namespace LowAgeData.Domain.Effects
         public RemoveBehaviour(
             EffectId id,
             IList<BehaviourId> behavioursToRemove,
-            Location? location = null,
+            Location? target = null,
             IList<IFilterItem>? filters = null,
             bool? treatAsDeath = null,
             Location? behaviourOwner = null,
             IList<Validator>? validators = null) 
             : base(
                 id, 
+                target ?? Location.Inherited,
                 validators ?? new List<Validator>())
         {
             BehavioursToRemove = behavioursToRemove;
-            Location = location ?? Location.Inherited;
             Filters = filters ?? new List<IFilterItem>();
             TreatAsDeath = treatAsDeath ?? false;
             BehaviourOwner = behaviourOwner;
         }
 
         public IList<BehaviourId> BehavioursToRemove { get; }
-        public Location Location { get; }
         public IList<IFilterItem> Filters { get; }
         
         /// <summary>

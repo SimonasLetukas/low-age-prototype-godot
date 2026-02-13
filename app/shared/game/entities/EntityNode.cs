@@ -299,11 +299,45 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         return result;
     }
 
-    public virtual (int damage, bool isLethal) ReceiveAttack(EntityNode source, AttackType attackType, 
+    public virtual (int Damage, bool IsLethal) ReceiveAttack(EntityNode source, AttackType attackType, 
         bool isSimulation) => (0, false);
 
-    protected virtual (int damage, bool isLethal) ReceiveDamage(EntityNode source, DamageType damageType, 
-        int amount, bool isSimulation) => (0, false);
+    protected virtual (int Damage, bool IsLethal) ReceiveDamage(EntityNode source, int amount, bool isSimulation) 
+        => (0, false);
+    
+    /// <summary>
+    /// Resolves various <see cref="DamageType"/> values into 3 main ones: <see cref="DamageType.Melee"/>,
+    /// <see cref="DamageType.Ranged"/> or <see cref="DamageType.Pure"/>. Updates the damage amount accordingly.
+    /// </summary>
+    public (int Amount, DamageType Type) ResolveDamageType(int damage, DamageType type, ActorNode from) => type switch
+    {
+        _ when type.Equals(DamageType.Melee) => (damage, DamageType.Melee),
+        _ when type.Equals(DamageType.Ranged) => (damage, DamageType.Ranged),
+        _ when type.Equals(DamageType.Pure) => (damage, DamageType.Pure),
+        
+        _ when type.Equals(DamageType.CurrentMelee) => 
+            (damage + GetDamage(from, AttackType.Melee).Amount, DamageType.Melee),
+        _ when type.Equals(DamageType.CurrentRanged) => 
+            (damage + GetDamage(from, AttackType.Ranged).Amount, DamageType.Ranged),
+        
+        _ when type.Equals(DamageType.OverrideMelee) => 
+            (GetDamage(from, AttackType.Melee).Amount, DamageType.Melee),
+        _ when type.Equals(DamageType.OverrideRanged) => 
+            (GetDamage(from, AttackType.Ranged).Amount, DamageType.Ranged),
+        
+        _ when type.Equals(DamageType.TargetMelee) => 
+            (GetDamage(this, AttackType.Melee).Amount, DamageType.Melee),
+        _ when type.Equals(DamageType.TargetRanged) => 
+            (GetDamage(this, AttackType.Ranged).Amount, DamageType.Ranged),
+        
+        _ => (0, DamageType.Pure),
+    };
+
+    // TODO entities should also be able to receive damage, fix when this is relevant
+    protected virtual (int Amount, DamageType Type) GetDamage(EntityNode from, AttackType attackType) 
+        => (0, DamageType.Pure);
+
+    protected virtual int ResolveDamageArmour(int damage, DamageType damageType) => damage;
     
     public void Destroy()
     {

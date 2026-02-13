@@ -13,7 +13,11 @@ namespace LowAgeData.Domain.Effects
             Location from,
             int amount,
             IList<EffectId>? onCollisionEffects = null,
-            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
+            IList<Validator>? validators = null) 
+            : base(
+                id, 
+                Location.Actor, 
+                validators ?? new List<Validator>())
         {
             From = from;
             Amount = amount;

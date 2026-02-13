@@ -168,7 +168,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         => (attackType.Equals(AttackType.Melee) && ActionEconomy.CanMeleeAttack) 
            || (attackType.Equals(AttackType.Ranged) && ActionEconomy.CanRangedAttack);
 
-    public override (int damage, bool isLethal) ReceiveAttack(EntityNode source, AttackType attackType, 
+    public override (int Damage, bool IsLethal) ReceiveAttack(EntityNode source, AttackType attackType, 
         bool isSimulation)
     {
         base.ReceiveAttack(source, attackType, isSimulation);
@@ -176,66 +176,38 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         if (source is not ActorNode attacker)
             return (0, false);
 
-        var damage = GetDamage(attacker, attackType);
-        var damageType = attackType.Equals(AttackType.Melee) ? DamageType.Melee : DamageType.Ranged;
-        return ReceiveDamage(source, damageType, damage, isSimulation);
+        var (damage, _) = GetDamage(attacker, attackType);
+        return ReceiveDamage(source, damage, isSimulation);
     }
 
-    protected override (int damage, bool isLethal) ReceiveDamage(EntityNode source, DamageType damageType, 
-        int amount, bool isSimulation)
+    protected override (int Damage, bool IsLethal) ReceiveDamage(EntityNode source, int amount, bool isSimulation)
     {
-        base.ReceiveDamage(source, damageType, amount, isSimulation);
+        base.ReceiveDamage(source, amount, isSimulation);
         
-        if (source is not ActorNode attacker)
+        if (source is not ActorNode)
             return (0, false);
-
-        var damage = damageType switch
-        {
-            _ when damageType.Equals(DamageType.Melee) => amount - (MeleeArmour?.MaxAmount ?? 0),
-            _ when damageType.Equals(DamageType.Ranged) => amount - (RangedArmour?.MaxAmount ?? 0),
-            _ when damageType.Equals(DamageType.Pure) => amount,
-            
-            _ when damageType.Equals(DamageType.CurrentMelee) => 
-                amount + GetDamage(attacker, AttackType.Melee) - (MeleeArmour?.MaxAmount ?? 0),
-            _ when damageType.Equals(DamageType.CurrentRanged) => 
-                amount + GetDamage(attacker, AttackType.Ranged) - (RangedArmour?.MaxAmount ?? 0),
-            
-            _ when damageType.Equals(DamageType.OverrideMelee) => 
-                GetDamage(attacker, AttackType.Melee) - (MeleeArmour?.MaxAmount ?? 0),
-            _ when damageType.Equals(DamageType.OverrideRanged) => 
-                GetDamage(attacker, AttackType.Ranged) - (RangedArmour?.MaxAmount ?? 0),
-            
-            _ when damageType.Equals(DamageType.TargetMelee) => 
-                GetDamage(this, AttackType.Melee) - (MeleeArmour?.MaxAmount ?? 0),
-            _ when damageType.Equals(DamageType.TargetRanged) => 
-                GetDamage(this, AttackType.Ranged) - (RangedArmour?.MaxAmount ?? 0),
-            
-            _ => 0,
-        };
-        
-        damage = Math.Max(damage, 1);
         
         if (isSimulation)
-            return GetSimulatedResult(damage);
+            return GetSimulatedResult(amount);
 
         if (HasShields && Shields!.CurrentAmount > 0)
         {
-            Shields!.CurrentAmount -= damage;
+            Shields!.CurrentAmount -= amount;
             if (Shields!.CurrentAmount < 0)
             {
-                damage = (int)Shields!.CurrentAmount * -1;
+                amount = (int)Shields!.CurrentAmount * -1;
                 Shields!.CurrentAmount = 0;
             }
             else
             {
-                damage = 0;
+                amount = 0;
             }
         }
 
         if (HasHealth is false)
             return (0, false);
 
-        Health!.CurrentAmount -= damage;
+        Health!.CurrentAmount -= amount;
         if ((int)Health!.CurrentAmount < 0)
             Destroy();
         
@@ -292,6 +264,47 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         _health.Position = new Vector2(_startingHealthPosition.X, -2) + offset;
         _shields.Position = new Vector2(_startingShieldsPosition.X, -3) + offset;
     }
+    
+    protected (int Amount, DamageType Type) GetDamage(ActorNode from, int damage, DamageType type)
+    {
+        var (initialAmount, initialType) = ResolveDamageType(damage, type, from);
+        
+        var (interceptedAmount, interceptedType) = Behaviours.InterceptDamage(initialAmount, initialType, from);
+        
+        var (adjustedAmount, adjustedType) = ResolveDamageType(interceptedAmount, interceptedType, from);
+        
+        var amountAfterArmour = ResolveDamageArmour(adjustedAmount, adjustedType);
+        
+        return (amountAfterArmour, adjustedType);
+    }
+    
+    protected override (int Amount, DamageType Type) GetDamage(EntityNode from, AttackType attackType)
+    {
+        if (from is not ActorNode fromActor)
+            return base.GetDamage(from, attackType);
+        
+        var attack = attackType.Equals(AttackType.Melee) ? fromActor.MeleeAttack : fromActor.RangedAttack;
+        if (attack is null)
+            return (0, DamageType.Pure);
+        
+        var damage = attack.Damage;
+        if (attack.HasBonusDamage && Attributes.Any(x => x.Equals(attack.BonusTo)))
+            damage += attack.BonusDamage;
+
+        var damageType = attackType.Equals(AttackType.Melee) ? DamageType.Melee : DamageType.Ranged;
+        return GetDamage(fromActor, damage, damageType);
+    }
+    
+    protected override int ResolveDamageArmour(int damage, DamageType damageType) => damageType switch
+    {
+        _ when damage == 0 => 0,
+        
+        _ when damageType.Equals(DamageType.Melee) => Math.Max(damage - (MeleeArmour?.MaxAmount ?? 0), 1),
+        _ when damageType.Equals(DamageType.Ranged) => Math.Max(damage - (RangedArmour?.MaxAmount ?? 0), 1),
+        _ when damageType.Equals(DamageType.Pure) => damage,
+        
+        _ => 0,
+    };
 
     protected override void OnPhaseStarted(int turn, TurnPhase phase)
     {
@@ -335,21 +348,8 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         var skip = Math.Max(attack.MinimumDistance - 1, 0);
         return new Circle(radius, skip).ToPositions(EntityPrimaryPosition, mapSize, this);
     }
-    
-    private int GetDamage(ActorNode from, AttackType attackType)
-    {
-        var attack = attackType.Equals(AttackType.Melee) ? from.MeleeAttack : from.RangedAttack;
-        if (attack is null)
-            return 0;
-        
-        var damage = attack.Damage;
-        if (attack.HasBonusDamage && Attributes.Any(x => x.Equals(attack.BonusTo)))
-            damage += attack.BonusDamage;
 
-        return damage;
-    }
-
-    private (int, bool) GetSimulatedResult(int damage)
+    private (int Damage, bool IsLethal) GetSimulatedResult(int damage)
     {
         var healthAndShields = (int)(Health?.CurrentAmount ?? 0) + (int)(Shields?.CurrentAmount ?? 0);
         var isLethal = HasHealth && healthAndShields - damage <= 0;

@@ -49,7 +49,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Shared.HighGroundApplyBehaviour
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.Shared.HighGroundApplyBehaviour,
@@ -109,7 +109,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Shared.Revelators.NoPopulationSpaceApplyBehaviour
                     },
-                    location: Location.Inherited),
+                    target: Location.Inherited),
 
                 new ApplyBehaviour(
                     id: EffectId.Shared.Revelators.NoPopulationSpaceApplyBehaviour,
@@ -180,7 +180,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Shared.Uee.PositiveFaithApplyBehaviour
                     },
-                    location: Location.Inherited),
+                    target: Location.Inherited),
                 
                 new ApplyBehaviour(
                     id: EffectId.Shared.Uee.PositiveFaithApplyBehaviour,
@@ -239,7 +239,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Obelisk.CelestiumDischargeApplyBehaviourLong
                     },
-                    location: Location.Origin),
+                    target: Location.Origin),
 
                 new ApplyBehaviour(
                     id: EffectId.Obelisk.CelestiumDischargeApplyBehaviourLong,
@@ -277,7 +277,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Obelisk.CelestiumDischargeApplyBehaviourShort
                     },
-                    location: Location.Origin),
+                    target: Location.Origin),
 
                 new ApplyBehaviour(
                     id: EffectId.Obelisk.CelestiumDischargeApplyBehaviourShort,
@@ -367,7 +367,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Barricade.ProtectiveShieldApplyBehaviour
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new ApplyBehaviour(
                     id: EffectId.Barricade.ProtectiveShieldApplyBehaviour,
@@ -404,7 +404,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Barricade.CaltropsDamage
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new Damage(
                     id: EffectId.Barricade.CaltropsDamage,
@@ -425,13 +425,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Barricade.DecomposeBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new Damage(
                     id: EffectId.Barricade.DecomposeDamage,
                     damageType: DamageType.Pure,
                     amount: new Amount(flat: 15),
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.BatteryCore.PowerGridApplyBehaviour,
@@ -477,7 +477,7 @@ namespace LowAgeData.Collections
                     id: EffectId.FusionCore.DefenceProtocolDamage,
                     damageType: DamageType.Ranged,
                     amount: new Amount(flat: 3),
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -520,7 +520,7 @@ namespace LowAgeData.Collections
                     id: EffectId.CelestiumCore.DefenceProtocolDamage,
                     damageType: DamageType.Ranged,
                     amount: new Amount(flat: 4),
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -605,7 +605,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.PowerPole.ExcessDistributionApplyBehaviour
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new ApplyBehaviour(
                     id: EffectId.PowerPole.ExcessDistributionApplyBehaviour,
@@ -664,7 +664,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.PowerPole.ExcessDistributionApplyBehaviour
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new Search(
                     id: EffectId.Temple.KeepingTheFaithSearch,
@@ -689,7 +689,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Temple.KeepingTheFaithApplyBehaviourBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new ApplyBehaviour(
                     id: EffectId.Temple.KeepingTheFaithApplyBehaviourBuff,
@@ -780,7 +780,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Watchtower.VantagePointApplyBehaviourBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.Watchtower.VantagePointApplyBehaviourBuff,
@@ -822,7 +822,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Bastion.BattlementApplyBehaviourBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
                 
                 new ApplyBehaviour(
                     id: EffectId.Bastion.BattlementApplyBehaviourBuff,
@@ -880,7 +880,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Leader.MenacingPresenceApplyBehaviour
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.Leader.MenacingPresenceApplyBehaviour,
@@ -939,7 +939,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Leader.OneForAllApplyBehaviourHeal
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.Leader.OneForAllApplyBehaviourHeal,
@@ -1098,7 +1098,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Gorger.FanaticSuicideDamage
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Damage(
                     id: EffectId.Gorger.FanaticSuicideDamage,
@@ -1110,15 +1110,11 @@ namespace LowAgeData.Collections
                     amount: new Amount(
                         flat: 0,
                         multiplier: 0.5f,
-                        multiplierOf: AmountFlag.FromMissingHealth,
-                        multiplierFilters: new List<IFilterItem>
-                        {
-                            new SpecificFlag(value: FilterFlag.Enemy),
-                            new SpecificFlag(value: FilterFlag.Unit)
-                        }),
+                        multiplierOf: AmountMultiplyOfFlag.MissingVitals,
+                        multiplyTarget: Location.Actor),
                     bonusTo: null,
                     bonusAmount: null,
-                    location: null,
+                    target: null,
                     filters: null,
                     validators: new List<Validator>
                     {
@@ -1176,7 +1172,7 @@ namespace LowAgeData.Collections
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
                     },
-                    location: Location.Origin,
+                    target: Location.Origin,
                     usedForValidator: true),
 
                 new Search(
@@ -1188,7 +1184,7 @@ namespace LowAgeData.Collections
                         new SpecificFlag(value: FilterFlag.Enemy),
                         new SpecificFlag(value: FilterFlag.Unit)
                     },
-                    location: Location.Actor,
+                    target: Location.Actor,
                     usedForValidator: true),
 
                 new Teleport(
@@ -1247,7 +1243,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Shaman.WondrousGooApplyBehaviour
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.Shaman.WondrousGooApplyBehaviour,
@@ -1315,7 +1311,7 @@ namespace LowAgeData.Collections
                         EffectId.BigBadBull.UnleashTheRageDamage,
                         EffectId.BigBadBull.UnleashTheRageForce
                     },
-                    location: Location.Point),
+                    target: Location.Point),
 
                 new Damage(
                     id: EffectId.BigBadBull.UnleashTheRageDamage,
@@ -1371,7 +1367,7 @@ namespace LowAgeData.Collections
                     amount: new Amount(flat: 6),
                     bonusTo: ActorAttribute.Mechanical,
                     bonusAmount: new Amount(flat: 8),
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
@@ -1478,7 +1474,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Horrior.ExpertFormationApplyBehaviour
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.Horrior.ExpertFormationApplyBehaviour,
@@ -1522,7 +1518,7 @@ namespace LowAgeData.Collections
                     amount: new Amount(flat: 5),
                     bonusTo: null,
                     bonusAmount: null,
-                    location: Location.Self,
+                    target: Location.Self,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -1570,7 +1566,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Mortar.DeadlyAmmunitionDamage
                     },
-                    location: Location.Inherited),
+                    target: Location.Inherited),
 
                 new Damage(
                     id: EffectId.Mortar.DeadlyAmmunitionDamage,
@@ -1587,7 +1583,7 @@ namespace LowAgeData.Collections
                 new Reload(
                     id: EffectId.Mortar.ReloadReload,
                     ammunitionToTarget: BehaviourId.Mortar.DeadlyAmmunitionAmmunition,
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.Mortar.PiercingBlastApplyBehaviour,
@@ -1654,7 +1650,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Hawk.HealthKitHealApplyBehaviour
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.Hawk.HealthKitHealApplyBehaviour,
@@ -1718,7 +1714,7 @@ namespace LowAgeData.Collections
                     },
                     change: Change.AddCurrent,
                     amount: 1,
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Destroy(
                     id: EffectId.Engineer.OperateDestroy,
@@ -1843,7 +1839,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Cannon.MachineBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new CreateEntity(
                     id: EffectId.Cannon.HeatUpCreateEntity,
@@ -1894,7 +1890,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Cannon.HeatUpDamage
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Damage(
                     id: EffectId.Cannon.HeatUpDamage,
@@ -1910,7 +1906,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Cannon.HeatUpWait
                     },
-                    location: Location.Origin,
+                    target: Location.Origin,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
@@ -1939,7 +1935,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Ballista.MachineBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Damage(
                     id: EffectId.Ballista.AimDamage,
@@ -1947,7 +1943,7 @@ namespace LowAgeData.Collections
                     amount: null,
                     bonusTo: null,
                     bonusAmount: null,
-                    location: Location.Actor,
+                    target: Location.Actor,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
@@ -2001,7 +1997,7 @@ namespace LowAgeData.Collections
                         new SpecificFlag(FilterFlag.Origin),
                         new SpecificEntity(UnitId.Ballista)
                     },
-                    location: Location.Self,
+                    target: Location.Self,
                     usedForValidator: true),
 
                 new ApplyBehaviour(
@@ -2019,7 +2015,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Radar.MachineBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new CreateEntity(
                     id: EffectId.Radar.ResonatingSweepCreateEntity,
@@ -2053,7 +2049,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Radar.RadioLocationDestroy
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Destroy(
                     id: EffectId.Radar.RadioLocationDestroy,
@@ -2082,7 +2078,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Radar.RadioLocationCreateEntity
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new CreateEntity(
                     id: EffectId.Radar.RadioLocationCreateEntity,
@@ -2108,7 +2104,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Vessel.MachineBuff
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new Search(
                     id: EffectId.Vessel.AbsorbentFieldSearch,
@@ -2134,7 +2130,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Vessel.AbsorbentFieldApplyBehaviour
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.Vessel.AbsorbentFieldApplyBehaviour,
@@ -2193,7 +2189,7 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Vessel.FortifyApplyBehaviour
                     },
-                    location: Location.Self),
+                    target: Location.Self),
 
                 new ApplyBehaviour(
                     id: EffectId.Vessel.FortifyApplyBehaviour,
@@ -2274,7 +2270,7 @@ namespace LowAgeData.Collections
                         EffectId.Omen.RenditionDamage,
                         EffectId.Omen.RenditionApplyBehaviourSlow
                     },
-                    location: Location.Source),
+                    target: Location.Source),
 
                 new Damage(
                     id: EffectId.Omen.RenditionDamage,

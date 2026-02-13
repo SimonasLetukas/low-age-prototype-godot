@@ -17,6 +17,7 @@ namespace LowAgeData.Domain.Effects
             IList<Validator>? validators = null)
             : base(
                 id, 
+                Location.Inherited, 
                 validators ?? new List<Validator>())
         {
             ResearchToAdd = researchToAdd ?? new List<ResearchId>();

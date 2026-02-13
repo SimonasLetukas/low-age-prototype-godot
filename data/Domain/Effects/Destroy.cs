@@ -11,13 +11,14 @@ namespace LowAgeData.Domain.Effects
             EffectId id, 
             Location? target = null,
             IList<Validator>? validators = null,
-            bool blocksBehaviours = false) : base(id, validators ?? new List<Validator>())
+            bool blocksBehaviours = false) 
+            : base(
+                id, 
+                target ?? Location.Self, 
+                validators ?? new List<Validator>())
         {
-            Target = target ?? Location.Self;
             BlocksBehaviours = blocksBehaviours;
         }
-
-        public Location Target { get; }
         
         /// /// <summary>
         /// If true, no <see cref="Behaviour"/> of the destroyed <see cref="Entity"/> can trigger their on-death

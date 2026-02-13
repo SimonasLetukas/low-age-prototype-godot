@@ -4,24 +4,29 @@ public class ApplyBehaviourNode : EffectNode, INodeFromBlueprint<ApplyBehaviour>
 {
     private ApplyBehaviour Blueprint { get; set; } = null!;
     
-    public ApplyBehaviourNode(ApplyBehaviour blueprint, EntityNode initiator, Effects history) : base(history)
+    public ApplyBehaviourNode(ApplyBehaviour blueprint, EntityNode initiator, Effects history) 
+        : base(history, initiator)
     {
-        Initiator = initiator;
         SetBlueprint(blueprint);
     }
     
     public void SetBlueprint(ApplyBehaviour blueprint)
     {
-        base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+        
+        base.SetBlueprint(blueprint);
     }
 
     public override bool Execute()
     {
         if (base.Execute() is false)
             return false;
+
+        foreach (var target in Targets)
+        {
+            target.Behaviours.AddBehaviours(Blueprint.BehavioursToApply, History);
+        }
         
-        Target.Behaviours.AddBehaviours(Blueprint.BehavioursToApply, History);
         return true;
     }
 }

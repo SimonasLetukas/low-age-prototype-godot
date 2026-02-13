@@ -12,7 +12,11 @@ namespace LowAgeData.Domain.Effects
             EntityId entityToCreate,
             IList<BehaviourId>? initialEntityBehaviours = null,
             Location? behaviourOwner = null,
-            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
+            IList<Validator>? validators = null) 
+            : base(
+                id, 
+                Location.Point, 
+                validators ?? new List<Validator>())
         {
             EntityToCreate = entityToCreate;
             InitialEntityBehaviours = initialEntityBehaviours ?? new List<BehaviourId>();

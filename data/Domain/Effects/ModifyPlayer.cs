@@ -1,4 +1,5 @@
-﻿using LowAgeData.Domain.Common.Filters;
+﻿using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Filters;
 using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Common.Modifications;
 using LowAgeData.Domain.Logic;
@@ -12,7 +13,11 @@ namespace LowAgeData.Domain.Effects
             IList<IFilterItem> playerFilters,
             IList<ModifyPlayerFlag>? modifyFlags = null,
             IList<ResourceModification>? resourceModifications = null,
-            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
+            IList<Validator>? validators = null) 
+            : base(
+                id,
+                Location.Inherited, 
+                validators ?? new List<Validator>())
         {
             PlayerFilters = playerFilters;
             ModifyFlags = modifyFlags ?? new List<ModifyPlayerFlag>();

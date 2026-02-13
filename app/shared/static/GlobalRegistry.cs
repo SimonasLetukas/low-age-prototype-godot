@@ -21,6 +21,7 @@ public partial class GlobalRegistry : Node
 
     public Vector2Int MapSize { get; private set; }
     public Func<Guid, EntityNode?> GetEntityById { get; private set; } = null!;
+    public Func<Player, IEnumerable<EntityNode>> GetEntitiesByPlayer { get; private set; } = null!;
     public Func<TurnPhase> GetCurrentPhase { get; private set; } = null!;
     public Func<ActorNode?> GetActorInAction { get; private set; } = null!;
     public Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; private set; } = null!;
@@ -43,6 +44,7 @@ public partial class GlobalRegistry : Node
 
     public void ProvideMapSize(Vector2Int mapSize) => MapSize = mapSize;
     public void ProvideGetEntityById(Func<Guid, EntityNode?> entityById) => GetEntityById = entityById;
+    public void ProvideGetEntitiesByPlayer(Func<Player, IEnumerable<EntityNode>> getEntitiesByPlayer) => GetEntitiesByPlayer = getEntitiesByPlayer;
     public void ProvideGetCurrentPhase(Func<TurnPhase> getCurrentPhase) => GetCurrentPhase = getCurrentPhase;
     public void ProvideGetActorInAction(Func<ActorNode?> getActorInAction) => GetActorInAction = getActorInAction;
     public void ProvideGetHighestTiles(Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles) => GetHighestTiles = getHighestTiles;

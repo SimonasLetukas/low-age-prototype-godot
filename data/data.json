@@ -7917,6 +7917,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -7925,10 +7926,10 @@
       "behavioursToApply": [
         "behaviour-shared-high-ground-buff"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -7937,10 +7938,10 @@
       "behavioursToApply": [
         "behaviour-shared-passive-income-income"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -7949,10 +7950,10 @@
       "behavioursToApply": [
         "behaviour-shared-scraps-income-income"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -7961,10 +7962,10 @@
       "behavioursToApply": [
         "behaviour-shared-celestium-income-income"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -7973,10 +7974,10 @@
       "behavioursToApply": [
         "behaviour-shared-revelators-population-cost-income"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8008,6 +8009,7 @@
       ],
       "location": "Location.Inherited",
       "usedForValidator": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8016,10 +8018,10 @@
       "behavioursToApply": [
         "behaviour-shared-revelators-no-population-space-intercept-damage"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8028,10 +8030,10 @@
       "behavioursToApply": [
         "behaviour-shared-uee-power-generator-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8047,6 +8049,7 @@
         "ModifyPlayerFlag.GameLost"
       ],
       "resourceModifications": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8055,10 +8058,10 @@
       "behavioursToApply": [
         "behaviour-shared-uee-power-dependency-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8069,19 +8072,19 @@
         "flat": 5,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": true,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8090,10 +8093,10 @@
       "behavioursToApply": [
         "behaviour-shared-uee-power-dependency-buff-disable"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8102,10 +8105,10 @@
       "behavioursToApply": [
         "behaviour-shared-uee-power-dependency-buff-inactive"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8130,6 +8133,7 @@
       ],
       "location": "Location.Inherited",
       "usedForValidator": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8138,10 +8142,10 @@
       "behavioursToApply": [
         "behaviour-shared-uee-positive-faith-buff"
       ],
-      "target": "Location.Actor",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -8150,10 +8154,10 @@
       "behavioursToApply": [
         "behaviour-citadel-executive-stash-income"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8162,10 +8166,10 @@
       "behavioursToApply": [
         "behaviour-citadel-ascendable-ascendable"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8174,10 +8178,10 @@
       "behavioursToApply": [
         "behaviour-citadel-high-ground-high-ground"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8219,6 +8223,7 @@
       ],
       "location": "Location.Origin",
       "usedForValidator": false,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -8227,10 +8232,10 @@
       "behavioursToApply": [
         "behaviour-obelisk-celestium-discharge-buff-long"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8239,10 +8244,10 @@
       "behavioursToApply": [
         "behaviour-obelisk-celestium-discharge-buff-negative"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8284,6 +8289,7 @@
       ],
       "location": "Location.Origin",
       "usedForValidator": false,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -8292,10 +8298,10 @@
       "behavioursToApply": [
         "behaviour-obelisk-celestium-discharge-buff-short"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8304,10 +8310,10 @@
       "behavioursToApply": [
         "behaviour-shack-accommodation-income"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8316,10 +8322,10 @@
       "behavioursToApply": [
         "behaviour-smith-melee-weapon-production-income"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8328,10 +8334,10 @@
       "behavioursToApply": [
         "behaviour-fletcher-ranged-weapon-production-income"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8340,10 +8346,10 @@
       "behavioursToApply": [
         "behaviour-alchemy-special-weapon-production-income"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8352,10 +8358,10 @@
       "behavioursToApply": [
         "behaviour-depot-weapon-storage-income"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8364,10 +8370,10 @@
       "behavioursToApply": [
         "behaviour-outpost-ascendable-ascendable"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8376,10 +8382,10 @@
       "behavioursToApply": [
         "behaviour-outpost-high-ground-high-ground"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8435,6 +8441,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8443,10 +8450,10 @@
       "behavioursToApply": [
         "behaviour-barricade-protective-shield-buff"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8500,6 +8507,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8510,19 +8518,19 @@
         "flat": 5,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8531,10 +8539,10 @@
       "behavioursToApply": [
         "behaviour-barricade-decompose-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8543,10 +8551,10 @@
       "behavioursToRemove": [
         "behaviour-barricade-decompose-buff"
       ],
-      "location": "Location.Self",
       "filters": [],
       "treatAsDeath": false,
       "behaviourOwner": null,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8557,19 +8565,19 @@
         "flat": 15,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Self",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8578,10 +8586,10 @@
       "behavioursToApply": [
         "behaviour-battery-core-power-grid-mask-provider"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8590,10 +8598,10 @@
       "behavioursToApply": [
         "behaviour-battery-core-fusion-core-upgrade-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8602,13 +8610,14 @@
       "entityToCreate": "structure-fusion-core",
       "initialEntityBehaviours": [],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-battery-core-fusion-core-upgrade-destroy",
-      "target": "Location.Self",
       "blocksBehaviours": true,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8618,6 +8627,7 @@
         "research-uee-fusion-core-upgrade"
       ],
       "researchToRemove": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8626,10 +8636,10 @@
       "behavioursToApply": [
         "behaviour-fusion-core-power-grid-mask-provider"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8640,16 +8650,15 @@
         "flat": 3,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Actor",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [
@@ -8662,6 +8671,7 @@
           "value": "FilterFlag.Unit"
         }
       ],
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -8670,10 +8680,10 @@
       "behavioursToApply": [
         "behaviour-fusion-core-celestium-core-upgrade-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8682,13 +8692,14 @@
       "entityToCreate": "structure-celestium-core",
       "initialEntityBehaviours": [],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-fusion-core-celestium-core-upgrade-destroy",
-      "target": "Location.Self",
       "blocksBehaviours": true,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8698,6 +8709,7 @@
         "research-uee-celestium-core-upgrade"
       ],
       "researchToRemove": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8706,10 +8718,10 @@
       "behavioursToApply": [
         "behaviour-celestium-core-power-grid-mask-provider"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8720,16 +8732,15 @@
         "flat": 4,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Actor",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [
@@ -8742,6 +8753,7 @@
           "value": "FilterFlag.Unit"
         }
       ],
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -8751,6 +8763,7 @@
         "research-uee-heightened-conductivity"
       ],
       "researchToRemove": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8759,10 +8772,10 @@
       "behavioursToApply": [
         "behaviour-collector-direct-transit-system-inactive-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8771,10 +8784,10 @@
       "behavioursToApply": [
         "behaviour-collector-direct-transit-system-active-income"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8783,10 +8796,10 @@
       "behavioursToApply": [
         "behaviour-extractor-reinforced-infrastructure-inactive-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8795,10 +8808,10 @@
       "behavioursToApply": [
         "behaviour-extractor-reinforced-infrastructure-active-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8807,10 +8820,10 @@
       "behavioursToApply": [
         "behaviour-power-pole-power-grid-mask-provider"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8865,6 +8878,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8873,10 +8887,10 @@
       "behavioursToApply": [
         "behaviour-power-pole-excess-distribution-buff"
       ],
-      "target": "Location.Actor",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -8884,6 +8898,7 @@
       "id": "effect-power-pole-improved-power-grid-modify-ability-power-grid",
       "abilityToModify": "ability-power-pole-power-grid",
       "modifiedAbility": "ability-power-pole-power-grid-improved",
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8891,6 +8906,7 @@
       "id": "effect-power-pole-improved-power-grid-modify-ability-excess-distribution",
       "abilityToModify": "ability-power-pole-excess-distribution",
       "modifiedAbility": "ability-power-pole-excess-distribution-improved",
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -8899,10 +8915,10 @@
       "behavioursToApply": [
         "behaviour-power-pole-power-grid-improved-mask-provider"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8957,6 +8973,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -8996,6 +9013,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9004,10 +9022,10 @@
       "behavioursToApply": [
         "behaviour-temple-keeping-the-faith-buff"
       ],
-      "target": "Location.Actor",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -9016,10 +9034,10 @@
       "behavioursToApply": [
         "behaviour-temple-keeping-the-faith-income"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9028,10 +9046,10 @@
       "behavioursToApply": [
         "behaviour-wall-high-ground-high-ground"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9040,10 +9058,10 @@
       "behavioursToApply": [
         "behaviour-stairs-ascendable-ascendable"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9052,10 +9070,10 @@
       "behavioursToApply": [
         "behaviour-gate-high-ground-high-ground"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9064,10 +9082,10 @@
       "behavioursToApply": [
         "behaviour-gate-ascendable-ascendable"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9076,10 +9094,10 @@
       "behavioursToApply": [
         "behaviour-gate-entrance-movement-block"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9088,10 +9106,10 @@
       "behavioursToApply": [
         "behaviour-watchtower-vantage-point-high-ground"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9136,6 +9154,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9144,10 +9163,10 @@
       "behavioursToApply": [
         "behaviour-watchtower-vantage-point-buff"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -9156,10 +9175,10 @@
       "behavioursToApply": [
         "behaviour-bastion-battlement-high-ground"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9204,6 +9223,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9212,10 +9232,10 @@
       "behavioursToApply": [
         "behaviour-bastion-battlement-buff"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -9224,10 +9244,10 @@
       "behavioursToApply": [
         "behaviour-leader-all-for-one-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9243,6 +9263,7 @@
         "ModifyPlayerFlag.GameLost"
       ],
       "resourceModifications": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -9288,6 +9309,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9296,10 +9318,10 @@
       "behavioursToApply": [
         "behaviour-leader-menacing-presence-buff"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -9308,7 +9330,6 @@
       "behavioursToApply": [
         "behaviour-leader-one-for-all-obelisk-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -9332,6 +9353,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": [
         {
           "conditions": [
@@ -9379,6 +9401,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9387,10 +9410,10 @@
       "behavioursToApply": [
         "behaviour-leader-one-for-all-heal-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9399,7 +9422,6 @@
       "behavioursToApply": [
         "behaviour-slave-repair-structure-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -9423,6 +9445,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": [
         {
           "conditions": [
@@ -9440,10 +9463,10 @@
       "behavioursToApply": [
         "behaviour-slave-repair-wait"
       ],
-      "target": "Location.Origin",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -9452,7 +9475,6 @@
       "behavioursToApply": [
         "behaviour-slave-manual-labour-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -9476,6 +9498,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": [
         {
           "conditions": [
@@ -9496,10 +9519,10 @@
       "behavioursToApply": [
         "behaviour-slave-manual-labour-wait"
       ],
-      "target": "Location.Origin",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -9519,6 +9542,7 @@
           "amount": 2.0
         }
       ],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -9527,10 +9551,10 @@
       "behavioursToApply": [
         "behaviour-quickdraw-doubleshot-extra-attack"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9539,7 +9563,6 @@
       "behavioursToApply": [
         "behaviour-quickdraw-cripple-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "SpecificFlag",
@@ -9552,6 +9575,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -9560,17 +9584,17 @@
       "behavioursToApply": [
         "behaviour-gorger-fanatic-suicide-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-gorger-fanatic-suicide-destroy",
-      "target": "Location.Origin",
       "blocksBehaviours": false,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -9623,6 +9647,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9633,19 +9658,19 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -9655,29 +9680,20 @@
       "amount": {
         "flat": 0,
         "multiplier": 0.5,
-        "multiplierOf": "AmountFlag.FromMissingHealth",
-        "multiplierFilters": [
-          {
-            "$type": "SpecificFlag",
-            "value": "FilterFlag.Enemy"
-          },
-          {
-            "$type": "SpecificFlag",
-            "value": "FilterFlag.Unit"
-          }
-        ]
+        "multiplierOf": "AmountMultiplyOfFlag.MissingVitals",
+        "multiplyTarget": "Location.Actor"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": [
         {
           "$type": "ResultValidator",
@@ -9697,7 +9713,6 @@
       "behavioursToApply": [
         "behaviour-camou-silent-assassin-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "SpecificFlag",
@@ -9710,6 +9725,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": [
         {
           "$type": "ResultValidator",
@@ -9766,6 +9782,7 @@
       "effects": [],
       "location": "Location.Origin",
       "usedForValidator": true,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -9790,12 +9807,14 @@
       "effects": [],
       "location": "Location.Actor",
       "usedForValidator": true,
+      "target": "Location.Actor",
       "validators": []
     },
     {
       "$type": "Teleport",
       "id": "effect-camou-climb-teleport",
       "waitBefore": "behaviour-camou-climb-wait",
+      "target": "Location.Point",
       "validators": [
         {
           "conditions": [
@@ -9821,10 +9840,10 @@
       "behavioursToApply": [
         "behaviour-camou-climb-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9835,6 +9854,7 @@
         "behaviour-shaman-wondrous-goo-feature-wait"
       ],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
@@ -9879,6 +9899,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9887,17 +9908,17 @@
       "behavioursToApply": [
         "behaviour-shaman-wondrous-goo-buff"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-shaman-wondrous-goo-destroy",
-      "target": "Location.Self",
       "blocksBehaviours": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9908,19 +9929,19 @@
         "flat": 1,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -9932,6 +9953,7 @@
         "behaviour-pyre-cargo-wall-of-flames-buff"
       ],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
@@ -9940,13 +9962,14 @@
       "entityToCreate": "doodad-pyre-flames",
       "initialEntityBehaviours": [],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-pyre-wall-of-flames-destroy",
-      "target": "Location.Self",
       "blocksBehaviours": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9957,19 +9980,19 @@
         "flat": 5,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -9978,10 +10001,10 @@
       "behavioursToApply": [
         "behaviour-pyre-phantom-menace-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10024,6 +10047,7 @@
       ],
       "location": "Location.Point",
       "usedForValidator": false,
+      "target": "Location.Point",
       "validators": []
     },
     {
@@ -10034,19 +10058,19 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -10057,6 +10081,7 @@
       "onCollisionEffects": [
         "effect-big-bad-bull-unleash-the-rage-force-damage"
       ],
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -10067,19 +10092,19 @@
         "flat": 5,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -10088,6 +10113,7 @@
       "entityToCreate": "unit-roach",
       "initialEntityBehaviours": [],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
@@ -10095,6 +10121,7 @@
       "id": "effect-mummy-leap-of-hunger-modify-ability",
       "abilityToModify": "ability-mummy-spawn-roach",
       "modifiedAbility": "ability-mummy-spawn-roach-modified",
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -10103,10 +10130,10 @@
       "behavioursToApply": [
         "behaviour-roach-degrading-carapace-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10115,10 +10142,10 @@
       "behavioursToApply": [
         "behaviour-roach-degrading-carapace-periodic-damage-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10129,19 +10156,19 @@
         "flat": 1,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -10152,16 +10179,15 @@
         "flat": 6,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": "ActorAttribute.Mechanical",
       "bonusAmount": {
         "flat": 8,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Actor",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [
@@ -10185,6 +10211,7 @@
           "value": "FilterFlag.Enemy"
         }
       ],
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -10193,7 +10220,6 @@
       "behavioursToApply": [
         "behaviour-parasite-paralysing-grasp-tether"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "SpecificFlag",
@@ -10206,6 +10232,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": [
         {
           "conditions": [
@@ -10226,7 +10253,6 @@
       "behavioursToApply": [
         "behaviour-parasite-paralysing-grasp-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "SpecificFlag",
@@ -10239,6 +10265,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": [
         {
           "conditions": [
@@ -10259,7 +10286,6 @@
       "behavioursToApply": [
         "behaviour-parasite-paralysing-grasp-self-buff"
       ],
-      "target": "Location.Source",
       "filters": [
         {
           "$type": "SpecificFlag",
@@ -10268,6 +10294,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Source",
       "validators": [
         {
           "conditions": [
@@ -10321,6 +10348,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10329,10 +10357,10 @@
       "behavioursToApply": [
         "behaviour-horrior-expert-formation-buff"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -10341,10 +10369,10 @@
       "behavioursToApply": [
         "behaviour-horrior-mount-wait"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10353,13 +10381,14 @@
       "entityToCreate": "unit-surfer",
       "initialEntityBehaviours": [],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-horrior-mount-destroy",
-      "target": "Location.Self",
       "blocksBehaviours": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10368,7 +10397,6 @@
       "behavioursToApply": [
         "behaviour-marksman-critical-mark-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "SpecificFlag",
@@ -10381,6 +10409,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -10391,16 +10420,15 @@
         "flat": 5,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Self",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [
@@ -10413,6 +10441,7 @@
           "value": "FilterFlag.Unit"
         }
       ],
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10421,10 +10450,10 @@
       "behavioursToApply": [
         "behaviour-surfer-dismount-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10433,6 +10462,7 @@
       "entityToCreate": "unit-horrior",
       "initialEntityBehaviours": [],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
@@ -10441,10 +10471,10 @@
       "behavioursToApply": [
         "behaviour-mortar-deadly-ammunition-ammunition"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10486,6 +10516,7 @@
       ],
       "location": "Location.Inherited",
       "usedForValidator": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -10496,19 +10527,19 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -10517,17 +10548,17 @@
       "behavioursToApply": [
         "behaviour-mortar-reload-wait"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
       "$type": "Reload",
       "id": "effect-mortar-reload-reload",
       "ammunitionToTarget": "behaviour-mortar-deadly-ammunition-ammunition",
-      "location": "Location.Self",
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10536,10 +10567,10 @@
       "behavioursToApply": [
         "behaviour-mortar-piercing-blast-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10548,10 +10579,10 @@
       "behavioursToApply": [
         "behaviour-hawk-tactical-goggles-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10560,7 +10591,6 @@
       "behavioursToApply": [
         "behaviour-hawk-leadership-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -10588,6 +10618,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -10596,10 +10627,10 @@
       "behavioursToApply": [
         "behaviour-hawk-health-kit-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10637,6 +10668,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10645,10 +10677,10 @@
       "behavioursToApply": [
         "behaviour-hawk-health-kit-heal-buff"
       ],
-      "target": "Location.Inherited",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -10657,7 +10689,6 @@
       "behavioursToApply": [
         "behaviour-engineer-operate-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -10689,6 +10720,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": [
         {
           "conditions": [
@@ -10736,15 +10768,15 @@
       ],
       "change": "Change.AddCurrent",
       "amount": 1,
-      "location": "Location.Self",
       "filters": [],
+      "target": "Location.Self",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-engineer-operate-destroy",
-      "target": "Location.Origin",
       "blocksBehaviours": false,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -10753,7 +10785,6 @@
       "behavioursToApply": [
         "behaviour-engineer-repair-structure-or-machine-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -10777,6 +10808,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": [
         {
           "conditions": [
@@ -10794,7 +10826,6 @@
       "behavioursToApply": [
         "behaviour-engineer-repair-structure-or-machine-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -10841,6 +10872,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": [
         {
           "conditions": [
@@ -10858,7 +10890,6 @@
       "behavioursToApply": [
         "behaviour-engineer-repair-horrior-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -10882,6 +10913,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": [
         {
           "conditions": [
@@ -10902,10 +10934,10 @@
       "behavioursToApply": [
         "behaviour-engineer-repair-wait"
       ],
-      "target": "Location.Origin",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -10915,10 +10947,10 @@
         "behaviour-cannon-machine-counter",
         "behaviour-cannon-machine-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10927,10 +10959,10 @@
       "behavioursToRemove": [
         "behaviour-cannon-machine-buff"
       ],
-      "location": "Location.Self",
       "filters": [],
       "treatAsDeath": false,
       "behaviourOwner": null,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -10941,6 +10973,7 @@
         "behaviour-cannon-heat-up-danger-zone-buff"
       ],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
@@ -10949,7 +10982,6 @@
       "behavioursToApply": [
         "behaviour-cannon-heat-up-wait"
       ],
-      "target": "Location.Origin",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -10973,6 +11005,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -11014,6 +11047,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11024,26 +11058,26 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-cannon-heat-up-destroy",
-      "target": "Location.Self",
       "blocksBehaviours": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11052,7 +11086,6 @@
       "behavioursToRemove": [
         "behaviour-cannon-heat-up-wait"
       ],
-      "location": "Location.Origin",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -11076,6 +11109,7 @@
       ],
       "treatAsDeath": false,
       "behaviourOwner": null,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -11085,10 +11119,10 @@
         "behaviour-ballista-machine-counter",
         "behaviour-ballista-machine-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11097,10 +11131,10 @@
       "behavioursToRemove": [
         "behaviour-ballista-machine-buff"
       ],
-      "location": "Location.Self",
       "filters": [],
       "treatAsDeath": false,
       "behaviourOwner": null,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11111,16 +11145,15 @@
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Actor",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [
@@ -11144,6 +11177,7 @@
           "value": "FilterFlag.Enemy"
         }
       ],
+      "target": "Location.Actor",
       "validators": [
         {
           "conditions": [
@@ -11164,7 +11198,6 @@
       "behavioursToApply": [
         "behaviour-ballista-aim-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -11188,6 +11221,7 @@
       ],
       "behaviourOwner": "Location.Origin",
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -11212,6 +11246,7 @@
       "effects": [],
       "location": "Location.Self",
       "usedForValidator": true,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11221,10 +11256,10 @@
         "behaviour-radar-machine-counter",
         "behaviour-radar-machine-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11233,10 +11268,10 @@
       "behavioursToRemove": [
         "behaviour-radar-machine-buff"
       ],
-      "location": "Location.Self",
       "filters": [],
       "treatAsDeath": false,
       "behaviourOwner": null,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11247,13 +11282,14 @@
         "behaviour-radar-resonating-sweep-buff"
       ],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-radar-resonating-sweep-destroy",
-      "target": "Location.Self",
       "blocksBehaviours": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11262,10 +11298,10 @@
       "behavioursToApply": [
         "behaviour-radar-radio-location-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11286,13 +11322,14 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-radar-radio-location-destroy",
-      "target": "Location.Inherited",
       "blocksBehaviours": false,
+      "target": "Location.Inherited",
       "validators": [
         {
           "conditions": [
@@ -11331,6 +11368,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11341,6 +11379,7 @@
         "behaviour-radar-radio-location-feature-buff"
       ],
       "behaviourOwner": "Location.Origin",
+      "target": "Location.Point",
       "validators": []
     },
     {
@@ -11350,10 +11389,10 @@
         "behaviour-vessel-machine-counter",
         "behaviour-vessel-machine-buff"
       ],
-      "target": "Location.Self",
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11362,10 +11401,10 @@
       "behavioursToRemove": [
         "behaviour-vessel-machine-buff"
       ],
-      "location": "Location.Self",
       "filters": [],
       "treatAsDeath": false,
       "behaviourOwner": null,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11406,6 +11445,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11414,7 +11454,6 @@
       "behavioursToApply": [
         "behaviour-vessel-absorbent-field-intercept-damage"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -11438,6 +11477,7 @@
       ],
       "behaviourOwner": "Location.Origin",
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -11448,13 +11488,14 @@
         "behaviour-vessel-fortify-destroy-buff"
       ],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-vessel-fortify-destroy",
-      "target": "Location.Self",
       "blocksBehaviours": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11495,6 +11536,7 @@
       ],
       "location": "Location.Self",
       "usedForValidator": false,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11503,7 +11545,6 @@
       "behavioursToApply": [
         "behaviour-vessel-fortify-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "FilterGroup",
@@ -11527,6 +11568,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -11535,7 +11577,6 @@
       "behavioursToApply": [
         "behaviour-omen-rendition-placement-buff"
       ],
-      "target": "Location.Actor",
       "filters": [
         {
           "$type": "SpecificFlag",
@@ -11548,6 +11589,7 @@
       ],
       "behaviourOwner": null,
       "waitForInitialEffects": true,
+      "target": "Location.Actor",
       "validators": []
     },
     {
@@ -11556,6 +11598,7 @@
       "abilityToExecute": "ability-omen-rendition-placement",
       "executingPlayer": "Location.Origin",
       "cancelSynchronised": true,
+      "target": "Location.Origin",
       "validators": []
     },
     {
@@ -11568,13 +11611,14 @@
         "behaviour-omen-rendition-buff-timer"
       ],
       "behaviourOwner": null,
+      "target": "Location.Point",
       "validators": []
     },
     {
       "$type": "Destroy",
       "id": "effect-omen-rendition-destroy",
-      "target": "Location.Self",
       "blocksBehaviours": true,
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11613,6 +11657,7 @@
       ],
       "location": "Location.Source",
       "usedForValidator": false,
+      "target": "Location.Source",
       "validators": []
     },
     {
@@ -11623,19 +11668,19 @@
         "flat": 10,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "bonusTo": null,
       "bonusAmount": {
         "flat": 0,
         "multiplier": null,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
-      "location": "Location.Inherited",
       "ignoresArmor": false,
       "ignoresShield": false,
       "filters": [],
+      "target": "Location.Inherited",
       "validators": []
     }
   ],
@@ -11948,7 +11993,7 @@
       "displayName": "Population Cost Income",
       "description": "This unit costs 1 population.",
       "endsAt": "EndsAt.Death",
-      "alignment": "Alignment.Negative",
+      "alignment": "Alignment.Neutral",
       "canStack": false,
       "canResetDuration": false,
       "triggers": [],
@@ -11965,13 +12010,17 @@
     {
       "$type": "InterceptDamage",
       "id": "behaviour-shared-revelators-no-population-space-intercept-damage",
-      "numberOfInterceptions": 0,
-      "damageTypes": [],
+      "numberOfInterceptions": -1,
+      "interceptedDamageTypes": [
+        "DamageType.Melee",
+        "DamageType.Ranged",
+        "DamageType.Pure"
+      ],
       "amountDealtInstead": {
         "flat": 0,
         "multiplier": 2.0,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "damageTypeDealtInstead": null,
       "shareWith": null,
@@ -11981,7 +12030,7 @@
       "displayName": "No Population Space Intercept Damage",
       "description": "This unit receives double damage from all sources, because there's not enough population space.",
       "endsAt": "EndsAt.EndOfThisPlanning",
-      "alignment": "Alignment.Neutral",
+      "alignment": "Alignment.Negative",
       "canStack": false,
       "canResetDuration": false,
       "triggers": [],
@@ -15967,8 +16016,8 @@
     {
       "$type": "InterceptDamage",
       "id": "behaviour-vessel-absorbent-field-intercept-damage",
-      "numberOfInterceptions": 0,
-      "damageTypes": [
+      "numberOfInterceptions": -1,
+      "interceptedDamageTypes": [
         "DamageType.Melee",
         "DamageType.Ranged"
       ],
@@ -15979,7 +16028,7 @@
         "flat": 0,
         "multiplier": 0.5,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "damageTypeShared": null,
       "reduceByTheSharedAmount": true,
@@ -16098,8 +16147,12 @@
     {
       "$type": "InterceptDamage",
       "id": "behaviour-omen-rendition-intercept-damage",
-      "numberOfInterceptions": 0,
-      "damageTypes": [],
+      "numberOfInterceptions": -1,
+      "interceptedDamageTypes": [
+        "DamageType.Melee",
+        "DamageType.Ranged",
+        "DamageType.Pure"
+      ],
       "amountDealtInstead": null,
       "damageTypeDealtInstead": null,
       "shareWith": "Location.Source",
@@ -16107,7 +16160,7 @@
         "flat": 0,
         "multiplier": 0.5,
         "multiplierOf": null,
-        "multiplierFilters": []
+        "multiplyTarget": "Location.Inherited"
       },
       "damageTypeShared": "DamageType.Pure",
       "reduceByTheSharedAmount": false,

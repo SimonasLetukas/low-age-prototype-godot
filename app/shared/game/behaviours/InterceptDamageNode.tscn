@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlymba1remlke"]
+
+[ext_resource type="PackedScene" uid="uid://c27u5adjari35" path="res://app/shared/game/behaviours/BehaviourNode.tscn" id="1_lwncf"]
+[ext_resource type="Script" uid="uid://dllnbit7n8r40" path="res://app/shared/game/behaviours/InterceptDamageNode.cs" id="2_3803r"]
+
+[node name="InterceptDamageNode" instance=ExtResource("1_lwncf")]
+script = ExtResource("2_3803r")

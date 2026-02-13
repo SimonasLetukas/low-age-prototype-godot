@@ -6,7 +6,8 @@ using LowAgeData.Domain.Entities.Actors;
 namespace LowAgeData.Domain.Behaviours
 {
     /// <summary>
-    /// A <see cref="Behaviour"/> that intercepts incoming <see cref="Damage"/> and acts on it in various ways. 
+    /// A <see cref="Behaviour"/> that intercepts the initial incoming <see cref="Damage"/> (before armour) and
+    /// acts on it in various ways. 
     /// </summary>
     public class InterceptDamage : Behaviour
     {
@@ -16,8 +17,9 @@ namespace LowAgeData.Domain.Behaviours
             string description,
             string sprite,
             EndsAt endsAt,
-            int numberOfInterceptions = 0,
-            IList<DamageType>? damageTypes = null,
+            Alignment? alignment = null,
+            int? numberOfInterceptions = null,
+            IList<DamageType>? interceptedDamageTypes = null,
             Amount? amountDealtInstead = null,
             DamageType? damageTypeDealtInstead = null,
             Location? shareWith = null,
@@ -32,12 +34,13 @@ namespace LowAgeData.Domain.Behaviours
                 description, 
                 sprite,
                 endsAt,
-                Alignment.Neutral,
+                alignment ?? Alignment.Neutral,
                 ownerAllowed: ownerAllowed, 
                 hasSameInstanceForAllOwners: hasSameInstanceForAllOwners)
         {
-            NumberOfInterceptions = numberOfInterceptions;
-            DamageTypes = damageTypes ?? new List<DamageType>();
+            NumberOfInterceptions = numberOfInterceptions ?? -1;
+            InterceptedDamageTypes = interceptedDamageTypes 
+                                     ?? [DamageType.Melee, DamageType.Ranged, DamageType.Pure];
             AmountDealtInstead = amountDealtInstead;
             DamageTypeDealtInstead = damageTypeDealtInstead;
             ShareWith = shareWith;
@@ -47,21 +50,26 @@ namespace LowAgeData.Domain.Behaviours
         }
         
         /// <summary>
-        /// How many interceptions are executed until this <see cref="Behaviour"/> is removed. Value of '0' means that
+        /// How many interceptions are executed until this <see cref="Behaviour"/> is removed. Value of '-1' means that
         /// there is no limit of interceptions. 
         /// </summary>
         public int NumberOfInterceptions { get; }
         
         /// <summary>
-        /// List of <see cref="DamageType"/>s that trigger this <see cref="Behaviour"/>. An empty list means that all
-        /// damage goes through <see cref="InterceptDamage"/>.
+        /// List of <see cref="DamageType"/>s that can trigger this <see cref="Behaviour"/>.
+        ///
+        /// Default = [<see cref="DamageType.Melee"/>, <see cref="DamageType.Ranged"/>, <see cref="DamageType.Pure"/>]
+        /// (all main damage types). 
         /// </summary>
-        public IList<DamageType> DamageTypes { get; }
+        public IList<DamageType> InterceptedDamageTypes { get; }
         
         /// <summary>
         /// Specifies the <see cref="Amount"/> of damage this <see cref="Actor"/> receives instead of the intercepted
         /// <see cref="Amount"/>. Can be set to deal <see cref="Amount.Flat"/> or a <see cref="Amount.Multiplier"/>
         /// of the intercepted <see cref="Amount"/>.
+        ///
+        /// Note: In <see cref="Amount"/>.<see cref="Amount.MultiplyTarget"/> the '<see cref="Location.Inherited"/>'
+        /// value means that the incoming damage is taken as the multiply target. 
         /// </summary>
         public Amount? AmountDealtInstead { get; }
         

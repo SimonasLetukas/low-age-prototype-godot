@@ -55,7 +55,7 @@ namespace LowAgeData
             typeof(TileCondition), 
             
             // EnumValueObjects:
-            typeof(ActorAttribute), typeof(Alignment), typeof(AmountFlag), typeof(AttackAttribute), typeof(AttackType),
+            typeof(ActorAttribute), typeof(Alignment), typeof(AmountMultiplyOfFlag), typeof(AttackAttribute), typeof(AttackType),
             typeof(Change), typeof(ConditionFlag), typeof(DamageType), typeof(EndsAt), typeof(Event), typeof(FilterFlag),
             typeof(Location), typeof(ModificationFlag), typeof(ModifyPlayerFlag), typeof(SearchFlag), typeof(StatType), 
             typeof(Terrain), typeof(TurnPhase),

@@ -1,7 +1,6 @@
 ﻿using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Effects;
-using LowAgeData.Domain.Entities.Actors;
 using LowAgeCommon;
 
 namespace LowAgeData.Domain.Resources
@@ -69,14 +68,14 @@ namespace LowAgeData.Domain.Resources
         public ResourceId StoredAs { get; }
         
         /// <summary>
-        /// List of <see cref="Effect"/>s to be executed at the start of each action phase if the current value of this
-        /// <see cref="Resource"/> is positive (zero excluded).
+        /// List of <see cref="Effect"/>s to be executed at the start of each action phase or when resources change
+        /// during action phase if the current value of this <see cref="Resource"/> is positive (zero excluded).
         /// </summary>
         public IList<EffectId> PositiveIncomeEffects { get; }
 
         /// <summary>
-        /// List of <see cref="Effect"/>s to be executed at the start of each action phase if the current value of this
-        /// <see cref="Resource"/> is negative (zero excluded).
+        /// List of <see cref="Effect"/>s to be executed at the start of each action phase or when resources change
+        /// during action phase if the current value of this <see cref="Resource"/> is negative (zero excluded).
         /// </summary>
         public IList<EffectId> NegativeIncomeEffects { get; }
         

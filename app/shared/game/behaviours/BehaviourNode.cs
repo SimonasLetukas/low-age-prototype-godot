@@ -5,7 +5,7 @@ using LowAgeData.Domain.Common;
 
 public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBehaviour
 {
-    public event Action<BehaviourNode> Ended = delegate { };
+    public event Action<BehaviourNode> Destroyed = delegate { };
     
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     public string Description { get; protected set; } = null!;
@@ -13,7 +13,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     public Guid? OwnerActorId { get; protected set; }
     public EndsAtNode CurrentDuration { get; protected set; } = null!;
 
-    protected bool DebugEnabled => true;
+    protected bool DebugEnabled => false;
     protected EntityNode Parent { get; set; } = null!;
     protected Effects History { get; set; } = null!;
 
@@ -26,6 +26,8 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         Alignment = Blueprint.Alignment;
         CurrentDuration = EndsAtNode.InstantiateAsChild(blueprint.EndsAt, this, Parent);
         CurrentDuration.Completed += OnDurationEnded;
+        
+        CurrentDuration.ResetDuration();
     }
 
     public override void _ExitTree()
@@ -40,7 +42,13 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     
     protected virtual void OnDurationEnded(EndsAtNode duration)
     {
-        Ended(this);
+        Destroy();
+    }
+
+    protected void Destroy()
+    {
+        Destroyed(this);
+        QueueFree();
     }
     
     public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);

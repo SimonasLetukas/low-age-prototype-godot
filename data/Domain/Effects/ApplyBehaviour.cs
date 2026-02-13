@@ -18,17 +18,16 @@ namespace LowAgeData.Domain.Effects
             IList<Validator>? validators = null)
             : base(
                 id, 
+                target ?? Location.Inherited,
                 validators ?? new List<Validator>())
         {
             BehavioursToApply = behavioursToApply;
-            Target = target ?? Location.Inherited;
             Filters = filters ?? new List<IFilterItem>();
             BehaviourOwner = behaviourOwner;
             WaitForInitialEffects = waitForInitialEffects ?? false;
         }
 
         public IList<BehaviourId> BehavioursToApply { get; }
-        public Location Target { get; }
         public IList<IFilterItem> Filters { get; }
         
         /// <summary>

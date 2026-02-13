@@ -164,7 +164,7 @@ namespace LowAgeData.Collections
                             amount: -1, 
                             resource: ResourceId.Population)
                     },
-                    alignment: Alignment.Negative),
+                    alignment: Alignment.Neutral),
 
                 new InterceptDamage(
                     id: BehaviourId.Shared.Revelators.NoPopulationSpaceInterceptDamage,
@@ -175,7 +175,8 @@ namespace LowAgeData.Collections
                     endsAt: EndsAt.EndOf.This.Planning,
                     amountDealtInstead: new Amount(
                         flat: 0,
-                        multiplier: 2)),
+                        multiplier: 2),
+                    alignment: Alignment.Negative),
                 
                 new Buildable(
                     id: BehaviourId.Shared.Uee.BuildingStructureBuildable,
@@ -2422,8 +2423,7 @@ namespace LowAgeData.Collections
                     "also dealt to a nearby Vessel.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.Death,
-                    numberOfInterceptions: 0,
-                    damageTypes: new List<DamageType>
+                    interceptedDamageTypes: new List<DamageType>
                     {
                         DamageType.Melee,
                         DamageType.Ranged
@@ -2508,8 +2508,7 @@ namespace LowAgeData.Collections
                     "this rendition.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.Death,
-                    numberOfInterceptions: 0,
-                    damageTypes: null,
+                    interceptedDamageTypes: null,
                     amountDealtInstead: null,
                     damageTypeDealtInstead: null,
                     shareWith: Location.Source,

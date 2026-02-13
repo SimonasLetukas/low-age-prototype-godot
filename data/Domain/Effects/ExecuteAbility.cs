@@ -14,6 +14,7 @@ namespace LowAgeData.Domain.Effects
             IList<Validator>? validators = null) 
             : base(
                 id, 
+                executingPlayer ?? Location.Inherited,
                 validators ?? new List<Validator>())
         {
             AbilityToExecute = abilityToExecute;
@@ -28,6 +29,8 @@ namespace LowAgeData.Domain.Effects
         
         /// <summary>
         /// Used to specify the player who has the control over the <see cref="AbilityToExecute"/>.
+        ///
+        /// Note: Used for documentation purposes only, will be automatically resolved to <see cref="Target"/>.
         /// </summary>
         public Location ExecutingPlayer { get; }
         

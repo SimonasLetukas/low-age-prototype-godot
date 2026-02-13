@@ -82,7 +82,8 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         var vitalsAmount = HasShields 
             ? Shields!.MaxAmount + Health!.MaxAmount
             : Health?.MaxAmount ?? 0;
-        ReceiveDamage(this, DamageType.Pure, vitalsAmount / 2, false);
+        var (damage, _) = GetDamage(this, vitalsAmount / 2, DamageType.Pure);
+        ReceiveDamage(this, damage, false);
     }
 
     public override void MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Point> path)

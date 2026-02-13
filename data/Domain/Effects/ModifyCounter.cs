@@ -13,14 +13,17 @@ namespace LowAgeData.Domain.Effects
             IList<BehaviourId> countersToModify,
             Change change,
             int amount,
-            Location? location = null,
+            Location? target = null,
             IList<IFilterItem>? filters = null,
-            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
+            IList<Validator>? validators = null) 
+            : base(
+                id, 
+                target ?? Location.Inherited, 
+                validators ?? new List<Validator>())
         {
             CountersToModify = countersToModify;
             Change = change;
             Amount = amount;
-            Location = location ?? Location.Inherited;
             Filters = filters ?? new List<IFilterItem>();
         }
         
@@ -30,7 +33,6 @@ namespace LowAgeData.Domain.Effects
         public IList<BehaviourId> CountersToModify { get; }
         public Change Change { get; }
         public int Amount { get; }
-        public Location Location { get; }
         public IList<IFilterItem> Filters { get; }
     }
 }

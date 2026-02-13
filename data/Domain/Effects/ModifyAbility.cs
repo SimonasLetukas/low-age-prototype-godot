@@ -1,4 +1,5 @@
 ﻿using LowAgeData.Domain.Abilities;
+using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Logic;
 
 namespace LowAgeData.Domain.Effects
@@ -9,7 +10,11 @@ namespace LowAgeData.Domain.Effects
             EffectId id,
             AbilityId abilityToModify,
             AbilityId modifiedAbility,
-            IList<Validator>? validators = null) : base(id, validators ?? new List<Validator>())
+            IList<Validator>? validators = null) 
+            : base(
+                id, 
+                Location.Inherited, 
+                validators ?? new List<Validator>())
         {
             AbilityToModify = abilityToModify;
             ModifiedAbility = modifiedAbility;
