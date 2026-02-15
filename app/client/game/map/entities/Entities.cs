@@ -55,7 +55,7 @@ public partial class Entities : Node2D
     {
         _playerPriority = new PlayerPriority
         {
-            Queue = Players.Instance.GetAll().OrderBy(x => x.Id).ToList(),
+            Queue = Players.Instance.GetAll().OrderBy(x => x.StableId).ToList(),
         };
         
         GlobalRegistry.Instance.ProvideGetEntityById(GetEntityByInstanceId);
@@ -328,9 +328,9 @@ public partial class Entities : Node2D
 
     public EntityNode SetEntityForPlacement(EntityId entityId, bool canBePlacedOnTheWholeMap, IList<Payment> cost)
     {
-        var playerId = Players.Instance.Current.Id;
+        var player = Players.Instance.Current;
         var newEntityBlueprint = Data.Instance.GetEntityBlueprintById(entityId);
-        var newEntity = InstantiateEntity(newEntityBlueprint, playerId, cost);
+        var newEntity = InstantiateEntity(newEntityBlueprint, player, cost);
         
         newEntity.SetForPlacement(canBePlacedOnTheWholeMap);
         EntityInPlacement = newEntity;
@@ -394,7 +394,7 @@ public partial class Entities : Node2D
         CandidatePlacementCancelled(new EntityCandidatePlacementCancelledEvent
         {
             InstanceId = entity.InstanceId,
-            PlayerId = entity.Player.Id
+            PlayerStableId = entity.Player.StableId
         });
     }
 
@@ -420,7 +420,7 @@ public partial class Entities : Node2D
         ability.OnExecutionRequested(@event.Focus);
         AbilityExecutionCompleted(new AbilityExecutionCompletedEvent
         {
-            PlayerId = Players.Instance.Current.Id,
+            PlayerStableId = Players.Instance.Current.StableId,
             AbilityExecutionRequestedEventId = @event.Id
         });
     }
@@ -459,7 +459,8 @@ public partial class Entities : Node2D
         }
         
         var entityBlueprint = Data.Instance.GetEntityBlueprintById(@event.BlueprintId);
-        entity = InstantiateEntity(entityBlueprint, @event.PlayerId, @event.Cost, @event.InstanceId);
+        var player = Players.Instance.GetByStableId(@event.PlayerStableId);
+        entity = InstantiateEntity(entityBlueprint, player, @event.Cost, @event.InstanceId);
         entity.ForcePlace(@event);
         
         NewPositionOccupied(entity);
@@ -486,7 +487,7 @@ public partial class Entities : Node2D
     /// </summary>
     private EntityNode? PlaceEntity(Entity entityBlueprint, Vector2Int mapPosition, IsometricRotation rotation)
     {
-        var playerId = Players.Instance.Current.Id;
+        var playerId = Players.Instance.Current;
         var entity = InstantiateEntity(entityBlueprint, playerId, []);
         entity.EntityPrimaryPosition = mapPosition;
         entity.Behaviours.AddOnBuildBehaviour(BehaviourId.Shared.StartingEntityBuildable);
@@ -514,7 +515,7 @@ public partial class Entities : Node2D
                 Cost = entity.HasCost ? entity.CreationProgress?.TotalCost ?? [] : [],
                 InstanceId = instanceId,
                 ActorRotation = entity is ActorNode actor ? actor.ActorRotation : IsometricRotation.BottomRight,
-                PlayerId = entity.Player.Id
+                PlayerStableId = entity.Player.StableId
             });
         
         NewPositionOccupied(entity);
@@ -531,11 +532,9 @@ public partial class Entities : Node2D
         return placedSuccessfully;
     }
 
-    private EntityNode InstantiateEntity(Entity entityBlueprint, int playerId, IList<Payment> cost, 
+    private EntityNode InstantiateEntity(Entity entityBlueprint, Player player, IList<Payment> cost, 
         Guid? instanceId = null)
     {
-        var player = Players.Instance.Get(playerId);
-
         EntityNode entity = entityBlueprint switch
         {
             Structure structure => InstantiateStructure(structure, player),
@@ -627,7 +626,7 @@ public partial class Entities : Node2D
                 var uniquePlayerEntityGroup = new List<ActorNode>();
                 foreach (var player in entitiesByPlayer.Keys
                              .Where(player => entitiesByPlayer[player].Count > 0)
-                             .OrderBy(player => player.Id))
+                             .OrderBy(player => player.StableId))
                 {
                     uniquePlayerEntityGroup.Add(entitiesByPlayer[player].First());
                     entitiesByPlayer[player].RemoveAt(0);

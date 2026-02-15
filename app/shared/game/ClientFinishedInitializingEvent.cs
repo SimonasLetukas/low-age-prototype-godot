@@ -2,11 +2,11 @@ using System;
 
 public partial class ClientFinishedInitializingEvent : IGameEvent
 {
-    public ClientFinishedInitializingEvent(int playerId)
+    public ClientFinishedInitializingEvent(int playerStableId)
     {
-        PlayerId = playerId;
+        PlayerStableId = playerStableId;
     }
 
     public Guid Id { get; init; } = Guid.NewGuid();
-    public int PlayerId { get; }
+    public int PlayerStableId { get; }
 }

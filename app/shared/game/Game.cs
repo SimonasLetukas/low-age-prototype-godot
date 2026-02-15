@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using LowAgeCommon.Extensions;
@@ -10,13 +11,16 @@ public partial class Game : Node2D
 {
     // In case of out-of-sync, this could be used to get the difference: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/how-to-find-the-set-difference-between-two-lists-linq
     protected List<IGameEvent> Events { get; set; } = [];
+    protected Guid GameId { get; set; }
+    protected string MapLocation { get; set; } = "";
+    protected bool LoadingSavedGame { get; set; } = false;
 
     protected Turns Turns { get; private set; } = null!;
-    protected string LogPrefix => $"{CurrentPlayerId}.{GetType().Name}";
+    protected string LogPrefix => $"{CurrentPlayerStableId}.{GetType().Name}";
 
-    private string CurrentPlayerId => Multiplayer.IsServer() 
-        ? "0"
-        : Players.Instance.Current.Id.ToString();
+    private string CurrentPlayerStableId => Multiplayer.IsServer() 
+        ? "S"
+        : Players.Instance.Current.StableId.ToString();
     
     public override void _Ready()
     {
@@ -45,11 +49,14 @@ public partial class Game : Node2D
     /// <param name="gameEvent"></param>
     protected void RegisterNewGameEvent(IGameEvent gameEvent)
     {
-        GD.Print($"{LogPrefix}.{nameof(RegisterNewGameEvent)}: called with {gameEvent.GetType()} " +
-                 $"and properties '{JsonConvert.SerializeObject(gameEvent).TrimForLogs()}'.");
+        if (LoadingSavedGame)
+            return;
 
         if (Multiplayer.IsServer())
             return;
+        
+        GD.Print($"{LogPrefix}.{nameof(RegisterNewGameEvent)}: called with {gameEvent.GetType()} " +
+                 $"and properties '{JsonConvert.SerializeObject(gameEvent).TrimForLogs()}'.");
         
         RpcId(Constants.ENet.ServerId, nameof(OnRegisterNewGameEvent), EventToString(gameEvent));
     }

@@ -1,10 +1,14 @@
+using System;
 using Godot;
 using System.Linq;
 using LowAgeCommon.Extensions;
+using LowAgeData.Domain.Common;
+using Newtonsoft.Json;
 
 public partial class ClientGame : Game
 {
     public const string ScenePath = @"res://app/client/game/ClientGame.tscn";
+    private const string SaveLocation = "user://saves";
     
     private ClientMap _map = null!;
     private Camera _camera = null!;
@@ -63,6 +67,8 @@ public partial class ClientGame : Game
         _map.EntityIsBeingPlaced += _interface.OnEntityIsBeingPlaced;
         _map.Entities.EntitySelected += _interface.OnEntitySelected;
         _map.Entities.EntityDeselected += _interface.OnEntityDeselected;
+
+        EventBus.Instance.PhaseStarted += OnPhaseStarted;
         
         _map.UnitMovementIssued += RegisterNewGameEvent;
         _map.EntityAttacked += RegisterNewGameEvent;
@@ -138,11 +144,7 @@ public partial class ClientGame : Game
         switch (gameEvent)
         {
             case MapCreatedEvent mapCreatedEvent:
-                GlobalRegistry.Instance.ProvideMapSize(mapCreatedEvent.MapSize);
-                _camera.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
-                _interface.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
-                _map.Initialize(mapCreatedEvent);
-                Turns.Initialize(_map.Entities.GetActorsSortedByInitiative, _map.Entities.GetCandidateEntities);
+                HandleEvent(mapCreatedEvent);
                 break;
             case InitializationCompletedEvent initializationCompletedEvent:
                 HandleEvent(initializationCompletedEvent);
@@ -176,14 +178,55 @@ public partial class ClientGame : Game
                 break;
         }
     }
-    
-    private void HandleEvent(InitializationCompletedEvent @event)
+
+    private void HandleEvent(MapCreatedEvent mapCreatedEvent)
     {
-        SharedRandom.Set(@event.RandomSeed);
+        MapLocation = mapCreatedEvent.MapLocation;
+        GlobalRegistry.Instance.ProvideMapSize(mapCreatedEvent.MapSize);
+        _camera.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
+        _interface.SetMapSize(mapCreatedEvent.MapSize.ToGodotVector2());
+        _map.Initialize(mapCreatedEvent);
+        Turns.Initialize(_map.Entities.GetActorsSortedByInitiative, _map.Entities.GetCandidateEntities);
+    }
+
+    private void HandleEvent(InitializationCompletedEvent initializationCompletedEvent)
+    {
+        SharedRandom.Set(initializationCompletedEvent.RandomSeed);
+        GameId = initializationCompletedEvent.GameId;
+        GlobalRegistry.Instance.ProvideGameId(GameId);
         _map.SetupFactionStart();
         _interface.Visible = true;
         SetPaused(false);
         Callable.From(() => Turns.OnNextTurnButtonClicked()).CallDeferred();
+    }
+
+    private void SaveGame()
+    {
+        if (LoadingSavedGame)
+            return;
+
+        if (DirAccess.Open(SaveLocation) is null)
+        {
+            var dir = DirAccess.Open("user://");
+            dir.MakeDirRecursive(SaveLocation);
+        }
+
+        var save = new Save
+        {
+            GameId = GameId,
+            MapLocation = MapLocation,
+            SavedAtUtc = DateTimeOffset.UtcNow,
+            Players = Players.Instance.GetAll().ToDictionary(p => p.StableId, p => new SavePlayer
+            {
+                FactionId = p.Faction,
+                Team = p.Team.Value
+            }),
+            Events = Events.Select(EventToString).ToList()
+        };
+        
+        var file = FileAccess.Open($"{SaveLocation}/{GameId}.save", FileAccess.ModeFlags.Write);
+        file.StoreString(JsonConvert.SerializeObject(save));
+        file.Close();
     }
 
     private void SetPaused(bool to)
@@ -195,6 +238,12 @@ public partial class ClientGame : Game
     private void OnMapFinishedInitializing()
     {
         GD.Print($"{LogPrefix}.{nameof(OnMapFinishedInitializing)}");
-        RegisterNewGameEvent(new ClientFinishedInitializingEvent(Multiplayer.GetUniqueId()));
+        RegisterNewGameEvent(new ClientFinishedInitializingEvent(Players.Instance.Current.StableId));
+    }
+    
+    private void OnPhaseStarted(int turn, TurnPhase phase)
+    {
+        if (phase.Equals(TurnPhase.Planning))
+            SaveGame();
     }
 }

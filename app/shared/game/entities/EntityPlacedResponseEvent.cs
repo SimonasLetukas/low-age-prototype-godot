@@ -12,7 +12,7 @@ public class EntityPlacedResponseEvent : IGameEvent
     public required List<Payment> Cost { get; init; }
     public required Guid InstanceId { get; init; }
     public required IsometricRotation ActorRotation { get; init; }
-    public required int PlayerId { get; init; }
+    public required int PlayerStableId { get; init; }
     public required int CreationToken { get; init; }
 
     public static EntityPlacedResponseEvent From(EntityPlacedRequestEvent request, int creationToken) => new()
@@ -22,7 +22,7 @@ public class EntityPlacedResponseEvent : IGameEvent
         Cost = request.Cost,
         InstanceId = request.InstanceId,
         ActorRotation = request.ActorRotation,
-        PlayerId = request.PlayerId,
+        PlayerStableId = request.PlayerStableId,
         CreationToken = creationToken
     };
 }

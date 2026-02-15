@@ -50,19 +50,20 @@ public partial class Client : Network
         Data.Instance.ReadBlueprint();
     }
 
-    public void RegisterPlayer(int recipientId, int playerId, string playerName, bool playerReady, 
+    public void RegisterPlayer(int recipientId, int playerId, int playerStableId, string playerName, bool playerReady, 
         FactionId playerFaction, Team playerTeam)
     {
-        RpcId(recipientId, nameof(OnRegisterPlayer), playerId, playerName, playerReady, 
+        RpcId(recipientId, nameof(OnRegisterPlayer), playerId, playerStableId, playerName, playerReady, 
             playerFaction.ToString(), playerTeam.Value);
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void OnRegisterPlayer(int playerId, string playerName, bool playerReady, string playerFactionId, 
-        int playerTeam)
+    public void OnRegisterPlayer(int playerId, int playerStableId, string playerName, bool playerReady, 
+        string playerFactionId, int playerTeam)
     {
-        GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerName}, {playerReady}, {playerFactionId}");
-        Players.Instance.Add(playerId, playerName, playerReady, new FactionId(playerFactionId), 
+        GD.Print($"{nameof(OnRegisterPlayer)}: {playerId}, {playerStableId}, {playerName}, {playerReady}, " +
+                 $"{playerFactionId}");
+        Players.Instance.Add(playerId, playerStableId, playerName, playerReady, new FactionId(playerFactionId), 
             new Team(playerTeam));
         
         PlayerAdded(playerId);

@@ -6,7 +6,7 @@ public class PlanningPhaseEndedRequestEvent : IGameEvent
 {
     public Guid Id { get; init; } = Guid.NewGuid();
     public required int Turn { get; init; }
-    public required int PlayerId { get; init; }
+    public required int PlayerStableId { get; init; }
     public required IList<CandidateEntity> CandidateEntities { get; init; }
 }
 

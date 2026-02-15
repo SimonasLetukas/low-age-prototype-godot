@@ -101,7 +101,7 @@ public partial class ClientMap : Map
 
 		_currentPlayer = Players.Instance.Current;
 		_mapSize = @event.MapSize;
-		_startingPositions = @event.StartingPositions[_currentPlayer.Id];
+		_startingPositions = @event.StartingPositions[_currentPlayer.StableId];
 
 		Position = new Vector2(((float)Mathf.Max(_mapSize.X, _mapSize.Y) * Constants.TileWidth) / 2, Position.Y);
 		_tileMap.Initialize(_mapSize.ToGodotVector2(), @event.Tiles);

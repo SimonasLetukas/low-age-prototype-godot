@@ -5,11 +5,13 @@ using MultipurposePathfinding;
 
 public partial class Lobby : VBoxContainer
 {
+    protected Save? Save { get; set; }
+    
     private VBoxContainer _playersList = null!;
     
     public override void _Ready()
     {
-        _playersList = GetNode<VBoxContainer>("Players");
+        _playersList = GetNode<VBoxContainer>("Players/PlayersList");
         
         Client.Instance.PlayerAdded += OnPlayerAdded;
         Client.Instance.PlayerRemoved += OnPlayerRemoved;
@@ -37,7 +39,7 @@ public partial class Lobby : VBoxContainer
         playerInfo.PlayerSelectedTeam += OnPlayerChangedSelectedTeam;
         playerInfo.PlayerChangedReadyStatus += OnPlayerChangedReadyStatus;
 
-        var player = Players.Instance.Get(playerId);
+        var player = Players.Instance.GetById(playerId);
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerAdded)}: player {player.Name} ({player.Id}) " +
                  "successfully added to lobby.");
     }

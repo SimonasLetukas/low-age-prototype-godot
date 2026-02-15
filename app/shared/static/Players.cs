@@ -27,15 +27,19 @@ public partial class Players : Node
     
     public int Count => _players.Count;
     public bool AllReady => _players.All(x => x.Ready);
-    public Player Current => Get(Multiplayer.GetUniqueId());
+    public Player Current => GetById(Multiplayer.GetUniqueId());
 
     public IList<Player> GetAll() => _players;
     
     public IList<int> GetAllIds() => _players.Select(p => p.Id).ToList();
     
-    public Player Get(int id) => _players.Single(x => x.Id.Equals(id));
+    public IList<int> GetAllStableIds() => _players.Select(p => p.StableId).ToList();
     
-    public Player? TryGet(int id) => _players.FirstOrDefault(x => x.Id.Equals(id));
+    public Player GetById(int id) => _players.Single(x => x.Id.Equals(id));
+    
+    public Player? TryGetById(int id) => _players.FirstOrDefault(x => x.Id.Equals(id));
+
+    public Player GetByStableId(int stableId) => _players.Single(x => x.StableId.Equals(stableId));
     
     public string GetName(int id) => _players.Single(x => x.Id.Equals(id)).Name;
 
@@ -49,6 +53,22 @@ public partial class Players : Node
     public Team GetNextAvailableTeam() => new(_players.Count + 1);
     
     public Team GetMaxAvailableTeam() => new(_players.Count);
+
+    public int GetNextAvailableStableId()
+    {
+        var sortedIds = _players
+            .Select(p => p.StableId)
+            .OrderBy(id => id)
+            .ToList();
+
+        for (int i = 0; i < sortedIds.Count; i++)
+        {
+            if (sortedIds[i] != i)
+                return i;
+        }
+
+        return sortedIds.Count;
+    }
     
     public IEnumerable<Team> GetAvailableTeams()
     {
@@ -58,25 +78,26 @@ public partial class Players : Node
     
     #region Setters (should only be accessed by the multiplayer-related nodes)
 
-    public void Add(int playerId, string playerName, bool ready, FactionId faction, Team team)
+    public void Add(int id, int stableId, string name, bool ready, FactionId faction, Team team)
     {
-        if (_players.Any(x => x.Id == playerId))
+        if (_players.Any(x => x.Id == id))
             return; 
         
         _players.Add(new Player
         {
-            Id = playerId,
-            Name = playerName,
+            Id = id,
+            StableId = stableId,
+            Name = name,
             Ready = ready,
             Faction = faction,
             Team = team,
         });
-        PlayerAdded(playerId);
+        PlayerAdded(id);
     }
     
     public void Remove(int id)
     {
-        var playerToRemove = TryGet(id);
+        var playerToRemove = TryGetById(id);
         if (playerToRemove is null)
         {
             return;
@@ -95,9 +116,17 @@ public partial class Players : Node
 
 public class Player : IEquatable<Player>
 {
+    /// <summary>
+    /// Used to represent multiplayer peer ID, should not be used to calculate equality in-game.
+    /// </summary>
     public required int Id { get; init; }
-    public required string Name { get; init; }
     
+    /// <summary>
+    /// Used to calculate equality in-game.
+    /// </summary>
+    public required int StableId { get; set; }
+    
+    public required string Name { get; init; }
     public required FactionId Faction { get; set; }
     public required Team Team { get; set; }
     public required bool Ready { get; set; }
@@ -106,7 +135,7 @@ public class Player : IEquatable<Player>
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
-        return Id == other.Id;
+        return StableId == other.StableId;
     }
 
     public override bool Equals(object? obj)
@@ -119,6 +148,6 @@ public class Player : IEquatable<Player>
 
     public override int GetHashCode()
     {
-        return Id;
+        return Id.GetHashCode();
     }
 }

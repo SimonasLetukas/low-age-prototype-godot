@@ -52,7 +52,7 @@ public partial class PlayerInLobby : HBoxContainer
         }
         Name = $"{playerId}";
 
-        Player = Players.Instance.Get(playerId);
+        Player = Players.Instance.GetById(playerId);
         _nameLabel.Text = Player.Name;
         
         _factionSelection.SetSelectedFaction(Player.Faction);

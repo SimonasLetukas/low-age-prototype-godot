@@ -19,6 +19,7 @@ public partial class GlobalRegistry : Node
 
     #region Resolvers
 
+    public Guid GameId { get; private set; }
     public Vector2Int MapSize { get; private set; }
     public Func<Guid, EntityNode?> GetEntityById { get; private set; } = null!;
     public Func<IEnumerable<EntityNode>> GetEntities { get; private set; } = null!;
@@ -42,6 +43,7 @@ public partial class GlobalRegistry : Node
 
     #region Providers
 
+    public void ProvideGameId(Guid gameId) => GameId = gameId;
     public void ProvideMapSize(Vector2Int mapSize) => MapSize = mapSize;
     public void ProvideGetEntityById(Func<Guid, EntityNode?> entityById) => GetEntityById = entityById;
     public void ProvideGetEntities(Func<IEnumerable<EntityNode>> getEntities) => GetEntities = getEntities;

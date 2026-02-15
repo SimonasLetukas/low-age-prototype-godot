@@ -115,7 +115,7 @@ public abstract partial class ActiveAbilityNode<
         
         var reservation = new AbilityReservationResult
         {
-            PlayerId = OwnerActor.Player.Id,
+            PlayerStableId = OwnerActor.Player.StableId,
             ActionWasReserved = actionWasReserved,
             ReservedResources = reservedResources
         };
@@ -153,7 +153,7 @@ public abstract partial class ActiveAbilityNode<
     
     protected void SpendActionAndConsumableResources(TFocus focus)
     {
-        if (focus.Reservation.PlayerId == Players.Instance.Current.Id)
+        if (focus.Reservation.PlayerStableId == Players.Instance.Current.StableId)
             return; // We already spent these when creating reservation
 
         var activationRequest = focus.ToActivationRequest();
@@ -183,12 +183,12 @@ public abstract partial class ActiveAbilityNode<
     {
         if (DebugEnabled)
             GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} requeue: " +
-                     $"reservation player ID '{focus.Reservation.PlayerId}', current player ID " +
-                     $"'{Players.Instance.Current.Id}', focus '{JsonConvert.SerializeObject(focus)}'");
+                     $"reservation player ID '{focus.Reservation.PlayerStableId}', current player stable ID " +
+                     $"'{Players.Instance.Current.StableId}', focus '{JsonConvert.SerializeObject(focus)}'");
         
         // Only requeue for the owner player for convenience but still allow to cancel if desired,
         // every other player will receive (or not) a new execution request from the owner player.
-        if (focus.Reservation.PlayerId != Players.Instance.Current.Id)
+        if (focus.Reservation.PlayerStableId != Players.Instance.Current.StableId)
             return; 
         
         focus.Requeued = true;
@@ -325,11 +325,11 @@ public abstract partial class ActiveAbilityNode<
 
 public record AbilityReservationResult
 {
-    public required int PlayerId { get; init; }
+    public required int PlayerStableId { get; init; }
     public required bool ActionWasReserved { get; init; }
     public required IList<Payment> ReservedResources { get; init; }
 
-    public bool IsReservedFor(Player player) => player.Id == PlayerId;
+    public bool IsReservedFor(Player player) => player.StableId == PlayerStableId;
 }
 
 public interface IConsumableAbilityActivationRequest : IAbilityActivationRequest

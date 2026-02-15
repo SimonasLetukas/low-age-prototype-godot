@@ -59,7 +59,7 @@ public partial class Turns : Node2D
 			var planningPhaseEndedRequest = new PlanningPhaseEndedRequestEvent
 			{
 				Turn = Turn,
-				PlayerId = Players.Instance.Current.Id,
+				PlayerStableId = Players.Instance.Current.StableId,
 				CandidateEntities = _getCandidateEntities is null ? [] : _getCandidateEntities().Select(x => 
 					new CandidateEntity
 					{
@@ -94,7 +94,7 @@ public partial class Turns : Node2D
 		
 		PlanningPhaseEndResolved(new PlanningPhaseEndResolvedEvent
 		{
-			PlayerId = Players.Instance.Current.Id
+			PlayerStableId = Players.Instance.Current.StableId
 		});
 	}
 

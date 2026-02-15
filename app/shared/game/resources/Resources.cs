@@ -267,7 +267,7 @@ public partial class Resources : Node2D
     private void OnPlanningPhaseStarted()
     {
         var providersByPlayer = _currentPaymentByIncomeProvider.Keys
-            .OrderBy(p => p.Player.Id) // Ensure determinism across clients
+            .OrderBy(p => p.Player.StableId) // Ensure determinism across clients
             .GroupBy(p => p.Player)
             .ToDictionary(g => g.Key, g => g
                 .OrderBy(p => p.EntityId) // Ensure determinism across clients

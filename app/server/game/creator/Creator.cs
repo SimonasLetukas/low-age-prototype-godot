@@ -42,13 +42,13 @@ public partial class Creator : Node2D
         }
     }
 
-    public void Generate()
+    public string Generate()
     {
         var image = GD.Load<Image>(MapFileLocation);
         if (image.IsInvisible() || image.IsEmpty())
         {
             if (DebugEnabled) GD.Print($"{nameof(Creator)}.{nameof(Generate)}: loaded image is not available");
-            return;
+            return "";
         }
 
         var mapSize = new Vector2Int(image.GetWidth(), image.GetHeight());
@@ -74,8 +74,13 @@ public partial class Creator : Node2D
                 tiles.Add((new Vector2Int(x, y), tile));
             }
         }
+
+        var mapPath = ResourceUid.GetIdPath(ResourceUid.TextToId(MapFileLocation));
         
-        MapCreated(new MapCreatedEvent(mapSize, AssignStartingPositions(startingPositions.ToSquareRects()), tiles));
+        MapCreated(new MapCreatedEvent(mapPath, mapSize, 
+            AssignStartingPositions(startingPositions.ToSquareRects()), tiles));
+
+        return MapFileLocation;
     }
 
     private static Dictionary<int, Area> AssignStartingPositions(IList<Area> positions)
@@ -86,9 +91,9 @@ public partial class Creator : Node2D
         var shuffledPositions = shuffledPositionsArray.ToList();
         
         var assigned = new Dictionary<int, Area>();
-        foreach (var playerId in Players.Instance.GetAllIds())
+        foreach (var player in Players.Instance.GetAll())
         {
-            assigned[playerId] =  shuffledPositions.First();
+            assigned[player.StableId] =  shuffledPositions.First();
             shuffledPositions.RemoveAt(0);
         }
 

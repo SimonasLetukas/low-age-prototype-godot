@@ -28,13 +28,17 @@ public partial class Server : Network
         // Server has the authority to determine the next available team
         var playerTeam = Players.Instance.GetNextAvailableTeam();
         
+        // Server has the authority to set the initial stable ID
+        var playerStableId = Players.Instance.GetNextAvailableStableId();
+        
         // Register this client with the server
-        Client.Instance.OnRegisterPlayer(playerId, playerName, playerReady, playerFactionId, playerTeam.Value);
+        Client.Instance.OnRegisterPlayer(playerId, playerStableId, playerName, playerReady, playerFactionId, 
+            playerTeam.Value);
 
         // Register the new player with all existing clients
         foreach (var currentPlayerId in Players.Instance.GetAllIds())
         {
-            Client.Instance.RegisterPlayer(currentPlayerId, playerId, playerName, playerReady, 
+            Client.Instance.RegisterPlayer(currentPlayerId, playerId, playerStableId, playerName, playerReady, 
                 new FactionId(playerFactionId), playerTeam);
         }
 
@@ -43,7 +47,7 @@ public partial class Server : Network
         {
             if (currentPlayer.Id != playerId)
             {
-                Client.Instance.RegisterPlayer(playerId, currentPlayer.Id, currentPlayer.Name, 
+                Client.Instance.RegisterPlayer(playerId, currentPlayer.Id, currentPlayer.StableId, currentPlayer.Name, 
                     currentPlayer.Ready, currentPlayer.Faction, currentPlayer.Team);
             }
         }

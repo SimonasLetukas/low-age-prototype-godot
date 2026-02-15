@@ -33,10 +33,10 @@ public partial class ServerGame : Game
         // Wait until the parent scene is fully loaded
         await ToSignal(GetTree().Root.GetChild(GetTree().Root.GetChildCount() - 1), "ready");
         
-        foreach (var playerId in Players.Instance.GetAllIds())
+        foreach (var player in Players.Instance.GetAll())
         {
-            _notLoadedPlayers.Add(playerId);
-            _notInitializedPlayers.Add(playerId);
+            _notLoadedPlayers.Add(player.Id);
+            _notInitializedPlayers.Add(player.StableId);
         }
     }
 
@@ -51,12 +51,18 @@ public partial class ServerGame : Game
     {
         GD.Print($"{nameof(ServerGame)}.{nameof(OnClientLoaded)}: '{playerId}' client loaded");
         _notLoadedPlayers.Remove(playerId);
+
+        if (LoadingSavedGame)
+            return;
         
         if (_notLoadedPlayers.IsEmpty())
         {
             GD.Print($"{nameof(ServerGame)}.{nameof(OnClientLoaded)}: all clients have loaded, " +
                      "starting map generation");
-            _creator.Generate();
+            
+            var mapFileLocation = _creator.Generate();
+            MapLocation = mapFileLocation;
+            
             return;
         }
         
@@ -87,6 +93,9 @@ public partial class ServerGame : Game
 
     private void OnRegisterServerEvent(IGameEvent gameEvent)
     {
+        if (LoadingSavedGame)
+            return;
+        
         GD.Print($"{nameof(ServerGame)}.{nameof(OnRegisterServerEvent)}: called with {gameEvent.GetType()}");
         OnRegisterNewGameEvent(EventToString(gameEvent));
     }
@@ -97,6 +106,9 @@ public partial class ServerGame : Game
         {
             case ClientFinishedInitializingEvent clientFinishedInitializingEvent:
                 HandleEvent(clientFinishedInitializingEvent);
+                break;
+            case InitializationCompletedEvent initializationCompletedEvent:
+                HandleEvent(initializationCompletedEvent);
                 break;
             case EntityPlacedRequestEvent entityPlacedRequestEvent:
                 HandleEvent(entityPlacedRequestEvent);
@@ -126,9 +138,9 @@ public partial class ServerGame : Game
 
     private void HandleEvent(ClientFinishedInitializingEvent clientFinishedInitializingEvent)
     {
-        var playerId = clientFinishedInitializingEvent.PlayerId;
-        GD.Print($"{nameof(ServerGame)}.{nameof(ClientFinishedInitializingEvent)}: '{playerId}' client initialized");
-        _notInitializedPlayers.Remove(playerId);
+        var playerStableId = clientFinishedInitializingEvent.PlayerStableId;
+        GD.Print($"{nameof(ServerGame)}.{nameof(ClientFinishedInitializingEvent)}: '{playerStableId}' client initialized");
+        _notInitializedPlayers.Remove(playerStableId);
         
         if (_notInitializedPlayers.IsEmpty())
         {
@@ -138,6 +150,7 @@ public partial class ServerGame : Game
             var @event = new InitializationCompletedEvent
             {
                 RandomSeed = SharedRandom.Seed,
+                GameId = Guid.NewGuid()
             };
             OnRegisterServerEvent(@event);
             
@@ -148,6 +161,11 @@ public partial class ServerGame : Game
                  $"{_notInitializedPlayers.Count} players to initialize");
     }
 
+    private void HandleEvent(InitializationCompletedEvent initializationCompletedEvent)
+    {
+        GameId = initializationCompletedEvent.GameId;
+    }
+
     private void HandleEvent(EntityPlacedRequestEvent entityPlacedRequestEvent)
     {
         _pendingEntityPlacedRequests.Add(entityPlacedRequestEvent);
@@ -156,7 +174,7 @@ public partial class ServerGame : Game
     private void HandleEvent(EntityCandidatePlacementCancelledEvent @event)
     {
         var placedRequest = _pendingEntityPlacedRequests.FirstOrDefault(r =>
-            r.InstanceId.Equals(@event.InstanceId) && r.PlayerId.Equals(@event.PlayerId));
+            r.InstanceId.Equals(@event.InstanceId) && r.PlayerStableId.Equals(@event.PlayerStableId));
 
         if (placedRequest is null)
             return;
@@ -167,7 +185,7 @@ public partial class ServerGame : Game
     private void HandleEvent(PlanningPhaseEndedRequestEvent @event)
     {
         var existingRequestFromThisPlayer = _planningPhaseEndedEventsByTurn.FirstOrDefault(x => 
-            x.PlayerId.Equals(@event.PlayerId));
+            x.PlayerStableId.Equals(@event.PlayerStableId));
         if (existingRequestFromThisPlayer != null)
             _planningPhaseEndedEventsByTurn.Remove(existingRequestFromThisPlayer);
         
@@ -189,7 +207,7 @@ public partial class ServerGame : Game
         _planningPhaseEndedEventsByTurn.Clear();
 
         _pendingPlayersByAbilityExecutions.Clear();
-        _playersPendingPlanningPhaseEndResolution = Players.Instance.GetAllIds().ToList();
+        _playersPendingPlanningPhaseEndResolution = Players.Instance.GetAllStableIds().ToList();
         
         _turn = @event.Turn;
         
@@ -202,19 +220,19 @@ public partial class ServerGame : Game
 
     private void HandleEvent(AbilityExecutionRequestedEvent @event)
     {
-        _pendingPlayersByAbilityExecutions[@event.Id] = Players.Instance.GetAllIds().ToList();
+        _pendingPlayersByAbilityExecutions[@event.Id] = Players.Instance.GetAllStableIds().ToList();
     }
     
     private void HandleEvent(AbilityExecutionCompletedEvent @event)
     {
-        _pendingPlayersByAbilityExecutions[@event.AbilityExecutionRequestedEventId].Remove(@event.PlayerId);
+        _pendingPlayersByAbilityExecutions[@event.AbilityExecutionRequestedEventId].Remove(@event.PlayerStableId);
 
         StartActionPhase();
     }
     
     private void HandleEvent(PlanningPhaseEndResolvedEvent @event)
     {
-        _playersPendingPlanningPhaseEndResolution.Remove(@event.PlayerId);
+        _playersPendingPlanningPhaseEndResolution.Remove(@event.PlayerStableId);
 
         StartActionPhase();
     }

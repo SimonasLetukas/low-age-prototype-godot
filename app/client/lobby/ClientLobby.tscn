@@ -1,10 +1,68 @@
-[gd_scene load_steps=3 format=3 uid="uid://cr8pw04hfs0qq"]
+[gd_scene load_steps=5 format=3 uid="uid://cr8pw04hfs0qq"]
 
 [ext_resource type="PackedScene" uid="uid://dbtqyiouwicb4" path="res://app/shared/lobby/Lobby.tscn" id="1"]
 [ext_resource type="Script" uid="uid://c1hh3hyjopnml" path="res://app/client/lobby/ClientLobby.cs" id="2"]
+[ext_resource type="FontFile" uid="uid://d0w7npripgnag" path="res://assets/fonts/Karla-Regular.ttf" id="3_iee8w"]
+
+[sub_resource type="FontFile" id="1"]
+fallbacks = Array[Font]([ExtResource("3_iee8w")])
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
 [node name="Lobby" instance=ExtResource("1")]
+offset_top = -160.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2")
+
+[node name="Save" type="VBoxContainer" parent="." index="0"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Save" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/font = SubResource("1")
+text = "Saved Game"
+horizontal_alignment = 1
+
+[node name="Loading" type="HBoxContainer" parent="Save" index="1"]
+layout_mode = 2
+alignment = 1
+
+[node name="LoadSave" type="Button" parent="Save/Loading" index="0"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Load"
+
+[node name="FileDialog" type="FileDialog" parent="Save/Loading/LoadSave" index="0"]
+title = "Open a File"
+file_mode = 0
+access = 1
+root_subfolder = "user://saves"
+filters = PackedStringArray("*.save ; Save Files")
+use_native_dialog = true
+
+[node name="LoadSaveLabel" type="Label" parent="Save/Loading" index="1"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/font = SubResource("1")
+text = "Loaded (2026-01-01 11:22): 23f45e89-8b5a-5c55-9df7-240d78a3ce15"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="StartGame" type="Button" parent="." index="2"]
 custom_minimum_size = Vector2(80, 40)
@@ -13,4 +71,5 @@ size_flags_horizontal = 4
 disabled = true
 text = "Start"
 
+[connection signal="pressed" from="Save/Loading/LoadSave" to="." method="_on_StartGame_pressed"]
 [connection signal="pressed" from="StartGame" to="." method="_on_StartGame_pressed"]

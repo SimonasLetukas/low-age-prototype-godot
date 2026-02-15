@@ -20,7 +20,7 @@ public partial class PlayerAttributes : VBoxContainer
 
 	public void Set(Player player)
 	{
-		if (Player is not null && Player.Id.Equals(player.Id))
+		if (Player is not null && Player.Equals(player))
 			return;
 		
 		Player = player;
