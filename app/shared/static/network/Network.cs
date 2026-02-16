@@ -7,7 +7,7 @@ public partial class Network : Node
 
     public override void _Ready()
     {
-	    ResetNetwork();
+	    Callable.From(ResetNetwork).CallDeferred();
 
 	    Multiplayer.PeerDisconnected += OnPlayerDisconnected;
     }
@@ -19,6 +19,10 @@ public partial class Network : Node
     {
 	    var peer = Multiplayer.MultiplayerPeer as ENetMultiplayerPeer;
 	    peer?.Close();
+	    
+	    Players.Instance.Reset();
+	    Data.Instance.Reset();
+	    Data.Instance.ReadBlueprint();
     }
 
     /// <summary>

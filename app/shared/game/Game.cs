@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Godot;
 using LowAgeCommon.Extensions;
 using Newtonsoft.Json;
@@ -9,6 +11,8 @@ using Newtonsoft.Json;
 /// </summary>
 public partial class Game : Node2D
 {
+    protected event Action SaveLoadingFinished = delegate { };
+    
     // In case of out-of-sync, this could be used to get the difference: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/how-to-find-the-set-difference-between-two-lists-linq
     protected List<IGameEvent> Events { get; set; } = [];
     protected Guid GameId { get; set; }
@@ -21,10 +25,51 @@ public partial class Game : Node2D
     private string CurrentPlayerStableId => Multiplayer.IsServer() 
         ? "S"
         : Players.Instance.Current.StableId.ToString();
+
+    private List<IGameEvent> _eventsToLoad = [];
+    private readonly Stopwatch _stopwatch = new();
     
     public override void _Ready()
     {
         Turns = GetNode<Turns>(nameof(Turns));
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+
+        if (LoadingSavedGame is false)
+            return;
+
+        IterateLoadingSavedGame(delta);
+    }
+
+    protected virtual void ExecuteGameEvent(IGameEvent gameEvent) { }
+
+    protected void LoadGame(Save save)
+    {
+        _eventsToLoad = save.Events.Select(StringToEvent).ToList();
+        LoadingSavedGame = true;
+    }
+
+    private void IterateLoadingSavedGame(double deltaTime)
+    {
+        var deltaMs = (int)(deltaTime * 1000);
+        _stopwatch.Reset();
+        _stopwatch.Start();
+
+        while (_stopwatch.ElapsedMilliseconds < deltaMs && _eventsToLoad.Count != 0)
+        {
+            var eventToExecute = _eventsToLoad.First();
+            ExecuteGameEvent(eventToExecute);
+            _eventsToLoad.Remove(eventToExecute);
+        }
+
+        if (_eventsToLoad.Count == 0)
+        {
+            LoadingSavedGame = false;
+            SaveLoadingFinished();
+        }
     }
 
     #region Calls to the server
@@ -37,6 +82,9 @@ public partial class Game : Node2D
         GD.Print($"{LogPrefix}.{nameof(MarkAsLoaded)}");
         
         if (Multiplayer.IsServer()) 
+            return;
+
+        if (LoadingSavedGame)
             return;
         
         GD.Print($"{LogPrefix}: calling {nameof(OnClientLoaded)} as Rpc.");
@@ -78,6 +126,18 @@ public partial class Game : Node2D
 
     #region Callbacks from the server
 
+    protected void SaveGameLoadedByAllPeers()
+    {
+        GD.Print($"{LogPrefix}.{nameof(SaveGameLoadedByAllPeers)}");
+        Rpc(nameof(OnSaveGameLoadedByAllPeers));
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false)]
+    protected virtual void OnSaveGameLoadedByAllPeers()
+    {
+        GD.Print($"{LogPrefix}.{nameof(OnSaveGameLoadedByAllPeers)}");
+    }
+    
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void GameEnded()
     {

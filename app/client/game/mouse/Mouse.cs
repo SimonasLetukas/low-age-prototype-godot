@@ -30,6 +30,8 @@ public partial class Mouse : Node2D
     private Vector2 _previousPosition = Vector2.Zero;
     private Vector2 _startPosition = Vector2.Zero;
 
+    private bool _paused;
+
     public override void _Ready()
     {
         _arrowCursor = GD.Load(ArrowCursorFileLocation);
@@ -42,6 +44,9 @@ public partial class Mouse : Node2D
 
     public override void _Input(InputEvent inputEvent)
     {
+	    if (_paused)
+		    return;
+	    
 	    base._Input(inputEvent);
 	    
 	    var mousePos = GetViewport().GetMousePosition();
@@ -94,6 +99,8 @@ public partial class Mouse : Node2D
 			    EmitSignal(nameof(RightReleasedWithoutExamine));
 	    }
     }
+
+    public void SetPaused(bool to) => _paused = to;
     
     internal void OnInterfaceMouseEntered() => _mouseIsOnUi = true;
 

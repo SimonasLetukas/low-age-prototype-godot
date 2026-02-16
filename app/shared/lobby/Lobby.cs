@@ -2,11 +2,10 @@ using Godot;
 using System.Linq;
 using LowAgeData.Domain.Factions;
 using MultipurposePathfinding;
+using Newtonsoft.Json;
 
 public partial class Lobby : VBoxContainer
 {
-    protected Save? Save { get; set; }
-    
     private VBoxContainer _playersList = null!;
     
     public override void _Ready()
@@ -66,6 +65,40 @@ public partial class Lobby : VBoxContainer
         }
         
         GD.PrintErr($"{nameof(Lobby)}.{nameof(OnPlayerRemoved)}: player {playerId} could not be removed from lobby.");
+    }
+    
+    /// <summary>
+    /// Calls the server that a new save has been loaded
+    /// </summary>
+    protected void OnPlayerSaveAdded(string savePayload)
+    {
+        GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerSaveAdded)}: called.");
+        RpcId(Constants.ENet.ServerId, nameof(RequestUpdateSaveAdded), savePayload);
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    protected virtual void RequestUpdateSaveAdded(string savePayload)
+    {
+        GD.Print($"{nameof(Lobby)}.{nameof(RequestUpdateSaveAdded)}: called.");
+    }
+    
+    /// <summary>
+    /// Callback from the server for each client to add the saved game
+    /// </summary>
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    protected virtual void UpdateSaveAdded(string savePayload)
+    {
+        GD.Print($"{nameof(Lobby)}.{nameof(UpdateSaveAdded)}: trying to add saved game.");
+        
+        var save = JsonConvert.DeserializeObject<Save>(savePayload);
+
+        if (save is null)
+        {
+            GD.Print($"{nameof(Lobby)}.{nameof(UpdateSaveAdded)}: could not add saved game.");
+            return;
+        }
+
+        Data.Instance.SetSave(save);
     }
 
     /// <summary>

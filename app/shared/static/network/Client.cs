@@ -2,6 +2,7 @@ using System;
 using Godot;
 using LowAgeData.Domain.Factions;
 using MultipurposePathfinding;
+using Newtonsoft.Json;
 
 public partial class Client : Network
 {
@@ -29,6 +30,8 @@ public partial class Client : Network
         LocalPlayerFaction = playerFaction;
         LocalPlayerReady = false;
 
+        Data.Instance.Reset();
+        
         Multiplayer.ConnectedToServer += OnConnectedToServer;
         var peer = new ENetMultiplayerPeer();
         var result = peer.CreateClient(Constants.ENet.ServerIp, Constants.ENet.ServerPort);
@@ -68,6 +71,27 @@ public partial class Client : Network
         
         PlayerAdded(playerId);
         GD.Print($"Total players: {Players.Instance.Count}");
+    }
+
+    public void SyncSaveGame(int recipientId)
+    {
+        var savePayload = JsonConvert.SerializeObject(Data.Instance.Save);
+        RpcId(recipientId, nameof(OnSyncSaveGame), savePayload);
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    public void OnSyncSaveGame(string savePayload)
+    {
+        GD.Print($"{nameof(OnSyncSaveGame)} received.");
+        
+        var save = JsonConvert.DeserializeObject<Save>(savePayload);
+        if (save is null)
+        {
+            GD.PrintErr($"{nameof(OnSyncSaveGame)} could not deserialize received save game.");
+            return;
+        }
+        
+        Data.Instance.SetSave(save);
     }
 
     public void StartGame()

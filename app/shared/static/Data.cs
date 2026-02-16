@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Godot;
 using LowAgeData;
@@ -10,9 +11,12 @@ using FileAccess = Godot.FileAccess;
 /// </summary>
 public partial class Data : Node
 {
+    public event Action<Save> SaveUpdated = delegate { };
+    
     public static Data Instance = null!;
 
     public Blueprint Blueprint { get; private set; } = null!;
+    public Save? Save { get; private set; }
     
     private const string DataBlueprintLocation = "res://data/data.json";
 
@@ -27,6 +31,7 @@ public partial class Data : Node
     public void Reset()
     {
         Blueprint = null!;
+        Save = null;
     }
     
     public void ReadBlueprint() 
@@ -49,5 +54,11 @@ public partial class Data : Node
         return (Blueprint.Entities.Units.FirstOrDefault(x => x.Id.Equals(id)) 
                 ?? Blueprint.Entities.Structures.FirstOrDefault(x => x.Id.Equals(id)) as Entity) 
                ?? Blueprint.Entities.Doodads.First(x => x.Id.Equals(id));
+    }
+    
+    public void SetSave(Save save)
+    {
+        Save = save;
+        SaveUpdated(Save);
     }
 }

@@ -51,6 +51,12 @@ public partial class Server : Network
                     currentPlayer.Ready, currentPlayer.Faction, currentPlayer.Team);
             }
         }
+        
+        // Catch the new player up with the added save game
+        if (Data.Instance.Save is not null)
+        {
+            Client.Instance.SyncSaveGame(playerId);
+        }
     }
 
     public void RunLocalServerInstance()
@@ -81,7 +87,6 @@ public partial class Server : Network
     public bool HostGame() 
     {
         ResetNetwork();
-        Data.Instance.Reset();
 
         var peer = new ENetMultiplayerPeer();
         var result = peer.CreateServer(Constants.ENet.ServerPort, Constants.ENet.MaxPlayers);
@@ -99,8 +104,6 @@ public partial class Server : Network
             // Check is needed so that server restarts do not crash when trying to connect already connected signal.
             Multiplayer.Connect(MultiplayerApi.SignalName.PeerConnected, onPlayerConnected);
         }
-        
-        Data.Instance.ReadBlueprint();
         
         GD.Print("Server started.");
         return true;

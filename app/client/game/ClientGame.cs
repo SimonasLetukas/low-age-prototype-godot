@@ -32,6 +32,10 @@ public partial class ClientGame : Game
         await ToSignal(GetTree().Root.GetChild(GetTree().Root.GetChildCount() - 1), "ready");
 
         ConnectSignals();
+
+        var save = Data.Instance.Save;
+        if (save is not null)
+            LoadGame(save);
         
         MarkAsLoaded();
     }
@@ -45,6 +49,8 @@ public partial class ClientGame : Game
     private void ConnectSignals()
     {
         GD.Print($"{LogPrefix}.{nameof(ConnectSignals)}: connecting signals.");
+
+        SaveLoadingFinished += OnClientSaveLoadingFinished;
         
         _mouse.Connect(nameof(Mouse.LeftReleasedWithoutDrag), new Callable(_map, nameof(ClientMap.OnMouseLeftReleasedWithoutDrag)));
         _mouse.Connect(nameof(Mouse.RightReleasedWithoutExamine), new Callable(_map, nameof(ClientMap.OnMouseRightReleasedWithoutExamine)));
@@ -111,6 +117,13 @@ public partial class ClientGame : Game
         Turns.PlanningPhaseEndResolved -= RegisterNewGameEvent;
         Turns.ActionEnded -= RegisterNewGameEvent;
     }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false)]
+    protected override void OnSaveGameLoadedByAllPeers()
+    {
+        GD.Print($"{LogPrefix}.{nameof(OnSaveGameLoadedByAllPeers)}");
+        SetPaused(false);
+    }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected override void GameEnded()
@@ -139,7 +152,7 @@ public partial class ClientGame : Game
         ExecuteGameEvent(gameEvent);
     }
 
-    private void ExecuteGameEvent(IGameEvent gameEvent)
+    protected override void ExecuteGameEvent(IGameEvent gameEvent)
     {
         switch (gameEvent)
         {
@@ -196,7 +209,10 @@ public partial class ClientGame : Game
         GlobalRegistry.Instance.ProvideGameId(GameId);
         _map.SetupFactionStart();
         _interface.Visible = true;
-        SetPaused(false);
+        
+        if (LoadingSavedGame is false)
+            SetPaused(false); // Otherwise we wait until all peers loaded their saves
+        
         Callable.From(() => Turns.OnNextTurnButtonClicked()).CallDeferred();
     }
 
@@ -231,9 +247,13 @@ public partial class ClientGame : Game
 
     private void SetPaused(bool to)
     {
-        GetTree().Paused = to;
+        _mouse.SetPaused(to);
         _map.SetPaused(to);
+        return;
+        GetTree().Paused = to; // Doesn't work during loading a saved game because events can't be iterated and executed
     }
+    
+    private void OnClientSaveLoadingFinished() => MarkAsLoaded();
 
     private void OnMapFinishedInitializing()
     {

@@ -29,6 +29,7 @@ public partial class ServerGame : Game
         
         _creator.MapCreated += OnRegisterServerEvent;
         Server.Instance.PlayerRemoved += OnPlayerRemoved;
+        SaveLoadingFinished += OnServerSaveLoadingFinished;
 
         // Wait until the parent scene is fully loaded
         await ToSignal(GetTree().Root.GetChild(GetTree().Root.GetChildCount() - 1), "ready");
@@ -38,8 +39,12 @@ public partial class ServerGame : Game
             _notLoadedPlayers.Add(player.Id);
             _notInitializedPlayers.Add(player.StableId);
         }
-    }
 
+        var save = Data.Instance.Save;
+        if (save is not null)
+            LoadGame(save);
+    }
+    
     public override void _ExitTree()
     {
         _creator.MapCreated -= OnRegisterServerEvent;
@@ -51,23 +56,41 @@ public partial class ServerGame : Game
     {
         GD.Print($"{nameof(ServerGame)}.{nameof(OnClientLoaded)}: '{playerId}' client loaded");
         _notLoadedPlayers.Remove(playerId);
-
-        if (LoadingSavedGame)
-            return;
         
         if (_notLoadedPlayers.IsEmpty())
         {
-            GD.Print($"{nameof(ServerGame)}.{nameof(OnClientLoaded)}: all clients have loaded, " +
-                     "starting map generation");
+            if (Data.Instance.Save is null)
+            {
+                UnpausePlayersAfterMapGeneration();
+                return;
+            }
             
-            var mapFileLocation = _creator.Generate();
-            MapLocation = mapFileLocation;
-            
+            UnpausePlayersAfterLoadingSave();
             return;
         }
         
         GD.Print($"{nameof(ServerGame)}.{nameof(OnClientLoaded)}: still waiting for " +
                  $"{_notLoadedPlayers.Count} players to load");
+    }
+
+    private void UnpausePlayersAfterMapGeneration()
+    {
+        GD.Print($"{nameof(ServerGame)}.{nameof(UnpausePlayersAfterMapGeneration)}: all clients have loaded " +
+                 $"without a saved game, starting map generation");
+            
+        var mapFileLocation = _creator.Generate();
+        MapLocation = mapFileLocation;
+    }
+
+    private void UnpausePlayersAfterLoadingSave()
+    {
+        if (LoadingSavedGame || _notLoadedPlayers.Count > 0)
+            return;
+        
+        GD.Print($"{nameof(ServerGame)}.{nameof(UnpausePlayersAfterLoadingSave)}: all clients (and server) " +
+                 $"have loaded a saved game, unpausing the game for all players");
+
+        SaveGameLoadedByAllPeers();
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
@@ -100,12 +123,15 @@ public partial class ServerGame : Game
         OnRegisterNewGameEvent(EventToString(gameEvent));
     }
     
-    private void ExecuteGameEvent(IGameEvent gameEvent)
+    protected override void ExecuteGameEvent(IGameEvent gameEvent)
     {
         switch (gameEvent)
         {
             case ClientFinishedInitializingEvent clientFinishedInitializingEvent:
                 HandleEvent(clientFinishedInitializingEvent);
+                break;
+            case MapCreatedEvent mapCreatedEvent:
+                HandleEvent(mapCreatedEvent);
                 break;
             case InitializationCompletedEvent initializationCompletedEvent:
                 HandleEvent(initializationCompletedEvent);
@@ -159,6 +185,11 @@ public partial class ServerGame : Game
         
         GD.Print($"{nameof(ServerGame)}.{nameof(ClientFinishedInitializingEvent)}: still waiting for " +
                  $"{_notInitializedPlayers.Count} players to initialize");
+    }
+
+    private void HandleEvent(MapCreatedEvent mapCreatedEvent)
+    {
+        MapLocation = mapCreatedEvent.MapLocation;
     }
 
     private void HandleEvent(InitializationCompletedEvent initializationCompletedEvent)
@@ -299,11 +330,12 @@ public partial class ServerGame : Game
             Rpc(nameof(GameEnded));
             
             Server.Instance.ResetNetwork();
-            Players.Instance.Reset();
             
             Callable.From(() => GetTree().ChangeSceneToFile(ServerLobby.ScenePath)).CallDeferred();
         }
         
         GD.Print($"{nameof(ServerGame)}.{nameof(OnPlayerRemoved)}: '{Players.Instance.Count}' players remaining");
     }
+    
+    private void OnServerSaveLoadingFinished() => UnpausePlayersAfterLoadingSave();
 }

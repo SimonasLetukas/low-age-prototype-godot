@@ -23,6 +23,14 @@ public partial class ServerLobby : Lobby
         
         base._ExitTree();
     }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    protected override void RequestUpdateSaveAdded(string savePayload)
+    {
+        GD.Print($"{nameof(ServerLobby)}.{nameof(RequestUpdateSaveAdded)}: called.");
+        
+        Rpc(nameof(UpdateSaveAdded), savePayload);
+    }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     protected override void UpdateSelectedPlayerFaction(int playerId, string factionId)

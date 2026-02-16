@@ -1,4 +1,5 @@
 using Godot;
+using Newtonsoft.Json;
 
 public partial class ClientLobby : Lobby
 {
@@ -24,6 +25,7 @@ public partial class ClientLobby : Lobby
         _loadSaveDialog.FileSelected += OnLoadSaveDialogFileSelected;
         _startGameButton.Pressed += OnStartGamePressed;
         Client.Instance.GameStarted += OnGameStarted;
+        Data.Instance.SaveUpdated += OnSaveUpdated;
         
         // Tell the server about you (client)
         Server.Instance.RegisterSelf(
@@ -60,8 +62,6 @@ public partial class ClientLobby : Lobby
     /// <summary>
     /// Callback from the server for each client to update their player ready status
     /// </summary>
-    /// <param name="playerId"></param>
-    /// <param name="newReadyStatus"></param>
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected override void ChangeReadyStatusForPlayer(int playerId, bool newReadyStatus)
     {
@@ -79,15 +79,30 @@ public partial class ClientLobby : Lobby
     
     private void OnLoadSaveDialogFileSelected(string path)
     {
-        // TODO
-        // load file,
-        // serialize,
-        // update label,
-        // distribute save object to everyone,
-        // change how players in lobby look like (ability to select player in saved game) for everyone,
-        // disable loading for everyone
+        using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+        var save = file.GetAsText();
+        file.Close();
+
+        if (save is null)
+            return;
         
-        _loadSaveButton.Visible = false;
+        OnPlayerSaveAdded(save);
+    }
+    
+    /// <summary>
+    /// Callback from the server for each client to add the saved game
+    /// </summary>
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    protected override void UpdateSaveAdded(string savePayload)
+    {
+        base.UpdateSaveAdded(savePayload);
+        GD.Print($"{nameof(ClientLobby)}.{nameof(UpdateSaveAdded)}");
+
+        var save = Data.Instance.Save;
+        if (save is null)
+            return;
+        
+        UpdateLoadSaveUi(save);
     }
 
     private void OnLoadSavePressed() => _loadSaveDialog.PopupCentered();
@@ -97,10 +112,18 @@ public partial class ClientLobby : Lobby
         GD.Print($"{nameof(ClientLobby)}: start game button pressed.");
         Client.Instance.StartGame();
     }
-
+    
     private static bool IsStartGameButtonDisabled()
     {
         // TODO also check if enough players have joined for the save game AND all stable IDs are picked (no overlaps)
         return Players.Instance.AllReady is false;
     }
+
+    private void UpdateLoadSaveUi(Save save)
+    {
+        _loadSaveLabel.Text = $"Loaded ({save.SavedAtUtc.ToLocalTime():g}): {save.GameId}";
+        _loadSaveButton.Visible = false;
+    }
+    
+    private void OnSaveUpdated(Save save) => UpdateLoadSaveUi(save);
 }
