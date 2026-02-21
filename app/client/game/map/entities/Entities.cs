@@ -579,6 +579,9 @@ public partial class Entities : Node2D
         
         foreach (var entity in _entitiesByIds.Values.OrderBy(e => e.CreationToken))
         {
+            if (_entitiesBeingDestroyed.Contains(entity))
+                continue;
+            
             if (entity is not ActorNode actor 
                 || actor.HasInitiative is false 
                 || actor.IsCompleted() is false
@@ -597,7 +600,8 @@ public partial class Entities : Node2D
             
             if (DebugEnabled)
                 GD.Print($"{nameof(Entities)}.{nameof(GetActorInitiativeMap)}: {actor.DisplayName} at " + 
-                         $"{actor.EntityPrimaryPosition} {nameof(initiative)} {initiative}");
+                         $"{actor.EntityPrimaryPosition} {nameof(initiative)} {initiative}. {nameof(actor.WorkingOn)}: " +
+                         $"{string.Join(", ", actor.WorkingOn.Select(w => w.Ability.DisplayName))}");
             
             entityInitiativeMap[actor] = initiative;
         }

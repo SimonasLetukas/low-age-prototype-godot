@@ -14,6 +14,7 @@ public partial class FocusedTile : AnimatedSprite2D
     private EntityNode? _focusedEntity = null;
     private Vector2Int _previousPosition = Vector2Int.Zero;
     private bool _stateChanged = false;
+    private bool _paused = true;
 
     private RichTextLabel _zIndexText = null!;
 
@@ -41,6 +42,9 @@ public partial class FocusedTile : AnimatedSprite2D
 
     public override void _Process(double delta)
     {
+        if (_paused)
+            return; 
+        
         base._Process(delta);
         
         UpdateTile();
@@ -80,6 +84,8 @@ public partial class FocusedTile : AnimatedSprite2D
         CurrentTile = tile;
     }
 
+    public void SetPaused(bool to) => _paused = to;
+    
     private (Vector2Int, Tiles.TileInstance?) DetermineMapPositionAndTile()
     {
         var (availableTileElevation, availableTile) = _tiles.Elevatable.GetElevationAndAvailableTileAtMousePosition();

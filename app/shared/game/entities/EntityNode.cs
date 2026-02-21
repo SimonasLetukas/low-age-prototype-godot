@@ -62,6 +62,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
         Completed // visible for all clients and fully functional
     }
 
+    protected bool DebugEnabled { get; set; } = false;
+
     private Entity Blueprint { get; set; } = null!;
 
     private IList<Vector2> _movePath = new List<Vector2>();

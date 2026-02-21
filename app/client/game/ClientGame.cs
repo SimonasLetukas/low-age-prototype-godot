@@ -154,6 +154,8 @@ public partial class ClientGame : Game
 
     protected override void ExecuteGameEvent(IGameEvent gameEvent)
     {
+        GD.Print($"{LogPrefix}.{nameof(ExecuteGameEvent)}: executing event '{EventToString(gameEvent)}'.");
+        
         switch (gameEvent)
         {
             case MapCreatedEvent mapCreatedEvent:
@@ -187,7 +189,7 @@ public partial class ClientGame : Game
                 break;
             default:
                 GD.Print($"{LogPrefix}.{nameof(ExecuteGameEvent)}: could not execute event " +
-                         $"'{EventToString(gameEvent)}'. Type not implemented or not relevant for client.");
+                         $"'{gameEvent.GetType()}'. Type not implemented or not relevant for client.");
                 break;
         }
     }
@@ -207,7 +209,8 @@ public partial class ClientGame : Game
         SharedRandom.Set(initializationCompletedEvent.RandomSeed);
         GameId = initializationCompletedEvent.GameId;
         GlobalRegistry.Instance.ProvideGameId(GameId);
-        _map.SetupFactionStart();
+        if (LoadingSavedGame is false)
+            _map.SetupFactionStart();
         _interface.Visible = true;
         
         if (LoadingSavedGame is false)

@@ -32,6 +32,8 @@ public partial class Game : Node2D
     public override void _Ready()
     {
         Turns = GetNode<Turns>(nameof(Turns));
+
+        GlobalRegistry.Instance.ProvideGetLoadingSavedGame(() => LoadingSavedGame);
     }
 
     public override void _Process(double delta)
@@ -49,6 +51,8 @@ public partial class Game : Node2D
     protected void LoadGame(Save save)
     {
         _eventsToLoad = save.Events.Select(StringToEvent).ToList();
+        Events = _eventsToLoad.ToList();
+        
         LoadingSavedGame = true;
     }
 

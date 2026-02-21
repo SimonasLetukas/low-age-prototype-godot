@@ -30,6 +30,7 @@ public partial class Resources : Node2D
         base._Ready();
 
         GlobalRegistry.Instance.ProvideStringifyResources(StringifyResources);
+        GlobalRegistry.Instance.ProvideGetConsumableResources(GetConsumableResources);
         GlobalRegistry.Instance.ProvideGetNonConsumableResources(GetNonConsumableResources);
         GlobalRegistry.Instance.ProvideGetCurrentPlayerStockpile(GetCurrentPlayerStockpile);
         GlobalRegistry.Instance.ProvideGetMaximumPlayerIncome(GetMaximumPlayerIncome);
@@ -75,6 +76,12 @@ public partial class Resources : Node2D
 
         return result;
     }
+    
+    public IList<Payment> GetConsumableResources(IList<Payment> resources) => resources
+        .Select(resource => new { resource, resourceBlueprint = _resourceBlueprints[resource.Resource] })
+        .Where(r => r.resourceBlueprint.IsConsumable)
+        .Select(r => r.resource)
+        .ToList();
 
     public IList<Payment> GetNonConsumableResources(IList<Payment> resources) => resources
         .Select(resource => new { resource, resourceBlueprint = _resourceBlueprints[resource.Resource] })

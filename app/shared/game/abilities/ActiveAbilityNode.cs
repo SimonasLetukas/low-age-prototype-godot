@@ -102,7 +102,7 @@ public abstract partial class ActiveAbilityNode<
 
     protected virtual AbilityReservationResult HandleReservation(TActivationRequest request)
     {
-        var reservedResources = ReserveResources(request);
+        var reservedConsumableResources = ReserveResources(request);
         
         var actionWasReserved = false;
         if (CasterConsumesAction)
@@ -117,7 +117,7 @@ public abstract partial class ActiveAbilityNode<
         {
             PlayerStableId = OwnerActor.Player.StableId,
             ActionWasReserved = actionWasReserved,
-            ReservedResources = reservedResources
+            ReservedConsumableResources = reservedConsumableResources
         };
         
         if (DebugEnabled)
@@ -153,9 +153,10 @@ public abstract partial class ActiveAbilityNode<
     
     protected void SpendActionAndConsumableResources(TFocus focus)
     {
-        if (focus.Reservation.PlayerStableId == Players.Instance.Current.StableId)
-            return; // We already spent these when creating reservation
-
+        if (focus.Reservation.PlayerStableId == Players.Instance.Current.StableId
+            && GlobalRegistry.Instance.GetLoadingSavedGame() is false)
+            return; // We already spent these when creating reservation (in a non-loading game state)
+        
         var activationRequest = focus.ToActivationRequest();
         if (activationRequest is not TActivationRequest typedRequest)
             return;
@@ -181,6 +182,9 @@ public abstract partial class ActiveAbilityNode<
 
     private void Requeue(TFocus focus)
     {
+        if (GlobalRegistry.Instance.GetLoadingSavedGame())
+            return;
+        
         if (DebugEnabled)
             GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} requeue: " +
                      $"reservation player ID '{focus.Reservation.PlayerStableId}', current player stable ID " +
@@ -260,12 +264,22 @@ public abstract partial class ActiveAbilityNode<
 
         return true;
     }
+
+    private void CleanUpAllFocuses()
+    {
+        foreach (var focus in FocusQueue.ToList())
+        {
+            var activationRequest = focus.ToActivationRequest();
+            CancelActivation(activationRequest);
+        }
+    }
     
-    private void CleanUpNonRequeuedAbilityFocuses()
+    private void CleanUpNonRequeuedFocuses()
     {
         foreach (var nonRequeuedFocus in FocusQueue.Where(f => f.Requeued is false).ToList())
         {
-            Complete(nonRequeuedFocus);
+            var activationRequest = nonRequeuedFocus.ToActivationRequest();
+            CancelActivation(activationRequest);
         }
     }
     
@@ -282,7 +296,16 @@ public abstract partial class ActiveAbilityNode<
         if (AbilityAllowedForPlanningPhaseGiven(currentPhase) is false)
             return;
         
-        CleanUpNonRequeuedAbilityFocuses();
+        if (DebugEnabled)
+            GD.Print($"ActiveAbilityNode.OnPlanningPhaseStarted: Current phase {currentPhase} (ability phase " +
+                     $"{TurnPhase}) focus queue for {OwnerActor.DisplayName} " +
+                     $"'{OwnerActor.InstanceId}' at {OwnerActor.EntityPrimaryPosition}: " +
+                     $"'{JsonConvert.SerializeObject(FocusQueue)}'");
+
+        if (GlobalRegistry.Instance.GetLoadingSavedGame())
+            return;
+        
+        CleanUpNonRequeuedFocuses();
         HandleRequeuedAbilityFocuses();
     }
     
@@ -290,6 +313,9 @@ public abstract partial class ActiveAbilityNode<
     {
         if (AbilityAllowedForPlanningPhaseGiven(currentPhase) is false)
             return;
+        
+        if (GlobalRegistry.Instance.GetLoadingSavedGame())
+            CleanUpAllFocuses();
         
         RequestExecution();
     }
@@ -299,7 +325,10 @@ public abstract partial class ActiveAbilityNode<
         if (AbilityAllowedAsAnActionInActionPhaseFor(actor) is false)
             return;
         
-        CleanUpNonRequeuedAbilityFocuses();
+        if (GlobalRegistry.Instance.GetLoadingSavedGame())
+            return;
+        
+        CleanUpNonRequeuedFocuses();
         HandleRequeuedAbilityFocuses();
     }
 
@@ -307,6 +336,9 @@ public abstract partial class ActiveAbilityNode<
     {
         if (AbilityAllowedAsAnActionInActionPhaseFor(actor) is false)
             return;
+        
+        if (GlobalRegistry.Instance.GetLoadingSavedGame())
+            CleanUpAllFocuses();
         
         RequestExecution();
     }
@@ -327,7 +359,7 @@ public record AbilityReservationResult
 {
     public required int PlayerStableId { get; init; }
     public required bool ActionWasReserved { get; init; }
-    public required IList<Payment> ReservedResources { get; init; }
+    public required IList<Payment> ReservedConsumableResources { get; init; }
 
     public bool IsReservedFor(Player player) => player.StableId == PlayerStableId;
 }

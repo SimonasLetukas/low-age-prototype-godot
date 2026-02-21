@@ -21,6 +21,7 @@ public partial class GlobalRegistry : Node
 
     public Guid GameId { get; private set; }
     public Vector2Int MapSize { get; private set; }
+    public Func<bool> GetLoadingSavedGame { get; private set; } = null!;
     public Func<Guid, EntityNode?> GetEntityById { get; private set; } = null!;
     public Func<IEnumerable<EntityNode>> GetEntities { get; private set; } = null!;
     public Func<TurnPhase> GetCurrentPhase { get; private set; } = null!;
@@ -28,6 +29,7 @@ public partial class GlobalRegistry : Node
     public Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; private set; } = null!;
     public Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; private set; } = null!;
     public Func<IList<Payment>, string> StringifyResources { get; private set; } = null!;
+    public Func<IList<Payment>, IList<Payment>> GetConsumableResources { get; private set; } = null!;
     public Func<IList<Payment>, IList<Payment>> GetNonConsumableResources { get; private set; } = null!;
     public Func<Player, IList<Payment>> GetCurrentPlayerStockpile { get; private set; } = null!;
     public Func<Player, IList<Payment>> GetMaximumPlayerIncome { get; private set; } = null!;
@@ -45,6 +47,7 @@ public partial class GlobalRegistry : Node
 
     public void ProvideGameId(Guid gameId) => GameId = gameId;
     public void ProvideMapSize(Vector2Int mapSize) => MapSize = mapSize;
+    public void ProvideGetLoadingSavedGame(Func<bool> getLoadingSavedGame) => GetLoadingSavedGame = getLoadingSavedGame;
     public void ProvideGetEntityById(Func<Guid, EntityNode?> entityById) => GetEntityById = entityById;
     public void ProvideGetEntities(Func<IEnumerable<EntityNode>> getEntities) => GetEntities = getEntities;
     public void ProvideGetCurrentPhase(Func<TurnPhase> getCurrentPhase) => GetCurrentPhase = getCurrentPhase;
@@ -52,6 +55,7 @@ public partial class GlobalRegistry : Node
     public void ProvideGetHighestTiles(Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles) => GetHighestTiles = getHighestTiles;
     public void ProvideGetTile(Func<Vector2Int, bool, Tiles.TileInstance?> getTile) => GetTile = getTile;
     public void ProvideStringifyResources(Func<IList<Payment>, string> stringifyResources) => StringifyResources = stringifyResources;
+    public void ProvideGetConsumableResources(Func<IList<Payment>, IList<Payment>> getConsumableResources) => GetConsumableResources = getConsumableResources;
     public void ProvideGetNonConsumableResources(Func<IList<Payment>, IList<Payment>> getNonConsumableResources) => GetNonConsumableResources = getNonConsumableResources;
     public void ProvideGetCurrentPlayerStockpile(Func<Player, IList<Payment>> getCurrentPlayerStockpile) => GetCurrentPlayerStockpile = getCurrentPlayerStockpile;
     public void ProvideGetMaximumPlayerIncome(Func<Player, IList<Payment>> getCurrentPlayerIncome) => GetMaximumPlayerIncome = getCurrentPlayerIncome;

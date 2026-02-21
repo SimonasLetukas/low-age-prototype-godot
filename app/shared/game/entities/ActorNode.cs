@@ -36,7 +36,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public IList<ActorAttribute> Attributes { get; protected set; } = null!;
     public IsometricRotation ActorRotation { get; protected set; }
     public Abilities Abilities { get; protected set; } = null!;
-    public IList<WorkingOnAbility> WorkingOn { get; set; } = new List<WorkingOnAbility>();
+    public IList<WorkingOnAbility> WorkingOn { get; } = new List<WorkingOnAbility>();
 
     private Actor Blueprint { get; set; } = null!;
     private Node2D StatsNode { get; set; } = null!;
@@ -148,9 +148,15 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             Timing = timing,
             ConsumesAction = consumesAction
         };
-        
+
         if (WorkingOn.Contains(workingOn) is false)
+        {
+            if (DebugEnabled)
+                GD.Print($"{DisplayName} at {EntityPrimaryPosition}: adding working on ability " +
+                         $"{ability.DisplayName} with timing {timing} and consumes action {consumesAction}.");
+            
             WorkingOn.Add(workingOn);
+        }
     }
 
     public void RemoveWorkingOnAbility(IAbilityNode ability)
@@ -159,6 +165,11 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
                      .ToList()
                      .Where(workingOnAbility => workingOnAbility.Ability.Equals(ability)))
         {
+            if (DebugEnabled)
+                GD.Print($"{DisplayName} at {EntityPrimaryPosition}: removing working on ability " +
+                         $"{ability.DisplayName} with timing {workingOnAbility.Timing} and consumes action " +
+                         $"{workingOnAbility.ConsumesAction}.");
+            
             WorkingOn.Remove(workingOnAbility);
         }
     }

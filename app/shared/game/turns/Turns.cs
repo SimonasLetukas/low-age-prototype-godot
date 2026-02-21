@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Responsible for keeping track of turns and phases.
@@ -127,11 +128,24 @@ public partial class Turns : Node2D
 
 	public void HandleEvent(ActionEndedEvent @event)
 	{
+		if (DebugEnabled)
+			GD.Print($"Initiative queue on ActionEndedEvent: {JsonConvert.SerializeObject(InitiativeQueue
+				.Select(a => new {a.InstanceId, a.Initiative?.CurrentAmount}))}");
+
 		if (InitiativeQueue.FirstOrDefault() is not { } actor
 		    || actor.InstanceId.Equals(@event.ActorInAction) is false)
+		{
+			if (DebugEnabled)
+				GD.Print($"Could not find '{@event.ActorInAction}' in initiative queue");
+			
 			return;
+		}
 		
 		AdvanceToNextAction(false);
+		
+		if (DebugEnabled)
+			GD.Print($"Initiative queue after AdvanceToNextAction: {string.Join(", ", InitiativeQueue
+				.Select(a => a.InstanceId))}");
 		
 		if (InitiativeQueue.IsEmpty())
 		{

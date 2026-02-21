@@ -4,7 +4,7 @@ using LowAgeData.Domain.Factions;
 public partial class Server : Network
 {
     public static Server Instance = null!;
-
+    
     public override void _Ready()
     {
         base._Ready();

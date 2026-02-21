@@ -244,8 +244,9 @@ public partial class BuildNode : ActiveAbilityNode<
             return [];
 
         var cost = GetCostForSelectedEntity(request.EntityToBuild);
-        EventBus.Instance.RaisePaymentRequested(OwnerActor.Player, cost, false);
-        return cost;
+        var consumableCost = Registry.GetConsumableResources(cost);
+        EventBus.Instance.RaisePaymentRequested(OwnerActor.Player, consumableCost, false);
+        return consumableCost;
     }
 
     protected override PreProcessingResult CreatePreProcessingResult(ActivationRequest request,
@@ -364,7 +365,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
         public IConsumableAbilityActivationRequest ToActivationRequest() => new ActivationRequest
         {
-            UseConsumableResources = false, // TODO focus.Reservation.ReservedConsumableResources,
+            UseConsumableResources = Reservation.ReservedConsumableResources.Any(),
             EntityAlreadyPlaced = true,
             EntityToBuild = GlobalRegistry.Instance.GetEntityById(EntityToBuildId)
         };

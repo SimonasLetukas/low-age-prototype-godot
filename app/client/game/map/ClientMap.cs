@@ -251,6 +251,8 @@ public partial class ClientMap : Map
 	public void SetPaused(bool to)
 	{
 		_paused = to;
+		// ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+		_focusedTile?.SetPaused(to);
 	}
 	
 	public void HandleEvent(UnitMovedAlongPathEvent @event)
