@@ -73,6 +73,15 @@ namespace MultipurposePathfinding
         void IterateInitialization(double deltaTime);
 
         /// <summary>
+        /// Retrieves <see cref="Point"/> by ID.
+        /// </summary>
+        /// <param name="pointId">Point ID.</param>
+        /// <param name="team">Which team is pathfinding.</param>
+        /// <param name="pathfindingSize">What is the MxM size of the pathfinding entity.</param>
+        /// <returns><see cref="Point"/></returns>
+        Point GetPointById(int pointId, Team team, PathfindingSize pathfindingSize);
+
+        /// <summary>
         /// Recalculates the graph and returns all available points within range. 
         /// </summary>
         /// <param name="from">Position from which all available points are calculated.</param>
@@ -383,6 +392,9 @@ namespace MultipurposePathfinding
         #endregion Cache
 
         #region Getters
+
+        public Point GetPointById(int pointId, Team team, PathfindingSize pathfindingSize) 
+            => Graph.GetPoint(pointId, team, pathfindingSize);
 
         public IEnumerable<Point> GetAvailablePoints(Vector2Int from, float range, bool lookingFromHighGround,
             Team team, PathfindingSize pathfindingSize, bool temporary = false)

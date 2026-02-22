@@ -20,7 +20,7 @@ public partial class ClientMap : Map
 	public event Action<EntityAttackedEvent> EntityAttacked = delegate { };
 
 	public Entities Entities { get; private set; } = null!;
-	private Pathfinding Pathfinding { get; set; } = new();
+	private IPathfinding Pathfinding { get; set; } = new Pathfinding();
 
 	private Player _currentPlayer = null!;
 	private Area _startingPositions;
@@ -265,7 +265,10 @@ public partial class ClientMap : Map
 			HandleDeselecting();
 		
 		RemoveOccupation(selectedEntity);
-		Entities.MoveEntity(selectedEntity, @event.GlobalPath.ToList(), @event.Path.ToList());
+		
+		var path = @event.Path.Select(p => 
+			Pathfinding.GetPointById(p, selectedEntity.Player.Team, selectedEntity.EntitySize.X));
+		Entities.MoveEntity(selectedEntity, @event.GlobalPath.ToList(), path.ToList());
 	}
 
 	public void HandleDeselecting()
@@ -562,7 +565,7 @@ public partial class ClientMap : Map
 			selectedUnit.Player.Team,
 			selectedUnit.EntitySize.X).ToList();
 		var globalPath = _tileMap.GetGlobalPositionsFromMapPoints(path);
-		UnitMovementIssued(new UnitMovedAlongPathEvent(selectedUnit.InstanceId, globalPath, path));
+		UnitMovementIssued(new UnitMovedAlongPathEvent(selectedUnit.InstanceId, globalPath, path.Select(p => p.Id)));
 		HandleDeselecting();
 		
 		return ValidationResult.Valid;
