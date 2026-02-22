@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
@@ -74,20 +75,27 @@ public partial class Server : Network
 
     public void RunLocalServerInstance()
     {
-        if (_serverProcess is { HasExited: false })
+        try
         {
-            GD.Print("Server already running.");
-            return;
+            if (_serverProcess is { HasExited: false })
+            {
+                GD.Print("Server already running.");
+                return;
+            }
+
+            var executablePath = GetLocalServerExecutablePath();
+
+            _serverProcess = new Process();
+            _serverProcess.StartInfo.FileName = executablePath;
+            _serverProcess.StartInfo.UseShellExecute = false;
+            _serverProcess.StartInfo.CreateNoWindow = true;
+
+            _serverProcess.Start();
         }
-
-        var executablePath = GetLocalServerExecutablePath();
-
-        _serverProcess = new Process();
-        _serverProcess.StartInfo.FileName = executablePath;
-        _serverProcess.StartInfo.UseShellExecute = false;
-        _serverProcess.StartInfo.CreateNoWindow = true;
-
-        _serverProcess.Start();
+        catch (Exception e)
+        {
+            GD.Print(e);
+        }
     }
 
     public bool IsHosting()
@@ -130,12 +138,19 @@ public partial class Server : Network
     
     private void ShutdownServer()
     {
-        if (_serverProcess is not { HasExited: false }) 
-            return;
+        try
+        {
+            if (_serverProcess is not { HasExited: false }) 
+                return;
         
-        _serverProcess.Kill(true);
-        _serverProcess.Dispose();
-        GD.Print("Server stopped.");
+            _serverProcess.Kill(true);
+            _serverProcess.Dispose();
+            GD.Print("Server stopped.");
+        }
+        catch (Exception e)
+        {
+            // ignored
+        }
     }
     
     private static string GetLocalServerExecutablePath()

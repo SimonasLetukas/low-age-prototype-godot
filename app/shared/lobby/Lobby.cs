@@ -33,7 +33,8 @@ public partial class Lobby : VBoxContainer
         playerInfo.GetTree().SetMultiplayer(Multiplayer);
         
         Callable.From(() => playerInfo.SetupPlayer(playerId)).CallDeferred();
-        
+
+        playerInfo.PlayerSelectedOriginalPlayer += OnPlayerChangedSelectedOriginalPlayer;
         playerInfo.PlayerSelectedFaction += OnPlayerChangedSelectedFaction;
         playerInfo.PlayerSelectedTeam += OnPlayerChangedSelectedTeam;
         playerInfo.PlayerChangedReadyStatus += OnPlayerChangedReadyStatus;
@@ -43,7 +44,7 @@ public partial class Lobby : VBoxContainer
                  "successfully added to lobby.");
     }
 
-    private void OnPlayerRemoved(long playerId)
+    protected virtual void OnPlayerRemoved(long playerId)
     {
         GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerRemoved)}: removing player {playerId} from lobby.");
         
@@ -55,13 +56,13 @@ public partial class Lobby : VBoxContainer
                 continue;
             }
             
+            playerInfo.PlayerSelectedOriginalPlayer -= OnPlayerChangedSelectedOriginalPlayer;
             playerInfo.PlayerSelectedFaction -= OnPlayerChangedSelectedFaction;
             playerInfo.PlayerSelectedTeam -= OnPlayerChangedSelectedTeam;
             playerInfo.PlayerChangedReadyStatus -= OnPlayerChangedReadyStatus;
             playerInfo.QueueFree();
             
             GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerRemoved)}: player {playerId} successfully removed from lobby.");
-            return;
         }
         
         GD.PrintErr($"{nameof(Lobby)}.{nameof(OnPlayerRemoved)}: player {playerId} could not be removed from lobby.");
@@ -100,12 +101,56 @@ public partial class Lobby : VBoxContainer
 
         Data.Instance.SetSave(save);
     }
+    
+    /// <summary>
+    /// Calls the server that the original player selection has changed
+    /// </summary>
+    private void OnPlayerChangedSelectedOriginalPlayer(PlayerInLobby playerInLobby, int originalPlayerStableId)
+    {
+        var playerId = playerInLobby.Player.Id;
+        GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedOriginalPlayer)} called with " +
+                 $"{nameof(playerId)} '{playerId}', {nameof(originalPlayerStableId)} '{originalPlayerStableId}'.");
+
+        if (Multiplayer.IsServer()) 
+            return;
+        
+        GD.Print($"{nameof(Lobby)}.{nameof(OnPlayerChangedSelectedOriginalPlayer)}: calling " +
+                 $"{nameof(UpdateSelectedOriginalPlayer)}.");
+        RpcId(Constants.ENet.ServerId, nameof(UpdateSelectedOriginalPlayer), playerId, 
+            originalPlayerStableId);
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    protected virtual void UpdateSelectedOriginalPlayer(int playerId, int originalPlayerStableId)
+    {
+        GD.Print($"{nameof(Lobby)}.{nameof(UpdateSelectedOriginalPlayer)}: called with " +
+                 $"{nameof(playerId)} '{playerId}', {nameof(originalPlayerStableId)} '{originalPlayerStableId}'.");
+    }
+    
+    /// <summary>
+    /// Callback from the server for each client to update their original player selection
+    /// </summary>
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    protected virtual void ChangeSelectedOriginalPlayerForPlayer(int playerId, int originalPlayerStableId)
+    {
+        GD.Print($"{nameof(Lobby)}.{nameof(ChangeSelectedOriginalPlayerForPlayer)}: trying to change player " +
+                 $"'{playerId}' selected original player to '{originalPlayerStableId}'");
+        
+        foreach (var player in _playersList.GetChildren().OfType<PlayerInLobby>())
+        {
+            if (player.Player.Id != playerId) continue;
+            
+            player.SetOriginalPlayer(originalPlayerStableId);
+            
+            GD.Print($"{nameof(Lobby)}.{nameof(ChangeSelectedOriginalPlayerForPlayer)}: player '{playerId}' " +
+                     $"changed selected original player to '{originalPlayerStableId}'");
+            return;
+        }
+    }
 
     /// <summary>
     /// Calls the server that the faction selection has changed
     /// </summary>
-    /// <param name="playerInLobby"></param>
-    /// <param name="newFactionId"></param>
     private void OnPlayerChangedSelectedFaction(PlayerInLobby playerInLobby, FactionId newFactionId)
     {
         var playerId = playerInLobby.Player.Id;
@@ -131,8 +176,6 @@ public partial class Lobby : VBoxContainer
     /// <summary>
     /// Callback from the server for each client to update their player faction selection
     /// </summary>
-    /// <param name="playerId"></param>
-    /// <param name="factionId"></param>
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void ChangeSelectedFactionForPlayer(int playerId, string factionId)
     {
@@ -154,8 +197,6 @@ public partial class Lobby : VBoxContainer
     /// <summary>
     /// Calls the server that the team selection has changed
     /// </summary>
-    /// <param name="playerInLobby"></param>
-    /// <param name="newTeam"></param>
     private void OnPlayerChangedSelectedTeam(PlayerInLobby playerInLobby, Team newTeam)
     {
         var playerId = playerInLobby.Player.Id;
@@ -181,8 +222,6 @@ public partial class Lobby : VBoxContainer
     /// <summary>
     /// Callback from the server for each client to update their player team selection
     /// </summary>
-    /// <param name="playerId"></param>
-    /// <param name="team"></param>
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void ChangeSelectedTeamForPlayer(int playerId, int team)
     {
@@ -204,8 +243,6 @@ public partial class Lobby : VBoxContainer
     /// <summary>
     /// Calls the server that the player ready status has changed
     /// </summary>
-    /// <param name="playerInLobby"></param>
-    /// <param name="newReadyStatus"></param>
     private void OnPlayerChangedReadyStatus(PlayerInLobby playerInLobby, bool newReadyStatus)
     {
         var playerId = playerInLobby.Player.Id;
@@ -230,8 +267,6 @@ public partial class Lobby : VBoxContainer
     /// <summary>
     /// Callback from the server for each client to update their player ready status
     /// </summary>
-    /// <param name="playerId"></param>
-    /// <param name="newReadyStatus"></param>
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void ChangeReadyStatusForPlayer(int playerId, bool newReadyStatus)
     {

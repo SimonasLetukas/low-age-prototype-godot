@@ -23,13 +23,37 @@ public partial class ServerLobby : Lobby
         
         base._ExitTree();
     }
-    
+
+    protected override void OnPlayerRemoved(long playerId)
+    {
+        base.OnPlayerRemoved(playerId);
+        
+        if (Players.Instance.Count == 0)
+        {
+            GD.Print($"{nameof(ServerLobby)}.{nameof(OnPlayerRemoved)}: not enough players to keep the lobby " +
+                     $"state, resetting.");
+            
+            Server.Instance.ResetNetwork();
+            
+            Callable.From(() => GetTree().ChangeSceneToFile(ScenePath)).CallDeferred();
+        }
+    }
+
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     protected override void RequestUpdateSaveAdded(string savePayload)
     {
         GD.Print($"{nameof(ServerLobby)}.{nameof(RequestUpdateSaveAdded)}: called.");
         
         Rpc(nameof(UpdateSaveAdded), savePayload);
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    protected override void UpdateSelectedOriginalPlayer(int playerId, int originalPlayerStableId)
+    {
+        GD.Print($"{nameof(ServerLobby)}.{nameof(UpdateSelectedOriginalPlayer)}: called with " +
+                 $"{nameof(playerId)} '{playerId}', {nameof(originalPlayerStableId)} '{originalPlayerStableId}'.");
+        
+        Rpc(nameof(ChangeSelectedOriginalPlayerForPlayer), playerId, originalPlayerStableId);
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]

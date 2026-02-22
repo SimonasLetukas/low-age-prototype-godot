@@ -15,4 +15,5 @@ public record SavePlayer
 {
     public required FactionId FactionId { get; init; }
     public required int Team { get; init; }
+    public required string OriginalName { get; init; }
 }

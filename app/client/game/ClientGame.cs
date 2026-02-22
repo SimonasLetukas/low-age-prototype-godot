@@ -238,13 +238,16 @@ public partial class ClientGame : Game
             Players = Players.Instance.GetAll().ToDictionary(p => p.StableId, p => new SavePlayer
             {
                 FactionId = p.Faction,
-                Team = p.Team.Value
+                Team = p.Team.Value,
+                OriginalName = p.Name
             }),
             Events = Events.Select(EventToString).ToList()
         };
-        
-        var file = FileAccess.Open($"{SaveLocation}/{GameId}.save", FileAccess.ModeFlags.Write);
-        file.StoreString(JsonConvert.SerializeObject(save));
+
+        var json = JsonConvert.SerializeObject(save);
+        using var file = FileAccess.Open($"{SaveLocation}/{GameId}.save", FileAccess.ModeFlags.WriteRead);
+        file.Resize(0);
+        file.StoreString(json);
         file.Close();
     }
 

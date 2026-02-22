@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://xhtymnr7u3r0"]
+
+[ext_resource type="Script" uid="uid://bshj7oxw1opu2" path="res://app/shared/lobby/players/original-player/OriginalPlayer.cs" id="1_3idtw"]
+
+[node name="OriginalPlayer" type="OptionButton"]
+script = ExtResource("1_3idtw")

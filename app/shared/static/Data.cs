@@ -38,7 +38,7 @@ public partial class Data : Node
         // TODO to save resources currently both server and client read from their local files,
         // it should be transferred by server instead to have one source of truth.
     {
-        var dataFile = FileAccess.Open(DataBlueprintLocation, FileAccess.ModeFlags.Read);
+        using var dataFile = FileAccess.Open(DataBlueprintLocation, FileAccess.ModeFlags.Read);
         var dataJson = dataFile.GetAsText(); 
         dataFile.Close();
 

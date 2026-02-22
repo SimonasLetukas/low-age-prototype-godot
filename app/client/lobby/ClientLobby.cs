@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using Newtonsoft.Json;
 
@@ -58,6 +59,18 @@ public partial class ClientLobby : Lobby
             Client.Instance.StartGame();
         }
     }
+
+    /// <summary>
+    /// Callback from the server for each client to update their original player selection
+    /// </summary>
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    protected override void ChangeSelectedOriginalPlayerForPlayer(int playerId, int originalPlayerStableId)
+    {
+        base.ChangeSelectedOriginalPlayerForPlayer(playerId, originalPlayerStableId);
+        GD.Print($"{nameof(ClientLobby)}.{nameof(ChangeSelectedOriginalPlayerForPlayer)}");
+        
+        _startGameButton.Disabled = IsStartGameButtonDisabled();
+    }
     
     /// <summary>
     /// Callback from the server for each client to update their player ready status
@@ -113,16 +126,33 @@ public partial class ClientLobby : Lobby
         Client.Instance.StartGame();
     }
     
-    private static bool IsStartGameButtonDisabled()
+    private static bool IsStartGameButtonDisabled() => Players.Instance.AllReady is false 
+                                                       || IsSavedGameFilled() is false;
+
+    private static bool IsSavedGameFilled()
     {
-        // TODO also check if enough players have joined for the save game AND all stable IDs are picked (no overlaps)
-        return Players.Instance.AllReady is false;
+        var save = Data.Instance.Save;
+        if (save is null)
+            return true;
+
+        if (Players.Instance.Count < save.Players.Count)
+            return false;
+
+        foreach (var (originalPlayerStableId, _) in save.Players)
+        {
+            if (Players.Instance.GetAll().Any(p => p.StableId == originalPlayerStableId) is false)
+                return false;
+        }
+
+        return true;
     }
 
     private void UpdateLoadSaveUi(Save save)
     {
         _loadSaveLabel.Text = $"Loaded ({save.SavedAtUtc.ToLocalTime():g}): {save.GameId}";
         _loadSaveButton.Visible = false;
+        
+        Callable.From(() => _startGameButton.Disabled = IsStartGameButtonDisabled()).CallDeferred();
     }
     
     private void OnSaveUpdated(Save save) => UpdateLoadSaveUi(save);
