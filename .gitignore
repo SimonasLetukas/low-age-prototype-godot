@@ -66,3 +66,5 @@ msbuild.wrn
 /.idea/.idea.low-age-prototype-godot/.idea/.gitignore
 /packages/
 
+
+/export

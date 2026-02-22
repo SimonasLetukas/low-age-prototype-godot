@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 using Godot;
 using LowAgeData.Domain.Factions;
 
@@ -5,12 +8,22 @@ public partial class Server : Network
 {
     public static Server Instance = null!;
     
+    private Process? _serverProcess;
+    
     public override void _Ready()
     {
         base._Ready();
 
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
         Instance ??= this;
+    }
+    
+    public override void _Notification(int what)
+    {
+        if (what == NotificationWMCloseRequest)
+        {
+            ShutdownServer();
+        }
     }
 
     /// <summary>
@@ -61,14 +74,20 @@ public partial class Server : Network
 
     public void RunLocalServerInstance()
     {
-        // TODO seems that the export is not working from game itself, should probably find another way to do this,
-        // see useful links in: https://trello.com/c/VKRGNOYZ/69-make-it-easier-to-test-the-changes-locally
-        // OS.Execute("godot", new []{ "--export", "\"Windows Desktop - Server\"", "server.exe" });
-        OS.Execute("cmd", new []
+        if (_serverProcess is { HasExited: false })
         {
-            "/c", "tasklist /fi \"imagename eq server.exe\" | findstr /B /I /C:\"server.exe \" >NUL " +
-                  "& IF ERRORLEVEL 1 start /min \"server\" server.exe"
-        });
+            GD.Print("Server already running.");
+            return;
+        }
+
+        var executablePath = GetLocalServerExecutablePath();
+
+        _serverProcess = new Process();
+        _serverProcess.StartInfo.FileName = executablePath;
+        _serverProcess.StartInfo.UseShellExecute = false;
+        _serverProcess.StartInfo.CreateNoWindow = true;
+
+        _serverProcess.Start();
     }
 
     public bool IsHosting()
@@ -107,6 +126,35 @@ public partial class Server : Network
         
         GD.Print("Server started.");
         return true;
+    }
+    
+    private void ShutdownServer()
+    {
+        if (_serverProcess is not { HasExited: false }) 
+            return;
+        
+        _serverProcess.Kill(true);
+        _serverProcess.Dispose();
+        GD.Print("Server stopped.");
+    }
+    
+    private static string GetLocalServerExecutablePath()
+    {
+        if (OS.HasFeature(nameof(Client).ToLower()) is false)
+        {
+            // Running from editor (Rider / Godot editor), otherwise there would be "client" feature at this point.
+            return ProjectSettings.GlobalizePath("res://server.exe");
+        }
+        
+        var basePath = OS.GetExecutablePath().GetBaseDir();
+
+        if (OS.GetName() == "Windows")
+            return basePath + "/server.exe";
+        if (OS.GetName() == "macOS")
+            return basePath + "/server";
+        
+        // Linux
+        return basePath + "/server";
     }
 
     private void OnPlayerConnected(long playerId)
