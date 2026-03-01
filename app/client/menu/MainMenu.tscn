@@ -158,7 +158,6 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_fonts/font = SubResource("2")
 text = "Name:"
-horizontal_alignment = 1
 
 [node name="Input" type="LineEdit" parent="Items/Name"]
 custom_minimum_size = Vector2(300, 40)
@@ -182,7 +181,6 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_fonts/font = SubResource("2")
 text = "Faction:"
-horizontal_alignment = 1
 
 [node name="Faction" parent="Items/Faction" instance=ExtResource("4")]
 layout_mode = 2
@@ -251,3 +249,22 @@ offset_top = 40.0
 offset_right = -40.0
 offset_bottom = 80.0
 text = "Settings"
+
+[node name="Version" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -53.0
+offset_top = -25.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/font = SubResource("1")
+text = "v0.0.0"

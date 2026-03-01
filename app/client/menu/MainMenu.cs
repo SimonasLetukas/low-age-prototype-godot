@@ -8,6 +8,7 @@ public partial class MainMenu : Control
     protected CheckBox QuickStartCheckBox { get; set; }
 
     private Button _settingsButton;
+    private Label _gameVersion;
     private Settings _settings;
     private LineEdit _nameInput;
     private FactionSelection _factionSelection;
@@ -23,6 +24,7 @@ public partial class MainMenu : Control
                                         // TODO this should happen before (and instead of) the read in FactionSelection.cs
                                         
         _settingsButton = FindChild("SettingsButton") as Button;
+        _gameVersion = FindChild("Version") as Label;
         _nameInput = GetNode<LineEdit>("Items/Name/Input");
         _factionSelection = GetNode<FactionSelection>("Items/Faction/Faction");
         _connectButton = FindChild("Connect") as Button;
@@ -45,6 +47,8 @@ public partial class MainMenu : Control
         AddChild(_settings);
         _settings.FactionSelected += OnFactionSelectionSelected;
         _settings.Visible = false;
+
+        _gameVersion!.Text = Constants.GameVersion;
         
         _currentlySelectedFaction = _factionSelection.GetSelectedFaction();
 
