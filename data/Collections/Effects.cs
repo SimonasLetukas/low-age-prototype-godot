@@ -27,23 +27,24 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Shared.HighGroundSearch,
                     shape: new Circle(radius: 0),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnEnter,
-                        SearchFlag.RemovedOnExit
-                    },
+                    height: SearchHeight.OnlyHighGround,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
                                 new SpecificFlag(value: FilterFlag.Enemy)
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnEnter,
+                        SearchTriggerFlag.RemovedOnExit
                     },
                     effects: new List<EffectId>
                     {
@@ -93,7 +94,7 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Shared.Revelators.NoPopulationSpaceSearch,
                     shape: new Map(),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Player),
@@ -164,7 +165,7 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Shared.Uee.PositiveFaithSearch,
                     shape: new Map(),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Player),
@@ -182,7 +183,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Shared.Uee.PositiveFaithBuff
                     },
-                    target: Location.Actor),
+                    target: Location.Entity),
 
                 #endregion
 
@@ -215,13 +216,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Obelisk.CelestiumDischargeSearchLong,
                     shape: new Circle(radius: 5, ignoreRadius: 1),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -253,13 +254,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Obelisk.CelestiumDischargeSearchShort,
                     shape: new Circle(radius: 1, ignoreRadius: 0),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -338,24 +339,25 @@ namespace LowAgeData.Collections
                         new Area(start: new Vector2Int(x: -1,y: -1), 
                             size: new Vector2Int (x: 3, y: 2))
                     }),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnEnter,
-                        SearchFlag.AppliedOnActionPhaseStart,
-                        SearchFlag.RemovedOnExit
-                    },
+                    height: SearchHeight.OnlyLowGround,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
                                 new SpecificFlag(value: FilterFlag.Enemy)
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag> 
+                    { 
+                        SearchTriggerFlag.AppliedOnEnter, 
+                        SearchTriggerFlag.AppliedOnActionPhaseStart, 
+                        SearchTriggerFlag.RemovedOnExit 
                     },
                     effects: new List<EffectId>
                     {
@@ -377,22 +379,23 @@ namespace LowAgeData.Collections
                         new Area(start: new Vector2Int(x: 1,y: -1), 
                             size: new Vector2Int (x: 3, y: 2))
                     }),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnActionPhaseStart,
-                    },
+                    height: SearchHeight.OnlyLowGround,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
                                 new SpecificFlag(value: FilterFlag.Enemy)
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnActionPhaseStart,
                     },
                     effects: new List<EffectId>
                     {
@@ -471,7 +474,7 @@ namespace LowAgeData.Collections
                     id: EffectId.FusionCore.DefenceProtocolDamage,
                     damageType: DamageType.Ranged,
                     amount: new Amount(flat: 3),
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -514,7 +517,7 @@ namespace LowAgeData.Collections
                     id: EffectId.CelestiumCore.DefenceProtocolDamage,
                     damageType: DamageType.Ranged,
                     amount: new Amount(flat: 4),
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -571,16 +574,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.PowerPole.ExcessDistributionSearch,
                     shape: new Circle(radius: 4),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnPlanningPhaseStart
-                    },
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -588,12 +588,16 @@ namespace LowAgeData.Collections
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Unit),
                                 new SpecificFlag(value: FilterFlag.Structure)
                             }),
                         new SpecificFaction(value: FactionId.Uee)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnPlanningPhaseStart
                     },
                     effects: new List<EffectId>
                     {
@@ -607,7 +611,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.PowerPole.ExcessDistributionBuff
                     },
-                    target: Location.Actor),
+                    target: Location.Entity),
                 
                 new ModifyAbility(
                     id: EffectId.PowerPole.ImprovedPowerGridModifyAbilityPowerGrid,
@@ -630,16 +634,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.PowerPole.ExcessDistributionImprovedSearch,
                     shape: new Circle(radius: 6),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnPlanningPhaseStart
-                    },
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -647,12 +648,16 @@ namespace LowAgeData.Collections
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Unit),
                                 new SpecificFlag(value: FilterFlag.Structure)
                             }),
                         new SpecificFaction(value: FactionId.Uee)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnPlanningPhaseStart
                     },
                     effects: new List<EffectId>
                     {
@@ -663,21 +668,22 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Temple.KeepingTheFaithSearch,
                     shape: new Circle(radius: 6),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnActionPhaseStart
-                    },
+                    height: SearchHeight.HighestPossible,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally)
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnActionPhaseStart
                     },
                     effects: new List<EffectId>
                     {
@@ -691,7 +697,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Temple.KeepingTheFaithBuff
                     },
-                    target: Location.Actor),
+                    target: Location.Entity),
                 
                 new ApplyBehaviour(
                     id: EffectId.Temple.KeepingTheFaithApplyBehaviourIncome,
@@ -752,23 +758,24 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Watchtower.VantagePointSearch,
                     shape: new Circle(radius: 0),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnEnter,
-                        SearchFlag.RemovedOnExit
-                    },
+                    height: SearchHeight.OnlyHighGround,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
                                 new SpecificFlag(value: FilterFlag.Enemy)
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnEnter,
+                        SearchTriggerFlag.RemovedOnExit
                     },
                     effects: new List<EffectId>
                     {
@@ -794,23 +801,24 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Bastion.BattlementSearch,
                     shape: new Circle(radius: 0),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnEnter,
-                        SearchFlag.RemovedOnExit
-                    },
+                    height: SearchHeight.OnlyHighGround,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
                                 new SpecificFlag(value: FilterFlag.Enemy)
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnEnter,
+                        SearchTriggerFlag.RemovedOnExit
                     },
                     effects: new List<EffectId>
                     {
@@ -851,24 +859,25 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Leader.MenacingPresenceSearch,
                     shape: new Circle(radius: 6),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnEnter,
-                        SearchFlag.AppliedOnSourceAction,
-                        SearchFlag.RemovedOnExit
-                    },
+                    height: SearchHeight.HighestPossible,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
                                 new SpecificFlag(value: FilterFlag.Enemy)
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnEnter,
+                        SearchTriggerFlag.AppliedOnSourceAction,
+                        SearchTriggerFlag.RemovedOnExit
                     },
                     effects: new List<EffectId>
                     {
@@ -889,13 +898,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Leader.OneForAllObeliskBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -916,13 +925,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Leader.OneForAllSearch,
                     shape: new Map(),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.HighestPossible,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -949,13 +958,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Slave.RepairStructureBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -985,13 +994,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Slave.ManualLabourBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1045,7 +1054,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Quickdraw.CrippleBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -1067,13 +1076,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Gorger.FanaticSuicideSearch,
                     shape: new Circle(radius: 1),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1082,7 +1091,7 @@ namespace LowAgeData.Collections
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Unit),
                                 new SpecificFlag(value: FilterFlag.Structure),
@@ -1105,7 +1114,7 @@ namespace LowAgeData.Collections
                         flat: 0,
                         multiplier: 0.5f,
                         multiplierOf: AmountMultiplyOfFlag.MissingVitals,
-                        multiplyTarget: Location.Actor),
+                        multiplyTarget: Location.Entity),
                     bonusTo: null,
                     bonusAmount: null,
                     target: null,
@@ -1126,7 +1135,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Camou.SilentAssassinBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -1153,13 +1162,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Camou.SilentAssassinSearchFriendly,
                     shape: new Circle(radius: 4, ignoreRadius: 0),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.HighestPossible,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1172,13 +1181,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Camou.SilentAssassinSearchEnemy,
                     shape: new Circle(radius: 4, ignoreRadius: 0),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.HighestPossible,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
                         new SpecificFlag(value: FilterFlag.Unit)
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     usedForValidator: true),
 
                 new Teleport(
@@ -1215,23 +1224,24 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Shaman.WondrousGooSearch,
                     shape: new Circle(radius: 0),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnEveryAction,
-                        SearchFlag.AppliedOnEnter
-                    },
+                    height: SearchHeight.OnlyLowGround,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
                                 new SpecificFlag(value: FilterFlag.Enemy)
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnEveryAction,
+                        SearchTriggerFlag.AppliedOnEnter
                     },
                     effects: new List<EffectId>
                     {
@@ -1286,13 +1296,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.BigBadBull.UnleashTheRageSearch,
                     shape: new Line(length: 1),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.OnlyLowGround,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1361,13 +1371,13 @@ namespace LowAgeData.Collections
                     amount: new Amount(flat: 6),
                     bonusTo: ActorAttribute.Mechanical,
                     bonusAmount: new Amount(flat: 8),
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Structure),
                                 new SpecificFlag(value: FilterFlag.Unit),
@@ -1381,7 +1391,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Parasite.ParalysingGraspTether
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -1404,7 +1414,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Parasite.ParalysingGraspBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -1446,23 +1456,24 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Horrior.ExpertFormationSearch,
                     shape: new Circle(radius: 1),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnEnter,
-                        SearchFlag.AppliedOnEveryAction,
-                        SearchFlag.RemovedOnExit,
-                    },
+                    height: SearchHeight.HighestPossible,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
                             }),
                         new SpecificEntity(value: UnitId.Horrior)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnEnter,
+                        SearchTriggerFlag.AppliedOnEveryAction,
+                        SearchTriggerFlag.RemovedOnExit,
                     },
                     effects: new List<EffectId>
                     {
@@ -1499,7 +1510,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Marksman.CriticalMarkBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -1542,13 +1553,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Mortar.DeadlyAmmunitionSearch,
                     shape: new Circle(radius: 1, ignoreRadius: 0),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1601,13 +1612,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Hawk.LeadershipBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1627,13 +1638,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Hawk.HealthKitSearch,
                     shape: new Circle(radius: 1, ignoreRadius: 0),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.HighestPossible,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1659,13 +1670,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Engineer.OperateBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificEntity(value: UnitId.Cannon),
                                 new SpecificEntity(value: UnitId.Ballista),
@@ -1720,13 +1731,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Engineer.RepairStructureOrMachineBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1748,13 +1759,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Engineer.RepairStructureOrMachineBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificEntity(value: UnitId.Cannon),
                                 new SpecificEntity(value: UnitId.Ballista),
@@ -1764,7 +1775,7 @@ namespace LowAgeData.Collections
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1786,13 +1797,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Engineer.RepairHorriorBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1855,7 +1866,7 @@ namespace LowAgeData.Collections
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1866,13 +1877,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Cannon.HeatUpSearch,
                     shape: new Circle(radius: 0),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1906,7 +1917,7 @@ namespace LowAgeData.Collections
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -1937,13 +1948,13 @@ namespace LowAgeData.Collections
                     amount: null,
                     bonusTo: null,
                     bonusAmount: null,
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Structure),
                                 new SpecificFlag(value: FilterFlag.Unit)
@@ -1967,13 +1978,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Ballista.AimBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Structure),
                                 new SpecificFlag(value: FilterFlag.Unit)
@@ -1985,7 +1996,7 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Ballista.AimSearch,
                     shape: new Circle(radius: 9),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.HighestPossible,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(FilterFlag.Origin),
@@ -2034,7 +2045,7 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Radar.RadioLocationSearchDestroy,
                     shape: new Map(),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new SpecificEntity(DoodadId.RadarRedDot)
@@ -2062,7 +2073,7 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Radar.RadioLocationSearchCreate,
                     shape: new Circle(radius: 15, ignoreRadius: 0),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.HighestPossible,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -2103,22 +2114,23 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Vessel.AbsorbentFieldSearch,
                     shape: new Circle(radius: 3),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnEnter,
-                        SearchFlag.RemovedOnExit
-                    },
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnEnter,
+                        SearchTriggerFlag.RemovedOnExit
                     },
                     effects: new List<EffectId>
                     {
@@ -2132,13 +2144,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Vessel.AbsorbentFieldInterceptDamage
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -2162,22 +2174,23 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Vessel.FortifySearch,
                     shape: new Circle(radius: 0),
-                    searchFlags: new List<SearchFlag>
-                    {
-                        SearchFlag.AppliedOnEnter,
-                        SearchFlag.RemovedOnExit
-                    },
+                    height: SearchHeight.All,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
                             }),
                         new SpecificFlag(value: FilterFlag.Unit)
+                    },
+                    triggerFlags: new List<SearchTriggerFlag>
+                    {
+                        SearchTriggerFlag.AppliedOnEnter,
+                        SearchTriggerFlag.RemovedOnExit
                     },
                     effects: new List<EffectId>
                     {
@@ -2191,13 +2204,13 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Vessel.FortifyBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),
@@ -2211,7 +2224,7 @@ namespace LowAgeData.Collections
                     {
                         BehaviourId.Omen.RenditionPlacementBuff
                     },
-                    target: Location.Actor,
+                    target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
                         new SpecificFlag(value: FilterFlag.Enemy),
@@ -2246,13 +2259,13 @@ namespace LowAgeData.Collections
                 new Search(
                     id: EffectId.Omen.RenditionSearch,
                     shape: new Circle(radius: 1),
-                    searchFlags: new List<SearchFlag>(),
+                    height: SearchHeight.HighestPossible,
                     filters: new List<IFilterItem>
                     {
                         new FilterGroup(
                             policy: Policy.Include, 
                             quantifier: Quantifier.Any, 
-                            items: new List<IFilterItem>
+                            filters: new List<IFilterItem>
                             {
                                 new SpecificFlag(value: FilterFlag.Player),
                                 new SpecificFlag(value: FilterFlag.Ally),

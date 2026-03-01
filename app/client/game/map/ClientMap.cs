@@ -114,6 +114,7 @@ public partial class ClientMap : Map
 		
 		GlobalRegistry.Instance.ProvideGetCurrentPhase(() => CurrentPhase);
 		GlobalRegistry.Instance.ProvideGetActorInAction(() => ActorInAction);
+		GlobalRegistry.Instance.ProvideGetTiles(_tileMap.GetTiles);
 		GlobalRegistry.Instance.ProvideGetHighestTiles(_tileMap.GetHighestTiles);
 		GlobalRegistry.Instance.ProvideGetTile(_tileMap.GetTile);
 	}

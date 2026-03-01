@@ -47,7 +47,7 @@ namespace LowAgeData.Domain.Behaviours
         public string Description { get; }
         
         /// <summary>
-        /// <see cref="Behaviour"/>'s duration.
+        /// <see cref="Behaviour"/>'s duration. Afterward, the <see cref="Behaviour"/> is removed.
         /// </summary>
         public EndsAt EndsAt { get; }
         

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cpiroyuxgdrc1"]
+[gd_scene load_steps=5 format=3 uid="uid://cpiroyuxgdrc1"]
 
 [ext_resource type="Texture2D" uid="uid://hgsa6r1yopuv" path="res://assets/sprites/interface/panel-extra-small-x4.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://blt1s54vx3rim" path="res://assets/icons/icon_health_big.png" id="2"]
 [ext_resource type="Script" uid="uid://0dkj7gmifw3o" path="res://app/client/game/interface/panels/entity/behaviours/BehaviourBox.cs" id="3"]
+[ext_resource type="PackedScene" uid="uid://dax8eksfbotqw" path="res://app/client/game/interface/shared/Text.tscn" id="4_8qylt"]
 
 [node name="BehaviourBox" type="NinePatchRect"]
 custom_minimum_size = Vector2(24, 24)
@@ -27,3 +28,15 @@ offset_bottom = 20.0
 texture = ExtResource("2")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="Counter" parent="." instance=ExtResource("4_8qylt")]
+visible = false
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 0
+offset_left = -4.0
+offset_top = 3.0
+offset_right = 28.0
+offset_bottom = 20.0
+text = "99"
+horizontal_alignment = 1
+HasOutline = true

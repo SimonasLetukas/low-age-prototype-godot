@@ -96,7 +96,7 @@ public partial class InterceptDamageNode : BehaviourNode, INodeFromBlueprint<Int
         var entity = target switch
         {
             _ when target.Equals(Location.Self) => from,
-            _ when target.Equals(Location.Actor) => Parent,
+            _ when target.Equals(Location.Entity) => Parent,
             _ when target.Equals(Location.Source) => History.SourceEntityOrNull ?? from,
             _ when target.Equals(Location.Origin) => History.OriginEntityOrNull ?? from,
             _ => Parent

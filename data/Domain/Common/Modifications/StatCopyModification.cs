@@ -1,18 +1,19 @@
-﻿namespace LowAgeData.Domain.Common.Modifications
-{
-    public class StatCopyModification : Modification
-    {
-        public StatCopyModification(
-            Change change,
-            Location copyFrom,
-            float additionalAmount,
-            StatType statType) : base(change, additionalAmount)
-        {
-            CopyFrom = copyFrom;
-            StatType = statType;
-        }
+﻿namespace LowAgeData.Domain.Common.Modifications;
 
-        public Location CopyFrom { get; }
-        public StatType StatType { get; }
+public record StatCopyModification : Modification
+{
+    public StatCopyModification(
+        Change change,
+        Location copyFrom,
+        float additionalAmount,
+        StatType statType) : base(change, additionalAmount)
+    {
+        CopyFrom = copyFrom;
+        StatType = statType;
     }
+
+    public Location CopyFrom { get; }
+    public StatType StatType { get; }
+        
+    public override void Accept(IModificationVisitor visitor) => visitor.Visit(this);
 }

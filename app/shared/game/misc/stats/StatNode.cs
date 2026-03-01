@@ -1,54 +1,73 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Modifications;
 
-public partial class StatNode : Node2D, INodeFromBlueprint<Stat>
+public abstract partial class StatNode : Node2D, INodeFromBlueprint<Stat>
 {
     public Guid InstanceId { get; set; } = Guid.NewGuid();
-    private Stat Blueprint { get; set; } = null!;
-
-    public bool HasCurrent => Blueprint.HasCurrent;
     
-    private float _currentAmount;
-    public float CurrentAmount
-    {
-        get => HasCurrent ? _currentAmount : MaxAmount;
-        set => SetCurrentValue(ref _currentAmount, ref _maxAmount, value, HasCurrent);
-    }
+    protected List<Modification> Modifications { get; } = [];
+    
+    private Stat Blueprint { get; set; } = null!;
+    private bool HasCurrent => Blueprint.HasCurrent;
 
-    private int _maxAmount;
-    public int MaxAmount
-    {
-        get => _maxAmount;
-        set => SetMaxValue(ref _currentAmount, ref _maxAmount, value);
-    }
+    public float CurrentAmount => HasCurrent ? GetCurrent() : GetMax();
+    public int MaxAmount => GetMax();
+
+    protected float BaseCurrentAmount { get; set; }
+    protected int BaseMaxAmount { get; set; }
 
     public void SetBlueprint(Stat blueprint)
     {
         Blueprint = blueprint;
-        _currentAmount = Blueprint.MaxAmount;
-        _maxAmount = Blueprint.MaxAmount;
+        BaseCurrentAmount = Blueprint.MaxAmount;
+        BaseMaxAmount = Blueprint.MaxAmount;
     }
 
-    protected static void SetCurrentValue(ref float currentProperty, ref int maxProperty, 
-        float value, bool hasCurrent)
-    {
-        if (hasCurrent)
-        {
-            currentProperty = value;
-            return;
-        }
+    public abstract void Apply(Change what, float amount);
 
-        maxProperty = (int)value;
-    }
+    public abstract void Apply(Modification modification, bool applyToBaseValue);
+
+    public abstract void Remove(Modification modification);
     
-    protected static void SetMaxValue(ref float currentProperty, ref int maxProperty, 
-        float value)
-    {
-        if (currentProperty > maxProperty) 
-            currentProperty = value;
+    protected virtual float GetCurrent() => GetModified(BaseCurrentAmount, BaseMaxAmount, Modifications).NewCurrent;
+    
+    protected virtual int GetMax() => GetModified(BaseCurrentAmount, BaseMaxAmount, Modifications).NewMax;
 
-        maxProperty = (int)value;
+    protected static (float NewCurrent, int NewMax) GetUpdated(Change what, float amount, float currentAmount,
+        float maxAmount)
+    {
+        var (newCurrent, newMax) = what switch
+        {
+            _ when what.Equals(Change.AddMax) => (currentAmount, maxAmount + amount),
+            _ when what.Equals(Change.AddCurrent) => (currentAmount + amount, maxAmount),
+            _ when what.Equals(Change.SubtractMax) => (currentAmount, maxAmount - amount),
+            _ when what.Equals(Change.SubtractCurrent) => (currentAmount - amount, maxAmount),
+            _ when what.Equals(Change.SetMax) => (currentAmount, amount),
+            _ when what.Equals(Change.SetCurrent) => (amount, maxAmount),
+            _ when what.Equals(Change.MultiplyMax) => (currentAmount, maxAmount * amount),
+            _ when what.Equals(Change.MultiplyCurrent) => (currentAmount * amount, maxAmount),
+            _ => (currentAmount, maxAmount),
+        };
+
+        return (newCurrent, (int)newMax);
+    }
+
+    protected static (float NewCurrent, int NewMax) GetModified(float currentAmount, int maxAmount, 
+        IEnumerable<Modification> modifications)
+    {
+        foreach (var modification in modifications
+                     .OrderByDescending(m => m.Change.DoesSet())
+                     .ThenByDescending(m => m.Change.DoesAdd() || m.Change.DoesSubtract())
+                     .ThenByDescending(m => m.Change.DoesMultiply()))
+        {
+            (currentAmount, maxAmount) = GetUpdated(modification.Change, modification.Amount, currentAmount, maxAmount);
+        }
+        
+        return (currentAmount, maxAmount);
     }
     
     public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);

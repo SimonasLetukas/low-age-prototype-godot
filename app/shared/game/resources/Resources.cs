@@ -296,7 +296,7 @@ public partial class Resources : Node2D
 
     private void OnActionPhaseStarted()
     {
-        foreach (var (player, stockpile) in _resourcesStockpiledByPlayer)
+        foreach (var (_, stockpile) in _resourcesStockpiledByPlayer)
         {
             foreach (var (resourceId, amount) in stockpile)
             {
@@ -312,14 +312,14 @@ public partial class Resources : Node2D
                     : resource.NegativeIncomeEffects;
 
                 var count = resource.EffectAmountMultipliedByResourceAmount 
-                    ? effects.Count 
+                    ? amount
                     : 1;
 
                 for (var i = 0; i < count; i++)
                 {
                     foreach (var effectId in effects)
                     {
-                        var chain = new Effects(effectId, player);
+                        var chain = new Effects(effectId, null, null);
                         if (chain.ValidateLast())
                             chain.ExecuteLast();
                     }

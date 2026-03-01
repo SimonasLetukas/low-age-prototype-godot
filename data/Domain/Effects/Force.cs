@@ -16,7 +16,7 @@ namespace LowAgeData.Domain.Effects
             IList<Validator>? validators = null) 
             : base(
                 id, 
-                Location.Actor, 
+                Location.Entity, 
                 validators ?? new List<Validator>())
         {
             From = from;

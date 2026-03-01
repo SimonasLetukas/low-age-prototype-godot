@@ -4,40 +4,28 @@ using System.Linq;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Effects;
 
-public class EffectNode : INodeFromBlueprint<Effect>
+public abstract class EffectNode(
+    Effects history, 
+    ITargetable? initialTarget, 
+    EntityNode? initiator)
+    : INodeFromBlueprint<Effect>
 {
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     
-    public Player? InitiatorPlayer { get; }
-    public EntityNode? InitiatorEntity { get; }
-    public IList<EntityNode> Targets { get; protected set; } = null!;
-    public Effects History { get; protected set; }
-    
+    public EntityNode? InitiatorEntity { get; } = initiator;
+
+    protected ITargetable? InitialTarget { get; } = initialTarget;
+    protected IList<ITargetable> FoundTargets { get; private set; } = null!;
+    protected Effects History { get; } = history;
     protected bool IsValidated { get; private set; }
 
     private Effect Blueprint { get; set; } = null!;
-
-    public EffectNode(Effects history, EntityNode initiator)
-    {
-        History = history;
-        InitiatorEntity = initiator;
-    }
-
-    public EffectNode(Effects history, Player initiator)
-    {
-        History = history;
-        InitiatorPlayer = initiator;
-    }
 
     public void SetBlueprint(Effect blueprint)
     {
         Blueprint = blueprint;
         
-        if (InitiatorEntity is not null)
-            Targets = GetTargets(Blueprint.Target, InitiatorEntity);
-        
-        if (InitiatorPlayer is not null)
-            Targets = GetTargets(Blueprint.Target, InitiatorPlayer);
+        FoundTargets = GetTargets(Blueprint.Target, InitialTarget, InitiatorEntity);
     }
 
     public virtual bool Validate()
@@ -51,36 +39,42 @@ public class EffectNode : INodeFromBlueprint<Effect>
         return IsValidated;
     }
     
-    protected virtual IEnumerable<EntityNode> GetInheritedTargets(EntityNode initiator) => [initiator];
-    
-    protected virtual IEnumerable<EntityNode> GetInheritedTargets() => GetAllEntities();
-    
-    protected static IEnumerable<EntityNode> GetAllEntities() => GlobalRegistry.Instance.GetEntities();
-    
-    // TODO instead of these different overloads, try to introduce ITargetable to Tile, Player, Entity
-    private IList<EntityNode> GetTargets(Location location, EntityNode initiator)
-    {
-        return location switch
-        {
-            _ when location.Equals(Location.Inherited) => GetInheritedTargets(initiator).ToList(),
-            _ when location.Equals(Location.Self) => [initiator],
-            _ when location.Equals(Location.Source) => [History.SourceEntityOrNull ?? initiator],
-            _ when location.Equals(Location.Origin) => [History.OriginEntityOrNull ?? initiator],
-            _ => throw new NotImplementedException($"{nameof(Effects)}.{nameof(GetTargets)}: Could not find " +
-                                                   $"{nameof(Location)} of value '{location}'")
-        };
-    }
+    protected abstract IEnumerable<ITargetable> GetInheritedTargets(ITargetable? initialTarget, EntityNode? initiator);
 
-    private IList<EntityNode> GetTargets(Location location, Player initiator)
+    protected virtual IList<ITargetable> GetSelfTargets(EntityNode initiator) => [initiator];
+    
+    protected virtual IList<ITargetable> GetEntityTargets(EntityNode initialTarget) => [initialTarget];
+    
+    protected virtual IList<ITargetable> GetPointTargets(Tiles.TileInstance initialTarget) => [initialTarget];
+    
+    protected virtual IList<ITargetable> GetSourceTargets(EntityNode sourceEntity) => [sourceEntity];
+    
+    protected virtual IList<ITargetable> GetOriginTargets(EntityNode originEntity) => [originEntity];
+    
+    protected static IList<EntityNode> GetAllEntities() => GlobalRegistry.Instance.GetEntities().ToList();
+    
+    private IList<ITargetable> GetTargets(Location location, ITargetable? initialTarget, EntityNode? initiator)
     {
         return location switch
         {
-            _ when location.Equals(Location.Inherited) => GetInheritedTargets().ToList(),
-            _ when location.Equals(Location.Self) => GetAllEntities().ToList(),
-            _ when location.Equals(Location.Source) => GetAllEntities().ToList(),
-            _ when location.Equals(Location.Origin) => GetAllEntities().ToList(),
-            _ => throw new NotImplementedException($"{nameof(Effects)}.{nameof(GetTargets)}: Could not find " +
-                                                   $"{nameof(Location)} of value '{location}'")
+            _ when location.Equals(Location.Inherited) => GetInheritedTargets(initialTarget, initiator).ToList(),
+            
+            _ when location.Equals(Location.Self) 
+                   && initiator is not null => GetSelfTargets(initiator),
+            
+            _ when location.Equals(Location.Entity) 
+                   && initialTarget is EntityNode entityInitialTarget => GetEntityTargets(entityInitialTarget),
+            
+            _ when location.Equals(Location.Point) 
+                   && initialTarget is Tiles.TileInstance pointInitialTarget => GetPointTargets(pointInitialTarget),
+            
+            _ when location.Equals(Location.Source) 
+                   && History.SourceEntityOrNull is not null => GetSourceTargets(History.SourceEntityOrNull),
+            
+            _ when location.Equals(Location.Origin) 
+                   && History.OriginEntityOrNull is not null => GetOriginTargets(History.OriginEntityOrNull),
+            
+            _ => []
         };
     }
     

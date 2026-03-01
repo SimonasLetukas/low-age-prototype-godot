@@ -1,11 +1,12 @@
-﻿using LowAgeData.Domain.Effects;
+﻿using System.Collections.Generic;
+using LowAgeData.Domain.Effects;
 
 public class ApplyBehaviourNode : EffectNode, INodeFromBlueprint<ApplyBehaviour>
 {
     private ApplyBehaviour Blueprint { get; set; } = null!;
     
-    public ApplyBehaviourNode(ApplyBehaviour blueprint, EntityNode initiator, Effects history) 
-        : base(history, initiator)
+    public ApplyBehaviourNode(ApplyBehaviour blueprint, Effects history, ITargetable? initialTarget, EntityNode? initiator) 
+        : base(history, initialTarget, initiator)
     {
         SetBlueprint(blueprint);
     }
@@ -22,11 +23,17 @@ public class ApplyBehaviourNode : EffectNode, INodeFromBlueprint<ApplyBehaviour>
         if (base.Execute() is false)
             return false;
 
-        foreach (var target in Targets)
+        foreach (var target in FoundTargets)
         {
-            target.Behaviours.AddBehaviours(Blueprint.BehavioursToApply, History);
+            if (target is not EntityNode entity)
+                continue;
+            
+            entity.Behaviours.AddBehaviours(Blueprint.BehavioursToApply, History);
         }
         
         return true;
     }
+
+    protected override IEnumerable<ITargetable> GetInheritedTargets(ITargetable? initialTarget, EntityNode? initiator) 
+        => initiator is null ? [] : GetSelfTargets(initiator);
 }

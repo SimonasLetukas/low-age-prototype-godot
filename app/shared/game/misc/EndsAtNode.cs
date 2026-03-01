@@ -4,7 +4,7 @@ using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Durations;
 
 // TODO unit tests
-public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
+public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>, IComparable<EndsAtNode>
 {
     public const string ScenePath = @"res://app/shared/game/misc/EndsAtNode.tscn";
     public static EndsAtNode Instance() => (EndsAtNode) GD.Load<PackedScene>(ScenePath).Instantiate();
@@ -55,7 +55,11 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     public void SetBlueprint(EndsAt endsAt)
     {
         if (endsAt.Equals(EndsAt.Death))
+        {
             EndsOnDeath = true;
+            MaxCounter = int.MaxValue;
+            Counter = int.MaxValue;
+        }
 
         if (endsAt.Equals(EndsAt.Instant))
             IsInstant = true;
@@ -250,6 +254,18 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
         }
     }
 
+    public bool DurationIsFullyReset()
+    {
+        if (EndsOnDeath)
+            return true;
+        
+        var hasDuration = HasDuration();
+        if (hasDuration is false)
+            return true;
+        
+        return Counter == MaxCounter;
+    }
+
     /// <summary>
     /// Resets the duration to the full amount if this <see cref="EndsAt"/> <see cref="HasDuration"/>. Otherwise,
     /// immediately triggers <see cref="Completed"/>
@@ -279,7 +295,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     /// <returns></returns>
     public bool HasDuration() => IsInstant is false;
 
-    public string GetText(bool current = true, bool capitalizeFirstLetter = false)
+    public string GetText(bool current = true, bool capitalizeFirstLetter = false, bool cooldownPhrasing = true)
     {
         var text = string.Empty;
         
@@ -296,7 +312,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
             if (Phase.Equals(TurnPhase.Planning)) text += " planning phases";
         }
             
-        if (EndsOnDeath) text = "until death";
+        if (EndsOnDeath) text = cooldownPhrasing ? "until death" : "death";
         
         return capitalizeFirstLetter 
             ? string.Concat(text[0].ToString().ToUpper(), text.AsSpan(1)) 
@@ -398,5 +414,12 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>
     {
         Start,
         End
+    }
+
+    public int CompareTo(EndsAtNode? other)
+    {
+        if (ReferenceEquals(this, other)) return 0;
+        if (other is null) return 1;
+        return Counter.CompareTo(other.Counter);
     }
 }

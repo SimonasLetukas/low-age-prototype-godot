@@ -21,7 +21,7 @@ public partial class Tiles : Node2D
     /// <summary>
     /// Wrapper of <see cref="Point"/>.
     /// </summary>
-    public class TileInstance : IEquatable<TileInstance>
+    public class TileInstance : IEquatable<TileInstance>, ITargetable
     {
         public Vector2Int Position { get; init; }
         public required TileId Blueprint { get; init; }
@@ -385,11 +385,14 @@ public partial class Tiles : Node2D
     public Terrain GetTerrain(Vector2Int at, bool isHighGround = false) => (at.IsInBoundsOf(_mapSize)
         ? GetTile(at, isHighGround)?.Terrain
         : Terrain.Mountains) ?? Terrain.Mountains;
-
+    
     public IList<TileInstance?> GetHighestTiles(IList<Vector2Int> at) => at.Select(GetHighestTile).ToList();
 
     public TileInstance? GetHighestTile(Vector2Int at) => GetTile(at, true) ?? GetTile(at, false);
 
+    public IList<TileInstance?> GetTiles(IList<Vector2Int> at, bool isHighGround) 
+        => at.Select(p => GetTile(p, isHighGround)).ToList();
+    
     public TileInstance? GetTile(Vector2Int at, bool isHighGround) => at.IsInBoundsOf(_mapSize) 
         ? _tiles.ContainsKey((at, isHighGround)) 
             ? _tiles[(at, isHighGround)] 

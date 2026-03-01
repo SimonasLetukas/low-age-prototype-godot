@@ -12,8 +12,9 @@ namespace LowAgeData.Domain.Effects
         public Search(
             EffectId id,
             IShape shape,
-            IList<SearchFlag> searchFlags,
+            SearchHeight height,
             IList<IFilterItem> filters,
+            IList<SearchTriggerFlag>? triggerFlags = null,
             IList<EffectId>? effects = null,
             Location? target = null,
             IList<Validator>? validators = null,
@@ -24,8 +25,9 @@ namespace LowAgeData.Domain.Effects
                 validators ?? new List<Validator>())
         {
             Shape = shape;
-            SearchFlags = searchFlags;
+            Height = height;
             Filters = filters;
+            TriggerFlags = triggerFlags ?? [];
             Effects = effects ?? new List<EffectId>();
             Location = target ?? Location.Inherited;
             UsedForValidator = usedForValidator ?? false;
@@ -37,14 +39,19 @@ namespace LowAgeData.Domain.Effects
         public IShape Shape { get; }
         
         /// <summary>
-        /// For <see cref="SearchFlag"/> flags.
+        /// Specifies the <see cref="SearchHeight"/> that the <see cref="Search"/> targets.
         /// </summary>
-        public IList<SearchFlag> SearchFlags { get; }
+        public SearchHeight Height { get; }
         
         /// <summary>
-        /// For <see cref="Common.Filters"/>.
+        /// <see cref="Common.Filters"/> done for all found results.
         /// </summary>
         public IList<IFilterItem> Filters { get; }
+        
+        /// <summary>
+        /// For <see cref="SearchTriggerFlag"/> flags.
+        /// </summary>
+        public IList<SearchTriggerFlag> TriggerFlags { get; }
         
         /// <summary>
         /// Effects executed on each <see cref="Entity"/> found.
@@ -53,6 +60,9 @@ namespace LowAgeData.Domain.Effects
         
         /// <summary>
         /// Indicates where the <see cref="Search"/> originates from. Can be used to display selection overlays.
+        ///
+        /// <see cref="Location.Inherited"/> will try to return all entities on the map if <see cref="Shape"/> is
+        /// <see cref="Map"/>. Otherwise, it will default to <see cref="Location.Entity"/>.
         ///
         /// Note: Used for documentation purposes only, will be automatically resolved to <see cref="Effect.Target"/>.
         /// </summary>

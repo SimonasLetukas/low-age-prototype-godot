@@ -1,17 +1,18 @@
 ﻿using LowAgeData.Domain.Behaviours;
 
-namespace LowAgeData.Domain.Common.Modifications
+namespace LowAgeData.Domain.Common.Modifications;
+
+public record DurationModification : Modification
 {
-    public class DurationModification : Modification
+    public DurationModification(
+        Change change, 
+        float amount,
+        BehaviourId behaviourToModify) : base(change, amount)
     {
-        public DurationModification(
-            Change change, 
-            float amount,
-            BehaviourId behaviourToModify) : base(change, amount)
-        {
-            BehaviourToModify = behaviourToModify;
-        }
-        
-        public BehaviourId BehaviourToModify { get; }
+        BehaviourToModify = behaviourToModify;
     }
+        
+    public BehaviourId BehaviourToModify { get; }
+    
+    public override void Accept(IModificationVisitor visitor) => visitor.Visit(this);
 }

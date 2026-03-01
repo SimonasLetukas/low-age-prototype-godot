@@ -7,7 +7,9 @@ namespace LowAgeData.Domain.Common.Modifications
     public class AttackAttribute : EnumValueObject<AttackAttribute, AttackAttribute.AttackAttributes>
     {
         public static AttackAttribute MaxAmount => new AttackAttribute(AttackAttributes.MaxAmount);
+        public static AttackAttribute MinDistance => new AttackAttribute(AttackAttributes.MinDistance);
         public static AttackAttribute MaxDistance => new AttackAttribute(AttackAttributes.MaxDistance);
+        public static AttackAttribute BonusAmount => new AttackAttribute(AttackAttributes.BonusAmount);
 
         private AttackAttribute(AttackAttributes @enum) : base(@enum) { }
 

@@ -10,16 +10,16 @@
         public FilterGroup(
             Policy policy, 
             Quantifier quantifier, 
-            IList<IFilterItem> items)
+            IList<IFilterItem> filters)
         {
             Policy = policy;
             Quantifier = quantifier;
-            Items = items;
+            Filters = filters;
         }
         
         public Policy Policy { get; }
         public Quantifier Quantifier { get; }
-        public IList<IFilterItem> Items { get; }
+        public IList<IFilterItem> Filters { get; }
     }
     
     public enum Policy

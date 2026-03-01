@@ -30,15 +30,15 @@ namespace LowAgeTests
         [Fact]
         public void ValueObjectTest()
         {
-            var location = Location.Actor;
+            var location = Location.Entity;
 
             switch (location)
             {
-                case var _ when location.Equals(Location.Actor):
-                    GD.Print(Location.Actor);
+                case var _ when location.Equals(Location.Entity):
+                    GD.Print(Location.Entity);
                     break;
                 default:
-                    GD.Print($"Not {Location.Actor}");
+                    GD.Print($"Not {Location.Entity}");
                     break;
             }
         }

@@ -26,6 +26,7 @@ public partial class GlobalRegistry : Node
     public Func<IEnumerable<EntityNode>> GetEntities { get; private set; } = null!;
     public Func<TurnPhase> GetCurrentPhase { get; private set; } = null!;
     public Func<ActorNode?> GetActorInAction { get; private set; } = null!;
+    public Func<IList<Vector2Int>, bool, IList<Tiles.TileInstance?>> GetTiles { get; private set; } = null!;
     public Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; private set; } = null!;
     public Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; private set; } = null!;
     public Func<IList<Payment>, string> StringifyResources { get; private set; } = null!;
@@ -52,6 +53,7 @@ public partial class GlobalRegistry : Node
     public void ProvideGetEntities(Func<IEnumerable<EntityNode>> getEntities) => GetEntities = getEntities;
     public void ProvideGetCurrentPhase(Func<TurnPhase> getCurrentPhase) => GetCurrentPhase = getCurrentPhase;
     public void ProvideGetActorInAction(Func<ActorNode?> getActorInAction) => GetActorInAction = getActorInAction;
+    public void ProvideGetTiles(Func<IList<Vector2Int>, bool, IList<Tiles.TileInstance?>> getTiles) => GetTiles = getTiles;
     public void ProvideGetHighestTiles(Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles) => GetHighestTiles = getHighestTiles;
     public void ProvideGetTile(Func<Vector2Int, bool, Tiles.TileInstance?> getTile) => GetTile = getTile;
     public void ProvideStringifyResources(Func<IList<Payment>, string> stringifyResources) => StringifyResources = stringifyResources;

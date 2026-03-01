@@ -23,7 +23,7 @@ public partial class AbilitySubtitle : MarginContainer
         }
         else if (cooldown.HasDuration())
         {
-            newText += $" (cooldown: {cooldown.GetText(false)})";
+            newText += $" (cooldown: {cooldown.GetText(current: false)})";
         }
 
         _text.Text = newText;

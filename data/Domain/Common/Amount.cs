@@ -40,7 +40,7 @@ public class Amount
     
     /// <summary>
     /// Specifies what is the target of <see cref="MultiplierOf"/> flag. Supported: <see cref="Location.Inherited"/>,
-    /// <see cref="Location.Self"/>, <see cref="Location.Actor"/>, <see cref="Location.Source"/> or
+    /// <see cref="Location.Self"/>, <see cref="Location.Entity"/>, <see cref="Location.Source"/> or
     /// <see cref="Location.Origin"/>.
     ///
     /// Default = <see cref="Location.Inherited"/>.

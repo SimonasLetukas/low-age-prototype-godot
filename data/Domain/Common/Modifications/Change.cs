@@ -18,6 +18,11 @@ namespace LowAgeData.Domain.Common.Modifications
         /// </summary>
         public static Change MultiplyMax => new Change(Changes.MultiplyMax);
         public static Change MultiplyCurrent => new Change(Changes.MultiplyCurrent);
+        
+        public bool DoesSet() => Value is Changes.SetMax or Changes.SetCurrent;
+        public bool DoesAdd() => Value is Changes.AddMax or Changes.AddCurrent;
+        public bool DoesSubtract() => Value is Changes.SubtractMax or Changes.SubtractCurrent;
+        public bool DoesMultiply() => Value is Changes.MultiplyMax or Changes.MultiplyCurrent;
 
         private Change(Changes @enum) : base(@enum) { }
         

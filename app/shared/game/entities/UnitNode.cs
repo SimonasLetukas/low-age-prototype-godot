@@ -5,6 +5,7 @@ using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
+using LowAgeData.Domain.Common.Modifications;
 using MultipurposePathfinding;
 
 public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
@@ -91,7 +92,7 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         var resultingPoint = path.Last();
 
         var movementCost = CalculateMovementCostFrom(path);
-        Movement.CurrentAmount -= movementCost;
+        Movement.Apply(Change.SubtractCurrent, movementCost);
         ActionEconomy.Moved(movementCost, Movement.CurrentAmount >= 1);
         
         IsOnHighGround = resultingPoint.IsHighGround;
@@ -152,7 +153,7 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     
     private void RestoreMovement()
     {
-        Movement.CurrentAmount = Movement.MaxAmount + Constants.Pathfinding.SearchIncrement;
+        Movement.Apply(Change.SetCurrent, Movement.MaxAmount + Constants.Pathfinding.SearchIncrement);
     }
     
     private static float CalculateMovementCostFrom(IList<Point> path)

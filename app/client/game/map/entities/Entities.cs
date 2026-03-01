@@ -9,6 +9,7 @@ using LowAgeData.Domain.Factions;
 using LowAgeCommon;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Modifications;
 using LowAgeData.Domain.Common.Shape;
 using MultipurposePathfinding;
 using Newtonsoft.Json;
@@ -596,7 +597,7 @@ public partial class Entities : Node2D
                 : Mathf.Max((float)Dice.RollMultiple(19, actor.Initiative!.MaxAmount).Sum() / 10 
                             + initiativeBonus, 0);
 
-            actor.Initiative.CurrentAmount = initiative;
+            actor.Initiative.Apply(Change.SetCurrent, initiative);
             
             if (DebugEnabled)
                 GD.Print($"{nameof(Entities)}.{nameof(GetActorInitiativeMap)}: {actor.DisplayName} at " + 

@@ -224,8 +224,11 @@ public partial class EntityPanel : Control
 
     private void AddBehaviours(EntityNode entity)
     {
-        foreach (var behaviour in entity.Behaviours.GetAll())
+        foreach (var behaviours in entity.Behaviours
+                     .GetAll()
+                     .GroupBy(b => b.BlueprintId))
         {
+            var behaviour = behaviours.OrderBy(b => b.CurrentDuration).First();
             BehaviourBox.InstantiateAsChild(behaviour, _behaviours);
         }
     }

@@ -9,20 +9,20 @@ namespace LowAgeData.Domain.Common
     {
         /// <summary>
         /// Allows a default <see cref="Location"/> to be set by the caller (e.g. <see cref="Search"/> sets
-        /// <see cref="Location.Actor"/> by default). Otherwise applies the same location that was set before in the
+        /// <see cref="Entity"/> by default). Otherwise applies the same location that was set before in the
         /// chain. Default = <see cref="Location.Self"/>.
         /// </summary>
         public static Location Inherited => new Location(Locations.Inherited);
 
         /// <summary>
-        /// Targets the current actor in the chain
+        /// Targets the current entity in the chain
         /// </summary>
         public static Location Self => new Location(Locations.Self);
 
         /// <summary>
-        /// Targets single actor
+        /// Targets single entity
         /// </summary>
-        public static Location Actor => new Location(Locations.Actor);
+        public static Location Entity => new Location(Locations.Entity);
 
         /// <summary>
         /// Targets point on the ground (tile)
@@ -30,12 +30,12 @@ namespace LowAgeData.Domain.Common
         public static Location Point => new Location(Locations.Point);
 
         /// <summary>
-        /// Targets the previous actor in the chain
+        /// Targets the previous entity in the chain
         /// </summary>
         public static Location Source => new Location(Locations.Source);
 
         /// <summary>
-        /// Targets origin - the first actor from which the chain started
+        /// Targets origin - the first entity from which the chain started
         /// </summary>
         public static Location Origin => new Location(Locations.Origin);
 
@@ -47,7 +47,7 @@ namespace LowAgeData.Domain.Common
         {
             Inherited,
             Self,
-            Actor,
+            Entity,
             Point,
             Source,
             Origin

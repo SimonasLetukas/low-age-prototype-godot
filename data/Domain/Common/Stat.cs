@@ -1,14 +1,13 @@
-﻿namespace LowAgeData.Domain.Common
-{
-    public abstract class Stat
-    {
-        protected Stat(int maxAmount, bool hasCurrent)
-        {
-            MaxAmount = maxAmount;
-            HasCurrent = hasCurrent;
-        }
+﻿namespace LowAgeData.Domain.Common;
 
-        public int MaxAmount { get; }
-        public bool HasCurrent { get; }
+public abstract class Stat
+{
+    protected Stat(int maxAmount, bool hasCurrent)
+    {
+        MaxAmount = maxAmount;
+        HasCurrent = hasCurrent;
     }
+
+    public int MaxAmount { get; }
+    public bool HasCurrent { get; }
 }

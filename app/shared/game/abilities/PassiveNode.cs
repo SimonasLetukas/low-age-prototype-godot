@@ -41,7 +41,7 @@ public partial class PassiveNode : AbilityNode<
 
         foreach (var effectId in onBirthEffects)
         {
-            var effects = new Effects(effectId, actor);
+            var effects = new Effects(effectId, actor, actor);
             if (effects.ValidateLast())
                 effects.ExecuteLast();
         }

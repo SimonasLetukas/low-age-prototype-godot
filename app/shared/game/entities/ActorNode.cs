@@ -6,6 +6,7 @@ using LowAgeCommon;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeCommon.Extensions;
+using LowAgeData.Domain.Common.Modifications;
 using LowAgeData.Domain.Common.Shape;
 using LowAgeData.Domain.Factions;
 using MultipurposePathfinding;
@@ -124,10 +125,10 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         base.SetCost(cost);
         
         if (HasHealth) 
-            Health!.CurrentAmount = HasCost ? 1 : Health!.MaxAmount;
+            Health!.Apply(Change.SetCurrent, HasCost ? 1 : Health!.MaxAmount);
 
         if (HasShields) 
-            Shields!.CurrentAmount = HasCost ? 1 : Shields!.MaxAmount;
+            Shields!.Apply(Change.SetCurrent, HasCost ? 1 : Shields!.MaxAmount);
         
         UpdateVitalsValuesForDisplay();
     }
@@ -206,11 +207,11 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
         if (HasShields && Shields!.CurrentAmount > 0)
         {
-            Shields!.CurrentAmount -= amount;
+            Shields!.Apply(Change.SubtractCurrent, amount);
             if (Shields!.CurrentAmount < 0)
             {
                 amount = (int)Shields!.CurrentAmount * -1;
-                Shields!.CurrentAmount = 0;
+                Shields!.Apply(Change.SetCurrent, 0);
             }
             else
             {
@@ -221,7 +222,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         if (HasHealth is false)
             return (0, false);
 
-        Health!.CurrentAmount -= amount;
+        Health!.Apply(Change.SubtractCurrent, amount);
         if ((int)Health!.CurrentAmount < 0)
             Destroy();
         
@@ -372,10 +373,10 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     
     private void OnCreationProgressUpdated((int DeltaGainedHealth, int DeltaGainedShields) delta)
     {
-        Health!.CurrentAmount += delta.DeltaGainedHealth;
+        Health!.Apply(Change.AddCurrent, delta.DeltaGainedHealth);
         
         if (HasShields)
-            Shields!.CurrentAmount += delta.DeltaGainedShields;
+            Shields!.Apply(Change.AddCurrent, delta.DeltaGainedShields);
         
         UpdateVitalsValuesForDisplay();
     }

@@ -66,27 +66,37 @@ public partial class Behaviours : Node2D
     }
 
     /// <b>Avoid calling directly</b>, use other overloads instead. Method is public to make automated testing easier.
-    public BehaviourNode AddBehaviour(Behaviour behaviourBlueprint, Effects history)
+    public void AddBehaviour(Behaviour behaviourBlueprint, Effects history)
     {
-        switch (behaviourBlueprint)
+        var addedBehaviour = behaviourBlueprint switch
         {
-            case Ascendable ascendable:
-                return AscendableNode.InstantiateAsChild(ascendable, this, history, Parent);
+            Ascendable ascendable 
+                => AscendableNode.InstantiateAsChild(ascendable, this, history, Parent),
             
-            case HighGround highGround:
-                return HighGroundNode.InstantiateAsChild(highGround, this, history, Parent);
+            Buff buff 
+                => BuffNode.InstantiateAsChild(buff, this, history, Parent),
             
-            case Income income:
-                return IncomeNode.InstantiateAsChild(income, this, history, Parent);
+            HighGround highGround 
+                => HighGroundNode.InstantiateAsChild(highGround, this, history, Parent),
             
-            case InterceptDamage interceptDamage:
-                return InterceptDamageNode.InstantiateAsChild(interceptDamage, this, history, Parent);
+            Income income 
+                => IncomeNode.InstantiateAsChild(income, this, history, Parent),
             
-            default:
-                return null;
-                // TODO once all types are implemented switch to (and change constructor access to protected):
-                throw new NotImplementedException($"{nameof(Behaviours)}.{nameof(AddBehaviour)}: Could not find " +
-                                                  $"{nameof(Behaviour)} of type '{behaviourBlueprint?.GetType()}'");
+            InterceptDamage interceptDamage 
+                => InterceptDamageNode.InstantiateAsChild(interceptDamage, this, history, Parent),
+            
+            _ => (BehaviourNode)null
+            // TODO once all types are implemented switch to (and change constructor access to protected):
+            // throw new NotImplementedException($"{nameof(Behaviours)}.{nameof(AddBehaviour)}: Could not find " +
+            //                                   $"{nameof(Behaviour)} of type '{behaviourBlueprint?.GetType()}'");
+        };
+
+        if (addedBehaviour is null)
+            return;
+
+        foreach (var otherBehaviour in GetAll())
+        {
+            otherBehaviour.OnBehaviourAdded(addedBehaviour);
         }
     }
 

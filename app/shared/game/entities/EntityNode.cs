@@ -14,7 +14,7 @@ using Area = LowAgeCommon.Area;
 /// (<see cref="StructureNode"/> or <see cref="UnitNode"/>) with abilities and stats, or a simple
 /// <see cref="DoodadNode"/>.
 /// </summary>
-public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>
+public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetable
 {
     [Export] public Color PlacementColorSuccess { get; set; } = Colors.Green;
     [Export] public Color PlacementColorInvalid { get; set; } = Colors.Red;
