@@ -12,7 +12,8 @@ using LowAgeData.Domain.Effects;
 public class Effects
 {
     private IList<EffectNode> Chain { get; set; } = new List<EffectNode>();
-    
+
+    public EffectNode? PreviousOrNull => Chain.Count > 1 ? Chain[^2] : null;
     public EntityNode? SourceEntityOrNull => Chain.LastOrDefault()?.InitiatorEntity;
     public EntityNode? OriginEntityOrNull => Chain.FirstOrDefault()?.InitiatorEntity;
     

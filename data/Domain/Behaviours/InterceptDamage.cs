@@ -2,6 +2,7 @@
 using LowAgeData.Domain.Common.Durations;
 using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Entities.Actors;
+using LowAgeData.Domain.Logic;
 
 namespace LowAgeData.Domain.Behaviours
 {
@@ -26,6 +27,7 @@ namespace LowAgeData.Domain.Behaviours
             Amount? amountShared = null,
             DamageType? damageTypeShared = null,
             bool? reduceByTheSharedAmount = null,
+            IList<Trigger>? triggers = null,
             bool? ownerAllowed = null,
             bool? hasSameInstanceForAllOwners = null) 
             : base(
@@ -35,6 +37,8 @@ namespace LowAgeData.Domain.Behaviours
                 sprite,
                 endsAt,
                 alignment ?? Alignment.Neutral,
+                triggers: triggers,
+                removeOnConditionsMet: true,
                 ownerAllowed: ownerAllowed, 
                 hasSameInstanceForAllOwners: hasSameInstanceForAllOwners)
         {

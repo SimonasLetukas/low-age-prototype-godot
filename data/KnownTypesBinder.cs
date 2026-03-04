@@ -51,8 +51,8 @@ namespace LowAgeData
             typeof(Structure), typeof(Unit), typeof(Doodad), 
             
             // Logic:
-            typeof(BehaviourCondition), typeof(EntityCondition), typeof(MaskCondition), typeof(ResultValidator), 
-            typeof(TileCondition), 
+            typeof(BehaviourCondition), typeof(EntityCondition), typeof(MaskCondition), typeof(ResourceCondition), 
+            typeof(ResultValidator), typeof(TileCondition), 
             
             // EnumValueObjects:
             typeof(ActorAttribute), typeof(Alignment), typeof(AmountMultiplyOfFlag), typeof(AttackAttribute), typeof(AttackType),

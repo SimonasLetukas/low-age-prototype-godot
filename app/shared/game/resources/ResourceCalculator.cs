@@ -169,13 +169,14 @@ public static class ResourceCalculator
         IEnumerable<IncomeProvider> UsedIncomeProviders) AddResources(
             IReadOnlyDictionary<ResourceId, int> stockpile, 
             IReadOnlyDictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>> paymentsByProviders, 
+            IEnumerable<ResourceId> resourcesToAdd,
             IReadOnlyDictionary<ResourceId, Resource> resourceBlueprints)
     {
         var updatedStockpile = stockpile.ToDictionary();
         var contributingIncomeProviders = GetContributingIncomeProviders(
             paymentsByProviders);
         
-        foreach (var resource in updatedStockpile.Keys.ToList())
+        foreach (var resource in resourcesToAdd)
         {
             var resourceBlueprint = resourceBlueprints[resource];
             if (resourceBlueprint.HasBank is false)
@@ -213,7 +214,7 @@ public static class ResourceCalculator
                 updatedStockpile[resource] -= amount;
             }
 
-            // Pausing the cost by not resetting it (assuming that the returned adjustedIncomeProviders will
+            // Pausing the cost but not resetting it (assuming that the returned contributingIncomeProviders will
             // have their costs reset)
             if (incomeProviderToReject.WaitForAvailableStorage)
                 contributingIncomeProviders.Remove(incomeProviderToReject);

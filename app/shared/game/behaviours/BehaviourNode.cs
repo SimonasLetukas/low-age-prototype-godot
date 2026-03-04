@@ -2,7 +2,6 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LowAgeData;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
 
@@ -22,8 +21,10 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     protected bool DebugEnabled => false;
     protected EntityNode Parent { get; set; } = null!;
     protected Effects History { get; set; } = null!;
-
+    
     private Behaviour Blueprint { get; set; } = null!;
+    
+    private readonly IList<TriggerHandler> _triggerHandlers = [];
     
     public void SetBlueprint(Behaviour blueprint)
     {
@@ -32,6 +33,8 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         Alignment = Blueprint.Alignment;
         CanResetDuration = Blueprint.CanResetDuration;
         CurrentDuration = EndsAtNode.InstantiateAsChild(blueprint.EndsAt, this, Parent);
+        InitializeTriggers();
+        
         CurrentDuration.Completed += OnDurationEnded;
         EventBus.Instance.EntityDestroyed += OnEntityDestroyed;
 
@@ -43,6 +46,8 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     {
         CurrentDuration.Completed -= OnDurationEnded;
         EventBus.Instance.EntityDestroyed -= OnEntityDestroyed;
+        
+        DisposeTriggers();
 
         base._ExitTree();
     }
@@ -97,9 +102,32 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         QueueFree();
     }
     
-    protected virtual void OnDurationEnded(EndsAtNode duration)
+    protected virtual void OnDurationEnded(EndsAtNode duration) => Destroy();
+
+    private void InitializeTriggers()
     {
-        Destroy();
+        foreach (var trigger in Blueprint.Triggers)
+        {
+            var triggerHandler = TriggerHandler
+                .Setup(trigger)
+                .With(Parent.Player)
+                .With(GlobalRegistry.Instance.GetHighestTiles(Parent.EntityOccupyingPositions))
+                .With(History)
+                .With(Parent);
+
+            triggerHandler.Triggered += OnTriggered;
+            _triggerHandlers.Add(triggerHandler);
+        }
+    }
+
+    private void DisposeTriggers()
+    {
+        foreach (var triggerHandler in _triggerHandlers)
+        {
+            triggerHandler.Triggered -= OnTriggered;
+            triggerHandler.Dispose();
+        }
+        _triggerHandlers.Clear();
     }
 
     private void InitializeStackedBehaviours()
@@ -128,6 +156,8 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
             GD.Print($"Behaviour on {Parent.DisplayName} at {Parent.EntityPrimaryPosition}: stack initialized. " +
                      $"Current stack: {Stack.Count}.");
     }
+    
+    private void OnTriggered() => Destroy();
 
     private void OnEntityDestroyed(EntityNode entity)
     {

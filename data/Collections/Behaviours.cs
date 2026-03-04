@@ -164,19 +164,37 @@ namespace LowAgeData.Collections
                             amount: -1, 
                             resource: ResourceId.Population)
                     },
+                    instantUpdate: true,
                     alignment: Alignment.Neutral),
 
                 new InterceptDamage(
                     id: BehaviourId.Shared.Revelators.NoPopulationSpaceInterceptDamage,
                     displayName: nameof(BehaviourId.Shared.Revelators.NoPopulationSpaceInterceptDamage).CamelCaseToWords(),
                     description: "This unit receives double damage from all sources, because there's not enough " +
-                                 "population space.",
+                                 "population space. Will be removed automatically when there is enough population " +
+                                 "space again.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     endsAt: EndsAt.EndOf.This.Planning,
                     amountDealtInstead: new Amount(
                         flat: 0,
                         multiplier: 2),
-                    alignment: Alignment.Negative),
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
+                    {
+                        new Trigger(events: new List<Event>
+                        {
+                            Event.PlayerResourcesStockpileUpdated
+                        }, validators: new List<Validator> 
+                        {
+                            new Validator(conditions: new List<Condition>
+                            {
+                                new ResourceCondition(
+                                    conditionFlag: ConditionFlag.Exists,
+                                    conditionedResource: ResourceId.Population,
+                                    amountOfResourcesRequired: 0)
+                            })
+                        }) 
+                    }),
                 
                 new Buildable(
                     id: BehaviourId.Shared.Uee.BuildingStructureBuildable,

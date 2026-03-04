@@ -265,6 +265,8 @@ public partial class ClientGame : Game
     {
         GD.Print($"{LogPrefix}.{nameof(OnMapFinishedInitializing)}");
         RegisterNewGameEvent(new ClientFinishedInitializingEvent(Players.Instance.Current.StableId));
+        
+        // TODO save loading should wait for this event AGAIN during loading
     }
     
     private void OnPhaseStarted(int turn, TurnPhase phase)

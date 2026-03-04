@@ -11,6 +11,7 @@ public class IncomeProvider : IEquatable<IncomeProvider>
     public required BehaviourId ProviderType { get; init; }
     public required IList<Payment> ResourcesGained { get; init; }
     public required int DiminishingReturn { get; init; }
+    public required bool InstantUpdate { get; init; }
     public required IList<Payment> Cost { get; init; }
     public required bool WaitForAvailableStorage { get; init; }
 

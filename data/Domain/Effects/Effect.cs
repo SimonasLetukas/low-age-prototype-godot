@@ -18,8 +18,18 @@ namespace LowAgeData.Domain.Effects
         public EffectId Id { get; }
         
         /// <summary>
+        /// <para>
         /// Specifies what <see cref="Location"/> this <see cref="Effect"/> should target. <see cref="Ability"/>
-        /// relies on this, among other things.  
+        /// relies on this, among other things.
+        /// </para>
+        /// <para>
+        /// <see cref="Location.Inherited"/> default values:
+        /// <list type="bullet">
+        /// <item>
+        /// <see cref="Search"/>: <see cref="Location.Entity"/>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
         public Location Target { get; }
         

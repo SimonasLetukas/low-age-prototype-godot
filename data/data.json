@@ -11764,6 +11764,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": false,
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Passive Income Income",
@@ -11794,6 +11795,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": false,
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Scraps Income Income",
@@ -11824,6 +11826,7 @@
         }
       ],
       "diminishingReturn": 2,
+      "instantUpdate": false,
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Celestium Income Income",
@@ -12010,6 +12013,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": true,
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Population Cost Income",
@@ -12050,13 +12054,32 @@
       "damageTypeShared": null,
       "reduceByTheSharedAmount": false,
       "displayName": "No Population Space Intercept Damage",
-      "description": "This unit receives double damage from all sources, because there's not enough population space.",
+      "description": "This unit receives double damage from all sources, because there's not enough population space. Will be removed automatically when there is enough population space again.",
       "endsAt": "EndsAt.EndOfThisPlanning",
       "alignment": "Alignment.Negative",
       "canStack": false,
       "canResetDuration": false,
-      "triggers": [],
-      "removeOnConditionsMet": false,
+      "triggers": [
+        {
+          "events": [
+            "Event.PlayerResourcesStockpileUpdated"
+          ],
+          "validators": [
+            {
+              "conditions": [
+                {
+                  "$type": "ResourceCondition",
+                  "conditionedResource": "resource-population",
+                  "amountOfResourcesRequired": 0,
+                  "conditionFlag": "ConditionFlag.Exists"
+                }
+              ],
+              "filters": []
+            }
+          ]
+        }
+      ],
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
@@ -12374,6 +12397,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": false,
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Executive Stash Income",
@@ -12597,6 +12621,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": false,
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Accommodation Income",
@@ -12627,6 +12652,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": false,
       "cost": [
         {
           "resource": "resource-celestium",
@@ -12662,6 +12688,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": false,
       "cost": [
         {
           "resource": "resource-celestium",
@@ -12697,6 +12724,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": false,
       "cost": [
         {
           "resource": "resource-celestium",
@@ -12732,6 +12760,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": false,
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Weapon Storage Income",
@@ -13275,6 +13304,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": false,
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Direct Transit System Active Income",
@@ -13542,6 +13572,7 @@
         }
       ],
       "diminishingReturn": 0,
+      "instantUpdate": false,
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Keeping The Faith Income",
@@ -16061,7 +16092,7 @@
       "canStack": false,
       "canResetDuration": false,
       "triggers": [],
-      "removeOnConditionsMet": false,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": true,
       "hasSameInstanceForAllOwners": false,
@@ -16193,7 +16224,7 @@
       "canStack": false,
       "canResetDuration": false,
       "triggers": [],
-      "removeOnConditionsMet": false,
+      "removeOnConditionsMet": true,
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,

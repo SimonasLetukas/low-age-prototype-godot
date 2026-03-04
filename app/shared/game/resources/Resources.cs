@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -238,13 +239,13 @@ public partial class Resources : Node2D
     }
     
     private IReadOnlyDictionary<ResourceId, int> GetUpdatedStockpileAfterIncome(IEnumerable<IncomeProvider> providers, 
-        IReadOnlyDictionary<ResourceId, int> stockpile)
+        IReadOnlyDictionary<ResourceId, int> stockpile, IEnumerable<ResourceId>? targetResources = null)
     {
         var paymentsByProviders = providers
             .ToDictionary(p => p, p => _currentPaymentByIncomeProvider[p]);
         
         var (updatedStockpile, usedIncomeProviders) = ResourceCalculator
-            .AddResources(stockpile, paymentsByProviders, _resourceBlueprints);
+            .AddResources(stockpile, paymentsByProviders, targetResources ?? stockpile.Keys, _resourceBlueprints);
 
         foreach (var usedIncomeProvider in usedIncomeProviders)
         {
@@ -254,6 +255,46 @@ public partial class Resources : Node2D
         }
 
         return updatedStockpile;
+    }
+    
+    private Dictionary<Player, List<IncomeProvider>> GetProvidersByPlayers() => _currentPaymentByIncomeProvider.Keys
+        .OrderBy(p => p.Player.StableId) // Ensure determinism across clients
+        .GroupBy(p => p.Player)
+        .ToDictionary(g => g.Key, g => g
+            .OrderBy(p => p.EntityId) // Ensure determinism across clients
+            .ToList());
+
+    private void UpdatePlayerResourcesOnProviderChange(IncomeProvider provider)
+    {
+        var player = provider.Player;
+        var resources = provider.ResourcesGained.Select(r => r.Resource).ToHashSet();
+        
+        var providers = GetProvidersByPlayers()[player];
+        var affectedProviders = FilterProvidersByResources(providers, resources);
+        
+        _resourcesStockpiledByPlayer[player] = GetUpdatedStockpileAfterIncome(
+            affectedProviders, _resourcesStockpiledByPlayer[player], resources);
+
+        RaisePlayerResourcesUpdated(player);
+    }
+    
+    private static HashSet<IncomeProvider> FilterProvidersByResources(IList<IncomeProvider> providers, 
+        IEnumerable<ResourceId> resources)
+    {
+        var result = new HashSet<IncomeProvider>();
+
+        foreach (var resource in resources)
+        {
+            foreach (var provider in providers)
+            {
+                if (provider.ResourcesGained.Any(r => r.Resource.Equals(resource)))
+                {
+                    result.Add(provider);
+                }
+            }
+        }
+        
+        return result;
     }
     
     private void RaisePlayerResourcesUpdated(Player player)
@@ -273,12 +314,7 @@ public partial class Resources : Node2D
 
     private void OnPlanningPhaseStarted()
     {
-        var providersByPlayer = _currentPaymentByIncomeProvider.Keys
-            .OrderBy(p => p.Player.StableId) // Ensure determinism across clients
-            .GroupBy(p => p.Player)
-            .ToDictionary(g => g.Key, g => g
-                .OrderBy(p => p.EntityId) // Ensure determinism across clients
-                .ToList());
+        var providersByPlayer = GetProvidersByPlayers();
 
         foreach (var player in Players.Instance.GetAll())
         {
@@ -312,7 +348,7 @@ public partial class Resources : Node2D
                     : resource.NegativeIncomeEffects;
 
                 var count = resource.EffectAmountMultipliedByResourceAmount 
-                    ? amount
+                    ? Math.Abs(amount)
                     : 1;
 
                 for (var i = 0; i < count; i++)
@@ -345,10 +381,16 @@ public partial class Resources : Node2D
         _currentPaymentByIncomeProvider[provider] = new Dictionary<ResourceId, int>();
         EventBus.Instance.RaiseIncomeProviderPaymentUpdated(provider, 
             ResourceCalculator.ToList(_currentPaymentByIncomeProvider[provider]));
+        
+        if (provider.InstantUpdate)
+            UpdatePlayerResourcesOnProviderChange(provider);
     }
     
     private void OnIncomeProviderUnregistered(IncomeProvider provider)
     {
         _currentPaymentByIncomeProvider.Remove(provider);
+        
+        if (provider.InstantUpdate)
+            UpdatePlayerResourcesOnProviderChange(provider);
     }
 }

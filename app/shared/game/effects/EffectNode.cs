@@ -39,7 +39,8 @@ public abstract class EffectNode(
         return IsValidated;
     }
     
-    protected abstract IEnumerable<ITargetable> GetInheritedTargets(ITargetable? initialTarget, EntityNode? initiator);
+    protected virtual IEnumerable<ITargetable> GetInheritedTargets(ITargetable? initialTarget, EntityNode? initiator)
+        => initiator is null ? [] : GetSelfTargets(initiator);
 
     protected virtual IList<ITargetable> GetSelfTargets(EntityNode initiator) => [initiator];
     
@@ -57,7 +58,9 @@ public abstract class EffectNode(
     {
         return location switch
         {
-            _ when location.Equals(Location.Inherited) => GetInheritedTargets(initialTarget, initiator).ToList(),
+            _ when location.Equals(Location.Inherited) => History.PreviousOrNull is not null 
+                ? History.PreviousOrNull.GetInheritedTargets(initialTarget, initiator).ToList() 
+                : GetInheritedTargets(initialTarget, initiator).ToList(),
             
             _ when location.Equals(Location.Self) 
                    && initiator is not null => GetSelfTargets(initiator),

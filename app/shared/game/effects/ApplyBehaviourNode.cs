@@ -33,7 +33,4 @@ public class ApplyBehaviourNode : EffectNode, INodeFromBlueprint<ApplyBehaviour>
         
         return true;
     }
-
-    protected override IEnumerable<ITargetable> GetInheritedTargets(ITargetable? initialTarget, EntityNode? initiator) 
-        => initiator is null ? [] : GetSelfTargets(initiator);
 }

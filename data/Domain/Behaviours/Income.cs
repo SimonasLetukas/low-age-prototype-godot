@@ -4,6 +4,7 @@ using LowAgeData.Domain.Common.Modifications;
 using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Logic;
+using LowAgeData.Domain.Resources;
 
 namespace LowAgeData.Domain.Behaviours
 {
@@ -19,6 +20,7 @@ namespace LowAgeData.Domain.Behaviours
             string sprite,
             IList<ResourceModification> resources,
             int? diminishingReturn = null,
+            bool? instantUpdate = null,
             EndsAt? endsAt = null,
             Alignment? alignment = null,
             IList<Payment>? cost = null,
@@ -39,6 +41,7 @@ namespace LowAgeData.Domain.Behaviours
         {
             Resources = resources;
             DiminishingReturn = diminishingReturn ?? 0;
+            InstantUpdate = instantUpdate ?? false;
             Cost = cost ?? new List<Payment>();
             WaitForAvailableStorage = waitForAvailableStorage ?? false;
         }
@@ -54,6 +57,23 @@ namespace LowAgeData.Domain.Behaviours
         /// <see cref="Modification.Amount"/> cannot be lower than 1.
         /// </summary>
         public int DiminishingReturn { get; }
+        
+        /// <summary>
+        /// <para>
+        /// If true, when this behaviour is added or removed, the associated <see cref="Resources"/> are instantly
+        /// updated (i.e. all other <see cref="Income"/>s are recalculated for each registered <see cref="Resource"/>
+        /// in <see cref="Resources"/> -- each <see cref="Income"/> is checked for <see cref="Cost"/> again, so the
+        /// updated values might be different, because the deduction needed for <see cref="Cost"/> would not happen
+        /// here).
+        /// </para>
+        /// <para>
+        /// Otherwise, the <see cref="Resources"/> are gained normally (start of planning phase).
+        /// </para>
+        /// <para>
+        /// Default = false.
+        /// </para>
+        /// </summary>
+        public bool InstantUpdate { get; }
         
         /// <summary>
         /// Deducted before updating the income at the start of each planning phase. If the <see cref="Cost"/> is

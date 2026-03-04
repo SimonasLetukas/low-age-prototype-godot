@@ -8,9 +8,11 @@ namespace LowAgeData.Domain.Common
     public class Location : EnumValueObject<Location, Location.Locations>
     {
         /// <summary>
-        /// Allows a default <see cref="Location"/> to be set by the caller (e.g. <see cref="Search"/> sets
-        /// <see cref="Entity"/> by default). Otherwise applies the same location that was set before in the
-        /// chain. Default = <see cref="Location.Self"/>.
+        /// Tries to set the default <see cref="Location"/> from the previous <see cref="Effect"/> in the chain (e.g.
+        /// <see cref="Search"/> sets <see cref="Entity"/> by default). If there is no previous <see cref="Effect"/>,
+        /// then the default <see cref="Location"/> of the current <see cref="Effect"/> in the chain is used. If
+        /// current <see cref="Effect"/> has no default, or <see cref="Location"/> is used outside of
+        /// <see cref="Effect"/> context, then <see cref="Location.Self"/> is used. 
         /// </summary>
         public static Location Inherited => new Location(Locations.Inherited);
 

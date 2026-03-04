@@ -223,7 +223,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             return (0, false);
 
         Health!.Apply(Change.SubtractCurrent, amount);
-        if ((int)Health!.CurrentAmount < 0)
+        if ((int)Health!.CurrentAmount <= 0)
             Destroy();
         
         UpdateVitalsValuesForDisplay();

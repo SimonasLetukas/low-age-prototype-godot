@@ -283,12 +283,16 @@ public partial class BuildNode : ActiveAbilityNode<
             entity.CreationProgress.Helpers[this] = Blueprint.HelpEfficiency;
         
         var nonConsumableStockpile = GetNonConsumableStockpile();
+        if (DebugEnabled)
+            GD.Print($"{nameof(BuildNode)}.{nameof(TryExecutePostPayment)}: {nameof(nonConsumableStockpile)} " +
+                     $"'{JsonConvert.SerializeObject(nonConsumableStockpile)}'");
+        
         entity.CreationProgress.UpdateProgress(nonConsumableStockpile, focus.EfficiencyFactor);
 
         var completed = entity.IsCompleted();
         
         if (DebugEnabled)
-            GD.Print($"Building completed: '{completed}'");
+            GD.Print($"{nameof(BuildNode)}.{nameof(TryExecutePostPayment)}: Building completed '{completed}'");
         
         return completed;
     }

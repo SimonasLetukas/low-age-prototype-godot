@@ -56,6 +56,7 @@ public partial class IncomeNode : BehaviourNode, INodeFromBlueprint<Income>
             .Select(r => new Payment(r.Resource, (int)r.Amount))
             .ToList(),
         DiminishingReturn = Blueprint.DiminishingReturn,
+        InstantUpdate = Blueprint.InstantUpdate,
         Cost = Blueprint.Cost,
         WaitForAvailableStorage = Blueprint.WaitForAvailableStorage
     };

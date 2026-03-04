@@ -33,6 +33,7 @@ namespace LowAgeData.Domain.Logic
         /// Triggers when a <see cref="Mask"/> is added or removed. 
         /// </summary>
         public static Event EntityMaskChanged => new Event(Events.EntityMaskChanged);
+        public static Event PlayerResourcesStockpileUpdated => new Event(Events.PlayerResourcesStockpileUpdated);
 
         private Event(Events @enum) : base(@enum) { }
 
@@ -51,7 +52,8 @@ namespace LowAgeData.Domain.Logic
             EntityRangedAttacks,
             EntityStartsActionPhase,
             EntityStartsAction,
-            EntityMaskChanged
+            EntityMaskChanged,
+            PlayerResourcesStockpileUpdated
         }
         
         private class EventJsonConverter : JsonConverter
