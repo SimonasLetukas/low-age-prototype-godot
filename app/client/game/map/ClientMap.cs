@@ -280,6 +280,8 @@ public partial class ClientMap : Map
 		ClearArrows();
 		Entities.DeselectEntity();
 		_selectionOverlay = SelectionOverlay.None;
+		
+		_tileMap.ClearVision();
 	}
 
 	private void HandleFlattenInput()
@@ -419,6 +421,8 @@ public partial class ClientMap : Map
 		ShowArrowsForEntity(entity);
 		
 		Entities.SelectEntity(entity);
+		
+		_tileMap.AddVision(entity);
 	}
 
 	private void ShowMovementOverlay(EntityNode entity)

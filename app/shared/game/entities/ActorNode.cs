@@ -26,6 +26,8 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public CombatStatNode? RangedArmour => Stats.FirstOrDefault(x => x.StatType == StatType.RangedArmour);
     public bool HasInitiative => HasStat(StatType.Initiative);
     public CombatStatNode? Initiative => Stats.FirstOrDefault(x => x.StatType == StatType.Initiative);
+    public bool HasVision => HasStat(StatType.Vision);
+    public CombatStatNode? Vision => Stats.FirstOrDefault(x => x.StatType == StatType.Vision);
     public bool HasMeleeAttack => Attacks.Any(x => x.IsMelee);
     public bool HasRangedAttack => Attacks.Any(x => x.IsRanged);
     public AttackStatNode? MeleeAttack => Attacks.FirstOrDefault(x => x.IsMelee);

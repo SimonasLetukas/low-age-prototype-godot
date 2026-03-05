@@ -8,6 +8,7 @@ using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Tiles;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
+using LowAgeData.Domain.Common.Shape;
 using MultipurposePathfinding;
 
 /// <summary>
@@ -29,7 +30,8 @@ public partial class Tiles : Node2D
         public TargetType TargetType { get; set; }
         public Point Point { get; set; } = null!;
         public int YSpriteOffset { get; set; }
-        private List<EntityNode> Occupants { get; init; } = [];
+        private List<EntityNode> Occupants { get; } = [];
+        private List<Player> VisibleTo { get; } = [];
 
         public IEnumerable<EntityNode> GetOccupants()
         {
@@ -80,6 +82,12 @@ public partial class Tiles : Node2D
 
         public void RemoveOccupant(EntityNode entity) => Occupants.Remove(entity);
 
+        public bool IsVisibleTo(Player player) => VisibleTo.Contains(player);
+        
+        public void AddVisibleTo(Player player) => VisibleTo.Add(player);
+        
+        public void ClearVisibleToPlayers() => VisibleTo.Clear();
+        
         public bool Equals(TileInstance? other)
         {
             if (other is null) return false;
@@ -105,6 +113,8 @@ public partial class Tiles : Node2D
     public ElevatableTiles Elevatable { get; private set; } = null!;
 
     private readonly System.Collections.Generic.Dictionary<(Vector2Int, bool), TileInstance> _tiles = new();
+    private readonly HashSet<TileInstance> _revealedTilesByAllPlayers = [];
+    private readonly HashSet<Vector2I> _revealedFogPositionsByCurrentPlayer = [];
     private IList<Tile> _tilesBlueprint = null!;
     private Vector2Int _mapSize;
     private int _mountainsFillOffset;
@@ -112,6 +122,7 @@ public partial class Tiles : Node2D
     private TileMapLayer _scraps = null!;
     private TileMapLayer _marsh = null!;
     private TileMapLayer _mountains = null!;
+    private TileMapLayer _fog = null!;
     private bool _connectTerrain = Config.Instance.ConnectTerrain;
 
     private const int SourceId = 0;
@@ -126,6 +137,8 @@ public partial class Tiles : Node2D
     private readonly Vector2I _tileMapMarshAtlasPosition = new(0, 8);
     private const int TileMapMountainsIndex = 5;
     private readonly Vector2I _tileMapMountainsAtlasPosition = new(0, 13);
+    private const int TileMapFogIndex = 13;
+    private readonly Vector2I _tileMapFogAtlasPosition = new(8, 22);
     
     private readonly System.Collections.Generic.Dictionary<Terrain, int> _tileMapIndexesByTerrain = new()
     {
@@ -158,6 +171,7 @@ public partial class Tiles : Node2D
         _scraps = GetNode<TileMapLayer>("Scraps");
         _marsh = GetNode<TileMapLayer>("Marsh");
         _mountains = GetNode<TileMapLayer>("Stone");
+        _fog = GetNode<TileMapLayer>("Fog");
 
         StructureFoundations = GetNode<StructureFoundations>($"{nameof(StructureFoundations)}");
         Elevatable = GetNode<ElevatableTiles>($"{nameof(ElevatableTiles)}");
@@ -292,6 +306,8 @@ public partial class Tiles : Node2D
         
         SetCells(position, GetTerrain(pos));
         Elevatable.SetMapWideTargetTiles(pos.ToGodotVector2I());
+        
+        SetFogCells(position, true);
     }
     
     private List<Vector2Int> GetOutsideVisualPositions()
@@ -315,22 +331,27 @@ public partial class Tiles : Node2D
             return;
         }
         
-        var positions = _positionsForOutsideVisualsInitialization.Take(InitializationChunk);
+        var positions = _positionsForOutsideVisualsInitialization.Take(InitializationChunk)
+            .Select(x => x.ToGodotVector2I())
+            .ToGodotArray();
+        
         _positionsForOutsideVisualsInitialization.RemoveRange(0, InitializationChunk);
 
         if (_connectTerrain)
         {
             _mountains.SetCellsTerrainConnect(
-                positions.Select(x => x.ToGodotVector2I()).ToGodotArray(), 
+                positions, 
                 TerrainSetIndex, TileMapMountainsIndex);
         }
         else
         {
             foreach (var position in positions)
             {
-                _mountains.SetCell(position.ToGodotVector2I(), SourceId, _tileMapMountainsAtlasPosition);
+                _mountains.SetCell(position, SourceId, _tileMapMountainsAtlasPosition);
             }
         }
+        
+        SetFogCells(positions, true);
     }
 
     public void AddPoints(IEnumerable<Point> points)
@@ -446,6 +467,64 @@ public partial class Tiles : Node2D
             .Select(x => GetTile(x.Item1, x.Item2) ?? GetHighestTile(x.Item1))
             .WhereNotNull();
     }
+    
+    public void AddVision(EntityNode entity)
+    {
+        if (entity is not ActorNode actor || actor.HasVision is false)
+            return;
+        
+        // TODO calculate shadowcasting
+        var revealedTiles = new Circle((int)actor.Vision!.CurrentAmount)
+            .ToPositions(actor, _mapSize)
+            .Select(p => GetTile(p, false))
+            .WhereNotNull(); 
+
+        var isCurrentPlayer = actor.Player.Equals(Players.Instance.Current);
+        var fogToReveal = new List<Vector2I>();
+        foreach (var revealedTile in revealedTiles)
+        {
+            revealedTile.AddVisibleTo(actor.Player);
+            _revealedTilesByAllPlayers.Add(revealedTile);
+
+            if (isCurrentPlayer is false) 
+                continue;
+            
+            var position = revealedTile.Position.ToGodotVector2I();
+            fogToReveal.Add(position);
+            _revealedFogPositionsByCurrentPlayer.Add(position);
+        }
+        
+        SetFogCells(fogToReveal, false);
+    }
+
+    public void ClearVision()
+    {
+        foreach (var tile in _revealedTilesByAllPlayers) 
+            tile.ClearVisibleToPlayers();
+        _revealedTilesByAllPlayers.Clear();
+        
+        SetFogCells(_revealedFogPositionsByCurrentPlayer, true);
+        _revealedFogPositionsByCurrentPlayer.Clear();
+    }
+
+    private void SetFogCells(IEnumerable<Vector2I> at, bool to)
+    {
+        var positions = at.ToGodotArray();
+        
+        if (_connectTerrain)
+        {
+            var index = to ? TileMapFogIndex : -1;
+            _fog.SetCellsTerrainConnect(positions, TerrainSetIndex, index);
+        }
+        else
+        {
+            var index = to ? SourceId : -1;
+            foreach (var position in positions)
+            {
+                _fog.SetCell(position, index, _tileMapFogAtlasPosition);
+            }
+        }
+    }
 
     private void SetCells(IList<Vector2I> at, Terrain terrain)
     {
@@ -527,6 +606,7 @@ public partial class Tiles : Node2D
         _scraps.Clear();
         _marsh.Clear();
         _mountains.Clear();
+        _fog.Clear();
     }
 
     private void OnPathfindingUpdating(IPathfindingUpdatable data, bool isAdded)
