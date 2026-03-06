@@ -61,13 +61,13 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         Placed, // visible for all clients, in process of being paid for so cannot use abilities, but can be attacked
         Completed // visible for all clients and fully functional
     }
-
+    
+    protected IList<Tiles.TileInstance> CurrentTileDuringMovement = [];
     protected bool DebugEnabled { get; set; } = false;
 
     private Entity Blueprint { get; set; } = null!;
 
-    private IList<Vector2> _movePath = new List<Vector2>();
-
+    private IList<Vector2> _moveGlobalPositionPath = [];
     private readonly Dictionary<Vector2Int, int> _providingHighGroundHeightByLocalEntityPosition = new();
     private float _movementDuration;
     private bool _canBePlacedOnTheWholeMap = false;
@@ -133,6 +133,11 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         UpdateVisuals();
     }
 
+    public void SetRevealed(bool to)
+    {
+        Visible = to;
+    }
+
     public virtual void SetOutline(bool to) => Renderer.SetOutline(to, Players.Instance.IsCurrentPlayerEnemyTo(Player));
 
     public virtual void SnapTo(Vector2 globalPosition)
@@ -154,11 +159,11 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         UpdateVisuals();
     }
 
-    public bool DeterminePlacementValidity(bool requiresTargetTiles)
+    public bool DeterminePlacementValidity(bool requiresTargetTiles, bool requiresVision)
     {
         requiresTargetTiles = requiresTargetTiles && _canBePlacedOnTheWholeMap is false;
         var tiles = GetHighestTiles(EntityOccupyingPositions);
-        CanBePlaced = IsPlacementGenerallyValid(tiles, requiresTargetTiles)
+        CanBePlaced = IsPlacementGenerallyValid(tiles, requiresTargetTiles, requiresVision)
                       && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles));
         
         // TODO check for masks
@@ -241,14 +246,17 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         Renderer.ResetElevationOffset();
     }
     
-    public virtual void MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Point> path)
+    public virtual void MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Tiles.TileInstance> path)
     {
-        var resultingPoint = path.Last();
-        EntityPrimaryPosition = resultingPoint.Position;
+        var resultingTile = path.Last();
+        EntityPrimaryPosition = resultingTile.Position;
         Renderer.ResetElevationOffset();
         
         globalPositionPath.Remove(globalPositionPath.First());
-        _movePath = globalPositionPath;
+        _moveGlobalPositionPath = globalPositionPath;
+        
+        CurrentTileDuringMovement = path;
+        
         MoveToNextTarget();
     }
 
@@ -400,9 +408,12 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
 
     protected virtual void OnPhaseStarted(int turn, TurnPhase phase) { }
     
-    private static bool IsPlacementGenerallyValid(IList<Tiles.TileInstance?> tiles, bool requiresTargetTiles)
+    private bool IsPlacementGenerallyValid(IList<Tiles.TileInstance?> tiles, bool requiresTargetTiles, bool requiresVision)
     {
         if (tiles.Any(tile => tile is null))
+            return false;
+
+        if (requiresVision && tiles.Any(tile => tile!.IsVisibleTo(Player)) is false)
             return false;
 
         if (requiresTargetTiles && tiles.All(tile => tile!.TargetType is TargetType.None))
@@ -419,7 +430,9 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         Renderer.UpdateOrigins();
         Renderer.UpdateSpriteBounds();
         
-        if (_movePath.IsEmpty())
+        CurrentTileDuringMovement.Remove(CurrentTileDuringMovement.First());
+        
+        if (_moveGlobalPositionPath.IsEmpty())
         {
             FinishedMoving(this);
             return;
@@ -428,10 +441,10 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         MoveToNextTarget();
     }
     
-    private void MoveToNextTarget()
+    protected virtual void MoveToNextTarget()
     {
-        var nextMoveTarget = _movePath.First();
-        _movePath.Remove(nextMoveTarget);
+        var nextMoveTarget = _moveGlobalPositionPath.First();
+        _moveGlobalPositionPath.Remove(nextMoveTarget);
 
         Renderer.AimSprite(nextMoveTarget);
 
@@ -440,6 +453,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
             .FromCurrent()
             .SetTrans(Tween.TransitionType.Quad)
             .SetEase(Tween.EaseType.InOut);
+        
         tween.TweenCallback(Callable.From(OnMovementTweenAllCompleted));
     }
     

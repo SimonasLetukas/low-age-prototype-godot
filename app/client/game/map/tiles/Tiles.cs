@@ -78,16 +78,44 @@ public partial class Tiles : Node2D
             return Occupants.Any(o => o is TEntity);
         }
         
-        public void AddOccupant(EntityNode entity) => Occupants.Add(entity);
+        public void AddOccupant(EntityNode entity)
+        {
+            Occupants.Add(entity);
+            
+            if (IsVisibleTo(Players.Instance.Current))
+                entity.SetRevealed(true);
+        }
 
-        public void RemoveOccupant(EntityNode entity) => Occupants.Remove(entity);
+        public void RemoveOccupant(EntityNode entity)
+        {
+            Occupants.Remove(entity);
+            
+            entity.SetRevealed(false);
+        }
 
-        public bool IsVisibleTo(Player player) => VisibleTo.Contains(player);
-        
-        public void AddVisibleTo(Player player) => VisibleTo.Add(player);
-        
-        public void ClearVisibleToPlayers() => VisibleTo.Clear();
-        
+        public bool IsVisibleTo(Player player) => Point.IsHighGround 
+            ? GlobalRegistry.Instance.GetTile(Position, false)?.IsVisibleTo(player) ?? false 
+            : VisibleTo.Contains(player);
+
+        public void AddVisibleTo(Player player)
+        {
+            VisibleTo.Add(player);
+
+            foreach (var occupant in GetOccupants())
+            {
+                if (IsVisibleTo(Players.Instance.Current))
+                    occupant.SetRevealed(true);
+            }
+        }
+
+        public void ClearVisibleToPlayers()
+        {
+            VisibleTo.Clear();
+
+            foreach (var occupant in GetOccupants())
+                occupant.SetRevealed(false);
+        }
+
         public bool Equals(TileInstance? other)
         {
             if (other is null) return false;
@@ -386,14 +414,11 @@ public partial class Tiles : Node2D
     public Vector2 GetGlobalPositionFromMapPosition(Vector2Int mapPosition) 
     {
         var adjustedMapPosition = mapPosition.ToGodotVector2I();
-    
         var localPosition = _grass.MapToLocal(adjustedMapPosition);
-    
         return _grass.ToGlobal(localPosition);
     }
 
-    public IEnumerable<Vector2> GetGlobalPositionsFromMapPoints(IEnumerable<Point> points) => points
-        .Select(x => GetTile(x.Position, x.IsHighGround))
+    public IEnumerable<Vector2> GetGlobalPositionsFromTiles(IEnumerable<TileInstance> tiles) => tiles
         .Select(x => GetGlobalPositionFromMapPosition(x!.Position) + Vector2.Up * 
             (x.YSpriteOffset > 0 && ClientState.Instance.Flattened 
                 ? Constants.FlattenedHighGroundHeight 
@@ -467,23 +492,67 @@ public partial class Tiles : Node2D
             .Select(x => GetTile(x.Item1, x.Item2) ?? GetHighestTile(x.Item1))
             .WhereNotNull();
     }
+
+    public void AddVision(EntityNode entity, IEnumerable<TileInstance> path)
+    {
+        if (entity is not ActorNode actor || actor.HasVision is false)
+            return;
+
+        var vision = (int)actor.Vision!.CurrentAmount;
+        var player = actor.Player;
+
+        var searchPositions = actor.EntityOccupyingPositions.ToHashSet();
+        foreach (var tile in path)
+            searchPositions.Add(tile.Position);
+        
+        AddVision(searchPositions, vision, player);
+    }
     
     public void AddVision(EntityNode entity)
     {
         if (entity is not ActorNode actor || actor.HasVision is false)
             return;
         
-        // TODO calculate shadowcasting
-        var revealedTiles = new Circle((int)actor.Vision!.CurrentAmount)
-            .ToPositions(actor, _mapSize)
-            .Select(p => GetTile(p, false))
-            .WhereNotNull(); 
+        var vision = (int)actor.Vision!.CurrentAmount;
+        var player = actor.Player;
 
-        var isCurrentPlayer = actor.Player.Equals(Players.Instance.Current);
+        var searchPositions = actor.EntityOccupyingPositions.ToHashSet();
+        
+        AddVision(searchPositions, vision, player);
+    }
+
+    public void ClearVision()
+    {
+        foreach (var tile in _revealedTilesByAllPlayers) 
+            tile.ClearVisibleToPlayers();
+        _revealedTilesByAllPlayers.Clear();
+        
+        SetFogCells(_revealedFogPositionsByCurrentPlayer, true);
+        _revealedFogPositionsByCurrentPlayer.Clear();
+    }
+    
+    private void AddVision(IEnumerable<Vector2Int> searchPositions, int visionRange, Player player)
+    {
+        // TODO calculate shadowcasting
+        var revealedTiles = new HashSet<TileInstance>();
+        foreach (var searchPosition in searchPositions)
+        {
+            var foundTiles = new Circle(visionRange)
+                .ToPositions(searchPosition, _mapSize)
+                .Select(p => GetTile(p, false))
+                .WhereNotNull();
+
+            foreach (var tile in foundTiles)
+            {
+                revealedTiles.Add(tile);
+            }
+        }
+
+        var isCurrentPlayer = player.Equals(Players.Instance.Current);
         var fogToReveal = new List<Vector2I>();
         foreach (var revealedTile in revealedTiles)
         {
-            revealedTile.AddVisibleTo(actor.Player);
+            revealedTile.AddVisibleTo(player);
             _revealedTilesByAllPlayers.Add(revealedTile);
 
             if (isCurrentPlayer is false) 
@@ -495,16 +564,6 @@ public partial class Tiles : Node2D
         }
         
         SetFogCells(fogToReveal, false);
-    }
-
-    public void ClearVision()
-    {
-        foreach (var tile in _revealedTilesByAllPlayers) 
-            tile.ClearVisibleToPlayers();
-        _revealedTilesByAllPlayers.Clear();
-        
-        SetFogCells(_revealedFogPositionsByCurrentPlayer, true);
-        _revealedFogPositionsByCurrentPlayer.Clear();
     }
 
     private void SetFogCells(IEnumerable<Vector2I> at, bool to)

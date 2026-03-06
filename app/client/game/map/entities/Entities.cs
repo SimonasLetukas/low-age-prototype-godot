@@ -315,7 +315,7 @@ public partial class Entities : Node2D
         return topEntity;
     }
     
-    public void MoveEntity(EntityNode entity, IList<Vector2> globalPath, IList<Point> path)
+    public void MoveEntity(EntityNode entity, IList<Vector2> globalPath, IList<Tiles.TileInstance> path)
     {
         EntityMoving = true;
         entity.MoveUntilFinished(globalPath, path);
@@ -348,7 +348,7 @@ public partial class Entities : Node2D
         
         EntityInPlacement.EntityPrimaryPosition = mapPosition;
         EntityInPlacement.SnapTo(globalPosition);
-        EntityInPlacement.DeterminePlacementValidity(true);
+        EntityInPlacement.DeterminePlacementValidity(true, true);
     }
 
     public void CancelPlacement()
@@ -479,7 +479,7 @@ public partial class Entities : Node2D
         if (entity is StructureNode)
             entity.Renderer.MakeStatic();
         
-        entity.DeterminePlacementValidity(true);
+        entity.DeterminePlacementValidity(true, true);
         return PlaceEntity(entity, true);
     }
     
@@ -492,7 +492,7 @@ public partial class Entities : Node2D
         var entity = InstantiateEntity(entityBlueprint, playerId, []);
         entity.EntityPrimaryPosition = mapPosition;
         entity.Behaviours.AddOnBuildBehaviour(BehaviourId.Shared.StartingEntityBuildable);
-        entity.DeterminePlacementValidity(false);
+        entity.DeterminePlacementValidity(false, false);
         if (entity is ActorNode actor)
             actor.SetActorRotation(rotation);
         return PlaceEntity(entity, true);

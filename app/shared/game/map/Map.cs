@@ -19,6 +19,7 @@ public partial class Map : Node2D
 		EventBus.Instance.PhaseStarted += OnPhaseStarted;
 		EventBus.Instance.PhaseEnded += OnPhaseEnded;
 		EventBus.Instance.ActionStarted += OnActionStarted;
+		EventBus.Instance.ActionEnded += OnActionEnded;
 		
 		base._Ready();
 	}
@@ -28,6 +29,8 @@ public partial class Map : Node2D
 		EventBus.Instance.PhaseStarted -= OnPhaseStarted;
 		EventBus.Instance.PhaseEnded -= OnPhaseEnded;
 		EventBus.Instance.ActionStarted -= OnActionStarted;
+		EventBus.Instance.ActionEnded -= OnActionEnded;
+
 		
 		base._ExitTree();
 	}
@@ -47,5 +50,9 @@ public partial class Map : Node2D
 	protected virtual void OnActionStarted(ActorNode actor)
 	{
 		ActorInAction = actor;
+	}
+	
+	protected virtual void OnActionEnded(ActorNode actor)
+	{
 	}
 }

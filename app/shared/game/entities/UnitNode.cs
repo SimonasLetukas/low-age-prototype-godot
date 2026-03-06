@@ -23,6 +23,7 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     }
     
     public bool IsOnHighGround { get; private set; } = false;
+    public int FinalYSpriteOffset { get; private set; }
     public CombatStatNode Movement => Stats.Single(x => x.StatType == StatType.Movement);
     public override Tiles.TileInstance EntityPrimaryTile => GetHighestTiles([EntityPrimaryPosition])
         .WhereNotNull().Single();
@@ -32,6 +33,20 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
 
     private Unit Blueprint { get; set; } = null!;
     
+    public override void _Ready()
+    {
+        base._Ready();
+
+        FinishedMoving += OnFinishedMoving;
+    }
+
+    public override void _ExitTree()
+    {
+        FinishedMoving -= OnFinishedMoving;
+        
+        base._ExitTree();
+    }
+
     public void SetBlueprint(Unit blueprint)
     {
         base.SetBlueprint(blueprint);
@@ -87,22 +102,18 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         ReceiveDamage(this, damage, false);
     }
 
-    public override void MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Point> path)
+    public override void MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Tiles.TileInstance> path)
     {
-        var resultingPoint = path.Last();
+        var resultingTile = path.Last();
 
         var movementCost = CalculateMovementCostFrom(path);
         Movement.Apply(Change.SubtractCurrent, movementCost);
         ActionEconomy.Moved(movementCost, Movement.CurrentAmount >= 1);
         
-        IsOnHighGround = resultingPoint.IsHighGround;
+        IsOnHighGround = resultingTile.Point.IsHighGround;
+        FinalYSpriteOffset = resultingTile.YSpriteOffset;
         
         base.MoveUntilFinished(globalPositionPath, path);
-        
-        Renderer.UpdateElevation(
-            IsOnHighGround, 
-            GetTile(resultingPoint.Position, resultingPoint.IsHighGround)?.YSpriteOffset, 
-            GetEntitiesBelow().OrderByDescending(x => x.Renderer.ZIndex).FirstOrDefault());
         
         UpdateVitalsPosition();
     }
@@ -133,7 +144,22 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         // take into account targeting logic (however complex it would be) and everything gets calculated through
         // pathfinding.
     }
-    
+
+    protected override void MoveToNextTarget()
+    {
+        var currentTile = CurrentTileDuringMovement.First();
+        var nextTile = CurrentTileDuringMovement.ElementAt(1);
+
+        SetRevealed(currentTile.IsVisibleTo(Players.Instance.Current));
+
+        Renderer.UpdateElevation(
+            nextTile.Point.IsHighGround, 
+            nextTile.YSpriteOffset, 
+            GetEntitiesBelow().OrderByDescending(x => x.Renderer.ZIndex).FirstOrDefault());
+        
+        base.MoveToNextTarget();
+    }
+
     protected override void UpdateVisuals()
     {
         base.UpdateVisuals();
@@ -156,7 +182,7 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         Movement.Apply(Change.SetCurrent, Movement.MaxAmount + Constants.Pathfinding.SearchIncrement);
     }
     
-    private static float CalculateMovementCostFrom(IList<Point> path)
+    private static float CalculateMovementCostFrom(IList<Tiles.TileInstance> path)
     {
         if (path.Count <= 1)
             return 0f;
@@ -164,14 +190,14 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         var cost = 0f;
         for (var i = 1; i < path.Count; i++)
         {
-            var previousPoint = path[i - 1];
-            var currentPoint = path[i];
+            var previousTile = path[i - 1];
+            var currentTile = path[i];
 
-            var length = previousPoint.Position.IsDiagonalTo(currentPoint.Position)
+            var length = previousTile.Position.IsDiagonalTo(currentTile.Position)
                 ? Constants.Pathfinding.DiagonalCost
                 : 1f;
             
-            cost += length * currentPoint.Weight;
+            cost += length * currentTile.Point.Weight;
         }
         
         return cost;
@@ -189,5 +215,20 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         }
 
         return entities;
+    }
+    
+    private void OnFinishedMoving(EntityNode entity)
+    {
+        if (entity.Equals(this) is false)
+            return;
+        
+        SetRevealed(EntityOccupyingTiles.Any(t => t.IsVisibleTo(Players.Instance.Current)));
+        
+        Renderer.UpdateElevation(
+            IsOnHighGround, 
+            FinalYSpriteOffset, 
+            GetEntitiesBelow().OrderByDescending(x => x.Renderer.ZIndex).FirstOrDefault());
+        
+        UpdateVitalsPosition();
     }
 }

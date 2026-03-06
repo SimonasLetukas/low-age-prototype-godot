@@ -117,6 +117,7 @@ public partial class ClientMap : Map
 		GlobalRegistry.Instance.ProvideGetTiles(_tileMap.GetTiles);
 		GlobalRegistry.Instance.ProvideGetHighestTiles(_tileMap.GetHighestTiles);
 		GlobalRegistry.Instance.ProvideGetTile(_tileMap.GetTile);
+		GlobalRegistry.Instance.ProvideGetTileFromPoint(_tileMap.GetTile);
 	}
 
 	private void InitializePathfinding(ICollection<(Vector2Int, TileId)> tiles)
@@ -258,18 +259,24 @@ public partial class ClientMap : Map
 	
 	public void HandleEvent(UnitMovedAlongPathEvent @event)
 	{
-		var selectedEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
-		if (selectedEntity is null)
+		var movingEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
+		if (movingEntity is null)
 			return;
 		
-		if (Entities.IsEntitySelected(selectedEntity))
+		if (Entities.IsEntitySelected(movingEntity))
 			HandleDeselecting();
 		
-		RemoveOccupation(selectedEntity);
+		var path = @event.Path
+			.Select(p => Pathfinding.GetPointById(p, movingEntity.Player.Team, movingEntity.EntitySize.X))
+			.ToList();
 		
-		var path = @event.Path.Select(p => 
-			Pathfinding.GetPointById(p, selectedEntity.Player.Team, selectedEntity.EntitySize.X));
-		Entities.MoveEntity(selectedEntity, @event.GlobalPath.ToList(), path.ToList());
+		var dilatedPath = _tileMap.GetDilated(path, movingEntity.EntitySize.X);
+		_tileMap.AddVision(movingEntity, dilatedPath);
+		
+		RemoveOccupation(movingEntity);
+
+		var tiles = path.Select(p => _tileMap.GetTile(p)).WhereNotNull().ToList();
+		Entities.MoveEntity(movingEntity, _tileMap.GetGlobalPositionsFromTiles(tiles).ToList(), tiles);
 	}
 
 	public void HandleDeselecting()
@@ -280,8 +287,6 @@ public partial class ClientMap : Map
 		ClearArrows();
 		Entities.DeselectEntity();
 		_selectionOverlay = SelectionOverlay.None;
-		
-		_tileMap.ClearVision();
 	}
 
 	private void HandleFlattenInput()
@@ -421,8 +426,6 @@ public partial class ClientMap : Map
 		ShowArrowsForEntity(entity);
 		
 		Entities.SelectEntity(entity);
-		
-		_tileMap.AddVision(entity);
 	}
 
 	private void ShowMovementOverlay(EntityNode entity)
@@ -569,8 +572,7 @@ public partial class ClientMap : Map
 			_focusedTile.CurrentTile.Point,
 			selectedUnit.Player.Team,
 			selectedUnit.EntitySize.X).ToList();
-		var globalPath = _tileMap.GetGlobalPositionsFromMapPoints(path);
-		UnitMovementIssued(new UnitMovedAlongPathEvent(selectedUnit.InstanceId, globalPath, path.Select(p => p.Id)));
+		UnitMovementIssued(new UnitMovedAlongPathEvent(selectedUnit.InstanceId, path.Select(p => p.Id)));
 		HandleDeselecting();
 		
 		return ValidationResult.Valid;
@@ -778,6 +780,15 @@ public partial class ClientMap : Map
 			? ValidationResult.Valid 
 			: ValidationResult.Invalid("Cannot execute actions for another player.");
 
+	private void UpdateVision()
+	{
+		_tileMap.ClearVision();
+		
+		var entities = Entities.GetEntities();
+		foreach (var entity in entities) 
+			_tileMap.AddVision(entity);
+	}
+
 	private void ResetLines()
 	{
 		foreach (var node in _lines.GetChildren())
@@ -831,6 +842,14 @@ public partial class ClientMap : Map
 		}
 	}
 
+	protected override void OnPhaseStarted(int turn, TurnPhase phase)
+	{
+		base.OnPhaseStarted(turn, phase);
+
+		if (phase.Equals(TurnPhase.Action))
+			UpdateVision();
+	}
+
 	protected override void OnActionStarted(ActorNode actor)
 	{
 		base.OnActionStarted(actor);
@@ -839,6 +858,13 @@ public partial class ClientMap : Map
 			return;
 		
 		ExecuteEntitySelection(actor);
+	}
+
+	protected override void OnActionEnded(ActorNode actor)
+	{
+		base.OnActionEnded(actor);
+
+		UpdateVision();
 	}
 
 	private void OnPathfindingUpdating(IPathfindingUpdatable data, bool isAdded)

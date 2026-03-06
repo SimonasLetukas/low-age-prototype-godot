@@ -118,6 +118,13 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         
         Behaviours.RemoveAll<BuildableNode>();
         CreationProgress = null;
+
+        if (HasVision)
+        {
+            var baseVision = Blueprint.Statistics.First(s => s is CombatStat stat 
+                                                             && stat.CombatType.Equals(StatType.Vision)).MaxAmount;
+            Vision!.Apply(Change.SetMax, baseVision);
+        }
         
         Abilities.OnActorBirth();
     }
@@ -131,6 +138,9 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
         if (HasShields) 
             Shields!.Apply(Change.SetCurrent, HasCost ? 1 : Shields!.MaxAmount);
+        
+        if (HasVision)
+            Vision!.Apply(Change.SetMax, HasCost ? 1 : Vision!.MaxAmount);
         
         UpdateVitalsValuesForDisplay();
     }
