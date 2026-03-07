@@ -185,6 +185,15 @@ public struct Vector2Int(int x, int y) : IEquatable<Vector2Int>
         return vec;
     }
 
+    public static Vector2Int operator /(Vector2Int vec, int scale) => vec / Convert.ToSingle(scale);
+    
+    public static Vector2Int operator /(Vector2Int vec, float scale)
+    {
+        vec.X = Convert.ToInt32(vec.X / scale);
+        vec.Y = Convert.ToInt32(vec.Y / scale);
+        return vec;
+    }
+
     public static Vector2Int operator *(Vector2Int left, Vector2Int right)
     {
         left.X *= right.X;

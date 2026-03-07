@@ -51,6 +51,12 @@ public sealed partial class StructureNode : ActorNode, INodeFromBlueprint<Struct
         UpdateVitalsPosition();
     }
 
+    public override void SetRevealed(bool to)
+    {
+        if (IsRevealed() is false) 
+            base.SetRevealed(to);
+    }
+
     public override void Rotate()
     {
         var centerPointAssigned = false;

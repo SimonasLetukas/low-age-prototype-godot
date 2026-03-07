@@ -56,7 +56,7 @@ theme_override_constants/separation = 20
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "General"
+text = "Preferences"
 horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/SettingGroups/General"]
@@ -170,13 +170,14 @@ layout_mode = 2
 
 [node name="Debug" type="VBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups"]
 layout_mode = 2
+tooltip_text = "Warning: these settings must stay the same between all players. Make sure to click on \"Set to Default Gameplay\" before starting a multiplayer game."
 theme_override_constants/separation = 20
 
 [node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/Debug"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Debug"
+text = "Gameplay"
 horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/SettingGroups/Debug"]
@@ -241,6 +242,31 @@ custom_minimum_size = Vector2(300, 40)
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 4
+
+[node name="FogOfWarCalculation" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer"]
+layout_mode = 2
+tooltip_text = "If checked, gameplay elements can obstruct the line of sight when revealing the fog of war, otherwise a simple circle is revealed instead."
+alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer/FogOfWarCalculation"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+mouse_filter = 1
+text = "Line of Sight:"
+
+[node name="LineOfSight" type="CheckBox" parent="MarginContainer/VBoxContainer/SettingGroups/Debug/GridContainer/FogOfWarCalculation"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="DefaultGameplay" type="Button" parent="MarginContainer/VBoxContainer/SettingGroups/Debug"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Set to Default Gameplay"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/SettingGroups/Debug"]
 layout_mode = 2

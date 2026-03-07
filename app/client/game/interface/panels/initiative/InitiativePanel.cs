@@ -187,7 +187,7 @@ public partial class InitiativePanel : Control
 		if (occupants is null || occupants.IsEmpty() || _currentInitiativeQueue.IsEmpty())
 			return;
 
-		if (occupants.FirstOrDefault(o => o is ActorNode { HasInitiative: true }) 
+		if (occupants.FirstOrDefault(e => e.IsRevealed() && e is ActorNode { HasInitiative: true }) 
 		    is not ActorNode actorWithInitiative)
 			return;
 

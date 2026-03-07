@@ -105,6 +105,21 @@ public partial class Config : Node
         set => GetData().DeterministicInitiative = value;
     }
 
+    public bool UseLineOfSight
+    {
+        get => GetData().UseLineOfSight;
+        set => GetData().UseLineOfSight = value;
+    }
+
+    public void SetGameplayDefaults()
+    {
+        var configData = new ConfigData();
+        AllowSameTeamCombat = configData.AllowSameTeamCombat;
+        ResearchEnabled = configData.ResearchEnabled;
+        DeterministicInitiative = configData.DeterministicInitiative;
+        UseLineOfSight = configData.UseLineOfSight;
+    }
+
     private ConfigData? _data;
     private ConfigData GetData()
     {
@@ -140,6 +155,7 @@ public partial class Config : Node
         public bool AllowSameTeamCombat { get; set; } = false;
         public bool ResearchEnabled { get; set; } = false;
         public bool DeterministicInitiative { get; set; } = false;
+        public bool UseLineOfSight { get; set; } = true;
     }
 
     public enum AnimationSpeeds

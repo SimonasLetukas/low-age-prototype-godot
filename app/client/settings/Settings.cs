@@ -17,7 +17,10 @@ public partial class Settings : Control
     
     private CheckBox _researchToggle = null!;
     private CheckBox _sameTeamCombat = null!;
-    
+    private CheckBox _deterministicInitiative = null!;
+    private CheckBox _lineOfSight = null!;
+
+    private Button _defaultGameplay = null!;
     private Button _backButton = null!;
     
     public override void _Ready()
@@ -30,7 +33,10 @@ public partial class Settings : Control
         
         _researchToggle = (CheckBox)FindChild("Research")!;
         _sameTeamCombat = (CheckBox)FindChild("AllowSameTeamCombat")!;
+        _deterministicInitiative = (CheckBox)FindChild("DeterministicInitiative")!;
+        _lineOfSight = (CheckBox)FindChild("LineOfSight")!;
         
+        _defaultGameplay = (Button)FindChild("DefaultGameplay")!;
         _backButton = (Button)FindChild("Back")!;
 
         _factionSelection.FactionSelected += OnFactionSelected;
@@ -41,7 +47,10 @@ public partial class Settings : Control
         
         _researchToggle.Connect(nameof(_researchToggle.Pressed).ToLower(), new Callable(this, nameof(OnResearchToggled)));
         _sameTeamCombat.Connect(nameof(_sameTeamCombat.Pressed).ToLower(), new Callable(this, nameof(OnSameTeamCombatToggled)));
+        _deterministicInitiative.Connect(nameof(_deterministicInitiative.Pressed).ToLower(), new Callable(this, nameof(OnDeterministicInitiativeToggled)));
+        _lineOfSight.Connect(nameof(_lineOfSight.Pressed).ToLower(), new Callable(this, nameof(OnLineOfSightToggled)));
 
+        _defaultGameplay.Connect(nameof(_defaultGameplay.Pressed).ToLower(), new Callable(this, nameof(OnDefaultGameplayPressed)));
         _backButton.Connect(nameof(_backButton.Pressed).ToLower(), new Callable(this, nameof(OnBackPressed)));
         
         _factionSelection.SetSelectedFaction(Config.Instance.StartingFaction);
@@ -49,14 +58,21 @@ public partial class Settings : Control
         _bigCursorToggle.ButtonPressed = Config.Instance.LargeCursor;
         _showHintsToggle.ButtonPressed = Config.Instance.ShowHints;
         _connectTerrain.ButtonPressed = Config.Instance.ConnectTerrain;
-        
-        _researchToggle.ButtonPressed = Config.Instance.ResearchEnabled;
-        _sameTeamCombat.ButtonPressed = Config.Instance.AllowSameTeamCombat;
+
+        InitializeGameplaySettings();
     }
 
     public override void _ExitTree()
     {
         _factionSelection.FactionSelected -= OnFactionSelected;
+    }
+
+    private void InitializeGameplaySettings()
+    {
+        _researchToggle.ButtonPressed = Config.Instance.ResearchEnabled;
+        _sameTeamCombat.ButtonPressed = Config.Instance.AllowSameTeamCombat;
+        _deterministicInitiative.ButtonPressed = Config.Instance.DeterministicInitiative;
+        _lineOfSight.ButtonPressed = Config.Instance.UseLineOfSight;
     }
 
     private void OnAnimationSpeedSelected(int index) => Config.Instance.AnimationSpeed = (Config.AnimationSpeeds)index;
@@ -70,7 +86,17 @@ public partial class Settings : Control
     private void OnResearchToggled() => Config.Instance.ResearchEnabled = _researchToggle.IsPressed();
     
     private void OnSameTeamCombatToggled() => Config.Instance.AllowSameTeamCombat = _sameTeamCombat.IsPressed();
+    
+    private void OnDeterministicInitiativeToggled() => Config.Instance.DeterministicInitiative = _deterministicInitiative.IsPressed();
+    
+    private void OnLineOfSightToggled() => Config.Instance.UseLineOfSight = _lineOfSight.IsPressed();
 
+    private void OnDefaultGameplayPressed()
+    {
+        Config.Instance.SetGameplayDefaults();
+        InitializeGameplaySettings();
+    }
+    
     private void OnBackPressed()
     {
         Config.Instance.Save();

@@ -3,8 +3,8 @@ using Godot;
 
 public partial class InitiativeButton : BaseButton
 {
-    public const string ScenePath = @"res://app/client/game/interface/panels/initiative/InitiativeButton.tscn";
-    public static InitiativeButton Instance() => (InitiativeButton) GD.Load<PackedScene>(ScenePath).Instantiate();
+    private const string ScenePath = @"res://app/client/game/interface/panels/initiative/InitiativeButton.tscn";
+    private static InitiativeButton Instance() => (InitiativeButton) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static InitiativeButton InstantiateAsChild(ActorNode actor, Node parentNode)
     {
         var initiativeButton = Instance();

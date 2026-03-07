@@ -93,6 +93,7 @@ public partial class Tiles : Node2D
             entity.SetRevealed(false);
         }
 
+        // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
         public bool IsVisibleTo(Player player) => Point?.IsHighGround ?? false // Nullability check needed when loading save
             ? GlobalRegistry.Instance.GetTile(Position, false)?.IsVisibleTo(player) ?? false 
             : VisibleTo.Contains(player);
@@ -419,7 +420,7 @@ public partial class Tiles : Node2D
     }
 
     public IEnumerable<Vector2> GetGlobalPositionsFromTiles(IEnumerable<TileInstance> tiles) => tiles
-        .Select(x => GetGlobalPositionFromMapPosition(x!.Position) + Vector2.Up * 
+        .Select(x => GetGlobalPositionFromMapPosition(x.Position) + Vector2.Up * 
             (x.YSpriteOffset > 0 && ClientState.Instance.Flattened 
                 ? Constants.FlattenedHighGroundHeight 
                 : x.YSpriteOffset));
@@ -533,20 +534,7 @@ public partial class Tiles : Node2D
     
     private void AddVision(IEnumerable<Vector2Int> searchPositions, int visionRange, Player player)
     {
-        // TODO calculate shadowcasting
-        var revealedTiles = new HashSet<TileInstance>();
-        foreach (var searchPosition in searchPositions)
-        {
-            var foundTiles = new Circle(visionRange)
-                .ToPositions(searchPosition, _mapSize)
-                .Select(p => GetTile(p, false))
-                .WhereNotNull();
-
-            foreach (var tile in foundTiles)
-            {
-                revealedTiles.Add(tile);
-            }
-        }
+        var revealedTiles = GetRevealedTiles(searchPositions, visionRange);
 
         var isCurrentPlayer = player.Equals(Players.Instance.Current);
         var fogToReveal = new List<Vector2I>();
@@ -564,6 +552,64 @@ public partial class Tiles : Node2D
         }
         
         SetFogCells(fogToReveal, false);
+    }
+
+    private IEnumerable<TileInstance> GetRevealedTiles(IEnumerable<Vector2Int> searchPositions, int visionRange)
+    {
+        var revealedTiles = new HashSet<TileInstance>();
+
+        var useShadowCast = Config.Instance.UseLineOfSight;
+        if (useShadowCast is false)
+        {
+            foreach (var searchPosition in searchPositions)
+            {
+                var foundTiles = new Circle(visionRange)
+                    .ToPositions(searchPosition, _mapSize)
+                    .Select(p => GetTile(p, false))
+                    .WhereNotNull();
+
+                foreach (var tile in foundTiles)
+                {
+                    revealedTiles.Add(tile);
+                }
+            }
+
+            return revealedTiles;
+        }
+        
+        foreach (var searchPosition in searchPositions)
+        {
+            var size = new Vector2Int(visionRange + 1, visionRange + 1);
+            var grid = new ShadowCastGrid(
+                searchPosition,
+                size,
+                (x, y) =>
+                {
+                    var tile = GetHighestTile(new Vector2Int(x, y));
+                
+                    if (tile is null)
+                        return true;
+
+                    if (tile.Terrain.Equals(Terrain.Mountains))
+                        return true;
+
+                    if (tile.Point.IsHighGround)
+                        return true;
+
+                    return false;
+                });
+            
+            ShadowCast.ComputeVisibility(grid, size, visionRange + Constants.Pathfinding.SearchIncrement);
+            
+            foreach (var tile in grid.GetLitPositions()
+                         .Select(p => GetTile(p, false))
+                         .WhereNotNull())
+            {
+                revealedTiles.Add(tile);
+            }
+        }
+
+        return revealedTiles;
     }
 
     private void SetFogCells(IEnumerable<Vector2I> at, bool to)

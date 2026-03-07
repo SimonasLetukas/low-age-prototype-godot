@@ -5,12 +5,11 @@ using Godot;
 // TODO: Probably needs to be moved under Entities.cs instead of Tiles.cs
 public partial class StructureFoundations : Node2D
 {
-    private readonly Dictionary<Guid, StructureFoundation> _foundationsByInstanceId = new();
+    private readonly Dictionary<StructureNode, StructureFoundation> _foundationsByStructure = new();
 
     public override void _Ready()
     {
         base._Ready();
-        Visible = false;
         foreach (var child in GetChildren()) 
             child.QueueFree();
 
@@ -26,29 +25,37 @@ public partial class StructureFoundations : Node2D
 
     public void AddOccupation(StructureNode structure)
     {
-        if (_foundationsByInstanceId.ContainsKey(structure.InstanceId))
+        if (_foundationsByStructure.ContainsKey(structure))
             return;
         var foundation = StructureFoundation.InstantiateAsChild(this);
+        foundation.Visible = ClientState.Instance.Flattened;
         foundation.Initialize(structure);
-        _foundationsByInstanceId.Add(structure.InstanceId, foundation);
+        _foundationsByStructure.Add(structure, foundation);
     }
 
     public void RemoveOccupation(StructureNode structure)
     {
-        if (_foundationsByInstanceId.TryGetValue(structure.InstanceId, out var foundation) is false)
+        if (_foundationsByStructure.TryGetValue(structure, out var foundation) is false)
             return;
         foundation.QueueFree();
-        _foundationsByInstanceId.Remove(structure.InstanceId);
+        _foundationsByStructure.Remove(structure);
     }
 
     private void Enable()
     {
-        Visible = true;
+        foreach (var (structure, foundation) in _foundationsByStructure)
+        {
+            if (structure.IsRevealed())
+                foundation.Visible = true;
+        }
     }
 
     private void Disable()
     {
-        Visible = false;
+        foreach (var (_, foundation) in _foundationsByStructure)
+        {
+            foundation.Visible = false;
+        }
     }
 
     private void OnWhenFlattenedChanged(bool to)

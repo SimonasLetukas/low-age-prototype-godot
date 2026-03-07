@@ -34,7 +34,7 @@ public partial class StructureFoundation : TileMapLayer
             WalkableFoundationTerrainIndex,
             false);
         
-        if (structure.FlattenedSprite != null && structure.FlattenedCenterOffset != null)
+        if (structure is { FlattenedSprite: not null, FlattenedCenterOffset: not null })
         {
             return;
         }

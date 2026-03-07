@@ -136,7 +136,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
 
     public bool IsRevealed() => Visible;
 
-    public void SetRevealed(bool to)
+    public virtual void SetRevealed(bool to)
     {
         Visible = to;
         RevealedUpdated(this, to);
@@ -213,6 +213,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
             Destroy();
             return false;
         }
+        
+        Visible = Player.Equals(Players.Instance.Current);
         
         EntityState = State.Placed;
         EventBus.Instance.RaiseEntityPlaced(this);
