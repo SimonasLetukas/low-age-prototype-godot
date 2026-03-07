@@ -22,6 +22,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
     public event Action<EntityNode> Completed = delegate { };
     public event Action<EntityNode> Destroyed = delegate { };
     public event Action<EntityNode> FinishedMoving = delegate { };
+    public event Action<EntityNode, bool> RevealedUpdated = delegate { };
     
     public EntityId BlueprintId { get; private set; } = null!;
 
@@ -133,9 +134,12 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         UpdateVisuals();
     }
 
+    public bool IsRevealed() => Visible;
+
     public void SetRevealed(bool to)
     {
         Visible = to;
+        RevealedUpdated(this, to);
     }
 
     public virtual void SetOutline(bool to) => Renderer.SetOutline(to, Players.Instance.IsCurrentPlayerEnemyTo(Player));
@@ -430,7 +434,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         Renderer.UpdateOrigins();
         Renderer.UpdateSpriteBounds();
         
-        CurrentTileDuringMovement.Remove(CurrentTileDuringMovement.First());
+        if (CurrentTileDuringMovement.Any())
+            CurrentTileDuringMovement.Remove(CurrentTileDuringMovement.First());
         
         if (_moveGlobalPositionPath.IsEmpty())
         {

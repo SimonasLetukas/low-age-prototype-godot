@@ -47,6 +47,8 @@ public partial class CombatStatNode : StatNode, INodeFromBlueprint<CombatStat>
 		{
 			Modifications.Add(statModification);
 		}
+		
+		base.Apply(modification, applyToBaseValue);
 	}
 
 	public override void Remove(Modification modification)
@@ -56,5 +58,7 @@ public partial class CombatStatNode : StatNode, INodeFromBlueprint<CombatStat>
 			return;
 		
 		Modifications.Remove(statModification);
+		
+		base.Remove(modification);
 	}
 }

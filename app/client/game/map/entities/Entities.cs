@@ -11,7 +11,6 @@ using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Modifications;
 using LowAgeData.Domain.Common.Shape;
-using MultipurposePathfinding;
 using Newtonsoft.Json;
 
 /// <summary>
@@ -270,6 +269,9 @@ public partial class Entities : Node2D
         
         var occupationExists = tile.IsOccupied();
         var occupantEntity = tile.GetLastOccupantOrNull();
+
+        if (occupantEntity?.IsRevealed() is false)
+            return false;
         
         if (occupationExists && IsEntityHovered(occupantEntity!))
             return true;
@@ -543,6 +545,7 @@ public partial class Entities : Node2D
             _ => throw new ArgumentOutOfRangeException($"No possible cast for entity '{entityBlueprint.Id}'")
         };
 
+        entity.RevealedUpdated += OnEntityRevealedUpdated;
         entity.Destroyed += OnEntityDestroyed;
 
         if (instanceId != null)
@@ -677,7 +680,8 @@ public partial class Entities : Node2D
         EventBus.Instance.RaiseEntityDestroyed(entity);
 
         _renderers.UnregisterRenderer(entity.Renderer);
-        
+
+        entity.RevealedUpdated -= OnEntityRevealedUpdated;
         entity.FinishedMoving -= OnEntityFinishedMoving;
         entity.Destroyed -= OnEntityDestroyed;
         if (entity is ActorNode actor)
@@ -687,6 +691,9 @@ public partial class Entities : Node2D
         _entitiesBeingDestroyed.Remove(entity);
     }
     
+    private void OnEntityRevealedUpdated(EntityNode entity, bool isRevealed) 
+        => EventBus.Instance.RaiseEntityRevealedUpdated(entity, isRevealed);
+
     private class PlayerPriority
     {
         public required IList<Player> Queue { private get; init; }

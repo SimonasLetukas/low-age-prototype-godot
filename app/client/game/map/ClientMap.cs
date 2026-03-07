@@ -400,6 +400,9 @@ public partial class ClientMap : Map
 		if (entity is null)
 			return;
 
+		if (entity.IsRevealed() is false)
+			return;
+
 		var initialOverlay = entity is ActorNode actor
 			? actor.ActionEconomy.CanMove
 				? SelectionOverlay.Movement
@@ -697,7 +700,9 @@ public partial class ClientMap : Map
 
 		var topEntity = Entities.GetTopEntity(mousePosition);
 
-		if (topEntity != null && Input.IsActionPressed(Constants.Input.FocusSelection) is false)
+		if (topEntity != null 
+		    && topEntity.IsRevealed() 
+		    && Input.IsActionPressed(Constants.Input.FocusSelection) is false)
 		{
 			_focusedTile.FocusEntity(topEntity);
 			_focusedTile.UpdateTile();
@@ -915,7 +920,7 @@ public partial class ClientMap : Map
 
 		var occupant = _hoveredInitiativePanelActor ?? occupants?.LastOrDefault();
 
-		if (occupant is null)
+		if (occupant is null || occupant.IsRevealed() is false)
 		{
 			_tileMap.Elevatable.ClearAvailableTiles(true);
 			return;
@@ -1043,9 +1048,21 @@ public partial class ClientMap : Map
 		ShowAttackOverlay(actor, showMelee);
 	}
 
-	internal void OnInitiativePanelActorHovered(ActorNode? actor) => _hoveredInitiativePanelActor = actor;
+	internal void OnInitiativePanelActorHovered(ActorNode? actor)
+	{
+		if (actor?.IsRevealed() is false)
+			return;
+		
+		_hoveredInitiativePanelActor = actor;
+	}
 
-	internal void OnInitiativePanelActorSelected(ActorNode? actor) => ExecuteEntitySelection(actor);
+	internal void OnInitiativePanelActorSelected(ActorNode? actor)
+	{
+		if (actor?.IsRevealed() is false)
+			return;
+		
+		ExecuteEntitySelection(actor);
+	}
 
 	internal void OnInterfaceAbilitySelected(IAbilityNode ability)
 	{

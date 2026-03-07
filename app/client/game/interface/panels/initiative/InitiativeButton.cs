@@ -19,6 +19,8 @@ public partial class InitiativeButton : BaseButton
     public ActorNode Actor { get; private set; } = null!;
 
     private GridContainer _possibleActions = null!;
+
+    private const string UnknownIconPath = @"res://assets/icons/icon_x_simplified.png";
     
     public override void _Ready()
     {
@@ -40,34 +42,45 @@ public partial class InitiativeButton : BaseButton
         base._ExitTree();
     }
 
+    public void UpdateDisplay() => SetDynamicProperties(Actor);
+
     private void SetupInitiativeButton(ActorNode actor)
     {
         Actor = actor;
-
-        if (actor.SpriteLocation != null)
-            SetIcon(GD.Load<Texture2D>(actor.SpriteLocation));
         
         Callable.From(() => SetDynamicProperties(actor)).CallDeferred();
     }
 
     private void SetDynamicProperties(ActorNode actor)
     {
+        var spriteLocation = actor.IsRevealed() ? actor.SpriteLocation : UnknownIconPath;
+        if (spriteLocation != null)
+            SetIcon(GD.Load<Texture2D>(spriteLocation));
+        
         var actorTypeText = actor is UnitNode ? "Unit" : "Structure";
         var numberOfActions = actor.ActionEconomy.NumberOfPossibleActions;
         
-        var initiativeValue = actor.Initiative?.CurrentAmount.Equals((float?)actor.Initiative?.MaxAmount) switch
+        var initiativeValue = Config.Instance.DeterministicInitiative switch
         {
-            false => $"{actor.Initiative?.CurrentAmount.ToDisplayFormat()}/{actor.Initiative?.MaxAmount}",
-            _ => actor.Initiative?.MaxAmount.ToString()
+            false => actor.IsRevealed() 
+                ? $"{actor.Initiative?.CurrentAmount.ToDisplayFormat()}/{actor.Initiative?.MaxAmount}" 
+                : $"{actor.Initiative?.CurrentAmount.ToDisplayFormat()}",
+            _ => actor.IsRevealed() 
+                ? actor.Initiative?.MaxAmount.ToString() 
+                : "Unknown"
         };
 
-        TooltipText = $"{actorTypeText}: {actor.DisplayName}\n" +
-                      $"Position: {actor.EntityPrimaryPosition}\n" +
-                      $"Initiative: {initiativeValue}\n" +
-                      $"Player: {actor.Player.Name}\n" + 
-                      $"Available Actions: {numberOfActions}";
+        TooltipText = actor.IsRevealed()
+            ? $"{actorTypeText}: {actor.DisplayName}\n" +
+              $"Position: {actor.EntityPrimaryPosition}\n" +
+              $"Initiative: {initiativeValue}\n" +
+              $"Player: {actor.Player.Name}\n" +
+              $"Available Actions: {numberOfActions}"
+            : $"Unrevealed\n" +
+              $"Initiative: {initiativeValue}\n" +
+              $"Player: {actor.Player.Name}\n";
 
-        SetPossibleActions(numberOfActions);
+        SetPossibleActions(actor.IsRevealed() ? numberOfActions : 0);
     }
 
     private void SetPossibleActions(int number)

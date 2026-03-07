@@ -53,6 +53,9 @@ public partial class EventBus : Node
     
     public event Action<EntityNode> EntityPlaced = delegate { };
     public void RaiseEntityPlaced(EntityNode entity) => EntityPlaced(entity);
+
+    public event Action<EntityNode, bool> EntityRevealedUpdated = delegate { };
+    public void RaiseEntityRevealedUpdated(EntityNode entity, bool isRevealed) => EntityRevealedUpdated(entity, isRevealed);
     
     public event Action<EntityNode, EntityNode, AttackType> EntityTargeted = delegate { };
     public void RaiseEntityTargeted(EntityNode target, EntityNode source, AttackType attackType) 

@@ -9,7 +9,7 @@ using LowAgeData.Domain.Common;
 public partial class InitiativePanel : Control
 {
 	public event Action<ActorNode?> ActorHovered = delegate { };
-	public event Action<ActorNode?> ActorSelected = delegate { }; // TODO also handle deselect and force select outside of this
+	public event Action<ActorNode?> ActorSelected = delegate { };
 	
 	private const float PanelMoveDuration = 0.05f;
 	
@@ -34,12 +34,14 @@ public partial class InitiativePanel : Control
 
 		EventBus.Instance.InitiativeQueueUpdated += OnInitiativeQueueUpdated;
 		EventBus.Instance.NewTileFocused += OnNewTileFocused;
+		EventBus.Instance.EntityRevealedUpdated += OnEntityRevealedUpdated;
 	}
 
 	public override void _ExitTree()
 	{
 		EventBus.Instance.InitiativeQueueUpdated -= OnInitiativeQueueUpdated;
 		EventBus.Instance.NewTileFocused -= OnNewTileFocused;
+		EventBus.Instance.EntityRevealedUpdated -= OnEntityRevealedUpdated;
 		
 		base._ExitTree();
 	}
@@ -194,5 +196,13 @@ public partial class InitiativePanel : Control
 		
 		_currentlyHoveringButton = button;
 		button.SetHovering(true);
+	}
+	
+	private void OnEntityRevealedUpdated(EntityNode entity, bool isRevealed)
+	{
+		if (entity is not ActorNode actor || _buttonsByActor.TryGetValue(actor, out var button) is false)
+			return;
+		
+		button.UpdateDisplay();
 	}
 }

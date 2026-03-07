@@ -49,7 +49,7 @@ public partial class HoveringPanel : Control
             coordinatesText = $"{tileHovered.X}, {tileHovered.Y}";
             terrainText = terrain.ToDisplayValue().Capitalize();
             
-            if (occupants is null || occupants.IsEmpty())
+            if (occupants is null || occupants.IsEmpty() || occupants.Last().IsRevealed() is false)
             {
                 _infoDisplay.Reset();
                 _availableActions.Reset();

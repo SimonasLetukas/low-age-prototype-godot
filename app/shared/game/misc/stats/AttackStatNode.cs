@@ -93,6 +93,8 @@ public partial class AttackStatNode : StatNode, INodeFromBlueprint<AttackStat>
 		{
 			Modifications.Add(attackModification);
 		}
+		
+		base.Apply(modification, applyToBaseValue);
 	}
 	
 	public override void Remove(Modification modification)
@@ -102,6 +104,8 @@ public partial class AttackStatNode : StatNode, INodeFromBlueprint<AttackStat>
 			return;
 		
 		Modifications.Remove(attackModification);
+		
+		base.Remove(modification);
 	}
 
 	protected override float GetCurrent() => GetMax();

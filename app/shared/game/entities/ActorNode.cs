@@ -16,6 +16,8 @@ using MultipurposePathfinding;
 /// </summary>
 public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 {
+    public event Action<ActorNode, StatNode> StatChanged = delegate { };
+    
     public bool HasHealth => HasStat(StatType.Health);
     public bool HasShields => HasStat(StatType.Shields) && Shields?.MaxAmount > 0;
     public CombatStatNode? Health => Stats.FirstOrDefault(x => x.StatType == StatType.Health);
@@ -66,6 +68,20 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         _shields.Visible = false;
     }
 
+    public override void _ExitTree()
+    {
+        foreach (var attack in Attacks)
+        {
+            attack.Updated -= OnStatUpdated;
+        }
+        foreach (var stat in Stats)
+        {
+            stat.Updated -= OnStatUpdated;
+        }
+        
+        base._ExitTree();
+    }
+
     public void SetBlueprint(Actor blueprint)
     {
         base.SetBlueprint(blueprint);
@@ -83,16 +99,25 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         Abilities.PopulateFromBlueprint(Blueprint.Abilities);
         Behaviours.AddOnBuildBehaviours(Abilities.GetPassives());
         CreationProgress = Behaviours.GetBuildables().FirstOrDefault();
+        ActionEconomy = ActionEconomy.For(this);
+        
+        foreach (var attack in Attacks)
+        {
+            attack.Updated += OnStatUpdated;
+        }
+        foreach (var stat in Stats)
+        {
+            stat.Updated += OnStatUpdated;
+        }
         if (CreationProgress is not null)
         {
             CreationProgress.Updated += OnCreationProgressUpdated;
             CreationProgress.Completed += OnCreationProgressCompleted;
         }
-        ActionEconomy = ActionEconomy.For(this);
         
         UpdateVitalsValuesForDisplay();
     }
-
+    
     public override void SetOutline(bool to)
     {
         base.SetOutline(to);
@@ -332,13 +357,6 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         
         _ => 0,
     };
-
-    protected override void OnPhaseStarted(int turn, TurnPhase phase)
-    {
-        RestoreActionEconomy(phase, false);
-        
-        base.OnPhaseStarted(turn, phase);
-    }
     
     private List<Tiles.TileInstance> GetAttackTargetTiles(AttackType attackType, Vector2Int mapSize)
     {
@@ -382,6 +400,15 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         var isLethal = HasHealth && healthAndShields - damage <= 0;
         return (damage, isLethal);
     }
+    
+    protected override void OnPhaseStarted(int turn, TurnPhase phase)
+    {
+        RestoreActionEconomy(phase, false);
+        
+        base.OnPhaseStarted(turn, phase);
+    }
+    
+    private void OnStatUpdated(StatNode stat) => StatChanged(this, stat);
     
     private void OnCreationProgressUpdated((int DeltaGainedHealth, int DeltaGainedShields) delta)
     {

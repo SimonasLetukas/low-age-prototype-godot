@@ -93,7 +93,7 @@ public partial class Tiles : Node2D
             entity.SetRevealed(false);
         }
 
-        public bool IsVisibleTo(Player player) => Point.IsHighGround 
+        public bool IsVisibleTo(Player player) => Point?.IsHighGround ?? false // Nullability check needed when loading save
             ? GlobalRegistry.Instance.GetTile(Position, false)?.IsVisibleTo(player) ?? false 
             : VisibleTo.Contains(player);
 

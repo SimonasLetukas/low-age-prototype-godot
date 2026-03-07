@@ -7,6 +7,8 @@ using LowAgeData.Domain.Common.Modifications;
 
 public abstract partial class StatNode : Node2D, INodeFromBlueprint<Stat>
 {
+    public event Action<StatNode> Updated = delegate { };
+    
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     
     protected List<Modification> Modifications { get; } = [];
@@ -27,12 +29,12 @@ public abstract partial class StatNode : Node2D, INodeFromBlueprint<Stat>
         BaseMaxAmount = Blueprint.MaxAmount;
     }
 
-    public abstract void Apply(Change what, float amount);
+    public virtual void Apply(Change what, float amount) => Updated(this);
 
-    public abstract void Apply(Modification modification, bool applyToBaseValue);
+    public virtual void Apply(Modification modification, bool applyToBaseValue) => Updated(this);
 
-    public abstract void Remove(Modification modification);
-    
+    public virtual void Remove(Modification modification) => Updated(this);
+
     protected virtual float GetCurrent() => GetModified(BaseCurrentAmount, BaseMaxAmount, Modifications).NewCurrent;
     
     protected virtual int GetMax() => GetModified(BaseCurrentAmount, BaseMaxAmount, Modifications).NewMax;
