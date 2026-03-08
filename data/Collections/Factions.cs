@@ -38,7 +38,7 @@ namespace LowAgeData.Collections
                     bonusStartingResources: new List<Payment>
                     {
                         new Payment(resource: ResourceId.Scraps, amount: 17),
-                        new Payment(resource: ResourceId.MeleeWeapon, amount: 4)
+                        new Payment(resource: ResourceId.MeleeWeapon, amount: 4),
                     }),
 
                 new Faction(id: FactionId.Uee,

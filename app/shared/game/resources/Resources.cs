@@ -42,9 +42,9 @@ public partial class Resources : Node2D
         GlobalRegistry.Instance.ProvideIsPaymentComplete(IsPaymentComplete);
         GlobalRegistry.Instance.ProvideCanSubtractResources(CanSubtractResources);
         GlobalRegistry.Instance.ProvideSubtractResources(SubtractResources);
-
-        PopulatePlayerResources();
-
+        
+        InitializePlayers();
+        
         EventBus.Instance.IncomeProviderRegistered += OnIncomeProviderRegistered;
         EventBus.Instance.IncomeProviderUnregistered += OnIncomeProviderUnregistered;
         EventBus.Instance.PaymentRequested += OnPaymentRequested;
@@ -181,7 +181,7 @@ public partial class Resources : Node2D
             false,
             subtractNonConsumable));
 
-    private void PopulatePlayerResources()
+    private void InitializePlayers()
     {
         var blueprint = Data.Instance.Blueprint;
         _resourceBlueprints = blueprint.Resources.ToDictionary(resource => resource.Id, resource => resource);
@@ -195,11 +195,31 @@ public partial class Resources : Node2D
             
             foreach (var factionResource in factionResources)
             {
-                var amount = GetStartingResourceAmount(factionBlueprint, factionResource);
-                startingResources[factionResource] = amount;
+                startingResources[factionResource] = 0;
             }
             
             _resourcesStockpiledByPlayer[player] = startingResources;
+        }
+    }
+
+    private void AddPlayerStartingResources()
+    {
+        var blueprint = Data.Instance.Blueprint;
+        foreach (var player in Players.Instance.GetAll())
+        {
+            var faction = player.Faction;
+            var factionBlueprint = blueprint.Factions.First(f => f.Id.Equals(faction));
+            var currentPlayerStockpile = _resourcesStockpiledByPlayer[player];
+            var newStockpile = new Dictionary<ResourceId, int>();
+
+            foreach (var (resourceId, currentAmount) in currentPlayerStockpile)
+            {
+                var additionalAmount = GetStartingResourceAmount(factionBlueprint, resourceId);
+                newStockpile[resourceId] = currentAmount + additionalAmount;
+            }
+            
+            _resourcesStockpiledByPlayer[player] = newStockpile;
+            RaisePlayerResourcesUpdated(player);
         }
     }
 
@@ -316,13 +336,13 @@ public partial class Resources : Node2D
     private void OnPhaseStarted(int turn, TurnPhase phase)
     {
         if (phase.Equals(TurnPhase.Planning))
-            OnPlanningPhaseStarted();
+            OnPlanningPhaseStarted(turn);
         
         if (phase.Equals(TurnPhase.Action))
             OnActionPhaseStarted();
     }
 
-    private void OnPlanningPhaseStarted()
+    private void OnPlanningPhaseStarted(int turn)
     {
         var providersByPlayer = GetProvidersByPlayers();
 
@@ -338,6 +358,9 @@ public partial class Resources : Node2D
 
             RaisePlayerResourcesUpdated(player);
         }
+
+        if (turn == 1)
+            AddPlayerStartingResources();
     }
 
     private void OnActionPhaseStarted()

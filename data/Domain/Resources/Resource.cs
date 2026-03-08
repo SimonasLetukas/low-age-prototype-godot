@@ -14,11 +14,13 @@ namespace LowAgeData.Domain.Resources
             string sprite,
             bool hasLimit, 
             bool isConsumable, 
-            bool hasBank, ResourceId? storedAs = null,
+            bool hasBank, 
+            ResourceId? storedAs = null,
             IList<EffectId>? positiveIncomeEffects = null,
             IList<EffectId>? negativeIncomeEffects = null,
             string? negativeIncomeDescription = null,
-            bool? effectAmountMultipliedByResourceAmount = null)
+            bool? effectAmountMultipliedByResourceAmount = null,
+            int? value = null)
         {
             Id = id;
             DisplayName = displayName;
@@ -33,6 +35,7 @@ namespace LowAgeData.Domain.Resources
             NegativeIncomeEffects = negativeIncomeEffects ?? new List<EffectId>();
             NegativeIncomeDescription = negativeIncomeDescription ?? string.Empty;
             EffectAmountMultipliedByResourceAmount = effectAmountMultipliedByResourceAmount ?? false;
+            Value = value ?? 1;
         }
 
         public ResourceId Id { get; }
@@ -92,6 +95,14 @@ namespace LowAgeData.Domain.Resources
         /// </summary>
         public bool EffectAmountMultipliedByResourceAmount { get; }
 
+        /// <summary>
+        /// Used when comparing which resources are more valuable for storage, when there are multiple resource types
+        /// <see cref="StoredAs"/> under one resource. Higher is more valuable.
+        ///
+        /// Default = 1.
+        /// </summary>
+        public int Value { get; }
+        
         public string? Sprite { get; }
         
         public Vector2Int CenterOffset { get; }

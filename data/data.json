@@ -12,6 +12,7 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
+      "value": 1,
       "sprite": "res://assets/sprites/resources/scraps indexed.png",
       "centerOffset": {
         "x": 0,
@@ -30,6 +31,7 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
+      "value": 1,
       "sprite": "res://assets/sprites/resources/celestium indexed.png",
       "centerOffset": {
         "x": 0,
@@ -50,6 +52,7 @@
       ],
       "negativeIncomeDescription": "Caution, there are more units than the supported population.",
       "effectAmountMultipliedByResourceAmount": false,
+      "value": 1,
       "sprite": "res://assets/sprites/resources/population indexed.png",
       "centerOffset": {
         "x": 0,
@@ -68,6 +71,7 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
+      "value": 1,
       "sprite": "res://assets/sprites/resources/weapon all indexed.png",
       "centerOffset": {
         "x": 0,
@@ -86,6 +90,7 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
+      "value": 1,
       "sprite": "res://assets/sprites/resources/weapon melee indexed.png",
       "centerOffset": {
         "x": 0,
@@ -104,6 +109,7 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
+      "value": 2,
       "sprite": "res://assets/sprites/resources/weapon ranged indexed.png",
       "centerOffset": {
         "x": 0,
@@ -122,6 +128,7 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": false,
+      "value": 3,
       "sprite": "res://assets/sprites/resources/weapon special indexed.png",
       "centerOffset": {
         "x": 0,
@@ -142,6 +149,7 @@
       "negativeIncomeEffects": [],
       "negativeIncomeDescription": "",
       "effectAmountMultipliedByResourceAmount": true,
+      "value": 1,
       "sprite": "res://assets/sprites/resources/faith indexed.png",
       "centerOffset": {
         "x": 0,
@@ -12760,7 +12768,7 @@
         }
       ],
       "diminishingReturn": 0,
-      "instantUpdate": false,
+      "instantUpdate": true,
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Weapon Storage Income",

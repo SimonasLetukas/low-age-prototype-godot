@@ -555,7 +555,8 @@ namespace LowAgeData.Collections
                         new ResourceModification(
                             amount: 4,
                             resource: ResourceId.WeaponStorage)
-                    }),
+                    },
+                    instantUpdate: true),
                 
                 new Ascendable(
                     id: BehaviourId.Outpost.AscendableAscendable,

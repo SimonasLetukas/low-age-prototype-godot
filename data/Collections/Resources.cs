@@ -58,7 +58,8 @@ namespace LowAgeData.Collections
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
-                    storedAs: ResourceId.WeaponStorage),
+                    storedAs: ResourceId.WeaponStorage,
+                    value: 1),
 
                 new Resource(id: ResourceId.RangedWeapon,
                     displayName: nameof(ResourceId.RangedWeapon).CamelCaseToWords(),
@@ -67,7 +68,8 @@ namespace LowAgeData.Collections
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
-                    storedAs: ResourceId.WeaponStorage),
+                    storedAs: ResourceId.WeaponStorage,
+                    value: 2),
 
                 new Resource(id: ResourceId.SpecialWeapon,
                     displayName: nameof(ResourceId.SpecialWeapon).CamelCaseToWords(),
@@ -76,7 +78,8 @@ namespace LowAgeData.Collections
                     hasLimit: true,
                     isConsumable: true,
                     hasBank: true,
-                    storedAs: ResourceId.WeaponStorage),
+                    storedAs: ResourceId.WeaponStorage,
+                    value: 3),
                 
                 new Resource(id: ResourceId.Faith,
                     displayName: nameof(ResourceId.Faith).CamelCaseToWords(),

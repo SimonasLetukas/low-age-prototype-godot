@@ -199,10 +199,18 @@ public static class ResourceCalculator
         while (contributingIncomeProviders.Count > 0 
                && StockpileIsOverLimit(updatedStockpile, resourceBlueprints, out var resourcesOverLimit))
         {
+            if (resourcesOverLimit.IsEmpty())
+                break;
+            
             var incomeProvidersByResourcesToReject = 
                 GetIncomeProvidersByResourcesToReject(resourcesOverLimit, contributingIncomeProviders);
             if (incomeProvidersByResourcesToReject.IsEmpty())
-                break; // Retain resources over limit if there are no income providers contributing to that resource
+            {
+                // Start removing resources over limit if there are no income providers contributing to that resource
+                var resourceOverLimit = resourcesOverLimit.First();
+                updatedStockpile[resourceOverLimit]--;
+                continue;
+            }
             
             var incomeProviderToReject = resourcesOverLimit
                 .Where(incomeProvidersByResourcesToReject.ContainsKey)
@@ -306,15 +314,21 @@ public static class ResourceCalculator
                 continue;
 
             foreach (var (resourceOverLimit, fullAmount) in allResourcesStoredAsThis)
+            {
+                if (fullAmount <= 0)
+                    continue;
+                
                 fullAmountByResourceOverLimit[resourceOverLimit] = fullAmount;
+            }
         }
 
         if (fullAmountByResourceOverLimit.Count == 0)
             return false;
 
         resourcesOverLimit = fullAmountByResourceOverLimit
-            .OrderByDescending(kvp => kvp.Value) // Most abundant resources are first in line to be rejected
-            .ThenBy(kvp => kvp.Key.ToString())   // Alphabetical sort for determinism
+            .OrderByDescending(kvp => resourceBlueprints[kvp.Key].Value) // Most valuable resources to be rejected
+            .ThenByDescending(kvp => kvp.Value) // Most abundant resources are second in line to be rejected
+            .ThenBy(kvp => kvp.Key.ToString()) // Alphabetical sort for determinism
             .Select(kvp => kvp.Key)
             .ToList();
         
