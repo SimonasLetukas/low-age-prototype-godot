@@ -958,7 +958,7 @@ public partial class ClientMap : Map
 		UpdateLines();
 	}
 	
-	private void OnEntityDestroyed(EntityNode entity)
+	private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
 	{
 		if (Entities.IsEntitySelected(entity))
 			HandleDeselecting();

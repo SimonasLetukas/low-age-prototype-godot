@@ -166,7 +166,7 @@ public static class ResourceCalculator
     }
     
     public static (IReadOnlyDictionary<ResourceId, int> UpdatedStockpile, 
-        IEnumerable<IncomeProvider> UsedIncomeProviders) AddResources(
+        IReadOnlyDictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>> UsedIncomeProviders) AddResources(
             IReadOnlyDictionary<ResourceId, int> stockpile, 
             IReadOnlyDictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>> paymentsByProviders, 
             IEnumerable<ResourceId> resourcesToAdd,
@@ -220,7 +220,7 @@ public static class ResourceCalculator
                 contributingIncomeProviders.Remove(incomeProviderToReject);
         }
         
-        return (updatedStockpile, contributingIncomeProviders.Keys);
+        return (updatedStockpile, contributingIncomeProviders);
     }
 
     public static Dictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>> GetContributingIncomeProviders(

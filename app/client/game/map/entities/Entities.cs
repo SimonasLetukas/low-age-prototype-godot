@@ -355,7 +355,7 @@ public partial class Entities : Node2D
 
     public void CancelPlacement()
     {
-        EntityInPlacement?.Destroy();
+        EntityInPlacement?.Destroy(null);
         EntityInPlacement = null;
     }
 
@@ -384,7 +384,7 @@ public partial class Entities : Node2D
             if (entity.IsCandidate() is false)
                 continue;
             
-            entity.Destroy();
+            entity.Destroy(null);
         }
     }
 
@@ -667,7 +667,7 @@ public partial class Entities : Node2D
         });
     }
 
-    private void OnEntityDestroyed(EntityNode entity)
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
     {
         _entitiesBeingDestroyed.Add(entity);
         
@@ -677,7 +677,7 @@ public partial class Entities : Node2D
         if (entity.IsCandidate())
             OnCandidatePlacementCancelled(entity);
         
-        EventBus.Instance.RaiseEntityDestroyed(entity);
+        EventBus.Instance.RaiseEntityDestroyed(entity, source);
 
         _renderers.UnregisterRenderer(entity.Renderer);
 

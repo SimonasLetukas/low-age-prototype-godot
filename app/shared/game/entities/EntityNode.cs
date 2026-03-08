@@ -20,7 +20,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
     [Export] public Color PlacementColorInvalid { get; set; } = Colors.Red;
 
     public event Action<EntityNode> Completed = delegate { };
-    public event Action<EntityNode> Destroyed = delegate { };
+    public event Action<EntityNode, EntityNode?> Destroyed = delegate { };
     public event Action<EntityNode> FinishedMoving = delegate { };
     public event Action<EntityNode, bool> RevealedUpdated = delegate { };
     
@@ -183,7 +183,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         
         if (CanBePlaced is false)
         {
-            Destroy();
+            Destroy(null);
             return false;
         }
 
@@ -210,7 +210,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
     {
         if (EntityState != State.Candidate && CanBePlaced is false)
         {
-            Destroy();
+            Destroy(null);
             return false;
         }
         
@@ -325,43 +325,44 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
     /// Resolves various <see cref="DamageType"/> values into 3 main ones: <see cref="DamageType.Melee"/>,
     /// <see cref="DamageType.Ranged"/> or <see cref="DamageType.Pure"/>. Updates the damage amount accordingly.
     /// </summary>
-    public (int Amount, DamageType Type) ResolveDamageType(int damage, DamageType type, ActorNode from) => type switch
+    public (int Amount, DamageType Type) ResolveDamageType(int damage, DamageType type, 
+        ActorNode from, bool isSimulation) => type switch
     {
         _ when type.Equals(DamageType.Melee) => (damage, DamageType.Melee),
         _ when type.Equals(DamageType.Ranged) => (damage, DamageType.Ranged),
         _ when type.Equals(DamageType.Pure) => (damage, DamageType.Pure),
         
         _ when type.Equals(DamageType.CurrentMelee) => 
-            (damage + GetDamage(from, AttackType.Melee).Amount, DamageType.Melee),
+            (damage + GetDamage(from, AttackType.Melee, isSimulation).Amount, DamageType.Melee),
         _ when type.Equals(DamageType.CurrentRanged) => 
-            (damage + GetDamage(from, AttackType.Ranged).Amount, DamageType.Ranged),
+            (damage + GetDamage(from, AttackType.Ranged, isSimulation).Amount, DamageType.Ranged),
         
         _ when type.Equals(DamageType.OverrideMelee) => 
-            (GetDamage(from, AttackType.Melee).Amount, DamageType.Melee),
+            (GetDamage(from, AttackType.Melee, isSimulation).Amount, DamageType.Melee),
         _ when type.Equals(DamageType.OverrideRanged) => 
-            (GetDamage(from, AttackType.Ranged).Amount, DamageType.Ranged),
+            (GetDamage(from, AttackType.Ranged, isSimulation).Amount, DamageType.Ranged),
         
         _ when type.Equals(DamageType.TargetMelee) => 
-            (GetDamage(this, AttackType.Melee).Amount, DamageType.Melee),
+            (GetDamage(this, AttackType.Melee, isSimulation).Amount, DamageType.Melee),
         _ when type.Equals(DamageType.TargetRanged) => 
-            (GetDamage(this, AttackType.Ranged).Amount, DamageType.Ranged),
+            (GetDamage(this, AttackType.Ranged, isSimulation).Amount, DamageType.Ranged),
         
         _ => (0, DamageType.Pure),
     };
 
     // TODO entities should also be able to receive damage, fix when this is relevant
-    protected virtual (int Amount, DamageType Type) GetDamage(EntityNode from, AttackType attackType) 
+    protected virtual (int Amount, DamageType Type) GetDamage(EntityNode from, AttackType attackType, bool isSimulation) 
         => (0, DamageType.Pure);
 
     protected virtual int ResolveDamageArmour(int damage, DamageType damageType) => damage;
     
-    public void Destroy()
+    public void Destroy(EntityNode? source)
     {
         if (IsBeingDestroyed)
             return;
         
         IsBeingDestroyed = true;
-        Destroyed(this);
+        Destroyed(this, source);
         QueueFree();
     }
 

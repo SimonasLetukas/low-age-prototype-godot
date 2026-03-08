@@ -231,6 +231,8 @@ public partial class Resources : Node2D
                 continue; // Try to pay for the income provider next time
 
             stockpile = resultingStockpile;
+            EventBus.Instance.RaiseResourcesSpent(provider.Player, ResourceCalculator.ToList(resourcesSpent), false);
+            
             _currentPaymentByIncomeProvider[provider] = updatedPayment;
             EventBus.Instance.RaiseIncomeProviderPaymentUpdated(provider, ResourceCalculator.ToList(updatedPayment));
         }
@@ -247,7 +249,15 @@ public partial class Resources : Node2D
         var (updatedStockpile, usedIncomeProviders) = ResourceCalculator
             .AddResources(stockpile, paymentsByProviders, targetResources ?? stockpile.Keys, _resourceBlueprints);
 
-        foreach (var usedIncomeProvider in usedIncomeProviders)
+        var gainedResources = ResourceCalculator.GetSummedIncomeProviderResources(
+            usedIncomeProviders.Values, 1, 1);
+        if (gainedResources.Any())
+        {
+            var player = usedIncomeProviders.Keys.First().Player;
+            EventBus.Instance.RaiseResourcesGained(player, ResourceCalculator.ToList(gainedResources));
+        }
+        
+        foreach (var usedIncomeProvider in usedIncomeProviders.Keys)
         {
             _currentPaymentByIncomeProvider[usedIncomeProvider] = new Dictionary<ResourceId, int>();
             EventBus.Instance.RaiseIncomeProviderPaymentUpdated(usedIncomeProvider, 
@@ -371,6 +381,8 @@ public partial class Resources : Node2D
                 ResourceCalculator.ToDictionary(resourcesSpent), _resourceBlueprints, 
                 isRefund, out var resultingStockpile) is false)
             return;
+
+        EventBus.Instance.RaiseResourcesSpent(player, resourcesSpent, isRefund);
 
         _resourcesStockpiledByPlayer[player] = resultingStockpile;
         RaisePlayerResourcesUpdated(player);

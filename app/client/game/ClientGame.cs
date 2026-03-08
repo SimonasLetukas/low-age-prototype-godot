@@ -1,9 +1,11 @@
 using System;
+using System.IO;
 using Godot;
 using System.Linq;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
 using Newtonsoft.Json;
+using FileAccess = Godot.FileAccess;
 
 public partial class ClientGame : Game
 {
@@ -244,11 +246,18 @@ public partial class ClientGame : Game
             Events = Events.Select(EventToString).ToList()
         };
 
-        var json = JsonConvert.SerializeObject(save);
-        using var file = FileAccess.Open($"{SaveLocation}/{GameId}.save", FileAccess.ModeFlags.WriteRead);
-        file.Resize(0);
-        file.StoreString(json);
-        file.Close();
+        try
+        {
+            var json = JsonConvert.SerializeObject(save);
+            using var file = FileAccess.Open($"{SaveLocation}/{GameId}.save", FileAccess.ModeFlags.WriteRead);
+            file.Resize(0);
+            file.StoreString(json);
+            file.Close();
+        }
+        catch (IOException e)
+        {
+            GD.Print($"{LogPrefix}.{nameof(SaveGame)}: received an exception while saving the game '{e.Message}'.");
+        }
     }
 
     private void SetPaused(bool to)

@@ -228,7 +228,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         if (source is not ActorNode attacker)
             return (0, false);
 
-        var (damage, _) = GetDamage(attacker, attackType);
+        var (damage, _) = GetDamage(attacker, attackType, isSimulation);
         return ReceiveDamage(source, damage, isSimulation);
     }
 
@@ -261,7 +261,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
         Health!.Apply(Change.SubtractCurrent, amount);
         if ((int)Health!.CurrentAmount <= 0)
-            Destroy();
+            Destroy(source);
         
         UpdateVitalsValuesForDisplay();
         return (0, false);
@@ -317,23 +317,28 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         _shields.Position = new Vector2(_startingShieldsPosition.X, -3) + offset;
     }
     
-    protected (int Amount, DamageType Type) GetDamage(ActorNode from, int damage, DamageType type)
+    protected (int Amount, DamageType Type) GetDamage(ActorNode from, int damage, DamageType type, bool isSimulation)
     {
-        var (initialAmount, initialType) = ResolveDamageType(damage, type, from);
+        var (initialAmount, initialType) = ResolveDamageType(damage, type, from, isSimulation);
         
-        var (interceptedAmount, interceptedType) = Behaviours.InterceptDamage(initialAmount, initialType, from);
+        var (interceptedAmount, interceptedType) = Behaviours.InterceptDamage(initialAmount, initialType, 
+            from, isSimulation);
         
-        var (adjustedAmount, adjustedType) = ResolveDamageType(interceptedAmount, interceptedType, from);
+        var (adjustedAmount, adjustedType) = ResolveDamageType(interceptedAmount, interceptedType, from, 
+            isSimulation);
+        
+        if (isSimulation is false)
+            EventBus.Instance.RaiseRawDamageDone(this, from, adjustedAmount, adjustedType);
         
         var amountAfterArmour = ResolveDamageArmour(adjustedAmount, adjustedType);
         
         return (amountAfterArmour, adjustedType);
     }
     
-    protected override (int Amount, DamageType Type) GetDamage(EntityNode from, AttackType attackType)
+    protected override (int Amount, DamageType Type) GetDamage(EntityNode from, AttackType attackType, bool isSimulation)
     {
         if (from is not ActorNode fromActor)
-            return base.GetDamage(from, attackType);
+            return base.GetDamage(from, attackType, isSimulation);
         
         var attack = attackType.Equals(AttackType.Melee) ? fromActor.MeleeAttack : fromActor.RangedAttack;
         if (attack is null)
@@ -344,7 +349,13 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             damage += attack.BonusDamage;
 
         var damageType = attackType.Equals(AttackType.Melee) ? DamageType.Melee : DamageType.Ranged;
-        return GetDamage(fromActor, damage, damageType);
+        
+        var finalDamage = GetDamage(fromActor, damage, damageType, isSimulation);
+        var currentVitals = Shields?.CurrentAmount ?? 0 + Health?.CurrentAmount ?? 0;
+        var finalDamageAmount = finalDamage.Amount > currentVitals ? currentVitals : finalDamage.Amount;
+        if (isSimulation is false) 
+            EventBus.Instance.RaiseFinalDamageDone(this, from, (int)finalDamageAmount, finalDamage.Type);
+        return finalDamage;
     }
     
     protected override int ResolveDamageArmour(int damage, DamageType damageType) => damageType switch

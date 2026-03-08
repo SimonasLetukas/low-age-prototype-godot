@@ -28,6 +28,7 @@ EventBus="*res://app/shared/static/event-bus/EventBus.cs"
 ClientState="*res://app/shared/static/ClientState.cs"
 Players="*res://app/shared/static/Players.cs"
 GlobalRegistry="*res://app/shared/static/GlobalRegistry.cs"
+GameMetrics="*res://app/shared/static/GameMetrics.cs"
 
 [display]
 

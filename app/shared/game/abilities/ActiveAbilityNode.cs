@@ -343,7 +343,7 @@ public abstract partial class ActiveAbilityNode<
         RequestExecution();
     }
     
-    private void OnOwnerActorDestroyed(EntityNode entity)
+    private void OnOwnerActorDestroyed(EntityNode entity, EntityNode? source)
     {
         if (entity is not ActorNode actor)
             return;

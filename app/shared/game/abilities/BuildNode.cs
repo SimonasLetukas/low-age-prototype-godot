@@ -148,7 +148,7 @@ public partial class BuildNode : ActiveAbilityNode<
         if (buildableEntity.IsCandidate() && creationProgress is not null && creationProgress.Helpers.IsEmpty())
         {
             // No one is working on this anymore
-            buildableEntity.Destroy(); 
+            buildableEntity.Destroy(null); 
             costOfDestroyedEntity = creationProgress.TotalCost;
         }
         
@@ -334,7 +334,7 @@ public partial class BuildNode : ActiveAbilityNode<
     private IList<Payment> GetNonConsumableStockpile() => Registry.GetNonConsumableResources(
         Registry.GetCurrentPlayerStockpile(OwnerActor.Player));
 
-    private void OnEntityDestroyed(EntityNode entity)
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
     {
         foreach (var focus in FocusQueue.ToList())
         {

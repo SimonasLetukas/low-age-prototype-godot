@@ -98,7 +98,7 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         var vitalsAmount = HasShields 
             ? Shields!.MaxAmount + Health!.MaxAmount
             : Health?.MaxAmount ?? 0;
-        var (damage, _) = GetDamage(this, vitalsAmount / 2, DamageType.Pure);
+        var (damage, _) = GetDamage(this, vitalsAmount / 2, DamageType.Pure, false);
         ReceiveDamage(this, damage, false);
     }
 
@@ -109,6 +109,7 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         var movementCost = CalculateMovementCostFrom(path);
         Movement.Apply(Change.SubtractCurrent, movementCost);
         ActionEconomy.Moved(movementCost, Movement.CurrentAmount >= 1);
+        EventBus.Instance.RaiseUnitMoved(this, movementCost);
         
         IsOnHighGround = resultingTile.Point.IsHighGround;
         FinalYSpriteOffset = resultingTile.YSpriteOffset;

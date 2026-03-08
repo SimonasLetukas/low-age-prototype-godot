@@ -399,7 +399,7 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>, IComparabl
         ReduceCounter();
     }
 
-    private void OnEntityDestroyed(EntityNode entity)
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
     {
         if (EndsOnDeath is false
             || IsInstant

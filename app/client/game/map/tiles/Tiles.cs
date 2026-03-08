@@ -205,6 +205,8 @@ public partial class Tiles : Node2D
         StructureFoundations = GetNode<StructureFoundations>($"{nameof(StructureFoundations)}");
         Elevatable = GetNode<ElevatableTiles>($"{nameof(ElevatableTiles)}");
 
+        GlobalRegistry.Instance.ProvideGetRevealedTilesByAllPlayers(() => _revealedTilesByAllPlayers);
+
         EventBus.Instance.PathfindingUpdating += OnPathfindingUpdating;
         EventBus.Instance.HighGroundPointCreated += OnHighGroundPointCreated;
         EventBus.Instance.HighGroundPointRemoved += OnHighGroundPointRemoved;
@@ -213,7 +215,7 @@ public partial class Tiles : Node2D
     public override void _ExitTree()
     {
         base._ExitTree();
-
+        
         EventBus.Instance.PathfindingUpdating -= OnPathfindingUpdating;
         EventBus.Instance.HighGroundPointCreated -= OnHighGroundPointCreated;
         EventBus.Instance.HighGroundPointRemoved -= OnHighGroundPointRemoved;

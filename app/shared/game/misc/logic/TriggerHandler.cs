@@ -64,7 +64,7 @@ public sealed class TriggerHandler : IDisposable
         return this;
     }
     
-    private void OnEntityDestroyed(EntityNode entity)
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
     {
         return; // TODO just an example for now
         

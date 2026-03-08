@@ -61,11 +61,22 @@ public partial class EventBus : Node
     public void RaiseEntityTargeted(EntityNode target, EntityNode source, AttackType attackType) 
         => EntityTargeted(target, source, attackType);
 
+    public event Action<UnitNode, float> UnitMoved = delegate { };
+    public void RaiseUnitMoved(UnitNode unit, float movementSpent) => UnitMoved(unit, movementSpent);
+
     public event Action<EntityNode, int> EntityZIndexUpdated = delegate { };
     public void RaiseEntityZIndexUpdated(EntityNode entity, int zIndex) => EntityZIndexUpdated(entity, zIndex);
 
-    public event Action<EntityNode> EntityDestroyed = delegate { };
-    public void RaiseEntityDestroyed(EntityNode entity) => EntityDestroyed(entity);
+    public event Action<EntityNode, EntityNode, int, DamageType> RawDamageDone = delegate { };
+    public void RaiseRawDamageDone(EntityNode to, EntityNode from, int amount, DamageType type) 
+        => RawDamageDone(to, from, amount, type);
+    
+    public event Action<EntityNode, EntityNode, int, DamageType> FinalDamageDone = delegate { };
+    public void RaiseFinalDamageDone(EntityNode to, EntityNode from, int amount, DamageType type) 
+        => FinalDamageDone(to, from, amount, type);
+    
+    public event Action<EntityNode, EntityNode?> EntityDestroyed = delegate { };
+    public void RaiseEntityDestroyed(EntityNode entity, EntityNode? source) => EntityDestroyed(entity, source);
     
     public event Action<IPathfindingUpdatable, bool> PathfindingUpdating = delegate { };
     public void RaisePathfindingUpdating(IPathfindingUpdatable data, bool isAdded) => PathfindingUpdating(data, isAdded);
@@ -81,9 +92,17 @@ public partial class EventBus : Node
     public void RaisePlayerResourcesUpdated(Player player, IList<Payment> currentStockpile) 
         => PlayerResourcesUpdated(player, currentStockpile);
 
+    public event Action<Player, IList<Payment>> ResourcesGained = delegate { };
+    public void RaiseResourcesGained(Player player, IList<Payment> resourcesGained) 
+        => ResourcesGained(player, resourcesGained);
+
     public event Action<Player, IList<Payment>, bool> PaymentRequested = delegate { };
     public void RaisePaymentRequested(Player player, IList<Payment> resourcesSpent, bool isRefund) 
         => PaymentRequested(player, resourcesSpent, isRefund);
+
+    public event Action<Player, IList<Payment>, bool> ResourcesSpent = delegate { };
+    public void RaiseResourcesSpent(Player player, IList<Payment> resourcesSpent, bool isRefund) 
+        => ResourcesSpent(player, resourcesSpent, isRefund);
     
     public event Action<IncomeProvider> IncomeProviderRegistered = delegate { };
     public void RaiseIncomeProviderRegistered(IncomeProvider provider) => IncomeProviderRegistered(provider);

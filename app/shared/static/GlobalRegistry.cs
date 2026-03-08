@@ -31,6 +31,7 @@ public partial class GlobalRegistry : Node
     public Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; private set; } = null!;
     public Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; private set; } = null!;
     public Func<Point, Tiles.TileInstance?> GetTileFromPoint { get; private set; } = null!;
+    public Func<ICollection<Tiles.TileInstance>> GetRevealedTilesByAllPlayers { get; private set; } = null!;
     public Func<IList<Payment>, string> StringifyResources { get; private set; } = null!;
     public Func<IList<Payment>, IList<Payment>> GetConsumableResources { get; private set; } = null!;
     public Func<IList<Payment>, IList<Payment>> GetNonConsumableResources { get; private set; } = null!;
@@ -59,6 +60,7 @@ public partial class GlobalRegistry : Node
     public void ProvideGetHighestTiles(Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> getHighestTiles) => GetHighestTiles = getHighestTiles;
     public void ProvideGetTile(Func<Vector2Int, bool, Tiles.TileInstance?> getTile) => GetTile = getTile;
     public void ProvideGetTileFromPoint(Func<Point, Tiles.TileInstance?> getTileFromPoint) => GetTileFromPoint = getTileFromPoint;
+    public void ProvideGetRevealedTilesByAllPlayers(Func<ICollection<Tiles.TileInstance>> getRevealedTilesByAllPlayers) => GetRevealedTilesByAllPlayers = getRevealedTilesByAllPlayers;
     public void ProvideStringifyResources(Func<IList<Payment>, string> stringifyResources) => StringifyResources = stringifyResources;
     public void ProvideGetConsumableResources(Func<IList<Payment>, IList<Payment>> getConsumableResources) => GetConsumableResources = getConsumableResources;
     public void ProvideGetNonConsumableResources(Func<IList<Payment>, IList<Payment>> getNonConsumableResources) => GetNonConsumableResources = getNonConsumableResources;

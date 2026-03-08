@@ -159,7 +159,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     
     private void OnTriggered() => Destroy();
 
-    private void OnEntityDestroyed(EntityNode entity)
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
     {
         if (entity.Equals(Parent) is false)
             return;

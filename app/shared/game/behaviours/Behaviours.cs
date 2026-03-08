@@ -100,7 +100,7 @@ public partial class Behaviours : Node2D
         }
     }
 
-    public (int Amount, DamageType Type) InterceptDamage(int damage, DamageType type, ActorNode from)
+    public (int Amount, DamageType Type) InterceptDamage(int damage, DamageType type, ActorNode from, bool isSimulation)
     {
         var interceptDamageBehaviours = GetChildren().OfType<InterceptDamageNode>()
             .OrderBy(i => i.HasMultiplication())
@@ -113,7 +113,8 @@ public partial class Behaviours : Node2D
         var currentType = type;
         foreach (var interceptDamage in interceptDamageBehaviours)
         {
-            var (resolvedDamage, resolvedType) = Parent.ResolveDamageType(currentDamage, currentType, from);
+            var (resolvedDamage, resolvedType) = Parent.ResolveDamageType(currentDamage, currentType, 
+                from, isSimulation);
             (currentDamage, currentType) = interceptDamage.Resolve(resolvedDamage, resolvedType, from);
         }
 
