@@ -157,7 +157,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Shared.Revelators.PopulationCostIncome,
                     displayName: nameof(BehaviourId.Shared.Revelators.PopulationCostIncome).CamelCaseToWords(),
                     description: "This unit costs 1 population.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_behaviour_population.png",
                     resources: new List<ResourceModification>
                     {
                         new ResourceModification(
@@ -173,7 +173,7 @@ namespace LowAgeData.Collections
                     description: "This unit receives double damage from all sources, because there's not enough " +
                                  "population space. Will be removed automatically when there is enough population " +
                                  "space again.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_behaviour_population.png",
                     endsAt: EndsAt.EndOf.This.Planning,
                     amountDealtInstead: new Amount(
                         flat: 0,
@@ -1126,7 +1126,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Leader.AllForOneBuff,
                     displayName: nameof(BehaviourId.Leader.AllForOneBuff).CamelCaseToWords(),
                     description: "Revelators faction loses when this unit dies.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_all_for_one.png",
                     finalEffects: new List<EffectId>
                     {
                         EffectId.Leader.AllForOneModifyPlayer
@@ -1136,7 +1136,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Leader.MenacingPresenceBuff,
                     displayName: nameof(BehaviourId.Leader.MenacingPresenceBuff).CamelCaseToWords(),
                     description: "Melee and Range Damage for this unit is reduced by 2.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_menacing_presence.png",
                     initialModifications: new List<Modification>
                     {
                         new AttackModification(
@@ -1161,7 +1161,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Leader.OneForAllObeliskBuff,
                     displayName: nameof(BehaviourId.Leader.OneForAllObeliskBuff).CamelCaseToWords(),
                     description: "This unit has recently been sapped for health.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_one_for_all.png",
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1179,7 +1179,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Leader.OneForAllHealBuff,
                     displayName: nameof(BehaviourId.Leader.OneForAllHealBuff).CamelCaseToWords(),
                     description: "Heals for 2 Health.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_one_for_all.png",
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -1201,7 +1201,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Hut.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground Scraps tiles, and can be built " +
                                  "by multiple Slaves simultaneously.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_build.png",
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -1230,7 +1230,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Obelisk.BuildingBuildable).CamelCaseToWords(),
                     description: "This building can only be placed on the low ground Celestium tiles, and can be " +
                                  "built by multiple Slaves simultaneously.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_build.png",
                     placementValidators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -1258,13 +1258,10 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Slave.RepairStructureBuff,
                     displayName: nameof(BehaviourId.Slave.RepairStructureBuff).CamelCaseToWords(),
                     description: "This structure will be repaired by +1 Health at the start of the planning phase.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_repair.png",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectId>
-                    {
-                        EffectId.Slave.RepairApplyBehaviourSelf
-                    },
+                    initialEffects: null,
                     finalModifications: new List<Modification>
                     {
                         new StatModification(
@@ -1286,19 +1283,12 @@ namespace LowAgeData.Collections
                     },
                     removeOnConditionsMet: true),
 
-                new Wait(
-                    id: BehaviourId.Slave.RepairWait,
-                    displayName: nameof(BehaviourId.Slave.RepairWait).CamelCaseToWords(),
-                    description: "Currently repairing a structure.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    endsAt: EndsAt.StartOf.Next.Planning),
-
                 new Buff(
                     id: BehaviourId.Slave.ManualLabourBuff,
                     displayName: nameof(BehaviourId.Slave.ManualLabourBuff).CamelCaseToWords(),
                     description:
                     "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_manual_labour.png",
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1327,14 +1317,14 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Slave.ManualLabourWait,
                     displayName: nameof(BehaviourId.Slave.ManualLabourWait).CamelCaseToWords(),
                     description: "Currently working on a nearby Hut.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_manual_labour.png",
                     endsAt: EndsAt.StartOf.Next.Planning),
 
                 new ExtraAttack(
                     id: BehaviourId.Quickdraw.DoubleshotExtraAttack,
                     displayName: nameof(BehaviourId.Quickdraw.DoubleshotExtraAttack).CamelCaseToWords(),
                     description: "Ranged attacks twice.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_doubleshot.png",
                     attackTypes: new List<AttackType>
                     {
                         AttackType.Ranged
@@ -1346,7 +1336,7 @@ namespace LowAgeData.Collections
                     description:
                     "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing " +
                     "from any sources until the end of its action.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_cripple.png",
                     modificationFlags: new List<ModificationFlag>
                     {
                         ModificationFlag.CannotBeHealed
@@ -1376,7 +1366,7 @@ namespace LowAgeData.Collections
                     description:
                     "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage " +
                     "to all friendly and enemy units in 1 Distance.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_fanatic_suicide.png",
                     modificationFlags: null,
                     initialModifications: null,
                     initialEffects: null,

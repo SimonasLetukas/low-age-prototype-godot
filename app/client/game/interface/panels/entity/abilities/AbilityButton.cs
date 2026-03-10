@@ -54,6 +54,9 @@ public partial class AbilityButton : BaseButton
             TextureClicked = TexturePassiveClicked;
         }
         
+        if (Ability.SpriteLocation != null)
+            SetIcon(GD.Load<Texture2D>(Ability.SpriteLocation));
+        
         _cooldown.Text = "[b]" + Ability.RemainingCooldown.GetCounterOrEmpty();
 
         Ability.RemainingCooldown.Updated += OnRemainingCooldownUpdated;

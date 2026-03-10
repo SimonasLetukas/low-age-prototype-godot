@@ -278,7 +278,7 @@
           "ability-slave-manual-labour"
         ],
         "displayName": "Slave",
-        "description": "",
+        "description": "The backbone labour force of the Revelators. Slaves build and repair structures, working together to speed up construction. They can also extract Scraps from nearby Huts through manual labour.",
         "sprite": "res://assets/sprites/units/revs/slave indexed 1x1.png",
         "centerOffset": {
           "x": 3,
@@ -432,7 +432,7 @@
           "ability-quickdraw-cripple"
         ],
         "displayName": "Quickdraw",
-        "description": "",
+        "description": "A versatile ranged fighter. Quickdraws can fire twice and excel at stopping fast-moving Light enemies. Their attacks can be upgraded to cripple targets for a short duration.",
         "sprite": "res://assets/sprites/units/revs/quickdraw indexed 1x1.png",
         "centerOffset": {
           "x": 4,
@@ -6288,7 +6288,7 @@
       "cost": [],
       "displayName": "All For One",
       "description": "Revelators faction loses if Leader dies.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_all_for_one.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -6309,7 +6309,7 @@
       "cost": [],
       "displayName": "Menacing Presence",
       "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1).",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_menacing_presence.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -6338,7 +6338,7 @@
       "cost": [],
       "displayName": "One For All",
       "description": "Select an adjacent Obelisk and sap its energy to give all friendly units +2 Health. This Obelisk cannot be sapped again for 10 turns.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_one_for_all.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -6526,7 +6526,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Build",
-      "description": "Start building a Revelators' structure on an adjacent tile. Multiple Slaves can build the structure, each additional one after the first provides half of the Celestium production to the construction than the previous Slave.",
+      "description": "Start building a Revelators' structure on a nearby tile. Multiple Slaves can build the structure, each additional one after the first provides half of the Celestium production to the construction than the previous Slave.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6582,7 +6582,7 @@
       "researchNeeded": [],
       "targetArea": {
         "$type": "Circle",
-        "radius": 1,
+        "radius": 2,
         "ignoreRadius": 0
       },
       "effects": [
@@ -6597,8 +6597,8 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Repair",
-      "description": "Select an adjacent structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be interrupted.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "description": "Select a nearby structure. At the start of the next planning phase the selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be interrupted.",
+      "sprite": "res://assets/icons/icon_ability_repair.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -6627,7 +6627,7 @@
       "cost": [],
       "displayName": "Manual Labour",
       "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_manual_labour.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -6650,7 +6650,7 @@
       "cost": [],
       "displayName": "Doubleshot",
       "description": "Ranged attacks twice.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_doubleshot.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -6677,7 +6677,7 @@
       "cost": [],
       "displayName": "Cripple",
       "description": "Each ranged attack cripples the target until the end of their action. During this time target has 60% of their maximum Movement (rounded up) and cannot receive healing from any sources. Multiple attacks on a crippled target have no additional effects.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_cripple.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -6724,7 +6724,28 @@
       "cost": [],
       "displayName": "Fanatic Suicide",
       "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, killing itself in the process.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_fanatic_suicide.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "$type": "Passive",
+      "id": "ability-gorger-disease",
+      "turnPhase": "TurnPhase.Passive",
+      "researchNeeded": [],
+      "periodicEffect": null,
+      "onHitEffects": [],
+      "onHitAttackTypes": [],
+      "onBirthEffects": [],
+      "onBuildBehaviour": null,
+      "hasButton": true,
+      "cooldown": "EndsAt.Instant",
+      "cost": [],
+      "displayName": "Disease",
+      "description": "",
+      "sprite": "res://assets/icons/icon_ability_disease.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -9474,18 +9495,6 @@
     },
     {
       "$type": "ApplyBehaviour",
-      "id": "effect-slave-repair-apply-behaviour-self",
-      "behavioursToApply": [
-        "behaviour-slave-repair-wait"
-      ],
-      "filters": [],
-      "behaviourOwner": null,
-      "waitForInitialEffects": false,
-      "target": "Location.Origin",
-      "validators": []
-    },
-    {
-      "$type": "ApplyBehaviour",
       "id": "effect-slave-manual-labour-apply-behaviour-hut",
       "behavioursToApply": [
         "behaviour-slave-manual-labour-buff"
@@ -12035,7 +12044,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_behaviour_population.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -12091,7 +12100,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_behaviour_population.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14018,7 +14027,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_all_for_one.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14061,7 +14070,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_menacing_presence.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14089,7 +14098,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_one_for_all.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14122,7 +14131,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_one_for_all.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14257,9 +14266,7 @@
       "id": "behaviour-slave-repair-structure-buff",
       "modificationFlags": [],
       "initialModifications": [],
-      "initialEffects": [
-        "effect-slave-repair-apply-behaviour-self"
-      ],
+      "initialEffects": [],
       "finalModifications": [
         {
           "$type": "StatModification",
@@ -14288,28 +14295,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
-      "centerOffset": {
-        "x": 0,
-        "y": 0
-      }
-    },
-    {
-      "$type": "Wait",
-      "id": "behaviour-slave-repair-wait",
-      "nextBehaviour": null,
-      "displayName": "Repair Wait",
-      "description": "Currently repairing a structure.",
-      "endsAt": "EndsAt.StartOfNextPlanning",
-      "alignment": "Alignment.Neutral",
-      "canStack": false,
-      "canResetDuration": false,
-      "triggers": [],
-      "removeOnConditionsMet": false,
-      "conditionalEffects": [],
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_repair.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14346,7 +14332,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_manual_labour.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14367,7 +14353,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_manual_labour.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14390,7 +14376,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_doubleshot.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14425,7 +14411,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_cripple.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14453,7 +14439,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_fanatic_suicide.png",
       "centerOffset": {
         "x": 0,
         "y": 0

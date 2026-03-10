@@ -26,7 +26,8 @@ public partial class BehaviourBox : NinePatchRect
 
     public void Initialize(BehaviourNode behaviour)
     {
-        // TODO also change icon
+        if (behaviour.SpriteLocation != null)
+            _texture.Texture = GD.Load<Texture2D>(behaviour.SpriteLocation);
 
         var text = behaviour.Description;
         // TODO tooltip should probably also include the name of the behaviour (and remove the behaviour type from the name)

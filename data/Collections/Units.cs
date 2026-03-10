@@ -15,7 +15,9 @@ namespace LowAgeData.Collections
                 new Unit(
                     id: UnitId.Slave,
                     displayName: nameof(UnitId.Slave),
-                    description: "",
+                    description: "The backbone labour force of the Revelators. Slaves build and repair structures, " +
+                                 "working together to speed up construction. They can also extract Scraps from " +
+                                 "nearby Huts through manual labour.",
                     sprite: "res://assets/sprites/units/revs/slave indexed 1x1.png",
                     centerOffset: new Vector2Int(3, 14),
                     statistics: new List<Stat>
@@ -89,7 +91,9 @@ namespace LowAgeData.Collections
                 new Unit(
                     id: UnitId.Quickdraw,
                     displayName: nameof(UnitId.Quickdraw),
-                    description: "",
+                    description: "A versatile ranged fighter. Quickdraws can fire twice and excel at stopping " +
+                                 "fast-moving Light enemies. Their attacks can be upgraded to cripple targets for " +
+                                 "a short duration.",
                     sprite: "res://assets/sprites/units/revs/quickdraw indexed 1x1.png",
                     centerOffset: new Vector2Int(4, 17),
                     statistics: new List<Stat>

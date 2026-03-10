@@ -981,14 +981,6 @@ namespace LowAgeData.Collections
                     }),
 
                 new ApplyBehaviour(
-                    id: EffectId.Slave.RepairApplyBehaviourSelf,
-                    behavioursToApply: new List<BehaviourId>
-                    {
-                        BehaviourId.Slave.RepairWait
-                    },
-                    target: Location.Origin),
-
-                new ApplyBehaviour(
                     id: EffectId.Slave.ManualLabourApplyBehaviourHut,
                     behavioursToApply: new List<BehaviourId>
                     {

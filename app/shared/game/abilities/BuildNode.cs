@@ -118,11 +118,13 @@ public partial class BuildNode : ActiveAbilityNode<
             : $"{turnsNeeded} turn(s) to produce";
         var finish = $"With the current income it will take {turns}.";
 
-        return $"Build {entity.DisplayName} \n" +
-               $"{research}" +
-               $"\nCost: {cost.WrapToLines(Constants.MaxTooltipCharCount)}." + 
-               $"\n\n{finish}\n\n" + 
-               $"{entity.Description.WrapToLines(Constants.MaxTooltipCharCount)}";
+        var finalMessage = $"{entity.DisplayName} \n" +
+                           $"{research}" +
+                           $"\nCost: {cost}." + 
+                           $"\n\n{finish}\n\n" + 
+                           $"{entity.Description}";
+        
+        return finalMessage.WrapToLines(Constants.MaxTooltipCharCount);
     }
 
     public bool IsSelectableItemDisabled(Id selectableItemId)

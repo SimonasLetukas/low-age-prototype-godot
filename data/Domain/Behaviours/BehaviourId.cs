@@ -184,7 +184,6 @@ namespace LowAgeData.Domain.Behaviours
         public static class Slave
         {
             public static BehaviourId RepairStructureBuff => new BehaviourId($"{nameof(Slave)}{nameof(RepairStructureBuff)}".ToKebabCase(), true);
-            public static BehaviourId RepairWait => new BehaviourId($"{nameof(Slave)}{nameof(RepairWait)}".ToKebabCase(), true);
             public static BehaviourId ManualLabourBuff => new BehaviourId($"{nameof(Slave)}{nameof(ManualLabourBuff)}".ToKebabCase(), true);
             public static BehaviourId ManualLabourWait => new BehaviourId($"{nameof(Slave)}{nameof(ManualLabourWait)}".ToKebabCase(), true);
         }

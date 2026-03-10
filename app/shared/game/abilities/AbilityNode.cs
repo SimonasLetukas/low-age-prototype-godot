@@ -25,6 +25,7 @@ public abstract partial class AbilityNode<
     public AbilityId Id { get; private set; } = null!;
     public string DisplayName { get; private set; } = null!;
     public string Description { get; private set; } = null!;
+    public string? SpriteLocation { get; private set; }
     public TurnPhase TurnPhase { get; private set; } = null!;
     public IList<ResearchId> ResearchNeeded { get; private set; } = [];
     public ActorNode OwnerActor { get; protected set; } = null!;
@@ -42,6 +43,7 @@ public abstract partial class AbilityNode<
         Id = Blueprint.Id;
         DisplayName = Blueprint.DisplayName;
         Description = Blueprint.Description;
+        SpriteLocation = Blueprint.Sprite;
         TurnPhase = Blueprint.TurnPhase;
         ResearchNeeded = Blueprint.ResearchNeeded;
         RemainingCooldown = EndsAtNode.InstantiateAsChild(Blueprint.Cooldown, this, OwnerActor);

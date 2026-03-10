@@ -9,6 +9,7 @@ public interface IAbilityNode
     AbilityId Id { get; }
     string DisplayName { get; }
     string Description { get; }
+    string? SpriteLocation { get; }
     TurnPhase TurnPhase { get; }
     IList<ResearchId> ResearchNeeded { get; }
     ActorNode OwnerActor { get; }

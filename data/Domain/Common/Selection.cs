@@ -20,7 +20,12 @@ namespace LowAgeData.Domain.Common
         }
         
         public T Name { get; }
+        
+        /// <summary>
+        /// Used to override the description of <see cref="T"/> (if the type even has a description).
+        /// </summary>
         public string Description { get; }
+        
         public IList<Payment> Cost { get; }
         
         /// <summary>

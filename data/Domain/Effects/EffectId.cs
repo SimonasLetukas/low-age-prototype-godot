@@ -222,7 +222,6 @@ namespace LowAgeData.Domain.Effects
         public static class Slave
         {
             public static EffectId RepairApplyBehaviourStructure => new EffectId($"{nameof(Slave)}{nameof(RepairApplyBehaviourStructure)}".ToKebabCase(), true);
-            public static EffectId RepairApplyBehaviourSelf => new EffectId($"{nameof(Slave)}{nameof(RepairApplyBehaviourSelf)}".ToKebabCase(), true);
             public static EffectId ManualLabourApplyBehaviourHut => new EffectId($"{nameof(Slave)}{nameof(ManualLabourApplyBehaviourHut)}".ToKebabCase(), true);
             public static EffectId ManualLabourApplyBehaviourSelf => new EffectId($"{nameof(Slave)}{nameof(ManualLabourApplyBehaviourSelf)}".ToKebabCase(), true);
             public static EffectId ManualLabourModifyPlayer => new EffectId($"{nameof(Slave)}{nameof(ManualLabourModifyPlayer)}".ToKebabCase(), true);

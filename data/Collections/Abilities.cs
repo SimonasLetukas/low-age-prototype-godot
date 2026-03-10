@@ -1021,7 +1021,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(AbilityId.Leader.AllForOne).CamelCaseToWords(),
                     description: "Revelators faction loses if Leader dies.",
                     hasButton: true,
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_all_for_one.png",
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Leader.AllForOneApplyBehaviour
@@ -1033,7 +1033,7 @@ namespace LowAgeData.Collections
                     description: "All friendly and enemy units that enter 6 Attack Distance around Leader " +
                                  "have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1).",
                     hasButton: true,
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_menacing_presence.png",
                     periodicEffect: EffectId.Leader.MenacingPresenceSearch),
 
                 new Target(
@@ -1042,7 +1042,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(AbilityId.Leader.OneForAll).CamelCaseToWords(),
                     description: "Select an adjacent Obelisk and sap its energy to give all friendly units " +
                                  "+2 Health. This Obelisk cannot be sapped again for 10 turns.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_one_for_all.png",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1052,10 +1052,10 @@ namespace LowAgeData.Collections
                 new Build(
                     id: AbilityId.Slave.Build,
                     displayName: nameof(AbilityId.Slave.Build).CamelCaseToWords(),
-                    description: "Start building a Revelators' structure on an adjacent tile. Multiple Slaves " +
+                    description: "Start building a Revelators' structure on a nearby tile. Multiple Slaves " +
                                  "can build the structure, each additional one after the first provides half of the " +
                                  "Celestium production to the construction than the previous Slave.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_build.png",
                     placementArea: new Circle(radius: 2, ignoreRadius: 0),
                     useWalkableTilesAsPlacementArea: false,
                     selection: new List<Selection<EntityId>>
@@ -1135,11 +1135,11 @@ namespace LowAgeData.Collections
                     id: AbilityId.Slave.Repair,
                     turnPhase: TurnPhase.Planning,
                     displayName: nameof(AbilityId.Slave.Repair).CamelCaseToWords(),
-                    description: "Select an adjacent structure. At the start of the next planning phase the " +
-                                 "selected structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can be " +
-                                 "interrupted.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    targetArea: new Circle(radius: 1, ignoreRadius: 0),
+                    description: "Select a nearby structure. At the start of the next planning phase the selected " +
+                                 "structure receives +1 Health. Multiple Slaves can stack their repairs. Repair can " +
+                                 "be interrupted.",
+                    sprite: "res://assets/icons/icon_ability_repair.png",
+                    targetArea: new Circle(radius: 2, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
                         EffectId.Slave.RepairApplyBehaviourStructure
@@ -1151,7 +1151,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(AbilityId.Slave.ManualLabour).CamelCaseToWords(),
                     description: "Select an adjacent Hut. At the start of the next planning phase receive +2 " +
                                  "Scraps. Maximum of one Slave per Hut.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_manual_labour.png",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1163,7 +1163,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(AbilityId.Quickdraw.Doubleshot).CamelCaseToWords(),
                     description: "Ranged attacks twice.",
                     hasButton: true,
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_doubleshot.png",
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Quickdraw.DoubleshotApplyBehaviour
@@ -1176,7 +1176,7 @@ namespace LowAgeData.Collections
                                  "this time target has 60% of their maximum Movement (rounded up) and cannot receive healing " +
                                  "from any sources. Multiple attacks on a crippled target have no additional effects.",
                     hasButton: true,
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_cripple.png",
                     researchNeeded: new List<ResearchId>
                     {
                         ResearchId.Revelators.PoisonedSlits
@@ -1216,12 +1216,19 @@ namespace LowAgeData.Collections
                     description: "Either as an action, or instead of attacking, or upon getting killed Gorger " +
                                  "detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, " +
                                  "killing itself in the process.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_fanatic_suicide.png",
                     effects: new List<EffectId>
                     {
                         EffectId.Gorger.FanaticSuicideSearch,
                         EffectId.Gorger.FanaticSuicideDestroy
                     }),
+                
+                new Passive( // TODO
+                    id: AbilityId.Gorger.Disease,
+                    displayName: nameof(AbilityId.Gorger.Disease).CamelCaseToWords(),
+                    description: "", // TODO
+                    hasButton: true,
+                    sprite: "res://assets/icons/icon_ability_disease.png"),
 
                 new Passive(
                     id: AbilityId.Camou.SilentAssassin,

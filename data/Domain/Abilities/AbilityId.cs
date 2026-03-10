@@ -213,6 +213,7 @@ namespace LowAgeData.Domain.Abilities
         {
             public static AbilityId FanaticSuicide => new AbilityId($"{nameof(Gorger)}{nameof(FanaticSuicide)}".ToKebabCase(), true);
             public static AbilityId FanaticSuicidePassive => new AbilityId($"{nameof(Gorger)}{nameof(FanaticSuicidePassive)}".ToKebabCase(), true);
+            public static AbilityId Disease => new AbilityId($"{nameof(Gorger)}{nameof(Disease)}".ToKebabCase(), true);
         }
 
         public static class Camou

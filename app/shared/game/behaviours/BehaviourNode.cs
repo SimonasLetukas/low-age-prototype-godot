@@ -12,6 +12,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     public BehaviourId BlueprintId => Blueprint.Id;
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     public string Description { get; protected set; } = null!;
+    public string? SpriteLocation { get; private set; }
     public Alignment Alignment { get; protected set; } = null!;
     public bool CanResetDuration { get; private set; }
     public Guid? OwnerActorId { get; protected set; }
@@ -30,6 +31,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     {
         Blueprint = blueprint;
         Description = Blueprint.Description;
+        SpriteLocation = Blueprint.Sprite;
         Alignment = Blueprint.Alignment;
         CanResetDuration = Blueprint.CanResetDuration;
         CurrentDuration = EndsAtNode.InstantiateAsChild(blueprint.EndsAt, this, Parent);
