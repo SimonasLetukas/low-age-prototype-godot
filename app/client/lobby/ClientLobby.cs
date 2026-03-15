@@ -88,7 +88,9 @@ public partial class ClientLobby : Lobby
 
     private void OnGameStarted()
     {
-        Log.Info(nameof(ClientLobby), nameof(OnGameStarted), "Game starting for client...");
+        Log.Info(nameof(ClientLobby), nameof(OnGameStarted), 
+            $"Game starting for client. Players: {JsonConvert.SerializeObject(Players.Instance.GetAll())}");
+        
         Callable.From(() => GetTree().ChangeSceneToFile(ClientGame.ScenePath)).CallDeferred();
     }
     

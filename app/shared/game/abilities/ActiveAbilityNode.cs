@@ -27,9 +27,7 @@ public abstract partial class ActiveAbilityNode<
     public override void _Ready()
     {
         base._Ready();
-
-        EventBus.Instance.PhaseStarted += OnPhaseStarted;
-        EventBus.Instance.ActionStarted += OnActionStarted;
+        
         EventBus.Instance.PhaseEnded += OnPhaseEnded;
         EventBus.Instance.ActionEnded += OnActionEnded;
         EventBus.Instance.EntityDestroyed += OnOwnerActorDestroyed;
@@ -37,8 +35,6 @@ public abstract partial class ActiveAbilityNode<
 
     public override void _ExitTree()
     {
-        EventBus.Instance.PhaseStarted -= OnPhaseStarted;
-        EventBus.Instance.ActionStarted -= OnActionStarted;
         EventBus.Instance.PhaseEnded -= OnPhaseEnded;
         EventBus.Instance.ActionEnded -= OnActionEnded;
         EventBus.Instance.EntityDestroyed -= OnOwnerActorDestroyed;
@@ -138,6 +134,19 @@ public abstract partial class ActiveAbilityNode<
     
     protected abstract TPreProcessingResult CreatePreProcessingResult(TActivationRequest request, 
         AbilityReservationResult reservation);
+
+    protected override void RequestExecution()
+    {
+        var currentPlayerStableId = Players.Instance.Current.StableId;
+        foreach (var focus in FocusQueue
+                     .Where(focus => focus.Reservation.PlayerStableId.Equals(currentPlayerStableId) is false)
+                     .ToList())
+        {
+            FocusQueue.Remove(focus);
+        }
+
+        base.RequestExecution();
+    }
 
     protected override void OnExecutionRequested(TFocus focus)
     {
@@ -303,56 +312,51 @@ public abstract partial class ActiveAbilityNode<
             HandleRequeuedFocus(focus);
         }
     }
-
-    private void OnPhaseStarted(int turn, TurnPhase currentPhase)
-    {
-        if (AbilityAllowedForPlanningPhaseGiven(currentPhase) is false)
-            return;
-        
-        if (Log.DebugEnabled)
-            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(OnPhaseStarted), 
-                $"Current phase {currentPhase} (ability phase {TurnPhase}) focus queue for " +
-                $"{OwnerActor}: '{JsonConvert.SerializeObject(FocusQueue)}'");
-
-        if (Registry.GetLoadingSavedGame())
-            return;
-        
-        CleanUpNonRequeuedFocuses();
-        HandleRequeuedAbilityFocuses();
-    }
     
     private void OnPhaseEnded(int turn, TurnPhase currentPhase)
     {
-        if (AbilityAllowedForPlanningPhaseGiven(currentPhase) is false)
-            return;
+        if (AbilityAllowedForPlanningPhaseGiven(currentPhase))
+        {
+            if (Registry.GetLoadingSavedGame())
+                CleanUpAllFocuses();
         
-        if (Registry.GetLoadingSavedGame())
-            CleanUpAllFocuses();
-        
-        RequestExecution();
-    }
-    
-    private void OnActionStarted(ActorNode actor)
-    {
-        if (AbilityAllowedAsAnActionInActionPhaseFor(actor) is false)
+            RequestExecution();
             return;
-        
-        if (Registry.GetLoadingSavedGame())
-            return;
+        }
         
         CleanUpNonRequeuedFocuses();
+        
+        if (Registry.GetLoadingSavedGame())
+            return;
+        
         HandleRequeuedAbilityFocuses();
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(OnPhaseEnded), 
+                $"{this} current {nameof(FocusQueue)}: '{JsonConvert.SerializeObject(FocusQueue)}'");
     }
 
     private void OnActionEnded(ActorNode actor)
     {
-        if (AbilityAllowedAsAnActionInActionPhaseFor(actor) is false)
+        if (AbilityAllowedAsAnActionInActionPhaseFor(actor))
+        {
+            if (Registry.GetLoadingSavedGame())
+                CleanUpAllFocuses();
+        
+            RequestExecution();
             return;
+        }
+        
+        CleanUpNonRequeuedFocuses();
         
         if (Registry.GetLoadingSavedGame())
-            CleanUpAllFocuses();
+            return;
         
-        RequestExecution();
+        HandleRequeuedAbilityFocuses();
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(OnActionEnded), 
+                $"{this} current {nameof(FocusQueue)}: '{JsonConvert.SerializeObject(FocusQueue)}'");
     }
     
     private void OnOwnerActorDestroyed(EntityNode entity, EntityNode? source)

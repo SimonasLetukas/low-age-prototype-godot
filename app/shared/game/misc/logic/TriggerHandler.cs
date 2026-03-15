@@ -81,6 +81,9 @@ public sealed class TriggerHandler : IDisposable
     
     private void OnPlayerResourcesUpdated(Player player, IList<Payment> currentStockpile)
     {
+        if (_events.Any(e => e.Equals(Event.PlayerResourcesStockpileUpdated)) is false)
+            return;
+        
         if (player.Equals(_playerListener) is false)
             return;
 

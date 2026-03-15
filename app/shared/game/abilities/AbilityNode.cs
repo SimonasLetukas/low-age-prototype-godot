@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 
@@ -96,7 +97,7 @@ public abstract partial class AbilityNode<
     protected abstract TFocus CreateFocus(TActivationRequest activationRequest, 
         TPreProcessingResult preProcessingResult);
 
-    protected void RequestExecution()
+    protected virtual void RequestExecution()
     {
         foreach (var focus in FocusQueue)
         {
@@ -150,6 +151,8 @@ public abstract partial class AbilityNode<
     
     [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
     public override int GetHashCode() => HashCode.Combine(Id, OwnerActor.InstanceId);
+
+    public override string ToString() => $"{Blueprint.DisplayName} ability of {OwnerActor}";
 }
 
 public interface IAbilityActivationRequest

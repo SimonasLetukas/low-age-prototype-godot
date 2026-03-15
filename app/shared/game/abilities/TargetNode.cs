@@ -159,7 +159,7 @@ public partial class TargetNode : ActiveAbilityNode<
         
         if (Log.DebugEnabled)
             Log.Info(nameof(TargetNode), nameof(ExecuteFocus), 
-                $"Executing focus '{JsonConvert.SerializeObject(focus)}' effects with validation " +
+                $"{this} executing focus '{JsonConvert.SerializeObject(focus)}' effects with validation " +
                 $"result '{JsonConvert.SerializeObject(validationResult)}'");
         
         if (validationResult.IsValid)

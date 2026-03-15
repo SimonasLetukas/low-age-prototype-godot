@@ -43,7 +43,7 @@ public class ValidationHandler
 
     private ValidationResult Handle(Validator validator)
     {
-        ValidationResult result = default;
+        ValidationResult result = ValidationResult.Invalid("Condition failed.");
         foreach (var condition in validator.Conditions) // ANY
         {
             result = Handle(condition);

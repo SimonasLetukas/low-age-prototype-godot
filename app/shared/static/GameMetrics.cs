@@ -46,8 +46,9 @@ public partial class GameMetrics : Node
         }
         catch (IOException)
         {
-            Log.Info(nameof(GameMetrics), nameof(_Process), 
-                $"Could not save row for player '{row.PlayerStableId}' and turn '{row.Turn}', will retry.");
+            if (Log.VerboseDebugEnabled)
+                Log.Info(nameof(GameMetrics), nameof(_Process), 
+                    $"Could not save row for player '{row.PlayerStableId}' and turn '{row.Turn}', will retry.");
         }
     }
 

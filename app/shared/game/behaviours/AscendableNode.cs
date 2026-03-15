@@ -65,7 +65,7 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
 
         if (Log.VerboseDebugEnabled)
             Log.Info(nameof(AscendableNode), nameof(AllowsConnectionBetweenPoints), 
-                $"'{allowsConnectionBetweenPoints}' for '{Parent}' for team '{forTeam}'. From " +
+                $"'{allowsConnectionBetweenPoints}' for '{this}' for team '{forTeam}'. From " +
                 $"{(fromPoint.IsLowGround ? "low ground" : "high ground")} point at {fromPoint.Position} to " +
                 $"{(toPoint.IsLowGround ? "low ground" : "high ground")} point at {toPoint.Position}. " +
                 $"{nameof(Blueprint.ClosingEnabled)} '{Blueprint.ClosingEnabled}', {nameof(Opened)} '{Opened}', " +

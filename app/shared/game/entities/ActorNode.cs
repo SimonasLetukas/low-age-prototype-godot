@@ -174,7 +174,15 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
     public void RestoreActionEconomy(TurnPhase phase, bool restoringOnlyAbilityAction)
     {
-        if (IsCompleted() && WorkingOn.All(x => x.ConsumesAction is false))
+        var restoreActionAllowed = IsCompleted() && WorkingOn.All(x => x.ConsumesAction is false);
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActorNode), nameof(RestoreActionEconomy), 
+                $"{this} in {phase}, {nameof(restoringOnlyAbilityAction)} '{restoringOnlyAbilityAction}', " +
+                $"{nameof(restoreActionAllowed)} '{restoreActionAllowed}', {nameof(IsCompleted)} '{IsCompleted()}', " +
+                $"{nameof(WorkingOn)} '{string.Join(", ", WorkingOn.Select(w => w.ToString()))}'");
+        
+        if (restoreActionAllowed)
             ActionEconomy.Restore(phase, restoringOnlyAbilityAction);
     }
 
@@ -190,9 +198,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         if (WorkingOn.Contains(workingOn) is false)
         {
             if (Log.DebugEnabled)
-                Log.Info(nameof(ActorNode), nameof(AddWorkingOnAbility), 
-                    $"{this}: adding working on ability {ability.DisplayName} with timing {timing} and " +
-                    $"consumes action {consumesAction}.");
+                Log.Info(nameof(ActorNode), nameof(AddWorkingOnAbility), $"{this}: adding {workingOn}.");
             
             WorkingOn.Add(workingOn);
         }
@@ -206,8 +212,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         {
             if (Log.DebugEnabled)
                 Log.Info(nameof(ActorNode), nameof(RemoveWorkingOnAbility), 
-                    $"{this}: removing working on ability {ability.DisplayName} with timing " +
-                    $"{workingOnAbility.Timing} and consumes action {workingOnAbility.ConsumesAction}.");
+                    $"{this}: removing {workingOnAbility}.");
             
             WorkingOn.Remove(workingOnAbility);
         }

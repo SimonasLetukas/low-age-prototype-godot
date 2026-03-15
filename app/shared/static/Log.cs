@@ -3,8 +3,8 @@ using Godot;
 
 public static class Log
 {
-    public const bool VerboseDebugEnabled = false; // Should be used for frame-based logging.
-    public const bool DebugEnabled = true; // Should be used for non-frame-based logging.
+    public const bool VerboseDebugEnabled = false; // Should be used for spammy logs (e.g. frame-based).
+    public const bool DebugEnabled = false; 
     private static string CurrentPlayerStableId => Network.Instance.TryGetMultiplayer()?.IsServer() ?? true
         ? "S"
         : Players.Instance.Current.StableId.ToString();

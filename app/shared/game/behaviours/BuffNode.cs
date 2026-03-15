@@ -31,8 +31,7 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
     protected override void EndBehaviour()
     {
         if (Log.DebugEnabled)
-            Log.Info(nameof(BuffNode), nameof(EndBehaviour), 
-                $"Buff '{Blueprint.Id}' on {Parent} destroy called.");
+            Log.Info(nameof(BuffNode), nameof(EndBehaviour), ToString());
         
         if (Blueprint.RestoreChangesOnEnd)
             RestoreInitialModifications();
@@ -54,8 +53,7 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
     {
         if (Log.DebugEnabled)
             Log.Info(nameof(BuffNode), nameof(RestoreInitialModifications), 
-                $"Buff '{Blueprint.Id}' on {Parent} restoring modifications " +
-                $"'{JsonConvert.SerializeObject(Blueprint.InitialModifications)}'.");
+                $"{this} restoring modifications '{JsonConvert.SerializeObject(Blueprint.InitialModifications)}'.");
         
         var restorer = new ModificationRestorer(Parent);
         
@@ -67,8 +65,7 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
     {
         if (Log.DebugEnabled)
             Log.Info(nameof(BuffNode), nameof(HandleFinalModifications), 
-                $"Buff '{Blueprint.Id}' on {Parent} adding final modifications " +
-                $"'{JsonConvert.SerializeObject(Blueprint.FinalModifications)}'");
+                $"{this} adding final modifications '{JsonConvert.SerializeObject(Blueprint.FinalModifications)}'.");
         
         var applier = new ModificationApplier(Parent, false);
         

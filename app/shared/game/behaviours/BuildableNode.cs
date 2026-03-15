@@ -134,7 +134,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         
         if (Log.DebugEnabled)
             Log.Info(nameof(BuildableNode), nameof(UpdateProgress), 
-                $"A helper wants to update building progress of {Parent}: stockpile " +
+                $"A helper wants to update building progress on {this}: stockpile " +
                 $"'{JsonConvert.SerializeObject(nonConsumableStockpile)}', paid cost " +
                 $"'{JsonConvert.SerializeObject(PaidCost)}', total cost '{JsonConvert.SerializeObject(TotalCost)}', " +
                 $"is payment complete {isPaymentComplete}, helpers {Helpers.Count}, efficiency factor " +
@@ -153,7 +153,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         
         if (Log.DebugEnabled)
             Log.Info(nameof(BuildableNode), nameof(UpdateProgress), 
-                $"{Parent} updated building progress: {JsonConvert.SerializeObject(progress)}");
+                $"Updated building progress on {this}: {JsonConvert.SerializeObject(progress)}");
 
         UpdateVitals(previousPaidCost, progress.Completed);
         UpdateDescription(nonConsumableStockpile);
@@ -199,7 +199,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         
         if (Log.DebugEnabled)
             Log.Info(nameof(BuildableNode), nameof(UpdateVitals), 
-                $"{Parent} building progress updates vitals: previous paid cost " +
+                $"Building progress updates vitals on {this}: previous paid cost " +
                 $"'{JsonConvert.SerializeObject(previousPaidCost)}', current paid cost " +
                 $"{JsonConvert.SerializeObject(PaidCost)}, is complete {completed}. Gained health " +
                 $"{deltaGainedHealth} and shields {deltaGainedShields}.");

@@ -129,7 +129,7 @@ public partial class Turns : Node2D
 	{
 		if (Log.DebugEnabled)
 			Log.Info(nameof(Turns), $"{nameof(HandleEvent)}.{nameof(ActionEndedEvent)}", 
-				$"Initiative queue after action ended '{JsonConvert.SerializeObject(InitiativeQueue
+				$"Initiative queue when action ended '{JsonConvert.SerializeObject(InitiativeQueue
 					.Select(a => new {a.InstanceId, a.Initiative?.CurrentAmount}))}'");
 
 		if (InitiativeQueue.FirstOrDefault() is not { } actor

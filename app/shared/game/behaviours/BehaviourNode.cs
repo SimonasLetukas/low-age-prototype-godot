@@ -60,6 +60,10 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     public void OnBehaviourAdded(BehaviourNode addedBehaviour)
     {
+        //if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(OnBehaviourAdded), 
+                $"Current: '{this}', added: '{addedBehaviour}'.");
+        
         if (addedBehaviour.Equals(this) || addedBehaviour.Blueprint.Id.Equals(Blueprint.Id) is false)
             return;
 
@@ -68,10 +72,10 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
             Stack.Add(addedBehaviour);
             addedBehaviour.Destroyed += OnStackedBehaviourDestroyed;
             
-            if (Log.DebugEnabled)
+            //if (Log.DebugEnabled)
                 Log.Info(nameof(BehaviourNode), nameof(OnBehaviourAdded), 
-                    $"Behaviour '{Blueprint.Id}' on {Parent}: added to stack (behaviour on " +
-                    $"{addedBehaviour.Parent}). Current stack: {Stack.Count}.");
+                    $"{this} added item to stack ({addedBehaviour}). Current stack: " +
+                    $"'{string.Join(", ", Stack.Select(b => b.ToString()))}'.");
         }
         else
         {
@@ -97,13 +101,18 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     protected virtual void EndBehaviour() => Destroy();
     
-    protected virtual void OnDurationEnded(EndsAtNode duration) => EndBehaviour();
-    
+    protected virtual void OnDurationEnded(EndsAtNode duration)
+    {
+        //if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(OnDurationEnded), ToString());
+        
+        EndBehaviour();
+    }
+
     private void Destroy()
     {
-        if (Log.DebugEnabled)
-            Log.Info(nameof(BehaviourNode), nameof(Destroy), 
-                $"Behaviour '{Blueprint.Id}' on {Parent} destroy called.");
+        //if (Log.DebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(Destroy), ToString());
 
         foreach (var stackedBehaviour in Stack)
         {
@@ -116,6 +125,9 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     private void InitializeTriggers()
     {
+        //if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(InitializeTriggers), ToString());
+        
         var highestTiles = GlobalRegistry.Instance
             .GetHighestTiles(Parent.EntityOccupyingPositions)
             .WhereNotNull()
@@ -137,6 +149,9 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     private void DisposeTriggers()
     {
+        //if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(DisposeTriggers), ToString());
+        
         foreach (var triggerHandler in _triggerHandlers)
         {
             triggerHandler.Triggered -= OnTriggered;
@@ -147,6 +162,9 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     private void InitializeStackedBehaviours()
     {
+        //if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(InitializeStackedBehaviours), ToString());
+        
         if (Blueprint.CanStack is false)
         {
             Stack = [this];
@@ -167,14 +185,21 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
             behaviour.Destroyed += OnStackedBehaviourDestroyed;
         }
         
-        if (Log.DebugEnabled)
+        //if (Log.DebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(InitializeStackedBehaviours), 
-                $"Behaviour '{Blueprint.Id}' on {Parent} stack initialized. Current stack: {Stack.Count}.");
+                $"{this} stack initialized. Current stack: " +
+                $"'{string.Join(", ", Stack.Select(b => b.ToString()))}'.");
     }
     
     private void OnTriggered()
     {
-        if (Blueprint.RemoveOnConditionsMet)
+        var removeOnConditionsMet = Blueprint.RemoveOnConditionsMet;
+        
+        //if (Log.DebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(OnTriggered), 
+                $"{this} conditions triggered ({nameof(removeOnConditionsMet)}: '{removeOnConditionsMet}').");
+        
+        if (removeOnConditionsMet)
             Destroy();
     }
 
@@ -183,15 +208,19 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         if (entity.Equals(Parent) is false)
             return;
         
+        //if (Log.DebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(OnEntityDestroyed), 
+                $"{this} parent destroyed by {source}");
+        
         EndBehaviour();
     }
 
     private void OnStackedBehaviourDestroyed(BehaviourNode stackedBehaviour)
     {
-        if (Log.DebugEnabled)
+        //if (Log.DebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(OnStackedBehaviourDestroyed), 
-                $"Behaviour '{Blueprint.Id}' on {Parent} stack destroyed (behaviour on " +
-                $"{stackedBehaviour.Parent}). Current stack: {Stack.Count}.");
+                $"{this} stack item destroyed ({stackedBehaviour}). Current stack: " +
+                $"'{string.Join(", ", Stack.Select(b => b.ToString()))}'.");
         
         Stack.Remove(stackedBehaviour);
         stackedBehaviour.Destroyed -= OnStackedBehaviourDestroyed;
@@ -199,4 +228,6 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     
     public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
     public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
+
+    public override string ToString() => $"{Blueprint.DisplayName} behaviour '{InstanceId}' on {Parent}";
 }
