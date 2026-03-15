@@ -20,7 +20,6 @@ public partial class Game : Node2D
     protected bool LoadingSavedGame { get; set; } = false;
 
     protected Turns Turns { get; private set; } = null!;
-    protected string LogPrefix => $"{CurrentPlayerStableId}.{GetType().Name}";
 
     private string CurrentPlayerStableId => Multiplayer.IsServer() 
         ? "S"
@@ -83,7 +82,7 @@ public partial class Game : Node2D
     /// </summary>
     protected void MarkAsLoaded()
     {
-        GD.Print($"{LogPrefix}.{nameof(MarkAsLoaded)}");
+        Log.Info(nameof(Game), nameof(MarkAsLoaded), string.Empty);
         
         if (Multiplayer.IsServer()) 
             return;
@@ -91,7 +90,7 @@ public partial class Game : Node2D
         if (LoadingSavedGame)
             return;
         
-        GD.Print($"{LogPrefix}: calling {nameof(OnClientLoaded)} as Rpc.");
+        Log.Info(nameof(Game), nameof(MarkAsLoaded), $"Calling {nameof(OnClientLoaded)} as Rpc.");
         RpcId(Constants.ENet.ServerId, nameof(OnClientLoaded), Multiplayer.GetUniqueId());
     }
 
@@ -107,8 +106,10 @@ public partial class Game : Node2D
         if (Multiplayer.IsServer())
             return;
         
-        GD.Print($"{LogPrefix}.{nameof(RegisterNewGameEvent)}: called with {gameEvent.GetType()} " +
-                 $"and properties '{JsonConvert.SerializeObject(gameEvent).TrimForLogs()}'.");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(Game), nameof(RegisterNewGameEvent), 
+                $"Called with {gameEvent.GetType()} and properties " +
+                $"'{JsonConvert.SerializeObject(gameEvent).TrimForLogs()}'.");
         
         RpcId(Constants.ENet.ServerId, nameof(OnRegisterNewGameEvent), EventToString(gameEvent));
     }
@@ -116,14 +117,15 @@ public partial class Game : Node2D
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     protected virtual void OnClientLoaded(int playerId)
     {
-        GD.Print($"{LogPrefix}.{nameof(OnClientLoaded)}: '{playerId}' client loaded");
+        Log.Info(nameof(Game), nameof(OnClientLoaded), $"'{playerId}' client loaded.");
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     protected virtual void OnRegisterNewGameEvent(string eventBody)
     {
-        GD.Print($"{LogPrefix}.{nameof(OnRegisterNewGameEvent)}: registering new game event " +
-                 $"'{eventBody.TrimForLogs()}'");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(Game), nameof(OnRegisterNewGameEvent), 
+                $"Registering new game event '{eventBody.TrimForLogs()}'");
     }
 
     #endregion
@@ -132,26 +134,26 @@ public partial class Game : Node2D
 
     protected void SaveGameLoadedByAllPeers()
     {
-        GD.Print($"{LogPrefix}.{nameof(SaveGameLoadedByAllPeers)}");
+        Log.Info(nameof(Game), nameof(SaveGameLoadedByAllPeers), string.Empty);
         Rpc(nameof(OnSaveGameLoadedByAllPeers));
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false)]
     protected virtual void OnSaveGameLoadedByAllPeers()
     {
-        GD.Print($"{LogPrefix}.{nameof(OnSaveGameLoadedByAllPeers)}");
+        Log.Info(nameof(Game), nameof(OnSaveGameLoadedByAllPeers), string.Empty);
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void GameEnded()
     {
-        GD.Print($"{LogPrefix}.{nameof(GameEnded)}");
+        Log.Info(nameof(Game), nameof(GameEnded), string.Empty);
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected virtual void OnNewGameEventRegistered(string eventBody)
     {
-        GD.Print($"{LogPrefix}.{nameof(OnNewGameEventRegistered)}");
+        Log.Info(nameof(Game), nameof(OnNewGameEventRegistered), string.Empty);
     }
 
     #endregion

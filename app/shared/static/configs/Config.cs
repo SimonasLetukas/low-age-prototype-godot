@@ -18,7 +18,7 @@ public partial class Config : Node
         if (file == null)
         {
             var err = FileAccess.GetOpenError();
-            GD.PrintErr($"Failed to open config file. Error: {err}");
+            Log.Error(nameof(Config), nameof(Save), $"Failed to open config file. Error: {err}");
             return;
         }
         
@@ -46,13 +46,12 @@ public partial class Config : Node
         try
         {
             var obj = JsonConvert.DeserializeObject<ConfigData>(value);
-            _data = obj 
-                    ?? throw new Exception($"Config value '{value}' returned null after deserialization.");
+            _data = obj ?? throw new Exception($"Config value '{value}' returned null after deserialization.");
             return true;
         }
         catch (Exception e)
         {
-            GD.PrintErr(e.Message);
+            Log.Error(nameof(Config), nameof(FromString), e.Message);
             return false;
         }
     }
@@ -136,7 +135,7 @@ public partial class Config : Node
         if (OS.HasFeature(nameof(Server).ToLower()))
             return;
         
-        GD.Print("User data dir: ", OS.GetUserDataDir());
+        Log.Info(nameof(Config), nameof(_Ready), $"User data dir: {OS.GetUserDataDir()}");
         
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
         Instance ??= this;

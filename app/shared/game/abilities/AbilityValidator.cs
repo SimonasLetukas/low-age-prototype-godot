@@ -73,16 +73,16 @@ public sealed class AbilityValidator
     public sealed class HasEnoughConsumableResources : IAbilityValidatorItem
     {
         public required bool UseConsumableResources { get; init; }
-        public required IList<Payment> Cost { get; init; }
+        public required IList<Payment> ConsumableCost { get; init; }
         public required Player Player { get; init; }
         
         public ValidationResult Validate()
         {
-            if (UseConsumableResources is false || Cost.IsEmpty())
+            if (UseConsumableResources is false || ConsumableCost.IsEmpty())
                 return ValidationResult.Valid;
 
             var stockpile = GlobalRegistry.Instance.GetCurrentPlayerStockpile(Player);
-            var canSubtractResources = GlobalRegistry.Instance.CanSubtractResources(stockpile, Cost);
+            var canSubtractResources = GlobalRegistry.Instance.CanSubtractResources(stockpile, ConsumableCost);
             
             return canSubtractResources
                 ? ValidationResult.Valid 
@@ -154,6 +154,23 @@ public sealed class AbilityValidator
             
             if (creationProgress.GetRemainingProductionLength(NonConsumableStockpile) <= 1)
                 return ValidationResult.Invalid("There is enough help to finish this in 1 turn.");
+            
+            return ValidationResult.Valid;
+        }
+    }
+
+    public sealed class EffectsValidatorsPass : IAbilityValidatorItem
+    {
+        public required IEnumerable<Effects> Effects { get; init; }
+        
+        public ValidationResult Validate()
+        {
+            foreach (var effect in Effects)
+            {
+                var result = effect.ValidateLast();
+                if (result.IsValid is false)
+                    return result;
+            }
             
             return ValidationResult.Valid;
         }

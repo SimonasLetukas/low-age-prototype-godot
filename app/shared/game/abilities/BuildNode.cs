@@ -31,7 +31,6 @@ public partial class BuildNode : ActiveAbilityNode<
     
     private Build Blueprint { get; set; } = null!;
     private IShape PlacementArea { get; set; } = null!;
-    private GlobalRegistry Registry { get; } = GlobalRegistry.Instance;
 
     public override void _Ready()
     {
@@ -162,7 +161,7 @@ public partial class BuildNode : ActiveAbilityNode<
                 RefundResources(costOfDestroyedEntity);
             
             FocusQueue.Remove(focus);
-            RaiseCancelled(focus);
+            RaiseFocusRemoved(focus);
         }
         
         if (FocusQueue.IsEmpty())
@@ -174,10 +173,6 @@ public partial class BuildNode : ActiveAbilityNode<
     
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
             // TODO missing validations: research
-            new AbilityValidator.CooldownCompleted
-            {
-                Cooldown = RemainingCooldown
-            },
             new AbilityValidator.CorrectTurnPhase
             {
                 CurrentTurnPhase = Registry.GetCurrentPhase(),
@@ -194,16 +189,16 @@ public partial class BuildNode : ActiveAbilityNode<
                 AlreadyPlaced = request.EntityAlreadyPlaced,
                 Selection = Selection
             },
-            new AbilityValidator.HasEnoughConsumableResources
-            {
-                UseConsumableResources = request.UseConsumableResources,
-                Cost = GetCostForSelectedEntity(request.EntityToBuild),
-                Player = OwnerActor.Player
-            },
             new AbilityValidator.TargetWithinArea
             {
                 AvailablePositions = GetTargetPositions(OwnerActor),
                 TargetPositions = request.EntityToBuild?.EntityOccupyingPositions!
+            },
+            new AbilityValidator.HasEnoughConsumableResources
+            {
+                UseConsumableResources = request.UseConsumableResources,
+                ConsumableCost = GetCostForSelectedEntity(request.EntityToBuild),
+                Player = OwnerActor.Player
             },
             new AbilityValidator.HelpApplicableAndAllowed
             {
@@ -217,12 +212,12 @@ public partial class BuildNode : ActiveAbilityNode<
 
     protected override AbilityReservationResult HandleReservation(ActivationRequest request)
     {
-        if (DebugEnabled)
-            GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} trying to reserve request " +
-                     $"({request.EntityToBuild?.DisplayName}, {request.EntityToBuild?.EntityPrimaryPosition}, already " +
-                     $"placed {request.EntityAlreadyPlaced}, use consumables {request.UseConsumableResources}). Creation " +
-                     $"progress (completed {request.EntityToBuild?.IsCompleted()}, helpers " +
-                     $"{request.EntityToBuild?.CreationProgress?.Helpers.Count})");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BuildNode), nameof(HandleReservation), 
+                $"{OwnerActor} trying to reserve request ({request.EntityToBuild}, already placed " +
+                $"{request.EntityAlreadyPlaced}, use consumables {request.UseConsumableResources}). Creation " +
+                $"progress (completed {request.EntityToBuild?.IsCompleted()}, helpers " +
+                $"{request.EntityToBuild?.CreationProgress?.Helpers.Count})");
 
         if (request.EntityToBuild is null || request.EntityToBuild.IsCompleted())
         {
@@ -273,7 +268,7 @@ public partial class BuildNode : ActiveAbilityNode<
         base.RequestExecution(focus);
     }
 
-    protected override bool TryExecutePostPayment(Focus focus)
+    protected override bool ExecutePostPaymentAndDetermineIfPaymentCompleted(Focus focus)
     {
         var entity = Registry.GetEntityById(focus.EntityToBuildId);
 
@@ -285,16 +280,17 @@ public partial class BuildNode : ActiveAbilityNode<
             entity.CreationProgress.Helpers[this] = Blueprint.HelpEfficiency;
         
         var nonConsumableStockpile = GetNonConsumableStockpile();
-        if (DebugEnabled)
-            GD.Print($"{nameof(BuildNode)}.{nameof(TryExecutePostPayment)}: {nameof(nonConsumableStockpile)} " +
-                     $"'{JsonConvert.SerializeObject(nonConsumableStockpile)}'");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BuildNode), nameof(ExecutePostPaymentAndDetermineIfPaymentCompleted), 
+                $"{nameof(nonConsumableStockpile)} '{JsonConvert.SerializeObject(nonConsumableStockpile)}'");
         
         entity.CreationProgress.UpdateProgress(nonConsumableStockpile, focus.EfficiencyFactor);
 
         var completed = entity.IsCompleted();
         
-        if (DebugEnabled)
-            GD.Print($"{nameof(BuildNode)}.{nameof(TryExecutePostPayment)}: Building completed '{completed}'");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BuildNode), nameof(ExecutePostPaymentAndDetermineIfPaymentCompleted), 
+                $"Building completed '{completed}'");
         
         return completed;
     }
@@ -309,25 +305,23 @@ public partial class BuildNode : ActiveAbilityNode<
         return false;
     }
 
-    protected override void Complete(Focus focus)
+    protected override void ExecuteFocus(Focus focus)
     {
         var entity = Registry.GetEntityById(focus.EntityToBuildId);
         
         if (entity is null)
         {
             // Something is fishy, best to move on
-            CleanUpCompletedFocus(focus);
+            RemoveFocus(focus);
             return; 
         }
         
         entity.CreationProgress?.Helpers.Clear(); // It's OK if CreationProgress doesn't even exist at this point
-
-        CleanUpCompletedFocus(focus);
         
-        if (DebugEnabled)
-            GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} completed focus " +
-                     $"'{JsonConvert.SerializeObject(focus)}'. Focus queue {FocusQueue.Count}. Entity is " +
-                     $"completed {entity.IsCompleted()}");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BuildNode), nameof(ExecuteFocus), 
+                $"{OwnerActor} completed focus '{JsonConvert.SerializeObject(focus)}'. Focus queue " +
+                $"{FocusQueue.Count}. Entity is completed {entity.IsCompleted()}");
     }
 
     private IList<Payment> GetCostForSelectedEntity(EntityNode? entityToBuild) => Selection
@@ -364,10 +358,9 @@ public partial class BuildNode : ActiveAbilityNode<
     {
         public bool Requeued { get; set; }
         public required AbilityReservationResult Reservation { get; set; }
+        public IList<Payment> NonConsumableResourcesPaidSoFar { get; set; } = []; 
         public float? EfficiencyFactor { get; set; }
         public required Guid EntityToBuildId { get; init; }
-        //public required IList<Payment> Cost { get; init; }
-        //public required IList<Payment> PaymentPaid { get; init; }
 
         public IConsumableAbilityActivationRequest ToActivationRequest() => new ActivationRequest
         {

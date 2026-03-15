@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
 using Newtonsoft.Json;
@@ -42,9 +43,9 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         NonConsumableCost = Registry.GetNonConsumableResources(cost).ToList();
     }
 
-    public bool IsPlacementValid(IList<Tiles.TileInstance?> tiles) => ValidationHandler
+    public ValidationResult IsPlacementValid(IList<Tiles.TileInstance?> tiles) => ValidationHandler
         .Validate(Blueprint.PlacementValidators)
-        .With(tiles)
+        .With(tiles.WhereNotNull())
         .Handle();
 
     /// <summary>
@@ -131,12 +132,13 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     {
         var isPaymentComplete = Registry.IsPaymentComplete(NonConsumableCost, PaidCost);
         
-        if (DebugEnabled)
-            GD.Print($"A helper wants to update building progress of {Parent.DisplayName} at " +
-                     $"{Parent.EntityPrimaryPosition}: stockpile '{JsonConvert.SerializeObject(nonConsumableStockpile)}', " +
-                     $"paid cost '{JsonConvert.SerializeObject(PaidCost)}', total cost " +
-                     $"'{JsonConvert.SerializeObject(TotalCost)}', is payment complete {isPaymentComplete}, helpers " +
-                     $"{Helpers.Count}, efficiency factor {CalculateEfficiencyFactor()}");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BuildableNode), nameof(UpdateProgress), 
+                $"A helper wants to update building progress of {Parent}: stockpile " +
+                $"'{JsonConvert.SerializeObject(nonConsumableStockpile)}', paid cost " +
+                $"'{JsonConvert.SerializeObject(PaidCost)}', total cost '{JsonConvert.SerializeObject(TotalCost)}', " +
+                $"is payment complete {isPaymentComplete}, helpers {Helpers.Count}, efficiency factor " +
+                $"{CalculateEfficiencyFactor()}");
         
         if (isPaymentComplete)
         {
@@ -149,9 +151,9 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         var progress = CalculateProgressStep(PaidCost, nonConsumableStockpile, efficiencyFactor);
         PaidCost = progress.NewPaidSoFar.ToList();
         
-        if (DebugEnabled)
-            GD.Print($"{Parent.DisplayName} at {Parent.EntityPrimaryPosition} updated building progress: " +
-                     $"{JsonConvert.SerializeObject(progress)}");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BuildableNode), nameof(UpdateProgress), 
+                $"{Parent} updated building progress: {JsonConvert.SerializeObject(progress)}");
 
         UpdateVitals(previousPaidCost, progress.Completed);
         UpdateDescription(nonConsumableStockpile);
@@ -195,11 +197,12 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         var deltaGainedHealth = CalculateDeltaGainedValue(maxHealth, previousPaidCost, completed);
         var deltaGainedShields = CalculateDeltaGainedValue(maxShields, previousPaidCost, completed);
         
-        if (DebugEnabled)
-            GD.Print($"{Parent.DisplayName} at {Parent.EntityPrimaryPosition} building progress updates " +
-                     $"vitals: previous paid cost '{JsonConvert.SerializeObject(previousPaidCost)}', current paid " +
-                     $"cost {JsonConvert.SerializeObject(PaidCost)}, is complete {completed}. Gained health " +
-                     $"{deltaGainedHealth} and shields {deltaGainedShields}.");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BuildableNode), nameof(UpdateVitals), 
+                $"{Parent} building progress updates vitals: previous paid cost " +
+                $"'{JsonConvert.SerializeObject(previousPaidCost)}', current paid cost " +
+                $"{JsonConvert.SerializeObject(PaidCost)}, is complete {completed}. Gained health " +
+                $"{deltaGainedHealth} and shields {deltaGainedShields}.");
         
         Updated((deltaGainedHealth, deltaGainedShields));
     }

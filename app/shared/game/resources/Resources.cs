@@ -20,8 +20,6 @@ using Resource = LowAgeData.Domain.Resources.Resource;
 /// </summary>
 public partial class Resources : Node2D
 {
-    private static bool DebugEnabled => false;
-    
     private readonly Dictionary<IncomeProvider, IReadOnlyDictionary<ResourceId, int>> _currentPaymentByIncomeProvider = new();
     private readonly Dictionary<Player, IReadOnlyDictionary<ResourceId, int>> _resourcesStockpiledByPlayer = new();
     private Dictionary<ResourceId, Resource> _resourceBlueprints = [];
@@ -145,10 +143,11 @@ public partial class Resources : Node2D
     public static (IList<Payment> ResourcesSpent, IList<Payment> UpdatedPayment) SimulatePayment(
         IList<Payment> cost, IList<Payment> stockpile, IList<Payment> paidSoFar, float efficiencyFactor)
     {
-        if (DebugEnabled)
-            GD.Print($"Received request to simulate payment: cost '{JsonConvert.SerializeObject(cost)}', " +
-                     $"stockpile '{JsonConvert.SerializeObject(stockpile)}', paid so far " +
-                     $"'{JsonConvert.SerializeObject(paidSoFar)}', efficiency factor '{efficiencyFactor}'");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(Resources), nameof(SimulatePayment), 
+                $"Received request to simulate payment: cost '{JsonConvert.SerializeObject(cost)}', " +
+                $"stockpile '{JsonConvert.SerializeObject(stockpile)}', paid so far " +
+                $"'{JsonConvert.SerializeObject(paidSoFar)}', efficiency factor '{efficiencyFactor}'");
         
         var (resourcesSpent, updatedPayment) = ResourceCalculator
             .SimulatePayment(
@@ -365,7 +364,7 @@ public partial class Resources : Node2D
 
     private void OnActionPhaseStarted()
     {
-        foreach (var (_, stockpile) in _resourcesStockpiledByPlayer)
+        foreach (var (player, stockpile) in _resourcesStockpiledByPlayer)
         {
             foreach (var (resourceId, amount) in stockpile)
             {
@@ -388,8 +387,8 @@ public partial class Resources : Node2D
                 {
                     foreach (var effectId in effects)
                     {
-                        var chain = new Effects(effectId, null, null);
-                        if (chain.ValidateLast())
+                        var chain = new Effects(effectId, [], player, null);
+                        if (chain.ValidateLast().IsValid)
                             chain.ExecuteLast();
                     }
                 }

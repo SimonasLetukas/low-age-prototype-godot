@@ -174,7 +174,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
     public void RestoreActionEconomy(TurnPhase phase, bool restoringOnlyAbilityAction)
     {
-        if (IsCompleted())
+        if (IsCompleted() && WorkingOn.All(x => x.ConsumesAction is false))
             ActionEconomy.Restore(phase, restoringOnlyAbilityAction);
     }
 
@@ -189,9 +189,10 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
         if (WorkingOn.Contains(workingOn) is false)
         {
-            if (DebugEnabled)
-                GD.Print($"{DisplayName} at {EntityPrimaryPosition}: adding working on ability " +
-                         $"{ability.DisplayName} with timing {timing} and consumes action {consumesAction}.");
+            if (Log.DebugEnabled)
+                Log.Info(nameof(ActorNode), nameof(AddWorkingOnAbility), 
+                    $"{this}: adding working on ability {ability.DisplayName} with timing {timing} and " +
+                    $"consumes action {consumesAction}.");
             
             WorkingOn.Add(workingOn);
         }
@@ -203,10 +204,10 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
                      .ToList()
                      .Where(workingOnAbility => workingOnAbility.Ability.Equals(ability)))
         {
-            if (DebugEnabled)
-                GD.Print($"{DisplayName} at {EntityPrimaryPosition}: removing working on ability " +
-                         $"{ability.DisplayName} with timing {workingOnAbility.Timing} and consumes action " +
-                         $"{workingOnAbility.ConsumesAction}.");
+            if (Log.DebugEnabled)
+                Log.Info(nameof(ActorNode), nameof(RemoveWorkingOnAbility), 
+                    $"{this}: removing working on ability {ability.DisplayName} with timing " +
+                    $"{workingOnAbility.Timing} and consumes action {workingOnAbility.ConsumesAction}.");
             
             WorkingOn.Remove(workingOnAbility);
         }
@@ -414,6 +415,10 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     
     protected override void OnPhaseStarted(int turn, TurnPhase phase)
     {
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActorNode), nameof(OnPhaseStarted), 
+                $"{phase.ToDisplayValue()} for {this} is starting.");
+        
         RestoreActionEconomy(phase, false);
         
         base.OnPhaseStarted(turn, phase);

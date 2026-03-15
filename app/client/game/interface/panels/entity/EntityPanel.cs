@@ -239,19 +239,19 @@ public partial class EntityPanel : Control
         _selectedAbility = ability;
         
         if (_selectedAbility is IActiveAbilityNode activeAbility)
-            activeAbility.Cancelled += OnAbilityCancelled;
+            activeAbility.FocusRemoved += OnAbilityFocusRemoved;
     }
 
     private void UnregisterAbility()
     {
         if (_selectedAbility is IActiveAbilityNode activeAbility)
-            activeAbility.Cancelled -= OnAbilityCancelled;
+            activeAbility.FocusRemoved -= OnAbilityFocusRemoved;
         
         _isShowingAbility = false;
         _selectedAbility = null;
     }
 
-    private void OnAbilityCancelled(IActiveAbilityFocus focus) => ChangeDisplay();
+    private void OnAbilityFocusRemoved(IActiveAbilityFocus focus) => ChangeDisplay();
 
     private void OnCancelButtonClicked()
     {

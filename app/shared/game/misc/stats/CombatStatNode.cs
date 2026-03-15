@@ -1,6 +1,7 @@
 using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Modifications;
+using Newtonsoft.Json;
 
 public partial class CombatStatNode : StatNode, INodeFromBlueprint<CombatStat>
 {
@@ -47,6 +48,13 @@ public partial class CombatStatNode : StatNode, INodeFromBlueprint<CombatStat>
 		{
 			Modifications.Add(statModification);
 		}
+		
+		if (Log.DebugEnabled)
+			Log.Info(nameof(CombatStatNode), nameof(Apply), 
+				$"{nameof(modification)} to apply '{JsonConvert.SerializeObject(modification)}', " +
+				$"{nameof(applyToBaseValue)} '{applyToBaseValue}', {nameof(BaseCurrentAmount)} " +
+				$"'{BaseCurrentAmount}', {nameof(BaseMaxAmount)} '{BaseMaxAmount}', resulting " +
+				$"{nameof(Modifications)} '{JsonConvert.SerializeObject(Modifications)}'");
 		
 		base.Apply(modification, applyToBaseValue);
 	}

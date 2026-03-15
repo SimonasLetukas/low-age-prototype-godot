@@ -50,7 +50,7 @@ public partial class ClientLobby : Lobby
     {
         base.OnPlayerAdded(playerId);
         
-        GD.Print($"{nameof(ClientLobby)}.{nameof(OnPlayerAdded)}");
+        Log.Info(nameof(ClientLobby), nameof(OnPlayerAdded), $"Added {playerId}.");
 
         _startGameButton.Disabled = IsStartGameButtonDisabled();
         
@@ -67,7 +67,8 @@ public partial class ClientLobby : Lobby
     protected override void ChangeSelectedOriginalPlayerForPlayer(int playerId, int originalPlayerStableId)
     {
         base.ChangeSelectedOriginalPlayerForPlayer(playerId, originalPlayerStableId);
-        GD.Print($"{nameof(ClientLobby)}.{nameof(ChangeSelectedOriginalPlayerForPlayer)}");
+        Log.Info(nameof(ClientLobby), nameof(ChangeSelectedOriginalPlayerForPlayer), 
+            $"{nameof(playerId)} '{playerId}', {nameof(originalPlayerStableId)} '{originalPlayerStableId}'");
         
         _startGameButton.Disabled = IsStartGameButtonDisabled();
     }
@@ -79,14 +80,15 @@ public partial class ClientLobby : Lobby
     protected override void ChangeReadyStatusForPlayer(int playerId, bool newReadyStatus)
     {
         base.ChangeReadyStatusForPlayer(playerId, newReadyStatus);
-        GD.Print($"{nameof(ClientLobby)}.{nameof(ChangeReadyStatusForPlayer)}");
+        Log.Info(nameof(ClientLobby), nameof(ChangeReadyStatusForPlayer), 
+            $"{nameof(playerId)} '{playerId}', {nameof(newReadyStatus)} '{newReadyStatus}'");
 
         _startGameButton.Disabled = IsStartGameButtonDisabled();
     }
 
     private void OnGameStarted()
     {
-        GD.Print($"{nameof(ClientLobby)}: game starting for client...");
+        Log.Info(nameof(ClientLobby), nameof(OnGameStarted), "Game starting for client...");
         Callable.From(() => GetTree().ChangeSceneToFile(ClientGame.ScenePath)).CallDeferred();
     }
     
@@ -109,7 +111,7 @@ public partial class ClientLobby : Lobby
     protected override void UpdateSaveAdded(string savePayload)
     {
         base.UpdateSaveAdded(savePayload);
-        GD.Print($"{nameof(ClientLobby)}.{nameof(UpdateSaveAdded)}");
+        Log.Info(nameof(ClientLobby), nameof(UpdateSaveAdded), string.Empty);
 
         var save = Data.Instance.Save;
         if (save is null)
@@ -122,7 +124,7 @@ public partial class ClientLobby : Lobby
 
     private void OnStartGamePressed()
     {
-        GD.Print($"{nameof(ClientLobby)}: start game button pressed.");
+        Log.Info(nameof(ClientLobby), nameof(OnStartGamePressed), "Start game button pressed.");
         Client.Instance.StartGame();
     }
     

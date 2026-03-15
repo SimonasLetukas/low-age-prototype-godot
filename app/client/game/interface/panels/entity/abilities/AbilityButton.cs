@@ -17,8 +17,8 @@ public partial class AbilityButton : BaseButton
 
     public new event Action<bool, AbilityButton> Hovering = delegate { };
     public new event Action<AbilityButton> Clicked = delegate { };
-    
-    public IAbilityNode? Ability { get; private set; }
+
+    public IAbilityNode Ability { get; private set; } = null!;
 
     private Text _cooldown = null!;
 

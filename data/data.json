@@ -274,8 +274,7 @@
           "ability-shared-unit-in-production",
           "ability-shared-revelators-population-cost",
           "ability-slave-build",
-          "ability-slave-repair",
-          "ability-slave-manual-labour"
+          "ability-slave-repair"
         ],
         "displayName": "Slave",
         "description": "The backbone labour force of the Revelators. Slaves build and repair structures, working together to speed up construction. They can also extract Scraps from nearby Huts through manual labour.",
@@ -343,10 +342,7 @@
           "ActorAttribute.Celestial"
         ],
         "abilities": [
-          "ability-shared-revelators-population-cost",
-          "ability-leader-all-for-one",
-          "ability-leader-menacing-presence",
-          "ability-leader-one-for-all"
+          "ability-shared-revelators-population-cost"
         ],
         "displayName": "Leader",
         "description": "",
@@ -427,9 +423,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost",
-          "ability-quickdraw-doubleshot",
-          "ability-quickdraw-cripple"
+          "ability-shared-revelators-population-cost"
         ],
         "displayName": "Quickdraw",
         "description": "A versatile ranged fighter. Quickdraws can fire twice and excel at stopping fast-moving Light enemies. Their attacks can be upgraded to cripple targets for a short duration.",
@@ -498,9 +492,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost",
-          "ability-gorger-fanatic-suicide",
-          "ability-gorger-fanatic-suicide-passive"
+          "ability-shared-revelators-population-cost"
         ],
         "displayName": "Gorger",
         "description": "",
@@ -569,9 +561,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost",
-          "ability-camou-silent-assassin",
-          "ability-camou-climb"
+          "ability-shared-revelators-population-cost"
         ],
         "displayName": "Camou",
         "description": "",
@@ -652,8 +642,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost",
-          "ability-shaman-wondrous-goo"
+          "ability-shared-revelators-population-cost"
         ],
         "displayName": "Shaman",
         "description": "",
@@ -734,9 +723,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost",
-          "ability-pyre-wall-of-flames",
-          "ability-pyre-phantom-menace"
+          "ability-shared-revelators-population-cost"
         ],
         "displayName": "Pyre",
         "description": "",
@@ -805,8 +792,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost",
-          "ability-big-bad-bull-unleash-the-rage"
+          "ability-shared-revelators-population-cost"
         ],
         "displayName": "Big Bad Bull",
         "description": "",
@@ -875,9 +861,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost",
-          "ability-mummy-spawn-roach",
-          "ability-mummy-leap-of-hunger"
+          "ability-shared-revelators-population-cost"
         ],
         "displayName": "Mummy",
         "description": "",
@@ -944,10 +928,7 @@
           "ActorAttribute.Armoured",
           "ActorAttribute.Biological"
         ],
-        "abilities": [
-          "ability-roach-degrading-carapace",
-          "ability-roach-corrosive-spit"
-        ],
+        "abilities": [],
         "displayName": "Roach",
         "description": "",
         "sprite": "res://assets/sprites/units/revs/roach indexed 1x1.png",
@@ -1015,8 +996,7 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost",
-          "ability-parasite-paralysing-grasp"
+          "ability-shared-revelators-population-cost"
         ],
         "displayName": "Parasite",
         "description": "",
@@ -1090,9 +1070,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
-          "ability-shared-unit-in-production",
-          "ability-horrior-expert-formation",
-          "ability-horrior-mount"
+          "ability-shared-unit-in-production"
         ],
         "displayName": "Horrior",
         "description": "",
@@ -1178,8 +1156,7 @@
           "ActorAttribute.Ranged"
         ],
         "abilities": [
-          "ability-shared-unit-in-production",
-          "ability-marksman-critical-mark"
+          "ability-shared-unit-in-production"
         ],
         "displayName": "Marksman",
         "description": "",
@@ -1253,8 +1230,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
-          "ability-shared-unit-in-production",
-          "ability-surfer-dismount"
+          "ability-shared-unit-in-production"
         ],
         "displayName": "Surfer",
         "description": "",
@@ -1340,10 +1316,7 @@
           "ActorAttribute.Ranged"
         ],
         "abilities": [
-          "ability-shared-unit-in-production",
-          "ability-mortar-deadly-ammunition",
-          "ability-mortar-reload",
-          "ability-mortar-piercing-blast"
+          "ability-shared-unit-in-production"
         ],
         "displayName": "Mortar",
         "description": "",
@@ -1417,10 +1390,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
-          "ability-shared-unit-in-production",
-          "ability-hawk-tactical-goggles",
-          "ability-hawk-leadership",
-          "ability-hawk-health-kit"
+          "ability-shared-unit-in-production"
         ],
         "displayName": "Hawk",
         "description": "",
@@ -1494,10 +1464,7 @@
           "ActorAttribute.Biological"
         ],
         "abilities": [
-          "ability-shared-unit-in-production",
-          "ability-engineer-assemble-machine",
-          "ability-engineer-operate",
-          "ability-engineer-repair"
+          "ability-shared-unit-in-production"
         ],
         "displayName": "Engineer",
         "description": "",
@@ -1571,11 +1538,7 @@
           "ActorAttribute.Mechanical",
           "ActorAttribute.Ranged"
         ],
-        "abilities": [
-          "ability-cannon-assembling",
-          "ability-cannon-machine",
-          "ability-cannon-heat-up"
-        ],
+        "abilities": [],
         "displayName": "Cannon",
         "description": "",
         "sprite": "res://assets/sprites/units/uee/cannon indexed 2x2.png",
@@ -1648,12 +1611,7 @@
           "ActorAttribute.Mechanical",
           "ActorAttribute.Ranged"
         ],
-        "abilities": [
-          "ability-ballista-assembling",
-          "ability-ballista-machine",
-          "ability-ballista-add-on",
-          "ability-ballista-aim"
-        ],
+        "abilities": [],
         "displayName": "Ballista",
         "description": "",
         "sprite": "res://assets/sprites/units/uee/ballista indexed 2x2.png",
@@ -1714,13 +1672,7 @@
           "ActorAttribute.Light",
           "ActorAttribute.Mechanical"
         ],
-        "abilities": [
-          "ability-radar-assembling",
-          "ability-radar-machine",
-          "ability-shared-uee-power-dependency",
-          "ability-radar-resonating-sweep",
-          "ability-radar-radio-location"
-        ],
+        "abilities": [],
         "displayName": "Radar",
         "description": "",
         "sprite": "res://assets/sprites/units/uee/radar indexed 1x1.png",
@@ -1793,10 +1745,7 @@
           "ActorAttribute.Mechanical"
         ],
         "abilities": [
-          "ability-shared-unit-in-production",
-          "ability-vessel-machine",
-          "ability-vessel-absorbent-field",
-          "ability-vessel-fortify"
+          "ability-shared-unit-in-production"
         ],
         "displayName": "Vessel",
         "description": "",
@@ -1881,8 +1830,7 @@
           "ActorAttribute.Ranged"
         ],
         "abilities": [
-          "ability-shared-unit-in-production",
-          "ability-omen-rendition"
+          "ability-shared-unit-in-production"
         ],
         "displayName": "Omen",
         "description": "",
@@ -2088,8 +2036,7 @@
         ],
         "abilities": [
           "ability-obelisk-building",
-          "ability-shared-celestium-income",
-          "ability-obelisk-celestium-discharge"
+          "ability-shared-celestium-income"
         ],
         "displayName": "Obelisk",
         "description": "Obelisk provides Celestium income and should be built on top of Celestium resources",
@@ -2526,8 +2473,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building-structure",
-          "ability-workshop-research"
+          "ability-shared-revelators-building-structure"
         ],
         "displayName": "Workshop",
         "description": "Workshop can be used to research various upgrades.",
@@ -2676,10 +2622,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building-structure",
-          "ability-barricade-protective-shield",
-          "ability-barricade-caltrops",
-          "ability-barricade-decompose"
+          "ability-shared-revelators-building-structure"
         ],
         "displayName": "Barricade",
         "description": "Barricade helps to defend against ranged attacks and acts as an obstacle for melee units.",
@@ -2757,11 +2700,8 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-power-generator",
           "ability-shared-passive-income",
-          "ability-battery-core-power-grid",
-          "ability-shared-uee-build",
-          "ability-battery-core-fusion-core-upgrade"
+          "ability-shared-uee-build"
         ],
         "displayName": "Battery Core",
         "description": "",
@@ -2839,12 +2779,8 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-power-generator",
           "ability-shared-passive-income",
-          "ability-fusion-core-power-grid",
-          "ability-shared-uee-build",
-          "ability-fusion-core-defence-protocol",
-          "ability-fusion-core-celestium-core-upgrade"
+          "ability-shared-uee-build"
         ],
         "displayName": "Fusion Core",
         "description": "",
@@ -2922,12 +2858,8 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-power-generator",
           "ability-shared-passive-income",
-          "ability-celestium-core-power-grid",
-          "ability-shared-uee-build",
-          "ability-celestium-core-defence-protocol",
-          "ability-celestium-core-heightened-conductivity"
+          "ability-shared-uee-build"
         ],
         "displayName": "Celestium Core",
         "description": "",
@@ -3006,8 +2938,7 @@
         ],
         "abilities": [
           "ability-collector-building",
-          "ability-shared-scraps-income",
-          "ability-collector-direct-transit-system"
+          "ability-shared-scraps-income"
         ],
         "displayName": "Collector",
         "description": "",
@@ -3086,8 +3017,7 @@
         ],
         "abilities": [
           "ability-extractor-building",
-          "ability-shared-celestium-income",
-          "ability-extractor-reinforced-infrastructure"
+          "ability-shared-celestium-income"
         ],
         "displayName": "Extractor",
         "description": "",
@@ -3165,11 +3095,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building-structure",
-          "ability-shared-uee-power-dependency",
-          "ability-power-pole-power-grid",
-          "ability-power-pole-excess-distribution",
-          "ability-power-pole-improved-power-grid"
+          "ability-shared-uee-building-structure"
         ],
         "displayName": "Power Pole",
         "description": "",
@@ -3247,9 +3173,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building-structure",
-          "ability-shared-uee-power-dependency",
-          "ability-temple-keeping-the-faith"
+          "ability-shared-uee-building-structure"
         ],
         "displayName": "Temple",
         "description": "",
@@ -3327,9 +3251,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building-structure",
-          "ability-shared-uee-power-dependency",
-          "ability-military-base-train"
+          "ability-shared-uee-building-structure"
         ],
         "displayName": "Military Base",
         "description": "",
@@ -3407,9 +3329,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building-structure",
-          "ability-shared-uee-power-dependency",
-          "ability-factory-train"
+          "ability-shared-uee-building-structure"
         ],
         "displayName": "Factory",
         "description": "",
@@ -3487,9 +3407,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building-structure",
-          "ability-shared-uee-power-dependency",
-          "ability-laboratory-train"
+          "ability-shared-uee-building-structure"
         ],
         "displayName": "Laboratory",
         "description": "",
@@ -3567,9 +3485,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building-structure",
-          "ability-shared-uee-power-dependency",
-          "ability-armoury-research"
+          "ability-shared-uee-building-structure"
         ],
         "displayName": "Armoury",
         "description": "",
@@ -3650,9 +3566,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-wall-building",
-          "ability-shared-uee-power-dependency",
-          "ability-wall-high-ground"
+          "ability-wall-building"
         ],
         "displayName": "Wall",
         "description": "",
@@ -3733,9 +3647,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building-structure",
-          "ability-shared-uee-power-dependency",
-          "ability-stairs-ascendable"
+          "ability-shared-uee-building-structure"
         ],
         "displayName": "Stairs",
         "description": "",
@@ -3817,7 +3729,6 @@
         ],
         "abilities": [
           "ability-shared-uee-building-structure",
-          "ability-shared-uee-power-dependency",
           "ability-gate-high-ground",
           "ability-gate-ascendable",
           "ability-gate-entrance"
@@ -3901,9 +3812,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building-structure",
-          "ability-shared-uee-power-dependency",
-          "ability-watchtower-vantage-point"
+          "ability-shared-uee-building-structure"
         ],
         "displayName": "Watchtower",
         "description": "",
@@ -3984,9 +3893,7 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-uee-building-structure",
-          "ability-shared-uee-power-dependency",
-          "ability-bastion-battlement"
+          "ability-shared-uee-building-structure"
         ],
         "displayName": "Bastion",
         "description": "",

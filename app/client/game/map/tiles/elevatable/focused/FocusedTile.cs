@@ -4,9 +4,6 @@ using LowAgeCommon;
 
 public partial class FocusedTile : AnimatedSprite2D
 {
-    [Export]
-    public bool DebugEnabled { get; set; } = false;
-    
     public Tiles.TileInstance? CurrentTile { get; private set; }
     public bool IsWithinTheMap => CurrentTile != null;
 
@@ -26,7 +23,7 @@ public partial class FocusedTile : AnimatedSprite2D
         base._Ready();
 
         _zIndexText = GetNode<RichTextLabel>($"{nameof(RichTextLabel)}");
-        _zIndexText.Visible = DebugEnabled;
+        _zIndexText.Visible = Log.VerboseDebugEnabled;
         
         Disable();
 
@@ -64,9 +61,10 @@ public partial class FocusedTile : AnimatedSprite2D
         if (_previousPosition == mapPosition && _stateChanged is false)
             return;
         
-        if (DebugEnabled)
-            GD.Print($"Updating tile to position {mapPosition}, reason: new position " +
-                     $"({_previousPosition != mapPosition}), state changed ({_stateChanged}).");
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(FocusedTile), nameof(UpdateTile), 
+                $"Updating tile to position {mapPosition}, reason: new position " +
+                $"({_previousPosition != mapPosition}), state changed ({_stateChanged}).");
         
         var hoveredTerrain = _tiles.GetTerrain(tile);
         EventBus.Instance.RaiseNewTileFocused(mapPosition, hoveredTerrain, tile?.GetOccupants().ToList());

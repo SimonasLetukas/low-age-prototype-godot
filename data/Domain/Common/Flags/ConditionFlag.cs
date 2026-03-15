@@ -8,12 +8,14 @@ namespace LowAgeData.Domain.Common.Flags
     public class ConditionFlag : EnumValueObject<ConditionFlag, ConditionFlag.ConditionFlags>
     {
         /// <summary>
-        /// Used in <see cref="MaskCondition"/>, <see cref="EntityCondition"/> or <see cref="BehaviourCondition"/>.
+        /// Used in <see cref="MaskCondition"/>, <see cref="TileCondition"/>, <see cref="ResourceCondition"/>,
+        /// <see cref="EntityCondition"/> or <see cref="BehaviourCondition"/>.
         /// </summary>
         public static ConditionFlag Exists => new ConditionFlag(ConditionFlags.Exists);
         
         /// <summary>
-        /// Used in <see cref="MaskCondition"/>, <see cref="EntityCondition"/> or <see cref="BehaviourCondition"/>.
+        /// Used in <see cref="MaskCondition"/>, <see cref="TileCondition"/>, <see cref="ResourceCondition"/>,
+        /// <see cref="EntityCondition"/> or <see cref="BehaviourCondition"/>.
         /// </summary>
         public static ConditionFlag DoesNotExist => new ConditionFlag(ConditionFlags.DoesNotExist);
         

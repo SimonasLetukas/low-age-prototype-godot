@@ -46,9 +46,9 @@ public sealed class TriggerHandler : IDisposable
         return this;
     }
 
-    public TriggerHandler With(IList<Tiles.TileInstance?> tileSource)
+    public TriggerHandler With(IEnumerable<ITargetable> targetSource)
     {
-        _validationHandler.With(tileSource);
+        _validationHandler.With(targetSource);
         return this;
     }
 
@@ -84,7 +84,7 @@ public sealed class TriggerHandler : IDisposable
         if (player.Equals(_playerListener) is false)
             return;
 
-        if (_validationHandler.Handle() is false)
+        if (_validationHandler.Handle().IsValid is false)
             return;
 
         Triggered();

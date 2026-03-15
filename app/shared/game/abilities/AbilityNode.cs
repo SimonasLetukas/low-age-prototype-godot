@@ -32,8 +32,10 @@ public abstract partial class AbilityNode<
     public EndsAtNode RemainingCooldown { get; private set; } = null!;
     public bool HasButton { get; private set; }
 
+    protected IList<Payment> ConsumableCost { get; private set; } = null!;
+    protected IList<Payment> NonConsumableCost { get; private set; } = null!;
     protected IList<TFocus> FocusQueue { get; } = new List<TFocus>();
-    protected bool DebugEnabled => false;
+    protected GlobalRegistry Registry { get; } = GlobalRegistry.Instance;
     
     private Ability Blueprint { get; set; } = null!;
 
@@ -48,6 +50,8 @@ public abstract partial class AbilityNode<
         ResearchNeeded = Blueprint.ResearchNeeded;
         RemainingCooldown = EndsAtNode.InstantiateAsChild(Blueprint.Cooldown, this, OwnerActor);
         RemainingCooldown.Completed += OnCooldownEnded;
+        ConsumableCost = Registry.GetConsumableResources(Blueprint.Cost);
+        NonConsumableCost = Registry.GetNonConsumableResources(Blueprint.Cost);
         HasButton = Blueprint.HasButton;
     }
     
@@ -61,8 +65,9 @@ public abstract partial class AbilityNode<
     {
         if (request is not TActivationRequest typedRequest)
         {
-            GD.PrintErr($"Invalid {nameof(IAbilityActivationRequest)} type. Expected " +
-                        $"'{typeof(TActivationRequest).Name}', but got '{request.GetType().Name}'");
+            Log.Error(nameof(AbilityNode<,,>), nameof(Activate), 
+                $"Invalid {nameof(IAbilityActivationRequest)} type. Expected " +
+                $"'{typeof(TActivationRequest).Name}', but got '{request.GetType().Name}'");
             return ValidationResult.Invalid("Error in ability activation!");
         }
 
@@ -108,17 +113,18 @@ public abstract partial class AbilityNode<
     {
         if (focus is not TFocus typedFocus)
         {
-            GD.PrintErr($"Invalid {nameof(IAbilityFocus)} type. Expected '{typeof(TFocus).Name}', but got " +
-                        $"'{focus.GetType().Name}'");
+            Log.Error(nameof(AbilityNode<,,>), nameof(OnExecutionRequested), 
+                $"Invalid {nameof(IAbilityFocus)} type. Expected '{typeof(TFocus).Name}', but got " +
+                $"'{focus.GetType().Name}'");
             return;
         }
 
         OnExecutionRequested(typedFocus);
     }
 
-    protected virtual void OnExecutionRequested(TFocus focus) => Complete(focus);
+    protected virtual void OnExecutionRequested(TFocus focus) => ExecuteFocus(focus);
 
-    protected abstract void Complete(TFocus focus);
+    protected abstract void ExecuteFocus(TFocus focus);
     
     protected void RaiseActivated() => Activated(this);
 

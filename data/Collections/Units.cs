@@ -47,7 +47,7 @@ namespace LowAgeData.Collections
                         AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Slave.Build,
                         AbilityId.Slave.Repair,
-                        AbilityId.Slave.ManualLabour
+                        //AbilityId.Slave.ManualLabour
                     }),
 
                 new Unit(
@@ -82,9 +82,9 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Revelators.PopulationCost,
-                        AbilityId.Leader.AllForOne,
-                        AbilityId.Leader.MenacingPresence,
-                        AbilityId.Leader.OneForAll
+                        //AbilityId.Leader.AllForOne,
+                        //AbilityId.Leader.MenacingPresence,
+                        //AbilityId.Leader.OneForAll
                     },
                     size: 2),
 
@@ -130,8 +130,8 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
-                        AbilityId.Quickdraw.Doubleshot,
-                        AbilityId.Quickdraw.Cripple
+                        //AbilityId.Quickdraw.Doubleshot,
+                        //AbilityId.Quickdraw.Cripple
                     }),
 
                 new Unit(
@@ -167,8 +167,9 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
-                        AbilityId.Gorger.FanaticSuicide,
-                        AbilityId.Gorger.FanaticSuicidePassive
+                        //AbilityId.Gorger.FanaticSuicide,
+                        //AbilityId.Gorger.FanaticSuicidePassive,
+                        //AbilityId.Gorger.Disease
                     },
                     size: 2),
 
@@ -205,8 +206,8 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
-                        AbilityId.Camou.SilentAssassin,
-                        AbilityId.Camou.Climb
+                        //AbilityId.Camou.SilentAssassin,
+                        //AbilityId.Camou.Climb
                     }),
 
                 new Unit(
@@ -249,7 +250,7 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
-                        AbilityId.Shaman.WondrousGoo
+                        //AbilityId.Shaman.WondrousGoo
                     }),
 
                 new Unit(
@@ -292,8 +293,8 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
-                        AbilityId.Pyre.WallOfFlames,
-                        AbilityId.Pyre.PhantomMenace
+                        //AbilityId.Pyre.WallOfFlames,
+                        //AbilityId.Pyre.PhantomMenace
                     }),
 
                 new Unit(
@@ -329,7 +330,7 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
-                        AbilityId.BigBadBull.UnleashTheRage
+                        //AbilityId.BigBadBull.UnleashTheRage
                     },
                     size: 3),
 
@@ -364,8 +365,8 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
-                        AbilityId.Mummy.SpawnRoach,
-                        AbilityId.Mummy.LeapOfHunger
+                        //AbilityId.Mummy.SpawnRoach,
+                        //AbilityId.Mummy.LeapOfHunger
                     },
                     size: 2),
 
@@ -400,8 +401,8 @@ namespace LowAgeData.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Roach.DegradingCarapace,
-                        AbilityId.Roach.CorrosiveSpit
+                        //AbilityId.Roach.DegradingCarapace,
+                        //AbilityId.Roach.CorrosiveSpit
                     }),
 
                 new Unit(
@@ -435,7 +436,7 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
-                        AbilityId.Parasite.ParalysingGrasp
+                        //AbilityId.Parasite.ParalysingGrasp
                     }),
 
                 new Unit(
@@ -471,8 +472,8 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
-                        AbilityId.Horrior.ExpertFormation,
-                        AbilityId.Horrior.Mount
+                        //AbilityId.Horrior.ExpertFormation,
+                        //AbilityId.Horrior.Mount
                     }),
 
                 new Unit(
@@ -515,7 +516,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
-                        AbilityId.Marksman.CriticalMark
+                        //AbilityId.Marksman.CriticalMark
                     }),
 
                 new Unit(
@@ -551,7 +552,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
-                        AbilityId.Surfer.Dismount
+                        //AbilityId.Surfer.Dismount
                     }),
 
                 new Unit(
@@ -594,9 +595,9 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
-                        AbilityId.Mortar.DeadlyAmmunition,
-                        AbilityId.Mortar.Reload,
-                        AbilityId.Mortar.PiercingBlast
+                        //AbilityId.Mortar.DeadlyAmmunition,
+                        //AbilityId.Mortar.Reload,
+                        //AbilityId.Mortar.PiercingBlast
                     }),
 
                 new Unit(
@@ -632,9 +633,9 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
-                        AbilityId.Hawk.TacticalGoggles,
-                        AbilityId.Hawk.Leadership,
-                        AbilityId.Hawk.HealthKit
+                        //AbilityId.Hawk.TacticalGoggles,
+                        //AbilityId.Hawk.Leadership,
+                        //AbilityId.Hawk.HealthKit
                     }),
 
                 new Unit(
@@ -670,9 +671,9 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
-                        AbilityId.Engineer.AssembleMachine,
-                        AbilityId.Engineer.Operate,
-                        AbilityId.Engineer.Repair
+                        //AbilityId.Engineer.AssembleMachine,
+                        //AbilityId.Engineer.Operate,
+                        //AbilityId.Engineer.Repair
                     }),                
                 
                 new Unit(
@@ -707,10 +708,10 @@ namespace LowAgeData.Collections
                         ActorAttribute.Ranged
                     },
                     abilities: new List<AbilityId>
-                    {
-                        AbilityId.Cannon.Assembling,
-                        AbilityId.Cannon.Machine,
-                        AbilityId.Cannon.HeatUp
+                    { 
+                        //AbilityId.Cannon.Assembling,
+                        //AbilityId.Cannon.Machine,
+                        //AbilityId.Cannon.HeatUp
                     },
                     size: 2),                
                 
@@ -747,10 +748,10 @@ namespace LowAgeData.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Ballista.Assembling,
-                        AbilityId.Ballista.Machine,
-                        AbilityId.Ballista.AddOn,
-                        AbilityId.Ballista.Aim
+                        //AbilityId.Ballista.Assembling,
+                        //AbilityId.Ballista.Machine,
+                        //AbilityId.Ballista.AddOn,
+                        //AbilityId.Ballista.Aim
                     }),                
                 
                 new Unit(
@@ -777,11 +778,11 @@ namespace LowAgeData.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Radar.Assembling,
-                        AbilityId.Radar.Machine,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Radar.ResonatingSweep,
-                        AbilityId.Radar.RadioLocation
+                        //AbilityId.Radar.Assembling,
+                        //AbilityId.Radar.Machine,
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.Radar.ResonatingSweep,
+                        //AbilityId.Radar.RadioLocation
                     }),                
                 
                 new Unit(
@@ -817,9 +818,9 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
-                        AbilityId.Vessel.Machine,
-                        AbilityId.Vessel.AbsorbentField,
-                        AbilityId.Vessel.Fortify
+                        //AbilityId.Vessel.Machine,
+                        //AbilityId.Vessel.AbsorbentField,
+                        //AbilityId.Vessel.Fortify
                     },
                     size: 2),                
                 
@@ -864,7 +865,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.UnitInProduction,
-                        AbilityId.Omen.Rendition
+                        //AbilityId.Omen.Rendition
                     })
             };
         }

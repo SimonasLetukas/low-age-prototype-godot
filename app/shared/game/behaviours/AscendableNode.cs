@@ -8,9 +8,6 @@ using MultipurposePathfinding;
 
 public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendable>, IPathfindingUpdatable
 {
-    [Export]
-    public bool DebugEnabled { get; set; } = false;
-    
     private const string ScenePath = @"res://app/shared/game/behaviours/AscendableNode.tscn";
     private static AscendableNode Instance() => (AscendableNode) GD.Load<PackedScene>(ScenePath).Instantiate();
     public static AscendableNode InstantiateAsChild(Ascendable blueprint, Node parentNode, Effects history, 
@@ -66,14 +63,14 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
         var allowsConnectionBetweenPoints = FlattenedPositions.ContainsKey(toPoint.Position) 
                                             && ((isAllowedToEnter && fromPoint.IsLowGround) || fromPoint.IsHighGround);
 
-        if (DebugEnabled)
-            GD.Print($"{nameof(AllowsConnectionBetweenPoints)}: '{allowsConnectionBetweenPoints}' for " +
-                     $"'{Parent.DisplayName}' at '{Parent.EntityPrimaryPosition}' for team '{forTeam}'. From " +
-                     $"{(fromPoint.IsLowGround ? "low ground" : "high ground")} point at {fromPoint.Position} to " +
-                     $"{(toPoint.IsLowGround ? "low ground" : "high ground")} point at {toPoint.Position}. " +
-                     $"{nameof(Blueprint.ClosingEnabled)} '{Blueprint.ClosingEnabled}', {nameof(Opened)} '{Opened}', " +
-                     $"{nameof(isAllowedToEnter)} '{isAllowedToEnter}', ContainsKey " +
-                     $"'{FlattenedPositions.ContainsKey(toPoint.Position)}'");
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(AscendableNode), nameof(AllowsConnectionBetweenPoints), 
+                $"'{allowsConnectionBetweenPoints}' for '{Parent}' for team '{forTeam}'. From " +
+                $"{(fromPoint.IsLowGround ? "low ground" : "high ground")} point at {fromPoint.Position} to " +
+                $"{(toPoint.IsLowGround ? "low ground" : "high ground")} point at {toPoint.Position}. " +
+                $"{nameof(Blueprint.ClosingEnabled)} '{Blueprint.ClosingEnabled}', {nameof(Opened)} '{Opened}', " +
+                $"{nameof(isAllowedToEnter)} '{isAllowedToEnter}', ContainsKey " +
+                $"'{FlattenedPositions.ContainsKey(toPoint.Position)}'");
         
         return allowsConnectionBetweenPoints;
     }

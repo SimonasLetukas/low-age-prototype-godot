@@ -1,21 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Filters;
 using LowAgeData.Domain.Effects;
 
 public abstract class EffectNode(
     Effects history, 
-    ITargetable? initialTarget, 
-    EntityNode? initiator)
+    IList<ITargetable> initialTargets, 
+    Player initiatorPlayer,
+    EntityNode? initiatorEntity)
     : INodeFromBlueprint<Effect>
 {
     public Guid InstanceId { get; set; } = Guid.NewGuid();
-    
-    public EntityNode? InitiatorEntity { get; } = initiator;
 
-    protected ITargetable? InitialTarget { get; } = initialTarget;
-    protected IList<ITargetable> FoundTargets { get; private set; } = null!;
+    public Player InitiatorPlayer { get; } = initiatorPlayer;
+    public EntityNode? InitiatorEntity { get; } = initiatorEntity;
+    public IList<ITargetable> FoundTargets { get; private set; } = null!;
+
+    protected IList<ITargetable> InitialTarget { get; } = initialTargets;
     protected Effects History { get; } = history;
     protected bool IsValidated { get; private set; }
 
@@ -28,18 +32,22 @@ public abstract class EffectNode(
         FoundTargets = GetTargets(Blueprint.Target, InitialTarget, InitiatorEntity);
     }
 
-    public virtual bool Validate()
+    public ValidationResult Validate()
     {
-        IsValidated = true;
-        return true;
+        var result = ValidationHandler
+            .Validate(Blueprint.Validators)
+            .With(FoundTargets)
+            .Handle();
+        
+        IsValidated = result.IsValid; 
+        return result;
     }
 
-    public virtual bool Execute()
-    {
-        return IsValidated;
-    }
+    public virtual bool Execute() => IsValidated;
+
+    protected abstract IList<IFilterItem> GetFilters();
     
-    protected virtual IEnumerable<ITargetable> GetInheritedTargets(ITargetable? initialTarget, EntityNode? initiator)
+    protected virtual IEnumerable<ITargetable> GetInheritedTargets(IList<ITargetable> initialTargets, EntityNode? initiator)
         => initiator is null ? [] : GetSelfTargets(initiator);
 
     protected virtual IList<ITargetable> GetSelfTargets(EntityNode initiator) => [initiator];
@@ -54,22 +62,22 @@ public abstract class EffectNode(
     
     protected static IList<EntityNode> GetAllEntities() => GlobalRegistry.Instance.GetEntities().ToList();
     
-    private IList<ITargetable> GetTargets(Location location, ITargetable? initialTarget, EntityNode? initiator)
+    private IList<ITargetable> GetTargets(Location location, IList<ITargetable> initialTargets, EntityNode? initiator)
     {
-        return location switch
+        var foundTargets = location switch
         {
             _ when location.Equals(Location.Inherited) => History.PreviousOrNull is not null 
-                ? History.PreviousOrNull.GetInheritedTargets(initialTarget, initiator).ToList() 
-                : GetInheritedTargets(initialTarget, initiator).ToList(),
+                ? History.PreviousOrNull.GetInheritedTargets(initialTargets, initiator).ToList() 
+                : GetInheritedTargets(initialTargets, initiator).ToList(),
             
-            _ when location.Equals(Location.Self) 
-                   && initiator is not null => GetSelfTargets(initiator),
+            _ when location.Equals(Location.Self) && initiator is not null 
+                => GetSelfTargets(initiator),
             
-            _ when location.Equals(Location.Entity) 
-                   && initialTarget is EntityNode entityInitialTarget => GetEntityTargets(entityInitialTarget),
+            _ when location.Equals(Location.Entity) && initialTargets.Any(t => t is EntityNode) 
+                => GetEntityTargets((EntityNode)initialTargets.First(t => t is EntityNode)),
             
-            _ when location.Equals(Location.Point) 
-                   && initialTarget is Tiles.TileInstance pointInitialTarget => GetPointTargets(pointInitialTarget),
+            _ when location.Equals(Location.Point) && initialTargets.Any(t => t is Tiles.TileInstance) 
+                => GetPointTargets((Tiles.TileInstance)initialTargets.First(t => t is Tiles.TileInstance)),
             
             _ when location.Equals(Location.Source) 
                    && History.SourceEntityOrNull is not null => GetSourceTargets(History.SourceEntityOrNull),
@@ -79,6 +87,20 @@ public abstract class EffectNode(
             
             _ => []
         };
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(EffectNode), nameof(GetTargets), 
+                $"Initial {nameof(FoundTargets)} for effect '{Blueprint.Id}': " +
+                $"'{string.Join(", ", foundTargets.Select(t => t.ToString()))}'.");
+
+        return FilterEvaluator
+            .Apply(foundTargets, GetFilters(), new FilterContext
+            {
+                Initiator = InitiatorEntity,
+                InitiatorPlayer = InitiatorPlayer,
+                Chain = History
+            })
+            .ToList();
     }
     
     public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);

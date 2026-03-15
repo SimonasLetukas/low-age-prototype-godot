@@ -7,14 +7,13 @@ using LowAgeData.Domain.Common;
 /// </summary>
 public partial class Map : Node2D
 {
-	[Export] public bool DebugEnabled { get; set; } = true;
-
 	protected TurnPhase CurrentPhase { get; private set; } = null!;
 	protected ActorNode? ActorInAction { get; private set; }
 	
 	public override void _Ready()
 	{
-		if (DebugEnabled) GD.Print($"{nameof(Map)}: entering");
+		if (Log.DebugEnabled) 
+			Log.Info(nameof(Map), nameof(_Ready), "Entering");
 		
 		EventBus.Instance.PhaseStarted += OnPhaseStarted;
 		EventBus.Instance.PhaseEnded += OnPhaseEnded;

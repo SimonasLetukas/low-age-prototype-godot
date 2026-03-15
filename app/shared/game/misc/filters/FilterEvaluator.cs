@@ -70,14 +70,14 @@ public static class FilterEvaluator
                                                && entity.Equals(context.Initiator),
         
         _ when flag.Equals(FilterFlag.Player) => item is EntityNode entity 
-                                                 && entity.Player.Equals(context.CurrentPlayer),
+                                                 && entity.Player.Equals(context.InitiatorPlayer),
         
         _ when flag.Equals(FilterFlag.Ally) => item is EntityNode entity 
-                                               && entity.Player.Team.IsAllyTo(context.CurrentPlayer.Team) 
-                                               && entity.Player.Equals(context.CurrentPlayer) is false,
+                                               && entity.Player.Team.IsAllyTo(context.InitiatorPlayer.Team) 
+                                               && entity.Player.Equals(context.InitiatorPlayer) is false,
         
         _ when flag.Equals(FilterFlag.Enemy) => item is EntityNode entity 
-                                                && entity.Player.Team.IsEnemyTo(context.CurrentPlayer.Team),
+                                                && entity.Player.Team.IsEnemyTo(context.InitiatorPlayer.Team),
         
         _ when flag.Equals(FilterFlag.Unit) => item is UnitNode,
         

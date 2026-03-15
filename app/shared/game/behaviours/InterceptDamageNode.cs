@@ -64,7 +64,7 @@ public partial class InterceptDamageNode : BehaviourNode, INodeFromBlueprint<Int
         
         if (_interceptionsLeft == 0)
         {
-            Destroy();
+            EndBehaviour();
         }
     }
 

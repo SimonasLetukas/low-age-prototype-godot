@@ -97,7 +97,7 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Obelisk.Building,
                         AbilityId.Shared.CelestiumIncome,
-                        AbilityId.Obelisk.CelestiumDischarge
+                        //AbilityId.Obelisk.CelestiumDischarge
                     },
                     size: new Vector2Int(x: 2, y: 2)),
                 
@@ -255,7 +255,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Revelators.BuildingStructure,
-                        AbilityId.Workshop.Research
+                        //AbilityId.Workshop.Research
                     },
                     size: new Vector2Int(x: 2, y: 2)),
                 
@@ -313,9 +313,9 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Revelators.BuildingStructure,
-                        AbilityId.Barricade.ProtectiveShield,
-                        AbilityId.Barricade.Caltrops,
-                        AbilityId.Barricade.Decompose
+                        //AbilityId.Barricade.ProtectiveShield,
+                        //AbilityId.Barricade.Caltrops,
+                        //AbilityId.Barricade.Decompose
                     },
                     size: new Vector2Int(x: 2, y: 1)),
                 
@@ -341,11 +341,11 @@ namespace LowAgeData.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.PowerGenerator,
+                        //AbilityId.Shared.Uee.PowerGenerator,
                         AbilityId.Shared.PassiveIncome,
-                        AbilityId.BatteryCore.PowerGrid,
+                        //AbilityId.BatteryCore.PowerGrid,
                         AbilityId.Shared.Uee.Build,
-                        AbilityId.BatteryCore.FusionCoreUpgrade
+                        //AbilityId.BatteryCore.FusionCoreUpgrade
                     },
                     size: new Vector2Int(x: 3, y: 3)),
                 
@@ -371,12 +371,12 @@ namespace LowAgeData.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.PowerGenerator,
+                        //AbilityId.Shared.Uee.PowerGenerator,
                         AbilityId.Shared.PassiveIncome,
-                        AbilityId.FusionCore.PowerGrid,
+                        //AbilityId.FusionCore.PowerGrid,
                         AbilityId.Shared.Uee.Build,
-                        AbilityId.FusionCore.DefenceProtocol,
-                        AbilityId.FusionCore.CelestiumCoreUpgrade
+                        //AbilityId.FusionCore.DefenceProtocol,
+                        //AbilityId.FusionCore.CelestiumCoreUpgrade
                     },
                     size: new Vector2Int(x: 3, y: 3)),
                 
@@ -402,12 +402,12 @@ namespace LowAgeData.Collections
                     },
                     abilities: new List<AbilityId>
                     {
-                        AbilityId.Shared.Uee.PowerGenerator,
+                        //AbilityId.Shared.Uee.PowerGenerator,
                         AbilityId.Shared.PassiveIncome,
-                        AbilityId.CelestiumCore.PowerGrid,
+                        //AbilityId.CelestiumCore.PowerGrid,
                         AbilityId.Shared.Uee.Build,
-                        AbilityId.CelestiumCore.DefenceProtocol,
-                        AbilityId.CelestiumCore.HeightenedConductivity
+                        //AbilityId.CelestiumCore.DefenceProtocol,
+                        //AbilityId.CelestiumCore.HeightenedConductivity
                     },
                     size: new Vector2Int(x: 3, y: 3)),
                 
@@ -435,7 +435,7 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Collector.Building,
                         AbilityId.Shared.ScrapsIncome,
-                        AbilityId.Collector.DirectTransitSystem
+                        //AbilityId.Collector.DirectTransitSystem
                     },
                     size: new Vector2Int(x: 2, y: 2)),
                 
@@ -463,7 +463,7 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Extractor.Building,
                         AbilityId.Shared.CelestiumIncome,
-                        AbilityId.Extractor.ReinforcedInfrastructure
+                        //AbilityId.Extractor.ReinforcedInfrastructure
                     },
                     size: new Vector2Int(x: 2, y: 2)),
                 
@@ -490,10 +490,10 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.PowerPole.PowerGrid,
-                        AbilityId.PowerPole.ExcessDistribution,
-                        AbilityId.PowerPole.ImprovedPowerGrid
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.PowerPole.PowerGrid,
+                        //AbilityId.PowerPole.ExcessDistribution,
+                        //AbilityId.PowerPole.ImprovedPowerGrid
                     },
                     size: new Vector2Int(x: 1, y: 1)),
                 
@@ -520,8 +520,8 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Temple.KeepingTheFaith
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.Temple.KeepingTheFaith
                     },
                     size: new Vector2Int(x: 1, y: 2)),
                 
@@ -549,8 +549,8 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.MilitaryBase.Train
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.MilitaryBase.Train
                     },
                     size: new Vector2Int(x: 3, y: 1),
                     walkableAreas: new List<Area>
@@ -585,8 +585,8 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Factory.Train
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.Factory.Train
                     },
                     size: new Vector2Int(x: 5, y: 2),
                     walkableAreas: new List<Area>
@@ -621,8 +621,8 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Laboratory.Train
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.Laboratory.Train
                     },
                     size: new Vector2Int(x: 3, y: 3),
                     walkableAreas: new List<Area>
@@ -655,8 +655,8 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Armoury.Research
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.Armoury.Research
                     },
                     size: new Vector2Int(x: 1, y: 2)),
                 
@@ -685,8 +685,8 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Wall.Building,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Wall.HighGround
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.Wall.HighGround
                     },
                     size: new Vector2Int(x: 1, y: 1)),
                 
@@ -717,8 +717,8 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Stairs.Ascendable
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.Stairs.Ascendable
                     },
                     size: new Vector2Int(x: 2, y: 1)),
                 
@@ -747,7 +747,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
-                        AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.Shared.Uee.PowerDependency,
                         AbilityId.Gate.HighGround,
                         AbilityId.Gate.Ascendable,
                         AbilityId.Gate.Entrance
@@ -779,8 +779,8 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Watchtower.VantagePoint,
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.Watchtower.VantagePoint,
                     },
                     size: new Vector2Int(x: 1, y: 1)),
                 
@@ -809,8 +809,8 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Uee.BuildingStructure,
-                        AbilityId.Shared.Uee.PowerDependency,
-                        AbilityId.Bastion.Battlement,
+                        //AbilityId.Shared.Uee.PowerDependency,
+                        //AbilityId.Bastion.Battlement,
                     },
                     size: new Vector2Int(x: 2, y: 2)), 
             };

@@ -6,9 +6,6 @@ using Area = LowAgeCommon.Area;
 
 public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
 {
-    [Export]
-    public bool DebugEnabled { get; set; } = false;
-    
     public enum SortTypes
     {
         Point,
@@ -71,7 +68,7 @@ public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
         _area = GetNode<Area2D>(nameof(Area2D));
 
         _icon.Texture = null;
-        _debugVisuals.Visible = DebugEnabled;
+        _debugVisuals.Visible = Log.VerboseDebugEnabled;
 
         EventBus.Instance.WhenFlattenedChanged += OnWhenFlattenedChanged;
     }
@@ -217,8 +214,9 @@ public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
         var bottom = top + SpriteSize;
         SpriteBounds = new Rect2(top, SpriteSize);
         
-        if (DebugEnabled)
-            GD.Print($"New {_parentEntity?.DisplayName} sprite bounds: {SpriteBounds}");
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(EntityRenderer), nameof(UpdateSpriteBounds), 
+                $"New {_parentEntity?.DisplayName} sprite bounds: {SpriteBounds}");
         
         UpdateCollisionShape();
         
@@ -262,9 +260,12 @@ public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
     {
         var localPosition = _sprite.ToLocal(globalPosition);
         var result = _sprite.IsPixelOpaque(localPosition);
-        if (DebugEnabled)
-            GD.Print($"{nameof(EntityRenderer)}.{nameof(ContainsSpriteAt)}: {nameof(result)} '{result}' " +
-                     $"at {nameof(localPosition)} '{localPosition}', {nameof(globalPosition)} '{globalPosition}'");
+        
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(EntityRenderer), nameof(ContainsSpriteAt), 
+                $"{nameof(result)} '{result}' at {nameof(localPosition)} '{localPosition}', " +
+                $"{nameof(globalPosition)} '{globalPosition}'");
+
         return result;
     }
 
@@ -276,8 +277,9 @@ public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
         switch (renderer1.SortType)
         {
             case SortTypes.Point when renderer2.SortType == SortTypes.Point:
-                if (DebugEnabled)
-                    GD.Print($"'{renderer1._parentEntity!.DisplayName}' topOrigin: '{renderer1._topOrigin}', " +
+                if (Log.VerboseDebugEnabled)
+                    Log.Info(nameof(EntityRenderer), nameof(CompareRenderers), 
+                        $"'{renderer1._parentEntity!.DisplayName}' topOrigin: '{renderer1._topOrigin}', " +
                              $"'{renderer2._parentEntity!.DisplayName}' topOrigin: '{renderer2._topOrigin}'.");
                 result = renderer2._topOrigin.Y.CompareTo(renderer1._topOrigin.Y);
                 break;
@@ -295,12 +297,13 @@ public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
                 break;
         }
         
-        if (DebugEnabled)
+        if (Log.VerboseDebugEnabled)
         {
             var resultText = result == 0 ? "Both the same." : result > 0 
                 ? $"'{renderer2._parentEntity!.DisplayName}' at '{renderer2._parentEntity.EntityPrimaryPosition}' is on top." 
                 : $"'{renderer1._parentEntity!.DisplayName}' at '{renderer1._parentEntity.EntityPrimaryPosition}' is on top.";
-            GD.Print($"Renderer '{renderer1._parentEntity!.DisplayName}' at " +
+            Log.Info(nameof(EntityRenderer), nameof(CompareRenderers), 
+                $"Renderer '{renderer1._parentEntity!.DisplayName}' at " +
                      $"'{renderer1._parentEntity!.EntityPrimaryPosition}' of type '{renderer1.SortType}' compared to " +
                      $"'{renderer2._parentEntity!.DisplayName}' at '{renderer2._parentEntity.EntityPrimaryPosition}' " +
                      $"of type '{renderer2.SortType}' with the result of {result}. " + resultText);
@@ -310,8 +313,9 @@ public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
                             || (renderer2.IsDynamic && renderer1.IsDynamic is false)))
         {
             result = renderer1.IsDynamic ? -1 : 1;
-            if (DebugEnabled)
-                GD.Print(result > 0 ? $"'{renderer2._parentEntity!.DisplayName}' is on top because it's dynamic." 
+            if (Log.VerboseDebugEnabled)
+                Log.Info(nameof(EntityRenderer), nameof(CompareRenderers), result > 0 
+                    ? $"'{renderer2._parentEntity!.DisplayName}' is on top because it's dynamic."
                     : $"'{renderer1._parentEntity!.DisplayName}' is on top because it's dynamic.");
         }
         

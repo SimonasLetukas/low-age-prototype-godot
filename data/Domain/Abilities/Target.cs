@@ -42,6 +42,10 @@ namespace LowAgeData.Domain.Abilities
         }
 
         public IShape TargetArea { get; }
+        
+        /// <summary>
+        /// If all validators return true, all effects are executed at once.
+        /// </summary>
         public IList<EffectId> Effects { get; }
 
         /// <summary>

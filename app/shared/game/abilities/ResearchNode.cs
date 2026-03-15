@@ -53,12 +53,12 @@ public partial class ResearchNode : ActiveAbilityNode<
         throw new System.NotImplementedException();
     }
 
-    protected override bool TryExecutePostPayment(Focus focus)
+    protected override bool ExecutePostPaymentAndDetermineIfPaymentCompleted(Focus focus)
     {
         throw new System.NotImplementedException();
     }
     
-    protected override void Complete(Focus focus)
+    protected override void ExecuteFocus(Focus focus)
     {
         throw new System.NotImplementedException();
     }
@@ -77,6 +77,7 @@ public partial class ResearchNode : ActiveAbilityNode<
     {
         public bool Requeued { get; set; }
         public required AbilityReservationResult Reservation { get; set; }
+        public IList<Payment> NonConsumableResourcesPaidSoFar { get; set; } = [];
         
         public IConsumableAbilityActivationRequest ToActivationRequest()
         {

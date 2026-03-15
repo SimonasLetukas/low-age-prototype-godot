@@ -133,6 +133,8 @@ public partial class Tiles : Node2D
         }
 
         public override int GetHashCode() => HashCode.Combine(Position, Terrain);
+        
+        public override string ToString() => $"{Terrain.ToDisplayValue()} tile at {Position}";
     }
     
     public event Action FinishedInitialInitializing = delegate { };
@@ -299,8 +301,8 @@ public partial class Tiles : Node2D
     {
         if (_tilesForDataInitialization.IsEmpty())
         {
-            GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-                     $"{nameof(Tiles)}.{nameof(IterateDataInitialization)} completed");
+            Log.Info(nameof(Tiles), nameof(IterateDataInitialization),
+                $"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} completed.");
             _dataInitialized = true;
             return;
         }
@@ -320,8 +322,8 @@ public partial class Tiles : Node2D
     {
         if (_tilesForMainVisualsInitialization.IsEmpty())
         {
-            GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-                     $"{nameof(Tiles)}.{nameof(IterateVisualInitialization)} completed");
+            Log.Info(nameof(Tiles), nameof(IterateVisualInitialization),
+                $"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} completed.");
             _mainVisualsInitialized = true;
             return;
         }
@@ -356,8 +358,8 @@ public partial class Tiles : Node2D
     {
         if (_positionsForOutsideVisualsInitialization.IsEmpty())
         {
-            GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-                     $"{nameof(Tiles)}.{nameof(IterateOutsideVisualInitialization)} completed");
+            Log.Info(nameof(Tiles), nameof(IterateOutsideVisualInitialization),
+                $"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} completed.");
             _outsideVisualsInitialized = true;
             return;
         }
@@ -395,8 +397,8 @@ public partial class Tiles : Node2D
     {
         if (_pointsForInitialization.IsEmpty())
         {
-            GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-                     $"{nameof(Tiles)}.{nameof(IteratePointInitialization)} completed");
+            Log.Info(nameof(Tiles), nameof(IteratePointInitialization),
+                $"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} completed.");
             _pointsInitialized = true;
             return;
         }

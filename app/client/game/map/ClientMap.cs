@@ -96,9 +96,9 @@ public partial class ClientMap : Map
 
 	public void Initialize(MapCreatedEvent @event)
 	{
-		if (DebugEnabled)
-			GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} {nameof(ClientMap)}.{nameof(Initialize)}");
-
+		if (Log.DebugEnabled)
+			Log.Info(nameof(ClientMap), nameof(Initialize), 
+				$"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}");
 		_currentPlayer = Players.Instance.Current;
 		_mapSize = @event.MapSize;
 		_startingPositions = @event.StartingPositions[_currentPlayer.StableId];
@@ -110,10 +110,11 @@ public partial class ClientMap : Map
 
 		_focusedTile = _tileMap.Elevatable.Focused;
 
-		_lines.Visible = DebugEnabled && DebugLinesEnabled;
+		_lines.Visible = Log.DebugEnabled && DebugLinesEnabled;
 		
 		GlobalRegistry.Instance.ProvideGetCurrentPhase(() => CurrentPhase);
 		GlobalRegistry.Instance.ProvideGetActorInAction(() => ActorInAction);
+		GlobalRegistry.Instance.ProvideGetGlobalPositionFromMapPosition(_tileMap.GetGlobalPositionFromMapPosition);
 		GlobalRegistry.Instance.ProvideGetTiles(_tileMap.GetTiles);
 		GlobalRegistry.Instance.ProvideGetHighestTiles(_tileMap.GetHighestTiles);
 		GlobalRegistry.Instance.ProvideGetTile(_tileMap.GetTile);
@@ -142,27 +143,27 @@ public partial class ClientMap : Map
 
 	private void OnTileMapFinishedInitialInitializing()
 	{
-		if (DebugEnabled)
-			GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-					 $"{nameof(ClientMap)}.{nameof(OnTileMapFinishedInitialInitializing)}");
+		if (Log.DebugEnabled)
+			Log.Info(nameof(ClientMap), nameof(OnTileMapFinishedInitialInitializing),
+				$"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}");
 		_tileMapIsInitialized = true;
 		FinishInitialization();
 	}
 
 	private void OnPathfindingFinishedInitializing()
 	{
-		if (DebugEnabled)
-			GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-					 $"{nameof(ClientMap)}.{nameof(OnPathfindingFinishedInitializing)}");
+		if (Log.DebugEnabled)
+			Log.Info(nameof(ClientMap), nameof(OnPathfindingFinishedInitializing),
+				$"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}");
 		_pathfindingIsInitialized = true;
 		FinishInitialization();
 	}
 
 	private void OnTileMapFinishedPointInitialization()
 	{
-		if (DebugEnabled)
-			GD.Print($"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()} " +
-					 $"{nameof(ClientMap)}.{nameof(OnTileMapFinishedPointInitialization)}");
+		if (Log.DebugEnabled)
+			Log.Info(nameof(ClientMap), nameof(OnTileMapFinishedPointInitialization),
+				$"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}");
 		_tileMapPointsInitialized = true;
 		FinishInitialization();
 	}
@@ -621,7 +622,6 @@ public partial class ClientMap : Map
 		{
 			TargetNode => new TargetNode.ActivationRequest
 			{
-				UseConsumableResources = true,
 				TileToTarget = _focusedTile.CurrentTile,
 				EntityToTarget = Entities.HoveredEntity
 			},
@@ -802,7 +802,7 @@ public partial class ClientMap : Map
 
 	private void UpdateLines()
 	{
-		if (DebugEnabled is false || DebugLinesEnabled is false)
+		if (Log.DebugEnabled is false || DebugLinesEnabled is false)
 			return;
 
 		ResetLines();

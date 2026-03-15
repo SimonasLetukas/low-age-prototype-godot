@@ -6,8 +6,6 @@ using LowAgeData.Domain.Entities;
 
 public partial class Interface : CanvasLayer
 {
-    [Export] public bool DebugEnabled { get; set; } = false;
-    
     public event Action MouseEntered = delegate { };
     public event Action MouseExited = delegate { };
     public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
@@ -41,7 +39,8 @@ public partial class Interface : CanvasLayer
         {
             foreach (var control in firstLevel.GetChildren().OfType<Control>())
             {
-                if (DebugEnabled) GD.Print(control.Name);
+                if (Log.DebugEnabled) 
+                    Log.Info(nameof(Interface), nameof(_Ready), control.Name);
                 control.MouseEntered += () => OnControlMouseEntered(control);
                 control.MouseExited += () => OnControlMouseExited(control);
             }
@@ -90,16 +89,18 @@ public partial class Interface : CanvasLayer
     
     private void OnControlMouseEntered(Control which)
     {
-        if (DebugEnabled)
-            GD.Print($"{nameof(Interface)}: Control '{which.Name}' was entered by mouse.");
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(Interface), nameof(OnControlMouseEntered), 
+                $"Control '{which.Name}' was entered by mouse.");
         
         MouseEntered();
     }
 
     private void OnControlMouseExited(Control which)
     { 
-        if (DebugEnabled)
-            GD.Print($"{nameof(Interface)}: Control '{which.Name}' was exited by mouse.");
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(Interface), nameof(OnControlMouseExited), 
+                $"Control '{which.Name}' was exited by mouse.");
         
         MouseExited();
     }

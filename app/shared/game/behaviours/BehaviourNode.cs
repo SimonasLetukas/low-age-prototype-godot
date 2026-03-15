@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
 
@@ -19,7 +20,6 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     public EndsAtNode CurrentDuration { get; protected set; } = null!;
     public HashSet<BehaviourNode> Stack = [];
 
-    protected bool DebugEnabled => false;
     protected EntityNode Parent { get; set; } = null!;
     protected Effects History { get; set; } = null!;
     
@@ -68,10 +68,10 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
             Stack.Add(addedBehaviour);
             addedBehaviour.Destroyed += OnStackedBehaviourDestroyed;
             
-            if (DebugEnabled)
-                GD.Print($"Behaviour on {Parent.DisplayName} at {Parent.EntityPrimaryPosition}: added to stack " +
-                         $"(behaviour on {addedBehaviour.Parent.DisplayName} at " +
-                         $"{addedBehaviour.Parent.EntityPrimaryPosition}). Current stack: {Stack.Count}.");
+            if (Log.DebugEnabled)
+                Log.Info(nameof(BehaviourNode), nameof(OnBehaviourAdded), 
+                    $"Behaviour '{Blueprint.Id}' on {Parent}: added to stack (behaviour on " +
+                    $"{addedBehaviour.Parent}). Current stack: {Stack.Count}.");
         }
         else
         {
@@ -95,25 +95,38 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         }
     }
 
-    protected virtual void Destroy()
+    protected virtual void EndBehaviour() => Destroy();
+    
+    protected virtual void OnDurationEnded(EndsAtNode duration) => EndBehaviour();
+    
+    private void Destroy()
     {
-        if (DebugEnabled)
-            GD.Print($"Behaviour on {Parent.DisplayName} at {Parent.EntityPrimaryPosition}: destroy called.");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(Destroy), 
+                $"Behaviour '{Blueprint.Id}' on {Parent} destroy called.");
+
+        foreach (var stackedBehaviour in Stack)
+        {
+            stackedBehaviour.Destroyed -= OnStackedBehaviourDestroyed;
+        }
         
         Destroyed(this);
         QueueFree();
     }
-    
-    protected virtual void OnDurationEnded(EndsAtNode duration) => Destroy();
 
     private void InitializeTriggers()
     {
+        var highestTiles = GlobalRegistry.Instance
+            .GetHighestTiles(Parent.EntityOccupyingPositions)
+            .WhereNotNull()
+            .ToList();
+        
         foreach (var trigger in Blueprint.Triggers)
         {
             var triggerHandler = TriggerHandler
                 .Setup(trigger)
                 .With(Parent.Player)
-                .With(GlobalRegistry.Instance.GetHighestTiles(Parent.EntityOccupyingPositions))
+                .With(highestTiles)
                 .With(History)
                 .With(Parent);
 
@@ -154,27 +167,31 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
             behaviour.Destroyed += OnStackedBehaviourDestroyed;
         }
         
-        if (DebugEnabled)
-            GD.Print($"Behaviour on {Parent.DisplayName} at {Parent.EntityPrimaryPosition}: stack initialized. " +
-                     $"Current stack: {Stack.Count}.");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(InitializeStackedBehaviours), 
+                $"Behaviour '{Blueprint.Id}' on {Parent} stack initialized. Current stack: {Stack.Count}.");
     }
     
-    private void OnTriggered() => Destroy();
+    private void OnTriggered()
+    {
+        if (Blueprint.RemoveOnConditionsMet)
+            Destroy();
+    }
 
     private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
     {
         if (entity.Equals(Parent) is false)
             return;
         
-        Destroy();
+        EndBehaviour();
     }
 
     private void OnStackedBehaviourDestroyed(BehaviourNode stackedBehaviour)
     {
-        if (DebugEnabled)
-            GD.Print($"Behaviour on {Parent.DisplayName} at {Parent.EntityPrimaryPosition}: stack destroyed " +
-                     $"(behaviour on {stackedBehaviour.Parent.DisplayName} at " +
-                     $"{stackedBehaviour.Parent.EntityPrimaryPosition}). Current stack: {Stack.Count}.");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(OnStackedBehaviourDestroyed), 
+                $"Behaviour '{Blueprint.Id}' on {Parent} stack destroyed (behaviour on " +
+                $"{stackedBehaviour.Parent}). Current stack: {Stack.Count}.");
         
         Stack.Remove(stackedBehaviour);
         stackedBehaviour.Destroyed -= OnStackedBehaviourDestroyed;

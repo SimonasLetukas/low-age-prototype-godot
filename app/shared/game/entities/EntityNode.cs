@@ -64,7 +64,6 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
     }
     
     protected IList<Tiles.TileInstance> CurrentTileDuringMovement = [];
-    protected bool DebugEnabled { get; set; } = false;
 
     private Entity Blueprint { get; set; } = null!;
 
@@ -168,7 +167,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         requiresTargetTiles = requiresTargetTiles && _canBePlacedOnTheWholeMap is false;
         var tiles = GetHighestTiles(EntityOccupyingPositions);
         CanBePlaced = IsPlacementGenerallyValid(tiles, requiresTargetTiles, requiresVision)
-                      && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles));
+                      && Behaviours.GetBuildables().All(x => x.IsPlacementValid(tiles).IsValid);
         
         // TODO check for masks
         
@@ -493,4 +492,6 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
 
     public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
     public override int GetHashCode() => NodeFromBlueprint.GetHashCode(this);
+
+    public override string ToString() => $"{DisplayName} '{InstanceId}' entity at {EntityPrimaryPosition}";
 }

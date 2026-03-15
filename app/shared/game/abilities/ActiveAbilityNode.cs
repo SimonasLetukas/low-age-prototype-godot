@@ -18,7 +18,7 @@ public abstract partial class ActiveAbilityNode<
     where TPreProcessingResult : IActiveAbilityActivationPreProcessingResult
     where TFocus : IActiveAbilityFocus
 {
-    public event Action<IActiveAbilityFocus> Cancelled = delegate { };
+    public event Action<IActiveAbilityFocus> FocusRemoved = delegate { };
     
     public bool IsActivated => FocusQueue.Any();
     
@@ -59,7 +59,8 @@ public abstract partial class ActiveAbilityNode<
     {
         if (request is not TActivationRequest typedRequest)
         {
-            GD.PrintErr($"Invalid {nameof(IAbilityActivationRequest)} type. Expected " +
+            Log.Error(nameof(ActiveAbilityNode<,,>), nameof(CancelActivation), 
+                $"Invalid {nameof(IAbilityActivationRequest)} type. Expected " +
                         $"'{typeof(TActivationRequest).Name}', but got '{request.GetType().Name}'");
             return;
         }
@@ -69,11 +70,11 @@ public abstract partial class ActiveAbilityNode<
     
     protected abstract void CancelActivation(TActivationRequest request);
     
-    protected void RaiseCancelled(IActiveAbilityFocus focus) => Cancelled(focus);
+    protected void RaiseFocusRemoved(IActiveAbilityFocus focus) => FocusRemoved(focus);
 
     protected void RefundAction()
     {
-        var currentPhase = GlobalRegistry.Instance.GetCurrentPhase();
+        var currentPhase = Registry.GetCurrentPhase();
         OwnerActor.RestoreActionEconomy(currentPhase, true);
 
         if (currentPhase.Equals(TurnPhase.Action))
@@ -120,14 +121,20 @@ public abstract partial class ActiveAbilityNode<
             ReservedConsumableResources = reservedConsumableResources
         };
         
-        if (DebugEnabled)
-            GD.Print($"DONE: {OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} finishing to " +
-                     $"reserve with result '{JsonConvert.SerializeObject(reservation)}'");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleReservation), 
+                $"{OwnerActor} finishing to reserve with result '{JsonConvert.SerializeObject(reservation)}'");
         
         return reservation;
     }
     
     protected abstract IList<Payment> ReserveResources(TActivationRequest request);
+
+    protected IList<Payment> ReserveResources()
+    {
+        EventBus.Instance.RaisePaymentRequested(OwnerActor.Player, ConsumableCost, false);
+        return ConsumableCost;
+    }
     
     protected abstract TPreProcessingResult CreatePreProcessingResult(TActivationRequest request, 
         AbilityReservationResult reservation);
@@ -141,20 +148,23 @@ public abstract partial class ActiveAbilityNode<
         
         SpendActionAndConsumableResources(focus);
 
-        ExecutePaymentUpdate(focus);
+        ExecuteNonConsumablePayment(focus);
 
-        var paymentCompleted = TryExecutePostPayment(focus);
-        
+        var paymentCompleted = ExecutePostPaymentAndDetermineIfPaymentCompleted(focus);
+
         if (paymentCompleted is false)
+        {
             Requeue(focus);
+            return;
+        }
         
-        RemainingCooldown.ResetDuration();
+        ExecuteFocus(focus);
     }
     
     protected void SpendActionAndConsumableResources(TFocus focus)
     {
         if (focus.Reservation.PlayerStableId == Players.Instance.Current.StableId
-            && GlobalRegistry.Instance.GetLoadingSavedGame() is false)
+            && Registry.GetLoadingSavedGame() is false)
             return; // We already spent these when creating reservation (in a non-loading game state)
         
         var activationRequest = focus.ToActivationRequest();
@@ -164,31 +174,31 @@ public abstract partial class ActiveAbilityNode<
         HandleReservation(typedRequest);
     }
 
-    private static void ExecutePaymentUpdate(TFocus focus)
+    private void ExecuteNonConsumablePayment(TFocus focus)
     {
-        // TODO 
+        if (NonConsumableCost.IsEmpty())
+            return;
         
-        // Most probably a static method which takes the current resources and adds them to the paid amount
-        
-        // Would probably need to return the delta or percentage of each resource added so that post-payment
-        // could use those numbers to update the progress if needed 
-        
-        // Also input might need to specify if consumable resources need to be deducted, but that most probably
-        // should happen in pre-payment (and naming should probably be adjusted as well, something to indicate
-        // "consumable" part)
+        var currentPlayerStockpile = Registry.GetCurrentPlayerStockpile(OwnerActor.Player);
+        var nonConsumableStockpile = Registry.GetNonConsumableResources(currentPlayerStockpile);
+        var (_, updatedPaidSoFar) = Registry.SimulatePayment(NonConsumableCost,
+            nonConsumableStockpile, focus.NonConsumableResourcesPaidSoFar, 1f);
+
+        focus.NonConsumableResourcesPaidSoFar = updatedPaidSoFar;
     }
     
-    protected abstract bool TryExecutePostPayment(TFocus focus);
+    protected abstract bool ExecutePostPaymentAndDetermineIfPaymentCompleted(TFocus focus);
 
     private void Requeue(TFocus focus)
     {
-        if (GlobalRegistry.Instance.GetLoadingSavedGame())
+        if (Registry.GetLoadingSavedGame())
             return;
         
-        if (DebugEnabled)
-            GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} requeue: " +
-                     $"reservation player ID '{focus.Reservation.PlayerStableId}', current player stable ID " +
-                     $"'{Players.Instance.Current.StableId}', focus '{JsonConvert.SerializeObject(focus)}'");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleReservation), 
+                $"{OwnerActor} requeue: reservation player ID '{focus.Reservation.PlayerStableId}', " +
+                $"current player stable ID '{Players.Instance.Current.StableId}', " +
+                $"focus '{JsonConvert.SerializeObject(focus)}'");
         
         // Only requeue for the owner player for convenience but still allow to cancel if desired,
         // every other player will receive (or not) a new execution request from the owner player.
@@ -202,18 +212,22 @@ public abstract partial class ActiveAbilityNode<
     {
         if (WasAlreadyCompleted(focus))
         {
-            if (DebugEnabled)
-                GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} requeued focus " +
-                         $"'{JsonConvert.SerializeObject(focus)}' will not be handled because it was completed");
-            Complete(focus);
+            if (Log.DebugEnabled)
+                Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleRequeuedFocus), 
+                    $"{OwnerActor} requeued focus '{JsonConvert.SerializeObject(focus)}' will not be " +
+                    $"handled because it was already completed");
+            ExecuteFocus(focus);
+            RemoveFocus(focus);
+            RefundAction();
             return;
         }
         
         var activationRequest = focus.ToActivationRequestForRequeue();
         if (activationRequest is not TActivationRequest typedRequest)
         {
-            if (DebugEnabled)
-                GD.Print("Requeue focus was not the correct type");
+            if (Log.DebugEnabled)
+                Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleRequeuedFocus), 
+                    "Requeue focus was not the correct type");
             FocusQueue.Remove(focus);
             return;
         }
@@ -222,19 +236,18 @@ public abstract partial class ActiveAbilityNode<
         focus.Reservation = reservation;
         focus.Requeued = false;
         
-        if (DebugEnabled)
-            GD.Print($"{OwnerActor.DisplayName} at {OwnerActor.EntityPrimaryPosition} requeued focus " + 
-                     $"'{JsonConvert.SerializeObject(focus)}' was handled");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleRequeuedFocus), 
+                $"{OwnerActor} requeued focus '{JsonConvert.SerializeObject(focus)}' was handled");
     }
 
-    protected void CleanUpCompletedFocus(TFocus focus)
+    protected void RemoveFocus(TFocus focus)
     {
         FocusQueue.Remove(focus);
         
         if (FocusQueue.IsEmpty())
         {
             OwnerActor.RemoveWorkingOnAbility(this); 
-            RefundAction();
         }
     }
 
@@ -296,13 +309,12 @@ public abstract partial class ActiveAbilityNode<
         if (AbilityAllowedForPlanningPhaseGiven(currentPhase) is false)
             return;
         
-        if (DebugEnabled)
-            GD.Print($"ActiveAbilityNode.OnPlanningPhaseStarted: Current phase {currentPhase} (ability phase " +
-                     $"{TurnPhase}) focus queue for {OwnerActor.DisplayName} " +
-                     $"'{OwnerActor.InstanceId}' at {OwnerActor.EntityPrimaryPosition}: " +
-                     $"'{JsonConvert.SerializeObject(FocusQueue)}'");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(OnPhaseStarted), 
+                $"Current phase {currentPhase} (ability phase {TurnPhase}) focus queue for " +
+                $"{OwnerActor}: '{JsonConvert.SerializeObject(FocusQueue)}'");
 
-        if (GlobalRegistry.Instance.GetLoadingSavedGame())
+        if (Registry.GetLoadingSavedGame())
             return;
         
         CleanUpNonRequeuedFocuses();
@@ -314,7 +326,7 @@ public abstract partial class ActiveAbilityNode<
         if (AbilityAllowedForPlanningPhaseGiven(currentPhase) is false)
             return;
         
-        if (GlobalRegistry.Instance.GetLoadingSavedGame())
+        if (Registry.GetLoadingSavedGame())
             CleanUpAllFocuses();
         
         RequestExecution();
@@ -325,7 +337,7 @@ public abstract partial class ActiveAbilityNode<
         if (AbilityAllowedAsAnActionInActionPhaseFor(actor) is false)
             return;
         
-        if (GlobalRegistry.Instance.GetLoadingSavedGame())
+        if (Registry.GetLoadingSavedGame())
             return;
         
         CleanUpNonRequeuedFocuses();
@@ -337,7 +349,7 @@ public abstract partial class ActiveAbilityNode<
         if (AbilityAllowedAsAnActionInActionPhaseFor(actor) is false)
             return;
         
-        if (GlobalRegistry.Instance.GetLoadingSavedGame())
+        if (Registry.GetLoadingSavedGame())
             CleanUpAllFocuses();
         
         RequestExecution();
@@ -378,8 +390,7 @@ public interface IActiveAbilityFocus : IAbilityFocus, IEquatable<IActiveAbilityF
 {
     bool Requeued { get; set; }
     AbilityReservationResult Reservation { get; set; }
-    //IList<Payment> Cost { get; init; }
-    //IList<Payment> PaymentPaid { get; init; }
+    IList<Payment> NonConsumableResourcesPaidSoFar { get; set; }
     
     IConsumableAbilityActivationRequest ToActivationRequest();
     IConsumableAbilityActivationRequest ToActivationRequestForRequeue();

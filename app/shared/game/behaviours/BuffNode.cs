@@ -1,5 +1,7 @@
+using System.Linq;
 using Godot;
 using LowAgeData.Domain.Behaviours;
+using Newtonsoft.Json;
 
 public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
 {
@@ -26,15 +28,18 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
         HandleInitialModifications();
     }
 
-    protected override void Destroy()
+    protected override void EndBehaviour()
     {
-        if (DebugEnabled)
-            GD.Print($"Buff on {Parent.DisplayName} at {Parent.EntityPrimaryPosition}: destroy called.");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BuffNode), nameof(EndBehaviour), 
+                $"Buff '{Blueprint.Id}' on {Parent} destroy called.");
         
         if (Blueprint.RestoreChangesOnEnd)
             RestoreInitialModifications();
+
+        HandleFinalModifications();
         
-        base.Destroy();
+        base.EndBehaviour();
     }
 
     private void HandleInitialModifications()
@@ -47,12 +52,27 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
 
     private void RestoreInitialModifications()
     {
-        if (DebugEnabled)
-            GD.Print($"Buff on {Parent.DisplayName} at {Parent.EntityPrimaryPosition}: restoring modifications.");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BuffNode), nameof(RestoreInitialModifications), 
+                $"Buff '{Blueprint.Id}' on {Parent} restoring modifications " +
+                $"'{JsonConvert.SerializeObject(Blueprint.InitialModifications)}'.");
         
         var restorer = new ModificationRestorer(Parent);
         
         foreach (var modification in Blueprint.InitialModifications)
             modification.Accept(restorer);
+    }
+    
+    private void HandleFinalModifications()
+    {
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BuffNode), nameof(HandleFinalModifications), 
+                $"Buff '{Blueprint.Id}' on {Parent} adding final modifications " +
+                $"'{JsonConvert.SerializeObject(Blueprint.FinalModifications)}'");
+        
+        var applier = new ModificationApplier(Parent, false);
+        
+        foreach (var modification in Blueprint.FinalModifications)
+            modification.Accept(applier);
     }
 }

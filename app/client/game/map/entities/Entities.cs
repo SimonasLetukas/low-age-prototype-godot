@@ -18,8 +18,6 @@ using Newtonsoft.Json;
 /// </summary>
 public partial class Entities : Node2D
 {
-    [Export] public bool DebugEnabled { get; set; } = false;
-    
     public event Action<EntityPlacedRequestEvent> EntityPlaced = delegate { };
     public event Action<EntityCandidatePlacementCancelledEvent> CandidatePlacementCancelled = delegate { };
     public event Action<AbilityExecutionRequestedEvent> AbilityExecutionRequested = delegate { };
@@ -191,9 +189,10 @@ public partial class Entities : Node2D
 
         var finalOrder = ResolveIdenticalInitiatives(actorsGroupedBySortedInitiative);
         
-        if (DebugEnabled)
-            GD.Print($"{nameof(Entities)}.{nameof(GetActorsSortedByInitiative)}: Final order of actors sorted " +
-                     $"by initiative: {JsonConvert.SerializeObject(finalOrder.Select(x => new
+        if (Log.DebugEnabled)
+            Log.Info(nameof(Entities), nameof(GetActorsSortedByInitiative), 
+                $"Final order of actors sorted by initiative: {JsonConvert.SerializeObject(finalOrder
+                    .Select(x => new
                      {
                          Id = x.InstanceId, 
                          Name = x.DisplayName, 
@@ -310,9 +309,6 @@ public partial class Entities : Node2D
             topZ = entity.Renderer.ZIndex;
             topEntity = entity;
         }
-        
-        //if (DebugEnabled && topEntity != null)
-            //GD.Print($"{nameof(Entities)}.{nameof(GetTopEntity)}: entity found '{topEntity.DisplayName}'");
 
         return topEntity;
     }
@@ -406,17 +402,18 @@ public partial class Entities : Node2D
         var sourceActor = GetEntityByInstanceId(@event.SourceActorId) as ActorNode;
         if (sourceActor is null)
         {
-            GD.Print($"{nameof(Entities)} could not apply {nameof(AbilityExecutionRequestedEvent)} because " +
-                     $"{nameof(sourceActor)} '{@event.SourceActorId}' entity was null.");
+            Log.Info(nameof(Entities), $"{nameof(HandleEvent)}.{nameof(AbilityExecutionRequestedEvent)}", 
+                $"Could not apply {nameof(AbilityExecutionRequestedEvent)} because {nameof(sourceActor)} " +
+                $"'{@event.SourceActorId}' entity was null.");
             return;
         }
 
         var ability = sourceActor.Abilities.GetById(@event.AbilityId);
         if (ability is null)
         {
-            GD.Print($"{nameof(Entities)} could not apply {nameof(AbilityExecutionRequestedEvent)} because " +
-                     $"{nameof(ability)} '{@event.AbilityId}' was not found for {nameof(sourceActor)} " +
-                     $"'{@event.SourceActorId}'.");
+            Log.Info(nameof(Entities), $"{nameof(HandleEvent)}.{nameof(AbilityExecutionRequestedEvent)}", 
+                $"Could not apply {nameof(AbilityExecutionRequestedEvent)} because {nameof(ability)} " +
+                $"'{@event.AbilityId}' was not found for {nameof(sourceActor)} '{@event.SourceActorId}'.");
             return;
         }
         
@@ -435,15 +432,17 @@ public partial class Entities : Node2D
 
         if (source is null)
         {
-            GD.Print($"{nameof(Entities)} could not apply {nameof(EntityAttackedEvent)} because " +
-                     $"{nameof(source)} '{@event.SourceId}' entity was null.");
+            Log.Info(nameof(Entities), $"{nameof(HandleEvent)}.{nameof(EntityAttackedEvent)}", 
+                $"Could not apply {nameof(EntityAttackedEvent)} because {nameof(source)} " +
+                $"'{@event.SourceId}' entity was null.");
             return;
         }
         
         if (target is null)
         {
-            GD.Print($"{nameof(Entities)} could not apply {nameof(EntityAttackedEvent)} because " +
-                     $"{nameof(target)} '{@event.TargetId}' entity was null.");
+            Log.Info(nameof(Entities), $"{nameof(HandleEvent)}.{nameof(EntityAttackedEvent)}", 
+                $"Could not apply {nameof(EntityAttackedEvent)} because {nameof(target)} " +
+                $"'{@event.TargetId}' entity was null.");
             return;
         }
 
@@ -504,8 +503,9 @@ public partial class Entities : Node2D
     {
         var instanceId = entity.InstanceId;
         
-        if (DebugEnabled) GD.Print($"{nameof(Entities)}: placing {entity.DisplayName} '{instanceId}' at " +
-                                   $"{entity.EntityPrimaryPosition}.");
+        if (Log.DebugEnabled) 
+            Log.Info(nameof(Entities), nameof(PlaceEntity), $"Placing {entity.DisplayName} " +
+                                                            $"'{instanceId}' at {entity.EntityPrimaryPosition}.");
 
         if (TryPlaceEntity(entity, placeAsCandidate) is false)
             return null;
@@ -602,9 +602,9 @@ public partial class Entities : Node2D
 
             actor.Initiative.Apply(Change.SetCurrent, initiative);
             
-            if (DebugEnabled)
-                GD.Print($"{nameof(Entities)}.{nameof(GetActorInitiativeMap)}: {actor.DisplayName} at " + 
-                         $"{actor.EntityPrimaryPosition} {nameof(initiative)} {initiative}. {nameof(actor.WorkingOn)}: " +
+            if (Log.DebugEnabled)
+                Log.Info(nameof(Entities), nameof(GetActorInitiativeMap), 
+                    $"{actor} {nameof(initiative)} {initiative}. {nameof(actor.WorkingOn)}: " +
                          $"{string.Join(", ", actor.WorkingOn.Select(w => w.Ability.DisplayName))}");
             
             entityInitiativeMap[actor] = initiative;

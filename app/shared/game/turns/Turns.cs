@@ -13,8 +13,6 @@ using Newtonsoft.Json;
 /// </summary>
 public partial class Turns : Node2D
 {
-	[Export] public bool DebugEnabled { get; set; } = false;
-	
 	public event Action<PlanningPhaseEndedRequestEvent> PlanningPhaseEnded = delegate { };
 	public event Action<PlanningPhaseEndResolvedEvent> PlanningPhaseEndResolved = delegate { };
 	public event Action<ActionEndedEvent> ActionEnded = delegate { };
@@ -29,7 +27,8 @@ public partial class Turns : Node2D
 
 	public override void _Ready()
 	{
-		if (DebugEnabled) GD.Print($"{nameof(Turns)}: entering");
+		if (Log.DebugEnabled) 
+			Log.Info(nameof(Turns), nameof(_Ready), "Entering");
 		
 		base._Ready();
 
@@ -128,24 +127,27 @@ public partial class Turns : Node2D
 
 	public void HandleEvent(ActionEndedEvent @event)
 	{
-		if (DebugEnabled)
-			GD.Print($"Initiative queue on ActionEndedEvent: {JsonConvert.SerializeObject(InitiativeQueue
-				.Select(a => new {a.InstanceId, a.Initiative?.CurrentAmount}))}");
+		if (Log.DebugEnabled)
+			Log.Info(nameof(Turns), $"{nameof(HandleEvent)}.{nameof(ActionEndedEvent)}", 
+				$"Initiative queue after action ended '{JsonConvert.SerializeObject(InitiativeQueue
+					.Select(a => new {a.InstanceId, a.Initiative?.CurrentAmount}))}'");
 
 		if (InitiativeQueue.FirstOrDefault() is not { } actor
 		    || actor.InstanceId.Equals(@event.ActorInAction) is false)
 		{
-			if (DebugEnabled)
-				GD.Print($"Could not find '{@event.ActorInAction}' in initiative queue");
+			if (Log.DebugEnabled)
+				Log.Info(nameof(Turns), $"{nameof(HandleEvent)}.{nameof(ActionEndedEvent)}", 
+					$"Could not find '{@event.ActorInAction}' in initiative queue.");
 			
 			return;
 		}
 		
 		AdvanceToNextAction(false);
 		
-		if (DebugEnabled)
-			GD.Print($"Initiative queue after AdvanceToNextAction: {string.Join(", ", InitiativeQueue
-				.Select(a => a.InstanceId))}");
+		if (Log.DebugEnabled)
+			Log.Info(nameof(Turns), $"{nameof(HandleEvent)}.{nameof(ActionEndedEvent)}", 
+				$"Initiative queue after handling action ended: {string.Join(", ", InitiativeQueue
+					.Select(a => a.InstanceId))}");
 		
 		if (InitiativeQueue.IsEmpty())
 		{

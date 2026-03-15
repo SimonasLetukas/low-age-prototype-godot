@@ -13,39 +13,45 @@ public class Effects
 {
     private IList<EffectNode> Chain { get; set; } = new List<EffectNode>();
 
+    public EffectNode Last => Chain.Last();
     public EffectNode? PreviousOrNull => Chain.Count > 1 ? Chain[^2] : null;
     public EntityNode? SourceEntityOrNull => Chain.LastOrDefault()?.InitiatorEntity;
     public EntityNode? OriginEntityOrNull => Chain.FirstOrDefault()?.InitiatorEntity;
     
-    public Effects(EffectId effectId, ITargetable? initialTarget, EntityNode? initiator)
+    public Effects(EffectId effectId, IList<ITargetable> initialTargets, Player initiatorPlayer, 
+        EntityNode? initiatorEntity)
     {
-        var effect = CreateEffect(effectId, initialTarget, initiator);
+        var effect = CreateEffect(effectId, initialTargets, initiatorPlayer, initiatorEntity);
         
         Chain.Add(effect);
     }
     
-    public Effects(Effects previousEffects, EffectId effectId, ITargetable? initialTarget, EntityNode? initiator)
+    public Effects(Effects previousEffects, EffectId effectId, IList<ITargetable> initialTargets, 
+        Player initiatorPlayer, EntityNode? initiatorEntity)
     {
         Chain = previousEffects.Chain;
-        var effect = CreateEffect(effectId, initialTarget, initiator);
+        var effect = CreateEffect(effectId, initialTargets, initiatorPlayer, initiatorEntity);
         
         Chain.Add(effect);
     }
 
-    public bool ValidateLast() => Chain.LastOrDefault()?.Validate() ?? false;
+    public ValidationResult ValidateLast() => Chain.LastOrDefault()?.Validate() 
+                                              ?? ValidationResult.Invalid("Validation failed.");
 
     public void ExecuteLast() => Chain.LastOrDefault()?.Execute();
 
-    private EffectNode CreateEffect(EffectId effectId, ITargetable? initialTarget, EntityNode? initiator)
+    private EffectNode CreateEffect(EffectId effectId, IList<ITargetable> initialTargets, Player initiatorPlayer, 
+        EntityNode? initiatorEntity)
     {
         var foundEffect = FindEffectBlueprint(effectId);
         switch (foundEffect)
         {
             case ApplyBehaviour applyBehaviour:
-                var applyBehaviourNode = new ApplyBehaviourNode(applyBehaviour, this, initialTarget, initiator);
+                var applyBehaviourNode = new ApplyBehaviourNode(applyBehaviour, this, initialTargets, 
+                    initiatorPlayer, initiatorEntity);
                 return applyBehaviourNode;
             case Search search:
-                var searchNode = new SearchNode(search, this, initialTarget, initiator);
+                var searchNode = new SearchNode(search, this, initialTargets, initiatorPlayer, initiatorEntity);
                 return searchNode;
             default:
                 return null;

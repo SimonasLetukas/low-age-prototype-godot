@@ -2,7 +2,9 @@ using System;
 using Godot;
 
 public partial class Network : Node
-{ 
+{
+	public static Network Instance = null!;
+	
 	public event Action<long> PlayerRemoved = delegate { };
 
     public override void _Ready()
@@ -10,6 +12,9 @@ public partial class Network : Node
 	    Callable.From(ResetNetwork).CallDeferred();
 
 	    Multiplayer.PeerDisconnected += OnPlayerDisconnected;
+	    
+	    // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+	    Instance ??= this;
     }
 
     /// <summary>
@@ -23,6 +28,19 @@ public partial class Network : Node
 	    Players.Instance.Reset();
 	    Data.Instance.Reset();
 	    Data.Instance.ReadBlueprint();
+    }
+
+    public MultiplayerApi? TryGetMultiplayer()
+    {
+	    try
+	    {
+		    var multiplayer = GetMultiplayer();
+		    return multiplayer;
+	    }
+	    catch (Exception)
+	    {
+		    return null;
+	    }
     }
 
     /// <summary>

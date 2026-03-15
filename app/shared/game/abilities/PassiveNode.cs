@@ -41,8 +41,8 @@ public partial class PassiveNode : AbilityNode<
 
         foreach (var effectId in onBirthEffects)
         {
-            var effects = new Effects(effectId, actor, actor);
-            if (effects.ValidateLast())
+            var effects = new Effects(effectId, [actor], actor.Player, actor);
+            if (effects.ValidateLast().IsValid)
                 effects.ExecuteLast();
         }
     }
@@ -57,7 +57,7 @@ public partial class PassiveNode : AbilityNode<
         throw new System.NotImplementedException();
     }
     
-    protected override void Complete(Focus focus)
+    protected override void ExecuteFocus(Focus focus)
     {
         throw new System.NotImplementedException();
     }

@@ -67,6 +67,7 @@ namespace LowAgeData.Domain.Behaviours
         
         /// <summary>
         /// Added right before the <see cref="EndsAt"/> or before <see cref="Entity"/> is destroyed.
+        /// Final changes are non-restorable.
         /// </summary>
         public IList<Modification> FinalModifications { get; }
         

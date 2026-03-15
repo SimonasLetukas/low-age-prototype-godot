@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public partial class Camera : Camera2D
 {
-    [Export] public bool DebugEnabled { get; set; } = true;
     [Export(PropertyHint.Range, "-200,100,5")] public int HorizontalLimitMargin { get; set; } = 30;
     [Export(PropertyHint.Range, "-200,100,5")] public int VerticalLimitMargin { get; set; } = 5;
     [Export(PropertyHint.Range, "1,10,1")] public int MapScrollMargin { get; set; } = 5;
@@ -33,11 +32,11 @@ public partial class Camera : Camera2D
         Position = new Vector2((float)_mapWidthPixels / 2, (float)_mapHeightPixels / 2);
         UpdateZoom(true);
         
-        if (DebugEnabled)
+        if (Log.DebugEnabled)
         {
-            GD.Print($"{nameof(Camera3D)}: map width '{_mapWidthPixels}'");
-            GD.Print($"{nameof(Camera3D)}: map height '{_mapHeightPixels}'");
-            GD.Print($"{nameof(Camera3D)}: camera position '{Position}'");
+            Log.Info(nameof(Camera), nameof(_Ready), $"Map width '{_mapWidthPixels}'");
+            Log.Info(nameof(Camera), nameof(_Ready), $"Map height '{_mapHeightPixels}'");
+            Log.Info(nameof(Camera), nameof(_Ready), $"Camera position '{Position}'");
         }
 
         SetLimits();

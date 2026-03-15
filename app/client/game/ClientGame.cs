@@ -19,7 +19,7 @@ public partial class ClientGame : Game
     
     public override async void _Ready()
     {
-        GD.Print($"{LogPrefix}: entering.");
+        Log.Info(nameof(ClientGame), nameof(_Ready), "Entering");
         
         base._Ready();
         
@@ -50,7 +50,7 @@ public partial class ClientGame : Game
 
     private void ConnectSignals()
     {
-        GD.Print($"{LogPrefix}.{nameof(ConnectSignals)}: connecting signals.");
+        Log.Info(nameof(ClientGame), nameof(ConnectSignals), "Connecting signals.");
 
         SaveLoadingFinished += OnClientSaveLoadingFinished;
         
@@ -123,14 +123,14 @@ public partial class ClientGame : Game
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false)]
     protected override void OnSaveGameLoadedByAllPeers()
     {
-        GD.Print($"{LogPrefix}.{nameof(OnSaveGameLoadedByAllPeers)}");
+        Log.Info(nameof(ClientGame), nameof(OnSaveGameLoadedByAllPeers), string.Empty);
         SetPaused(false);
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected override void GameEnded()
     {
-        GD.Print($"{LogPrefix}.{nameof(GameEnded)}: returning to main menu.");
+        Log.Info(nameof(ClientGame), nameof(GameEnded), "Returning to main menu.");
         Client.Instance.ResetNetwork();
         Callable.From(() => GetTree().ChangeSceneToFile(MainMenu.ScenePath)).CallDeferred();
     }
@@ -138,15 +138,17 @@ public partial class ClientGame : Game
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     protected override void OnNewGameEventRegistered(string eventBody)
     {
-        var playerId = Multiplayer.GetUniqueId();
-        GD.Print($"{LogPrefix}.{nameof(OnNewGameEventRegistered)}: event '{eventBody.TrimForLogs()}' " +
-                 $"received for player {playerId} '{Players.Instance.GetName(playerId)}'");
+        var player = Players.Instance.Current;
+        
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(ClientGame), nameof(OnNewGameEventRegistered), 
+                $"Event '{eventBody.TrimForLogs()}' received for player {player.StableId} '{player.Name}'");
 
         var gameEvent = StringToEvent(eventBody);
         if (Events.Any(x => x.Id.Equals(gameEvent.Id)))
         {
-            GD.Print($"{LogPrefix}.{nameof(OnNewGameEventRegistered)}: event '{gameEvent.Id}' " +
-                     $"already exists for player {playerId} '{Players.Instance.GetName(playerId)}'");
+            Log.Info(nameof(ClientGame), nameof(OnNewGameEventRegistered), 
+                $"Event '{gameEvent.Id}' already exists for player {player.StableId} '{player.Name}'");
             return;
         }
 
@@ -156,7 +158,8 @@ public partial class ClientGame : Game
 
     protected override void ExecuteGameEvent(IGameEvent gameEvent)
     {
-        GD.Print($"{LogPrefix}.{nameof(ExecuteGameEvent)}: executing event '{EventToString(gameEvent)}'.");
+        Log.Info(nameof(ClientGame), nameof(ExecuteGameEvent), 
+            $"Executing event '{EventToString(gameEvent)}'.");
         
         switch (gameEvent)
         {
@@ -190,10 +193,15 @@ public partial class ClientGame : Game
                 Turns.HandleEvent(actionEndedEvent);
                 break;
             default:
-                GD.Print($"{LogPrefix}.{nameof(ExecuteGameEvent)}: could not execute event " +
-                         $"'{gameEvent.GetType()}'. Type not implemented or not relevant for client.");
-                break;
+                if (Log.VerboseDebugEnabled)
+                    Log.Info(nameof(ClientGame), nameof(ExecuteGameEvent), 
+                        $"Could not execute event '{gameEvent.GetType()}'. Type not implemented or " +
+                        $"not relevant for client.");
+                return;
         }
+        
+        Log.Info(nameof(ClientGame), nameof(ExecuteGameEvent), 
+            $"Executed event '{gameEvent.GetType()}'.\n");
     }
 
     private void HandleEvent(MapCreatedEvent mapCreatedEvent)
@@ -256,7 +264,8 @@ public partial class ClientGame : Game
         }
         catch (IOException e)
         {
-            GD.Print($"{LogPrefix}.{nameof(SaveGame)}: received an exception while saving the game '{e.Message}'.");
+            Log.Error(nameof(ClientGame), nameof(SaveGame), 
+                $"Received an exception while saving the game '{e.Message}'.");
         }
     }
 
@@ -272,7 +281,7 @@ public partial class ClientGame : Game
 
     private void OnMapFinishedInitializing()
     {
-        GD.Print($"{LogPrefix}.{nameof(OnMapFinishedInitializing)}");
+        Log.Info(nameof(ClientGame), nameof(OnMapFinishedInitializing), string.Empty);
         RegisterNewGameEvent(new ClientFinishedInitializingEvent(Players.Instance.Current.StableId));
         
         // TODO save loading should wait for this event AGAIN during loading

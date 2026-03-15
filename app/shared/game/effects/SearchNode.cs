@@ -3,6 +3,7 @@ using System.Linq;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Filters;
 using LowAgeData.Domain.Effects;
 
 namespace LowAge.app.shared.game.effects;
@@ -11,8 +12,9 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
 {
     private Search Blueprint { get; set; } = null!;
     
-    public SearchNode(Search blueprint, Effects history, ITargetable? initialTarget, EntityNode? initiator) 
-        : base(history, initialTarget, initiator)
+    public SearchNode(Search blueprint, Effects history, IList<ITargetable> initialTargets, Player initiatorPlayer, 
+        EntityNode? initiatorEntity) 
+        : base(history, initialTargets, initiatorPlayer, initiatorEntity)
     {
         SetBlueprint(blueprint);
     }
@@ -28,20 +30,13 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
     {
         if (base.Execute() is false)
             return false;
-
-        var targets = FilterEvaluator.Apply(FoundTargets, Blueprint.Filters, new FilterContext
-        {
-            Initiator = InitiatorEntity,
-            CurrentPlayer = Players.Instance.Current,
-            Chain = History
-        });
         
-        foreach (var target in targets)
+        foreach (var target in FoundTargets)
         {
             foreach (var effectId in Blueprint.Effects)
             {
-                var chain = new Effects(History, effectId, target, InitiatorEntity);
-                if (chain.ValidateLast())
+                var chain = new Effects(History, effectId, [target], InitiatorPlayer, InitiatorEntity);
+                if (chain.ValidateLast().IsValid)
                     chain.ExecuteLast();
             }
         }
@@ -49,13 +44,15 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
         return true;
     }
 
-    protected override IEnumerable<ITargetable> GetInheritedTargets(ITargetable? initialTarget, EntityNode? initiator)
+    protected override IList<IFilterItem> GetFilters() => Blueprint.Filters;
+
+    protected override IEnumerable<ITargetable> GetInheritedTargets(IList<ITargetable> initialTargets, EntityNode? initiator)
     {
         if (Blueprint.Shape is LowAgeData.Domain.Common.Shape.Map 
-            || initialTarget is not EntityNode initialEntityTarget)
+            || initialTargets.FirstOrDefault(t => t is EntityNode) is not EntityNode initialTargetEntity)
             return GetAllEntities();
         
-        return GetEntityTargets(initialEntityTarget);
+        return GetEntityTargets(initialTargetEntity);
     }
     
     protected override IList<ITargetable> GetSelfTargets(EntityNode initiator) 

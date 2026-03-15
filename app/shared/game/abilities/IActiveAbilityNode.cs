@@ -2,7 +2,7 @@ using System;
 
 public interface IActiveAbilityNode : IAbilityNode
 {
-    event Action<IActiveAbilityFocus> Cancelled;
+    event Action<IActiveAbilityFocus> FocusRemoved;
     
     bool IsActivated { get; }
     

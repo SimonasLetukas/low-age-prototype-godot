@@ -57,7 +57,6 @@ public partial class ElevatableTiles : Node2D
         _alpha = GetNode<Node2D>($"Alpha");
         _availableTilesVisual[0] = GetNode<AvailableTiles>($"Alpha/{nameof(AvailableTiles)}");
         _availableTilesHovering[0] = GetNode<AvailableHoveringTiles>($"Alpha/{nameof(AvailableHoveringTiles)}");
-        GD.Print($"Count: {_availableTilesVisual.Count}");
         _targetNormalTileMaps[0] = GetNode<TargetTiles>($"Alpha/{nameof(TargetTiles)}");
         _targetMeleeTileMaps[0] = GetNode<TargetMeleeTiles>($"Alpha/{nameof(TargetMeleeTiles)}");
         _targetNormalTileMapsHovering[0] = GetNode<TargetTiles>($"Alpha/{nameof(TargetTiles)}Hovering");
