@@ -63,7 +63,8 @@ public partial class ClientMap : Map
 		
 		ResetLines();
 		ClearArrows();
-		
+
+		Entities.MovementFinished += OnEntitiesMovementFinished;
 		Entities.NewPositionOccupied += OnEntitiesNewPositionOccupied;
 		_tileMap.FinishedInitialInitializing += OnTileMapFinishedInitialInitializing;
 		_tileMap.FinishedPointInitialization += OnTileMapFinishedPointInitialization;
@@ -78,6 +79,7 @@ public partial class ClientMap : Map
 
 	public override void _ExitTree()
 	{
+		Entities.MovementFinished -= OnEntitiesMovementFinished;
 		Entities.NewPositionOccupied -= OnEntitiesNewPositionOccupied;
 		_tileMap.FinishedInitialInitializing -= OnTileMapFinishedInitialInitializing;
 		_tileMap.FinishedPointInitialization -= OnTileMapFinishedPointInitialization;
@@ -278,6 +280,8 @@ public partial class ClientMap : Map
 
 		var tiles = path.Select(p => _tileMap.GetTile(p)).WhereNotNull().ToList();
 		Entities.MoveEntity(movingEntity, _tileMap.GetGlobalPositionsFromTiles(tiles).ToList(), tiles);
+		
+		AddOccupation(movingEntity);
 	}
 
 	public void HandleDeselecting()
@@ -336,9 +340,6 @@ public partial class ClientMap : Map
 		if (_focusedTile.IsWithinTheMap is false)
 			return;
 
-		if (Entities.EntityMoving)
-			return;
-
 		_focusedTile.UpdateTile();
 
 		if (_selectionOverlay is SelectionOverlay.None or SelectionOverlay.Movement or SelectionOverlay.Attack)
@@ -359,7 +360,7 @@ public partial class ClientMap : Map
 		if (_focusedTile.IsWithinTheMap is false)
 			return ValidationResult.Invalid("This action is outside of the map boundaries!");
 
-		if (Entities.EntityMoving)
+		if (Config.Instance.WaitForCompletedMovement && Entities.EntityMoving)
 			return ValidationResult.Invalid("Cannot execute while another unit is moving.");
 
 		if (_selectionOverlay is SelectionOverlay.None)
@@ -950,6 +951,14 @@ public partial class ClientMap : Map
 
 	private void OnEntityPlaced(EntityNode entity) => AddOccupation(entity);
 
+	private void OnEntitiesMovementFinished(EntityNode entity)
+	{
+		var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPrimaryPosition);
+		Entities.AdjustGlobalPosition(entity, globalPosition);
+		Entities.RegisterRenderer(entity);
+		UpdateLines();
+	}
+	
 	private void OnEntitiesNewPositionOccupied(EntityNode entity)
 	{
 		var globalPosition = _tileMap.GetGlobalPositionFromMapPosition(entity.EntityPrimaryPosition);

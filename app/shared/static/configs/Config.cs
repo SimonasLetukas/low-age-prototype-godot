@@ -85,6 +85,12 @@ public partial class Config : Node
         get => GetData().ShowHints;
         set => GetData().ShowHints = value;
     }
+    
+    public bool WaitForCompletedMovement
+    {
+        get => GetData().WaitForCompletedMovement;
+        set => GetData().WaitForCompletedMovement = value;
+    }
 
     public bool AllowSameTeamCombat
     {
@@ -146,11 +152,15 @@ public partial class Config : Node
 
     private class ConfigData
     {
+        // Preferences
         public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Fast;
         public bool ConnectTerrain { get; set; } = false;
         public FactionId StartingFaction { get; set; } = FactionId.Uee;
         public bool LargeCursor { get; set; } = false;
         public bool ShowHints { get; set; } = true;
+        public bool WaitForCompletedMovement { get; set; } = false; // TODO missing from settings
+        
+        // Gameplay
         public bool AllowSameTeamCombat { get; set; } = false;
         public bool ResearchEnabled { get; set; } = false;
         public bool DeterministicInitiative { get; set; } = false;

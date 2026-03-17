@@ -22,6 +22,7 @@ public partial class Entities : Node2D
     public event Action<EntityCandidatePlacementCancelledEvent> CandidatePlacementCancelled = delegate { };
     public event Action<AbilityExecutionRequestedEvent> AbilityExecutionRequested = delegate { };
     public event Action<AbilityExecutionCompletedEvent> AbilityExecutionCompleted = delegate { };
+    public event Action<EntityNode> MovementFinished = delegate { };
     public event Action<EntityNode> NewPositionOccupied = delegate { };
     public event Action<EntityNode> EntitySelected = delegate { };
     public event Action<EntityNode> EntityDeselected = delegate { };
@@ -211,9 +212,6 @@ public partial class Entities : Node2D
 
     public void SelectEntity(EntityNode entity)
     {
-        if (EntityMoving) 
-            return;
-        
         if (IsEntitySelected())
             SelectedEntity!.SetSelected(false);
 
@@ -264,9 +262,6 @@ public partial class Entities : Node2D
     
     public bool TryHoveringEntityOn(Tiles.TileInstance tile)
     {
-        if (EntityMoving)
-            return false;
-        
         var occupationExists = tile.IsOccupied();
         var occupantEntity = tile.GetLastOccupantOrNull();
 
@@ -660,7 +655,7 @@ public partial class Entities : Node2D
     private void OnEntityFinishedMoving(EntityNode entity)
     {
         EntityMoving = false;
-        NewPositionOccupied(entity);
+        MovementFinished(entity);
     }
     
     private void OnAbilityExecutionRequested(ActorNode sourceActor, IAbilityNode ability, IAbilityFocus focus)
