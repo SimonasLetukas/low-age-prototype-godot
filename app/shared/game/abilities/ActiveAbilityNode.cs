@@ -264,17 +264,6 @@ public abstract partial class ActiveAbilityNode<
     /// Relevant for abilities that allow helpers.
     /// </summary>
     protected virtual bool WasAlreadyCompleted(TFocus focus) => false;
-    
-    private bool AbilityAllowedForPlanningPhaseGiven(TurnPhase currentPhase)
-    {
-        if (TurnPhase.Equals(TurnPhase.Planning) is false)
-            return false;
-
-        if (currentPhase.Equals(TurnPhase.Planning) is false)
-            return false;
-
-        return true;
-    }
 
     private bool AbilityAllowedAsAnActionInActionPhaseFor(ActorNode actor)
     {
@@ -312,17 +301,27 @@ public abstract partial class ActiveAbilityNode<
             HandleRequeuedFocus(focus);
         }
     }
-    
-    private void OnPhaseEnded(int turn, TurnPhase currentPhase)
+
+    private void HandleEndOfPlanningPhase()
     {
-        if (AbilityAllowedForPlanningPhaseGiven(currentPhase))
-        {
-            if (Registry.GetLoadingSavedGame())
-                CleanUpAllFocuses();
-        
-            RequestExecution();
+        if (TurnPhase.Equals(TurnPhase.Planning) is false)
             return;
-        }
+        
+        if (Registry.GetLoadingSavedGame())
+            CleanUpAllFocuses();
+        
+        RequestExecution();
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleEndOfPlanningPhase), 
+                $"{this} current {nameof(FocusQueue)} (after {nameof(RequestExecution)}): " +
+                $"'{JsonConvert.SerializeObject(FocusQueue)}'");
+    }
+
+    private void HandleEndOfActionPhase()
+    {
+        if (TurnPhase.Equals(TurnPhase.Planning) is false)
+            return;
         
         CleanUpNonRequeuedFocuses();
         
@@ -332,27 +331,45 @@ public abstract partial class ActiveAbilityNode<
         HandleRequeuedAbilityFocuses();
         
         if (Log.DebugEnabled)
-            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(OnPhaseEnded), 
+            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleEndOfActionPhase), 
+                $"{this} current {nameof(FocusQueue)} (after {nameof(HandleRequeuedAbilityFocuses)}): " +
+                $"'{JsonConvert.SerializeObject(FocusQueue)}'");
+    }
+    
+    private void OnPhaseEnded(int turn, TurnPhase currentPhase)
+    {
+        if (currentPhase.Equals(TurnPhase.Planning))
+            HandleEndOfPlanningPhase();
+        
+        if (currentPhase.Equals(TurnPhase.Action))
+            HandleEndOfActionPhase();
+    }
+
+    private void OnActionStarted(ActorNode actor)
+    {
+        if (AbilityAllowedAsAnActionInActionPhaseFor(actor) is false)
+            return;
+        
+        if (Registry.GetLoadingSavedGame())
+            return;
+        
+        CleanUpNonRequeuedFocuses();
+        HandleRequeuedAbilityFocuses();
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(OnActionStarted), 
                 $"{this} current {nameof(FocusQueue)}: '{JsonConvert.SerializeObject(FocusQueue)}'");
     }
 
     private void OnActionEnded(ActorNode actor)
     {
-        if (AbilityAllowedAsAnActionInActionPhaseFor(actor))
-        {
-            if (Registry.GetLoadingSavedGame())
-                CleanUpAllFocuses();
-        
-            RequestExecution();
+        if (AbilityAllowedAsAnActionInActionPhaseFor(actor) is false)
             return;
-        }
-        
-        CleanUpNonRequeuedFocuses();
         
         if (Registry.GetLoadingSavedGame())
-            return;
+            CleanUpAllFocuses();
         
-        HandleRequeuedAbilityFocuses();
+        RequestExecution();
         
         if (Log.DebugEnabled)
             Log.Info(nameof(ActiveAbilityNode<,,>), nameof(OnActionEnded), 

@@ -196,7 +196,8 @@ public partial class Entities : Node2D
                      {
                          Id = x.InstanceId, 
                          Name = x.DisplayName, 
-                         Position = x.EntityPrimaryPosition 
+                         Position = x.EntityPrimaryPosition,
+                         Initiative = x.Initiative?.CurrentAmount,
                      }).ToList())}");
         
         return finalOrder;
@@ -309,6 +310,11 @@ public partial class Entities : Node2D
             topZ = entity.Renderer.ZIndex;
             topEntity = entity;
         }
+        
+        if (topEntity is not null && Log.VerboseDebugEnabled)
+            Log.Info(nameof(Entities), nameof(GetTopEntity), 
+                $"Found {nameof(topEntity)} '{topEntity}' (is revealed {topEntity.IsRevealed()}) from {nameof(colliders)} " +
+                $"'{string.Join(", ", colliders.Select(c => c.GetParent().GetParent().ToString()))}'");
 
         return topEntity;
     }

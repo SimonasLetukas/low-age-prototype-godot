@@ -11754,7 +11754,7 @@
       "cost": [],
       "waitForAvailableStorage": false,
       "displayName": "Celestium Income Income",
-      "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequently constructed Obelisk, total minimum of 1).",
+      "description": "At the start of each planning phase provides 5 Celestium (-2 for each subsequent construction, total minimum of 1).",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Positive",
       "canStack": false,

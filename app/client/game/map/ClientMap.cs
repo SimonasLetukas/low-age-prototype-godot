@@ -707,8 +707,10 @@ public partial class ClientMap : Map
 			_focusedTile.FocusEntity(topEntity);
 			_focusedTile.UpdateTile();
 
-			if (Entities.IsEntityHovered(topEntity))
-				return topEntity;
+			if (Entities.IsEntityHovered(topEntity) is false)
+				Entities.TryHoveringEntity(topEntity);
+				
+			return topEntity;
 		}
 
 		var entityWasHovered = Entities.TryHoveringEntityOn(_focusedTile.CurrentTile!);

@@ -76,8 +76,8 @@ namespace LowAgeData.Collections
                 new Income(
                     id: BehaviourId.Shared.CelestiumIncomeIncome,
                     displayName: nameof(BehaviourId.Shared.CelestiumIncomeIncome).CamelCaseToWords(),
-                    description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequently " +
-                                 "constructed Obelisk, total minimum of 1).",
+                    description: "At the start of each planning phase provides 5 Celestium (-2 for each subsequent " +
+                                 "construction, total minimum of 1).",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     resources: new List<ResourceModification>
                     {

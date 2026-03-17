@@ -325,7 +325,7 @@ public partial class BuildNode : ActiveAbilityNode<
     }
 
     private IList<Payment> GetCostForSelectedEntity(EntityNode? entityToBuild) => Selection
-        .First(s => s.Name.Equals(entityToBuild?.BlueprintId)).Cost;
+        .FirstOrDefault(s => s.Name.Equals(entityToBuild?.BlueprintId))?.Cost ?? [];
 
     private IList<Payment> GetNonConsumableStockpile() => Registry.GetNonConsumableResources(
         Registry.GetCurrentPlayerStockpile(OwnerActor.Player));
