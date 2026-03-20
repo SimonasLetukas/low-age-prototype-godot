@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using LowAgeData.Domain.Common.Flags;
@@ -11,6 +10,7 @@ public class ValidationHandler
     private readonly IList<Validator> _validators;
     private Player? _playerSource;
     private IList<ITargetable> _targetSource = [];
+    private Effects? _effectHistorySource;
 
     private ValidationHandler(IList<Validator> validators)
     {
@@ -26,6 +26,12 @@ public class ValidationHandler
     public ValidationHandler With(IEnumerable<ITargetable> targetSource)
     {
         _targetSource = targetSource.ToList();
+        return this;
+    }
+
+    public ValidationHandler With(Effects effectHistorySource)
+    {
+        _effectHistorySource = effectHistorySource;
         return this;
     }
 
@@ -58,6 +64,7 @@ public class ValidationHandler
     {
         return condition switch
         {
+            BehaviourCondition behaviourCondition => Handle(behaviourCondition),
             MaskCondition maskCondition => ValidationResult.Valid, // TODO
             ResourceCondition resourceCondition => Handle(resourceCondition),
             TileCondition tileCondition => Handle(tileCondition),
@@ -65,9 +72,39 @@ public class ValidationHandler
         };
     }
 
+    private ValidationResult Handle(BehaviourCondition behaviourCondition)
+    {
+        if (_targetSource.Count == 0)
+            return ValidationResult.Invalid("Behaviour condition failed: no found targets.");
+
+        var behaviours = _targetSource
+            .Where(target => target is EntityNode)
+            .Cast<EntityNode>()
+            .SelectMany(e => e.Behaviours.GetAll())
+            .ToHashSet();
+        var conditionedBehaviourId = behaviourCondition.ConditionedBehaviour;
+        var counter = behaviours.Count(b => b.BlueprintId.Equals(conditionedBehaviourId));
+        var data = Data.Instance.Blueprint.Behaviours.First(b => b.Id.Equals(conditionedBehaviourId));
+        
+        if (behaviourCondition.ConditionFlag.Equals(ConditionFlag.Exists))
+            return counter > 0
+                ? ValidationResult.Valid 
+                : ValidationResult.Invalid($"Could not find {data.DisplayName} which must exist.");
+
+        if (behaviourCondition.ConditionFlag.Equals(ConditionFlag.DoesNotExist))
+            return counter <= 0
+                ? ValidationResult.Valid 
+                : ValidationResult.Invalid($"Found {data.DisplayName} which cannot exist.");
+
+
+        return ValidationResult.Invalid("Behaviour condition failed.");
+    }
+
     private ValidationResult Handle(ResourceCondition resourceCondition)
     {
-        Console.WriteLine($"Resource validation triggered");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ValidationHandler), $"{nameof(Handle)}.{nameof(ResourceCondition)}", 
+                string.Empty);
         
         if (_playerSource is null)
             return ValidationResult.Invalid("Resource condition failed: player not found.");
@@ -78,10 +115,12 @@ public class ValidationHandler
         if (counter is null)
             return ValidationResult.Invalid("Resource condition failed: required resource was not found.");
         
-        Console.WriteLine($"Found {resourceCondition.ConditionedResource} resources: {counter}. Required: " +
-                          $"{resourceCondition.AmountOfResourcesRequired}. Exists: " +
-                          $"{counter >= resourceCondition.AmountOfResourcesRequired}. DoesNotExist: " +
-                          $"{counter < resourceCondition.AmountOfResourcesRequired}");
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ValidationHandler), $"{nameof(Handle)}.{nameof(ResourceCondition)}", 
+                $"Found {resourceCondition.ConditionedResource} resources: {counter}. Required: " +
+                $"{resourceCondition.AmountOfResourcesRequired}. Exists: " +
+                $"{counter >= resourceCondition.AmountOfResourcesRequired}. DoesNotExist: " +
+                $"{counter < resourceCondition.AmountOfResourcesRequired}");
         
         if (resourceCondition.ConditionFlag.Equals(ConditionFlag.Exists))
             return counter >= resourceCondition.AmountOfResourcesRequired 

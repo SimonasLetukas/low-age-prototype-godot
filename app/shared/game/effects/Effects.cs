@@ -7,7 +7,7 @@ using LowAgeData.Domain.Effects;
 /// <summary>
 /// A new effect chain is always created from abilities. Behaviours and effects then continue the chain. Effects that
 /// create other effects retain the same initiator. Behaviours that create effects set their attached entities as
-/// initiators.
+/// initiators, and entity owners as initiator players.
 /// </summary>
 public class Effects
 {
@@ -50,6 +50,10 @@ public class Effects
                 var applyBehaviourNode = new ApplyBehaviourNode(applyBehaviour, this, initialTargets, 
                     initiatorPlayer, initiatorEntity);
                 return applyBehaviourNode;
+            case ModifyPlayer modifyPlayer:
+                var modifyPlayerNode = new ModifyPlayerNode(modifyPlayer, this, initialTargets, initiatorPlayer, 
+                    initiatorEntity);
+                return modifyPlayerNode;
             case Search search:
                 var searchNode = new SearchNode(search, this, initialTargets, initiatorPlayer, initiatorEntity);
                 return searchNode;

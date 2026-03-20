@@ -123,10 +123,7 @@ namespace LowAgeData.Collections
 
                 new ModifyPlayer(
                     id: EffectId.Shared.Uee.PowerGeneratorModifyPlayer,
-                    playerFilters: new List<IFilterItem>
-                    {
-                        new SpecificFlag(FilterFlag.Self)
-                    },
+                    target: Location.Self,
                     modifyFlags: new List<ModifyPlayerFlag>
                     {
                         ModifyPlayerFlag.GameLost
@@ -847,10 +844,7 @@ namespace LowAgeData.Collections
 
                 new ModifyPlayer(
                     id: EffectId.Leader.AllForOneModifyPlayer,
-                    playerFilters: new List<IFilterItem>
-                    {
-                        new SpecificFlag(FilterFlag.Self)
-                    },
+                    target: Location.Self,
                     modifyFlags: new List<ModifyPlayerFlag>
                     {
                         ModifyPlayerFlag.GameLost
@@ -1010,21 +1004,9 @@ namespace LowAgeData.Collections
                         })
                     }),
 
-                new ApplyBehaviour(
-                    id: EffectId.Slave.ManualLabourApplyBehaviourSelf,
-                    behavioursToApply: new List<BehaviourId>
-                    {
-                        BehaviourId.Slave.ManualLabourWait
-                    },
-                    target: Location.Origin),
-
                 new ModifyPlayer(
                     id: EffectId.Slave.ManualLabourModifyPlayer,
-                    playerFilters: new List<IFilterItem>
-                    {
-                        new SpecificFlag(FilterFlag.Self)
-                    },
-                    modifyFlags: null,
+                    target: Location.Self,
                     resourceModifications: new List<ResourceModification>
                     {
                         new ResourceModification(

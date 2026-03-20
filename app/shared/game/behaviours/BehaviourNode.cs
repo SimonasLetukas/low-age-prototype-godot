@@ -60,7 +60,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     public void OnBehaviourAdded(BehaviourNode addedBehaviour)
     {
-        //if (Log.VerboseDebugEnabled)
+        if (Log.VerboseDebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(OnBehaviourAdded), 
                 $"Current: '{this}', added: '{addedBehaviour}'.");
         
@@ -72,7 +72,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
             Stack.Add(addedBehaviour);
             addedBehaviour.Destroyed += OnStackedBehaviourDestroyed;
             
-            //if (Log.DebugEnabled)
+            if (Log.DebugEnabled)
                 Log.Info(nameof(BehaviourNode), nameof(OnBehaviourAdded), 
                     $"{this} added item to stack ({addedBehaviour}). Current stack: " +
                     $"'{string.Join(", ", Stack.Select(b => b.ToString()))}'.");
@@ -103,7 +103,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     
     protected virtual void OnDurationEnded(EndsAtNode duration)
     {
-        //if (Log.VerboseDebugEnabled)
+        if (Log.VerboseDebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(OnDurationEnded), ToString());
         
         EndBehaviour();
@@ -111,7 +111,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     private void Destroy()
     {
-        //if (Log.DebugEnabled)
+        if (Log.DebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(Destroy), ToString());
 
         foreach (var stackedBehaviour in Stack)
@@ -125,7 +125,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     private void InitializeTriggers()
     {
-        //if (Log.VerboseDebugEnabled)
+        if (Log.VerboseDebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(InitializeTriggers), ToString());
         
         var highestTiles = GlobalRegistry.Instance
@@ -149,7 +149,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     private void DisposeTriggers()
     {
-        //if (Log.VerboseDebugEnabled)
+        if (Log.VerboseDebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(DisposeTriggers), ToString());
         
         foreach (var triggerHandler in _triggerHandlers)
@@ -162,7 +162,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     private void InitializeStackedBehaviours()
     {
-        //if (Log.VerboseDebugEnabled)
+        if (Log.VerboseDebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(InitializeStackedBehaviours), ToString());
         
         if (Blueprint.CanStack is false)
@@ -185,7 +185,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
             behaviour.Destroyed += OnStackedBehaviourDestroyed;
         }
         
-        //if (Log.DebugEnabled)
+        if (Log.DebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(InitializeStackedBehaviours), 
                 $"{this} stack initialized. Current stack: " +
                 $"'{string.Join(", ", Stack.Select(b => b.ToString()))}'.");
@@ -195,7 +195,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     {
         var removeOnConditionsMet = Blueprint.RemoveOnConditionsMet;
         
-        //if (Log.DebugEnabled)
+        if (Log.DebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(OnTriggered), 
                 $"{this} conditions triggered ({nameof(removeOnConditionsMet)}: '{removeOnConditionsMet}').");
         
@@ -208,7 +208,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         if (entity.Equals(Parent) is false)
             return;
         
-        //if (Log.DebugEnabled)
+        if (Log.DebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(OnEntityDestroyed), 
                 $"{this} parent destroyed by {source}");
         
@@ -217,7 +217,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     private void OnStackedBehaviourDestroyed(BehaviourNode stackedBehaviour)
     {
-        //if (Log.DebugEnabled)
+        if (Log.DebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(OnStackedBehaviourDestroyed), 
                 $"{this} stack item destroyed ({stackedBehaviour}). Current stack: " +
                 $"'{string.Join(", ", Stack.Select(b => b.ToString()))}'.");

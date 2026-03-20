@@ -274,7 +274,8 @@
           "ability-shared-unit-in-production",
           "ability-shared-revelators-population-cost",
           "ability-slave-build",
-          "ability-slave-repair"
+          "ability-slave-repair",
+          "ability-slave-manual-labour"
         ],
         "displayName": "Slave",
         "description": "The backbone labour force of the Revelators. Slaves build and repair structures, working together to speed up construction. They can also extract Scraps from nearby Huts through manual labour.",
@@ -6514,11 +6515,11 @@
     {
       "$type": "Target",
       "id": "ability-slave-manual-labour",
-      "turnPhase": "TurnPhase.Planning",
+      "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
       "targetArea": {
         "$type": "Circle",
-        "radius": 1,
+        "radius": 2,
         "ignoreRadius": 0
       },
       "effects": [
@@ -7970,17 +7971,11 @@
     {
       "$type": "ModifyPlayer",
       "id": "effect-shared-uee-power-generator-modify-player",
-      "playerFilters": [
-        {
-          "$type": "SpecificFlag",
-          "value": "FilterFlag.Self"
-        }
-      ],
       "modifyFlags": [
         "ModifyPlayerFlag.GameLost"
       ],
       "resourceModifications": [],
-      "target": "Location.Inherited",
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9194,17 +9189,11 @@
     {
       "$type": "ModifyPlayer",
       "id": "effect-leader-all-for-one-modify-player",
-      "playerFilters": [
-        {
-          "$type": "SpecificFlag",
-          "value": "FilterFlag.Self"
-        }
-      ],
       "modifyFlags": [
         "ModifyPlayerFlag.GameLost"
       ],
       "resourceModifications": [],
-      "target": "Location.Inherited",
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -9445,26 +9434,8 @@
       ]
     },
     {
-      "$type": "ApplyBehaviour",
-      "id": "effect-slave-manual-labour-apply-behaviour-self",
-      "behavioursToApply": [
-        "behaviour-slave-manual-labour-wait"
-      ],
-      "filters": [],
-      "behaviourOwner": null,
-      "waitForInitialEffects": false,
-      "target": "Location.Origin",
-      "validators": []
-    },
-    {
       "$type": "ModifyPlayer",
       "id": "effect-slave-manual-labour-modify-player",
-      "playerFilters": [
-        {
-          "$type": "SpecificFlag",
-          "value": "FilterFlag.Self"
-        }
-      ],
       "modifyFlags": [],
       "resourceModifications": [
         {
@@ -9473,7 +9444,7 @@
           "amount": 2.0
         }
       ],
-      "target": "Location.Inherited",
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -11985,9 +11956,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.PlayerResourcesStockpileUpdated"
-          ],
+          "event": "Event.PlayerResourcesStockpileUpdated",
           "validators": [
             {
               "conditions": [
@@ -12130,9 +12099,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.EntityStartsActionPhase"
-          ],
+          "event": "Event.EntityStartsActionPhase",
           "validators": [
             {
               "conditions": [
@@ -12147,9 +12114,7 @@
           ]
         },
         {
-          "events": [
-            "Event.EntityStartsAction"
-          ],
+          "event": "Event.EntityStartsAction",
           "validators": [
             {
               "conditions": [
@@ -12197,9 +12162,7 @@
       "canResetDuration": true,
       "triggers": [
         {
-          "events": [
-            "Event.EntityMaskChanged"
-          ],
+          "event": "Event.EntityMaskChanged",
           "validators": [
             {
               "conditions": [
@@ -12243,9 +12206,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.EntityMaskChanged"
-          ],
+          "event": "Event.EntityMaskChanged",
           "validators": [
             {
               "conditions": [
@@ -13188,9 +13149,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.EntityStartsActionPhase"
-          ],
+          "event": "Event.EntityStartsActionPhase",
           "validators": [
             {
               "conditions": [
@@ -13239,9 +13198,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.EntityStartsActionPhase"
-          ],
+          "event": "Event.EntityStartsActionPhase",
           "validators": [
             {
               "conditions": [
@@ -13285,9 +13242,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.EntityStartsActionPhase"
-          ],
+          "event": "Event.EntityStartsActionPhase",
           "validators": [
             {
               "conditions": [
@@ -13338,9 +13293,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.EntityStartsActionPhase"
-          ],
+          "event": "Event.EntityStartsActionPhase",
           "validators": [
             {
               "conditions": [
@@ -14192,9 +14145,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.OriginIsInterrupted"
-          ],
+          "event": "Event.OriginIsInterrupted",
           "validators": []
         }
       ],
@@ -14213,9 +14164,7 @@
       "id": "behaviour-slave-manual-labour-buff",
       "modificationFlags": [],
       "initialModifications": [],
-      "initialEffects": [
-        "effect-slave-manual-labour-apply-behaviour-self"
-      ],
+      "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [
         "effect-slave-manual-labour-modify-player"
@@ -14229,9 +14178,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.OriginIsDestroyed"
-          ],
+          "event": "Event.OriginIsDestroyed",
           "validators": []
         }
       ],
@@ -14572,9 +14519,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.EntityIsAboutToMove"
-          ],
+          "event": "Event.EntityIsAboutToMove",
           "validators": []
         }
       ],
@@ -14609,9 +14554,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.OriginIsDestroyed"
-          ],
+          "event": "Event.OriginIsDestroyed",
           "validators": []
         }
       ],
@@ -14762,9 +14705,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.OriginIsDestroyed"
-          ],
+          "event": "Event.OriginIsDestroyed",
           "validators": []
         }
       ],
@@ -14806,9 +14747,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.SourceIsDestroyed"
-          ],
+          "event": "Event.SourceIsDestroyed",
           "validators": []
         }
       ],
@@ -14923,9 +14862,7 @@
       "canResetDuration": true,
       "triggers": [
         {
-          "events": [
-            "Event.EntityIsAttacked"
-          ],
+          "event": "Event.EntityIsAttacked",
           "validators": [
             {
               "conditions": [
@@ -15162,9 +15099,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.SourceIsNotAdjacent"
-          ],
+          "event": "Event.SourceIsNotAdjacent",
           "validators": []
         }
       ],
@@ -15439,9 +15374,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.OriginIsInterrupted"
-          ],
+          "event": "Event.OriginIsInterrupted",
           "validators": []
         }
       ],
@@ -15481,9 +15414,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.OriginIsInterrupted"
-          ],
+          "event": "Event.OriginIsInterrupted",
           "validators": []
         }
       ],
@@ -15605,15 +15536,11 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.OriginIsInterrupted"
-          ],
+          "event": "Event.OriginIsInterrupted",
           "validators": []
         },
         {
-          "events": [
-            "Event.OriginIsDestroyed"
-          ],
+          "event": "Event.OriginIsDestroyed",
           "validators": []
         }
       ],
@@ -15724,9 +15651,7 @@
       "canResetDuration": true,
       "triggers": [
         {
-          "events": [
-            "Event.EntityFinishedMoving"
-          ],
+          "event": "Event.EntityFinishedMoving",
           "validators": [
             {
               "$type": "ResultValidator",
@@ -15741,9 +15666,7 @@
           ]
         },
         {
-          "events": [
-            "Event.OriginIsDestroyed"
-          ],
+          "event": "Event.OriginIsDestroyed",
           "validators": []
         }
       ],
@@ -16154,9 +16077,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "events": [
-            "Event.SourceIsDestroyed"
-          ],
+          "event": "Event.SourceIsDestroyed",
           "validators": []
         }
       ],

@@ -10,21 +10,19 @@ namespace LowAgeData.Domain.Effects
     {
         public ModifyPlayer(
             EffectId id,
-            IList<IFilterItem> playerFilters,
+            Location target,
             IList<ModifyPlayerFlag>? modifyFlags = null,
             IList<ResourceModification>? resourceModifications = null,
             IList<Validator>? validators = null) 
             : base(
                 id,
-                Location.Inherited, 
+                target, 
                 validators ?? new List<Validator>())
         {
-            PlayerFilters = playerFilters;
             ModifyFlags = modifyFlags ?? new List<ModifyPlayerFlag>();
             ResourceModifications = resourceModifications ?? new List<ResourceModification>();
         }
 
-        public IList<IFilterItem> PlayerFilters { get; }
         public IList<ModifyPlayerFlag> ModifyFlags { get; }
         public IList<ResourceModification> ResourceModifications { get; }
     }

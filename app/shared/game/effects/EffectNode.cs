@@ -14,7 +14,7 @@ public abstract class EffectNode(
     : INodeFromBlueprint<Effect>
 {
     public Guid InstanceId { get; set; } = Guid.NewGuid();
-
+    
     public Player InitiatorPlayer { get; } = initiatorPlayer;
     public EntityNode? InitiatorEntity { get; } = initiatorEntity;
     public IList<ITargetable> FoundTargets { get; private set; } = null!;
@@ -37,6 +37,7 @@ public abstract class EffectNode(
         var result = ValidationHandler
             .Validate(Blueprint.Validators)
             .With(FoundTargets)
+            .With(History)
             .Handle();
         
         IsValidated = result.IsValid; 

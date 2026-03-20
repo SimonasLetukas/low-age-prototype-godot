@@ -47,7 +47,7 @@ namespace LowAgeData.Collections
                         AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Slave.Build,
                         AbilityId.Slave.Repair,
-                        //AbilityId.Slave.ManualLabour
+                        AbilityId.Slave.ManualLabour
                     }),
 
                 new Unit(

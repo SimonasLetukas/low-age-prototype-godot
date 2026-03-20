@@ -242,7 +242,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
         var cost = GetCostForSelectedEntity(request.EntityToBuild);
         var consumableCost = Registry.GetConsumableResources(cost);
-        EventBus.Instance.RaisePaymentRequested(OwnerActor.Player, consumableCost, false);
+        EventBus.Instance.RaiseResourcePaymentRequested(OwnerActor.Player, consumableCost, false);
         return consumableCost;
     }
 

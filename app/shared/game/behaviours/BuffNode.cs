@@ -1,6 +1,7 @@
-using System.Linq;
+using System.Collections.Generic;
 using Godot;
 using LowAgeData.Domain.Behaviours;
+using LowAgeData.Domain.Effects;
 using Newtonsoft.Json;
 
 public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
@@ -26,6 +27,7 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
         Blueprint = blueprint;
 
         HandleInitialModifications();
+        HandleEffects(Blueprint.InitialEffects);
     }
 
     protected override void EndBehaviour()
@@ -37,6 +39,7 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
             RestoreInitialModifications();
 
         HandleFinalModifications();
+        HandleEffects(Blueprint.FinalEffects);
         
         base.EndBehaviour();
     }
@@ -71,5 +74,25 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
         
         foreach (var modification in Blueprint.FinalModifications)
             modification.Accept(applier);
+    }
+
+    private void HandleEffects(IList<EffectId> effects)
+    {
+        foreach (var effectId in effects)
+        {
+            var chain = new Effects(History, effectId, [Parent], Parent.Player, Parent);
+            var validationResult = chain.ValidateLast();
+
+            if (validationResult.IsValid is false)
+            {
+                if (Log.DebugEnabled)
+                    Log.Info(nameof(BuffNode), nameof(HandleEffects), 
+                        $"{this} failed to execute effect '{effectId}' because '{validationResult.Message}'.");
+                
+                continue;
+            }
+            
+            chain.ExecuteLast();
+        }
     }
 }

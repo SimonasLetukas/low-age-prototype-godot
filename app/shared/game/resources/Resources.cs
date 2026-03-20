@@ -45,7 +45,8 @@ public partial class Resources : Node2D
         
         EventBus.Instance.IncomeProviderRegistered += OnIncomeProviderRegistered;
         EventBus.Instance.IncomeProviderUnregistered += OnIncomeProviderUnregistered;
-        EventBus.Instance.PaymentRequested += OnPaymentRequested;
+        EventBus.Instance.ResourceGainRequested += OnGainRequested;
+        EventBus.Instance.ResourcePaymentRequested += OnPaymentRequested;
         EventBus.Instance.PhaseStarted += OnPhaseStarted;
     }
 
@@ -53,7 +54,8 @@ public partial class Resources : Node2D
     {
         EventBus.Instance.IncomeProviderRegistered -= OnIncomeProviderRegistered;
         EventBus.Instance.IncomeProviderUnregistered -= OnIncomeProviderUnregistered;
-        EventBus.Instance.PaymentRequested -= OnPaymentRequested;
+        EventBus.Instance.ResourceGainRequested -= OnGainRequested;
+        EventBus.Instance.ResourcePaymentRequested -= OnPaymentRequested;
         EventBus.Instance.PhaseStarted -= OnPhaseStarted;
         
         base._ExitTree();
@@ -394,6 +396,20 @@ public partial class Resources : Node2D
                 }
             }
         }
+    }
+
+    private void OnGainRequested(Player player, IList<Payment> resourcesGained)
+    {
+        var stockpile = _resourcesStockpiledByPlayer[player];
+        if (ResourceCalculator.TrySubtractResources(stockpile, 
+                ResourceCalculator.ToDictionary(resourcesGained), _resourceBlueprints, true, 
+                out var resultingStockpile) is false)
+            return;
+
+        EventBus.Instance.RaiseResourcesGained(player, resourcesGained);
+
+        _resourcesStockpiledByPlayer[player] = resultingStockpile;
+        RaisePlayerResourcesUpdated(player);
     }
 
     private void OnPaymentRequested(Player player, IList<Payment> resourcesSpent, bool isRefund)

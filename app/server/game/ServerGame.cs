@@ -15,6 +15,7 @@ public partial class ServerGame : Game
     private int _entityCreationTokenCounter;
     private readonly Dictionary<Guid, List<int>> _pendingPlayersByAbilityExecutions = [];
     private List<int> _playersPendingPlanningPhaseEndResolution = [];
+    private bool _planningPhaseResolved = true;
     private int _turn;
     
     private Creator _creator = null!;
@@ -239,6 +240,7 @@ public partial class ServerGame : Game
 
         _pendingPlayersByAbilityExecutions.Clear();
         _playersPendingPlanningPhaseEndResolution = Players.Instance.GetAllStableIds().ToList();
+        _planningPhaseResolved = false;
         
         _turn = @event.Turn;
         
@@ -251,11 +253,17 @@ public partial class ServerGame : Game
 
     private void HandleEvent(AbilityExecutionRequestedEvent @event)
     {
+        if (_planningPhaseResolved)
+            return;
+        
         _pendingPlayersByAbilityExecutions[@event.Id] = Players.Instance.GetAllStableIds().ToList();
     }
     
     private void HandleEvent(AbilityExecutionCompletedEvent @event)
     {
+        if (_planningPhaseResolved)
+            return;
+        
         _pendingPlayersByAbilityExecutions[@event.AbilityExecutionRequestedEventId].Remove(@event.PlayerStableId);
 
         StartActionPhase();
@@ -263,6 +271,9 @@ public partial class ServerGame : Game
     
     private void HandleEvent(PlanningPhaseEndResolvedEvent @event)
     {
+        if (_planningPhaseResolved)
+            return;
+        
         _playersPendingPlanningPhaseEndResolution.Remove(@event.PlayerStableId);
 
         StartActionPhase();
@@ -278,6 +289,8 @@ public partial class ServerGame : Game
         {
             Turn = _turn
         };
+        
+        _planningPhaseResolved = true;
         OnRegisterServerEvent(actionPhaseStartedEvent);
     }
 

@@ -2,14 +2,20 @@
 {
     public class Trigger
     {
-        public Trigger(IList<Event> events, IList<Validator>? validators = null)
+        public Trigger(Event @event, IList<Validator>? validators = null)
         {
-            Events = events;
+            Event = @event;
             Validators = validators ?? new List<Validator>();
         }
 
-        public IList<Event> Events { get; } // Events to wait for (logical AND between the events
-                                            // for the trigger to be considered fired)
-        public IList<Validator> Validators { get; } // More options to validate the events
+        /// <summary>
+        /// Event to wait for.
+        /// </summary>
+        public Event Event { get; }
+        
+        /// <summary>
+        /// Used to validate the event before the trigger is activated.
+        /// </summary>
+        public IList<Validator> Validators { get; }
     }
 }

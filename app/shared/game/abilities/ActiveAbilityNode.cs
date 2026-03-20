@@ -87,7 +87,7 @@ public abstract partial class ActiveAbilityNode<
 
     protected void RefundResources(IList<Payment> resources)
     {
-        EventBus.Instance.RaisePaymentRequested(OwnerActor.Player, resources, true);
+        EventBus.Instance.RaiseResourcePaymentRequested(OwnerActor.Player, resources, true);
     }
 
     protected override TPreProcessingResult PreProcessActivation(TActivationRequest request)
@@ -128,7 +128,7 @@ public abstract partial class ActiveAbilityNode<
 
     protected IList<Payment> ReserveResources()
     {
-        EventBus.Instance.RaisePaymentRequested(OwnerActor.Player, ConsumableCost, false);
+        EventBus.Instance.RaiseResourcePaymentRequested(OwnerActor.Player, ConsumableCost, false);
         return ConsumableCost;
     }
     
@@ -200,9 +200,6 @@ public abstract partial class ActiveAbilityNode<
 
     private void Requeue(TFocus focus)
     {
-        if (Registry.GetLoadingSavedGame())
-            return;
-        
         if (Log.DebugEnabled)
             Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleReservation), 
                 $"{OwnerActor} requeue: reservation player ID '{focus.Reservation.PlayerStableId}', " +
@@ -320,10 +317,10 @@ public abstract partial class ActiveAbilityNode<
 
     private void HandleEndOfActionPhase()
     {
+        CleanUpNonRequeuedFocuses();
+        
         if (TurnPhase.Equals(TurnPhase.Planning) is false)
             return;
-        
-        CleanUpNonRequeuedFocuses();
         
         if (Registry.GetLoadingSavedGame())
             return;

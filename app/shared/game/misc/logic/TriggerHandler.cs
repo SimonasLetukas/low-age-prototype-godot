@@ -10,7 +10,7 @@ public sealed class TriggerHandler : IDisposable
 
     public static TriggerHandler Setup(Trigger trigger) => new(trigger);
 
-    private readonly IList<Event> _events;
+    private readonly Event _event;
     private readonly ValidationHandler _validationHandler;
 
     private Player? _playerListener;
@@ -21,7 +21,7 @@ public sealed class TriggerHandler : IDisposable
 
     private TriggerHandler(Trigger trigger)
     {
-        _events = trigger.Events;
+        _event = trigger.Event;
         _validationHandler = ValidationHandler.Validate(trigger.Validators);
 
         EventBus.Instance.EntityDestroyed += OnEntityDestroyed;
@@ -54,6 +54,7 @@ public sealed class TriggerHandler : IDisposable
 
     public TriggerHandler With(Effects effectHistorySource)
     {
+        _validationHandler.With(effectHistorySource);
         _effectHistoryListener = effectHistorySource;
         return this;
     }
@@ -66,22 +67,30 @@ public sealed class TriggerHandler : IDisposable
     
     private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
     {
-        return; // TODO just an example for now
+        var gotOriginEntity = _event.Equals(Event.OriginIsDestroyed)
+                              && entity.Equals(_effectHistoryListener?.OriginEntityOrNull);
+        var gotSourceEntity = _event.Equals(Event.SourceIsDestroyed)
+                              && entity.Equals(_effectHistoryListener?.SourceEntityOrNull);
         
-        if ((_events.Any(e => e.Equals(Event.OriginIsDestroyed)) 
-             && entity.Equals(_effectHistoryListener?.OriginEntityOrNull)) 
-            || (_events.Any(e => e.Equals(Event.SourceIsDestroyed)) 
-                && entity.Equals(_effectHistoryListener?.SourceEntityOrNull)))
+        if ((gotOriginEntity || gotSourceEntity) is false)
+            return;
+
+        var validationResult = _validationHandler.Handle();
+        if (validationResult.IsValid is false)
         {
-            // TODO check validators first
-            // TODO how to handle AND requirement between events...?
-            Triggered();
+            if (Log.DebugEnabled)
+                Log.Info(nameof(TriggerHandler), nameof(OnEntityDestroyed), 
+                    $"{_event} trigger failed validation for {entity} because '{validationResult.Message}'.");
+            
+            return;
         }
+
+        Triggered();
     }
     
     private void OnPlayerResourcesUpdated(Player player, IList<Payment> currentStockpile)
     {
-        if (_events.Any(e => e.Equals(Event.PlayerResourcesStockpileUpdated)) is false)
+        if (_event.Equals(Event.PlayerResourcesStockpileUpdated) is false)
             return;
         
         if (player.Equals(_playerListener) is false)

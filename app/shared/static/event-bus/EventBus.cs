@@ -96,9 +96,13 @@ public partial class EventBus : Node
     public void RaiseResourcesGained(Player player, IList<Payment> resourcesGained) 
         => ResourcesGained(player, resourcesGained);
 
-    public event Action<Player, IList<Payment>, bool> PaymentRequested = delegate { };
-    public void RaisePaymentRequested(Player player, IList<Payment> resourcesSpent, bool isRefund) 
-        => PaymentRequested(player, resourcesSpent, isRefund);
+    public event Action<Player, IList<Payment>> ResourceGainRequested = delegate { };
+    public void RaiseResourceGainRequested(Player player, IList<Payment> resourcesGained) 
+        => ResourceGainRequested(player, resourcesGained);
+    
+    public event Action<Player, IList<Payment>, bool> ResourcePaymentRequested = delegate { };
+    public void RaiseResourcePaymentRequested(Player player, IList<Payment> resourcesSpent, bool isRefund) 
+        => ResourcePaymentRequested(player, resourcesSpent, isRefund);
 
     public event Action<Player, IList<Payment>, bool> ResourcesSpent = delegate { };
     public void RaiseResourcesSpent(Player player, IList<Payment> resourcesSpent, bool isRefund) 

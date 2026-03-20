@@ -181,10 +181,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.PlayerResourcesStockpileUpdated
-                        }, validators: new List<Validator> 
+                        new Trigger(@event: Event.PlayerResourcesStockpileUpdated, validators: new List<Validator> 
                         {
                             new Validator(conditions: new List<Condition>
                             {
@@ -250,10 +247,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Neutral,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityStartedActionPhase
-                        }, validators: new List<Validator> 
+                        new Trigger(@event: Event.EntityStartedActionPhase, validators: new List<Validator>
                         {
                             new Validator(conditions: new List<Condition>
                             {
@@ -263,10 +257,7 @@ namespace LowAgeData.Collections
                             })
                         }), 
                         // OR
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityStartedAction
-                        }, validators: new List<Validator> 
+                        new Trigger(@event: Event.EntityStartedAction, validators: new List<Validator>
                         {
                             new Validator(conditions: new List<Condition>
                             {
@@ -299,10 +290,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityMaskChanged
-                        }, validators: new List<Validator> 
+                        new Trigger(@event: Event.EntityMaskChanged, validators: new List<Validator>
                         {
                             new Validator(conditions: new List<Condition>
                             {
@@ -331,10 +319,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Neutral,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityMaskChanged
-                        }, validators: new List<Validator> 
+                        new Trigger(@event: Event.EntityMaskChanged, validators: new List<Validator>
                         {
                             new Validator(conditions: new List<Condition>
                             {
@@ -772,10 +757,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Neutral,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityStartedActionPhase
-                        }, validators: new List<Validator> 
+                        new Trigger(@event: Event.EntityStartedActionPhase, validators: new List<Validator>
                         {
                             new Validator(conditions: new List<Condition>
                             {
@@ -806,10 +788,7 @@ namespace LowAgeData.Collections
                     },
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityStartedActionPhase
-                        }, validators: new List<Validator> 
+                        new Trigger(@event: Event.EntityStartedActionPhase, validators: new List<Validator>
                         {
                             new Validator(conditions: new List<Condition>
                             {
@@ -836,10 +815,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Neutral,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityStartedActionPhase
-                        }, validators: new List<Validator> 
+                        new Trigger(@event: Event.EntityStartedActionPhase, validators: new List<Validator>
                         {
                             new Validator(conditions: new List<Condition>
                             {
@@ -874,10 +850,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityStartedActionPhase
-                        }, validators: new List<Validator> 
+                        new Trigger(@event: Event.EntityStartedActionPhase, validators: new List<Validator>
                         {
                             new Validator(conditions: new List<Condition>
                             {
@@ -1276,10 +1249,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.OriginIsInterrupted
-                        })
+                        new Trigger(@event: Event.OriginIsInterrupted)
                     },
                     removeOnConditionsMet: true),
 
@@ -1291,10 +1261,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_manual_labour.png",
                     modificationFlags: null,
                     initialModifications: null,
-                    initialEffects: new List<EffectId>
-                    {
-                        EffectId.Slave.ManualLabourApplyBehaviourSelf
-                    },
+                    initialEffects: null,
                     finalModifications: null,
                     finalEffects: new List<EffectId>
                     {
@@ -1306,10 +1273,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.OriginIsDestroyed
-                        })
+                        new Trigger(@event: Event.OriginIsDestroyed)
                     },
                     removeOnConditionsMet: true),
 
@@ -1517,10 +1481,7 @@ namespace LowAgeData.Collections
                     alignment: null,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityIsAboutToMove
-                        })
+                        new Trigger(@event: Event.EntityIsAboutToMove)
                     },
                     removeOnConditionsMet: false,
                     conditionalEffects: new List<EffectId>
@@ -1547,10 +1508,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.OriginIsDestroyed
-                        })
+                        new Trigger(@event: Event.OriginIsDestroyed)
                     },
                     removeOnConditionsMet: true,
                     conditionalEffects: new List<EffectId>
@@ -1647,10 +1605,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.OriginIsDestroyed
-                        })
+                        new Trigger(@event: Event.OriginIsDestroyed)
                     },
                     removeOnConditionsMet: true,
                     conditionalEffects: null,
@@ -1685,10 +1640,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.SourceIsDestroyed
-                        })
+                        new Trigger(@event: Event.SourceIsDestroyed)
                     },
                     removeOnConditionsMet: true,
                     conditionalEffects: null,
@@ -1763,10 +1715,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityIsAttacked
-                        }, validators: new List<Validator>
+                        new Trigger(@event: Event.EntityIsAttacked, validators: new List<Validator>
                         {
                             new Validator(
                                 conditions: new List<Condition>
@@ -1913,10 +1862,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.SourceIsNotAdjacent
-                        })
+                        new Trigger(@event: Event.SourceIsNotAdjacent)
                     },
                     removeOnConditionsMet: true,
                     conditionalEffects: null,
@@ -2077,10 +2023,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.OriginIsInterrupted
-                        })
+                        new Trigger(@event: Event.OriginIsInterrupted)
                     },
                     removeOnConditionsMet: true),
 
@@ -2111,10 +2054,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.OriginIsInterrupted
-                        })
+                        new Trigger(@event: Event.OriginIsInterrupted)
                     },
                     removeOnConditionsMet: true),
 
@@ -2191,14 +2131,8 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Positive,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.OriginIsInterrupted
-                        }),
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.OriginIsDestroyed
-                        })
+                        new Trigger(@event: Event.OriginIsInterrupted),
+                        new Trigger(@event: Event.OriginIsDestroyed)
                     },
                     removeOnConditionsMet: true,
                     conditionalEffects: new List<EffectId>
@@ -2268,10 +2202,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.EntityFinishedMoving
-                        }, validators: new List<Validator>
+                        new Trigger(@event: Event.EntityFinishedMoving, validators: new List<Validator>
                         {
                             new ResultValidator(
                                 searchEffect: EffectId.Ballista.AimSearch,
@@ -2280,10 +2211,7 @@ namespace LowAgeData.Collections
                                     new Condition(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
                                 })
                         }),
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.OriginIsDestroyed
-                        })
+                        new Trigger(@event: Event.OriginIsDestroyed)
                     },
                     removeOnConditionsMet: true,
                     conditionalEffects: null,
@@ -2545,10 +2473,7 @@ namespace LowAgeData.Collections
                     alignment: Alignment.Negative,
                     triggers: new List<Trigger>
                     {
-                        new Trigger(events: new List<Event>
-                        {
-                            Event.SourceIsDestroyed
-                        })
+                        new Trigger(@event: Event.SourceIsDestroyed)
                     },
                     removeOnConditionsMet: true,
                     conditionalEffects: new List<EffectId>
