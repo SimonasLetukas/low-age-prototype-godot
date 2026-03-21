@@ -57,57 +57,8 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     public EntityNode GetParentEntity() => Parent;
 
     public bool IsParentEntity(EntityNode entity) => Parent.InstanceId.Equals(entity.InstanceId);
-
-    public void OnBehaviourAdded(BehaviourNode addedBehaviour)
-    {
-        if (Log.VerboseDebugEnabled)
-            Log.Info(nameof(BehaviourNode), nameof(OnBehaviourAdded), 
-                $"Current: '{this}', added: '{addedBehaviour}'.");
-        
-        if (addedBehaviour.Equals(this) || addedBehaviour.Blueprint.Id.Equals(Blueprint.Id) is false)
-            return;
-
-        if (Blueprint.CanStack)
-        {
-            Stack.Add(addedBehaviour);
-            addedBehaviour.Destroyed += OnStackedBehaviourDestroyed;
-            
-            if (Log.DebugEnabled)
-                Log.Info(nameof(BehaviourNode), nameof(OnBehaviourAdded), 
-                    $"{this} added item to stack ({addedBehaviour}). Current stack: " +
-                    $"'{string.Join(", ", Stack.Select(b => b.ToString()))}'.");
-        }
-        else
-        {
-            addedBehaviour.Destroy();
-        }
-
-        if (CanResetDuration is false) 
-            return;
-        
-        if (Blueprint.CanStack)
-        {
-            foreach (var behaviour in Stack
-                         .Where(behaviour => behaviour.CurrentDuration.DurationIsFullyReset() is false))
-            {
-                behaviour.CurrentDuration.ResetDuration();
-            }
-        }
-        else
-        {
-            CurrentDuration.ResetDuration();
-        }
-    }
-
-    protected virtual void EndBehaviour() => Destroy();
     
-    protected virtual void OnDurationEnded(EndsAtNode duration)
-    {
-        if (Log.VerboseDebugEnabled)
-            Log.Info(nameof(BehaviourNode), nameof(OnDurationEnded), ToString());
-        
-        EndBehaviour();
-    }
+    protected virtual void EndBehaviour() => Destroy();
 
     private void Destroy()
     {
@@ -189,6 +140,55 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
             Log.Info(nameof(BehaviourNode), nameof(InitializeStackedBehaviours), 
                 $"{this} stack initialized. Current stack: " +
                 $"'{string.Join(", ", Stack.Select(b => b.ToString()))}'.");
+    }
+    
+    public void OnBehaviourAdded(BehaviourNode addedBehaviour)
+    {
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(OnBehaviourAdded), 
+                $"Current: '{this}', added: '{addedBehaviour}'.");
+        
+        if (addedBehaviour.Equals(this) || addedBehaviour.Blueprint.Id.Equals(Blueprint.Id) is false)
+            return;
+
+        if (Blueprint.CanStack)
+        {
+            Stack.Add(addedBehaviour);
+            addedBehaviour.Destroyed += OnStackedBehaviourDestroyed;
+            
+            if (Log.DebugEnabled)
+                Log.Info(nameof(BehaviourNode), nameof(OnBehaviourAdded), 
+                    $"{this} added item to stack ({addedBehaviour}). Current stack: " +
+                    $"'{string.Join(", ", Stack.Select(b => b.ToString()))}'.");
+        }
+        else
+        {
+            addedBehaviour.Destroy();
+        }
+
+        if (CanResetDuration is false) 
+            return;
+        
+        if (Blueprint.CanStack)
+        {
+            foreach (var behaviour in Stack
+                         .Where(behaviour => behaviour.CurrentDuration.DurationIsFullyReset() is false))
+            {
+                behaviour.CurrentDuration.ResetDuration();
+            }
+        }
+        else
+        {
+            CurrentDuration.ResetDuration();
+        }
+    }
+    
+    protected virtual void OnDurationEnded(EndsAtNode duration)
+    {
+        if (Log.DebugEnabled)
+            Log.Info(nameof(BehaviourNode), nameof(OnDurationEnded), ToString());
+        
+        EndBehaviour();
     }
     
     private void OnTriggered()

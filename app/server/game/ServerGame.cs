@@ -15,8 +15,10 @@ public partial class ServerGame : Game
     private int _entityCreationTokenCounter;
     private readonly Dictionary<Guid, List<int>> _pendingPlayersByAbilityExecutions = [];
     private List<int> _playersPendingPlanningPhaseEndResolution = [];
+    private List<int> _playersPendingActionEndResolution = [];
     private bool _planningPhaseResolved = true;
     private int _turn;
+    private Guid? _actorInAction = null;
     
     private Creator _creator = null!;
     
@@ -146,6 +148,9 @@ public partial class ServerGame : Game
             case PlanningPhaseEndedRequestEvent planningPhaseEndedRequestEvent:
                 HandleEvent(planningPhaseEndedRequestEvent);
                 break;
+            case ActionEndedRequestEvent actionEndedRequestEvent:
+                HandleEvent(actionEndedRequestEvent);
+                break;
             case AbilityExecutionRequestedEvent abilityExecutionRequestedEvent:
                 HandleEvent(abilityExecutionRequestedEvent);
                 break;
@@ -154,6 +159,9 @@ public partial class ServerGame : Game
                 break;
             case PlanningPhaseEndResolvedEvent planningPhaseEndResolvedEvent:
                 HandleEvent(planningPhaseEndResolvedEvent);
+                break;
+            case ActionEndResolvedEvent actionEndResolvedEvent:
+                HandleEvent(actionEndResolvedEvent);
                 break;
             default:
                 GD.Print($"{nameof(ServerGame)}.{nameof(ExecuteGameEvent)}: could not execute event " +
@@ -251,21 +259,29 @@ public partial class ServerGame : Game
         OnRegisterServerEvent(planningPhaseEndedResponse);
     }
 
+    private void HandleEvent(ActionEndedRequestEvent @event)
+    {
+        _pendingPlayersByAbilityExecutions.Clear();
+        _playersPendingActionEndResolution = Players.Instance.GetAllStableIds().ToList();
+        
+        _actorInAction = @event.ActorInAction;
+    }
+
     private void HandleEvent(AbilityExecutionRequestedEvent @event)
     {
-        if (_planningPhaseResolved)
-            return;
-        
         _pendingPlayersByAbilityExecutions[@event.Id] = Players.Instance.GetAllStableIds().ToList();
     }
     
     private void HandleEvent(AbilityExecutionCompletedEvent @event)
     {
-        if (_planningPhaseResolved)
-            return;
-        
         _pendingPlayersByAbilityExecutions[@event.AbilityExecutionRequestedEventId].Remove(@event.PlayerStableId);
 
+        if (_planningPhaseResolved)
+        {
+            StartNextAction();
+            return;
+        }
+        
         StartActionPhase();
     }
     
@@ -277,6 +293,16 @@ public partial class ServerGame : Game
         _playersPendingPlanningPhaseEndResolution.Remove(@event.PlayerStableId);
 
         StartActionPhase();
+    }
+    
+    private void HandleEvent(ActionEndResolvedEvent @event)
+    {
+        if (_planningPhaseResolved is false)
+            return;
+
+        _playersPendingActionEndResolution.Remove(@event.PlayerStableId);
+        
+        StartNextAction();
     }
 
     private void StartActionPhase()
@@ -292,6 +318,22 @@ public partial class ServerGame : Game
         
         _planningPhaseResolved = true;
         OnRegisterServerEvent(actionPhaseStartedEvent);
+    }
+    
+    private void StartNextAction()
+    {
+        if (_playersPendingActionEndResolution.Count > 0 
+            || AllPlayersCompletedAbilityExecution() is false 
+            || _actorInAction is null)
+            return;
+
+        var actionEndedResponseEvent = new ActionEndedResponseEvent
+        {
+            ActorInAction = _actorInAction.Value,
+        };
+
+        _actorInAction = null;
+        OnRegisterServerEvent(actionEndedResponseEvent);
     }
 
     private bool AllPlayersCompletedAbilityExecution() => _pendingPlayersByAbilityExecutions.Values

@@ -32,6 +32,7 @@ namespace LowAgeData.Domain.Abilities
                 turnPhase,
                 researchNeeded ?? new List<ResearchId>(),
                 true,
+                false,
                 displayName,
                 activationDescription,
                 sprite,

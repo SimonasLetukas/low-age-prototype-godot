@@ -33,6 +33,7 @@ public abstract partial class AbilityNode<
     public EndsAtNode RemainingCooldown { get; private set; } = null!;
     public bool HasButton { get; private set; }
 
+    protected bool Loops { get; private set; }
     protected IList<Payment> ConsumableCost { get; private set; } = null!;
     protected IList<Payment> NonConsumableCost { get; private set; } = null!;
     protected IList<TFocus> FocusQueue { get; } = new List<TFocus>();
@@ -54,6 +55,7 @@ public abstract partial class AbilityNode<
         ConsumableCost = Registry.GetConsumableResources(Blueprint.Cost);
         NonConsumableCost = Registry.GetNonConsumableResources(Blueprint.Cost);
         HasButton = Blueprint.HasButton;
+        Loops = Blueprint.Loops;
     }
     
     public override void _ExitTree()

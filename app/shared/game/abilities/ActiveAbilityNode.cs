@@ -168,6 +168,9 @@ public abstract partial class ActiveAbilityNode<
         }
         
         ExecuteFocus(focus);
+        
+        if (Loops)
+            Requeue(focus);
     }
     
     protected void SpendActionAndConsumableResources(TFocus focus)

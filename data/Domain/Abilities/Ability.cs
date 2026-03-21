@@ -13,6 +13,7 @@ namespace LowAgeData.Domain.Abilities
             TurnPhase turnPhase,
             IList<ResearchId> researchNeeded,
             bool hasButton,
+            bool loops,
             string displayName,
             string description, 
             string? sprite, 
@@ -23,6 +24,7 @@ namespace LowAgeData.Domain.Abilities
             TurnPhase = turnPhase;
             ResearchNeeded = researchNeeded;
             HasButton = hasButton;
+            Loops = loops;
             Cooldown = cooldown ?? EndsAt.Instant;
             Cost = cost ?? new List<Payment>();
             DisplayName = displayName;
@@ -48,6 +50,12 @@ namespace LowAgeData.Domain.Abilities
         /// functionalities.
         /// </summary>
         public bool HasButton { get; }
+        
+        /// <summary>
+        /// If true, after the ability is fully executed, it tries to automatically requeue itself,
+        /// minimizing the input needed from the player.
+        /// </summary>
+        public bool Loops { get; }
         
         /// <summary>
         /// For how long after activation does the ability stay inactive.

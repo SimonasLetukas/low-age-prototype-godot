@@ -88,6 +88,7 @@ public partial class ClientGame : Game
         Turns.PlanningPhaseEnded += RegisterNewGameEvent;
         Turns.PlanningPhaseEndResolved += RegisterNewGameEvent;
         Turns.ActionEnded += RegisterNewGameEvent;
+        Turns.ActionEndResolved += RegisterNewGameEvent;
     }
 
     private void DisconnectSignals()
@@ -118,6 +119,7 @@ public partial class ClientGame : Game
         Turns.PlanningPhaseEnded -= RegisterNewGameEvent;
         Turns.PlanningPhaseEndResolved -= RegisterNewGameEvent;
         Turns.ActionEnded -= RegisterNewGameEvent;
+        Turns.ActionEndResolved -= RegisterNewGameEvent;
     }
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false)]
@@ -189,8 +191,11 @@ public partial class ClientGame : Game
             case ActionPhaseStartedEvent actionPhaseStartedEvent:
                 Turns.HandleEvent(actionPhaseStartedEvent);
                 break;
-            case ActionEndedEvent actionEndedEvent:
-                Turns.HandleEvent(actionEndedEvent);
+            case ActionEndedRequestEvent actionEndedRequestEvent:
+                Turns.HandleEvent(actionEndedRequestEvent);
+                break;
+            case ActionEndedResponseEvent actionEndedResponseEvent:
+                Turns.HandleEvent(actionEndedResponseEvent);
                 break;
             default:
                 if (Log.VerboseDebugEnabled)

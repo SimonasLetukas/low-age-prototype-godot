@@ -1156,7 +1156,8 @@ namespace LowAgeData.Collections
                     effects: new List<EffectId>
                     {
                         EffectId.Slave.ManualLabourApplyBehaviourHut
-                    }),
+                    },
+                    loops: true),
 
                 new Passive(
                     id: AbilityId.Quickdraw.Doubleshot,

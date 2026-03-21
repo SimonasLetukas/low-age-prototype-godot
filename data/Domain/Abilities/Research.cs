@@ -23,6 +23,7 @@ namespace LowAgeData.Domain.Abilities
                 TurnPhase.Planning,
                 researchNeeded ?? new List<ResearchId>(),
                 true,
+                false,
                 displayName,
                 description,
                 sprite)

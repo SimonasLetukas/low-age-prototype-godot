@@ -24,6 +24,7 @@ namespace LowAgeData.Domain.Abilities
                 TurnPhase.Passive,
                 researchNeeded ?? new List<ResearchId>(),
                 hasButton,
+                false,
                 displayName,
                 description,
                 sprite,

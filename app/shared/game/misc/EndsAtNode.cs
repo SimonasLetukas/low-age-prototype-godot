@@ -357,6 +357,10 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>, IComparabl
             || Counter <= 0) 
             return;
 
+        if (Log.DebugEnabled)
+            Log.Info(nameof(EndsAtNode), nameof(OnPhaseStarted), 
+                $"Reducing counter in {turnPhase}: {Counter} >> {Counter - 1}.");
+        
         ReduceCounter();
     }
     
@@ -369,6 +373,10 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>, IComparabl
             || turnPhase.Equals(Phase) is false
             || Counter <= 0) 
             return;
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(EndsAtNode), nameof(OnPhaseEnded), 
+                $"Reducing counter in {turnPhase}: {Counter} >> {Counter - 1}.");
 
         ReduceCounter();
     }
@@ -382,6 +390,10 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>, IComparabl
             || actor.Equals(OwnerEntity) is false
             || Counter <= 0)
             return;
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(EndsAtNode), nameof(OnActionStarted), 
+                $"Reducing counter for {actor}: {Counter} >> {Counter - 1}.");
 
         ReduceCounter();
     }
@@ -395,6 +407,10 @@ public partial class EndsAtNode : Node2D, INodeFromBlueprint<EndsAt>, IComparabl
             || actor.Equals(OwnerEntity) is false
             || Counter <= 0)
             return;
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(EndsAtNode), nameof(OnActionEnded), 
+                $"Reducing counter for {actor}: {Counter} >> {Counter - 1}.");
 
         ReduceCounter();
     }

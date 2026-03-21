@@ -13,6 +13,7 @@ namespace LowAgeData.Domain.Abilities
             string description,
             string sprite,
             IList<EffectId> effects,
+            bool? loops = null,
             EndsAt? cooldown = null,
             IList<ResearchId>? researchNeeded = null,
             IList<Payment>? cost = null)
@@ -21,6 +22,7 @@ namespace LowAgeData.Domain.Abilities
                 turnPhase,
                 researchNeeded ?? new List<ResearchId>(),
                 true,
+                loops ?? false,
                 displayName,
                 description,
                 sprite,

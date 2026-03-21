@@ -19,6 +19,7 @@ namespace LowAgeData.Domain.Abilities
             string description,
             string sprite,
             IList<Selection<EntityId>> selection,
+            bool? loops = null,
             bool? canPlaceInWalkableAreaOnly = null,
             bool? hasQueue = null,
             bool? producedInstantly = null)
@@ -27,6 +28,7 @@ namespace LowAgeData.Domain.Abilities
                 TurnPhase.Planning,
                 new List<ResearchId>(),
                 true,
+                loops ?? false,
                 displayName,
                 description,
                 sprite)

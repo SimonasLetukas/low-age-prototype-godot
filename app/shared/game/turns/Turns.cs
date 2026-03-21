@@ -15,7 +15,8 @@ public partial class Turns : Node2D
 {
 	public event Action<PlanningPhaseEndedRequestEvent> PlanningPhaseEnded = delegate { };
 	public event Action<PlanningPhaseEndResolvedEvent> PlanningPhaseEndResolved = delegate { };
-	public event Action<ActionEndedEvent> ActionEnded = delegate { };
+	public event Action<ActionEndedRequestEvent> ActionEnded = delegate { };
+	public event Action<ActionEndResolvedEvent> ActionEndResolved = delegate { };
 
 	private int Turn { get; set; }
 	private TurnPhase Phase { get; set; } = TurnPhase.Planning;
@@ -79,7 +80,7 @@ public partial class Turns : Node2D
 			if (actorInAction == null) 
 				return;
 			
-			var actionEndedEvent = new ActionEndedEvent
+			var actionEndedEvent = new ActionEndedRequestEvent
 			{
 				ActorInAction = actorInAction.InstanceId,
 			};
@@ -122,56 +123,52 @@ public partial class Turns : Node2D
 			return;
 		}
 		
-		AdvanceToNextAction(true);
+		AdvanceToNextAction();
 	}
 
-	public void HandleEvent(ActionEndedEvent @event)
+	public void HandleEvent(ActionEndedRequestEvent @event)
 	{
 		if (Log.DebugEnabled)
-			Log.Info(nameof(Turns), $"{nameof(HandleEvent)}.{nameof(ActionEndedEvent)}", 
-				$"Initiative queue when action ended '{JsonConvert.SerializeObject(InitiativeQueue
+			Log.Info(nameof(Turns), $"{nameof(HandleEvent)}.{nameof(ActionEndedRequestEvent)}", 
+				$"Initiative queue '{JsonConvert.SerializeObject(InitiativeQueue
+					.Select(a => new {a.InstanceId, a.Initiative?.CurrentAmount}))}'");
+		
+		ResolveActionEnd();
+	}
+
+	public void HandleEvent(ActionEndedResponseEvent @event)
+	{
+		if (Log.DebugEnabled)
+			Log.Info(nameof(Turns), $"{nameof(HandleEvent)}.{nameof(ActionEndedResponseEvent)}", 
+				$"Initiative queue '{JsonConvert.SerializeObject(InitiativeQueue
 					.Select(a => new {a.InstanceId, a.Initiative?.CurrentAmount}))}'");
 
-		if (InitiativeQueue.FirstOrDefault() is not { } actor
-		    || actor.InstanceId.Equals(@event.ActorInAction) is false)
-		{
-			if (Log.DebugEnabled)
-				Log.Info(nameof(Turns), $"{nameof(HandleEvent)}.{nameof(ActionEndedEvent)}", 
-					$"Could not find '{@event.ActorInAction}' in initiative queue.");
-			
-			return;
-		}
-		
-		AdvanceToNextAction(false);
-		
-		if (Log.DebugEnabled)
-			Log.Info(nameof(Turns), $"{nameof(HandleEvent)}.{nameof(ActionEndedEvent)}", 
-				$"Initiative queue after handling action ended: {string.Join(", ", InitiativeQueue
-					.Select(a => a.InstanceId))}");
-		
 		if (InitiativeQueue.IsEmpty())
 		{
 			EventBus.Instance.RaiseInitiativeQueueUpdated([]);
 			AdvanceToNextPhase();
-		}
-	}
-
-	private void AdvanceToNextAction(bool firstAction)
-	{
-		if (InitiativeQueue.IsEmpty())
 			return;
-
-		if (firstAction is false)
-		{
-			EventBus.Instance.RaiseActionEnded(InitiativeQueue.First());
-			
-			InitiativeQueue.RemoveAt(0);
-			EventBus.Instance.RaiseInitiativeQueueUpdated(InitiativeQueue);
-			
-			if (InitiativeQueue.IsEmpty())
-				return;
 		}
 		
+		AdvanceToNextAction();
+	}
+
+	private void ResolveActionEnd()
+	{
+		EventBus.Instance.RaiseActionEnded(InitiativeQueue.First());
+		
+		InitiativeQueue.RemoveAt(0);
+		EventBus.Instance.RaiseInitiativeQueueUpdated(InitiativeQueue);
+
+		var actionEndResolvedEvent = new ActionEndResolvedEvent
+		{
+			PlayerStableId = Players.Instance.Current.StableId
+		};
+		ActionEndResolved(actionEndResolvedEvent);
+	}
+
+	private void AdvanceToNextAction()
+	{
 		EventBus.Instance.RaiseActionStarted(InitiativeQueue.First());
 	}
 
@@ -196,7 +193,7 @@ public partial class Turns : Node2D
 		var currentActorInActionWasDestroyed = InitiativeQueue.First().Equals(actor);
 		if (currentActorInActionWasDestroyed)
 		{
-			AdvanceToNextAction(false);
+			ResolveActionEnd();
 
 			if (InitiativeQueue.Any()) 
 				return;
