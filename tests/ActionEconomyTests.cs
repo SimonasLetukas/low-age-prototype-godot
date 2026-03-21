@@ -7,20 +7,75 @@ public class ActionEconomyTests
 {
     private readonly ActionEconomy _sut = new();
 
-    [Fact]
-    public void Restore_ShouldAssignConfiguredValues_WhenCalled()
+    [Theory]
+    [InlineData(true, true)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    [InlineData(false, false)]
+    public void Restore_ShouldAssignConfiguredValues_WhenCalled(bool isPlanning, bool restoringOnlyAbilityAction)
     {
         _sut.Config.MaxMeleeAttackActions = 3;
         _sut.Config.MaxRangedAttackActions = 4;
         _sut.Config.MaxAbilitiesInActionPhase = 5;
+        _sut.Config.MaxAbilitiesInPlanningPhase = 6;
         _sut.Moved(100, false);
+        var turnPhase = isPlanning ? TurnPhase.Planning : TurnPhase.Action;
         
-        _sut.Restore(TurnPhase.Action);
+        _sut.Restore(turnPhase, restoringOnlyAbilityAction);
 
-        _sut.MeleeAttackActions.Should().Be(3);
-        _sut.RangedAttackActions.Should().Be(4);
-        _sut.AbilityActions.Should().Be(5);
-        _sut.CanMove.Should().BeTrue();
+        _sut.MeleeAttackActions.Should().Be(turnPhase.Equals(TurnPhase.Planning)
+            ? 0 
+            : 3);
+        _sut.RangedAttackActions.Should().Be(restoringOnlyAbilityAction || turnPhase.Equals(TurnPhase.Planning) 
+            ? 0
+            : 4);
+        _sut.AbilityActions.Should().Be(restoringOnlyAbilityAction 
+            ? 0 // Because moved 
+            : turnPhase.Equals(TurnPhase.Planning) 
+                ? 6 
+                : 5);
+        _sut.CanMove.Should().Be(restoringOnlyAbilityAction is false && turnPhase.Equals(TurnPhase.Action));
+    }
+
+    [Theory]
+    [InlineData(false, false, false)]
+    [InlineData(false, false, true)]
+    [InlineData(false, true, false)]
+    [InlineData(false, true, true)]
+    [InlineData(true, false, false)]
+    [InlineData(true, false, true)]
+    [InlineData(true, true, false)]
+    [InlineData(true, true, true)]
+    public void RestoreOnlyAbilityAction_ShouldAssignConfiguredValuesInActionPhase_WhenSomeActionsWereAlreadyDone(
+        bool moved, bool meleeAttacked, bool rangedAttacked)
+    {
+        _sut.Config.MaxMeleeAttackActions = 1;
+        _sut.Config.MaxRangedAttackActions = 2;
+        _sut.Config.MaxAbilitiesInActionPhase = 1;
+        
+        if (moved)
+            _sut.Moved(100, false);
+        if (meleeAttacked)
+            _sut.Attacked(AttackType.Melee);
+        if (rangedAttacked)
+            _sut.Attacked(AttackType.Ranged);
+        
+        _sut.UsedAbilityAction();
+        
+        _sut.Restore(TurnPhase.Action, true);
+        
+        _sut.MeleeAttackActions.Should().Be(meleeAttacked || rangedAttacked 
+            ? 0 
+            : 1);
+        _sut.RangedAttackActions.Should().Be(moved || meleeAttacked 
+            ? 0 
+            : rangedAttacked 
+                ? 1 
+                : 2);
+        _sut.AbilityActions.Should().Be(moved || meleeAttacked || rangedAttacked 
+            ? 0 
+            : 1);
+        _sut.CanMove.Should().Be((moved || meleeAttacked || rangedAttacked) is false);
     }
 
     [Theory]
@@ -51,7 +106,7 @@ public class ActionEconomyTests
         true,
         false)]
     [InlineData(
-        1.1f, 
+        1.6f, 
         true, 
         true, 
         true, 
@@ -64,7 +119,7 @@ public class ActionEconomyTests
         false,
         true)]
     [InlineData(
-        1.1f, 
+        1.6f, 
         false, 
         true, 
         false, 
@@ -77,7 +132,7 @@ public class ActionEconomyTests
         false,
         false)]
     [InlineData(
-        1.1f, 
+        1.6f, 
         false, 
         true, 
         false, 

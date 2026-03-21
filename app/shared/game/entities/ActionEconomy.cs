@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using LowAgeData.Domain.Common;
 
@@ -6,14 +7,17 @@ public class ActionEconomy
 {
     public event Action Updated = delegate { };
     
-    public int MeleeAttackActions { get; private set; }
-    public int RangedAttackActions { get; private set; }
-    public int AbilityActions { get; private set; }
+    public int MeleeAttackActions => GetMeleeAttackActions();
+    public int RangedAttackActions => GetRangedAttackActions();
+    public int AbilityActions => GetAbilityActions();
     public bool CanMeleeAttack => MeleeAttackActions > 0;
     public bool CanRangedAttack => RangedAttackActions > 0;
     public bool CanUseAbilityAction => AbilityActions > 0;
-    public bool CanMove { get; private set; }
-    public int NumberOfPossibleActions => MeleeAttackActions + RangedAttackActions + AbilityActions + (CanMove ? 1 : 0);
+    public bool CanMove => GetCanMove();
+    public int NumberOfPossibleActions => MeleeAttackActions 
+                                          + RangedAttackActions 
+                                          + AbilityActions 
+                                          + (CanMove ? 1 : 0);
 
     public Configuration Config { get; set; } = new();
     public class Configuration
@@ -36,6 +40,8 @@ public class ActionEconomy
         public bool AbilityActionAllowedAfterFullMovement { get; set; } = false;
     }
 
+    private readonly IList<IAction> _actionsDone = [];
+    
     private float _movementSpent = 0f;
     private bool _isPlanning = false;
 
@@ -59,46 +65,27 @@ public class ActionEconomy
     public void Restore(TurnPhase phase, bool restoringOnlyAbilityAction = false)
     {
         _isPlanning = phase == TurnPhase.Planning;
-        
-        if (_isPlanning)
+
+        if (restoringOnlyAbilityAction)
         {
-            MeleeAttackActions = 0;
-            RangedAttackActions = 0;
-            AbilityActions = restoringOnlyAbilityAction
-                ? Math.Min(AbilityActions + 1, Config.MaxAbilitiesInPlanningPhase)
-                : Config.MaxAbilitiesInPlanningPhase;;
-            CanMove = false;
+            var abilityAction = _actionsDone.FirstOrDefault(a => a is AbilityAction);
+            if (abilityAction is not null)
+                _actionsDone.Remove(abilityAction);
+
+            Updated();
+            return;
         }
-        else
-        {
-            MeleeAttackActions = restoringOnlyAbilityAction 
-                ? MeleeAttackActions 
-                : Config.MaxMeleeAttackActions;
-            RangedAttackActions = restoringOnlyAbilityAction 
-                ? RangedAttackActions 
-                : Config.MaxRangedAttackActions;
-            AbilityActions = restoringOnlyAbilityAction
-                ? Math.Min(AbilityActions + 1, Config.MaxAbilitiesInActionPhase)
-                : Config.MaxAbilitiesInActionPhase;
-            CanMove = restoringOnlyAbilityAction 
-                ? CanMove 
-                : Config.MovementAllowed;
-            _movementSpent = restoringOnlyAbilityAction 
-                ? _movementSpent 
-                : 0f;
-        }
-        
+
+        _movementSpent = 0f;
+        _actionsDone.Clear();
         Updated();
     }
 
     public void Moved(float value, bool anyMovementRemaining)
     {
         _movementSpent += value;
-        if (_movementSpent > Config.MinimumAllowedMovement + Constants.Pathfinding.SearchIncrement)
-            HandleActionsAfterMovement(anyMovementRemaining);
-        
         if (anyMovementRemaining is false)
-            CanMove = false;
+            _actionsDone.Add(new MovementDepletedAction());
         
         Updated();
     }
@@ -106,72 +93,128 @@ public class ActionEconomy
     public void Attacked(AttackType attackType)
     {
         if (attackType.Equals(AttackType.Melee))
-            HandleMeleeAttack();
+            _actionsDone.Add(new MeleeAttackAction());
 
         if (attackType.Equals(AttackType.Ranged))
-            HandleRangedAttack();
+            _actionsDone.Add(new RangedAttackAction());
         
         Updated();
     }
 
     public void UsedAbilityAction()
     {
-        HandleAbility();
-        
+        _actionsDone.Add(new AbilityAction());        
         Updated();
     }
-
-    private void HandleActionsAfterMovement(bool anyMovementRemaining)
+    
+    private int GetMeleeAttackActions()
     {
-        if (Config.MeleeAttackActionAllowedAfterMinimumMovement is false 
-            || (anyMovementRemaining is false && Config.MeleeAttackActionAllowedAfterFullMovement is false))
-            MeleeAttackActions = 0;
+        var maxActions = _isPlanning 
+            ? 0
+            : Config.MaxMeleeAttackActions;
+
+        if (maxActions is 0)
+            return 0;
+
+        var otherActionMade = _actionsDone.Any(a => a is RangedAttackAction or AbilityAction);
+        if (otherActionMade)
+            return 0;
+
+        var movementDepleted = _actionsDone.Any(a => a is MovementDepletedAction);
+        if (IsMinimumMovementExceeded() && movementDepleted 
+                                        && Config.MeleeAttackActionAllowedAfterFullMovement is false)
+            return 0;
         
-        if (Config.RangedAttackActionAllowedAfterMinimumMovement is false 
-            || (anyMovementRemaining is false && Config.RangedAttackActionAllowedAfterFullMovement is false))
-            RangedAttackActions = 0;
+        if (IsMinimumMovementExceeded() && Config.MeleeAttackActionAllowedAfterMinimumMovement is false)
+            return 0;
         
-        if (Config.AbilityActionAllowedAfterMinimumMovement is false 
-            || (anyMovementRemaining is false && Config.AbilityActionAllowedAfterFullMovement is false))
-            AbilityActions = 0;
+        return maxActions - _actionsDone.Count(a => a is MeleeAttackAction);
     }
 
-    private void HandleMeleeAttack()
+    private int GetRangedAttackActions()
     {
-        MeleeAttackActions--;
-        RangedAttackActions = 0;
-        AbilityActions = 0;
+        var maxActions = _isPlanning 
+            ? 0
+            : Config.MaxRangedAttackActions;
+
+        if (maxActions is 0)
+            return 0;
+
+        var otherActionMade = _actionsDone.Any(a => a is MeleeAttackAction or AbilityAction);
+        if (otherActionMade)
+            return 0;
+
+        var movementDepleted = _actionsDone.Any(a => a is MovementDepletedAction);
+        if (IsMinimumMovementExceeded() && movementDepleted 
+                                        && Config.RangedAttackActionAllowedAfterFullMovement is false)
+            return 0;
+        
+        if (IsMinimumMovementExceeded() && Config.RangedAttackActionAllowedAfterMinimumMovement is false)
+            return 0;
+        
+        return maxActions - _actionsDone.Count(a => a is RangedAttackAction);
+    }
+
+    private int GetAbilityActions()
+    {
+        var maxActions = _isPlanning 
+            ? Config.MaxAbilitiesInPlanningPhase 
+            : Config.MaxAbilitiesInActionPhase;
+
+        if (maxActions is 0)
+            return 0;
+
+        var otherActionMade = _actionsDone.Any(a => a is MeleeAttackAction or RangedAttackAction);
+        if (otherActionMade)
+            return 0;
+
+        var movementDepleted = _actionsDone.Any(a => a is MovementDepletedAction);
+        if (IsMinimumMovementExceeded() && movementDepleted 
+                                        && Config.AbilityActionAllowedAfterFullMovement is false)
+            return 0;
+        
+        if (IsMinimumMovementExceeded() && Config.AbilityActionAllowedAfterMinimumMovement is false)
+            return 0;
+        
+        return maxActions - _actionsDone.Count(a => a is AbilityAction);
+    }
+
+    private bool GetCanMove()
+    {
+        if (Config.MovementAllowed is false)
+            return false;
+
+        if (_isPlanning)
+            return false;
+
+        var movementDepleted = _actionsDone.Any(a => a is MovementDepletedAction);
+        if (movementDepleted)
+            return false;
 
         if (Config.CanMoveAfterAnyAction)
-            return;
+            return true;
 
-        if (Config.CanMoveAfterMeleeAttackAction is false)
-            CanMove = false;
+        var meleeAttacked = _actionsDone.Any(a => a is MeleeAttackAction);
+        if (meleeAttacked && Config.CanMoveAfterMeleeAttackAction is false)
+            return false;
+
+        var rangedAttacked = _actionsDone.Any(a => a is RangedAttackAction);
+        if (rangedAttacked && Config.CanMoveAfterRangedAttackAction is false)
+            return false;
+        
+        var usedAbility = _actionsDone.Any(a => a is AbilityAction);
+        if (usedAbility && Config.CanMoveAfterAbilityAction is false)
+            return false;
+
+        return true;
     }
 
-    private void HandleRangedAttack()
-    {
-        MeleeAttackActions = 0;
-        RangedAttackActions--;
-        AbilityActions = 0;
-
-        if (Config.CanMoveAfterAnyAction)
-            return;
-
-        if (Config.CanMoveAfterRangedAttackAction is false)
-            CanMove = false;
-    }
-
-    private void HandleAbility()
-    {
-        MeleeAttackActions = 0;
-        RangedAttackActions = 0;
-        AbilityActions--;
-
-        if (Config.CanMoveAfterAnyAction)
-            return;
-
-        if (Config.CanMoveAfterAbilityAction is false)
-            CanMove = false;
-    }
+    private bool IsMinimumMovementExceeded()
+        => _movementSpent > Config.MinimumAllowedMovement + Constants.Pathfinding.SearchIncrement;
+    
+    private interface IAction;
+    private class MeleeAttackAction : IAction;
+    private class RangedAttackAction : IAction;
+    private class AbilityAction : IAction;
+    private class MovementDepletedAction : IAction;
 }
