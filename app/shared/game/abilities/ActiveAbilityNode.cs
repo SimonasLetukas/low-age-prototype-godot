@@ -65,8 +65,6 @@ public abstract partial class ActiveAbilityNode<
     }
     
     protected abstract void CancelActivation(TActivationRequest request);
-    
-    protected void RaiseFocusRemoved(IActiveAbilityFocus focus) => FocusRemoved(focus);
 
     protected void RefundAction()
     {
@@ -102,13 +100,11 @@ public abstract partial class ActiveAbilityNode<
         var reservedConsumableResources = ReserveResources(request);
         
         var actionWasReserved = false;
-        if (CasterConsumesAction)
+        if (CasterConsumesAction && OwnerActor.AddWorkingOnAbility(this, TurnPhase, CasterConsumesAction))
         {
             OwnerActor.ActionEconomy.UsedAbilityAction();
             actionWasReserved = true;
         }
-        
-        OwnerActor.AddWorkingOnAbility(this, TurnPhase, actionWasReserved);
         
         var reservation = new AbilityReservationResult
         {
@@ -142,7 +138,7 @@ public abstract partial class ActiveAbilityNode<
                      .Where(focus => focus.Reservation.PlayerStableId.Equals(currentPlayerStableId) is false)
                      .ToList())
         {
-            FocusQueue.Remove(focus);
+            RemoveFocus(focus);
         }
 
         base.RequestExecution();
@@ -219,12 +215,17 @@ public abstract partial class ActiveAbilityNode<
 
     private void HandleRequeuedFocus(TFocus focus)
     {
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleRequeuedFocus), 
+                $"Starting requeue for {this}");
+        
         if (WasAlreadyCompleted(focus))
         {
             if (Log.DebugEnabled)
                 Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleRequeuedFocus), 
                     $"{OwnerActor} requeued focus '{JsonConvert.SerializeObject(focus)}' will not be " +
                     $"handled because it was already completed");
+            
             ExecuteFocus(focus);
             RemoveFocus(focus);
             RefundAction();
@@ -237,7 +238,20 @@ public abstract partial class ActiveAbilityNode<
             if (Log.DebugEnabled)
                 Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleRequeuedFocus), 
                     "Requeue focus was not the correct type");
-            FocusQueue.Remove(focus);
+            
+            RemoveFocus(focus);
+            return;
+        }
+
+        var validationResult = ValidateActivation(typedRequest);
+        if (validationResult.IsValid is false)
+        {
+            if (Log.DebugEnabled)
+                Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleRequeuedFocus), 
+                    $"{this} could not requeue focus '{JsonConvert.SerializeObject(focus)}' " +
+                    $"because '{validationResult.Message}'");
+            
+            CancelActivation(typedRequest);
             return;
         }
             
@@ -258,6 +272,8 @@ public abstract partial class ActiveAbilityNode<
         {
             OwnerActor.RemoveWorkingOnAbility(this); 
         }
+        
+        FocusRemoved(focus);
     }
 
     /// <summary>
@@ -399,6 +415,7 @@ public record AbilityReservationResult
 
 public interface IConsumableAbilityActivationRequest : IAbilityActivationRequest
 {
+    bool IsRequeued { get; init; }
     bool UseConsumableResources { get; init; }
 }
 

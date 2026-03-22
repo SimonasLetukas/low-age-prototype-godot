@@ -160,15 +160,11 @@ public partial class BuildNode : ActiveAbilityNode<
             if (costOfDestroyedEntity.Count != 0) 
                 RefundResources(costOfDestroyedEntity);
             
-            FocusQueue.Remove(focus);
-            RaiseFocusRemoved(focus);
+            RemoveFocus(focus);
         }
         
         if (FocusQueue.IsEmpty())
-        {
-            OwnerActor.RemoveWorkingOnAbility(this);
             RefundAction();
-        }
     }
     
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
@@ -176,12 +172,14 @@ public partial class BuildNode : ActiveAbilityNode<
             new AbilityValidator.CorrectTurnPhase
             {
                 CurrentTurnPhase = Registry.GetCurrentPhase(),
-                RequiredTurnPhase = Blueprint.TurnPhase
+                RequiredTurnPhase = Blueprint.TurnPhase,
+                IsRequeued = request.IsRequeued
             },
             new AbilityValidator.ActorHasEnoughAction
             {
                 Actor = OwnerActor,
-                ActionNeeded = CasterConsumesAction
+                ActionNeeded = CasterConsumesAction,
+                IsRequeued = request.IsRequeued
             },
             new AbilityValidator.BuildableEntityCanBePlaced
             {
@@ -205,7 +203,8 @@ public partial class BuildNode : ActiveAbilityNode<
                 EntityToBuild = request.EntityToBuild!,
                 HelpingAbilityInstanceId = InstanceId,
                 HelpingAllowed = Blueprint.CanHelp,
-                NonConsumableStockpile = GetNonConsumableStockpile()
+                NonConsumableStockpile = GetNonConsumableStockpile(),
+                IsRequeued = request.IsRequeued
             }
         ])
         .Validate();
@@ -344,6 +343,7 @@ public partial class BuildNode : ActiveAbilityNode<
     
     public class ActivationRequest : IConsumableAbilityActivationRequest
     {
+        public bool IsRequeued { get; init; }
         public required bool UseConsumableResources { get; init; }
         public required bool EntityAlreadyPlaced { get; init; }
         public required EntityNode? EntityToBuild { get; init; }
@@ -364,6 +364,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
         public IConsumableAbilityActivationRequest ToActivationRequest() => new ActivationRequest
         {
+            IsRequeued = false,
             UseConsumableResources = Reservation.ReservedConsumableResources.Any(),
             EntityAlreadyPlaced = true,
             EntityToBuild = GlobalRegistry.Instance.GetEntityById(EntityToBuildId)
@@ -371,6 +372,7 @@ public partial class BuildNode : ActiveAbilityNode<
 
         public IConsumableAbilityActivationRequest ToActivationRequestForRequeue() => new ActivationRequest
         {
+            IsRequeued = true,
             UseConsumableResources = false,
             EntityAlreadyPlaced = true,
             EntityToBuild = GlobalRegistry.Instance.GetEntityById(EntityToBuildId)

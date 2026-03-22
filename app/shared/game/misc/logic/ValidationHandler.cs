@@ -67,6 +67,7 @@ public class ValidationHandler
             BehaviourCondition behaviourCondition => Handle(behaviourCondition),
             MaskCondition maskCondition => ValidationResult.Valid, // TODO
             ResourceCondition resourceCondition => Handle(resourceCondition),
+            TargetedAbilityCondition targetedAbilityCondition => Handle(targetedAbilityCondition),
             TileCondition tileCondition => Handle(tileCondition),
             _ => Handle(condition.ConditionFlag)
         };
@@ -95,8 +96,7 @@ public class ValidationHandler
             return counter <= 0
                 ? ValidationResult.Valid 
                 : ValidationResult.Invalid($"Found {data.DisplayName} which cannot exist.");
-
-
+        
         return ValidationResult.Invalid("Behaviour condition failed.");
     }
 
@@ -135,6 +135,31 @@ public class ValidationHandler
         return ValidationResult.Invalid("Resource condition failed.");
     }
 
+    private ValidationResult Handle(TargetedAbilityCondition targetedAbilityCondition)
+    {
+        if (_targetSource.Count == 0)
+            return ValidationResult.Invalid("Targeted ability condition failed: no found targets.");
+
+        var abilities = _targetSource
+            .SelectMany(e => e.TargetedBy)
+            .ToHashSet();
+        var targetedByAbilityId = targetedAbilityCondition.TargetedBy;
+        var counter = abilities.Count(b => b.Id.Equals(targetedByAbilityId));
+        var data = Data.Instance.Blueprint.Abilities.First(b => b.Id.Equals(targetedByAbilityId));
+        
+        if (targetedAbilityCondition.ConditionFlag.Equals(ConditionFlag.Exists))
+            return counter > 0
+                ? ValidationResult.Valid 
+                : ValidationResult.Invalid($"Could not find {data.DisplayName} ability which must exist.");
+
+        if (targetedAbilityCondition.ConditionFlag.Equals(ConditionFlag.DoesNotExist))
+            return counter <= 0
+                ? ValidationResult.Valid 
+                : ValidationResult.Invalid($"Found {data.DisplayName} ability which cannot exist.");
+        
+        return ValidationResult.Invalid("Targeted ability condition failed.");
+    }
+
     private ValidationResult Handle(TileCondition tileCondition)
     {
         var counter = _targetSource.Count(target => target is Tiles.TileInstance tile
@@ -159,6 +184,11 @@ public class ValidationHandler
         {
             _ when _targetSource.Any() is false => ValidationResult.Invalid("No valid targets."),
             
+            _ when conditionFlag.Equals(ConditionFlag.TargetIsCompleted)
+                => _targetSource.All(TargetIsCompleted)
+                    ? ValidationResult.Valid 
+                    : ValidationResult.Invalid("Target is not yet completed."),
+            
             _ when conditionFlag.Equals(ConditionFlag.TargetDoesNotHaveFullHealth) 
                 => _targetSource.All(TargetDoesNotHaveFullHealth) 
                     ? ValidationResult.Valid 
@@ -177,6 +207,12 @@ public class ValidationHandler
             _ => ValidationResult.Invalid("Unknown condition flag.")
         };
     }
+    
+    private static bool TargetIsCompleted(ITargetable target) => target switch
+    {
+        EntityNode entity => entity.IsCompleted(),
+        _ => false
+    };
     
     private static bool TargetDoesNotHaveFullHealth(ITargetable target) => target switch
     {

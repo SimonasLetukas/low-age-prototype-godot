@@ -6,8 +6,7 @@ public partial class AttackTypeButton : BaseButton
 	{
 		base._Ready();
 
-		TintColor = new Color("c1d7df");
-		SetTint(true);
+		SetTint(false);
 	}
 	
 	protected override void SetClicked(bool to)

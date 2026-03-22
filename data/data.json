@@ -6564,7 +6564,7 @@
         "$type": "Map"
       },
       "hasButton": true,
-      "loops": false,
+      "loops": true,
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Repair",
@@ -6578,7 +6578,7 @@
     {
       "$type": "Target",
       "id": "ability-slave-manual-labour",
-      "turnPhase": "TurnPhase.Action",
+      "turnPhase": "TurnPhase.Planning",
       "researchNeeded": [],
       "targetArea": {
         "$type": "Circle",
@@ -9537,6 +9537,24 @@
               "$type": "BehaviourCondition",
               "conditionedBehaviour": "behaviour-slave-manual-labour-buff",
               "behaviourOwner": null,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsCompleted"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "TargetedAbilityCondition",
+              "targetedBy": "ability-slave-manual-labour",
               "conditionFlag": "ConditionFlag.DoesNotExist"
             }
           ],

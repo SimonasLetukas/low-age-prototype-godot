@@ -48,8 +48,9 @@ public sealed class AbilityValidator
     {
         public required TurnPhase CurrentTurnPhase { get; init; }
         public required TurnPhase RequiredTurnPhase { get; init; }
+        public required bool IsRequeued { get; init; }
 
-        public ValidationResult Validate() => CurrentTurnPhase.Equals(RequiredTurnPhase)
+        public ValidationResult Validate() => IsRequeued || CurrentTurnPhase.Equals(RequiredTurnPhase)
             ? ValidationResult.Valid 
             : ValidationResult.Invalid("Ability cannot be activated in the current turn phase.");
     }
@@ -58,9 +59,13 @@ public sealed class AbilityValidator
     {
         public required ActorNode Actor { get; init; }
         public required bool ActionNeeded { get; init; }
+        public required bool IsRequeued { get; init; }
         
         public ValidationResult Validate()
         {
+            if (IsRequeued)
+                return ValidationResult.Valid;
+            
             if (ActionNeeded is false)
                 return ValidationResult.Valid;
             
@@ -130,6 +135,7 @@ public sealed class AbilityValidator
         public required Guid HelpingAbilityInstanceId { get; init; }
         public required bool HelpingAllowed { get; init; }
         public required IList<Payment> NonConsumableStockpile { get; init; }
+        public required bool IsRequeued { get; init; }
 
         public ValidationResult Validate()
         {
@@ -140,10 +146,12 @@ public sealed class AbilityValidator
             
             var helpers = creationProgress.Helpers.Keys;
             
-            if (helpers.Any(a => a.InstanceId.Equals(HelpingAbilityInstanceId)))
+            if (helpers.Any(a => a.InstanceId.Equals(HelpingAbilityInstanceId)) 
+                && IsRequeued is false)
                 return ValidationResult.Invalid("Already working on this.");
             
-            if (creationProgress.CanAddNewHelper() is false)
+            if (creationProgress.CanAddNewHelper() is false 
+                && IsRequeued is false)
                 return ValidationResult.Invalid("Maximum amount of workers are already working on this.");
             
             if (helpers.IsEmpty())
@@ -151,8 +159,12 @@ public sealed class AbilityValidator
             
             if (HelpingAllowed is false)
                 return ValidationResult.Invalid("Helping to work on this is not allowed.");
-            
-            if (creationProgress.GetRemainingProductionLength(NonConsumableStockpile) <= 1)
+
+            var remainingProductionLength = creationProgress.GetRemainingProductionLength(NonConsumableStockpile);
+            var enoughHelp = IsRequeued
+                ? helpers.Count > 1 && remainingProductionLength <= 1
+                : remainingProductionLength <= 1;
+            if (enoughHelp)
                 return ValidationResult.Invalid("There is enough help to finish this in 1 turn.");
             
             return ValidationResult.Valid;

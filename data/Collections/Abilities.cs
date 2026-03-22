@@ -1143,11 +1143,12 @@ namespace LowAgeData.Collections
                     effects: new List<EffectId>
                     {
                         EffectId.Slave.RepairApplyBehaviourStructure
-                    }),
+                    },
+                    loops: true),
 
                 new Target(
                     id: AbilityId.Slave.ManualLabour,
-                    turnPhase: TurnPhase.Action,
+                    turnPhase: TurnPhase.Planning,
                     displayName: nameof(AbilityId.Slave.ManualLabour).CamelCaseToWords(),
                     description: "Select an adjacent Hut. At the start of the next planning phase receive +2 " +
                                  "Scraps. Maximum of one Slave per Hut.",

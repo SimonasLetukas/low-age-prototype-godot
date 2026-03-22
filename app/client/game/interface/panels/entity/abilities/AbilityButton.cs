@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using Godot;
+using LowAgeData.Domain.Common;
 
 public partial class AbilityButton : BaseButton
 {
@@ -30,6 +32,7 @@ public partial class AbilityButton : BaseButton
 
         base.Hovering += OnButtonHovering;
         base.Clicked += OnButtonClicked;
+        EventBus.Instance.PhaseStarted += OnPhaseStarted;
     }
 
     public override void _ExitTree()
@@ -39,8 +42,14 @@ public partial class AbilityButton : BaseButton
         
         base.Hovering -= OnButtonHovering;
         base.Clicked -= OnButtonClicked;
+        EventBus.Instance.PhaseStarted -= OnPhaseStarted;
+
         base._ExitTree();
     }
+
+    private void OnPhaseStarted(int turn, TurnPhase phase) 
+        => DisableVisually(Ability.TurnPhase.Equals(TurnPhase.Passive) is false 
+                           && phase.Equals(Ability.TurnPhase) is false);
 
     public void SetAbility(IAbilityNode ability)
     {
@@ -60,6 +69,11 @@ public partial class AbilityButton : BaseButton
         _cooldown.Text = "[b]" + Ability.RemainingCooldown.GetCounterOrEmpty();
 
         Ability.RemainingCooldown.Updated += OnRemainingCooldownUpdated;
+        
+        DisableVisually(Ability.TurnPhase.Equals(TurnPhase.Passive) is false 
+                        && GlobalRegistry.Instance.GetCurrentPhase().Equals(Ability.TurnPhase) is false);
+        
+        SetTint(Ability.OwnerActor.WorkingOn.Any(w => w.Ability.Equals(Ability)));
     }
 
     private void OnRemainingCooldownUpdated(EndsAtNode cooldown)

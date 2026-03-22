@@ -30,6 +30,7 @@ public partial class Tiles : Node2D
         public TargetType TargetType { get; set; }
         public Point Point { get; set; } = null!;
         public int YSpriteOffset { get; set; }
+        public HashSet<IAbilityNode> TargetedBy { get; set; } = [];
         private List<EntityNode> Occupants { get; } = [];
         private List<Player> VisibleTo { get; } = [];
 
@@ -134,7 +135,7 @@ public partial class Tiles : Node2D
 
         public override int GetHashCode() => HashCode.Combine(Position, Terrain);
         
-        public override string ToString() => $"{Terrain.ToDisplayValue()} tile at {Position}";
+        public override string ToString() => $"{Terrain.ToDisplayValue()} tile '{Point.Id}' at {Position}";
     }
     
     public event Action FinishedInitialInitializing = delegate { };

@@ -103,7 +103,8 @@ public class ActionEconomy
 
     public void UsedAbilityAction()
     {
-        _actionsDone.Add(new AbilityAction());        
+        _actionsDone.Add(new AbilityAction());   
+        
         Updated();
     }
     
@@ -160,7 +161,7 @@ public class ActionEconomy
         var maxActions = _isPlanning 
             ? Config.MaxAbilitiesInPlanningPhase 
             : Config.MaxAbilitiesInActionPhase;
-
+        
         if (maxActions is 0)
             return 0;
 
@@ -169,6 +170,7 @@ public class ActionEconomy
             return 0;
 
         var movementDepleted = _actionsDone.Any(a => a is MovementDepletedAction);
+
         if (IsMinimumMovementExceeded() && movementDepleted 
                                         && Config.AbilityActionAllowedAfterFullMovement is false)
             return 0;

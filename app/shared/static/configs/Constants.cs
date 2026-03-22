@@ -58,7 +58,7 @@ public static class Constants
         public const string Username = "USERNAME";
     }
 
-    public const string GameVersion = "v0.5.2";
+    public const string GameVersion = "v0.6.1";
 
     public const int TileWidth = 16;
     public const int TileHeight = 8;

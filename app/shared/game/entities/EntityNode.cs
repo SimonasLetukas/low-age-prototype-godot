@@ -46,7 +46,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
     public string? SpriteLocation => Blueprint.Sprite;
     public bool CanBePlaced { get; protected set; } = false;
     public bool HasCost { get; private set; } = true;
-    public BuildableNode? CreationProgress { get; protected set; } 
+    public BuildableNode? CreationProgress { get; protected set; }
+    public HashSet<IAbilityNode> TargetedBy { get; set; } = [];
     public Behaviours Behaviours { get; protected set; } = null!;
     public bool IsBeingDestroyed { get; private set; }
     

@@ -14,6 +14,7 @@ public partial class BaseButton : TextureRect
     public bool IsDisabled { get; private set; } = false;
 
     protected Color TintColor = new("e0d1bf");
+    protected Color AlternativeTintColor = new("c1d7df");
 
     protected TextureRect TextureRect = null!;
     
@@ -47,7 +48,7 @@ public partial class BaseButton : TextureRect
     public void SetDisabled(bool to)
     {
         IsDisabled = to;
-        Disable(IsDisabled);
+        DisableVisually(IsDisabled);
     }
     
     public void SetSelected(bool to)
@@ -73,7 +74,7 @@ public partial class BaseButton : TextureRect
 
     public void SetTint(bool to)
     {
-        TextureRect.SelfModulate = to ? TintColor : Colors.White;
+        TextureRect.SelfModulate = to ? TintColor : AlternativeTintColor;
     }
 
     public void SetIcon(Texture2D icon)
@@ -98,7 +99,7 @@ public partial class BaseButton : TextureRect
             shaderMaterial.SetShaderParameter("draw_outline", to);
     }
     
-    protected void Disable(bool to)
+    protected void DisableVisually(bool to)
     {
         if (Material is ShaderMaterial shaderMaterial) 
             shaderMaterial.SetShaderParameter("disabled", to);

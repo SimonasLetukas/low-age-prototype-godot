@@ -65,6 +65,7 @@ public partial class ResearchNode : ActiveAbilityNode<
     
     public class ActivationRequest : IConsumableAbilityActivationRequest
     {
+        public bool IsRequeued { get; init; }
         public required bool UseConsumableResources { get; init; }
     }
 

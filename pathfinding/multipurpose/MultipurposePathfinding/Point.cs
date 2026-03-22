@@ -39,13 +39,10 @@ namespace MultipurposePathfinding
         
         public bool Equals(Point? other)
         {
-            return other is not null 
+            return other is not null
                    && Id == other.Id
                    && Position.Equals(other.Position)
-                   && IsHighGround == other.IsHighGround
-                   && HighGroundAscensionLevel == other.HighGroundAscensionLevel
-                   && OriginalTerrainIndex == other.OriginalTerrainIndex
-                   && IsImpassable == other.IsImpassable;
+                   && IsHighGround == other.IsHighGround;
         }
 
         public override bool Equals(object? obj)
@@ -60,8 +57,6 @@ namespace MultipurposePathfinding
                 var hashCode = Id;
                 hashCode = (hashCode * 397) ^ Position.GetHashCode();
                 hashCode = (hashCode * 397) ^ IsHighGround.GetHashCode();
-                hashCode = (hashCode * 397) ^ HighGroundAscensionLevel;
-                hashCode = (hashCode * 397) ^ IsImpassable.GetHashCode();
                 return hashCode;
             }
         }

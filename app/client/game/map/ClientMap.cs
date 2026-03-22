@@ -511,6 +511,12 @@ public partial class ClientMap : Map
 			}
 		}
 
+		foreach (var targetedAbility in entity.TargetedBy)
+		{
+			ShowArrow(targetedAbility.OwnerActor.GlobalPosition, entity.GlobalPosition, 
+				targetedAbility.OwnerActor.Renderer.ZIndex);
+		}
+
 		if (entity is not ActorNode actor) 
 			return;
 		

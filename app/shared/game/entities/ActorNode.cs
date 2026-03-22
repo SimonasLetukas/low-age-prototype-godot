@@ -184,9 +184,15 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         
         if (restoreActionAllowed)
             ActionEconomy.Restore(phase, restoringOnlyAbilityAction);
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ActorNode), nameof(RestoreActionEconomy), 
+                $"{this} resulting action economy: melee '{ActionEconomy.MeleeAttackActions}', " +
+                $"ranged '{ActionEconomy.RangedAttackActions}', ability '{ActionEconomy.AbilityActions}', " +
+                $"move '{ActionEconomy.CanMove}'.");
     }
 
-    public void AddWorkingOnAbility(IAbilityNode ability, TurnPhase timing, bool consumesAction)
+    public bool AddWorkingOnAbility(IAbilityNode ability, TurnPhase timing, bool consumesAction)
     {
         var workingOn = new WorkingOnAbility
         {
@@ -201,7 +207,10 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
                 Log.Info(nameof(ActorNode), nameof(AddWorkingOnAbility), $"{this}: adding {workingOn}.");
             
             WorkingOn.Add(workingOn);
+            return true;
         }
+
+        return false;
     }
 
     public void RemoveWorkingOnAbility(IAbilityNode ability)

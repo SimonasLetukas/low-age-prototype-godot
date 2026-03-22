@@ -18,7 +18,8 @@ namespace LowAgeData.Domain.Common.Flags
         /// <see cref="EntityCondition"/> or <see cref="BehaviourCondition"/>.
         /// </summary>
         public static ConditionFlag DoesNotExist => new ConditionFlag(ConditionFlags.DoesNotExist);
-        
+
+        public static ConditionFlag TargetIsCompleted => new ConditionFlag(ConditionFlags.TargetIsCompleted);
         public static ConditionFlag TargetDoesNotHaveFullHealth => new ConditionFlag(ConditionFlags.TargetDoesNotHaveFullHealth);
         public static ConditionFlag NoActorsFoundFromEffect => new ConditionFlag(ConditionFlags.NoActorsFoundFromEffect);
         public static ConditionFlag TargetIsLowGround => new ConditionFlag(ConditionFlags.TargetIsLowGround);
@@ -34,6 +35,7 @@ namespace LowAgeData.Domain.Common.Flags
         {
             Exists,
             DoesNotExist,
+            TargetIsCompleted,
             TargetDoesNotHaveFullHealth,
             NoActorsFoundFromEffect,
             TargetIsLowGround,

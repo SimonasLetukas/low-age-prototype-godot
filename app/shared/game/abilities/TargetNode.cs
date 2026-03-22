@@ -80,20 +80,25 @@ public partial class TargetNode : ActiveAbilityNode<
         var focus = FocusQueue.FirstOrDefault(f => Equals(f.TargetEntity, request.EntityToTarget?.InstanceId) 
                                                    && Equals(f.TargetTile, request.TileToTarget?.Point));
         
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(TargetNode), nameof(CancelActivation), 
+                $"Found focus '{JsonConvert.SerializeObject(focus)}' for requested entity " +
+                $"'{request.EntityToTarget}' and tile '{request.TileToTarget}' in queue " +
+                $"'{JsonConvert.SerializeObject(FocusQueue)}'");
+        
         if (focus is not null)
         {
+            request.EntityToTarget?.TargetedBy.Remove(this);
+            request.TileToTarget?.TargetedBy.Remove(this);
+            
             if (focus.NonConsumableResourcesPaidSoFar.IsEmpty()) 
                 RefundResources(ConsumableCost);
             
-            FocusQueue.Remove(focus);
-            RaiseFocusRemoved(focus);
+            RemoveFocus(focus);
         }
         
         if (FocusQueue.IsEmpty())
-        {
-            OwnerActor.RemoveWorkingOnAbility(this);
             RefundAction();
-        }
     }
     
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
@@ -101,12 +106,14 @@ public partial class TargetNode : ActiveAbilityNode<
             new AbilityValidator.CorrectTurnPhase
             {
                 CurrentTurnPhase = Registry.GetCurrentPhase(),
-                RequiredTurnPhase = Blueprint.TurnPhase
+                RequiredTurnPhase = Blueprint.TurnPhase,
+                IsRequeued = request.IsRequeued
             },
             new AbilityValidator.ActorHasEnoughAction
             {
                 Actor = OwnerActor,
-                ActionNeeded = CasterConsumesAction
+                ActionNeeded = CasterConsumesAction,
+                IsRequeued = request.IsRequeued
             },
             new AbilityValidator.CooldownCompleted
             {
@@ -130,6 +137,14 @@ public partial class TargetNode : ActiveAbilityNode<
         ])
         .Validate();
 
+    protected override AbilityReservationResult HandleReservation(ActivationRequest request)
+    {
+        request.EntityToTarget?.TargetedBy.Add(this);
+        request.TileToTarget?.TargetedBy.Add(this);
+        
+        return base.HandleReservation(request);
+    }
+
     protected override IList<Payment> ReserveResources(ActivationRequest request) => ReserveResources();
 
     protected override PreProcessingResult CreatePreProcessingResult(ActivationRequest request,
@@ -147,11 +162,30 @@ public partial class TargetNode : ActiveAbilityNode<
             TargetTile = activationRequest.TileToTarget?.Point
         };
 
-    protected override bool ExecutePostPaymentAndDetermineIfPaymentCompleted(Focus focus) 
-        => Registry.IsPaymentComplete(NonConsumableCost, focus.NonConsumableResourcesPaidSoFar);
+    protected override bool ExecutePostPaymentAndDetermineIfPaymentCompleted(Focus focus)
+    {
+        if (focus.Reservation.IsReservedFor(Players.Instance.Current) is false)
+        {
+            if (focus.TargetEntity is not null)
+                Registry.GetEntityById(focus.TargetEntity.Value)?.TargetedBy.Add(this);
+            
+            if (focus.TargetTile is not null)
+                Registry.GetTileFromPoint(focus.TargetTile)?.TargetedBy.Add(this);
+        }
+        
+        return Registry.IsPaymentComplete(NonConsumableCost, focus.NonConsumableResourcesPaidSoFar);
+    }
 
     protected override void ExecuteFocus(Focus focus)
     {
+        if (focus.TargetEntity is not null)
+            Registry.GetEntityById(focus.TargetEntity.Value)?.TargetedBy.Remove(this);
+            
+        if (focus.TargetTile is not null)
+            Registry.GetTileFromPoint(focus.TargetTile)?.TargetedBy.Remove(this);
+        
+        // Must be after clearing TargetedBy because validation may use this ability to check for
+        // targeted ability condition.
         var effects = GetEffects((ActivationRequest)focus.ToActivationRequest()).ToList();
         var validationResult = AbilityValidator
             .With([new AbilityValidator.EffectsValidatorsPass { Effects = effects }])
@@ -210,6 +244,7 @@ public partial class TargetNode : ActiveAbilityNode<
     
     public class ActivationRequest : IConsumableAbilityActivationRequest
     {
+        public bool IsRequeued { get; init; }
         public bool UseConsumableResources { get; init; } = true;
         public required Tiles.TileInstance? TileToTarget { get; init; }
         public required EntityNode? EntityToTarget { get; init; }
@@ -230,6 +265,7 @@ public partial class TargetNode : ActiveAbilityNode<
 
         public IConsumableAbilityActivationRequest ToActivationRequest() => new ActivationRequest
         {
+            IsRequeued = false,
             UseConsumableResources = true,
             TileToTarget = TargetTile is null ? null : GlobalRegistry.Instance.GetTileFromPoint(TargetTile),
             EntityToTarget = TargetEntity is null ? null : GlobalRegistry.Instance.GetEntityById(TargetEntity.Value),
@@ -237,6 +273,7 @@ public partial class TargetNode : ActiveAbilityNode<
 
         public IConsumableAbilityActivationRequest ToActivationRequestForRequeue() => new ActivationRequest
         {
+            IsRequeued = true,
             UseConsumableResources = true,
             TileToTarget = TargetTile is null ? null : GlobalRegistry.Instance.GetTileFromPoint(TargetTile),
             EntityToTarget = TargetEntity is null ? null : GlobalRegistry.Instance.GetEntityById(TargetEntity.Value),

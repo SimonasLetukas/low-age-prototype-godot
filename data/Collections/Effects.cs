@@ -1001,6 +1001,17 @@ namespace LowAgeData.Collections
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourId.Slave.ManualLabourBuff)
+                        }), // AND
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new Condition(
+                                conditionFlag: ConditionFlag.TargetIsCompleted)
+                        }), // AND
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new TargetedAbilityCondition(
+                                conditionFlag: ConditionFlag.DoesNotExist, 
+                                targetedBy: AbilityId.Slave.ManualLabour)
                         })
                     }),
 
