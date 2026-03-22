@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Filters;
+using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Effects;
 
 public class ModifyPlayerNode : EffectNode, INodeFromBlueprint<ModifyPlayer>
@@ -43,7 +44,7 @@ public class ModifyPlayerNode : EffectNode, INodeFromBlueprint<ModifyPlayer>
 
         foreach (var player in players)
         {
-            // TODO resolve flag
+            ResolveFlagFor(player);
             ResolveResourceModificationFor(player);
         }
         
@@ -51,6 +52,16 @@ public class ModifyPlayerNode : EffectNode, INodeFromBlueprint<ModifyPlayer>
     }
 
     protected override IList<IFilterItem> GetFilters() => [];
+
+    private void ResolveFlagFor(Player player)
+    {
+        var flags = Blueprint.ModifyFlags;
+        foreach (var flag in flags)
+        {
+            if (flag.Equals(ModifyPlayerFlag.GameLost))
+                EventBus.Instance.RaiseGameLost(player);
+        }
+    }
 
     private void ResolveResourceModificationFor(Player player)
     {

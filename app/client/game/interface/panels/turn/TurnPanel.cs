@@ -12,6 +12,7 @@ public partial class TurnPanel : Control
 	private RichTextLabel _turnCounterTen = null!;
 	private RichTextLabel _turnCounterSingle = null!;
 	private RichTextLabel _phaseLabel = null!;
+	private RichTextLabel _nextTurnText = null!;
 	private BaseButton _nextTurnButton = null!;
 	
 	public override void _Ready()
@@ -22,6 +23,7 @@ public partial class TurnPanel : Control
 		_turnCounterTen = GetNode<RichTextLabel>("TurnCounter/TenDigits");
 		_turnCounterSingle = GetNode<RichTextLabel>("TurnCounter/SingleDigits");
 		_phaseLabel = GetNode<RichTextLabel>("PhaseLabel");
+		_nextTurnText = GetNode<RichTextLabel>("NextTurnText");
 		_nextTurnButton = GetNode<BaseButton>("NextTurnButton");
 		
 		_nextTurnButton.Clicked += OnNextTurnButtonClicked;
@@ -32,7 +34,7 @@ public partial class TurnPanel : Control
 	private void OnActionStarted(ActorNode actor)
 	{
 		var currentPlayerCanPressNextTurn = Players.Instance.IsActionAllowedForCurrentPlayerOn(actor);
-		_nextTurnButton.SetDisabled(currentPlayerCanPressNextTurn is false);
+		SetTurnButtonDisable(currentPlayerCanPressNextTurn is false);
 	}
 
 	public override void _ExitTree()
@@ -42,10 +44,16 @@ public partial class TurnPanel : Control
 		base._ExitTree();
 	}
 
+	public void SetGameEnd(bool playerDefeated)
+	{
+		_nextTurnButton.SetDisabled(true);
+		_nextTurnText.Text = playerDefeated ? "[center][b]Defeated!" : "[center][b]Winner!";
+	}
+
 	public void OnPhaseStarted(int turn, TurnPhase phase)
 	{
 		_currentPhase = phase;
-		_nextTurnButton.SetDisabled(false);
+		SetTurnButtonDisable(false);
 		
 		SetTurnCounter(turn);
 		SetPhaseLabel(phase);
@@ -66,10 +74,16 @@ public partial class TurnPanel : Control
 
 	private void SetPhaseLabel(TurnPhase phase) => _phaseLabel.Text = $"{phase.ToDisplayValue().Capitalize()} Phase";
 
+	private void SetTurnButtonDisable(bool to)
+	{
+		_nextTurnButton.SetDisabled(to);
+		_nextTurnText.Text = to ? "[center][b]Waiting..." : "[center][b]Next Turn";
+	}
+	
 	private void OnNextTurnButtonClicked()
 	{
 		if (_currentPhase.Equals(TurnPhase.Planning))
-			_nextTurnButton.SetDisabled(true);
+			SetTurnButtonDisable(true);
 		
 		NextTurnClicked();
 	}

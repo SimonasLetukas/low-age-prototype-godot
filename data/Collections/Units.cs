@@ -82,7 +82,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Revelators.PopulationCost,
-                        //AbilityId.Leader.AllForOne,
+                        AbilityId.Leader.AllForOne,
                         //AbilityId.Leader.MenacingPresence,
                         //AbilityId.Leader.OneForAll
                     },

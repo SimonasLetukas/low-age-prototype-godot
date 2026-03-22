@@ -300,8 +300,8 @@ public partial class Resources : Node2D
         var player = provider.Player;
         var resources = provider.ResourcesGained.Select(r => r.Resource).ToHashSet();
         
-        var providers = GetProvidersByPlayers()[player];
-        var affectedProviders = FilterProvidersByResources(providers, resources);
+        GetProvidersByPlayers().TryGetValue(player, out var providers);
+        var affectedProviders = FilterProvidersByResources(providers ?? [], resources);
         
         _resourcesStockpiledByPlayer[player] = GetUpdatedStockpileAfterIncome(
             affectedProviders, _resourcesStockpiledByPlayer[player], resources);

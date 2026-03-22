@@ -343,7 +343,8 @@
           "ActorAttribute.Celestial"
         ],
         "abilities": [
-          "ability-shared-revelators-population-cost"
+          "ability-shared-revelators-population-cost",
+          "ability-leader-all-for-one"
         ],
         "displayName": "Leader",
         "description": "",

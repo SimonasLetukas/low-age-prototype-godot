@@ -86,6 +86,12 @@ public partial class Interface : CanvasLayer
             ? InformationalText.InfoTextType.PlacingRotatable 
             : InformationalText.InfoTextType.Placing);
     }
+
+    public void HandleEvent(GameLostEvent gameLostEvent)
+    {
+        var currentPlayerDefeated = Players.Instance.Current.Defeated;
+        _turnPanel.SetGameEnd(currentPlayerDefeated);
+    }
     
     private void OnControlMouseEntered(Control which)
     {

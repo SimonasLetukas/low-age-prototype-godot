@@ -126,6 +126,9 @@ public partial class EventBus : Node
     public event Action<EntityNode> MovementAttackOverlayChanged = delegate { };
     public void RaiseMovementAttackOverlayChanged(EntityNode selectedEntity) 
         => MovementAttackOverlayChanged(selectedEntity);
+    
+    public event Action<Player> GameLost = delegate { };
+    public void RaiseGameLost(Player player) => GameLost(player);
 
     #endregion Events
 }

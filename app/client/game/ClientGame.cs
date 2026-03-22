@@ -77,6 +77,7 @@ public partial class ClientGame : Game
         _map.Entities.EntityDeselected += _interface.OnEntityDeselected;
 
         EventBus.Instance.PhaseStarted += OnPhaseStarted;
+        EventBus.Instance.GameLost += OnGameLost;
         
         _map.UnitMovementIssued += RegisterNewGameEvent;
         _map.EntityAttacked += RegisterNewGameEvent;
@@ -109,6 +110,9 @@ public partial class ClientGame : Game
         _map.Entities.EntitySelected -= _interface.OnEntitySelected;
         _map.Entities.EntityDeselected -= _interface.OnEntityDeselected;
         
+        EventBus.Instance.PhaseStarted -= OnPhaseStarted;
+        EventBus.Instance.GameLost -= OnGameLost;
+        
         _map.UnitMovementIssued -= RegisterNewGameEvent;
         _map.EntityAttacked -= RegisterNewGameEvent;
         _map.Entities.EntityPlaced -= RegisterNewGameEvent;
@@ -121,7 +125,7 @@ public partial class ClientGame : Game
         Turns.ActionEnded -= RegisterNewGameEvent;
         Turns.ActionEndResolved -= RegisterNewGameEvent;
     }
-    
+
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false)]
     protected override void OnSaveGameLoadedByAllPeers()
     {
@@ -197,6 +201,9 @@ public partial class ClientGame : Game
             case ActionEndedResponseEvent actionEndedResponseEvent:
                 Turns.HandleEvent(actionEndedResponseEvent);
                 break;
+            case GameLostEvent gameLostEvent:
+                HandleEvent(gameLostEvent);
+                break;
             default:
                 if (Log.VerboseDebugEnabled)
                     Log.Info(nameof(ClientGame), nameof(ExecuteGameEvent), 
@@ -232,6 +239,13 @@ public partial class ClientGame : Game
             SetPaused(false); // Otherwise we wait until all peers loaded their saves
         
         Callable.From(() => Turns.OnNextTurnButtonClicked()).CallDeferred();
+    }
+
+    private void HandleEvent(GameLostEvent gameLostEvent)
+    {
+        Players.Instance.HandleEvent(gameLostEvent);
+        _map.HandleEvent(gameLostEvent);
+        _interface.HandleEvent(gameLostEvent);
     }
 
     private void SaveGame()
@@ -296,5 +310,19 @@ public partial class ClientGame : Game
     {
         if (phase.Equals(TurnPhase.Planning))
             SaveGame();
+    }
+    
+    private void OnGameLost(Player player)
+    {
+        var currentPlayer = Players.Instance.Current;
+        if (player.Equals(currentPlayer) is false)
+            return;
+        
+        var gameLostEvent = new GameLostEvent
+        {
+            PlayerStableId = currentPlayer.StableId,
+        };
+        
+        RegisterNewGameEvent(gameLostEvent);
     }
 }

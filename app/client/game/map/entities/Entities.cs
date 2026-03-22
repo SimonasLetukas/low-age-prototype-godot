@@ -398,6 +398,17 @@ public partial class Entities : Node2D
         });
     }
 
+    public void DestroyPlayerEntities(Player player)
+    {
+        foreach (var entity in _entitiesByIds.Values.ToList())
+        {
+            if (entity.Player.Equals(player))
+                entity.Destroy(null);
+            else 
+                entity.SetRevealed(true); // TODO see ClientMap handling of GameLostEvent
+        }
+    }
+
     public void HandleEvent(AbilityExecutionRequestedEvent @event)
     {
         var sourceActor = GetEntityByInstanceId(@event.SourceActorId) as ActorNode;

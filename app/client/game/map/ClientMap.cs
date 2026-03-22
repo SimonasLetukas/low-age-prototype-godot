@@ -284,6 +284,16 @@ public partial class ClientMap : Map
 		AddOccupation(movingEntity);
 	}
 
+	public void HandleEvent(GameLostEvent gameLostEvent)
+	{
+		var player = Players.Instance.GetByStableId(gameLostEvent.PlayerStableId);
+		Entities.DestroyPlayerEntities(player);
+		
+		// TODO handle more players when not 1v1 (only reveal to everyone if the game ended but always
+		// to the player who lost)
+		_tileMap.RevealMap(true);
+	}
+
 	public void HandleDeselecting()
 	{
 		_tileMap.Elevatable.ClearAvailableTiles(false);

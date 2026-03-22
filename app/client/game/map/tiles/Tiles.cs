@@ -224,6 +224,8 @@ public partial class Tiles : Node2D
         EventBus.Instance.HighGroundPointRemoved -= OnHighGroundPointRemoved;
     }
 
+    #region Initialization
+    
     public void Initialize(Vector2 mapSize, ICollection<(Vector2Int, TileId)> tiles)
     {
         _tilesBlueprint = Data.Instance.Blueprint.Tiles;
@@ -387,7 +389,7 @@ public partial class Tiles : Node2D
         
         SetFogCells(positions, true);
     }
-
+    
     public void AddPoints(IEnumerable<Point> points)
     {
         _pointsForInitialization = points.ToList();
@@ -410,6 +412,8 @@ public partial class Tiles : Node2D
         var tile = GetTile(point.Position, false);
         tile!.Point = point;
     }
+
+    #endregion Initialization
 
     public Vector2Int GetMapPositionFromGlobalPosition(Vector2 globalPosition)
     {
@@ -498,6 +502,8 @@ public partial class Tiles : Node2D
             .Select(x => GetTile(x.Item1, x.Item2) ?? GetHighestTile(x.Item1))
             .WhereNotNull();
     }
+
+    public void RevealMap(bool to) => _fog.Visible = to is false;
 
     public void AddVision(EntityNode entity, IEnumerable<TileInstance> path)
     {

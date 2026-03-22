@@ -112,6 +112,12 @@ public partial class Players : Node
     }
 
     #endregion Setters (should only be accessed by the multiplayer-related nodes)
+
+    public void HandleEvent(GameLostEvent gameLostEvent)
+    {
+        var player = GetByStableId(gameLostEvent.PlayerStableId);
+        player.Defeated = true;
+    }
 }
 
 public class Player : IEquatable<Player>
@@ -130,6 +136,7 @@ public class Player : IEquatable<Player>
     public required FactionId Faction { get; set; }
     public required Team Team { get; set; }
     public required bool Ready { get; set; }
+    public bool Defeated { get; set; }
 
     public bool Equals(Player? other)
     {
