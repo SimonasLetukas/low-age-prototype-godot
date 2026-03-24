@@ -38,8 +38,8 @@ public partial class HighGroundNode : BehaviourNode, INodeFromBlueprint<HighGrou
 
     public void SetBlueprint(HighGround blueprint)
     {
-        base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+        base.SetBlueprint(blueprint);
         
         SetupPositions();
         

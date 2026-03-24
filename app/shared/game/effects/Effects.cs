@@ -24,15 +24,17 @@ public class Effects
         var effect = CreateEffect(effectId, initialTargets, initiatorPlayer, initiatorEntity);
         
         Chain.Add(effect);
+        effect.UpdateFoundTargets();
     }
     
     public Effects(Effects previousEffects, EffectId effectId, IList<ITargetable> initialTargets, 
         Player initiatorPlayer, EntityNode? initiatorEntity)
     {
-        Chain = previousEffects.Chain;
         var effect = CreateEffect(effectId, initialTargets, initiatorPlayer, initiatorEntity);
         
+        Chain = previousEffects.Chain.ToList();
         Chain.Add(effect);
+        effect.UpdateFoundTargets();
     }
 
     public ValidationResult ValidateLast() => Chain.LastOrDefault()?.Validate() 
@@ -71,4 +73,6 @@ public class Effects
         var foundEffect = allEffects.FirstOrDefault(x => x.Id.Equals(effectId));
         return foundEffect;
     }
+
+    public override string ToString() => string.Join(", ", Chain.Select(e => e.Id));
 }

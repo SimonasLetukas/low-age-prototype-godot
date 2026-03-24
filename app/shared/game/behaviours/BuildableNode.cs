@@ -33,8 +33,8 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     
     public void SetBlueprint(Buildable blueprint)
     {
-        base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+        base.SetBlueprint(blueprint);
     }
 
     public void SetTotalCost(IList<Payment> cost)

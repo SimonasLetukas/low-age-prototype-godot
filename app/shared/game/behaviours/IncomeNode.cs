@@ -27,9 +27,9 @@ public partial class IncomeNode : BehaviourNode, INodeFromBlueprint<Income>
 
     public void SetBlueprint(Income blueprint)
     {
-        base.SetBlueprint(blueprint);
         Blueprint = blueprint;
-
+        base.SetBlueprint(blueprint);
+        
         _provider = GetProvider();
         
         EventBus.Instance.RaiseIncomeProviderRegistered(_provider);

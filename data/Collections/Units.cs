@@ -84,7 +84,7 @@ namespace LowAgeData.Collections
                         AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Leader.AllForOne,
                         //AbilityId.Leader.MenacingPresence,
-                        //AbilityId.Leader.OneForAll
+                        AbilityId.Leader.OneForAll
                     },
                     size: 2),
 

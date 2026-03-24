@@ -40,8 +40,8 @@ public partial class AscendableNode : BehaviourNode, INodeFromBlueprint<Ascendab
 
     public void SetBlueprint(Ascendable blueprint)
     {
-        base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+        base.SetBlueprint(blueprint);
 
         SetupPositions();
         

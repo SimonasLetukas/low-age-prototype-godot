@@ -438,8 +438,13 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         base.OnPhaseStarted(turn, phase);
     }
     
-    private void OnStatUpdated(StatNode stat) => StatChanged(this, stat);
-    
+    private void OnStatUpdated(StatNode stat)
+    {
+        UpdateVitalsValuesForDisplay();
+        
+        StatChanged(this, stat);
+    }
+
     private void OnCreationProgressUpdated((int DeltaGainedHealth, int DeltaGainedShields) delta)
     {
         Health!.Apply(Change.AddCurrent, delta.DeltaGainedHealth);

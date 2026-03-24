@@ -10,11 +10,13 @@ public partial class HoveringPanel : Control
     private Vector2 _mapSize;
 
     private AvailableActionsDisplay _availableActions = null!;
+    private GridContainer _behaviours = null!;
     private InfoDisplay _infoDisplay = null!;
 
     public override void _Ready()
     {
         _availableActions = GetNode<AvailableActionsDisplay>($"{nameof(AvailableActionsDisplay)}");
+        _behaviours = GetNode<GridContainer>("Behaviours");
         _infoDisplay = GetNode<InfoDisplay>($"{nameof(InfoDisplay)}");
         _infoDisplay.Reset();
         
@@ -37,6 +39,8 @@ public partial class HoveringPanel : Control
         string coordinatesText;
         string terrainText;
         var occupantsText = string.Empty;
+        
+        RemoveAllBehaviours();
 
         if (tileHovered.IsInBoundsOf(_mapSize.ToVector2()) is false)
         {
@@ -65,11 +69,32 @@ public partial class HoveringPanel : Control
                 _availableActions.Reset();
                 if (entity is ActorNode actor)
                     _availableActions.Populate(actor.ActionEconomy);
+                
+                AddBehaviours(entity);
             }
         }
 
         GetNode<Label>("DebugPanel/Coordinates").Text = coordinatesText;
         GetNode<Label>("DebugPanel/TerrainType").Text = terrainText;
         GetNode<Label>("DebugPanel/EntityName").Text = occupantsText;
+    }
+    
+    private void RemoveAllBehaviours()
+    {
+        foreach (var behaviour in _behaviours.GetChildren())
+        {
+            behaviour.QueueFree();
+        }
+    }
+
+    private void AddBehaviours(EntityNode entity)
+    {
+        foreach (var behaviours in entity.Behaviours
+                     .GetAll()
+                     .GroupBy(b => b.BlueprintId))
+        {
+            var behaviour = behaviours.OrderBy(b => b.CurrentDuration).First();
+            BehaviourBox.InstantiateAsChild(behaviour, _behaviours);
+        }
     }
 }

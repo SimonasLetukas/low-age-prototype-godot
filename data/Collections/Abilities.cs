@@ -1040,10 +1040,10 @@ namespace LowAgeData.Collections
                     id: AbilityId.Leader.OneForAll,
                     turnPhase: TurnPhase.Planning,
                     displayName: nameof(AbilityId.Leader.OneForAll).CamelCaseToWords(),
-                    description: "Select an adjacent Obelisk and sap its energy to give all friendly units " +
+                    description: "Select a nearby Obelisk and sap its energy to give all friendly units " +
                                  "+2 Health. This Obelisk cannot be sapped again for 10 turns.",
                     sprite: "res://assets/icons/icon_ability_one_for_all.png",
-                    targetArea: new Circle(radius: 1, ignoreRadius: 0),
+                    targetArea: new Circle(radius: 2, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
                         EffectId.Leader.OneForAllApplyBehaviourObelisk
@@ -1150,7 +1150,7 @@ namespace LowAgeData.Collections
                     id: AbilityId.Slave.ManualLabour,
                     turnPhase: TurnPhase.Planning,
                     displayName: nameof(AbilityId.Slave.ManualLabour).CamelCaseToWords(),
-                    description: "Select an adjacent Hut. At the start of the next planning phase receive +2 " +
+                    description: "Select a nearby Hut. At the start of the next planning phase receive +2 " +
                                  "Scraps. Maximum of one Slave per Hut.",
                     sprite: "res://assets/icons/icon_ability_manual_labour.png",
                     targetArea: new Circle(radius: 2, ignoreRadius: 0),

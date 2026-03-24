@@ -23,8 +23,8 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
 
     public void SetBlueprint(Buff blueprint)
     {
-        base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+        base.SetBlueprint(blueprint);
 
         HandleInitialModifications();
         HandleEffects(Blueprint.InitialEffects);

@@ -51,7 +51,7 @@ public partial class CombatStatNode : StatNode, INodeFromBlueprint<CombatStat>
 		
 		if (Log.DebugEnabled)
 			Log.Info(nameof(CombatStatNode), nameof(Apply), 
-				$"{nameof(modification)} to apply '{JsonConvert.SerializeObject(modification)}', " +
+				$"{nameof(modification)} applied '{JsonConvert.SerializeObject(modification)}', " +
 				$"{nameof(applyToBaseValue)} '{applyToBaseValue}', {nameof(BaseCurrentAmount)} " +
 				$"'{BaseCurrentAmount}', {nameof(BaseMaxAmount)} '{BaseMaxAmount}', resulting " +
 				$"{nameof(Modifications)} '{JsonConvert.SerializeObject(Modifications)}'");

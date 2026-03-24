@@ -26,8 +26,8 @@ public partial class InterceptDamageNode : BehaviourNode, INodeFromBlueprint<Int
 
     public void SetBlueprint(InterceptDamage blueprint)
     {
-        base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+        base.SetBlueprint(blueprint);
         
         _interceptionsLeft = Blueprint.NumberOfInterceptions;
     }

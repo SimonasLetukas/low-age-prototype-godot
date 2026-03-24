@@ -1133,16 +1133,12 @@ namespace LowAgeData.Collections
                 new Buff(
                     id: BehaviourId.Leader.OneForAllObeliskBuff,
                     displayName: nameof(BehaviourId.Leader.OneForAllObeliskBuff).CamelCaseToWords(),
-                    description: "This unit has recently been sapped for health.",
+                    description: "Leader recently has sapped this Obelisk for health.",
                     sprite: "res://assets/icons/icon_ability_one_for_all.png",
-                    modificationFlags: null,
-                    initialModifications: null,
                     initialEffects: new List<EffectId>
                     {
                         EffectId.Leader.OneForAllSearch
                     },
-                    finalModifications: null,
-                    finalEffects: null,
                     endsAt: EndsAt.StartOf.Tenth.Planning,
                     canStack: false,
                     canResetDuration: false,
@@ -1153,7 +1149,6 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Leader.OneForAllHealBuff).CamelCaseToWords(),
                     description: "Heals for 2 Health.",
                     sprite: "res://assets/icons/icon_ability_one_for_all.png",
-                    modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
                         new StatModification(
@@ -1161,9 +1156,6 @@ namespace LowAgeData.Collections
                             amount: 2,
                             statType: StatType.Health)
                     },
-                    initialEffects: null,
-                    finalModifications: null,
-                    finalEffects: null,
                     endsAt: EndsAt.Instant,
                     canStack: false,
                     canResetDuration: false,
@@ -1232,9 +1224,6 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Slave.RepairStructureBuff).CamelCaseToWords(),
                     description: "This structure will be repaired by +1 Health at the start of the planning phase.",
                     sprite: "res://assets/icons/icon_ability_repair.png",
-                    modificationFlags: null,
-                    initialModifications: null,
-                    initialEffects: null,
                     finalModifications: new List<Modification>
                     {
                         new StatModification(
@@ -1242,7 +1231,6 @@ namespace LowAgeData.Collections
                             amount: 1,
                             statType: StatType.Health)
                     },
-                    finalEffects: null,
                     endsAt: EndsAt.StartOf.Next.Planning,
                     canStack: true,
                     canResetDuration: false,
@@ -1259,10 +1247,6 @@ namespace LowAgeData.Collections
                     description:
                     "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
                     sprite: "res://assets/icons/icon_ability_manual_labour.png",
-                    modificationFlags: null,
-                    initialModifications: null,
-                    initialEffects: null,
-                    finalModifications: null,
                     finalEffects: new List<EffectId>
                     {
                         EffectId.Slave.ManualLabourModifyPlayer

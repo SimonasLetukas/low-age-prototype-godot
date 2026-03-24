@@ -905,7 +905,6 @@ namespace LowAgeData.Collections
                             }),
                         new SpecificEntity(value: StructureId.Obelisk)
                     },
-                    behaviourOwner: null,
                     validators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -913,6 +912,11 @@ namespace LowAgeData.Collections
                             new BehaviourCondition(
                                 conditionFlag: ConditionFlag.DoesNotExist,
                                 conditionedBehaviour: BehaviourId.Leader.OneForAllObeliskBuff)
+                        }), // AND
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new Condition(
+                                conditionFlag: ConditionFlag.TargetIsCompleted)
                         })
                     }),
 
@@ -943,8 +947,7 @@ namespace LowAgeData.Collections
                     behavioursToApply: new List<BehaviourId>
                     {
                         BehaviourId.Leader.OneForAllHealBuff
-                    },
-                    target: Location.Self),
+                    }),
 
                 new ApplyBehaviour(
                     id: EffectId.Slave.RepairApplyBehaviourStructure,
@@ -965,7 +968,6 @@ namespace LowAgeData.Collections
                             }),
                         new SpecificFlag(value: FilterFlag.Structure)
                     },
-                    behaviourOwner: null,
                     validators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -993,7 +995,6 @@ namespace LowAgeData.Collections
                             }),
                         new SpecificEntity(value: StructureId.Hut)
                     },
-                    behaviourOwner: null,
                     validators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>

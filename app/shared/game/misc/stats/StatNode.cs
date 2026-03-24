@@ -45,16 +45,16 @@ public abstract partial class StatNode : Node2D, INodeFromBlueprint<Stat>
         var (newCurrent, newMax) = what switch
         {
             _ when what.Equals(Change.AddMax) => (currentAmount, maxAmount + amount),
-            _ when what.Equals(Change.AddCurrent) => (currentAmount + amount, maxAmount),
+            _ when what.Equals(Change.AddCurrent) => (Math.Min(currentAmount + amount, maxAmount), maxAmount),
             _ when what.Equals(Change.SubtractMax) => (currentAmount, maxAmount - amount),
             _ when what.Equals(Change.SubtractCurrent) => (currentAmount - amount, maxAmount),
             _ when what.Equals(Change.SetMax) => (currentAmount, amount),
             _ when what.Equals(Change.SetCurrent) => (amount, maxAmount),
             _ when what.Equals(Change.MultiplyMax) => (currentAmount, maxAmount * amount),
-            _ when what.Equals(Change.MultiplyCurrent) => (currentAmount * amount, maxAmount),
+            _ when what.Equals(Change.MultiplyCurrent) => (Math.Min(currentAmount * amount, maxAmount), maxAmount),
             _ => (currentAmount, maxAmount),
         };
-
+        
         return (newCurrent, (int)newMax);
     }
 

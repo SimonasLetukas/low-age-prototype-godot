@@ -48,11 +48,16 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
 
     protected override IEnumerable<ITargetable> GetInheritedTargets(IList<ITargetable> initialTargets, EntityNode? initiator)
     {
-        if (Blueprint.Shape is LowAgeData.Domain.Common.Shape.Map 
-            || initialTargets.FirstOrDefault(t => t is EntityNode) is not EntityNode initialTargetEntity)
-            return GetAllEntities();
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(SearchNode), nameof(GetInheritedTargets), 
+                $"Effect '{Blueprint.Id}', {nameof(initialTargets)} " +
+                $"'{string.Join(", ", initialTargets.Select(t => t.ToString()))}', {nameof(initiator)} " +
+                $"'{initiator}'");
         
-        return GetEntityTargets(initialTargetEntity);
+        if (Blueprint.Shape is LowAgeData.Domain.Common.Shape.Map && initialTargets.IsEmpty())
+            return GetAllEntities();
+
+        return initialTargets.Where(t => t is EntityNode);
     }
     
     protected override IList<ITargetable> GetSelfTargets(EntityNode initiator) 

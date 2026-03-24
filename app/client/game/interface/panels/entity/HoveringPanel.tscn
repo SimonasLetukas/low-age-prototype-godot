@@ -55,6 +55,23 @@ offset_bottom = 92.0
 text = "Big Bad Bull"
 vertical_alignment = 2
 
+[node name="Behaviours" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -24.0
+offset_right = 140.00006
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 0
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 5
+
 [node name="Background" type="NinePatchRect" parent="."]
 layout_mode = 0
 offset_left = -4.0
@@ -69,6 +86,7 @@ patch_margin_right = 32
 patch_margin_bottom = 18
 
 [node name="InfoDisplay" parent="." instance=ExtResource("2")]
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0

@@ -344,7 +344,8 @@
         ],
         "abilities": [
           "ability-shared-revelators-population-cost",
-          "ability-leader-all-for-one"
+          "ability-leader-all-for-one",
+          "ability-leader-one-for-all"
         ],
         "displayName": "Leader",
         "description": "",
@@ -6289,7 +6290,7 @@
       "researchNeeded": [],
       "targetArea": {
         "$type": "Circle",
-        "radius": 1,
+        "radius": 2,
         "ignoreRadius": 0
       },
       "effects": [
@@ -6305,7 +6306,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "One For All",
-      "description": "Select an adjacent Obelisk and sap its energy to give all friendly units +2 Health. This Obelisk cannot be sapped again for 10 turns.",
+      "description": "Select a nearby Obelisk and sap its energy to give all friendly units +2 Health. This Obelisk cannot be sapped again for 10 turns.",
       "sprite": "res://assets/icons/icon_ability_one_for_all.png",
       "centerOffset": {
         "x": 0,
@@ -6599,7 +6600,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Manual Labour",
-      "description": "Select an adjacent Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut.",
+      "description": "Select a nearby Hut. At the start of the next planning phase receive +2 Scraps. Maximum of one Slave per Hut.",
       "sprite": "res://assets/icons/icon_ability_manual_labour.png",
       "centerOffset": {
         "x": 0,
@@ -9408,6 +9409,14 @@
             }
           ],
           "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "conditionFlag": "ConditionFlag.TargetIsCompleted"
+            }
+          ],
+          "filters": []
         }
       ]
     },
@@ -9457,7 +9466,7 @@
       "filters": [],
       "behaviourOwner": null,
       "waitForInitialEffects": false,
-      "target": "Location.Self",
+      "target": "Location.Inherited",
       "validators": []
     },
     {
@@ -14078,7 +14087,7 @@
       "finalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "One For All Obelisk Buff",
-      "description": "This unit has recently been sapped for health.",
+      "description": "Leader recently has sapped this Obelisk for health.",
       "endsAt": "EndsAt.StartOfTenthPlanning",
       "alignment": "Alignment.Negative",
       "canStack": false,

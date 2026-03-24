@@ -14,7 +14,8 @@ public abstract class EffectNode(
     : INodeFromBlueprint<Effect>
 {
     public Guid InstanceId { get; set; } = Guid.NewGuid();
-    
+
+    public EffectId Id { get; set; } = null!;
     public Player InitiatorPlayer { get; } = initiatorPlayer;
     public EntityNode? InitiatorEntity { get; } = initiatorEntity;
     public IList<ITargetable> FoundTargets { get; private set; } = null!;
@@ -28,9 +29,10 @@ public abstract class EffectNode(
     public void SetBlueprint(Effect blueprint)
     {
         Blueprint = blueprint;
-        
-        FoundTargets = GetTargets(Blueprint.Target, InitialTarget, InitiatorEntity);
+        Id = Blueprint.Id;
     }
+
+    public void UpdateFoundTargets() => FoundTargets = GetTargets(Blueprint.Target, InitialTarget, InitiatorEntity);
 
     public ValidationResult Validate()
     {
@@ -65,6 +67,13 @@ public abstract class EffectNode(
     
     private IList<ITargetable> GetTargets(Location location, IList<ITargetable> initialTargets, EntityNode? initiator)
     {
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(EffectNode), nameof(GetTargets), 
+                $"Getting {nameof(FoundTargets)} for effect '{Id}' with input: " +
+                $"{nameof(location)} '{location}', {nameof(initialTargets)} " +
+                $"'{string.Join(", ", initialTargets.Select(t => t.ToString()))}', " +
+                $"{nameof(initiator)} '{initiator}', {nameof(History)} '{History}'");
+        
         var foundTargets = location switch
         {
             _ when location.Equals(Location.Inherited) => History.PreviousOrNull is not null 
@@ -89,12 +98,12 @@ public abstract class EffectNode(
             _ => []
         };
         
-        if (Log.DebugEnabled)
+        if (Log.VerboseDebugEnabled)
             Log.Info(nameof(EffectNode), nameof(GetTargets), 
                 $"Initial {nameof(FoundTargets)} for effect '{Blueprint.Id}': " +
                 $"'{string.Join(", ", foundTargets.Select(t => t.ToString()))}'.");
 
-        return FilterEvaluator
+        var filteredTargets = FilterEvaluator
             .Apply(foundTargets, GetFilters(), new FilterContext
             {
                 Initiator = InitiatorEntity,
@@ -102,6 +111,13 @@ public abstract class EffectNode(
                 Chain = History
             })
             .ToList();
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(EffectNode), nameof(GetTargets), 
+                $"Filtered {nameof(FoundTargets)} for effect '{Id}': " +
+                $"'{string.Join(", ", filteredTargets.Select(t => t.ToString()))}'.");
+        
+        return filteredTargets;
     }
     
     public override bool Equals(object? obj) => NodeFromBlueprint.Equals(this, obj);
