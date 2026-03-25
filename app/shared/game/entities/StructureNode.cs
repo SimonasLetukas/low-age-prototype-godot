@@ -15,8 +15,9 @@ public sealed partial class StructureNode : ActorNode, INodeFromBlueprint<Struct
     {
         var structure = Instance();
         parentNode.AddChild(structure);
-        structure.SetBlueprint(blueprint);
+        
         structure.Player = player;
+        structure.SetBlueprint(blueprint);
         
         return structure;
     }

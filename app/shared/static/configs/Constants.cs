@@ -58,6 +58,25 @@ public static class Constants
         public const string Username = "USERNAME";
     }
 
+    public static class Palette
+    {
+        public static class Highlight
+        {
+            public const string Green = "95e8b3";
+            public const string Red = "a93403";
+        }
+
+        public static class Normal
+        {
+            
+        }
+
+        public static class Background
+        {
+            
+        }
+    }
+
     public const string GameVersion = "v0.6.1";
 
     public const int TileWidth = 16;

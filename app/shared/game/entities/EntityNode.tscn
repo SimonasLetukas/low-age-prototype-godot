@@ -26,9 +26,12 @@ script = ExtResource("6")
 material = ExtResource("2")
 texture = ExtResource("3")
 centered = false
-offset = Vector2(-3, -14)
+offset = Vector2(-5, -16)
+region_enabled = true
+region_rect = Rect2(-2, -2, 9, 19)
 
 [node name="Icon" type="TextureRect" parent="EntityRenderer"]
+visible = false
 offset_left = -4.0
 offset_top = -5.0
 offset_right = 4.0

@@ -6,7 +6,8 @@ render_mode unshaded;
 
 uniform vec4 outline_color : source_color;
 uniform bool draw_outline;
-uniform int intensity = 250;
+uniform bool change_outline_color;
+uniform int intensity = 50;
 
 uniform bool disabled = false;
 uniform float disabled_saturation = 0.2;
@@ -49,9 +50,16 @@ mat4 saturationMatrix( float _saturation ){
     return mat4(vec4(red, 0),vec4(green,0),vec4(blue,0),vec4(0, 0, 0, 1));
 }
 
-vec4 outlines(sampler2D var_TEXTURE, vec2 var_UV, vec2 var_TEXTURE_PIXEL_SIZE)
+vec4 outlines(sampler2D var_TEXTURE, vec2 var_UV, vec2 var_TEXTURE_PIXEL_SIZE, out bool is_outline)
 {
-	vec4 outline_color_changing = outline_color + ((sin(TIME * 3.5) + 1.0) / 2.0) - 0.08;
+	is_outline = false;
+
+	vec4 outline_color_changing = outline_color;
+	if (change_outline_color)
+	{
+		outline_color_changing = outline_color - ((sin(TIME * 6.0) + 1.0) / 5.0) - 0.08;
+	}
+
 	outline_color_changing.a = 1.0;
 
 	ivec2 t = textureSize(var_TEXTURE, 0);
@@ -85,8 +93,9 @@ vec4 outlines(sampler2D var_TEXTURE, vec2 var_UV, vec2 var_TEXTURE_PIXEL_SIZE)
 				}
 
 				//Is our sample empty? Is there something nearby?
-				if(outline_sample.a > final_color.a && outline_sample.a > 0.9){
+				if (regular_color.a <= 0.01 && outline_sample.a > 0.9){
 					final_color = outline_color_changing;
+					is_outline = true;
 				}
 			}
 		}
@@ -95,27 +104,27 @@ vec4 outlines(sampler2D var_TEXTURE, vec2 var_UV, vec2 var_TEXTURE_PIXEL_SIZE)
 	return final_color;
 }
 
-vec4 tint(sampler2D var_TEXTURE, vec2 var_UV)
+vec4 apply_tint(vec4 color)
 {
-	vec4 c = texture(var_TEXTURE, var_UV);
-	vec4 c2 = c * tint_color;
-	return mix(c, c2, tint_effect_factor);
+    vec4 tinted = color * tint_color;
+    return mix(color, tinted, tint_effect_factor);
 }
 
 void fragment()
 {
-	if (disabled)
+	bool is_outline = false;
+	vec4 base = texture(TEXTURE, UV);
+	vec4 col = outlines(TEXTURE, UV, TEXTURE_PIXEL_SIZE, is_outline);
+
+	if (!is_outline && tint_effect_factor > 0.0)
 	{
-		COLOR = saturationMatrix(disabled_saturation) * outlines(TEXTURE, UV, TEXTURE_PIXEL_SIZE);
-	}
-	else if (tint_effect_factor > 0.0)
-	{
-		COLOR = tint(TEXTURE, UV);
-	}
-	else
-	{
-		COLOR = outlines(TEXTURE, UV, TEXTURE_PIXEL_SIZE);
+	    col = apply_tint(col);
 	}
 
-	COLOR = modulate * COLOR;
+	if (!is_outline && disabled)
+	{
+	    col = saturationMatrix(disabled_saturation) * col;
+	}
+
+	COLOR = modulate * col;
 }"

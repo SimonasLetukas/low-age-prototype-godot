@@ -16,8 +16,9 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
     {
         var unit = Instance();
         parentNode.AddChild(unit);
-        unit.SetBlueprint(blueprint);
+        
         unit.Player = player;
+        unit.SetBlueprint(blueprint);
         
         return unit;
     }

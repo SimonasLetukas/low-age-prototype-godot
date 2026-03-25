@@ -142,7 +142,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         RevealedUpdated(this, to);
     }
 
-    public virtual void SetOutline(bool to) => Renderer.SetOutline(to, Players.Instance.IsCurrentPlayerEnemyTo(Player));
+    public virtual void SetOutline(bool to) => Renderer.SetOutline(to);
 
     public virtual void SnapTo(Vector2 globalPosition)
     {

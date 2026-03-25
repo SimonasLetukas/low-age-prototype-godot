@@ -23,8 +23,10 @@ public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
     public readonly List<EntityRenderer> StaticDependencies = [];
     public readonly List<EntityRenderer> DynamicDependencies = [];
 
-    private Color _outlineColorNormal = Colors.Black;
-    private Color _outlineColorEnemy = Colors.Red;
+    private readonly Vector2 _padding = new(2, 2);
+    
+    private Color _outlineColorNormal = new(Constants.Palette.Highlight.Green);
+    private Color _outlineColorEnemy = new(Constants.Palette.Highlight.Red);
     
     private EntityNode? _parentEntity;
     private Area _entityRelativeSize;
@@ -93,22 +95,34 @@ public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
         SetSpriteVisibility(true);
     }
 
-    public void SetSpriteVisibility(bool to) => _spriteContainer.Visible = to;
+    public void SetSpriteVisibility(bool to)
+    {
+        _spriteContainer.Visible = to;
+        
+        if (_sprite.Material is not ShaderMaterial spriteShaderMaterial) 
+            return;
+        spriteShaderMaterial.SetShaderParameter("draw_outline", to);
+
+        if (_parentEntity is null)
+            return;
+
+        var isAlly = Players.Instance.IsCurrentPlayerAllyTo(_parentEntity.Player);
+        spriteShaderMaterial.SetShaderParameter("outline_color", isAlly 
+            ? _outlineColorNormal 
+            : _outlineColorEnemy);
+    }
 
     public void SetIconVisibility(bool to) => _icon.Visible = to;
 
     public void MakeDynamic() => IsDynamic = true;
     public void MakeStatic() => IsDynamic = false;
 
-    public void SetOutline(bool to, bool isEnemy)
+    public void SetOutline(bool to)
     {
         if (_sprite.Material is not ShaderMaterial spriteShaderMaterial) 
             return;
         
-        spriteShaderMaterial.SetShaderParameter("draw_outline", to);
-        spriteShaderMaterial.SetShaderParameter("outline_color", isEnemy 
-            ? _outlineColorEnemy 
-            : _outlineColorNormal);
+        spriteShaderMaterial.SetShaderParameter("change_outline_color", to);
     }
 
     public void SetTintColor(Color color)
@@ -129,17 +143,19 @@ public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
     {
         _sprite.Texture = GD.Load<Texture2D>(location);
         _icon.Texture = GD.Load<Texture2D>(location);
+
+        _sprite.RegionRect = new Rect2(_padding * -1, SpriteSize + (_padding * 2));
         
         UpdateSpriteBounds();
     }
-
+    
     public void UpdateSpriteOffset(Vector2Int entitySize, Vector2 centerOffset)
     {
         const int quarterWidth = Constants.TileWidth / 4;
         const int quarterHeight = Constants.TileHeight / 4;
         var offsetFromX = (entitySize.X - 1) * new Vector2(quarterWidth, quarterHeight);
         var offsetFromY = (entitySize.Y - 1) * new Vector2(quarterWidth * -1, quarterHeight);
-        _sprite.Offset = (centerOffset * -1) + offsetFromX + offsetFromY;
+        _sprite.Offset = (centerOffset * -1) + offsetFromX + offsetFromY - _padding;
         UpdateSpriteBounds();
     }
 
@@ -209,8 +225,8 @@ public partial class EntityRenderer : Node2D, IEquatable<EntityRenderer>
     public void UpdateSpriteBounds()
     {
         var top = _spriteContainer.Scale.X > 0 
-            ? _sprite.GlobalPosition + _sprite.Offset 
-            : _sprite.GlobalPosition + new Vector2(-_sprite.Offset.X - SpriteSize.X, _sprite.Offset.Y);
+            ? _sprite.GlobalPosition + _sprite.Offset + _padding
+            : _sprite.GlobalPosition + new Vector2(-_sprite.Offset.X - SpriteSize.X - _padding.X, _sprite.Offset.Y + _padding.Y);
         var bottom = top + SpriteSize;
         SpriteBounds = new Rect2(top, SpriteSize);
         
