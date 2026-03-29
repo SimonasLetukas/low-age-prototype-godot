@@ -14,14 +14,14 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     public Guid InstanceId { get; set; } = Guid.NewGuid();
     public string Description { get; protected set; } = null!;
     public string? SpriteLocation { get; private set; }
-    public Alignment Alignment { get; protected set; } = null!;
+    public Alignment Alignment { get; private set; } = null!;
     public bool CanResetDuration { get; private set; }
     public Guid? OwnerActorId { get; protected set; }
-    public EndsAtNode CurrentDuration { get; protected set; } = null!;
-    public HashSet<BehaviourNode> Stack = [];
+    public EndsAtNode CurrentDuration { get; private set; } = null!;
+    public HashSet<BehaviourNode> Stack { get; private set; } = [];
+    public Effects History { get; protected set; } = null!;
 
     protected EntityNode Parent { get; set; } = null!;
-    protected Effects History { get; set; } = null!;
     
     private Behaviour Blueprint { get; set; } = null!;
     
@@ -57,6 +57,8 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     public EntityNode GetParentEntity() => Parent;
 
     public bool IsParentEntity(EntityNode entity) => Parent.InstanceId.Equals(entity.InstanceId);
+
+    public void Remove() => EndBehaviour();
     
     protected virtual void EndBehaviour() => Destroy();
 
@@ -163,7 +165,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         }
         else
         {
-            addedBehaviour.Destroy();
+            addedBehaviour.EndBehaviour();
         }
 
         if (CanResetDuration is false) 

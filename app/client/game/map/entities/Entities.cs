@@ -314,10 +314,11 @@ public partial class Entities : Node2D
         return topEntity;
     }
     
-    public void MoveEntity(EntityNode entity, IList<Vector2> globalPath, IList<Tiles.TileInstance> path)
+    public float MoveEntity(EntityNode entity, IList<Vector2> globalPath, IList<Tiles.TileInstance> path)
     {
         EntityMoving = true;
-        entity.MoveUntilFinished(globalPath, path);
+        var movementSpent = entity.MoveUntilFinished(globalPath, path);
+        return movementSpent;
     }
     
     public void RegisterRenderer(EntityNode entity)

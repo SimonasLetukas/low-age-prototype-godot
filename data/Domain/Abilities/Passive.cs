@@ -13,7 +13,7 @@ namespace LowAgeData.Domain.Abilities
             string description,
             string? sprite,
             bool hasButton = false,
-            EffectId? periodicEffect = null,
+            EffectId? periodicSearchEffect = null,
             IList<ResearchId>? researchNeeded = null,
             IList<EffectId>? onHitEffects = null,
             IList<AttackType>? onHitAttackTypes = null,
@@ -31,7 +31,7 @@ namespace LowAgeData.Domain.Abilities
                 EndsAt.Instant,
                 new List<Payment>())
         {
-            PeriodicEffect = periodicEffect;
+            PeriodicSearchEffect = periodicSearchEffect;
             OnHitEffects = onHitEffects ?? new List<EffectId>();
             OnHitAttackTypes = onHitAttackTypes ?? new List<AttackType>();
             OnBirthEffects = onBirthEffects ?? new List<EffectId>();
@@ -39,17 +39,18 @@ namespace LowAgeData.Domain.Abilities
         }
 
         /// <summary>
-        /// Executes effect as often as possible
+        /// Executes <see cref="Search"/> effect as often as possible. <see cref="Search"/>'s 
+        /// <see cref="Search.TriggerFlags"/> control the periodicity.
         /// </summary>
-        public EffectId? PeriodicEffect { get; }
+        public EffectId? PeriodicSearchEffect { get; }
 
         /// <summary>
-        /// Executes effects on each attack
+        /// Executes effects on each attack.
         /// </summary>
         public IList<EffectId> OnHitEffects { get; }
 
         /// <summary>
-        /// Determines which attack types trigger the on-hit effect
+        /// Determines which attack types trigger the on-hit effect.
         /// </summary>
         public IList<AttackType> OnHitAttackTypes { get; }
 

@@ -252,7 +252,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         Renderer.ResetElevationOffset();
     }
     
-    public virtual void MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Tiles.TileInstance> path)
+    public virtual float MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Tiles.TileInstance> path)
     {
         var resultingTile = path.Last();
         EntityPrimaryPosition = resultingTile.Position;
@@ -264,6 +264,8 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         CurrentTileDuringMovement = path;
         
         MoveToNextTarget();
+
+        return 0f;
     }
 
     public virtual bool CanBeMovedOnAt(Point point, Team forTeam)

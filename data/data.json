@@ -345,6 +345,7 @@
         "abilities": [
           "ability-shared-revelators-population-cost",
           "ability-leader-all-for-one",
+          "ability-leader-menacing-presence",
           "ability-leader-one-for-all"
         ],
         "displayName": "Leader",
@@ -3925,7 +3926,7 @@
         "alliesCanStack": false,
         "onlyOneCanExist": true,
         "displayName": "Shaman Wondrous Goo",
-        "description": "Any unit in this area is contaminated: has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn.",
+        "description": "Any unit in this area is contaminated: has its vision and Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn.",
         "sprite": "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png",
         "centerOffset": {
           "x": 0,
@@ -4122,7 +4123,7 @@
       "id": "ability-shared-passive-income",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -4146,7 +4147,7 @@
       "id": "ability-shared-scraps-income",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -4170,7 +4171,7 @@
       "id": "ability-shared-celestium-income",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -4194,7 +4195,7 @@
       "id": "ability-shared-unit-in-production",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -4216,7 +4217,7 @@
       "id": "ability-shared-revelators-population-cost",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -4240,7 +4241,7 @@
       "id": "ability-shared-revelators-building-structure",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -4262,7 +4263,7 @@
       "id": "ability-shared-uee-building-structure",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -4284,7 +4285,7 @@
       "id": "ability-shared-uee-power-generator",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -4550,7 +4551,7 @@
       "id": "ability-collector-building",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -4572,7 +4573,7 @@
       "id": "ability-extractor-building",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -4594,7 +4595,7 @@
       "id": "ability-wall-building",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -4616,7 +4617,7 @@
       "id": "ability-shared-uee-power-dependency",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -4640,7 +4641,7 @@
       "id": "ability-citadel-executive-stash",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -4664,7 +4665,7 @@
       "id": "ability-citadel-ascendable",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -4688,7 +4689,7 @@
       "id": "ability-citadel-high-ground",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -4700,7 +4701,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Distance for their ranged attacks.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -4979,7 +4980,7 @@
       "cooldown": "EndsAt.EndOfFourthActionPhase",
       "cost": [],
       "displayName": "Celestium Discharge",
-      "description": "Heals all nearby units in 5 Attack Distance by 5 Health. Adjacent units are healed by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 actions.",
+      "description": "Heals all nearby units in 5 Distance by 5 Health. Adjacent units are healed by 15 Health instead and their vision, Melee and Ranged Armour are all reduced by 3 for 3 actions.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -4991,7 +4992,7 @@
       "id": "ability-shack-accommodation",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5015,7 +5016,7 @@
       "id": "ability-smith-melee-weapon-production",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5039,7 +5040,7 @@
       "id": "ability-fletcher-ranged-weapon-production",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5063,7 +5064,7 @@
       "id": "ability-alchemy-special-weapon-production",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5087,7 +5088,7 @@
       "id": "ability-depot-weapon-storage",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5213,7 +5214,7 @@
       "id": "ability-outpost-ascendable",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5237,7 +5238,7 @@
       "id": "ability-outpost-high-ground",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5249,7 +5250,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Distance for their ranged attacks.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -5261,7 +5262,7 @@
       "id": "ability-barricade-protective-shield",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-barricade-protective-shield-search",
+      "periodicSearchEffect": "effect-barricade-protective-shield-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -5283,7 +5284,7 @@
       "id": "ability-barricade-caltrops",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-barricade-caltrops-search",
+      "periodicSearchEffect": "effect-barricade-caltrops-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -5329,7 +5330,7 @@
       "id": "ability-battery-core-power-grid",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5382,7 +5383,7 @@
       "id": "ability-fusion-core-power-grid",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5467,7 +5468,7 @@
       "id": "ability-celestium-core-power-grid",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5553,7 +5554,7 @@
       "id": "ability-collector-direct-transit-system",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5577,7 +5578,7 @@
       "id": "ability-extractor-reinforced-infrastructure",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5601,7 +5602,7 @@
       "id": "ability-power-pole-power-grid",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5625,7 +5626,7 @@
       "id": "ability-power-pole-excess-distribution",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-power-pole-excess-distribution-search",
+      "periodicSearchEffect": "effect-power-pole-excess-distribution-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -5649,7 +5650,7 @@
       "researchNeeded": [
         "research-uee-heightened-conductivity"
       ],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5674,7 +5675,7 @@
       "id": "ability-power-pole-power-grid-improved",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -5698,7 +5699,7 @@
       "id": "ability-power-pole-excess-distribution-improved",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-power-pole-excess-distribution-improved-search",
+      "periodicSearchEffect": "effect-power-pole-excess-distribution-improved-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -5720,7 +5721,7 @@
       "id": "ability-temple-keeping-the-faith",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-temple-keeping-the-faith-search",
+      "periodicSearchEffect": "effect-temple-keeping-the-faith-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6074,7 +6075,7 @@
       "id": "ability-wall-high-ground",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6086,7 +6087,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Distance for their ranged attacks.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6098,7 +6099,7 @@
       "id": "ability-stairs-ascendable",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6122,7 +6123,7 @@
       "id": "ability-gate-high-ground",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6134,7 +6135,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Distance for their ranged attacks.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6146,7 +6147,7 @@
       "id": "ability-gate-ascendable",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6170,7 +6171,7 @@
       "id": "ability-gate-entrance",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6194,7 +6195,7 @@
       "id": "ability-watchtower-vantage-point",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6206,7 +6207,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Vantage Point",
-      "description": "Provides +2 vision range, +1 Attack Distance and +1 Range Damage to ranged units on top.",
+      "description": "Provides +2 vision range, +1 Distance and +1 Range Damage to ranged units on top.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6218,7 +6219,7 @@
       "id": "ability-bastion-battlement",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6230,7 +6231,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Battlement",
-      "description": "Provides +1 Range Armour, +1 vision range and +1 Attack Distance to all units on top.",
+      "description": "Provides +1 Range Armour, +1 vision range and +1 Distance to all units on top.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6242,7 +6243,7 @@
       "id": "ability-leader-all-for-one",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6266,7 +6267,7 @@
       "id": "ability-leader-menacing-presence",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-leader-menacing-presence-search",
+      "periodicSearchEffect": "effect-leader-menacing-presence-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -6276,7 +6277,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Menacing Presence",
-      "description": "All friendly and enemy units that enter 6 Attack Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1).",
+      "description": "All friendly and enemy units that enter 6 Distance around Leader have their Melee Damage and Ranged Damage reduced by 2 (total minimum of 1).",
       "sprite": "res://assets/icons/icon_ability_menacing_presence.png",
       "centerOffset": {
         "x": 0,
@@ -6508,7 +6509,7 @@
       "id": "ability-hut-building",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -6530,7 +6531,7 @@
       "id": "ability-obelisk-building",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -6612,7 +6613,7 @@
       "id": "ability-quickdraw-doubleshot",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6638,7 +6639,7 @@
       "researchNeeded": [
         "research-revelators-poisoned-slits"
       ],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [
         "effect-quickdraw-cripple-apply-behaviour"
       ],
@@ -6664,7 +6665,7 @@
       "id": "ability-gorger-fanatic-suicide-passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [
         "effect-gorger-fanatic-suicide-destroy"
       ],
@@ -6701,7 +6702,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Fanatic Suicide",
-      "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Attack Distance, killing itself in the process.",
+      "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Distance, killing itself in the process.",
       "sprite": "res://assets/icons/icon_ability_fanatic_suicide.png",
       "centerOffset": {
         "x": 0,
@@ -6713,7 +6714,7 @@
       "id": "ability-gorger-disease",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -6735,7 +6736,7 @@
       "id": "ability-camou-silent-assassin",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [
         "effect-camou-silent-assassin-on-hit-damage",
         "effect-camou-silent-assassin-on-hit-silence"
@@ -6750,7 +6751,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Silent Assassin",
-      "description": "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly units around Camou in 4 Attack Distance. Additionally, if the target has none of its allies in the same radius, Camou silences the target for 2 of its actions, disabling the use of any abilities or passives.",
+      "description": "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly units around Camou in 4 Distance. Additionally, if the target has none of its allies in the same radius, Camou silences the target for 2 of its actions, disabling the use of any abilities or passives.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6796,7 +6797,7 @@
       "researchNeeded": [
         "research-revelators-spiked-rope"
       ],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6838,7 +6839,7 @@
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "cost": [],
       "displayName": "Wondrous Goo",
-      "description": "Select a tile in 4 Attack Distance, which gets contaminated. Any unit in the contamination has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase.",
+      "description": "Select a tile in 4 Distance, which gets contaminated. Any unit in the contamination has its vision and Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6850,7 +6851,7 @@
       "id": "ability-pyre-wall-of-flames",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -6876,7 +6877,7 @@
       "researchNeeded": [
         "research-revelators-questionable-cargo"
       ],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7002,7 +7003,7 @@
       "researchNeeded": [
         "research-revelators-humanflesh-rations"
       ],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7056,7 +7057,7 @@
       "id": "ability-roach-degrading-carapace",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7112,7 +7113,7 @@
       "id": "ability-parasite-paralysing-grasp",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [
         "effect-parasite-paralysing-grasp-apply-tether-behaviour",
         "effect-parasite-paralysing-grasp-apply-attack-behaviour"
@@ -7139,7 +7140,7 @@
       "id": "ability-horrior-expert-formation",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-horrior-expert-formation-search",
+      "periodicSearchEffect": "effect-horrior-expert-formation-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -7183,7 +7184,7 @@
       "id": "ability-marksman-critical-mark",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [
         "effect-marksman-critical-mark-apply-behaviour"
       ],
@@ -7209,7 +7210,7 @@
       "id": "ability-surfer-dismount",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7233,7 +7234,7 @@
       "id": "ability-mortar-deadly-ammunition",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7279,7 +7280,7 @@
       "researchNeeded": [
         "research-uee-explosive-shrapnel"
       ],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7303,7 +7304,7 @@
       "id": "ability-hawk-tactical-goggles",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7345,7 +7346,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Leadership",
-      "description": "Selected ranged adjacent friendly unit gains +1 Attack Distance. The bonus is lost at the end of the target's next action, or if the targeted unit is no longer adjacent.",
+      "description": "Selected ranged adjacent friendly unit gains +1 Distance. The bonus is lost at the end of the target's next action, or if the targeted unit is no longer adjacent.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -7359,7 +7360,7 @@
       "researchNeeded": [
         "research-uee-md-practice"
       ],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7459,7 +7460,7 @@
       "id": "ability-cannon-assembling",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -7481,7 +7482,7 @@
       "id": "ability-ballista-assembling",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -7503,7 +7504,7 @@
       "id": "ability-radar-assembling",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -7587,7 +7588,7 @@
       "id": "ability-cannon-machine",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7631,7 +7632,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Heat Up",
-      "description": "Instead of a regular ranged attack, select any tile in Attack Distance. This tile is revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's action, the attack is triggered which deals massive Range Damage.",
+      "description": "Instead of a regular ranged attack, select any tile in Distance. This tile is revealed for allies and highlighted as dangerous for enemies. Instead of the next Cannon's action, the attack is triggered which deals massive Range Damage.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -7643,7 +7644,7 @@
       "id": "ability-ballista-machine",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7667,7 +7668,7 @@
       "id": "ability-ballista-add-on",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -7722,7 +7723,7 @@
       "id": "ability-radar-machine",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7764,7 +7765,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Resonating Sweep",
-      "description": "Selected tile in 15 Attack Distance and all adjacent tiles are revealed until the start of the next planning phase.",
+      "description": "Selected tile in 15 Distance and all adjacent tiles are revealed until the start of the next planning phase.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -7778,7 +7779,7 @@
       "researchNeeded": [
         "research-uee-celestium-coated-materials"
       ],
-      "periodicEffect": "effect-radar-radio-location-apply-behaviour",
+      "periodicSearchEffect": "effect-radar-radio-location-apply-behaviour",
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -7788,7 +7789,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Radio Location",
-      "description": "Enemy units in 15 Attack Distance are shown as red dots in the fog of war.",
+      "description": "Enemy units in 15 Distance are shown as red dots in the fog of war.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -7800,7 +7801,7 @@
       "id": "ability-vessel-machine",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": null,
+      "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
@@ -7824,7 +7825,7 @@
       "id": "ability-vessel-absorbent-field",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
-      "periodicEffect": "effect-vessel-absorbent-field-search",
+      "periodicSearchEffect": "effect-vessel-absorbent-field-search",
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [],
@@ -7834,7 +7835,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Absorbent Field",
-      "description": "Reduces Melee and Range damage done by 50% to all friendly units in 3 Attack Distance, which is instead dealt to Vessel.",
+      "description": "Reduces Melee and Range damage done by 50% to all friendly units in 3 Distance, which is instead dealt to Vessel.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -7886,7 +7887,7 @@
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "cost": [],
       "displayName": "Rendition",
-      "description": "Place a ghostly rendition of a selected enemy unit in 7 Attack Distance to an unoccupied space in a 3 Attack Distance from the selected target. The rendition has the same amount of Health, Melee and Range Armour as the selected target, cannot act, can be attacked and stays for 2 action phases or until the selected target is dead. 50% of all damage done to the rendition is done as Pure Damage to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows all adjacent enemies by 50% until the end of their next action.",
+      "description": "Place a ghostly rendition of a selected enemy unit in 7 Distance to an unoccupied space in a 3 Distance from the selected target. The rendition has the same amount of Health, Melee and Range Armour as the selected target, cannot act, can be attacked and stays for 2 action phases or until the selected target is dead. 50% of all damage done to the rendition is done as Pure Damage to the selected target. If the rendition is destroyed before disappearing, the selected target emits a blast which deals 10 Melee Damage and slows all adjacent enemies by 50% until the end of their next action.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -7916,7 +7917,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Rendition Placement",
-      "description": "Select an unoccupied space in a 3 Attack Distance to place the rendition of the selected target.",
+      "description": "Select an unoccupied space in a 3 Distance to place the rendition of the selected target.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -9341,11 +9342,23 @@
         {
           "$type": "SpecificFlag",
           "value": "FilterFlag.Unit"
+        },
+        {
+          "$type": "FilterGroup",
+          "policy": "Exclude",
+          "quantifier": "Any",
+          "filters": [
+            {
+              "$type": "SpecificFlag",
+              "value": "FilterFlag.Self"
+            }
+          ]
         }
       ],
       "triggerFlags": [
         "SearchTriggerFlag.AppliedOnEnter",
         "SearchTriggerFlag.AppliedOnSourceAction",
+        "SearchTriggerFlag.AppliedOnPlanningPhaseStart",
         "SearchTriggerFlag.RemovedOnExit"
       ],
       "effects": [
@@ -11766,7 +11779,7 @@
       "finalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "High Ground Buff",
-      "description": "Unit is on high ground and has +1 vision range and +1 Attack Distance for ranged attacks.",
+      "description": "Unit is on high ground and has +1 vision range and +1 Distance for ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Positive",
       "canStack": false,
@@ -12505,7 +12518,7 @@
         "effect-shared-high-ground-search"
       ],
       "displayName": "High Ground High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Distance for their ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,
@@ -12868,7 +12881,7 @@
         "effect-shared-high-ground-search"
       ],
       "displayName": "High Ground High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Distance for their ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,
@@ -13633,7 +13646,7 @@
         "effect-shared-high-ground-search"
       ],
       "displayName": "High Ground High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Distance for their ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,
@@ -13729,7 +13742,7 @@
         "effect-shared-high-ground-search"
       ],
       "displayName": "High Ground High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +1 vision range and +1 Distance for their ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,
@@ -13851,7 +13864,7 @@
         "effect-watchtower-vantage-point-search"
       ],
       "displayName": "Vantage Point High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +2 vision range, +1 Attack Distance and +1 Range Damage for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +2 vision range, +1 Distance and +1 Range Damage for their ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,
@@ -13900,7 +13913,7 @@
       "finalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Vantage Point Buff",
-      "description": "Unit is on a Watchtower and has +2 vision range, +1 Attack Distance and +1 Range Damage for ranged attacks.",
+      "description": "Unit is on a Watchtower and has +2 vision range, +1 Distance and +1 Range Damage for ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Positive",
       "canStack": false,
@@ -13941,7 +13954,7 @@
         "effect-bastion-battlement-search"
       ],
       "displayName": "Battlement High Ground",
-      "description": "Provides an area of high ground to other units, who all gain +1 Range Armour, +1 vision range and +1 Attack Distance for their ranged attacks.",
+      "description": "Provides an area of high ground to other units, who all gain +1 Range Armour, +1 vision range and +1 Distance for their ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
       "canStack": false,
@@ -13988,7 +14001,7 @@
       "finalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Battlement Buff",
-      "description": "Unit is on a Bastion and has +1 Range Armour in addition to the default high ground bonus: +1 vision range and +1 Attack Distance for the ranged attacks.",
+      "description": "Unit is on a Bastion and has +1 Range Armour in addition to the default high ground bonus: +1 vision range and +1 Distance for the ranged attacks.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Positive",
       "canStack": false,
@@ -14059,7 +14072,7 @@
       "finalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Menacing Presence Buff",
-      "description": "Melee and Range Damage for this unit is reduced by 2.",
+      "description": "Melee and Range Damage for this unit is reduced by 2 because of a nearby Leader.",
       "endsAt": "EndsAt.EndOfThisAction",
       "alignment": "Alignment.Negative",
       "canStack": false,
@@ -14600,7 +14613,7 @@
       ],
       "restoreChangesOnEnd": true,
       "displayName": "Wondrous Goo Buff",
-      "description": "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
+      "description": "Unit has its vision and Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
       "endsAt": "EndsAt.StartOfNextAction",
       "alignment": "Alignment.Negative",
       "canStack": false,
@@ -15231,7 +15244,7 @@
       "finalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Leadership Buff",
-      "description": "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of the next action or if Hawk is not adjacent anymore.",
+      "description": "Gains +1 Distance range from nearby Hawk. Bonus will be lost at the end of the next action or if Hawk is not adjacent anymore.",
       "endsAt": "EndsAt.EndOfThisAction",
       "alignment": "Alignment.Positive",
       "canStack": false,
@@ -16144,7 +16157,7 @@
       "finalEffects": [],
       "restoreChangesOnEnd": false,
       "displayName": "Rendition Placement Buff",
-      "description": "This unit is about to have its rendition placed in a 3 Attack Distance.",
+      "description": "This unit is about to have its rendition placed in a 3 Distance.",
       "endsAt": "EndsAt.Instant",
       "alignment": "Alignment.Negative",
       "canStack": true,

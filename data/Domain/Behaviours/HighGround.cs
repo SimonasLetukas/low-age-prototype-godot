@@ -45,7 +45,7 @@ namespace LowAgeData.Domain.Behaviours
         public IList<HighGroundArea> HighGroundAreas { get; }
         
         /// <summary>
-        /// By default, all units gain +1 Ranged Attack Distance when on high ground, but
+        /// By default, all units gain +1 Ranged Distance when on high ground, but
         /// <see cref="OnCollisionEffects"/> could also be used to add different effects.
         /// </summary>
         public IList<EffectId> OnCollisionEffects { get; }

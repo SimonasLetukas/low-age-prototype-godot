@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using LowAge.app.shared.game.effects;
 using LowAgeData.Domain.Effects;
 
 /// <summary>
@@ -13,10 +12,11 @@ public class Effects
 {
     private IList<EffectNode> Chain { get; set; } = new List<EffectNode>();
 
+    public EffectNode First => Chain.First();
     public EffectNode Last => Chain.Last();
     public EffectNode? PreviousOrNull => Chain.Count > 1 ? Chain[^2] : null;
-    public EntityNode? SourceEntityOrNull => Chain.LastOrDefault()?.InitiatorEntity;
-    public EntityNode? OriginEntityOrNull => Chain.FirstOrDefault()?.InitiatorEntity;
+    public EntityNode? SourceEntityOrNull => PreviousOrNull?.InitiatorEntity;
+    public EntityNode? OriginEntityOrNull => First.InitiatorEntity;
     
     public Effects(EffectId effectId, IList<ITargetable> initialTargets, Player initiatorPlayer, 
         EntityNode? initiatorEntity)

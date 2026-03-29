@@ -146,11 +146,6 @@ public abstract partial class ActiveAbilityNode<
 
     protected override void OnExecutionRequested(TFocus focus)
     {
-        if (FocusQueue.Contains(focus))
-            focus = FocusQueue.First(f => f.Equals(focus));
-        else
-            FocusQueue.Add(focus);
-        
         SpendActionAndConsumableResources(focus);
 
         ExecuteNonConsumablePayment(focus);

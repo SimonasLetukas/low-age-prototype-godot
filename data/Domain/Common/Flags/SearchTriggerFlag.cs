@@ -7,7 +7,7 @@ namespace LowAgeData.Domain.Common.Flags
 {
     /// <summary>
     /// Used to control events when the effects should be applied or removed when <see cref="SearchTriggerFlag"/> is
-    /// used as a <see cref="Passive.PeriodicEffect"/>. When counteracting the applied effects, any
+    /// used as a <see cref="Passive.PeriodicSearchEffect"/>. When counteracting the applied effects, any
     /// <see cref="Behaviours.Buff"/>s down the line are allowed to execute their
     /// <see cref="Behaviours.Buff.ConditionalEffects"/> before removal.
     /// </summary>
@@ -19,11 +19,18 @@ namespace LowAgeData.Domain.Common.Flags
         /// <see cref="Effects.Search.Shape"/>).
         /// </summary>
         public static SearchTriggerFlag AppliedOnEnter => new SearchTriggerFlag(SearchFlags.AppliedOnEnter);
+        
+        /// <summary>
+        /// Counteracts any <see cref="Effects"/> added as part of <see cref="Effects.Search"/>
+        /// <see cref="Effects.Search.Effects"/> for an <see cref="Entity"/> that leaves the
+        /// <see cref="Effects.Search.Shape"/>.
+        /// </summary>
+        public static SearchTriggerFlag RemovedOnExit => new SearchTriggerFlag(SearchFlags.RemovedOnExit);
                 
         /// <summary>
         /// Applies <see cref="Effects.Search"/> after <see cref="Durations.EndsAt"/> (at the end of action
         /// for the <see cref="FilterFlag.Source"/> <see cref="Entity"/> -- which issued this
-        /// <see cref="Passive.PeriodicEffect"/>).
+        /// <see cref="Passive.PeriodicSearchEffect"/>).
         /// </summary>
         public static SearchTriggerFlag AppliedOnSourceAction => new SearchTriggerFlag(SearchFlags.AppliedOnSourceAction);
                 
@@ -52,25 +59,6 @@ namespace LowAgeData.Domain.Common.Flags
         /// <see cref="Effects.Search"/> is applied at the end of every planning phase.
         /// </summary>
         public static SearchTriggerFlag AppliedOnPlanningPhaseEnd => new SearchTriggerFlag(SearchFlags.AppliedOnPlanningPhaseEnd);
-                
-        /// <summary>
-        /// Counteracts any <see cref="Effects"/> added as part of <see cref="Effects.Search"/>
-        /// <see cref="Effects.Search.Effects"/> for an <see cref="Entity"/> that leaves the
-        /// <see cref="Effects.Search.Shape"/>.
-        /// </summary>
-        public static SearchTriggerFlag RemovedOnExit => new SearchTriggerFlag(SearchFlags.RemovedOnExit);
-                
-        /// <summary>
-        /// At the start of every planning phase, counteracts any <see cref="Effects"/> added as part of
-        /// <see cref="Effects.Search"/> <see cref="Effects.Search.Effects"/>.
-        /// </summary>
-        public static SearchTriggerFlag RemovedOnPlanningPhaseStart => new SearchTriggerFlag(SearchFlags.RemovedOnPlanningPhaseStart);
-                
-        /// <summary>
-        /// At the end of every planning phase, counteracts any <see cref="Effects"/> added as part of
-        /// <see cref="Effects.Search"/> <see cref="Effects.Search.Effects"/>.
-        /// </summary>
-        public static SearchTriggerFlag RemovedOnPlanningPhaseEnd => new SearchTriggerFlag(SearchFlags.RemovedOnPlanningPhaseEnd);
 
         private SearchTriggerFlag(SearchFlags @enum) : base(@enum) { }
         
@@ -79,15 +67,13 @@ namespace LowAgeData.Domain.Common.Flags
         public enum SearchFlags
         {
             AppliedOnEnter,
+            RemovedOnExit,
             AppliedOnSourceAction,
             AppliedOnEveryAction,
             AppliedOnActionPhaseStart,
             AppliedOnActionPhaseEnd,
             AppliedOnPlanningPhaseStart,
             AppliedOnPlanningPhaseEnd,
-            RemovedOnExit,
-            RemovedOnPlanningPhaseStart,
-            RemovedOnPlanningPhaseEnd
         }
         
         private class SearchFlagJsonConverter : JsonConverter

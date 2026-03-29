@@ -1,7 +1,9 @@
+using System;
 using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Modifications;
+using Newtonsoft.Json;
 
 public partial class AttackStatNode : StatNode, INodeFromBlueprint<AttackStat>
 {
@@ -22,9 +24,10 @@ public partial class AttackStatNode : StatNode, INodeFromBlueprint<AttackStat>
 			.Where(m => m is AttackModification a && a.Attribute.Equals(AttackAttribute.MinDistance)))
 		.NewMax;
 	public int MaximumDistance => GetModified(_baseMaximumDistance, _baseMaximumDistance, Modifications
-			.Where(m => m is AttackModification a && a.Attribute.Equals(AttackAttribute.MaxAmount)))
+			.Where(m => m is AttackModification a && a.Attribute.Equals(AttackAttribute.MaxDistance)))
 		.NewMax;
-	public int Damage => MaxAmount;
+
+	public int Damage => Math.Max(MaxAmount, 1);
 	public bool HasBonusDamage => BonusTo is not null && BonusDamage > 0;
 	public ActorAttribute? BonusTo { get; private set; }
 	public int BonusDamage => GetModified(_baseBonusDamage, _baseBonusDamage, Modifications
@@ -91,6 +94,11 @@ public partial class AttackStatNode : StatNode, INodeFromBlueprint<AttackStat>
 		}
 		else
 		{
+			if (Log.VerboseDebugEnabled)
+				Log.Info(nameof(AttackStatNode), nameof(Apply), 
+					$"Adding modification '{JsonConvert.SerializeObject(attackModification)}' to " +
+					$"modifications '{JsonConvert.SerializeObject(Modifications)}'.");
+			
 			Modifications.Add(attackModification);
 		}
 		
@@ -102,6 +110,11 @@ public partial class AttackStatNode : StatNode, INodeFromBlueprint<AttackStat>
 		if (modification is not AttackModification attackModification 
 		    || attackModification.AttackType.Equals(Blueprint.AttackType) is false)
 			return;
+		
+		if (Log.VerboseDebugEnabled)
+			Log.Info(nameof(AttackStatNode), nameof(Remove), 
+				$"Removing modification '{JsonConvert.SerializeObject(attackModification)}' from " +
+				$"modifications '{JsonConvert.SerializeObject(Modifications)}'.");
 		
 		Modifications.Remove(attackModification);
 		

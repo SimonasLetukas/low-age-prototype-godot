@@ -262,26 +262,29 @@ public partial class ClientMap : Map
 	
 	public void HandleEvent(UnitMovedAlongPathEvent @event)
 	{
-		var movingEntity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
-		if (movingEntity is null)
+		var entity = Entities.GetEntityByInstanceId(@event.EntityInstanceId);
+		if (entity is not UnitNode unit)
 			return;
 		
-		if (Entities.IsEntitySelected(movingEntity))
+		if (Entities.IsEntitySelected(unit))
 			HandleDeselecting();
 		
 		var path = @event.Path
-			.Select(p => Pathfinding.GetPointById(p, movingEntity.Player.Team, movingEntity.EntitySize.X))
+			.Select(p => Pathfinding.GetPointById(p, unit.Player.Team, unit.EntitySize.X))
 			.ToList();
 		
-		var dilatedPath = _tileMap.GetDilated(path, movingEntity.EntitySize.X);
-		_tileMap.AddVision(movingEntity, dilatedPath);
+		var dilatedPath = _tileMap.GetDilated(path, unit.EntitySize.X);
+		_tileMap.AddVision(unit, dilatedPath);
 		
-		RemoveOccupation(movingEntity);
+		RemoveOccupation(unit);
 
 		var tiles = path.Select(p => _tileMap.GetTile(p)).WhereNotNull().ToList();
-		Entities.MoveEntity(movingEntity, _tileMap.GetGlobalPositionsFromTiles(tiles).ToList(), tiles);
+		var globalPath = _tileMap.GetGlobalPositionsFromTiles(tiles).ToList();
+		var movementSpent = Entities.MoveEntity(unit, globalPath, tiles);
 		
-		AddOccupation(movingEntity);
+		AddOccupation(unit);
+		
+		EventBus.Instance.RaiseUnitMoved(unit, movementSpent);
 	}
 
 	public void HandleEvent(GameLostEvent gameLostEvent)

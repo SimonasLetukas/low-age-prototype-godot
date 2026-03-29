@@ -865,12 +865,20 @@ namespace LowAgeData.Collections
                                 new SpecificFlag(value: FilterFlag.Ally),
                                 new SpecificFlag(value: FilterFlag.Enemy)
                             }),
-                        new SpecificFlag(value: FilterFlag.Unit)
+                        new SpecificFlag(value: FilterFlag.Unit),
+                        new FilterGroup(
+                            policy: Policy.Exclude,
+                            quantifier: Quantifier.Any,
+                            filters: new List<IFilterItem>
+                            {
+                                new SpecificFlag(value: FilterFlag.Self)
+                            })
                     },
                     triggerFlags: new List<SearchTriggerFlag>
                     {
                         SearchTriggerFlag.AppliedOnEnter,
                         SearchTriggerFlag.AppliedOnSourceAction,
+                        SearchTriggerFlag.AppliedOnPlanningPhaseStart,
                         SearchTriggerFlag.RemovedOnExit
                     },
                     effects: new List<EffectId>

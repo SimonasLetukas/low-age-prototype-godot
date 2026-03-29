@@ -26,7 +26,7 @@ namespace LowAgeData.Collections
                 new Buff(
                     id: BehaviourId.Shared.HighGroundBuff,
                     displayName: nameof(BehaviourId.Shared.HighGroundBuff).CamelCaseToWords(),
-                    description: "Unit is on high ground and has +1 vision range and +1 Attack Distance for " +
+                    description: "Unit is on high ground and has +1 vision range and +1 Distance for " +
                                  "ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
@@ -387,7 +387,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Citadel.HighGroundHighGround,
                     displayName: nameof(BehaviourId.Citadel.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
-                                 "+1 Attack Distance for their ranged attacks.",
+                                 "+1 Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     highGroundAreas: new List<HighGroundArea>
                     {
@@ -561,7 +561,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Outpost.HighGroundHighGround,
                     displayName: nameof(BehaviourId.Outpost.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
-                                 "+1 Attack Distance for their ranged attacks.",
+                                 "+1 Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     highGroundAreas: new List<HighGroundArea>
                     {
@@ -930,7 +930,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Wall.HighGroundHighGround,
                     displayName: nameof(BehaviourId.Wall.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
-                                 "+1 Attack Distance for their ranged attacks.",
+                                 "+1 Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     highGroundAreas: new List<HighGroundArea>
                     {
@@ -962,7 +962,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Gate.HighGroundHighGround,
                     displayName: nameof(BehaviourId.Gate.HighGroundHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 vision range and " +
-                                 "+1 Attack Distance for their ranged attacks.",
+                                 "+1 Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     highGroundAreas: new List<HighGroundArea>
                     {
@@ -1006,7 +1006,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Watchtower.VantagePointHighGround,
                     displayName: nameof(BehaviourId.Watchtower.VantagePointHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +2 vision range, " +
-                                 "+1 Attack Distance and +1 Range Damage for their ranged attacks.",
+                                 "+1 Distance and +1 Range Damage for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     highGroundAreas: new List<HighGroundArea>
                     {
@@ -1022,7 +1022,7 @@ namespace LowAgeData.Collections
                 new Buff(
                     id: BehaviourId.Watchtower.VantagePointBuff,
                     displayName: nameof(BehaviourId.Watchtower.VantagePointBuff).CamelCaseToWords(),
-                    description: "Unit is on a Watchtower and has +2 vision range, +1 Attack Distance and +1 Range " +
+                    description: "Unit is on a Watchtower and has +2 vision range, +1 Distance and +1 Range " +
                                  "Damage for ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
@@ -1051,7 +1051,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Bastion.BattlementHighGround,
                     displayName: nameof(BehaviourId.Bastion.BattlementHighGround).CamelCaseToWords(),
                     description: "Provides an area of high ground to other units, who all gain +1 Range Armour, " +
-                                 "+1 vision range and +1 Attack Distance for their ranged attacks.",
+                                 "+1 vision range and +1 Distance for their ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     highGroundAreas: new List<HighGroundArea>
                     {
@@ -1068,7 +1068,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Bastion.BattlementBuff,
                     displayName: nameof(BehaviourId.Bastion.BattlementBuff).CamelCaseToWords(),
                     description: "Unit is on a Bastion and has +1 Range Armour in addition to the default high " +
-                                 "ground bonus: +1 vision range and +1 Attack Distance for the ranged attacks.",
+                                 "ground bonus: +1 vision range and +1 Distance for the ranged attacks.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     initialModifications: new List<Modification>
                     {
@@ -1108,7 +1108,7 @@ namespace LowAgeData.Collections
                 new Buff(
                     id: BehaviourId.Leader.MenacingPresenceBuff,
                     displayName: nameof(BehaviourId.Leader.MenacingPresenceBuff).CamelCaseToWords(),
-                    description: "Melee and Range Damage for this unit is reduced by 2.",
+                    description: "Melee and Range Damage for this unit is reduced by 2 because of a nearby Leader.",
                     sprite: "res://assets/icons/icon_ability_menacing_presence.png",
                     initialModifications: new List<Modification>
                     {
@@ -1403,7 +1403,7 @@ namespace LowAgeData.Collections
                 new Buff(
                     id: BehaviourId.Shaman.WondrousGooBuff,
                     displayName: nameof(BehaviourId.Shaman.WondrousGooBuff).CamelCaseToWords(),
-                    description: "Unit has its vision and Attack Distance reduced by 3 (total minimum of 1) " +
+                    description: "Unit has its vision and Distance reduced by 3 (total minimum of 1) " +
                                  "and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
@@ -1825,7 +1825,7 @@ namespace LowAgeData.Collections
                 new Buff(
                     id: BehaviourId.Hawk.LeadershipBuff,
                     displayName: nameof(BehaviourId.Hawk.LeadershipBuff).CamelCaseToWords(),
-                    description: "Gains +1 Attack Distance range from nearby Hawk. Bonus will be lost at the end of " +
+                    description: "Gains +1 Distance range from nearby Hawk. Bonus will be lost at the end of " +
                                  "the next action or if Hawk is not adjacent anymore.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
@@ -2406,7 +2406,7 @@ namespace LowAgeData.Collections
                 new Buff(
                     id: BehaviourId.Omen.RenditionPlacementBuff,
                     displayName: nameof(BehaviourId.Omen.RenditionPlacementBuff).CamelCaseToWords(),
-                    description: "This unit is about to have its rendition placed in a 3 Attack Distance.",
+                    description: "This unit is about to have its rendition placed in a 3 Distance.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: null,
                     initialModifications: null,

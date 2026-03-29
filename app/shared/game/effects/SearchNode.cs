@@ -4,12 +4,13 @@ using LowAgeCommon;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Filters;
+using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Effects;
-
-namespace LowAge.app.shared.game.effects;
 
 public class SearchNode : EffectNode, INodeFromBlueprint<Search>
 {
+    public IList<SearchTriggerFlag> TriggerFlags { get; private set; } = [];
+    
     private Search Blueprint { get; set; } = null!;
     
     public SearchNode(Search blueprint, Effects history, IList<ITargetable> initialTargets, Player initiatorPlayer, 
@@ -22,6 +23,7 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
     public void SetBlueprint(Search blueprint)
     {
         Blueprint = blueprint;
+        TriggerFlags = Blueprint.TriggerFlags;
         
         base.SetBlueprint(blueprint);
     }
@@ -138,5 +140,4 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
 
         return targetEntities;
     }
-    
 }

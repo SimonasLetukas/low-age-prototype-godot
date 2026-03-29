@@ -77,7 +77,7 @@ public abstract partial class AbilityNode<
         return Activate(typedRequest);
     }
     
-    private ValidationResult Activate(TActivationRequest request)
+    protected ValidationResult Activate(TActivationRequest request)
     {
         var validationResult = ValidateActivation(request);
         if (validationResult.IsValid is false)
@@ -121,6 +121,11 @@ public abstract partial class AbilityNode<
                 $"'{focus.GetType().Name}'");
             return;
         }
+        
+        if (FocusQueue.Contains(typedFocus))
+            typedFocus = FocusQueue.First(f => f.Equals(focus));
+        else
+            FocusQueue.Add(typedFocus);
 
         OnExecutionRequested(typedFocus);
     }

@@ -83,7 +83,7 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.Revelators.PopulationCost,
                         AbilityId.Leader.AllForOne,
-                        //AbilityId.Leader.MenacingPresence,
+                        AbilityId.Leader.MenacingPresence,
                         AbilityId.Leader.OneForAll
                     },
                     size: 2),

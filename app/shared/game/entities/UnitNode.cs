@@ -103,14 +103,13 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         ReceiveDamage(this, damage, false);
     }
 
-    public override void MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Tiles.TileInstance> path)
+    public override float MoveUntilFinished(IList<Vector2> globalPositionPath, IList<Tiles.TileInstance> path)
     {
         var resultingTile = path.Last();
 
         var movementCost = CalculateMovementCostFrom(path);
         Movement.Apply(Change.SubtractCurrent, movementCost);
         ActionEconomy.Moved(movementCost, Movement.CurrentAmount >= 1);
-        EventBus.Instance.RaiseUnitMoved(this, movementCost);
         
         IsOnHighGround = resultingTile.Point.IsHighGround;
         FinalYSpriteOffset = resultingTile.YSpriteOffset;
@@ -118,6 +117,8 @@ public sealed partial class UnitNode : ActorNode, INodeFromBlueprint<Unit>
         base.MoveUntilFinished(globalPositionPath, path);
         
         UpdateVitalsPosition();
+
+        return movementCost;
     }
     
     public float GetReach()
