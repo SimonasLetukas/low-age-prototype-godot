@@ -22,8 +22,8 @@ public partial class BuildNode : ActiveAbilityNode<
     {
         var ability = Instance();
         parentNode.AddChild(ability);
-        ability.SetBlueprint(blueprint);
         ability.OwnerActor = owner;
+        ability.SetBlueprint(blueprint);
         return ability;
     }
 
@@ -201,7 +201,7 @@ public partial class BuildNode : ActiveAbilityNode<
             new AbilityValidator.HelpApplicableAndAllowed
             {
                 EntityToBuild = request.EntityToBuild!,
-                HelpingAbilityInstanceId = InstanceId,
+                Helper = this,
                 HelpingAllowed = Blueprint.CanHelp,
                 NonConsumableStockpile = GetNonConsumableStockpile(),
                 IsRequeued = request.IsRequeued
@@ -262,7 +262,7 @@ public partial class BuildNode : ActiveAbilityNode<
     protected override void RequestExecution(Focus focus)
     {
         var entity = Registry.GetEntityById(focus.EntityToBuildId);
-        focus.EfficiencyFactor = entity?.CreationProgress?.CalculateEfficiencyFactor();
+        focus.EfficiencyFactor = entity?.CreationProgress?.CalculateEfficiencyFactor([]);
         
         base.RequestExecution(focus);
     }

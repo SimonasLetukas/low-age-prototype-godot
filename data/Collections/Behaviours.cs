@@ -1244,14 +1244,13 @@ namespace LowAgeData.Collections
                 new Buff(
                     id: BehaviourId.Slave.ManualLabourBuff,
                     displayName: nameof(BehaviourId.Slave.ManualLabourBuff).CamelCaseToWords(),
-                    description:
-                    "Slave is working on this Hut to provide +2 Scraps at the start of the planning phase.",
+                    description: "Slave is working on this Hut to provide +2 Scraps.",
                     sprite: "res://assets/icons/icon_ability_manual_labour.png",
                     finalEffects: new List<EffectId>
                     {
                         EffectId.Slave.ManualLabourModifyPlayer
                     },
-                    endsAt: EndsAt.StartOf.Next.Planning,
+                    endsAt: EndsAt.EndOf.This.ActionPhase,
                     canStack: false,
                     canResetDuration: false,
                     alignment: Alignment.Positive,

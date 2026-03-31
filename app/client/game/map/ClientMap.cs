@@ -638,6 +638,9 @@ public partial class ClientMap : Map
 
 	private ValidationResult ExecuteTarget()
 	{
+		if (_selectedAbility is PassiveNode)
+			return ValidationResult.Invalid("Cannot execute a passive ability.");
+		
 		IAbilityActivationRequest? request = _selectedAbility switch
 		{
 			TargetNode => new TargetNode.ActivationRequest

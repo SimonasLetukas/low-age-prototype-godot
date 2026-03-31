@@ -54,7 +54,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     /// </summary>
     public bool CanAddNewHelper() => Blueprint.MaximumHelpers < 0 || Helpers.Count < Blueprint.MaximumHelpers;
     
-    public int GetRemainingProductionLength(IList<Payment> nonConsumableStockpile)
+    public int GetRemainingProductionLength(IList<Payment> nonConsumableStockpile, HashSet<BuildNode> skippedHelpers)
     {
         if (GetResourcesSum(nonConsumableStockpile) <= 0)
             return int.MaxValue;
@@ -63,7 +63,11 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         if (isPaymentComplete)
             return 0;
 
-        if (Helpers.Count <= 0)
+        var helpers = Helpers
+            .Where(h => skippedHelpers.Contains(h.Key) is false)
+            .ToDictionary();
+        
+        if (helpers.Count <= 0)
             return int.MaxValue;
         
         var simulatedPaidCost = PaidCost.ToList();
@@ -71,9 +75,11 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
 
         while (Registry.IsPaymentComplete(NonConsumableCost, simulatedPaidCost) is false)
         {
-            for (var i = 0; i < Helpers.Count; i++)
+            for (var i = 0; i < helpers.Count; i++)
             {
-                var progress = CalculateProgressStep(simulatedPaidCost, nonConsumableStockpile, null);
+                var progress = CalculateProgressStep(simulatedPaidCost, nonConsumableStockpile, null, 
+                    skippedHelpers);
+                
                 simulatedPaidCost = progress.NewPaidSoFar.ToList();
             }
             
@@ -92,7 +98,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     public void UpdateDescription(IList<Payment> nonConsumableStockpile)
     {
         var helperText = Helpers.Count == 1 ? "1 helper is" : $"{Helpers.Count} helpers are";
-        var remainingUpdateCount = GetRemainingProductionLength(nonConsumableStockpile);
+        var remainingUpdateCount = GetRemainingProductionLength(nonConsumableStockpile, []);
         var remainingUpdateText = remainingUpdateCount == int.MaxValue ? "too many" : remainingUpdateCount.ToString();
         var appliedIncomeText = Registry.StringifyResources(GetAppliedIncome());
         var remainingCostText = Registry.StringifyResources(Registry.SubtractResources(NonConsumableCost, 
@@ -110,22 +116,26 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     /// <summary>
     /// Calculates the average efficiency factor given all the current helpers
     /// </summary>
-    public float CalculateEfficiencyFactor()
+    public float CalculateEfficiencyFactor(HashSet<BuildNode> skippedHelpers)
     {
-        var helpers = Helpers.Values
+        var helpers = Helpers
+            .Where(h => skippedHelpers.Contains(h.Key) is false)
+            .ToDictionary();
+        
+        var helperEfficiencies = helpers.Values
             .OrderDescending()
             .Skip(1); // First one is the main builder so it does not suffer from efficiency loss
         
         float currentProductionFactor = 1;
         float summedProductionBonus = 1;
 
-        foreach (var helperEfficiency in helpers)
+        foreach (var helperEfficiency in helperEfficiencies)
         {
             currentProductionFactor *= helperEfficiency;
             summedProductionBonus += currentProductionFactor;
         }
 
-        return MathF.Round(summedProductionBonus / Helpers.Count, 4);
+        return MathF.Round(summedProductionBonus / helpers.Count, 4);
     }
     
     public void UpdateProgress(IList<Payment> nonConsumableStockpile, float? efficiencyFactor)
@@ -138,7 +148,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
                 $"'{JsonConvert.SerializeObject(nonConsumableStockpile)}', paid cost " +
                 $"'{JsonConvert.SerializeObject(PaidCost)}', total cost '{JsonConvert.SerializeObject(TotalCost)}', " +
                 $"is payment complete {isPaymentComplete}, helpers {Helpers.Count}, efficiency factor " +
-                $"{CalculateEfficiencyFactor()}");
+                $"{CalculateEfficiencyFactor([])}");
         
         if (isPaymentComplete)
         {
@@ -148,7 +158,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
         }
 
         var previousPaidCost = PaidCost;
-        var progress = CalculateProgressStep(PaidCost, nonConsumableStockpile, efficiencyFactor);
+        var progress = CalculateProgressStep(PaidCost, nonConsumableStockpile, efficiencyFactor, []);
         PaidCost = progress.NewPaidSoFar.ToList();
         
         if (Log.DebugEnabled)
@@ -163,7 +173,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
     }
     
     private ProgressStep CalculateProgressStep(IList<Payment> paidSoFar, IList<Payment> nonConsumableStockpile,
-        float? efficiencyFactor)
+        float? efficiencyFactor, HashSet<BuildNode> skippedHelpers)
     {
         var isPaymentComplete = Registry.IsPaymentComplete(NonConsumableCost, paidSoFar);
         if (isPaymentComplete)
@@ -173,7 +183,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
                 Completed = true
             };
 
-        efficiencyFactor ??= CalculateEfficiencyFactor();
+        efficiencyFactor ??= CalculateEfficiencyFactor(skippedHelpers);
         var (_, updatedPaidSoFar) = Registry.SimulatePayment(NonConsumableCost,
             nonConsumableStockpile, paidSoFar, efficiencyFactor.Value);
 
@@ -229,7 +239,7 @@ public partial class BuildableNode : BehaviourNode, INodeFromBlueprint<Buildable
 
     private List<Payment> GetAppliedIncome()
     {
-        var efficiencyFactor = CalculateEfficiencyFactor();
+        var efficiencyFactor = CalculateEfficiencyFactor([]);
         var actualIncome = Registry.GetActualPlayerIncome(Parent.Player, efficiencyFactor, Helpers.Count);
         var nonConsumableIncome = Registry.GetNonConsumableResources(actualIncome);
         var filteredIncome = nonConsumableIncome

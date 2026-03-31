@@ -879,6 +879,7 @@ namespace LowAgeData.Collections
                         SearchTriggerFlag.AppliedOnEnter,
                         SearchTriggerFlag.AppliedOnSourceAction,
                         SearchTriggerFlag.AppliedOnPlanningPhaseStart,
+                        SearchTriggerFlag.AppliedOnActionPhaseStart,
                         SearchTriggerFlag.RemovedOnExit
                     },
                     effects: new List<EffectId>

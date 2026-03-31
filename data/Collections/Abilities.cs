@@ -1150,8 +1150,8 @@ namespace LowAgeData.Collections
                     id: AbilityId.Slave.ManualLabour,
                     turnPhase: TurnPhase.Planning,
                     displayName: nameof(AbilityId.Slave.ManualLabour).CamelCaseToWords(),
-                    description: "Select a nearby Hut. At the start of the next planning phase receive +2 " +
-                                 "Scraps. Maximum of one Slave per Hut.",
+                    description: "Select a nearby Hut. At the end of the action phase receive +2 Scraps. Maximum " +
+                                 "of one Slave per Hut.",
                     sprite: "res://assets/icons/icon_ability_manual_labour.png",
                     targetArea: new Circle(radius: 2, ignoreRadius: 0),
                     effects: new List<EffectId>

@@ -15,9 +15,17 @@ public partial class Behaviours : Node2D
         Parent = (EntityNode)GetParent();
     }
 
-    public IList<BehaviourNode> GetAll() => GetChildren().OfType<BehaviourNode>().ToList();
-    public IList<BuildableNode> GetBuildables() => GetChildren().OfType<BuildableNode>().ToList();
-    public IList<IPathfindingUpdatable> GetPathfindingUpdatables => GetChildren().OfType<IPathfindingUpdatable>().ToList();
+    public IList<BehaviourNode> GetAll() => IsInstanceValid(this) 
+        ? GetChildren().OfType<BehaviourNode>().ToList() 
+        : [];
+    
+    public IList<BuildableNode> GetBuildables() => IsInstanceValid(this) 
+        ? GetChildren().OfType<BuildableNode>().ToList() 
+        : [];
+    
+    public IList<IPathfindingUpdatable> GetPathfindingUpdatables() => IsInstanceValid(this) 
+        ? GetChildren().OfType<IPathfindingUpdatable>().ToList()
+        : [];
 
     public void AddOnBuildBehaviours(IEnumerable<PassiveNode> passiveAbilities)
     {
@@ -61,6 +69,9 @@ public partial class Behaviours : Node2D
 
     public void RemoveAll<T>() where T : BehaviourNode
     {
+        if (IsInstanceValid(this) is false)
+            return;
+        
         foreach (var behaviour in GetChildren().OfType<T>()) 
             behaviour.QueueFree();
     }

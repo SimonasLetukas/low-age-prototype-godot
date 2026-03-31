@@ -38,7 +38,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
     public IList<Vector2Int> EntityOccupyingPositions => new Area(EntityPrimaryPosition, EntitySize).ToList();
     public virtual IList<Tiles.TileInstance> EntityOccupyingTiles => EntityOccupyingPositions
         .Select(position => GetTile(position, false)).WhereNotNull().ToList();
-    public bool ProvidesHighGround => Behaviours.GetPathfindingUpdatables.IsEmpty() is false;
+    public bool ProvidesHighGround => Behaviours.GetPathfindingUpdatables().IsEmpty() is false;
     public Dictionary<Vector2Int, int> ProvidedHighGroundHeightByOccupyingPosition =>
         _providingHighGroundHeightByLocalEntityPosition.ToDictionary(pair => pair.Key + EntityPrimaryPosition, 
             pair => pair.Value);
@@ -299,7 +299,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         if (position.IsInBoundsOf(EntityPrimaryPosition, EntityPrimaryPosition + EntitySize) is false)
             return false;
 
-        var result = Behaviours.GetPathfindingUpdatables.Any(x => 
+        var result = Behaviours.GetPathfindingUpdatables().Any(x => 
             x.CanBeMovedOnAt(position, forTeam));
         
         return result;
@@ -307,7 +307,7 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
 
     public bool AllowsConnectionBetweenPoints(Point fromPoint, Point toPoint, Team forTeam)
     {
-        var pathfindingUpdatableBehaviours = Behaviours.GetPathfindingUpdatables;
+        var pathfindingUpdatableBehaviours = Behaviours.GetPathfindingUpdatables();
         if (pathfindingUpdatableBehaviours.IsEmpty())
             return true;
         

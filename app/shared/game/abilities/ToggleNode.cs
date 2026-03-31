@@ -17,8 +17,8 @@ public partial class ToggleNode : ActiveAbilityNode<
     {
         var ability = Instance();
         parentNode.AddChild(ability);
-        ability.SetBlueprint(blueprint);
         ability.OwnerActor = owner;
+        ability.SetBlueprint(blueprint);
         return ability;
     }
     

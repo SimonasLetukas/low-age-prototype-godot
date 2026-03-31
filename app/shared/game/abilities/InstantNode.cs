@@ -15,8 +15,8 @@ public partial class InstantNode : ActiveAbilityNode<
     {
         var ability = Instance();
         parentNode.AddChild(ability);
-        ability.SetBlueprint(blueprint);
         ability.OwnerActor = owner;
+        ability.SetBlueprint(blueprint);
         return ability;
     }
     

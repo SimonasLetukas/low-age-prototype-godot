@@ -239,7 +239,7 @@ public abstract partial class ActiveAbilityNode<
         }
 
         var validationResult = ValidateActivation(typedRequest);
-        if (validationResult.IsValid is false)
+        if (Loops is false && validationResult.IsValid is false)
         {
             if (Log.DebugEnabled)
                 Log.Info(nameof(ActiveAbilityNode<,,>), nameof(HandleRequeuedFocus), 

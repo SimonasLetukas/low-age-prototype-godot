@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using LowAgeCommon;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Behaviours;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Flags;
+using LowAgeData.Domain.Common.Shape;
 using LowAgeData.Domain.Effects;
 using MultipurposePathfinding;
 using Newtonsoft.Json;
@@ -15,7 +17,7 @@ public partial class PassiveNode : AbilityNode<
         PassiveNode.ActivationRequest, 
         PassiveNode.PreProcessingResult, 
         PassiveNode.Focus>, 
-    INodeFromBlueprint<Passive>
+    INodeFromBlueprint<Passive>, IAbilityHasTargetArea
 {
     private const string ScenePath = @"res://app/shared/game/abilities/PassiveNode.tscn";
     private static PassiveNode Instance() => (PassiveNode) GD.Load<PackedScene>(ScenePath).Instantiate();
@@ -23,19 +25,21 @@ public partial class PassiveNode : AbilityNode<
     {
         var ability = Instance();
         parentNode.AddChild(ability);
-        ability.SetBlueprint(blueprint);
         ability.OwnerActor = owner;
+        ability.SetBlueprint(blueprint);
         return ability;
     }
     
     private Passive Blueprint { get; set; } = null!;
 
+    private IShape? _targetArea;
     private HashSet<EntityNode> _periodicEffectTrackedEntities = [];
     
     public void SetBlueprint(Passive blueprint)
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
+        _targetArea = GetPeriodicSearchEffect()?.Shape;
 
         EventBus.Instance.UnitMoved += OnUnitMoved;
         EventBus.Instance.ActionEnded += OnActionEnded;
@@ -52,6 +56,17 @@ public partial class PassiveNode : AbilityNode<
         
         base._ExitTree();
     }
+    
+    public bool WholeMapIsTargeted() => _targetArea is LowAgeData.Domain.Common.Shape.Map;
+    
+    public IEnumerable<Vector2Int> GetTargetPositions(EntityNode caster)
+    {
+        var mapSize = Registry.MapSize;
+        return _targetArea?.ToPositions(caster, mapSize) ?? [];
+    }
+
+    public IEnumerable<Vector2> GetGlobalPositionsOfFocusedTargets() 
+        => _periodicEffectTrackedEntities.Select(entity => entity.GlobalPosition);
 
     public BehaviourId? GetOnBuildBehaviourOrDefault()
     {

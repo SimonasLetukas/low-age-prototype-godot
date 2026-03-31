@@ -5,10 +5,12 @@ using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Filters;
 using LowAgeData.Domain.Common.Flags;
+using LowAgeData.Domain.Common.Shape;
 using LowAgeData.Domain.Effects;
 
 public class SearchNode : EffectNode, INodeFromBlueprint<Search>
 {
+    public IShape Shape { get; private set; } = null!;
     public IList<SearchTriggerFlag> TriggerFlags { get; private set; } = [];
     
     private Search Blueprint { get; set; } = null!;
@@ -23,6 +25,7 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
     public void SetBlueprint(Search blueprint)
     {
         Blueprint = blueprint;
+        Shape = Blueprint.Shape;
         TriggerFlags = Blueprint.TriggerFlags;
         
         base.SetBlueprint(blueprint);

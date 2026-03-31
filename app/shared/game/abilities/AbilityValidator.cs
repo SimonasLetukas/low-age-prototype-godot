@@ -132,7 +132,7 @@ public sealed class AbilityValidator
     public sealed class HelpApplicableAndAllowed : IAbilityValidatorItem
     {
         public required EntityNode EntityToBuild { get; init; }
-        public required Guid HelpingAbilityInstanceId { get; init; }
+        public required BuildNode Helper { get; init; }
         public required bool HelpingAllowed { get; init; }
         public required IList<Payment> NonConsumableStockpile { get; init; }
         public required bool IsRequeued { get; init; }
@@ -146,7 +146,7 @@ public sealed class AbilityValidator
             
             var helpers = creationProgress.Helpers.Keys;
             
-            if (helpers.Any(a => a.InstanceId.Equals(HelpingAbilityInstanceId)) 
+            if (helpers.Any(a => a.Equals(Helper)) 
                 && IsRequeued is false)
                 return ValidationResult.Invalid("Already working on this.");
             
@@ -160,7 +160,8 @@ public sealed class AbilityValidator
             if (HelpingAllowed is false)
                 return ValidationResult.Invalid("Helping to work on this is not allowed.");
 
-            var remainingProductionLength = creationProgress.GetRemainingProductionLength(NonConsumableStockpile);
+            var remainingProductionLength = creationProgress.GetRemainingProductionLength(NonConsumableStockpile, 
+                [Helper]);
             var enoughHelp = IsRequeued
                 ? helpers.Count > 1 && remainingProductionLength <= 1
                 : remainingProductionLength <= 1;
