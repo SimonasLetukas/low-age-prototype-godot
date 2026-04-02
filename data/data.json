@@ -221,37 +221,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 6,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 14,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 20,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -262,7 +268,8 @@
             "bonusTo": null,
             "bonusAmount": 0,
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -293,37 +300,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 50,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 7,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 28,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -334,7 +347,8 @@
             "bonusTo": "ActorAttribute.Biological",
             "bonusAmount": 7,
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -364,37 +378,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 13,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 8,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 18,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -405,7 +425,8 @@
             "bonusTo": null,
             "bonusAmount": 0,
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -416,7 +437,8 @@
             "bonusTo": "ActorAttribute.Light",
             "bonusAmount": 2,
             "maxAmount": 3,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -427,7 +449,9 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost"
+          "ability-shared-revelators-population-cost",
+          "ability-quickdraw-doubleshot",
+          "ability-quickdraw-cripple"
         ],
         "displayName": "Quickdraw",
         "description": "A versatile ranged fighter. Quickdraws can fire twice and excel at stopping fast-moving Light enemies. Their attacks can be upgraded to cripple targets for a short duration.",
@@ -445,37 +469,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 7,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 9,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 26,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -486,7 +516,8 @@
             "bonusTo": "ActorAttribute.Biological",
             "bonusAmount": 3,
             "maxAmount": 3,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -514,37 +545,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 19,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 23,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -555,7 +592,8 @@
             "bonusTo": "ActorAttribute.Armoured",
             "bonusAmount": 4,
             "maxAmount": 6,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -583,37 +621,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 18,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 8,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 19,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -624,7 +668,8 @@
             "bonusTo": null,
             "bonusAmount": 0,
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -635,7 +680,8 @@
             "bonusTo": "ActorAttribute.Ranged",
             "bonusAmount": 9,
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -664,37 +710,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 22,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 11,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 12,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -705,7 +757,8 @@
             "bonusTo": null,
             "bonusAmount": 0,
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -716,7 +769,8 @@
             "bonusTo": "ActorAttribute.Armoured",
             "bonusAmount": 8,
             "maxAmount": 6,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -745,37 +799,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 40,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 9,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 25,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 6,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -786,7 +846,8 @@
             "bonusTo": "ActorAttribute.Giant",
             "bonusAmount": 6,
             "maxAmount": 8,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -814,37 +875,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 39,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 4,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 16,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -855,7 +922,8 @@
             "bonusTo": null,
             "bonusAmount": 0,
             "maxAmount": 3,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -883,37 +951,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 5,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 15,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -924,7 +998,8 @@
             "bonusTo": "ActorAttribute.Mechanical",
             "bonusAmount": 4,
             "maxAmount": 6,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -949,37 +1024,43 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 36,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 12,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 14,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -990,7 +1071,8 @@
             "bonusTo": null,
             "bonusAmount": 0,
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -1018,43 +1100,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 25,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 12,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 3,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 4,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 32,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1065,7 +1154,8 @@
             "bonusTo": "ActorAttribute.Armoured",
             "bonusAmount": 4,
             "maxAmount": 9,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1092,43 +1182,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 7,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 4,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 17,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1139,7 +1236,8 @@
             "bonusTo": null,
             "bonusAmount": 0,
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1150,7 +1248,8 @@
             "bonusTo": "ActorAttribute.Ranged",
             "bonusAmount": 3,
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1178,43 +1277,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 2,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 2,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 11,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 30,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1225,7 +1331,8 @@
             "bonusTo": "ActorAttribute.Light",
             "bonusAmount": 4,
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1252,43 +1359,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 8,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 21,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1299,7 +1413,8 @@
             "bonusTo": null,
             "bonusAmount": 0,
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1310,7 +1425,8 @@
             "bonusTo": "ActorAttribute.Armoured",
             "bonusAmount": 9,
             "maxAmount": 8,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1338,43 +1454,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 9,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 5,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 8,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 45,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1385,7 +1508,8 @@
             "bonusTo": "ActorAttribute.Celestial",
             "bonusAmount": 3,
             "maxAmount": 3,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1412,43 +1536,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 8,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 4,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 8,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 11,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1459,7 +1590,8 @@
             "bonusTo": "ActorAttribute.Mechanical",
             "bonusAmount": 5,
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1486,43 +1618,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 30,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 8,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 3,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 1,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 8,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1533,7 +1672,8 @@
             "bonusTo": "ActorAttribute.Structure",
             "bonusAmount": 20,
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1559,43 +1699,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 14,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 0,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 27,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 6,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1606,7 +1753,8 @@
             "bonusTo": "ActorAttribute.Giant",
             "bonusAmount": 6,
             "maxAmount": 9,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1632,43 +1780,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 20,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 12,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 0,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 8,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1693,43 +1848,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 50,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 6,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 29,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 6,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1740,7 +1902,8 @@
             "bonusTo": "ActorAttribute.Mechanical",
             "bonusAmount": 8,
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1767,43 +1930,50 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 5,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 20,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Movement",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Initiative",
             "maxAmount": 13,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": true
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1814,7 +1984,8 @@
             "bonusTo": "ActorAttribute.Biological",
             "bonusAmount": 10,
             "maxAmount": 10,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "AttackStat",
@@ -1825,7 +1996,8 @@
             "bonusTo": "ActorAttribute.Biological",
             "bonusAmount": 5,
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -1884,7 +2056,8 @@
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 5,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -1939,25 +2112,29 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 50,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -2012,25 +2189,29 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 60,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 3,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -2085,25 +2266,29 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 35,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 15,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -2158,25 +2343,29 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 75,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -2231,25 +2420,29 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 80,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -2304,25 +2497,29 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 90,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -2377,25 +2574,29 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 65,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -2450,25 +2651,29 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 55,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -2525,25 +2730,29 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 90,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -2599,25 +2808,29 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 65,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-revelators",
@@ -2671,31 +2884,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 100,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 0,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 15,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -2750,31 +2968,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 100,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 25,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 15,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -2829,31 +3052,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 100,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 50,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 15,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -2908,31 +3136,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 40,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 30,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -2987,31 +3220,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 70,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 15,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3066,31 +3304,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 6,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 60,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3144,31 +3387,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 35,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 0,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3222,31 +3470,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 80,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 15,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3300,31 +3553,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 95,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 20,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3378,31 +3636,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 110,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 30,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3456,31 +3719,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 65,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 25,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 1,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3537,31 +3805,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 100,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3618,31 +3891,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 60,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3699,31 +3977,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 300,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 10,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3783,31 +4066,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 95,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 0,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 2,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -3864,31 +4152,36 @@
             "$type": "CombatStat",
             "combatType": "StatType.Health",
             "maxAmount": 550,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Shields",
             "maxAmount": 0,
-            "hasCurrent": true
+            "hasCurrent": true,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.MeleeArmour",
             "maxAmount": 3,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.RangedArmour",
             "maxAmount": 20,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           },
           {
             "$type": "CombatStat",
             "combatType": "StatType.Vision",
             "maxAmount": 4,
-            "hasCurrent": false
+            "hasCurrent": false,
+            "allowsOverflow": false
           }
         ],
         "originalFaction": "faction-uee",
@@ -6653,7 +6946,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Cripple",
-      "description": "Each ranged attack cripples the target until the end of their action. During this time target has 60% of their maximum Movement (rounded up) and cannot receive healing from any sources. Multiple attacks on a crippled target have no additional effects.",
+      "description": "Each ranged attack cripples the target until the end of their action. During this time target has 60% of their maximum Movement (rounded down) and cannot receive healing from any sources. Multiple attacks on a crippled target have no additional effects.",
       "sprite": "res://assets/icons/icon_ability_cripple.png",
       "centerOffset": {
         "x": 0,
@@ -8086,7 +8379,7 @@
       "$type": "ModifyPlayer",
       "id": "effect-shared-uee-power-generator-modify-player",
       "modifyFlags": [
-        "ModifyPlayerFlag.GameLost"
+        "PlayerModificationFlag.GameLost"
       ],
       "resourceModifications": [],
       "target": "Location.Self",
@@ -9304,7 +9597,7 @@
       "$type": "ModifyPlayer",
       "id": "effect-leader-all-for-one-modify-player",
       "modifyFlags": [
-        "ModifyPlayerFlag.GameLost"
+        "PlayerModificationFlag.GameLost"
       ],
       "resourceModifications": [],
       "target": "Location.Self",
@@ -9464,7 +9757,7 @@
       ],
       "triggerFlags": [],
       "effects": [
-        "effect-leader-one-for-all-apply-behaviour-heal"
+        "effect-leader-one-for-all-heal"
       ],
       "location": "Location.Self",
       "usedForValidator": false,
@@ -9472,14 +9765,16 @@
       "validators": []
     },
     {
-      "$type": "ApplyBehaviour",
-      "id": "effect-leader-one-for-all-apply-behaviour-heal",
-      "behavioursToApply": [
-        "behaviour-leader-one-for-all-heal-buff"
-      ],
+      "$type": "Heal",
+      "id": "effect-leader-one-for-all-heal",
+      "statType": "StatType.Health",
+      "amount": {
+        "flat": 2,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplyTarget": "Location.Inherited"
+      },
       "filters": [],
-      "behaviourOwner": null,
-      "waitForInitialEffects": false,
       "target": "Location.Inherited",
       "validators": []
     },
@@ -9619,10 +9914,6 @@
         "behaviour-quickdraw-cripple-buff"
       ],
       "filters": [
-        {
-          "$type": "SpecificFlag",
-          "value": "FilterFlag.Enemy"
-        },
         {
           "$type": "SpecificFlag",
           "value": "FilterFlag.Unit"
@@ -12300,7 +12591,7 @@
       "$type": "Buff",
       "id": "behaviour-shared-uee-power-dependency-buff-disable",
       "modificationFlags": [
-        "ModificationFlag.AbilitiesDisabled"
+        "EntityModificationFlag.AbilitiesDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -14118,39 +14409,6 @@
       }
     },
     {
-      "$type": "Buff",
-      "id": "behaviour-leader-one-for-all-heal-buff",
-      "modificationFlags": [],
-      "initialModifications": [
-        {
-          "$type": "StatModification",
-          "statType": "StatType.Health",
-          "change": "Change.AddCurrent",
-          "amount": 2.0
-        }
-      ],
-      "initialEffects": [],
-      "finalModifications": [],
-      "finalEffects": [],
-      "restoreChangesOnEnd": false,
-      "displayName": "One For All Heal Buff",
-      "description": "Heals for 2 Health.",
-      "endsAt": "EndsAt.Instant",
-      "alignment": "Alignment.Positive",
-      "canStack": false,
-      "canResetDuration": false,
-      "triggers": [],
-      "removeOnConditionsMet": false,
-      "conditionalEffects": [],
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_one_for_all.png",
-      "centerOffset": {
-        "x": 0,
-        "y": 0
-      }
-    },
-    {
       "$type": "Buildable",
       "id": "behaviour-hut-building-buildable",
       "placementValidators": [
@@ -14346,27 +14604,6 @@
       }
     },
     {
-      "$type": "Wait",
-      "id": "behaviour-slave-manual-labour-wait",
-      "nextBehaviour": null,
-      "displayName": "Manual Labour Wait",
-      "description": "Currently working on a nearby Hut.",
-      "endsAt": "EndsAt.StartOfNextPlanning",
-      "alignment": "Alignment.Neutral",
-      "canStack": false,
-      "canResetDuration": false,
-      "triggers": [],
-      "removeOnConditionsMet": false,
-      "conditionalEffects": [],
-      "ownerAllowed": false,
-      "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_manual_labour.png",
-      "centerOffset": {
-        "x": 0,
-        "y": 0
-      }
-    },
-    {
       "$type": "ExtraAttack",
       "id": "behaviour-quickdraw-doubleshot-extra-attack",
       "attackTypes": [
@@ -14393,7 +14630,7 @@
       "$type": "Buff",
       "id": "behaviour-quickdraw-cripple-buff",
       "modificationFlags": [
-        "ModificationFlag.CannotBeHealed"
+        "EntityModificationFlag.CannotBeHealed"
       ],
       "initialModifications": [
         {
@@ -14408,7 +14645,7 @@
       "finalEffects": [],
       "restoreChangesOnEnd": true,
       "displayName": "Cripple Buff",
-      "description": "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing from any sources until the end of its action.",
+      "description": "This unit has only 60% of their maximum Movement (rounded down) and cannot receive healing from any sources until the end of its action.",
       "endsAt": "EndsAt.EndOfThisAction",
       "alignment": "Alignment.Negative",
       "canStack": false,
@@ -14456,7 +14693,7 @@
       "$type": "Buff",
       "id": "behaviour-camou-silent-assassin-buff",
       "modificationFlags": [
-        "ModificationFlag.AbilitiesDisabled"
+        "EntityModificationFlag.AbilitiesDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -14505,7 +14742,7 @@
       "$type": "Buff",
       "id": "behaviour-camou-climb-buff",
       "modificationFlags": [
-        "ModificationFlag.ClimbsDown"
+        "EntityModificationFlag.ClimbsDown"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -14727,7 +14964,7 @@
       "$type": "Buff",
       "id": "behaviour-pyre-phantom-menace-buff",
       "modificationFlags": [
-        "ModificationFlag.MovesThroughEnemyUnits"
+        "EntityModificationFlag.MovesThroughEnemyUnits"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -14839,9 +15076,9 @@
       "$type": "Buff",
       "id": "behaviour-parasite-paralysing-grasp-buff",
       "modificationFlags": [
-        "ModificationFlag.CanAttackAnyTeam",
-        "ModificationFlag.MovementDisabled",
-        "ModificationFlag.MustExecuteAttack"
+        "EntityModificationFlag.CanAttackAnyTeam",
+        "EntityModificationFlag.MovementDisabled",
+        "EntityModificationFlag.MustExecuteAttack"
       ],
       "initialModifications": [],
       "initialEffects": [
@@ -14876,8 +15113,8 @@
       "$type": "Buff",
       "id": "behaviour-parasite-paralysing-grasp-self-buff",
       "modificationFlags": [
-        "ModificationFlag.AbilitiesDisabled",
-        "ModificationFlag.CannotAttack"
+        "EntityModificationFlag.AbilitiesDisabled",
+        "EntityModificationFlag.CannotAttack"
       ],
       "initialModifications": [
         {
@@ -15166,7 +15403,7 @@
           "attackType": "AttackType.Ranged",
           "attribute": "AttackAttribute.MaxAmount",
           "modificationFlags": [
-            "ModificationFlag.IgnoreArmour"
+            "AttackModificationFlag.IgnoreArmour"
           ],
           "change": "Change.AddCurrent",
           "amount": 0.0
@@ -15634,7 +15871,7 @@
       "$type": "Buff",
       "id": "behaviour-cannon-machine-buff",
       "modificationFlags": [
-        "ModificationFlag.FullyDisabled"
+        "EntityModificationFlag.FullyDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -15662,7 +15899,7 @@
       "$type": "Buff",
       "id": "behaviour-cannon-heat-up-danger-zone-buff",
       "modificationFlags": [
-        "ModificationFlag.ProvidesVision"
+        "EntityModificationFlag.ProvidesVision"
       ],
       "initialModifications": [
         {
@@ -15763,7 +16000,7 @@
       "$type": "Buff",
       "id": "behaviour-ballista-machine-buff",
       "modificationFlags": [
-        "ModificationFlag.FullyDisabled"
+        "EntityModificationFlag.FullyDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -15865,7 +16102,7 @@
       "$type": "Buff",
       "id": "behaviour-radar-machine-buff",
       "modificationFlags": [
-        "ModificationFlag.FullyDisabled"
+        "EntityModificationFlag.FullyDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -15893,7 +16130,7 @@
       "$type": "Buff",
       "id": "behaviour-radar-resonating-sweep-buff",
       "modificationFlags": [
-        "ModificationFlag.ProvidesVision"
+        "EntityModificationFlag.ProvidesVision"
       ],
       "initialModifications": [
         {
@@ -15960,8 +16197,8 @@
       "$type": "Buff",
       "id": "behaviour-radar-radio-location-feature-buff",
       "modificationFlags": [
-        "ModificationFlag.OnlyVisibleToAllies",
-        "ModificationFlag.OnlyVisibleInFogOfWar"
+        "EntityModificationFlag.OnlyVisibleToAllies",
+        "EntityModificationFlag.OnlyVisibleInFogOfWar"
       ],
       "initialModifications": [],
       "initialEffects": [],
@@ -16019,7 +16256,7 @@
       "$type": "Buff",
       "id": "behaviour-vessel-machine-buff",
       "modificationFlags": [
-        "ModificationFlag.FullyDisabled"
+        "EntityModificationFlag.FullyDisabled"
       ],
       "initialModifications": [],
       "initialEffects": [],

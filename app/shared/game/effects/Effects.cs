@@ -52,6 +52,10 @@ public class Effects
                 var applyBehaviourNode = new ApplyBehaviourNode(applyBehaviour, this, initialTargets, 
                     initiatorPlayer, initiatorEntity);
                 return applyBehaviourNode;
+            case Heal heal:
+                var healNode = new HealNode(heal, this, initialTargets, initiatorPlayer, 
+                    initiatorEntity);
+                return healNode;
             case ModifyPlayer modifyPlayer:
                 var modifyPlayerNode = new ModifyPlayerNode(modifyPlayer, this, initialTargets, initiatorPlayer, 
                     initiatorEntity);

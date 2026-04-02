@@ -87,6 +87,9 @@ public partial class Behaviours : Node2D
             Buff buff 
                 => BuffNode.InstantiateAsChild(buff, this, history, Parent),
             
+            ExtraAttack extraAttack 
+                => ExtraAttackNode.InstantiateAsChild(extraAttack, this, history, Parent),
+            
             HighGround highGround 
                 => HighGroundNode.InstantiateAsChild(highGround, this, history, Parent),
             

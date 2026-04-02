@@ -178,14 +178,12 @@ namespace LowAgeData.Domain.Behaviours
             public static BehaviourId AllForOneBuff => new BehaviourId($"{nameof(Leader)}{nameof(AllForOneBuff)}".ToKebabCase(), true);
             public static BehaviourId MenacingPresenceBuff => new BehaviourId($"{nameof(Leader)}{nameof(MenacingPresenceBuff)}".ToKebabCase(), true);
             public static BehaviourId OneForAllObeliskBuff => new BehaviourId($"{nameof(Leader)}{nameof(OneForAllObeliskBuff)}".ToKebabCase(), true);
-            public static BehaviourId OneForAllHealBuff => new BehaviourId($"{nameof(Leader)}{nameof(OneForAllHealBuff)}".ToKebabCase(), true);
         }
 
         public static class Slave
         {
             public static BehaviourId RepairStructureBuff => new BehaviourId($"{nameof(Slave)}{nameof(RepairStructureBuff)}".ToKebabCase(), true);
             public static BehaviourId ManualLabourBuff => new BehaviourId($"{nameof(Slave)}{nameof(ManualLabourBuff)}".ToKebabCase(), true);
-            public static BehaviourId ManualLabourWait => new BehaviourId($"{nameof(Slave)}{nameof(ManualLabourWait)}".ToKebabCase(), true);
         }
 
         public static class Quickdraw

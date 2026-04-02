@@ -12,7 +12,7 @@ namespace LowAgeData.Domain.Common
             int minimumDistance, 
             int maximumDistance, 
             ActorAttribute? bonusTo = null, 
-            int bonusAmount = 0) : base(maxAmount, false)
+            int bonusAmount = 0) : base(maxAmount, false, false)
         {
             DisplayName = displayName;
             AttackType = attackType;

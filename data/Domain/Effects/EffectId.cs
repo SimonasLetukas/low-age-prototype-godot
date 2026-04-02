@@ -216,7 +216,7 @@ namespace LowAgeData.Domain.Effects
             public static EffectId MenacingPresenceApplyBehaviour => new EffectId($"{nameof(Leader)}{nameof(MenacingPresenceApplyBehaviour)}".ToKebabCase(), true);
             public static EffectId OneForAllApplyBehaviourObelisk => new EffectId($"{nameof(Leader)}{nameof(OneForAllApplyBehaviourObelisk)}".ToKebabCase(), true);
             public static EffectId OneForAllSearch => new EffectId($"{nameof(Leader)}{nameof(OneForAllSearch)}".ToKebabCase(), true);
-            public static EffectId OneForAllApplyBehaviourHeal => new EffectId($"{nameof(Leader)}{nameof(OneForAllApplyBehaviourHeal)}".ToKebabCase(), true);
+            public static EffectId OneForAllHeal => new EffectId($"{nameof(Leader)}{nameof(OneForAllHeal)}".ToKebabCase(), true);
         }
 
         public static class Slave

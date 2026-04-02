@@ -624,6 +624,8 @@ public partial class ClientMap : Map
 
 		if (selectedActor.CanAttack(attackType) is false)
 			return ValidationResult.Invalid($"This unit has no action for a {attackType} attack.");
+
+		selectedActor.Abilities.OnAttackExecuted(attackType, targetEntity);
 		
 		EntityAttacked(new EntityAttackedEvent
 		{
@@ -631,7 +633,6 @@ public partial class ClientMap : Map
 			TargetId = targetEntity.InstanceId,
 			AttackType = attackType
 		});
-		HandleDeselecting();
 		
 		return ValidationResult.Valid;
 	}

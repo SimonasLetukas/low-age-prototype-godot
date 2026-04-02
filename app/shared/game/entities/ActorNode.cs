@@ -6,6 +6,7 @@ using LowAgeCommon;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeCommon.Extensions;
+using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Common.Modifications;
 using LowAgeData.Domain.Common.Shape;
 using LowAgeData.Domain.Factions;
@@ -225,6 +226,22 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             
             WorkingOn.Remove(workingOnAbility);
         }
+    }
+
+    public void Heal(int amount, bool isShields = false)
+    {
+        if (Flags.Contains(EntityModificationFlag.CannotBeHealed))
+            return;
+        
+        var stat = isShields ? Shields : Health;
+        if (stat is null)
+            return;
+        
+        var potentialHealAmount = (int)Math.Min(amount, stat.MaxAmount - stat.CurrentAmount);
+
+        stat.Apply(Change.AddCurrent, amount);
+        
+        EventBus.Instance.RaiseActorHealed(this, potentialHealAmount);
     }
 
     public bool CanAttack(bool? isMelee) => isMelee is null 

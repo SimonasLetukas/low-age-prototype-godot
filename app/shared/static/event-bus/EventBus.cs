@@ -74,6 +74,9 @@ public partial class EventBus : Node
     public event Action<EntityNode, EntityNode, int, DamageType> FinalDamageDone = delegate { };
     public void RaiseFinalDamageDone(EntityNode to, EntityNode from, int amount, DamageType type) 
         => FinalDamageDone(to, from, amount, type);
+
+    public event Action<ActorNode, int> ActorHealed = delegate { };
+    public void RaiseActorHealed(ActorNode actor, int amount) => ActorHealed(actor, amount);
     
     public event Action<EntityNode, EntityNode?> EntityDestroyed = delegate { };
     public void RaiseEntityDestroyed(EntityNode entity, EntityNode? source) => EntityDestroyed(entity, source);

@@ -46,7 +46,7 @@ public abstract class EffectNode(
         return result;
     }
 
-    public virtual bool Execute() => IsValidated;
+    public abstract bool Execute();
 
     protected abstract IList<IFilterItem> GetFilters();
     

@@ -1175,7 +1175,7 @@ namespace LowAgeData.Collections
                     id: AbilityId.Quickdraw.Cripple,
                     displayName: nameof(AbilityId.Quickdraw.Cripple).CamelCaseToWords(),
                     description: "Each ranged attack cripples the target until the end of their action. During " +
-                                 "this time target has 60% of their maximum Movement (rounded up) and cannot receive healing " +
+                                 "this time target has 60% of their maximum Movement (rounded down) and cannot receive healing " +
                                  "from any sources. Multiple attacks on a crippled target have no additional effects.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_cripple.png",
@@ -1402,9 +1402,6 @@ namespace LowAgeData.Collections
                     description: "At the start of each action loses 1 Health more than the previous action.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Roach.DegradingCarapaceApplyBehaviour
@@ -1438,7 +1435,6 @@ namespace LowAgeData.Collections
                     "otherwise skip turn.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    researchNeeded: null,
                     onHitEffects: new List<EffectId>
                     {
                         EffectId.Parasite.ParalysingGraspApplyTetherBehaviour,
@@ -1499,9 +1495,6 @@ namespace LowAgeData.Collections
                     description: "Upon death, reemerges as Horrior.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Surfer.DismountApplyBehaviour
@@ -1515,9 +1508,6 @@ namespace LowAgeData.Collections
                     "Each ranged attack deals full Ranged Damage to all adjacent units around the target.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Mortar.DeadlyAmmunitionApplyBehaviour
@@ -1544,8 +1534,6 @@ namespace LowAgeData.Collections
                     {
                         ResearchId.Uee.ExplosiveShrapnel
                     },
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Mortar.PiercingBlastApplyBehaviour
@@ -1557,9 +1545,6 @@ namespace LowAgeData.Collections
                     description: "Gains +3 Vision range.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Hawk.TacticalGogglesApplyBehaviour
@@ -1589,8 +1574,6 @@ namespace LowAgeData.Collections
                     {
                         ResearchId.Uee.MdPractice
                     },
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Hawk.HealthKitApplyBehaviour
@@ -1691,9 +1674,6 @@ namespace LowAgeData.Collections
                                  "only if maximum number of 3 Engineers are operating it.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Cannon.MachineApplyBehaviour
@@ -1728,9 +1708,6 @@ namespace LowAgeData.Collections
                                  "only if maximum number of 1 Engineer is operating it.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Ballista.MachineApplyBehaviour
@@ -1811,9 +1788,6 @@ namespace LowAgeData.Collections
                                  "functional and can act only if maximum number of 3 Engineers are operating it.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    researchNeeded: null,
-                    onHitEffects: null,
-                    onHitAttackTypes: null,
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Vessel.MachineApplyBehaviour

@@ -59,6 +59,12 @@ public partial class Abilities : Node2D
         }
     }
 
+    public void OnAttackExecuted(AttackType attackType, EntityNode targetEntity)
+    {
+        foreach (var passive in GetPassives()) 
+            passive.OnAttackExecuted(attackType, targetEntity);
+    }
+
     public void OnActorBirth()
     {
         foreach (var passive in GetPassives()) 

@@ -45,7 +45,7 @@ namespace LowAgeData.Domain.Abilities
         public EffectId? PeriodicSearchEffect { get; }
 
         /// <summary>
-        /// Executes effects on each attack.
+        /// Executes effects just before each attack hits the target.
         /// </summary>
         public IList<EffectId> OnHitEffects { get; }
 

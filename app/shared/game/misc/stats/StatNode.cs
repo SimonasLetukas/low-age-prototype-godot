@@ -45,20 +45,20 @@ public abstract partial class StatNode : Node2D, INodeFromBlueprint<Stat>
         var (newCurrent, newMax) = what switch
         {
             _ when what.Equals(Change.AddMax) => (currentAmount, maxAmount + amount),
-            _ when what.Equals(Change.AddCurrent) => (Math.Min(currentAmount + amount, maxAmount), maxAmount),
+            _ when what.Equals(Change.AddCurrent) => (currentAmount + amount, maxAmount),
             _ when what.Equals(Change.SubtractMax) => (currentAmount, maxAmount - amount),
             _ when what.Equals(Change.SubtractCurrent) => (currentAmount - amount, maxAmount),
             _ when what.Equals(Change.SetMax) => (currentAmount, amount),
             _ when what.Equals(Change.SetCurrent) => (amount, maxAmount),
             _ when what.Equals(Change.MultiplyMax) => (currentAmount, maxAmount * amount),
-            _ when what.Equals(Change.MultiplyCurrent) => (Math.Min(currentAmount * amount, maxAmount), maxAmount),
+            _ when what.Equals(Change.MultiplyCurrent) => (currentAmount * amount, maxAmount),
             _ => (currentAmount, maxAmount),
         };
         
         return (newCurrent, (int)newMax);
     }
 
-    protected static (float NewCurrent, int NewMax) GetModified(float currentAmount, int maxAmount, 
+    protected (float NewCurrent, int NewMax) GetModified(float currentAmount, int maxAmount, 
         IEnumerable<Modification> modifications)
     {
         foreach (var modification in modifications
@@ -68,6 +68,9 @@ public abstract partial class StatNode : Node2D, INodeFromBlueprint<Stat>
         {
             (currentAmount, maxAmount) = GetUpdated(modification.Change, modification.Amount, currentAmount, maxAmount);
         }
+
+        if (Blueprint.AllowsOverflow is false)
+            currentAmount = Math.Min(currentAmount, maxAmount);
         
         return (currentAmount, maxAmount);
     }

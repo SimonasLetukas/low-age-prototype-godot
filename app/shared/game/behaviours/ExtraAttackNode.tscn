@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://da7ybewo7hjhn"]
+
+[ext_resource type="PackedScene" uid="uid://c27u5adjari35" path="res://app/shared/game/behaviours/BehaviourNode.tscn" id="1_lo7i0"]
+[ext_resource type="Script" uid="uid://dro2q70xt0rua" path="res://app/shared/game/behaviours/ExtraAttackNode.cs" id="2_3t032"]
+
+[node name="ExtraAttackNode" instance=ExtResource("1_lo7i0")]
+script = ExtResource("2_3t032")

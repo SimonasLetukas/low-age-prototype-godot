@@ -44,8 +44,8 @@ namespace LowAgeData
 
             // Effects:
             typeof(ApplyBehaviour), typeof(CreateEntity), typeof(Damage), typeof(Destroy), typeof(ExecuteAbility), 
-            typeof(Force), typeof(ModifyAbility), typeof(ModifyCounter), typeof(ModifyPlayer), typeof(ModifyResearch), 
-            typeof(Reload), typeof(RemoveBehaviour), typeof(Search), typeof(Teleport), 
+            typeof(Force), typeof(Heal), typeof(ModifyAbility), typeof(ModifyCounter), typeof(ModifyPlayer), 
+            typeof(ModifyResearch), typeof(Reload), typeof(RemoveBehaviour), typeof(Search), typeof(Teleport), 
 
             // Entities:
             typeof(Structure), typeof(Unit), typeof(Doodad), 
@@ -55,9 +55,10 @@ namespace LowAgeData
             typeof(ResultValidator), typeof(TargetedAbilityCondition), typeof(TileCondition), 
             
             // EnumValueObjects:
-            typeof(ActorAttribute), typeof(Alignment), typeof(AmountMultiplyOfFlag), typeof(AttackAttribute), typeof(AttackType),
-            typeof(Change), typeof(ConditionFlag), typeof(DamageType), typeof(EndsAt), typeof(Event), typeof(FilterFlag),
-            typeof(Location), typeof(ModificationFlag), typeof(ModifyPlayerFlag), typeof(SearchHeight), 
+            typeof(ActorAttribute), typeof(Alignment), typeof(AmountMultiplyOfFlag), typeof(AttackAttribute), 
+            typeof(AttackModificationFlag), typeof(AttackType), typeof(Change), typeof(ConditionFlag), 
+            typeof(DamageType), typeof(EndsAt), typeof(Event), typeof(FilterFlag), typeof(Location), 
+            typeof(EntityModificationFlag), typeof(PlayerModificationFlag), typeof(SearchHeight), 
             typeof(SearchTriggerFlag), typeof(StatType), typeof(Terrain), typeof(TurnPhase),
         };
 

@@ -280,9 +280,9 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Shared.Uee.PowerDependencyBuffDisable).CamelCaseToWords(),
                     description: "All abilities are disabled because Power is not supplied.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.AbilitiesDisabled
+                        EntityModificationFlag.AbilitiesDisabled
                     },
                     endsAt: EndsAt.StartOf.Next.ActionPhase,
                     canStack: false,
@@ -1144,23 +1144,6 @@ namespace LowAgeData.Collections
                     canResetDuration: false,
                     alignment: Alignment.Negative),
 
-                new Buff(
-                    id: BehaviourId.Leader.OneForAllHealBuff,
-                    displayName: nameof(BehaviourId.Leader.OneForAllHealBuff).CamelCaseToWords(),
-                    description: "Heals for 2 Health.",
-                    sprite: "res://assets/icons/icon_ability_one_for_all.png",
-                    initialModifications: new List<Modification>
-                    {
-                        new StatModification(
-                            change: Change.AddCurrent,
-                            amount: 2,
-                            statType: StatType.Health)
-                    },
-                    endsAt: EndsAt.Instant,
-                    canStack: false,
-                    canResetDuration: false,
-                    alignment: Alignment.Positive),
-
                 new Buildable(
                     id: BehaviourId.Hut.BuildingBuildable,
                     displayName: nameof(BehaviourId.Hut.BuildingBuildable).CamelCaseToWords(),
@@ -1260,13 +1243,6 @@ namespace LowAgeData.Collections
                     },
                     removeOnConditionsMet: true),
 
-                new Wait(
-                    id: BehaviourId.Slave.ManualLabourWait,
-                    displayName: nameof(BehaviourId.Slave.ManualLabourWait).CamelCaseToWords(),
-                    description: "Currently working on a nearby Hut.",
-                    sprite: "res://assets/icons/icon_ability_manual_labour.png",
-                    endsAt: EndsAt.StartOf.Next.Planning),
-
                 new ExtraAttack(
                     id: BehaviourId.Quickdraw.DoubleshotExtraAttack,
                     displayName: nameof(BehaviourId.Quickdraw.DoubleshotExtraAttack).CamelCaseToWords(),
@@ -1281,12 +1257,12 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Quickdraw.CrippleBuff,
                     displayName: nameof(BehaviourId.Quickdraw.CrippleBuff).CamelCaseToWords(),
                     description:
-                    "This unit has only 60% of their maximum Movement (rounded up) and cannot receive healing " +
+                    "This unit has only 60% of their maximum Movement (rounded down) and cannot receive healing " +
                     "from any sources until the end of its action.",
                     sprite: "res://assets/icons/icon_ability_cripple.png",
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.CannotBeHealed
+                        EntityModificationFlag.CannotBeHealed
                     },
                     initialModifications: new List<Modification>
                     {
@@ -1295,16 +1271,10 @@ namespace LowAgeData.Collections
                             amount: 0.6f,
                             statType: StatType.Movement)
                     },
-                    initialEffects: null,
-                    finalModifications: null,
-                    finalEffects: null,
                     endsAt: EndsAt.EndOf.This.Action,
                     canStack: false,
                     canResetDuration: true,
                     alignment: Alignment.Negative,
-                    triggers: null,
-                    removeOnConditionsMet: false,
-                    conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
                 new Buff(
@@ -1328,9 +1298,9 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Camou.SilentAssassinBuff).CamelCaseToWords(),
                     description: "This unit is silenced (use of any abilities is disabled).",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.AbilitiesDisabled
+                        EntityModificationFlag.AbilitiesDisabled
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -1358,9 +1328,9 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Camou.ClimbBuff).CamelCaseToWords(),
                     description: "Camou can move down from high ground at the additional cost of 1 Movement.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.ClimbsDown
+                        EntityModificationFlag.ClimbsDown
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -1504,9 +1474,9 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Pyre.PhantomMenaceBuff).CamelCaseToWords(),
                     description: "Pyre can move through enemy units (but not buildings).",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.MovesThroughEnemyUnits
+                        EntityModificationFlag.MovesThroughEnemyUnits
                     }),
 
                 new Buff(
@@ -1569,11 +1539,11 @@ namespace LowAgeData.Collections
                     "This unit is possessed by Parasite. On its turn, the possessed unit controls the attack which it " +
                     "must do unless there are no legal targets.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.CanAttackAnyTeam,
-                        ModificationFlag.MovementDisabled,
-                        ModificationFlag.MustExecuteAttack
+                        EntityModificationFlag.CanAttackAnyTeam,
+                        EntityModificationFlag.MovementDisabled,
+                        EntityModificationFlag.MustExecuteAttack
                     },
                     initialModifications: null,
                     initialEffects: new List<EffectId>
@@ -1601,10 +1571,10 @@ namespace LowAgeData.Collections
                     "Parasite has possessed the unit on top, gaining its movement speed and the ability to move both " +
                     "units on Parasite's turn.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.AbilitiesDisabled,
-                        ModificationFlag.CannotAttack
+                        EntityModificationFlag.AbilitiesDisabled,
+                        EntityModificationFlag.CannotAttack
                     },
                     initialModifications: new List<Modification>
                     {
@@ -1790,9 +1760,9 @@ namespace LowAgeData.Collections
                     {
                         new AttackModification(
                             attackType: AttackType.Ranged,
-                            modificationFlags: new List<ModificationFlag>
+                            modificationFlags: new List<AttackModificationFlag>
                             {
-                                ModificationFlag.IgnoreArmour
+                                AttackModificationFlag.IgnoreArmour
                             })
                     },
                     initialEffects: null,
@@ -2066,9 +2036,9 @@ namespace LowAgeData.Collections
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.FullyDisabled
+                        EntityModificationFlag.FullyDisabled
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -2090,9 +2060,9 @@ namespace LowAgeData.Collections
                     "This tile will receive massive damage on the next Cannon's turn. Until then, Cannon's " +
                     "owner has vision of this tile.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.ProvidesVision
+                        EntityModificationFlag.ProvidesVision
                     },
                     initialModifications: new List<Modification>
                     {
@@ -2150,9 +2120,9 @@ namespace LowAgeData.Collections
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.FullyDisabled
+                        EntityModificationFlag.FullyDisabled
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -2220,9 +2190,9 @@ namespace LowAgeData.Collections
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.", 
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.FullyDisabled
+                        EntityModificationFlag.FullyDisabled
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -2242,9 +2212,9 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Radar.ResonatingSweepBuff).CamelCaseToWords(),
                     description: "Provides vision to the Radar's owner.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.ProvidesVision
+                        EntityModificationFlag.ProvidesVision
                     },
                     initialModifications: new List<Modification>
                     {
@@ -2286,10 +2256,10 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Radar.RadioLocationFeatureBuff).CamelCaseToWords(),
                     description: "This red dot is able to detect enemy units in the fog of war.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.OnlyVisibleToAllies,
-                        ModificationFlag.OnlyVisibleInFogOfWar
+                        EntityModificationFlag.OnlyVisibleToAllies,
+                        EntityModificationFlag.OnlyVisibleInFogOfWar
                     },
                     initialModifications: null,
                     initialEffects: null,
@@ -2318,9 +2288,9 @@ namespace LowAgeData.Collections
                     description:
                     "This machine is disabled until it is fully operated by the required number of Engineers.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: new List<ModificationFlag>
+                    modificationFlags: new List<EntityModificationFlag>
                     {
-                        ModificationFlag.FullyDisabled
+                        EntityModificationFlag.FullyDisabled
                     },
                     initialModifications: null,
                     initialEffects: null,

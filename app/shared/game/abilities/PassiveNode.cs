@@ -197,6 +197,31 @@ public partial class PassiveNode : AbilityNode<
                                             && IsActorOwnedByCurrentPlayer();
 
     private bool IsActorOwnedByCurrentPlayer() => OwnerActor.Player.Equals(Players.Instance.Current);
+
+    public void OnAttackExecuted(AttackType attackType, EntityNode targetEntity)
+    {
+        if (PassiveCanBeTriggered() is false)
+            return;
+
+        if (Blueprint.OnHitAttackTypes.Contains(attackType) is false)
+            return;
+        
+        var onHitEffects = Blueprint.OnHitEffects;
+        if (onHitEffects.IsEmpty())
+            return;
+        
+        foreach (var effectId in onHitEffects)
+        {
+            var activationRequest = new ActivationRequest
+            {
+                Targets = [targetEntity],
+                EffectToExecute = effectId
+            };
+            
+            if (Activate(activationRequest).IsValid) 
+                RequestExecution();
+        }
+    }
     
     public void OnActorBirth(EntityNode actor)
     {

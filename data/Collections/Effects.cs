@@ -124,9 +124,9 @@ namespace LowAgeData.Collections
                 new ModifyPlayer(
                     id: EffectId.Shared.Uee.PowerGeneratorModifyPlayer,
                     target: Location.Self,
-                    modifyFlags: new List<ModifyPlayerFlag>
+                    modifyFlags: new List<PlayerModificationFlag>
                     {
-                        ModifyPlayerFlag.GameLost
+                        PlayerModificationFlag.GameLost
                     }),
                 
                 new ApplyBehaviour(
@@ -845,9 +845,9 @@ namespace LowAgeData.Collections
                 new ModifyPlayer(
                     id: EffectId.Leader.AllForOneModifyPlayer,
                     target: Location.Self,
-                    modifyFlags: new List<ModifyPlayerFlag>
+                    modifyFlags: new List<PlayerModificationFlag>
                     {
-                        ModifyPlayerFlag.GameLost
+                        PlayerModificationFlag.GameLost
                     }),
 
                 new Search(
@@ -947,16 +947,14 @@ namespace LowAgeData.Collections
                     },
                     effects: new List<EffectId>
                     {
-                        EffectId.Leader.OneForAllApplyBehaviourHeal
+                        EffectId.Leader.OneForAllHeal
                     },
                     target: Location.Self),
 
-                new ApplyBehaviour(
-                    id: EffectId.Leader.OneForAllApplyBehaviourHeal,
-                    behavioursToApply: new List<BehaviourId>
-                    {
-                        BehaviourId.Leader.OneForAllHealBuff
-                    }),
+                new Heal(
+                    id: EffectId.Leader.OneForAllHeal,
+                    statType: StatType.Health, 
+                    amount: new Amount(2)),
 
                 new ApplyBehaviour(
                     id: EffectId.Slave.RepairApplyBehaviourStructure,
@@ -1052,7 +1050,6 @@ namespace LowAgeData.Collections
                     target: Location.Entity,
                     filters: new List<IFilterItem>
                     {
-                        new SpecificFlag(value: FilterFlag.Enemy),
                         new SpecificFlag(value: FilterFlag.Unit)
                     }),
 

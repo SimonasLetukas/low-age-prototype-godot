@@ -11,16 +11,16 @@ public record AttackModification : Modification
         float amount,
         AttackType attackType,
         AttackAttribute attribute,
-        IList<ModificationFlag>? modificationFlags = null) : base(change, amount)
+        IList<AttackModificationFlag>? modificationFlags = null) : base(change, amount)
     {
         AttackType = attackType;
         Attribute = attribute;
-        ModificationFlags = modificationFlags ?? new List<ModificationFlag>();
+        ModificationFlags = modificationFlags ?? new List<AttackModificationFlag>();
     }
         
     public AttackModification(
         AttackType attackType,
-        IList<ModificationFlag> modificationFlags) : base(Change.AddCurrent, 0)
+        IList<AttackModificationFlag> modificationFlags) : base(Change.AddCurrent, 0)
     {
         AttackType = attackType;
         Attribute = AttackAttribute.MaxAmount;
@@ -29,7 +29,7 @@ public record AttackModification : Modification
 
     public AttackType AttackType { get; }
     public AttackAttribute Attribute { get; }
-    public IList<ModificationFlag> ModificationFlags { get; }
+    public IList<AttackModificationFlag> ModificationFlags { get; }
     
     public override void Accept(IModificationVisitor visitor) => visitor.Visit(this);
 }

@@ -2,7 +2,12 @@
 {
     public class CombatStat : Stat
     {
-        public CombatStat(int maxAmount, bool hasCurrent, StatType combatType) : base(maxAmount, hasCurrent)
+        public CombatStat(
+            int maxAmount, 
+            bool hasCurrent, 
+            StatType combatType, 
+            bool? allowsOverflow = null) 
+            : base(maxAmount, hasCurrent, allowsOverflow)
         {
             CombatType = combatType;
         }

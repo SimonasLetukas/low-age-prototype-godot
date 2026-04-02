@@ -4,15 +4,15 @@ using Newtonsoft.Json;
 namespace LowAgeData.Domain.Common.Flags
 {
     [JsonConverter(typeof(ModifyPlayerFlagJsonConverter))]
-    public class ModifyPlayerFlag : EnumValueObject<ModifyPlayerFlag, ModifyPlayerFlag.ModifyPlayerFlags>
+    public class PlayerModificationFlag : EnumValueObject<PlayerModificationFlag, PlayerModificationFlag.PlayerModificationFlags>
     {
-        public static ModifyPlayerFlag GameLost => new ModifyPlayerFlag(ModifyPlayerFlags.GameLost);
+        public static PlayerModificationFlag GameLost => new(PlayerModificationFlags.GameLost);
 
-        private ModifyPlayerFlag(ModifyPlayerFlags @enum) : base(@enum) { }
+        private PlayerModificationFlag(PlayerModificationFlags @enum) : base(@enum) { }
         
-        private ModifyPlayerFlag(string? from) : base(from) { }
+        private PlayerModificationFlag(string? from) : base(from) { }
         
-        public enum ModifyPlayerFlags
+        public enum PlayerModificationFlags
         {
             GameLost
         }
@@ -21,12 +21,12 @@ namespace LowAgeData.Domain.Common.Flags
         {
             public override bool CanConvert(Type objectType)
             {
-                return objectType == typeof(ModifyPlayerFlag);
+                return objectType == typeof(PlayerModificationFlag);
             }
             
             public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
             {
-                var id = (ModifyPlayerFlag)value!;
+                var id = (PlayerModificationFlag)value!;
                 serializer.Serialize(writer, id.ToString());
             }
 
@@ -36,7 +36,7 @@ namespace LowAgeData.Domain.Common.Flags
                     return null;
                 
                 var value = serializer.Deserialize<string>(reader);
-                return new ModifyPlayerFlag(value);
+                return new PlayerModificationFlag(value);
             }
         }
     }

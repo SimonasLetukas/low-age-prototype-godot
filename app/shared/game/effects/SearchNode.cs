@@ -33,7 +33,7 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
     
     public override bool Execute()
     {
-        if (base.Execute() is false)
+        if (IsValidated is false)
             return false;
         
         foreach (var target in FoundTargets)

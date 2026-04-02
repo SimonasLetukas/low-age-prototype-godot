@@ -25,7 +25,7 @@ public class ModifyPlayerNode : EffectNode, INodeFromBlueprint<ModifyPlayer>
     
     public override bool Execute()
     {
-        if (base.Execute() is false)
+        if (IsValidated is false)
             return false;
         
         if (Log.DebugEnabled)
@@ -58,7 +58,7 @@ public class ModifyPlayerNode : EffectNode, INodeFromBlueprint<ModifyPlayer>
         var flags = Blueprint.ModifyFlags;
         foreach (var flag in flags)
         {
-            if (flag.Equals(ModifyPlayerFlag.GameLost))
+            if (flag.Equals(PlayerModificationFlag.GameLost))
                 EventBus.Instance.RaiseGameLost(player);
         }
     }

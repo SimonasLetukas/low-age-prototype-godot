@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Effects;
@@ -26,6 +27,8 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
         Blueprint = blueprint;
         base.SetBlueprint(blueprint);
 
+        AddModificationFlags();
+        
         HandleInitialModifications();
         HandleEffects(Blueprint.InitialEffects);
     }
@@ -35,13 +38,35 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
         if (Log.DebugEnabled)
             Log.Info(nameof(BuffNode), nameof(EndBehaviour), ToString());
         
+        RemoveModificationFlags();
+        
         if (Blueprint.RestoreChangesOnEnd)
             RestoreInitialModifications();
-
+        
         HandleFinalModifications();
         HandleEffects(Blueprint.FinalEffects);
         
         base.EndBehaviour();
+    }
+
+    private void AddModificationFlags()
+    {
+        foreach (var flag in Blueprint.ModificationFlags)
+        {
+            Parent.Flags.Add(flag);
+        }
+    }
+
+    private void RemoveModificationFlags()
+    {
+        foreach (var flag in Blueprint.ModificationFlags)
+        {
+            var foundFlag = Parent.Flags.FirstOrDefault(f => f.Equals(flag));
+            if (foundFlag is null)
+                continue;
+            
+            Parent.Flags.Remove(foundFlag);
+        }
     }
 
     private void HandleInitialModifications()

@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Modifications;
@@ -41,7 +42,7 @@ public partial class CombatStatNode : StatNode, INodeFromBlueprint<CombatStat>
 		{
 			var (newAmount, newMax) = GetUpdated(statModification.Change, statModification.Amount, 
 				BaseCurrentAmount, BaseMaxAmount);
-			BaseCurrentAmount = newAmount;
+			BaseCurrentAmount = Blueprint.AllowsOverflow ? newAmount : Math.Min(newAmount, newMax);
 			BaseMaxAmount = newMax;
 		}
 		else

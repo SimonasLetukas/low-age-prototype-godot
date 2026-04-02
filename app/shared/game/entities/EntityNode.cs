@@ -6,6 +6,7 @@ using LowAgeData.Domain.Entities;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Common.Flags;
 using MultipurposePathfinding;
 using Area = LowAgeCommon.Area;
 
@@ -47,8 +48,9 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
     public bool CanBePlaced { get; protected set; } = false;
     public bool HasCost { get; private set; } = true;
     public BuildableNode? CreationProgress { get; protected set; }
-    public HashSet<IAbilityNode> TargetedBy { get; set; } = [];
+    public HashSet<IAbilityNode> TargetedBy { get; } = [];
     public Behaviours Behaviours { get; protected set; } = null!;
+    public IList<EntityModificationFlag> Flags { get; } = [];
     public bool IsBeingDestroyed { get; private set; }
     
     protected Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; } = GlobalRegistry.Instance.GetHighestTiles;

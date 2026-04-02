@@ -62,6 +62,7 @@ public partial class GameMetrics : Node
         EventBus.Instance.RawDamageDone -= OnRawDamageDone;
         EventBus.Instance.FinalDamageDone -= OnFinalDamageDone;
         EventBus.Instance.UnitMoved -= OnUnitMoved;
+        EventBus.Instance.ActorHealed -= OnActorHealed;
         EventBus.Instance.EntityDestroyed -= OnEntityDestroyed;
         
         base._ExitTree();
@@ -77,6 +78,7 @@ public partial class GameMetrics : Node
         EventBus.Instance.RawDamageDone += OnRawDamageDone;
         EventBus.Instance.FinalDamageDone += OnFinalDamageDone;
         EventBus.Instance.UnitMoved += OnUnitMoved;
+        EventBus.Instance.ActorHealed += OnActorHealed;
         EventBus.Instance.EntityDestroyed += OnEntityDestroyed;
     }
 
@@ -350,6 +352,12 @@ public partial class GameMetrics : Node
         row.MovedAmount += movementSpent;
     }
     
+    private void OnActorHealed(ActorNode actor, int amount)
+    {
+        var row = _preparedRows.First(r => r.PlayerStableId.Equals(actor.Player.StableId));
+        row.HealingDone += amount;
+    }
+    
     private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
     {
         if (source is null || source.Equals(entity))
@@ -396,6 +404,7 @@ public partial class GameMetrics : Node
         public int FinalPureDamageDone { get; set; }
         public int PureDamageReceived { get; set; }
         
+        public int HealingDone { get; set; }
         public float MovedAmount { get; set; }
         public int KilledAmount { get; set; }
         public float InitiativeSumAtActionPhaseStart { get; set; }
