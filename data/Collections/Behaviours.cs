@@ -28,7 +28,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Shared.HighGroundBuff).CamelCaseToWords(),
                     description: "Unit is on high ground and has +1 vision range and +1 Distance for " +
                                  "ranged attacks.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_behaviour_high_ground.png",
                     initialModifications: new List<Modification>
                     {
                         new AttackModification(
@@ -1297,7 +1297,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Camou.SilentAssassinBuff,
                     displayName: nameof(BehaviourId.Camou.SilentAssassinBuff).CamelCaseToWords(),
                     description: "This unit is silenced (use of any abilities is disabled).",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_silent_assassin.png",
                     modificationFlags: new List<EntityModificationFlag>
                     {
                         EntityModificationFlag.AbilitiesDisabled
@@ -1320,14 +1320,14 @@ namespace LowAgeData.Collections
                     displayName: nameof(BehaviourId.Camou.ClimbWait).CamelCaseToWords(),
                     description:
                     "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_climb.png",
                     endsAt: EndsAt.EndOf.This.ActionPhase),
 
                 new Buff(
                     id: BehaviourId.Camou.ClimbBuff,
                     displayName: nameof(BehaviourId.Camou.ClimbBuff).CamelCaseToWords(),
                     description: "Camou can move down from high ground at the additional cost of 1 Movement.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_climb.png",
                     modificationFlags: new List<EntityModificationFlag>
                     {
                         EntityModificationFlag.ClimbsDown
@@ -1345,7 +1345,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Shaman.WondrousGooFeatureWait,
                     displayName: nameof(BehaviourId.Shaman.WondrousGooFeatureWait).CamelCaseToWords(),
                     description: "Effect area will expand at the end of this action phase.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_wondrous_goo.png",
                     endsAt: EndsAt.EndOf.This.ActionPhase,
                     nextBehaviour: BehaviourId.Shaman.WondrousGooFeatureBuff),
 
@@ -1353,7 +1353,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Shaman.WondrousGooFeatureBuff,
                     displayName: nameof(BehaviourId.Shaman.WondrousGooFeatureBuff).CamelCaseToWords(),
                     description: "Effect area will disappear at the end of this action phase.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_wondrous_goo.png",
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -1372,9 +1372,9 @@ namespace LowAgeData.Collections
                 new Buff(
                     id: BehaviourId.Shaman.WondrousGooBuff,
                     displayName: nameof(BehaviourId.Shaman.WondrousGooBuff).CamelCaseToWords(),
-                    description: "Unit has its vision and Distance reduced by 3 (total minimum of 1) " +
+                    description: "Unit has its vision and Distance for all attacks reduced by 3 (total minimum of 1) " +
                                  "and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_wondrous_goo.png",
                     modificationFlags: null,
                     initialModifications: new List<Modification>
                     {
@@ -1408,7 +1408,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Pyre.CargoTether,
                     displayName: nameof(BehaviourId.Pyre.CargoTether).CamelCaseToWords(),
                     description: "The cargo follows Pyre.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_wall_of_flames.png",
                     source: Location.Origin,
                     extendsSelection: true,
                     sharedDamage: true,
@@ -1422,16 +1422,9 @@ namespace LowAgeData.Collections
                     "The cargo leaves a path of flames when moved, which stay until the start of the next " +
                     "Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives " +
                     "5 Melee Damage.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: null,
-                    initialModifications: null,
-                    initialEffects: null,
-                    finalModifications: null,
-                    finalEffects: null,
-                    endsAt: null,
+                    sprite: "res://assets/icons/icon_ability_wall_of_flames.png",
                     canStack: false,
                     canResetDuration: false,
-                    alignment: null,
                     triggers: new List<Trigger>
                     {
                         new Trigger(@event: Event.EntityIsAboutToMove)
@@ -1445,12 +1438,8 @@ namespace LowAgeData.Collections
                 new Buff(
                     id: BehaviourId.Pyre.WallOfFlamesBuff,
                     displayName: nameof(BehaviourId.Pyre.WallOfFlamesBuff).CamelCaseToWords(),
-                    description: "",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
-                    modificationFlags: null,
-                    initialModifications: null,
-                    initialEffects: null,
-                    finalModifications: null,
+                    description: "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
+                    sprite: "res://assets/icons/icon_ability_wall_of_flames.png",
                     finalEffects: new List<EffectId>
                     {
                         EffectId.Pyre.WallOfFlamesDestroy
@@ -1473,7 +1462,7 @@ namespace LowAgeData.Collections
                     id: BehaviourId.Pyre.PhantomMenaceBuff,
                     displayName: nameof(BehaviourId.Pyre.PhantomMenaceBuff).CamelCaseToWords(),
                     description: "Pyre can move through enemy units (but not buildings).",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_phantom_menace.png",
                     modificationFlags: new List<EntityModificationFlag>
                     {
                         EntityModificationFlag.MovesThroughEnemyUnits

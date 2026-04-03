@@ -520,7 +520,7 @@ namespace LowAgeData.Collections
                     description: "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the " +
                                  "start of each action phase.",
                     hasButton: true,
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_caltrops.png",
                     periodicSearchEffect: EffectId.Barricade.CaltropsSearch),
                 
                 new Toggle(
@@ -1240,7 +1240,7 @@ namespace LowAgeData.Collections
                                  "in the same radius, Camou silences the target for 2 of its actions, disabling the use of any " +
                                  "abilities or passives.",
                     hasButton: true,
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_silent_assassin.png",
                     onHitEffects: new List<EffectId>
                     {
                         EffectId.Camou.SilentAssassinOnHitDamage,
@@ -1258,7 +1258,7 @@ namespace LowAgeData.Collections
                     description: "Select an adjacent unoccupied space on a high ground. This space is considered " +
                                  "occupied until the end of the action phase at which point Camou moves to it. Passively, " +
                                  "Camou can move down from high ground at the additional cost of 1 Movement.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_climb.png",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
@@ -1289,10 +1289,11 @@ namespace LowAgeData.Collections
                     turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityId.Shaman.WondrousGoo).CamelCaseToWords(),
                     description: "Select a tile in 4 Distance, which gets contaminated. Any unit in the " +
-                                 "contamination has its vision and Distance reduced by 3 (total minimum of 1) and " +
-                                 "receives 1 Pure Damage at the start of its turn. At the end of this action phase, the " +
-                                 "contamination area expands to adjacent tiles and stays until the end of the next action phase.",
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                                 "contamination has its vision and Distance for all attacks reduced by 3 (total " +
+                                 "minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of " +
+                                 "this action phase, the contamination area expands to adjacent tiles and stays " +
+                                 "until the end of the next action phase.",
+                    sprite: "res://assets/icons/icon_ability_wondrous_goo.png",
                     targetArea: new Circle(radius: 4),
                     effects: new List<EffectId>
                     {
@@ -1304,10 +1305,10 @@ namespace LowAgeData.Collections
                     id: AbilityId.Pyre.WallOfFlames,
                     displayName: nameof(AbilityId.Pyre.WallOfFlames).CamelCaseToWords(),
                     description: "The cargo leaves a path of flames when moved, which stay until the start of the " +
-                                 "next Pyre's action or until death. Any unit which starts its turn or moves onto the flames " +
-                                 "receives 5 Melee Damage.",
+                                 "next Pyre's action or until death. Any unit which starts its turn or moves onto the " +
+                                 "flames receives 5 Melee Damage.",
                     hasButton: true,
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_wall_of_flames.png",
                     onBirthEffects: new List<EffectId>
                     {
                         EffectId.Pyre.CargoCreateEntity
@@ -1318,7 +1319,7 @@ namespace LowAgeData.Collections
                     displayName: nameof(AbilityId.Pyre.PhantomMenace).CamelCaseToWords(),
                     description: "Can move through enemy units (but not buildings).",
                     hasButton: true,
-                    sprite: "res://assets/icons/icon_ability_build.png", // TODO
+                    sprite: "res://assets/icons/icon_ability_phantom_menace.png",
                     researchNeeded: new List<ResearchId>
                     {
                         ResearchId.Revelators.QuestionableCargo

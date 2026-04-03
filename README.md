@@ -9,7 +9,7 @@ Uploading server to GCP:
 - Export 'Export: Linux - Server' in Godot
 - Zip `data_LowAge_linuxbsd_x86_64` and `server.x86_64` in `\export\linux`
 - Upload the zipped file to [GCP VM](https://console.cloud.google.com/compute/instances?project=low-age-prototype) via SSH
-- While uploading, remove previous files: `rm data_LowAge_linuxbsd_x86_64` and `rm server.x86_64`
+- While uploading, remove previous files: `rm linux.zip`, `rm -rf data_LowAge_linuxbsd_x86_64` and `rm server.x86_64`
 - Unzip the file in GCP VM: `unzip linux.zip` (if command missing, run `sudo apt install unzip`)
 - Run server with the following commands:
 ```
