@@ -34,7 +34,7 @@ public static class Constants
 
         public static void SetRemoteServer()
         {
-            ServerIp = "35.217.22.105"; // TODO move to secrets or configs
+            ServerIp = "35.217.57.31"; // TODO move to secrets or configs
         }
     }
 
