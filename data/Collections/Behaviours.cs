@@ -1292,6 +1292,40 @@ namespace LowAgeData.Collections
                     {
                         EffectId.Gorger.FanaticSuicideSearch
                     }),
+                
+                new Buff(
+                    id: BehaviourId.Gorger.DiseaseBuff,
+                    displayName: nameof(BehaviourId.Gorger.DiseaseBuff).CamelCaseToWords(),
+                    description:
+                    "This unit is infected by disease which halves the initiative and deals 1 Pure Damage at the " +
+                    "end of next action phase. The disease is spread to all adjacent non-mechanical units without " +
+                    "a disease at the start of the planning phase.",
+                    sprite: "res://assets/icons/icon_ability_disease.png",
+                    initialModifications: new List<Modification>
+                    {
+                        new StatModification(
+                            change: Change.MultiplyMax, 
+                            amount: 0.5f,
+                            statType: StatType.Initiative)
+                    },
+                    finalEffects: new List<EffectId>
+                    {
+                        EffectId.Gorger.DiseaseDamage
+                    },
+                    endsAt: EndsAt.EndOf.Next.ActionPhase,
+                    canStack: false,
+                    canResetDuration: false,
+                    alignment: Alignment.Negative,
+                    triggers: new List<Trigger>
+                    {
+                        new Trigger(@event: Event.EntityStartedPlanningPhase)
+                    },
+                    removeOnConditionsMet: false,
+                    conditionalEffects: new List<EffectId>
+                    {
+                        EffectId.Gorger.DiseaseSearch
+                    },
+                    restoreChangesOnEnd: true),
 
                 new Buff(
                     id: BehaviourId.Camou.SilentAssassinBuff,
@@ -2051,7 +2085,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<EntityModificationFlag>
                     {
-                        EntityModificationFlag.ProvidesVision
+                        EntityModificationFlag.ProvidesVisionToOriginPlayer
                     },
                     initialModifications: new List<Modification>
                     {
@@ -2203,7 +2237,7 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     modificationFlags: new List<EntityModificationFlag>
                     {
-                        EntityModificationFlag.ProvidesVision
+                        EntityModificationFlag.ProvidesVisionToOriginPlayer
                     },
                     initialModifications: new List<Modification>
                     {

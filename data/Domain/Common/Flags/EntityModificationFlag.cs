@@ -14,7 +14,7 @@ namespace LowAgeData.Domain.Common.Flags
         public static EntityModificationFlag CannotAttack => new(EntityModificationFlags.CannotAttack);
         public static EntityModificationFlag MovementDisabled => new(EntityModificationFlags.MovementDisabled);
         public static EntityModificationFlag CanAttackAnyTeam => new(EntityModificationFlags.CanAttackAnyTeam);
-        public static EntityModificationFlag ProvidesVision => new(EntityModificationFlags.ProvidesVision);
+        public static EntityModificationFlag ProvidesVisionToOriginPlayer => new(EntityModificationFlags.ProvidesVisionToOriginPlayer);
         public static EntityModificationFlag OnlyVisibleToAllies => new(EntityModificationFlags.OnlyVisibleToAllies);
         public static EntityModificationFlag OnlyVisibleInFogOfWar => new(EntityModificationFlags.OnlyVisibleInFogOfWar);
             
@@ -39,7 +39,7 @@ namespace LowAgeData.Domain.Common.Flags
             MovementDisabled,
             CanAttackAnyTeam,
             IgnoreArmour,
-            ProvidesVision,
+            ProvidesVisionToOriginPlayer,
             OnlyVisibleToAllies,
             OnlyVisibleInFogOfWar,
             FullyDisabled

@@ -238,6 +238,9 @@ namespace LowAgeData.Domain.Effects
             public static EffectId FanaticSuicideDestroy => new EffectId($"{nameof(Gorger)}{nameof(FanaticSuicideDestroy)}".ToKebabCase(), true);
             public static EffectId FanaticSuicideSearch => new EffectId($"{nameof(Gorger)}{nameof(FanaticSuicideSearch)}".ToKebabCase(), true);
             public static EffectId FanaticSuicideDamage => new EffectId($"{nameof(Gorger)}{nameof(FanaticSuicideDamage)}".ToKebabCase(), true);
+            public static EffectId DiseaseApplyBehaviour => new EffectId($"{nameof(Gorger)}{nameof(DiseaseApplyBehaviour)}".ToKebabCase(), true);
+            public static EffectId DiseaseSearch => new EffectId($"{nameof(Gorger)}{nameof(DiseaseSearch)}".ToKebabCase(), true);
+            public static EffectId DiseaseDamage => new EffectId($"{nameof(Gorger)}{nameof(DiseaseDamage)}".ToKebabCase(), true);
         }
 
         public static class Camou

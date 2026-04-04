@@ -436,6 +436,17 @@ namespace LowAgeData.Collections
                                     amount: 50)
                             },
                             grayOutIfAlreadyExists: true),
+                        new Selection<ResearchId>(name: ResearchId.Revelators.RadioactiveChyme,
+                            description: $"Unlock {nameof(AbilityId.Gorger.Disease).CamelCaseToWords()} for " +
+                                         $"{nameof(UnitId.Gorger).CamelCaseToWords()}.",
+                            cost: new List<Payment>
+                            {
+                                new Payment(resource: ResourceId.Scraps,
+                                    amount: 10),
+                                new Payment(resource: ResourceId.Celestium,
+                                    amount: 40)
+                            },
+                            grayOutIfAlreadyExists: true),
                         new Selection<ResearchId>(name: ResearchId.Revelators.SpikedRope,
                             description: $"Unlock {nameof(AbilityId.Camou.Climb).CamelCaseToWords()} for " +
                                          $"{nameof(UnitId.Camou).CamelCaseToWords()}.",
@@ -1225,12 +1236,19 @@ namespace LowAgeData.Collections
                         EffectId.Gorger.FanaticSuicideDestroy
                     }),
                 
-                new Passive( // TODO
+                new Passive(
                     id: AbilityId.Gorger.Disease,
                     displayName: nameof(AbilityId.Gorger.Disease).CamelCaseToWords(),
-                    description: "", // TODO
+                    description: $"All non-mechanical units hit by {nameof(AbilityId.Gorger.FanaticSuicide).CamelCaseToWords()} " +
+                                 $"are also affected by disease which halves the initiative and deals 1 Pure Damage " +
+                                 $"at the end of next action phase. The disease is spread to all adjacent " +
+                                 $"non-mechanical units without a disease at the start of the planning phase.",
                     hasButton: true,
-                    sprite: "res://assets/icons/icon_ability_disease.png"),
+                    sprite: "res://assets/icons/icon_ability_disease.png",
+                    researchNeeded: new List<ResearchId>
+                    {
+                        ResearchId.Revelators.RadioactiveChyme
+                    }),
 
                 new Passive(
                     id: AbilityId.Camou.SilentAssassin,

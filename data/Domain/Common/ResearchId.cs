@@ -13,23 +13,24 @@ namespace LowAgeData.Domain.Common
 
         public static class Revelators
         {
-            public static ResearchId PoisonedSlits => new ResearchId($"{nameof(Revelators)}{nameof(PoisonedSlits)}".ToKebabCase(), true);
-            public static ResearchId SpikedRope => new ResearchId($"{nameof(Revelators)}{nameof(SpikedRope)}".ToKebabCase(), true);
-            public static ResearchId QuestionableCargo => new ResearchId($"{nameof(Revelators)}{nameof(QuestionableCargo)}".ToKebabCase(), true);
-            public static ResearchId HumanfleshRations => new ResearchId($"{nameof(Revelators)}{nameof(HumanfleshRations)}".ToKebabCase(), true);
-            public static ResearchId AdaptiveDigestion => new ResearchId($"{nameof(Revelators)}{nameof(AdaptiveDigestion)}".ToKebabCase(), true);
+            public static ResearchId PoisonedSlits => new($"{nameof(Revelators)}{nameof(PoisonedSlits)}".ToKebabCase(), true);
+            public static ResearchId RadioactiveChyme => new($"{nameof(Revelators)}{nameof(RadioactiveChyme)}".ToKebabCase(), true);
+            public static ResearchId SpikedRope => new($"{nameof(Revelators)}{nameof(SpikedRope)}".ToKebabCase(), true);
+            public static ResearchId QuestionableCargo => new($"{nameof(Revelators)}{nameof(QuestionableCargo)}".ToKebabCase(), true);
+            public static ResearchId HumanfleshRations => new($"{nameof(Revelators)}{nameof(HumanfleshRations)}".ToKebabCase(), true);
+            public static ResearchId AdaptiveDigestion => new($"{nameof(Revelators)}{nameof(AdaptiveDigestion)}".ToKebabCase(), true);
         }
 
         public static class Uee
         {
-            public static ResearchId FusionCoreUpgrade => new ResearchId($"{nameof(Uee)}{nameof(FusionCoreUpgrade)}".ToKebabCase(), true);
-            public static ResearchId CelestiumCoreUpgrade => new ResearchId($"{nameof(Uee)}{nameof(CelestiumCoreUpgrade)}".ToKebabCase(), true);
-            public static ResearchId HeightenedConductivity => new ResearchId($"{nameof(Uee)}{nameof(HeightenedConductivity)}".ToKebabCase(), true);
-            public static ResearchId HoverboardReignition => new ResearchId($"{nameof(Uee)}{nameof(HoverboardReignition)}".ToKebabCase(), true);
-            public static ResearchId ExplosiveShrapnel => new ResearchId($"{nameof(Uee)}{nameof(ExplosiveShrapnel)}".ToKebabCase(), true);
-            public static ResearchId MdPractice => new ResearchId($"{nameof(Uee)}{nameof(MdPractice)}".ToKebabCase(), true);
-            public static ResearchId CelestiumCoatedMaterials => new ResearchId($"{nameof(Uee)}{nameof(CelestiumCoatedMaterials)}".ToKebabCase(), true);
-            public static ResearchId HardenedMatrix => new ResearchId($"{nameof(Uee)}{nameof(HardenedMatrix)}".ToKebabCase(), true);
+            public static ResearchId FusionCoreUpgrade => new($"{nameof(Uee)}{nameof(FusionCoreUpgrade)}".ToKebabCase(), true);
+            public static ResearchId CelestiumCoreUpgrade => new($"{nameof(Uee)}{nameof(CelestiumCoreUpgrade)}".ToKebabCase(), true);
+            public static ResearchId HeightenedConductivity => new($"{nameof(Uee)}{nameof(HeightenedConductivity)}".ToKebabCase(), true);
+            public static ResearchId HoverboardReignition => new($"{nameof(Uee)}{nameof(HoverboardReignition)}".ToKebabCase(), true);
+            public static ResearchId ExplosiveShrapnel => new($"{nameof(Uee)}{nameof(ExplosiveShrapnel)}".ToKebabCase(), true);
+            public static ResearchId MdPractice => new($"{nameof(Uee)}{nameof(MdPractice)}".ToKebabCase(), true);
+            public static ResearchId CelestiumCoatedMaterials => new($"{nameof(Uee)}{nameof(CelestiumCoatedMaterials)}".ToKebabCase(), true);
+            public static ResearchId HardenedMatrix => new($"{nameof(Uee)}{nameof(HardenedMatrix)}".ToKebabCase(), true);
         }
         
         private class ResearchIdJsonConverter : JsonConverter

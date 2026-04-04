@@ -195,6 +195,7 @@ namespace LowAgeData.Domain.Behaviours
         public static class Gorger
         {
             public static BehaviourId FanaticSuicideBuff => new BehaviourId($"{nameof(Gorger)}{nameof(FanaticSuicideBuff)}".ToKebabCase(), true);
+            public static BehaviourId DiseaseBuff => new BehaviourId($"{nameof(Gorger)}{nameof(DiseaseBuff)}".ToKebabCase(), true);
         }
 
         public static class Camou

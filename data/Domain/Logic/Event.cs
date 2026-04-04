@@ -26,8 +26,9 @@ namespace LowAgeData.Domain.Logic
         public static Event EntityIsAttacked => new Event(Events.EntityIsAttacked);
         public static Event EntityMeleeAttacks => new Event(Events.EntityMeleeAttacks);
         public static Event EntityRangedAttacks => new Event(Events.EntityRangedAttacks);
-        public static Event EntityStartedActionPhase => new Event(Events.EntityStartsActionPhase);
-        public static Event EntityStartedAction => new Event(Events.EntityStartsAction);
+        public static Event EntityStartedPlanningPhase => new Event(Events.EntityStartedPlanningPhase);
+        public static Event EntityStartedActionPhase => new Event(Events.EntityStartedActionPhase);
+        public static Event EntityStartedAction => new Event(Events.EntityStartedAction);
         
         /// <summary>
         /// Triggers when a <see cref="Mask"/> is added or removed. 
@@ -50,8 +51,9 @@ namespace LowAgeData.Domain.Logic
             EntityIsAttacked,            
             EntityMeleeAttacks,
             EntityRangedAttacks,
-            EntityStartsActionPhase,
-            EntityStartsAction,
+            EntityStartedPlanningPhase,
+            EntityStartedActionPhase,
+            EntityStartedAction,
             EntityMaskChanged,
             PlayerResourcesStockpileUpdated
         }

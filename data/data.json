@@ -5423,6 +5423,22 @@
           "grayOutIfAlreadyExists": true
         },
         {
+          "name": "research-revelators-radioactive-chyme",
+          "description": "Unlock Disease for Gorger.",
+          "cost": [
+            {
+              "resource": "resource-scraps",
+              "amount": 10
+            },
+            {
+              "resource": "resource-celestium",
+              "amount": 40
+            }
+          ],
+          "researchNeeded": [],
+          "grayOutIfAlreadyExists": true
+        },
+        {
           "name": "research-revelators-spiked-rope",
           "description": "Unlock Climb for Camou.",
           "cost": [
@@ -5588,7 +5604,7 @@
       "cost": [],
       "displayName": "Caltrops",
       "description": "Every unit adjacent to the spikes of this Barricade receives 5 Pure Damage at the start of each action phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_caltrops.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -7006,7 +7022,9 @@
       "$type": "Passive",
       "id": "ability-gorger-disease",
       "turnPhase": "TurnPhase.Passive",
-      "researchNeeded": [],
+      "researchNeeded": [
+        "research-revelators-radioactive-chyme"
+      ],
       "periodicSearchEffect": null,
       "onHitEffects": [],
       "onHitAttackTypes": [],
@@ -7017,7 +7035,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Disease",
-      "description": "",
+      "description": "All non-mechanical units hit by Fanatic Suicide are also affected by disease which halves the initiative and deals 1 Pure Damage at the end of next action phase. The disease is spread to all adjacent non-mechanical units without a disease at the start of the planning phase.",
       "sprite": "res://assets/icons/icon_ability_disease.png",
       "centerOffset": {
         "x": 0,
@@ -7045,7 +7063,7 @@
       "cost": [],
       "displayName": "Silent Assassin",
       "description": "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly units around Camou in 4 Distance. Additionally, if the target has none of its allies in the same radius, Camou silences the target for 2 of its actions, disabling the use of any abilities or passives.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_silent_assassin.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -7077,7 +7095,7 @@
       "cost": [],
       "displayName": "Climb",
       "description": "Select an adjacent unoccupied space on a high ground. This space is considered occupied until the end of the action phase at which point Camou moves to it. Passively, Camou can move down from high ground at the additional cost of 1 Movement.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_climb.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -7132,8 +7150,8 @@
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "cost": [],
       "displayName": "Wondrous Goo",
-      "description": "Select a tile in 4 Distance, which gets contaminated. Any unit in the contamination has its vision and Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "description": "Select a tile in 4 Distance, which gets contaminated. Any unit in the contamination has its vision and Distance for all attacks reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase.",
+      "sprite": "res://assets/icons/icon_ability_wondrous_goo.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -7157,7 +7175,7 @@
       "cost": [],
       "displayName": "Wall Of Flames",
       "description": "The cargo leaves a path of flames when moved, which stay until the start of the next Pyre's action or until death. Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_wall_of_flames.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -7183,7 +7201,7 @@
       "cost": [],
       "displayName": "Phantom Menace",
       "description": "Can move through enemy units (but not buildings).",
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_phantom_menace.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -9990,7 +10008,8 @@
       ],
       "triggerFlags": [],
       "effects": [
-        "effect-gorger-fanatic-suicide-damage"
+        "effect-gorger-fanatic-suicide-damage",
+        "effect-gorger-disease-apply-behaviour"
       ],
       "location": "Location.Self",
       "usedForValidator": false,
@@ -10018,6 +10037,167 @@
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
+      "validators": []
+    },
+    {
+      "$type": "ApplyBehaviour",
+      "id": "effect-gorger-disease-apply-behaviour",
+      "behavioursToApply": [
+        "behaviour-gorger-disease-buff"
+      ],
+      "filters": [
+        {
+          "$type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "filters": [
+            {
+              "$type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "$type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "$type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "$type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "filters": [
+            {
+              "$type": "SpecificFlag",
+              "value": "FilterFlag.Unit"
+            }
+          ]
+        },
+        {
+          "$type": "FilterGroup",
+          "policy": "Exclude",
+          "quantifier": "Any",
+          "filters": [
+            {
+              "$type": "SpecificCombatAttribute",
+              "value": "ActorAttribute.Mechanical"
+            }
+          ]
+        }
+      ],
+      "behaviourOwner": null,
+      "waitForInitialEffects": false,
+      "target": "Location.Entity",
+      "validators": [
+        {
+          "conditions": [
+            {
+              "$type": "ResearchCondition",
+              "conditionedResearchId": "research-revelators-radioactive-chyme",
+              "researchOwner": "Location.Origin",
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
+        },
+        {
+          "conditions": [
+            {
+              "$type": "BehaviourCondition",
+              "conditionedBehaviour": "behaviour-gorger-disease-buff",
+              "behaviourOwner": null,
+              "conditionFlag": "ConditionFlag.DoesNotExist"
+            }
+          ],
+          "filters": []
+        }
+      ]
+    },
+    {
+      "$type": "Search",
+      "id": "effect-gorger-disease-search",
+      "shape": {
+        "$type": "Circle",
+        "radius": 1,
+        "ignoreRadius": 0
+      },
+      "height": "SearchHeight.HighestPossible",
+      "filters": [
+        {
+          "$type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "filters": [
+            {
+              "$type": "SpecificFlag",
+              "value": "FilterFlag.Player"
+            },
+            {
+              "$type": "SpecificFlag",
+              "value": "FilterFlag.Ally"
+            },
+            {
+              "$type": "SpecificFlag",
+              "value": "FilterFlag.Enemy"
+            }
+          ]
+        },
+        {
+          "$type": "FilterGroup",
+          "policy": "Include",
+          "quantifier": "Any",
+          "filters": [
+            {
+              "$type": "SpecificFlag",
+              "value": "FilterFlag.Unit"
+            }
+          ]
+        },
+        {
+          "$type": "FilterGroup",
+          "policy": "Exclude",
+          "quantifier": "Any",
+          "filters": [
+            {
+              "$type": "SpecificCombatAttribute",
+              "value": "ActorAttribute.Mechanical"
+            }
+          ]
+        }
+      ],
+      "triggerFlags": [],
+      "effects": [
+        "effect-gorger-disease-apply-behaviour"
+      ],
+      "location": "Location.Self",
+      "usedForValidator": false,
+      "target": "Location.Self",
+      "validators": []
+    },
+    {
+      "$type": "Damage",
+      "id": "effect-gorger-disease-damage",
+      "damageType": "DamageType.Pure",
+      "amount": {
+        "flat": 1,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplyTarget": "Location.Inherited"
+      },
+      "bonusTo": null,
+      "bonusAmount": {
+        "flat": 0,
+        "multiplier": null,
+        "multiplierOf": null,
+        "multiplyTarget": "Location.Inherited"
+      },
+      "ignoresArmor": false,
+      "ignoresShield": false,
+      "filters": [],
+      "target": "Location.Self",
       "validators": []
     },
     {
@@ -12081,7 +12261,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_behaviour_high_ground.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -12543,7 +12723,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "event": "Event.EntityStartsActionPhase",
+          "event": "Event.EntityStartedActionPhase",
           "validators": [
             {
               "conditions": [
@@ -12558,7 +12738,7 @@
           ]
         },
         {
-          "event": "Event.EntityStartsAction",
+          "event": "Event.EntityStartedAction",
           "validators": [
             {
               "conditions": [
@@ -13593,7 +13773,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "event": "Event.EntityStartsActionPhase",
+          "event": "Event.EntityStartedActionPhase",
           "validators": [
             {
               "conditions": [
@@ -13642,7 +13822,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "event": "Event.EntityStartsActionPhase",
+          "event": "Event.EntityStartedActionPhase",
           "validators": [
             {
               "conditions": [
@@ -13686,7 +13866,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "event": "Event.EntityStartsActionPhase",
+          "event": "Event.EntityStartedActionPhase",
           "validators": [
             {
               "conditions": [
@@ -13737,7 +13917,7 @@
       "canResetDuration": false,
       "triggers": [
         {
-          "event": "Event.EntityStartsActionPhase",
+          "event": "Event.EntityStartedActionPhase",
           "validators": [
             {
               "conditions": [
@@ -14691,6 +14871,48 @@
     },
     {
       "$type": "Buff",
+      "id": "behaviour-gorger-disease-buff",
+      "modificationFlags": [],
+      "initialModifications": [
+        {
+          "$type": "StatModification",
+          "statType": "StatType.Initiative",
+          "change": "Change.MultiplyMax",
+          "amount": 0.5
+        }
+      ],
+      "initialEffects": [],
+      "finalModifications": [],
+      "finalEffects": [
+        "effect-gorger-disease-damage"
+      ],
+      "restoreChangesOnEnd": true,
+      "displayName": "Disease Buff",
+      "description": "This unit is infected by disease which halves the initiative and deals 1 Pure Damage at the end of next action phase. The disease is spread to all adjacent non-mechanical units without a disease at the start of the planning phase.",
+      "endsAt": "EndsAt.EndOfNextActionPhase",
+      "alignment": "Alignment.Negative",
+      "canStack": false,
+      "canResetDuration": false,
+      "triggers": [
+        {
+          "event": "Event.EntityStartedPlanningPhase",
+          "validators": []
+        }
+      ],
+      "removeOnConditionsMet": false,
+      "conditionalEffects": [
+        "effect-gorger-disease-search"
+      ],
+      "ownerAllowed": false,
+      "hasSameInstanceForAllOwners": false,
+      "sprite": "res://assets/icons/icon_ability_disease.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "$type": "Buff",
       "id": "behaviour-camou-silent-assassin-buff",
       "modificationFlags": [
         "EntityModificationFlag.AbilitiesDisabled"
@@ -14711,7 +14933,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_silent_assassin.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14732,7 +14954,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_climb.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14760,7 +14982,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_climb.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14781,7 +15003,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_wondrous_goo.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14816,7 +15038,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_wondrous_goo.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14851,7 +15073,7 @@
       ],
       "restoreChangesOnEnd": true,
       "displayName": "Wondrous Goo Buff",
-      "description": "Unit has its vision and Distance reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
+      "description": "Unit has its vision and Distance for all attacks reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn, at which point the effect ends.",
       "endsAt": "EndsAt.StartOfNextAction",
       "alignment": "Alignment.Negative",
       "canStack": false,
@@ -14861,7 +15083,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_wondrous_goo.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14886,7 +15108,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_wall_of_flames.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14919,7 +15141,7 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_wall_of_flames.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14937,7 +15159,7 @@
       ],
       "restoreChangesOnEnd": false,
       "displayName": "Wall Of Flames Buff",
-      "description": "",
+      "description": "Any unit which starts its turn or moves onto the flames receives 5 Melee Damage.",
       "endsAt": "EndsAt.StartOfNextAction",
       "alignment": "Alignment.Negative",
       "canStack": false,
@@ -14954,7 +15176,7 @@
       ],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_wall_of_flames.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -14982,7 +15204,7 @@
       "conditionalEffects": [],
       "ownerAllowed": false,
       "hasSameInstanceForAllOwners": false,
-      "sprite": "res://assets/icons/icon_ability_build.png",
+      "sprite": "res://assets/icons/icon_ability_phantom_menace.png",
       "centerOffset": {
         "x": 0,
         "y": 0
@@ -15899,7 +16121,7 @@
       "$type": "Buff",
       "id": "behaviour-cannon-heat-up-danger-zone-buff",
       "modificationFlags": [
-        "EntityModificationFlag.ProvidesVision"
+        "EntityModificationFlag.ProvidesVisionToOriginPlayer"
       ],
       "initialModifications": [
         {
@@ -16130,7 +16352,7 @@
       "$type": "Buff",
       "id": "behaviour-radar-resonating-sweep-buff",
       "modificationFlags": [
-        "EntityModificationFlag.ProvidesVision"
+        "EntityModificationFlag.ProvidesVisionToOriginPlayer"
       ],
       "initialModifications": [
         {

@@ -1091,13 +1091,106 @@ namespace LowAgeData.Collections
                     },
                     effects: new List<EffectId>
                     {
-                        EffectId.Gorger.FanaticSuicideDamage
+                        EffectId.Gorger.FanaticSuicideDamage,
+                        EffectId.Gorger.DiseaseApplyBehaviour
                     },
                     target: Location.Self),
 
                 new Damage(
                     id: EffectId.Gorger.FanaticSuicideDamage,
                     damageType: DamageType.OverrideMelee),
+                
+                new ApplyBehaviour(
+                    id: EffectId.Gorger.DiseaseApplyBehaviour,
+                    behavioursToApply: new List<BehaviourId>
+                    {
+                        BehaviourId.Gorger.DiseaseBuff
+                    },
+                    target: Location.Entity,
+                    filters: new List<IFilterItem>
+                    {
+                        new FilterGroup(
+                            policy: Policy.Include, 
+                            quantifier: Quantifier.Any, 
+                            filters: new List<IFilterItem>
+                            {
+                                new SpecificFlag(value: FilterFlag.Player),
+                                new SpecificFlag(value: FilterFlag.Ally),
+                                new SpecificFlag(value: FilterFlag.Enemy),
+                            }),
+                        new FilterGroup(
+                            policy: Policy.Include, 
+                            quantifier: Quantifier.Any, 
+                            filters: new List<IFilterItem>
+                            {
+                                new SpecificFlag(value: FilterFlag.Unit),
+                            }),
+                        new FilterGroup(
+                            policy: Policy.Exclude,
+                            quantifier: Quantifier.Any,
+                            filters: new List<IFilterItem>
+                            {
+                                new SpecificCombatAttribute(ActorAttribute.Mechanical)
+                            })
+                    },
+                    validators: new List<Validator>
+                    {
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new ResearchCondition(
+                                conditionFlag: ConditionFlag.DoesNotExist, 
+                                conditionedResearchId: ResearchId.Revelators.RadioactiveChyme,
+                                researchOwner: Location.Origin)
+                        }),
+                        new Validator(conditions: new List<Condition>
+                        {
+                            new BehaviourCondition(
+                                conditionFlag: ConditionFlag.DoesNotExist, 
+                                conditionedBehaviour: BehaviourId.Gorger.DiseaseBuff)
+                        })
+                    }),
+                
+                new Search(
+                    id: EffectId.Gorger.DiseaseSearch,
+                    shape: new Circle(radius: 1, ignoreRadius: 0),
+                    height: SearchHeight.HighestPossible, 
+                    filters: new List<IFilterItem>
+                    {
+                        new FilterGroup(
+                            policy: Policy.Include, 
+                            quantifier: Quantifier.Any, 
+                            filters: new List<IFilterItem>
+                            {
+                                new SpecificFlag(value: FilterFlag.Player),
+                                new SpecificFlag(value: FilterFlag.Ally),
+                                new SpecificFlag(value: FilterFlag.Enemy),
+                            }),
+                        new FilterGroup(
+                            policy: Policy.Include, 
+                            quantifier: Quantifier.Any, 
+                            filters: new List<IFilterItem>
+                            {
+                                new SpecificFlag(value: FilterFlag.Unit),
+                            }),
+                        new FilterGroup(
+                            policy: Policy.Exclude,
+                            quantifier: Quantifier.Any,
+                            filters: new List<IFilterItem>
+                            {
+                                new SpecificCombatAttribute(ActorAttribute.Mechanical)
+                            })
+                    },
+                    effects: new List<EffectId>
+                    {
+                        EffectId.Gorger.DiseaseApplyBehaviour
+                    },
+                    target: Location.Self),
+                
+                new Damage(
+                    id: EffectId.Gorger.DiseaseDamage,
+                    damageType: DamageType.Pure,
+                    amount: new Amount(flat: 1),
+                    target: Location.Self),
 
                 new Damage(
                     id: EffectId.Camou.SilentAssassinOnHitDamage,
