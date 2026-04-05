@@ -1278,8 +1278,8 @@ namespace LowAgeData.Collections
                     restoreChangesOnEnd: true),
 
                 new Buff(
-                    id: BehaviourId.Gorger.FanaticSuicideBuff,
-                    displayName: nameof(BehaviourId.Gorger.FanaticSuicideBuff).CamelCaseToWords(),
+                    id: BehaviourId.Gorger.FanaticDetonationBuff,
+                    displayName: nameof(BehaviourId.Gorger.FanaticDetonationBuff).CamelCaseToWords(),
                     description:
                     "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage " +
                     "to all friendly and enemy units in 1 Distance.",
@@ -1290,7 +1290,7 @@ namespace LowAgeData.Collections
                     finalModifications: null,
                     finalEffects: new List<EffectId>
                     {
-                        EffectId.Gorger.FanaticSuicideSearch
+                        EffectId.Gorger.FanaticDetonationSearch
                     }),
                 
                 new Buff(
@@ -1350,16 +1350,16 @@ namespace LowAgeData.Collections
                     restoreChangesOnEnd: true),
 
                 new Wait(
-                    id: BehaviourId.Camou.ClimbWait,
-                    displayName: nameof(BehaviourId.Camou.ClimbWait).CamelCaseToWords(),
+                    id: BehaviourId.Camou.InfiltrationWait,
+                    displayName: nameof(BehaviourId.Camou.InfiltrationWait).CamelCaseToWords(),
                     description:
                     "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
                     sprite: "res://assets/icons/icon_ability_climb.png",
                     endsAt: EndsAt.EndOf.This.ActionPhase),
 
                 new Buff(
-                    id: BehaviourId.Camou.ClimbBuff,
-                    displayName: nameof(BehaviourId.Camou.ClimbBuff).CamelCaseToWords(),
+                    id: BehaviourId.Camou.InfiltrationBuff,
+                    displayName: nameof(BehaviourId.Camou.InfiltrationBuff).CamelCaseToWords(),
                     description: "Camou can move down from high ground at the additional cost of 1 Movement.",
                     sprite: "res://assets/icons/icon_ability_climb.png",
                     modificationFlags: new List<EntityModificationFlag>

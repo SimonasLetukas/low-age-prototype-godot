@@ -211,16 +211,16 @@ namespace LowAgeData.Domain.Abilities
 
         public static class Gorger
         {
-            public static AbilityId FanaticSuicide => new AbilityId($"{nameof(Gorger)}{nameof(FanaticSuicide)}".ToKebabCase(), true);
-            public static AbilityId FanaticSuicidePassive => new AbilityId($"{nameof(Gorger)}{nameof(FanaticSuicidePassive)}".ToKebabCase(), true);
+            public static AbilityId FanaticDetonation => new AbilityId($"{nameof(Gorger)}{nameof(FanaticDetonation)}".ToKebabCase(), true);
+            public static AbilityId FanaticDetonationPassive => new AbilityId($"{nameof(Gorger)}{nameof(FanaticDetonationPassive)}".ToKebabCase(), true);
             public static AbilityId Disease => new AbilityId($"{nameof(Gorger)}{nameof(Disease)}".ToKebabCase(), true);
         }
 
         public static class Camou
         {
             public static AbilityId SilentAssassin => new AbilityId($"{nameof(Camou)}{nameof(SilentAssassin)}".ToKebabCase(), true);
-            public static AbilityId Climb => new AbilityId($"{nameof(Camou)}{nameof(Climb)}".ToKebabCase(), true);
-            public static AbilityId ClimbPassive => new AbilityId($"{nameof(Camou)}{nameof(ClimbPassive)}".ToKebabCase(), true);
+            public static AbilityId Infiltration => new AbilityId($"{nameof(Camou)}{nameof(Infiltration)}".ToKebabCase(), true);
+            public static AbilityId InfiltrationPassive => new AbilityId($"{nameof(Camou)}{nameof(InfiltrationPassive)}".ToKebabCase(), true);
         }
 
         public static class Shaman

@@ -234,10 +234,10 @@ namespace LowAgeData.Domain.Effects
 
         public static class Gorger
         {
-            public static EffectId FanaticSuicideApplyBehaviourBuff => new EffectId($"{nameof(Gorger)}{nameof(FanaticSuicideApplyBehaviourBuff)}".ToKebabCase(), true);
-            public static EffectId FanaticSuicideDestroy => new EffectId($"{nameof(Gorger)}{nameof(FanaticSuicideDestroy)}".ToKebabCase(), true);
-            public static EffectId FanaticSuicideSearch => new EffectId($"{nameof(Gorger)}{nameof(FanaticSuicideSearch)}".ToKebabCase(), true);
-            public static EffectId FanaticSuicideDamage => new EffectId($"{nameof(Gorger)}{nameof(FanaticSuicideDamage)}".ToKebabCase(), true);
+            public static EffectId FanaticDetonationApplyBehaviourBuff => new EffectId($"{nameof(Gorger)}{nameof(FanaticDetonationApplyBehaviourBuff)}".ToKebabCase(), true);
+            public static EffectId FanaticDetonationDestroy => new EffectId($"{nameof(Gorger)}{nameof(FanaticDetonationDestroy)}".ToKebabCase(), true);
+            public static EffectId FanaticDetonationSearch => new EffectId($"{nameof(Gorger)}{nameof(FanaticDetonationSearch)}".ToKebabCase(), true);
+            public static EffectId FanaticDetonationDamage => new EffectId($"{nameof(Gorger)}{nameof(FanaticDetonationDamage)}".ToKebabCase(), true);
             public static EffectId DiseaseApplyBehaviour => new EffectId($"{nameof(Gorger)}{nameof(DiseaseApplyBehaviour)}".ToKebabCase(), true);
             public static EffectId DiseaseSearch => new EffectId($"{nameof(Gorger)}{nameof(DiseaseSearch)}".ToKebabCase(), true);
             public static EffectId DiseaseDamage => new EffectId($"{nameof(Gorger)}{nameof(DiseaseDamage)}".ToKebabCase(), true);
@@ -249,8 +249,8 @@ namespace LowAgeData.Domain.Effects
             public static EffectId SilentAssassinOnHitSilence => new EffectId($"{nameof(Camou)}{nameof(SilentAssassinOnHitSilence)}".ToKebabCase(), true);
             public static EffectId SilentAssassinSearchFriendly => new EffectId($"{nameof(Camou)}{nameof(SilentAssassinSearchFriendly)}".ToKebabCase(), true);
             public static EffectId SilentAssassinSearchEnemy => new EffectId($"{nameof(Camou)}{nameof(SilentAssassinSearchEnemy)}".ToKebabCase(), true);
-            public static EffectId ClimbTeleport => new EffectId($"{nameof(Camou)}{nameof(ClimbTeleport)}".ToKebabCase(), true);
-            public static EffectId ClimbApplyBehaviour => new EffectId($"{nameof(Camou)}{nameof(ClimbApplyBehaviour)}".ToKebabCase(), true);
+            public static EffectId InfiltrationTeleport => new EffectId($"{nameof(Camou)}{nameof(InfiltrationTeleport)}".ToKebabCase(), true);
+            public static EffectId InfiltrationApplyBehaviour => new EffectId($"{nameof(Camou)}{nameof(InfiltrationApplyBehaviour)}".ToKebabCase(), true);
         }
 
         public static class Shaman

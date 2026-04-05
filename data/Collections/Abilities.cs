@@ -448,7 +448,7 @@ namespace LowAgeData.Collections
                             },
                             grayOutIfAlreadyExists: true),
                         new Selection<ResearchId>(name: ResearchId.Revelators.SpikedRope,
-                            description: $"Unlock {nameof(AbilityId.Camou.Climb).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Camou.Infiltration).CamelCaseToWords()} for " +
                                          $"{nameof(UnitId.Camou).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -1204,14 +1204,14 @@ namespace LowAgeData.Collections
                     }),
 
                 new Passive(
-                    id: AbilityId.Gorger.FanaticSuicidePassive,
-                    displayName: nameof(AbilityId.Gorger.FanaticSuicidePassive).CamelCaseToWords(),
+                    id: AbilityId.Gorger.FanaticDetonationPassive,
+                    displayName: nameof(AbilityId.Gorger.FanaticDetonationPassive).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     sprite: null,
                     onHitEffects: new List<EffectId>
                     {
-                        EffectId.Gorger.FanaticSuicideDestroy
+                        EffectId.Gorger.FanaticDetonationDestroy
                     },
                     onHitAttackTypes: new List<AttackType>
                     {
@@ -1219,30 +1219,31 @@ namespace LowAgeData.Collections
                     },
                     onBirthEffects: new List<EffectId>
                     {
-                        EffectId.Gorger.FanaticSuicideApplyBehaviourBuff
+                        EffectId.Gorger.FanaticDetonationApplyBehaviourBuff
                     }),
 
                 new Instant(
-                    id: AbilityId.Gorger.FanaticSuicide,
+                    id: AbilityId.Gorger.FanaticDetonation,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityId.Gorger.FanaticSuicide).CamelCaseToWords(),
+                    displayName: nameof(AbilityId.Gorger.FanaticDetonation).CamelCaseToWords(),
                     description: "Either as an action, or instead of attacking, or upon getting killed Gorger " +
                                  "detonates, dealing its Melee Damage to all friendly and enemy units in 1 Distance, " +
                                  "killing itself in the process.",
                     sprite: "res://assets/icons/icon_ability_fanatic_suicide.png",
                     effects: new List<EffectId>
                     {
-                        EffectId.Gorger.FanaticSuicideSearch,
-                        EffectId.Gorger.FanaticSuicideDestroy
+                        EffectId.Gorger.FanaticDetonationSearch,
+                        EffectId.Gorger.FanaticDetonationDestroy
                     }),
                 
                 new Passive(
                     id: AbilityId.Gorger.Disease,
                     displayName: nameof(AbilityId.Gorger.Disease).CamelCaseToWords(),
-                    description: $"All non-mechanical units hit by {nameof(AbilityId.Gorger.FanaticSuicide).CamelCaseToWords()} " +
-                                 $"are also affected by disease which halves the initiative and deals 1 Pure Damage " +
-                                 $"at the end of next action phase. The disease is spread to all adjacent " +
-                                 $"non-mechanical units without a disease at the start of the planning phase.",
+                    description: $"All non-mechanical units hit by {nameof(AbilityId.Gorger.FanaticDetonation).CamelCaseToWords()} " +
+                                 $"are infected with disease. Infected units have their Initiative halved and take " +
+                                 $"1 Pure Damage at the end of the next action phase. At the start of each planning " +
+                                 $"phase, the disease spreads to adjacent non-mechanical units that are not already " +
+                                 $"infected.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_disease.png",
                     researchNeeded: new List<ResearchId>
@@ -1253,10 +1254,10 @@ namespace LowAgeData.Collections
                 new Passive(
                     id: AbilityId.Camou.SilentAssassin,
                     displayName: nameof(AbilityId.Camou.SilentAssassin).CamelCaseToWords(),
-                    description: "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly " +
-                                 "units around Camou in 4 Distance. Additionally, if the target has none of its allies " +
-                                 "in the same radius, Camou silences the target for 2 of its actions, disabling the use of any " +
-                                 "abilities or passives.",
+                    description: "Deals bonus Melee Damage equal to 50% of the target's missing Health if there are " +
+                                 "no friendly units in 4 Distance around Camou. If the target also has no " +
+                                 "allies within that Distance, it is silenced for its next 2 actions, disabling " +
+                                 "abilities and passives.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_silent_assassin.png",
                     onHitEffects: new List<EffectId>
@@ -1270,17 +1271,18 @@ namespace LowAgeData.Collections
                     }),
 
                 new Target(
-                    id: AbilityId.Camou.Climb,
+                    id: AbilityId.Camou.Infiltration,
                     turnPhase: TurnPhase.Action,
-                    displayName: nameof(AbilityId.Camou.Climb).CamelCaseToWords(),
-                    description: "Select an adjacent unoccupied space on a high ground. This space is considered " +
-                                 "occupied until the end of the action phase at which point Camou moves to it. Passively, " +
-                                 "Camou can move down from high ground at the additional cost of 1 Movement.",
+                    displayName: nameof(AbilityId.Camou.Infiltration).CamelCaseToWords(),
+                    description: "Select an adjacent unoccupied high ground tile. This tile is considered " +
+                                 "occupied until the end of the action phase at which point Camou moves to it. " +
+                                 "Passively, Camou can move down directly from high ground at an additional cost " +
+                                 "of 1 Movement.",
                     sprite: "res://assets/icons/icon_ability_climb.png",
                     targetArea: new Circle(radius: 1, ignoreRadius: 0),
                     effects: new List<EffectId>
                     {
-                        EffectId.Camou.ClimbTeleport
+                        EffectId.Camou.InfiltrationTeleport
                     },
                     researchNeeded: new List<ResearchId>
                     {
@@ -1288,8 +1290,8 @@ namespace LowAgeData.Collections
                     }),
 
                 new Passive(
-                    id: AbilityId.Camou.ClimbPassive,
-                    displayName: nameof(AbilityId.Camou.ClimbPassive).CamelCaseToWords(),
+                    id: AbilityId.Camou.InfiltrationPassive,
+                    displayName: nameof(AbilityId.Camou.InfiltrationPassive).CamelCaseToWords(),
                     description: "",
                     hasButton: false,
                     sprite: null,
@@ -1299,7 +1301,7 @@ namespace LowAgeData.Collections
                     },
                     onBirthEffects: new List<EffectId>
                     {
-                        EffectId.Camou.ClimbApplyBehaviour
+                        EffectId.Camou.InfiltrationApplyBehaviour
                     }),
 
                 new Target(
@@ -1307,8 +1309,8 @@ namespace LowAgeData.Collections
                     turnPhase: TurnPhase.Action,
                     displayName: nameof(AbilityId.Shaman.WondrousGoo).CamelCaseToWords(),
                     description: "Select a tile in 4 Distance, which gets contaminated. Any unit in the " +
-                                 "contamination has its vision and Distance for all attacks reduced by 3 (total " +
-                                 "minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of " +
+                                 "contamination has its Vision and Distance for all attacks reduced by 3 (total " +
+                                 "minimum of 1) and receives 1 Pure Damage at the start of its action. At the end of " +
                                  "this action phase, the contamination area expands to adjacent tiles and stays " +
                                  "until the end of the next action phase.",
                     sprite: "res://assets/icons/icon_ability_wondrous_goo.png",

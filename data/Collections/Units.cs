@@ -137,7 +137,9 @@ namespace LowAgeData.Collections
                 new Unit(
                     id: UnitId.Gorger,
                     displayName: nameof(UnitId.Gorger),
-                    description: "",
+                    description: "A volatile suicide unit. Gorgers detonate to deal area damage to all nearby " +
+                                 "units and are most effective against biological targets. Their explosions can " +
+                                 "be upgraded to spread disease, which then continues to spread on its own.",
                     sprite: "res://assets/sprites/units/revs/gorger indexed 1x1.png",
                     centerOffset: new Vector2Int(8, 15),
                     statistics: new List<Stat>
@@ -167,16 +169,18 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
-                        //AbilityId.Gorger.FanaticSuicide,
-                        //AbilityId.Gorger.FanaticSuicidePassive,
-                        //AbilityId.Gorger.Disease
+                        AbilityId.Gorger.FanaticDetonation,
+                        AbilityId.Gorger.FanaticDetonationPassive,
+                        AbilityId.Gorger.Disease
                     },
                     size: 2),
 
                 new Unit(
                     id: UnitId.Camou,
                     displayName: nameof(UnitId.Camou),
-                    description: "",
+                    description: "A silent assassin. Camous excel when operating alone, picking off isolated " +
+                                 "armoured enemies and exploiting weak points in enemy defenses. Their infiltration " +
+                                 "capabilities can be upgraded to climb walls.",                    
                     sprite: "res://assets/sprites/units/revs/camou indexed 1x1.png",
                     centerOffset: new Vector2Int(3, 17),
                     statistics: new List<Stat>
@@ -207,13 +211,14 @@ namespace LowAgeData.Collections
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
                         //AbilityId.Camou.SilentAssassin,
-                        //AbilityId.Camou.Climb
+                        //AbilityId.Camou.Infiltration
                     }),
 
                 new Unit(
                     id: UnitId.Shaman, 
                     displayName: nameof(UnitId.Shaman),
-                    description: "",
+                    description: "A specialized anti-ranged unit. Shamans contaminate areas that expand over " +
+                                 "time and reduce enemy vision as well as attack range.",
                     sprite: "res://assets/sprites/units/revs/shaman indexed 1x1.png",
                     centerOffset: new Vector2Int(5, 17),
                     statistics: new List<Stat>

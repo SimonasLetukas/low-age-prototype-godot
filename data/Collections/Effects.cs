@@ -1054,19 +1054,19 @@ namespace LowAgeData.Collections
                     }),
 
                 new ApplyBehaviour(
-                    id: EffectId.Gorger.FanaticSuicideApplyBehaviourBuff,
+                    id: EffectId.Gorger.FanaticDetonationApplyBehaviourBuff,
                     behavioursToApply: new List<BehaviourId>
                     {
-                        BehaviourId.Gorger.FanaticSuicideBuff
+                        BehaviourId.Gorger.FanaticDetonationBuff
                     },
                     target: Location.Self),
 
                 new Destroy(
-                    id: EffectId.Gorger.FanaticSuicideDestroy,
+                    id: EffectId.Gorger.FanaticDetonationDestroy,
                     target: Location.Origin),
 
                 new Search(
-                    id: EffectId.Gorger.FanaticSuicideSearch,
+                    id: EffectId.Gorger.FanaticDetonationSearch,
                     shape: new Circle(radius: 1),
                     height: SearchHeight.All,
                     filters: new List<IFilterItem>
@@ -1091,13 +1091,13 @@ namespace LowAgeData.Collections
                     },
                     effects: new List<EffectId>
                     {
-                        EffectId.Gorger.FanaticSuicideDamage,
+                        EffectId.Gorger.FanaticDetonationDamage,
                         EffectId.Gorger.DiseaseApplyBehaviour
                     },
                     target: Location.Self),
 
                 new Damage(
-                    id: EffectId.Gorger.FanaticSuicideDamage,
+                    id: EffectId.Gorger.FanaticDetonationDamage,
                     damageType: DamageType.OverrideMelee),
                 
                 new ApplyBehaviour(
@@ -1276,8 +1276,8 @@ namespace LowAgeData.Collections
                     usedForValidator: true),
 
                 new Teleport(
-                    id: EffectId.Camou.ClimbTeleport,
-                    waitBefore: BehaviourId.Camou.ClimbWait,
+                    id: EffectId.Camou.InfiltrationTeleport,
+                    waitBefore: BehaviourId.Camou.InfiltrationWait,
                     validators: new List<Validator>
                     {
                         new Validator(conditions: new List<Condition>
@@ -1291,10 +1291,10 @@ namespace LowAgeData.Collections
                     }),
 
                 new ApplyBehaviour(
-                    id: EffectId.Camou.ClimbApplyBehaviour,
+                    id: EffectId.Camou.InfiltrationApplyBehaviour,
                     behavioursToApply: new List<BehaviourId>
                     {
-                        BehaviourId.Camou.ClimbBuff
+                        BehaviourId.Camou.InfiltrationBuff
                     },
                     target: Location.Self),
 

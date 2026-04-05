@@ -531,13 +531,13 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="OM8NJAFl4dGKops6Xfzr-79" value="FanaticSuicidePassive&lt;br&gt;&amp;lt;Passive&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="OM8NJAFl4dGKops6Xfzr-79" value="FanaticDetonationPassive&lt;br&gt;&amp;lt;Passive&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="120" y="2480" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="OM8NJAFl4dGKops6Xfzr-228" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="OM8NJAFl4dGKops6Xfzr-80" target="OM8NJAFl4dGKops6Xfzr-213">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="OM8NJAFl4dGKops6Xfzr-80" value="FanaticSuicide&lt;br&gt;&amp;lt;Instant&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="OM8NJAFl4dGKops6Xfzr-80" value="FanaticDetonation&lt;br&gt;&amp;lt;Instant&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="120" y="2760" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="OM8NJAFl4dGKops6Xfzr-82" value="Climb&lt;br&gt;&amp;lt;Target&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
