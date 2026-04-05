@@ -527,10 +527,13 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost"
+          "ability-shared-revelators-population-cost",
+          "ability-gorger-fanatic-detonation",
+          "ability-gorger-fanatic-detonation-passive",
+          "ability-gorger-disease"
         ],
         "displayName": "Gorger",
-        "description": "",
+        "description": "A volatile suicide unit. Gorgers detonate to deal area damage to all nearby units and are most effective against biological targets. Their explosions can be upgraded to spread disease, which then continues to spread on its own.",
         "sprite": "res://assets/sprites/units/revs/gorger indexed 1x1.png",
         "centerOffset": {
           "x": 8,
@@ -606,7 +609,7 @@
           "ability-shared-revelators-population-cost"
         ],
         "displayName": "Camou",
-        "description": "",
+        "description": "A silent assassin. Camous excel when operating alone, picking off isolated armoured enemies and exploiting weak points in enemy defenses. Their infiltration capabilities can be upgraded to climb walls.",
         "sprite": "res://assets/sprites/units/revs/camou indexed 1x1.png",
         "centerOffset": {
           "x": 3,
@@ -695,7 +698,7 @@
           "ability-shared-revelators-population-cost"
         ],
         "displayName": "Shaman",
-        "description": "",
+        "description": "A specialized anti-ranged unit. Shamans contaminate areas that expand over time and reduce enemy vision as well as attack range.",
         "sprite": "res://assets/sprites/units/revs/shaman indexed 1x1.png",
         "centerOffset": {
           "x": 5,
@@ -5440,7 +5443,7 @@
         },
         {
           "name": "research-revelators-spiked-rope",
-          "description": "Unlock Climb for Camou.",
+          "description": "Unlock Infiltration for Camou.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -6971,25 +6974,25 @@
     },
     {
       "$type": "Passive",
-      "id": "ability-gorger-fanatic-suicide-passive",
+      "id": "ability-gorger-fanatic-detonation-passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [],
       "periodicSearchEffect": null,
       "onHitEffects": [
-        "effect-gorger-fanatic-suicide-destroy"
+        "effect-gorger-fanatic-detonation-destroy"
       ],
       "onHitAttackTypes": [
         "AttackType.Melee"
       ],
       "onBirthEffects": [
-        "effect-gorger-fanatic-suicide-apply-behaviour-buff"
+        "effect-gorger-fanatic-detonation-apply-behaviour-buff"
       ],
       "onBuildBehaviour": null,
       "hasButton": false,
       "loops": false,
       "cooldown": "EndsAt.Instant",
       "cost": [],
-      "displayName": "Fanatic Suicide Passive",
+      "displayName": "Fanatic Detonation Passive",
       "description": "",
       "sprite": null,
       "centerOffset": {
@@ -6999,18 +7002,18 @@
     },
     {
       "$type": "Instant",
-      "id": "ability-gorger-fanatic-suicide",
+      "id": "ability-gorger-fanatic-detonation",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
       "effects": [
-        "effect-gorger-fanatic-suicide-search",
-        "effect-gorger-fanatic-suicide-destroy"
+        "effect-gorger-fanatic-detonation-search",
+        "effect-gorger-fanatic-detonation-destroy"
       ],
       "hasButton": true,
       "loops": false,
       "cooldown": "EndsAt.Instant",
       "cost": [],
-      "displayName": "Fanatic Suicide",
+      "displayName": "Fanatic Detonation",
       "description": "Either as an action, or instead of attacking, or upon getting killed Gorger detonates, dealing its Melee Damage to all friendly and enemy units in 1 Distance, killing itself in the process.",
       "sprite": "res://assets/icons/icon_ability_fanatic_suicide.png",
       "centerOffset": {
@@ -7035,7 +7038,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Disease",
-      "description": "All non-mechanical units hit by Fanatic Suicide are also affected by disease which halves the initiative and deals 1 Pure Damage at the end of next action phase. The disease is spread to all adjacent non-mechanical units without a disease at the start of the planning phase.",
+      "description": "All non-mechanical units hit by Fanatic Detonation are infected with disease. Infected units have their Initiative halved and take 1 Pure Damage at the end of the next action phase. At the start of each planning phase, the disease spreads to adjacent non-mechanical units that are not already infected.",
       "sprite": "res://assets/icons/icon_ability_disease.png",
       "centerOffset": {
         "x": 0,
@@ -7062,7 +7065,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Silent Assassin",
-      "description": "Deals 50% of target's lost Health as bonus Melee Damage if there are no friendly units around Camou in 4 Distance. Additionally, if the target has none of its allies in the same radius, Camou silences the target for 2 of its actions, disabling the use of any abilities or passives.",
+      "description": "Deals bonus Melee Damage equal to 50% of the target's missing Health if there are no friendly units in 4 Distance around Camou. If the target also has no allies within that Distance, it is silenced for its next 2 actions, disabling abilities and passives.",
       "sprite": "res://assets/icons/icon_ability_silent_assassin.png",
       "centerOffset": {
         "x": 0,
@@ -7071,7 +7074,7 @@
     },
     {
       "$type": "Target",
-      "id": "ability-camou-climb",
+      "id": "ability-camou-infiltration",
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [
         "research-revelators-spiked-rope"
@@ -7082,7 +7085,7 @@
         "ignoreRadius": 0
       },
       "effects": [
-        "effect-camou-climb-teleport"
+        "effect-camou-infiltration-teleport"
       ],
       "overridesAttacks": [],
       "fallbackToAttack": false,
@@ -7093,8 +7096,8 @@
       "loops": false,
       "cooldown": "EndsAt.Instant",
       "cost": [],
-      "displayName": "Climb",
-      "description": "Select an adjacent unoccupied space on a high ground. This space is considered occupied until the end of the action phase at which point Camou moves to it. Passively, Camou can move down from high ground at the additional cost of 1 Movement.",
+      "displayName": "Infiltration",
+      "description": "Select an adjacent unoccupied high ground tile. This tile is considered occupied until the end of the action phase at which point Camou moves to it. Passively, Camou can move down directly from high ground at an additional cost of 1 Movement.",
       "sprite": "res://assets/icons/icon_ability_climb.png",
       "centerOffset": {
         "x": 0,
@@ -7103,7 +7106,7 @@
     },
     {
       "$type": "Passive",
-      "id": "ability-camou-climb-passive",
+      "id": "ability-camou-infiltration-passive",
       "turnPhase": "TurnPhase.Passive",
       "researchNeeded": [
         "research-revelators-spiked-rope"
@@ -7112,14 +7115,14 @@
       "onHitEffects": [],
       "onHitAttackTypes": [],
       "onBirthEffects": [
-        "effect-camou-climb-apply-behaviour"
+        "effect-camou-infiltration-apply-behaviour"
       ],
       "onBuildBehaviour": null,
       "hasButton": false,
       "loops": false,
       "cooldown": "EndsAt.Instant",
       "cost": [],
-      "displayName": "Climb Passive",
+      "displayName": "Infiltration Passive",
       "description": "",
       "sprite": null,
       "centerOffset": {
@@ -7150,7 +7153,7 @@
       "cooldown": "EndsAt.EndOfSecondActionPhase",
       "cost": [],
       "displayName": "Wondrous Goo",
-      "description": "Select a tile in 4 Distance, which gets contaminated. Any unit in the contamination has its vision and Distance for all attacks reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase.",
+      "description": "Select a tile in 4 Distance, which gets contaminated. Any unit in the contamination has its Vision and Distance for all attacks reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its action. At the end of this action phase, the contamination area expands to adjacent tiles and stays until the end of the next action phase.",
       "sprite": "res://assets/icons/icon_ability_wondrous_goo.png",
       "centerOffset": {
         "x": 0,
@@ -9944,9 +9947,9 @@
     },
     {
       "$type": "ApplyBehaviour",
-      "id": "effect-gorger-fanatic-suicide-apply-behaviour-buff",
+      "id": "effect-gorger-fanatic-detonation-apply-behaviour-buff",
       "behavioursToApply": [
-        "behaviour-gorger-fanatic-suicide-buff"
+        "behaviour-gorger-fanatic-detonation-buff"
       ],
       "filters": [],
       "behaviourOwner": null,
@@ -9956,14 +9959,14 @@
     },
     {
       "$type": "Destroy",
-      "id": "effect-gorger-fanatic-suicide-destroy",
+      "id": "effect-gorger-fanatic-detonation-destroy",
       "blocksBehaviours": false,
       "target": "Location.Origin",
       "validators": []
     },
     {
       "$type": "Search",
-      "id": "effect-gorger-fanatic-suicide-search",
+      "id": "effect-gorger-fanatic-detonation-search",
       "shape": {
         "$type": "Circle",
         "radius": 1,
@@ -10008,7 +10011,7 @@
       ],
       "triggerFlags": [],
       "effects": [
-        "effect-gorger-fanatic-suicide-damage",
+        "effect-gorger-fanatic-detonation-damage",
         "effect-gorger-disease-apply-behaviour"
       ],
       "location": "Location.Self",
@@ -10018,7 +10021,7 @@
     },
     {
       "$type": "Damage",
-      "id": "effect-gorger-fanatic-suicide-damage",
+      "id": "effect-gorger-fanatic-detonation-damage",
       "damageType": "DamageType.OverrideMelee",
       "amount": {
         "flat": 0,
@@ -10341,8 +10344,8 @@
     },
     {
       "$type": "Teleport",
-      "id": "effect-camou-climb-teleport",
-      "waitBefore": "behaviour-camou-climb-wait",
+      "id": "effect-camou-infiltration-teleport",
+      "waitBefore": "behaviour-camou-infiltration-wait",
       "target": "Location.Point",
       "validators": [
         {
@@ -10365,9 +10368,9 @@
     },
     {
       "$type": "ApplyBehaviour",
-      "id": "effect-camou-climb-apply-behaviour",
+      "id": "effect-camou-infiltration-apply-behaviour",
       "behavioursToApply": [
-        "behaviour-camou-climb-buff"
+        "behaviour-camou-infiltration-buff"
       ],
       "filters": [],
       "behaviourOwner": null,
@@ -14843,16 +14846,16 @@
     },
     {
       "$type": "Buff",
-      "id": "behaviour-gorger-fanatic-suicide-buff",
+      "id": "behaviour-gorger-fanatic-detonation-buff",
       "modificationFlags": [],
       "initialModifications": [],
       "initialEffects": [],
       "finalModifications": [],
       "finalEffects": [
-        "effect-gorger-fanatic-suicide-search"
+        "effect-gorger-fanatic-detonation-search"
       ],
       "restoreChangesOnEnd": false,
-      "displayName": "Fanatic Suicide Buff",
+      "displayName": "Fanatic Detonation Buff",
       "description": "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage to all friendly and enemy units in 1 Distance.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Neutral",
@@ -14941,9 +14944,9 @@
     },
     {
       "$type": "Wait",
-      "id": "behaviour-camou-climb-wait",
+      "id": "behaviour-camou-infiltration-wait",
       "nextBehaviour": null,
-      "displayName": "Climb Wait",
+      "displayName": "Infiltration Wait",
       "description": "Camou will complete climbing on an adjacent high ground space at the end of this action phase.",
       "endsAt": "EndsAt.EndOfThisActionPhase",
       "alignment": "Alignment.Neutral",
@@ -14962,7 +14965,7 @@
     },
     {
       "$type": "Buff",
-      "id": "behaviour-camou-climb-buff",
+      "id": "behaviour-camou-infiltration-buff",
       "modificationFlags": [
         "EntityModificationFlag.ClimbsDown"
       ],
@@ -14971,7 +14974,7 @@
       "finalModifications": [],
       "finalEffects": [],
       "restoreChangesOnEnd": false,
-      "displayName": "Climb Buff",
+      "displayName": "Infiltration Buff",
       "description": "Camou can move down from high ground at the additional cost of 1 Movement.",
       "endsAt": "EndsAt.Death",
       "alignment": "Alignment.Positive",
