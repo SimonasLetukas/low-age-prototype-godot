@@ -45,6 +45,10 @@ public partial class Abilities : Node2D
                     var build = BuildNode.InstantiateAsChild(buildBlueprint, this, Parent);
                     build.ExecutionRequested += OnExecutionRequested;
                     break;
+                case Instant instantBlueprint:
+                    var instant = InstantNode.InstantiateAsChild(instantBlueprint, this, Parent);
+                    instant.ExecutionRequested += OnExecutionRequested;
+                    break;
                 case Passive passiveBlueprint:
                     var passive = PassiveNode.InstantiateAsChild(passiveBlueprint, this, Parent);
                     passive.ExecutionRequested += OnExecutionRequested;

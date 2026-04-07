@@ -58,9 +58,9 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
 
     public bool IsParentEntity(EntityNode entity) => Parent.InstanceId.Equals(entity.InstanceId);
 
-    public void Remove() => EndBehaviour();
+    public void Remove() => EndBehaviour(true);
     
-    protected virtual void EndBehaviour() => Destroy();
+    protected virtual void EndBehaviour(bool triggersOnDeathBehaviours) => Destroy();
 
     private void Destroy()
     {
@@ -165,7 +165,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         }
         else
         {
-            addedBehaviour.EndBehaviour();
+            addedBehaviour.EndBehaviour(false);
         }
 
         if (CanResetDuration is false) 
@@ -190,7 +190,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         if (Log.DebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(OnDurationEnded), ToString());
         
-        EndBehaviour();
+        EndBehaviour(true);
     }
     
     private void OnTriggered()
@@ -205,7 +205,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
             Destroy();
     }
 
-    private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
     {
         if (entity.Equals(Parent) is false)
             return;
@@ -214,7 +214,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
             Log.Info(nameof(BehaviourNode), nameof(OnEntityDestroyed), 
                 $"{this} parent destroyed by {source}");
         
-        EndBehaviour();
+        EndBehaviour(triggersOnDeathBehaviours);
     }
 
     private void OnStackedBehaviourDestroyed(BehaviourNode stackedBehaviour)

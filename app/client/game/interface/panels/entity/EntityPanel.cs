@@ -44,6 +44,7 @@ public partial class EntityPanel : Control
         _display.AbilityTextResized += OnInfoDisplayTextResized;
         _display.AttackSelected += OnInfoDisplayAttackSelected;
         _display.AbilityCancelled += OnInfoDisplayAbilityCancelled;
+        _display.AbilityActivated += OnInfoDisplayAbilityActivated;
         
         HidePanel();
     }
@@ -56,6 +57,7 @@ public partial class EntityPanel : Control
         _display.AbilityTextResized -= OnInfoDisplayTextResized;
         _display.AttackSelected -= OnInfoDisplayAttackSelected;
         _display.AbilityCancelled -= OnInfoDisplayAbilityCancelled;
+        _display.AbilityActivated -= OnInfoDisplayAbilityActivated;
         
         base._ExitTree();
     }
@@ -110,7 +112,11 @@ public partial class EntityPanel : Control
             var research = _selectedAbility.ResearchNeeded;
             var cooldown = _selectedAbility.RemainingCooldown;
             var hasAbilityToCancel = _selectedAbility is IActiveAbilityNode { IsActivated: true };
-            _display.SetAbilityStats(name, turnPhase, text, cooldown, research, hasAbilityToCancel);
+            var hasAbilityToActivate = _selectedAbility is InstantNode instant 
+                                       && instant.TurnPhase.Equals(GlobalRegistry.Instance.GetCurrentPhase)
+                                       && hasAbilityToCancel is false;
+            
+            _display.SetAbilityStats(name, turnPhase, text, cooldown, research, hasAbilityToCancel, hasAbilityToActivate);
             _display.ShowView(View.Ability);
             return;
         }
@@ -323,5 +329,24 @@ public partial class EntityPanel : Control
             return;
         
         activeAbility.CancelActivations();
+    }
+    
+    private void OnInfoDisplayAbilityActivated()
+    {
+        if (_selectedAbility is not InstantNode instantAbility)
+            return;
+
+        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(instantAbility.OwnerActor) is false)
+            return;
+        
+        var currentPhase = GlobalRegistry.Instance.GetCurrentPhase();
+        if (currentPhase.Equals(instantAbility.TurnPhase) is false)
+            return;
+        
+        instantAbility.Activate(new InstantNode.ActivationRequest
+        {
+            IsRequeued = false,
+            UseConsumableResources = true
+        });
     }
 }

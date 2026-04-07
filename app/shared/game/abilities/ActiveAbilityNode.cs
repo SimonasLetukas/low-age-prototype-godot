@@ -387,7 +387,7 @@ public abstract partial class ActiveAbilityNode<
                 $"{this} current {nameof(FocusQueue)}: '{JsonConvert.SerializeObject(FocusQueue)}'");
     }
     
-    private void OnOwnerActorDestroyed(EntityNode entity, EntityNode? source)
+    private void OnOwnerActorDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
     {
         if (entity is not ActorNode actor)
             return;

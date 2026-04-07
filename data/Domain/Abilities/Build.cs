@@ -3,6 +3,7 @@ using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Shape;
 using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Entities.Actors.Structures;
+using LowAgeData.Domain.Researches;
 
 namespace LowAgeData.Domain.Abilities
 {

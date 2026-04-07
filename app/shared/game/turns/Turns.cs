@@ -185,7 +185,7 @@ public partial class Turns : Node2D
 		EventBus.Instance.RaisePhaseStarted(Turn, Phase);
 	}
 	
-	private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
+	private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
 	{
 		if (InitiativeQueue.IsEmpty() || entity is not ActorNode actor) 
 			return;

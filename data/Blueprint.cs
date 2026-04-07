@@ -8,6 +8,7 @@ using LowAgeData.Domain.Factions;
 using LowAgeData.Domain.Masks;
 using LowAgeData.Domain.Resources;
 using LowAgeData.Domain.Tiles;
+using Research = LowAgeData.Domain.Researches.Research;
 
 namespace LowAgeData
 {
@@ -15,6 +16,7 @@ namespace LowAgeData
     {
         public IList<Resource> Resources { get; set; } = null!;
         public IList<Faction> Factions { get; set; } = null!;
+        public IList<Research> Researches { get; set; } = null!;
         public EntityBlueprint Entities { get; set; } = null!;
         public IList<Tile> Tiles { get; set; } = null!;
         public IList<Ability> Abilities { get; set; } = null!;

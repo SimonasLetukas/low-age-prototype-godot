@@ -33,7 +33,7 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
         HandleEffects(Blueprint.InitialEffects);
     }
 
-    protected override void EndBehaviour()
+    protected override void EndBehaviour(bool triggersOnDeathBehaviours)
     {
         if (Log.DebugEnabled)
             Log.Info(nameof(BuffNode), nameof(EndBehaviour), ToString());
@@ -42,11 +42,14 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
         
         if (Blueprint.RestoreChangesOnEnd)
             RestoreInitialModifications();
+
+        if (triggersOnDeathBehaviours)
+        {
+            HandleFinalModifications();
+            HandleEffects(Blueprint.FinalEffects);
+        }
         
-        HandleFinalModifications();
-        HandleEffects(Blueprint.FinalEffects);
-        
-        base.EndBehaviour();
+        base.EndBehaviour(triggersOnDeathBehaviours);
     }
 
     private void AddModificationFlags()

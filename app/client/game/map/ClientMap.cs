@@ -992,7 +992,7 @@ public partial class ClientMap : Map
 		UpdateLines();
 	}
 	
-	private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
+	private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
 	{
 		if (Entities.IsEntitySelected(entity))
 			HandleDeselecting();

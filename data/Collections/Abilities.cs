@@ -9,6 +9,8 @@ using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Resources;
 using LowAgeCommon;
+using LowAgeData.Domain.Researches;
+using Research = LowAgeData.Domain.Abilities.Research;
 
 namespace LowAgeData.Collections
 {
@@ -426,7 +428,7 @@ namespace LowAgeData.Collections
                     selection: new List<Selection<ResearchId>>
                     {
                         new Selection<ResearchId>(name: ResearchId.Revelators.PoisonedSlits,
-                            description: $"Unlock {nameof(AbilityId.Quickdraw.Cripple).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Quickdraw.Cripple).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Quickdraw).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -437,7 +439,7 @@ namespace LowAgeData.Collections
                             },
                             grayOutIfAlreadyExists: true),
                         new Selection<ResearchId>(name: ResearchId.Revelators.RadioactiveChyme,
-                            description: $"Unlock {nameof(AbilityId.Gorger.Disease).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Gorger.Disease).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Gorger).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -448,7 +450,7 @@ namespace LowAgeData.Collections
                             },
                             grayOutIfAlreadyExists: true),
                         new Selection<ResearchId>(name: ResearchId.Revelators.SpikedRope,
-                            description: $"Unlock {nameof(AbilityId.Camou.Infiltration).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Camou.Infiltration).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Camou).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -459,7 +461,7 @@ namespace LowAgeData.Collections
                             },
                             grayOutIfAlreadyExists: true),
                         new Selection<ResearchId>(name: ResearchId.Revelators.QuestionableCargo,
-                            description: $"Unlock {nameof(AbilityId.Pyre.PhantomMenace).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Pyre.PhantomMenace).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Pyre).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -470,7 +472,7 @@ namespace LowAgeData.Collections
                             },
                             grayOutIfAlreadyExists: true),
                         new Selection<ResearchId>(name: ResearchId.Revelators.HumanfleshRations,
-                            description: $"Unlock {nameof(AbilityId.Mummy.LeapOfHunger).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Mummy.LeapOfHunger).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Mummy).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -481,7 +483,7 @@ namespace LowAgeData.Collections
                             },
                             grayOutIfAlreadyExists: true),
                         new Selection<ResearchId>(name: ResearchId.Revelators.AdaptiveDigestion,
-                            description: $"Unlock {nameof(AbilityId.Roach.CorrosiveSpit).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Roach.CorrosiveSpit).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Roach).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -652,7 +654,8 @@ namespace LowAgeData.Collections
                     id: AbilityId.CelestiumCore.HeightenedConductivity,
                     displayName: nameof(AbilityId.CelestiumCore.HeightenedConductivity).CamelCaseToWords(),
                     turnPhase: TurnPhase.Planning,
-                    description: "Unlocks Improved Power Grid ability for all Power Poles.",
+                    description: $"Unlocks {nameof(AbilityId.PowerPole.ImprovedPowerGrid).CamelCaseToWords()} " +
+                                 $"ability for {nameof(StructureId.PowerPole).CamelCaseToWords()}.",
                     sprite: "res://assets/icons/icon_ability_build.png", // TODO
                     effects: new List<EffectId>
                     {
@@ -865,7 +868,7 @@ namespace LowAgeData.Collections
                     selection: new List<Selection<ResearchId>>
                     {
                         new Selection<ResearchId>(name: ResearchId.Uee.HoverboardReignition,
-                            description: $"Unlock {nameof(AbilityId.Horrior.Mount).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Horrior.Mount).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Horrior).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -880,7 +883,7 @@ namespace LowAgeData.Collections
                                 ResearchId.Uee.FusionCoreUpgrade
                             }),
                         new Selection<ResearchId>(name: ResearchId.Uee.MdPractice,
-                            description: $"Unlock {nameof(AbilityId.Hawk.HealthKit).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Hawk.HealthKit).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Hawk).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -895,7 +898,7 @@ namespace LowAgeData.Collections
                                 ResearchId.Uee.FusionCoreUpgrade
                             }),
                         new Selection<ResearchId>(name: ResearchId.Uee.CelestiumCoatedMaterials,
-                            description: $"Unlock {nameof(AbilityId.Radar.RadioLocation).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Radar.RadioLocation).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Radar).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -910,7 +913,7 @@ namespace LowAgeData.Collections
                                 ResearchId.Uee.FusionCoreUpgrade
                             }),
                         new Selection<ResearchId>(name: ResearchId.Uee.ExplosiveShrapnel,
-                            description: $"Unlock {nameof(AbilityId.Mortar.PiercingBlast).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Mortar.PiercingBlast).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Mortar).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {
@@ -925,7 +928,7 @@ namespace LowAgeData.Collections
                                 ResearchId.Uee.CelestiumCoreUpgrade
                             }),
                         new Selection<ResearchId>(name: ResearchId.Uee.HardenedMatrix,
-                            description: $"Unlock {nameof(AbilityId.Vessel.Fortify).CamelCaseToWords()} for " +
+                            description: $"Unlock {nameof(AbilityId.Vessel.Fortify).CamelCaseToWords()} ability for " +
                                          $"{nameof(UnitId.Vessel).CamelCaseToWords()}.",
                             cost: new List<Payment>
                             {

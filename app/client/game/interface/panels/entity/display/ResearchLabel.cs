@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Research : MarginContainer
+public partial class ResearchLabel : MarginContainer
 {
     [Export] public string HintTemplate { get; set; } = "Research Needed: ";
     [Export] public string ResearchTemplate { get; set; } = "[R]";

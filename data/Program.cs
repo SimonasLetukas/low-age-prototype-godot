@@ -10,6 +10,7 @@ const string fileName = "data.json";
 
 var resources = ResourcesCollection.Get();
 var factions = FactionsCollection.Get();
+var researches = ResearchesCollection.Get();
 var tiles = TilesCollection.Get();
 var units = UnitsCollection.Get();
 var structures = StructuresCollection.Get();
@@ -23,6 +24,7 @@ var outputObject = new Blueprint
 {
     Resources = resources,
     Factions = factions,
+    Researches = researches,
     Entities = new EntityBlueprint
     {
         Units = units,

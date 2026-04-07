@@ -64,7 +64,7 @@ public partial class InterceptDamageNode : BehaviourNode, INodeFromBlueprint<Int
         
         if (_interceptionsLeft == 0)
         {
-            EndBehaviour();
+            EndBehaviour(true);
         }
     }
 
@@ -75,54 +75,12 @@ public partial class InterceptDamageNode : BehaviourNode, INodeFromBlueprint<Int
         if (amountDealtInstead is null)
             return (damage, damageType);
 
-        var flat = amountDealtInstead.Flat;
-        var multiplied = GetMultipliedDamage(amountDealtInstead, damage, from);
-
-        var adjustedDamage = flat + multiplied;
+        var amountNode = AmountNode.Build(amountDealtInstead);
+        var adjustedDamage = (int)Math.Round(amountNode.GetResolvedAmount(
+            damage, History, from, Parent));
+        
         var adjustedDamageType = Blueprint.DamageTypeDealtInstead ?? damageType;
         
         return (adjustedDamage, adjustedDamageType);
-    }
-
-    private int GetMultipliedDamage(Amount amount, int currentDamage, ActorNode from)
-    {
-        if (amount.Multiplier is null)
-            return 0;
-
-        var target = amount.MultiplyTarget;
-        if (target.Equals(Location.Inherited))
-            return (int)Math.Round(currentDamage * amount.Multiplier.Value);
-
-        var entity = target switch
-        {
-            _ when target.Equals(Location.Self) => from,
-            _ when target.Equals(Location.Entity) => Parent,
-            _ when target.Equals(Location.Source) => History.SourceEntityOrNull ?? from,
-            _ when target.Equals(Location.Origin) => History.OriginEntityOrNull ?? from,
-            _ => Parent
-        };
-
-        var multiplierOf = amount.MultiplierOf;
-        if (entity is not ActorNode actor || multiplierOf is null)
-            return 0;
-
-        var baseValue = multiplierOf switch
-        {
-            _ when multiplierOf.Equals(AmountMultiplyOfFlag.Health) => actor.Health?.CurrentAmount ?? 0,
-            
-            _ when multiplierOf.Equals(AmountMultiplyOfFlag.Vitals)
-                => actor.Health?.CurrentAmount ?? 0 + actor.Shields?.CurrentAmount ?? 0,
-            
-            _ when multiplierOf.Equals(AmountMultiplyOfFlag.MissingHealth)
-                => actor.Health?.MaxAmount ?? 0 - actor.Health?.CurrentAmount ?? 0,
-            
-            _ when multiplierOf.Equals(AmountMultiplyOfFlag.MissingVitals)
-                => (actor.Health?.MaxAmount ?? 0 + actor.Shields?.MaxAmount ?? 0) -
-                   (actor.Health?.CurrentAmount ?? 0 + actor.Shields?.CurrentAmount ?? 0),
-            
-            _ => 0
-        };
-
-        return (int)Math.Round(baseValue * amount.Multiplier.Value);
     }
 }

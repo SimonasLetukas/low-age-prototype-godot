@@ -2,6 +2,7 @@
 using LowAgeData.Domain.Common.Durations;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeCommon;
+using LowAgeData.Domain.Researches;
 using Newtonsoft.Json;
 
 namespace LowAgeData.Domain.Abilities

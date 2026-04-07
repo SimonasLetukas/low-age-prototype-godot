@@ -13,6 +13,7 @@ using LowAgeData.Domain.Entities.Doodads;
 using LowAgeData.Domain.Factions;
 using LowAgeData.Domain.Resources;
 using LowAgeCommon;
+using LowAgeData.Domain.Researches;
 
 namespace LowAgeData.Collections
 {
@@ -1063,7 +1064,8 @@ namespace LowAgeData.Collections
 
                 new Destroy(
                     id: EffectId.Gorger.FanaticDetonationDestroy,
-                    target: Location.Origin),
+                    target: Location.Origin,
+                    blocksBehaviours: true),
 
                 new Search(
                     id: EffectId.Gorger.FanaticDetonationSearch,

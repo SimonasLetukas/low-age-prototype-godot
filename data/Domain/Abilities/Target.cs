@@ -4,6 +4,7 @@ using LowAgeData.Domain.Common.Shape;
 using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Entities.Actors;
 using LowAgeData.Domain.Logic;
+using LowAgeData.Domain.Researches;
 
 namespace LowAgeData.Domain.Abilities
 {
@@ -46,7 +47,7 @@ namespace LowAgeData.Domain.Abilities
         public IShape TargetArea { get; }
         
         /// <summary>
-        /// If all validators return true, all effects are executed at once.
+        /// If all validators return true, all effects are executed in sequence.
         /// </summary>
         public IList<EffectId> Effects { get; }
 

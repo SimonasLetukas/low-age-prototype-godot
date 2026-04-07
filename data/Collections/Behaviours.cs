@@ -1284,10 +1284,6 @@ namespace LowAgeData.Collections
                     "Upon getting killed or executing a melee attack Gorger explodes dealing its Melee Damage " +
                     "to all friendly and enemy units in 1 Distance.",
                     sprite: "res://assets/icons/icon_ability_fanatic_suicide.png",
-                    modificationFlags: null,
-                    initialModifications: null,
-                    initialEffects: null,
-                    finalModifications: null,
                     finalEffects: new List<EffectId>
                     {
                         EffectId.Gorger.FanaticDetonationSearch

@@ -10,7 +10,10 @@ using LowAgeData.Domain.Effects;
 using LowAgeData.Domain.Entities.Actors.Structures;
 using LowAgeData.Domain.Entities.Actors.Units;
 using LowAgeData.Domain.Entities.Doodads;
+using LowAgeData.Domain.Factions;
 using LowAgeData.Domain.Logic;
+using LowAgeData.Domain.Resources;
+using LowAgeData.Domain.Tiles;
 using Newtonsoft.Json.Serialization;
 
 namespace LowAgeData
@@ -50,9 +53,21 @@ namespace LowAgeData
             // Entities:
             typeof(Structure), typeof(Unit), typeof(Doodad), 
             
+            // Factions:
+            typeof(Faction),
+            
             // Logic:
             typeof(BehaviourCondition), typeof(EntityCondition), typeof(MaskCondition), typeof(ResourceCondition), 
             typeof(ResultValidator), typeof(TargetedAbilityCondition), typeof(TileCondition), 
+            
+            // Researches:
+            typeof(Domain.Researches.Research),
+            
+            // Resources:
+            typeof(Resource),
+            
+            // Tiles:
+            typeof(Tile),
             
             // EnumValueObjects:
             typeof(ActorAttribute), typeof(Alignment), typeof(AmountMultiplyOfFlag), typeof(AttackAttribute), 

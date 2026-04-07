@@ -266,7 +266,7 @@ public partial class TargetNode : ActiveAbilityNode<
         public IConsumableAbilityActivationRequest ToActivationRequest() => new ActivationRequest
         {
             IsRequeued = false,
-            UseConsumableResources = true,
+            UseConsumableResources = Reservation.ReservedConsumableResources.Any(),
             TileToTarget = TargetTile is null ? null : GlobalRegistry.Instance.GetTileFromPoint(TargetTile),
             EntityToTarget = TargetEntity is null ? null : GlobalRegistry.Instance.GetEntityById(TargetEntity.Value),
         };
@@ -274,7 +274,7 @@ public partial class TargetNode : ActiveAbilityNode<
         public IConsumableAbilityActivationRequest ToActivationRequestForRequeue() => new ActivationRequest
         {
             IsRequeued = true,
-            UseConsumableResources = true,
+            UseConsumableResources = false,
             TileToTarget = TargetTile is null ? null : GlobalRegistry.Instance.GetTileFromPoint(TargetTile),
             EntityToTarget = TargetEntity is null ? null : GlobalRegistry.Instance.GetEntityById(TargetEntity.Value),
         };

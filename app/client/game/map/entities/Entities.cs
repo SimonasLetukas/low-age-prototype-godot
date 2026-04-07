@@ -443,19 +443,21 @@ public partial class Entities : Node2D
         var source = GetEntityByInstanceId(@event.SourceId) as ActorNode; // TODO how would doodads be able to execute attack?
         var target = GetEntityByInstanceId(@event.TargetId);
 
-        if (source is null)
+        if (source is null || source.IsBeingDestroyed)
         {
-            Log.Info(nameof(Entities), $"{nameof(HandleEvent)}.{nameof(EntityAttackedEvent)}", 
-                $"Could not apply {nameof(EntityAttackedEvent)} because {nameof(source)} " +
-                $"'{@event.SourceId}' entity was null.");
+            if (Log.DebugEnabled)
+                Log.Info(nameof(Entities), $"{nameof(HandleEvent)}.{nameof(EntityAttackedEvent)}", 
+                    $"Could not apply {nameof(EntityAttackedEvent)} because {nameof(source)} " +
+                    $"'{@event.SourceId}' entity was null or being destroyed: '{source?.IsBeingDestroyed}'.");
             return;
         }
         
-        if (target is null)
+        if (target is null || target.IsBeingDestroyed)
         {
-            Log.Info(nameof(Entities), $"{nameof(HandleEvent)}.{nameof(EntityAttackedEvent)}", 
-                $"Could not apply {nameof(EntityAttackedEvent)} because {nameof(target)} " +
-                $"'{@event.TargetId}' entity was null.");
+            if (Log.DebugEnabled)
+                Log.Info(nameof(Entities), $"{nameof(HandleEvent)}.{nameof(EntityAttackedEvent)}", 
+                    $"Could not apply {nameof(EntityAttackedEvent)} because {nameof(target)} " +
+                    $"'{@event.TargetId}' entity was null or being destroyed: '{target?.IsBeingDestroyed}'.");
             return;
         }
 
@@ -680,7 +682,7 @@ public partial class Entities : Node2D
         });
     }
 
-    private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
     {
         _entitiesBeingDestroyed.Add(entity);
         
@@ -690,7 +692,7 @@ public partial class Entities : Node2D
         if (entity.IsCandidate())
             OnCandidatePlacementCancelled(entity);
         
-        EventBus.Instance.RaiseEntityDestroyed(entity, source);
+        EventBus.Instance.RaiseEntityDestroyed(entity, source, triggersOnDeathBehaviours);
 
         _renderers.UnregisterRenderer(entity.Renderer);
 

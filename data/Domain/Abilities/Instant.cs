@@ -1,6 +1,7 @@
 ﻿using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Durations;
 using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Researches;
 
 namespace LowAgeData.Domain.Abilities
 {
@@ -32,6 +33,9 @@ namespace LowAgeData.Domain.Abilities
             Effects = effects;
         }
 
+        /// <summary>
+        /// If all validators return true, all effects are executed in sequence.
+        /// </summary>
         public IList<EffectId> Effects { get; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeCommon;
+using LowAgeData.Domain.Researches;
 using MultipurposePathfinding;
 
 /// <summary>
@@ -78,8 +79,9 @@ public partial class EventBus : Node
     public event Action<ActorNode, int> ActorHealed = delegate { };
     public void RaiseActorHealed(ActorNode actor, int amount) => ActorHealed(actor, amount);
     
-    public event Action<EntityNode, EntityNode?> EntityDestroyed = delegate { };
-    public void RaiseEntityDestroyed(EntityNode entity, EntityNode? source) => EntityDestroyed(entity, source);
+    public event Action<EntityNode, EntityNode?, bool> EntityDestroyed = delegate { };
+    public void RaiseEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours) 
+        => EntityDestroyed(entity, source, triggersOnDeathBehaviours);
     
     public event Action<IPathfindingUpdatable, bool> PathfindingUpdating = delegate { };
     public void RaisePathfindingUpdating(IPathfindingUpdatable data, bool isAdded) => PathfindingUpdating(data, isAdded);
@@ -120,6 +122,9 @@ public partial class EventBus : Node
     public event Action<IncomeProvider, IList<Payment>> IncomeProviderPaymentUpdated = delegate { };
     public void RaiseIncomeProviderPaymentUpdated(IncomeProvider provider, IList<Payment> updatedPayment) => IncomeProviderPaymentUpdated(provider, updatedPayment);
 
+    public event Action<Player, ResearchId> ResearchGained = delegate { };
+    public void RaiseResearchGained(Player player, ResearchId researchId) => ResearchGained(player, researchId);
+    
     public event Action<bool> WhenFlattenedChanged = delegate { };
     public void RaiseWhenFlattenedChanged(bool to) => WhenFlattenedChanged(to);
     

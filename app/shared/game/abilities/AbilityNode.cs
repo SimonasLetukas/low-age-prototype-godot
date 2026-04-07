@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Researches;
 
 /// <summary>
 /// Note: since visualisation in-game is not needed, this abstract class has no node/scene. 

@@ -358,7 +358,7 @@ public partial class GameMetrics : Node
         row.HealingDone += amount;
     }
     
-    private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
     {
         if (source is null || source.Equals(entity))
             return;

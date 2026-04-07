@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://v1fykotkag4a"]
+
+[ext_resource type="Script" uid="uid://2ys1a8605qoq" path="res://app/shared/game/misc/Researches.cs" id="1_e2sga"]
+
+[node name="Researches" type="Node2D"]
+script = ExtResource("1_e2sga")

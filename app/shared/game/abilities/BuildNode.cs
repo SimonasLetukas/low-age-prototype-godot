@@ -105,7 +105,7 @@ public partial class BuildNode : ActiveAbilityNode<
         {
             research += "\nResearch needed to unlock: ";
             research = item.ResearchNeeded.Aggregate(research, (current, researchId) 
-                => current + $"{researchId}, ");
+                => current + $"{Registry.GetResearchById(researchId).DisplayName}, ");
             research = research.Remove(research.Length - 2);
         }
 
@@ -329,7 +329,7 @@ public partial class BuildNode : ActiveAbilityNode<
     private IList<Payment> GetNonConsumableStockpile() => Registry.GetNonConsumableResources(
         Registry.GetCurrentPlayerStockpile(OwnerActor.Player));
 
-    private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
     {
         foreach (var focus in FocusQueue.ToList())
         {

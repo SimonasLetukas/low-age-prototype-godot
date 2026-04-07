@@ -211,6 +211,92 @@
       ]
     }
   ],
+  "researches": [
+    {
+      "id": "research-revelators-poisoned-slits",
+      "displayName": "Poisoned Slits",
+      "description": "Unlocks Cripple ability for Quickdraw.",
+      "faction": "faction-revelators"
+    },
+    {
+      "id": "research-revelators-radioactive-chyme",
+      "displayName": "Radioactive Chyme",
+      "description": "Unlocks Disease ability for Gorger.",
+      "faction": "faction-revelators"
+    },
+    {
+      "id": "research-revelators-spiked-rope",
+      "displayName": "Spiked Rope",
+      "description": "Unlocks Infiltration ability for Camou.",
+      "faction": "faction-revelators"
+    },
+    {
+      "id": "research-revelators-questionable-cargo",
+      "displayName": "Questionable Cargo",
+      "description": "Unlocks Phantom Menace ability for Pyre.",
+      "faction": "faction-revelators"
+    },
+    {
+      "id": "research-revelators-humanflesh-rations",
+      "displayName": "Humanflesh Rations",
+      "description": "Unlocks Leap Of Hunger ability for Mummy.",
+      "faction": "faction-revelators"
+    },
+    {
+      "id": "research-revelators-adaptive-digestion",
+      "displayName": "Adaptive Digestion",
+      "description": "Unlocks Corrosive Spit ability for Roach.",
+      "faction": "faction-revelators"
+    },
+    {
+      "id": "research-uee-fusion-core-upgrade",
+      "displayName": "Fusion Core Upgrade",
+      "description": "Upgrades Battery Core to Fusion Core.",
+      "faction": "faction-uee"
+    },
+    {
+      "id": "research-uee-celestium-core-upgrade",
+      "displayName": "Celestium Core Upgrade",
+      "description": "Upgrades Fusion Core to Celestium Core.",
+      "faction": "faction-uee"
+    },
+    {
+      "id": "research-uee-heightened-conductivity",
+      "displayName": "Heightened Conductivity",
+      "description": "Unlocks Improved Power Grid ability for Power Pole.",
+      "faction": "faction-uee"
+    },
+    {
+      "id": "research-uee-hoverboard-reignition",
+      "displayName": "Hoverboard Reignition",
+      "description": "Unlocks Mount ability for Horrior.",
+      "faction": "faction-uee"
+    },
+    {
+      "id": "research-uee-explosive-shrapnel",
+      "displayName": "Explosive Shrapnel",
+      "description": "Unlocks Piercing Blast ability for Mortar.",
+      "faction": "faction-uee"
+    },
+    {
+      "id": "research-uee-md-practice",
+      "displayName": "Md Practice",
+      "description": "Unlocks Health Kit ability for Hawk.",
+      "faction": "faction-uee"
+    },
+    {
+      "id": "research-uee-celestium-coated-materials",
+      "displayName": "Celestium Coated Materials",
+      "description": "Unlocks Radio Location ability for Radar.",
+      "faction": "faction-uee"
+    },
+    {
+      "id": "research-uee-hardened-matrix",
+      "displayName": "Hardened Matrix",
+      "description": "Unlocks Fortify ability for Vessel.",
+      "faction": "faction-uee"
+    }
+  ],
   "entities": {
     "units": [
       {
@@ -5411,7 +5497,7 @@
       "selection": [
         {
           "name": "research-revelators-poisoned-slits",
-          "description": "Unlock Cripple for Quickdraw.",
+          "description": "Unlock Cripple ability for Quickdraw.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -5427,7 +5513,7 @@
         },
         {
           "name": "research-revelators-radioactive-chyme",
-          "description": "Unlock Disease for Gorger.",
+          "description": "Unlock Disease ability for Gorger.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -5443,7 +5529,7 @@
         },
         {
           "name": "research-revelators-spiked-rope",
-          "description": "Unlock Infiltration for Camou.",
+          "description": "Unlock Infiltration ability for Camou.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -5459,7 +5545,7 @@
         },
         {
           "name": "research-revelators-questionable-cargo",
-          "description": "Unlock Phantom Menace for Pyre.",
+          "description": "Unlock Phantom Menace ability for Pyre.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -5475,7 +5561,7 @@
         },
         {
           "name": "research-revelators-humanflesh-rations",
-          "description": "Unlock Leap Of Hunger for Mummy.",
+          "description": "Unlock Leap Of Hunger ability for Mummy.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -5491,7 +5577,7 @@
         },
         {
           "name": "research-revelators-adaptive-digestion",
-          "description": "Unlock Corrosive Spit for Roach.",
+          "description": "Unlock Corrosive Spit ability for Roach.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -5854,7 +5940,7 @@
         }
       ],
       "displayName": "Heightened Conductivity",
-      "description": "Unlocks Improved Power Grid ability for all Power Poles.",
+      "description": "Unlocks Improved Power Grid ability for Power Pole.",
       "sprite": "res://assets/icons/icon_ability_build.png",
       "centerOffset": {
         "x": 0,
@@ -6278,7 +6364,7 @@
       "selection": [
         {
           "name": "research-uee-hoverboard-reignition",
-          "description": "Unlock Mount for Horrior.",
+          "description": "Unlock Mount ability for Horrior.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -6296,7 +6382,7 @@
         },
         {
           "name": "research-uee-md-practice",
-          "description": "Unlock Health Kit for Hawk.",
+          "description": "Unlock Health Kit ability for Hawk.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -6314,7 +6400,7 @@
         },
         {
           "name": "research-uee-celestium-coated-materials",
-          "description": "Unlock Radio Location for Radar.",
+          "description": "Unlock Radio Location ability for Radar.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -6332,7 +6418,7 @@
         },
         {
           "name": "research-uee-explosive-shrapnel",
-          "description": "Unlock Piercing Blast for Mortar.",
+          "description": "Unlock Piercing Blast ability for Mortar.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -6350,7 +6436,7 @@
         },
         {
           "name": "research-uee-hardened-matrix",
-          "description": "Unlock Fortify for Vessel.",
+          "description": "Unlock Fortify ability for Vessel.",
           "cost": [
             {
               "resource": "resource-scraps",
@@ -8435,7 +8521,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": true,
       "filters": [],
       "target": "Location.Inherited",
@@ -8886,7 +8972,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
@@ -8933,7 +9019,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Self",
@@ -9018,7 +9104,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [
         {
@@ -9100,7 +9186,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [
         {
@@ -9960,7 +10046,7 @@
     {
       "$type": "Destroy",
       "id": "effect-gorger-fanatic-detonation-destroy",
-      "blocksBehaviours": false,
+      "blocksBehaviours": true,
       "target": "Location.Origin",
       "validators": []
     },
@@ -10036,7 +10122,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
@@ -10197,7 +10283,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Self",
@@ -10220,7 +10306,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
@@ -10471,7 +10557,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
@@ -10522,7 +10608,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
@@ -10601,7 +10687,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
@@ -10635,7 +10721,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
@@ -10699,7 +10785,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
@@ -10722,7 +10808,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [
         {
@@ -10964,7 +11050,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [
         {
@@ -11072,7 +11158,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
@@ -11605,7 +11691,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",
@@ -11692,7 +11778,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [
         {
@@ -12221,7 +12307,7 @@
         "multiplierOf": null,
         "multiplyTarget": "Location.Inherited"
       },
-      "ignoresArmor": false,
+      "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
       "target": "Location.Inherited",

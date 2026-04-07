@@ -1,7 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
+using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Effects;
+using Newtonsoft.Json;
 
 public partial class InstantNode : ActiveAbilityNode<
         InstantNode.ActivationRequest, 
@@ -21,48 +25,110 @@ public partial class InstantNode : ActiveAbilityNode<
     }
     
     private Instant Blueprint { get; set; } = null!;
+    private IList<EffectId> Effects { get; set; } = null!;
     
     public void SetBlueprint(Instant blueprint)
     {
         base.SetBlueprint(blueprint);
         Blueprint = blueprint;
-    }
-
-    protected override ValidationResult ValidateActivation(ActivationRequest request)
-    {
-        throw new System.NotImplementedException();
+        Effects = Blueprint.Effects;
     }
     
     protected override void CancelActivation(ActivationRequest request)
     {
-        throw new System.NotImplementedException();
+        var focus = FocusQueue.FirstOrDefault();
+        
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(InstantNode), nameof(CancelActivation), 
+                $"Found focus '{JsonConvert.SerializeObject(focus)}'.");
+        
+        if (focus is not null)
+        {
+            if (focus.NonConsumableResourcesPaidSoFar.IsEmpty()) 
+                RefundResources(ConsumableCost);
+            
+            RemoveFocus(focus);
+        }
+        
+        if (FocusQueue.IsEmpty())
+            RefundAction();
     }
 
-    protected override Focus CreateFocus(ActivationRequest activationRequest, PreProcessingResult? preProcessingResult)
-    {
-        throw new System.NotImplementedException();
-    }
+    protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
+            // TODO missing validations: research
+            new AbilityValidator.CorrectTurnPhase
+            {
+                CurrentTurnPhase = Registry.GetCurrentPhase(),
+                RequiredTurnPhase = Blueprint.TurnPhase,
+                IsRequeued = request.IsRequeued
+            },
+            new AbilityValidator.ActorHasEnoughAction
+            {
+                Actor = OwnerActor,
+                ActionNeeded = CasterConsumesAction,
+                IsRequeued = request.IsRequeued
+            },
+            new AbilityValidator.CooldownCompleted
+            {
+                Cooldown = RemainingCooldown
+            },
+            new AbilityValidator.HasEnoughConsumableResources
+            {
+                UseConsumableResources = request.UseConsumableResources,
+                ConsumableCost = ConsumableCost,
+                Player = OwnerActor.Player
+            },
+            new AbilityValidator.EffectsValidatorsPass
+            {
+                Effects = GetEffects()
+            }
+        ])
+        .Validate();
 
-    protected override IList<Payment> ReserveResources(ActivationRequest request)
-    {
-        throw new System.NotImplementedException();
-    }
+    protected override IList<Payment> ReserveResources(ActivationRequest request) => ReserveResources();
 
-    protected override PreProcessingResult CreatePreProcessingResult(ActivationRequest request, AbilityReservationResult reservation)
+    protected override PreProcessingResult CreatePreProcessingResult(ActivationRequest request,
+        AbilityReservationResult reservation) => new()
     {
-        throw new System.NotImplementedException();
-    }
-
-    protected override bool ExecutePostPaymentAndDetermineIfPaymentCompleted(Focus focus)
-    {
-        throw new System.NotImplementedException();
-    }
+        Reservation = reservation
+    };
     
+    protected override Focus CreateFocus(ActivationRequest activationRequest, PreProcessingResult preProcessingResult)
+        => new Focus
+        {
+            Requeued = false,
+            Reservation = preProcessingResult.Reservation
+        };
+
+    protected override bool ExecutePostPaymentAndDetermineIfPaymentCompleted(Focus focus) 
+        => Registry.IsPaymentComplete(NonConsumableCost, focus.NonConsumableResourcesPaidSoFar);
+
     protected override void ExecuteFocus(Focus focus)
     {
-        throw new System.NotImplementedException();
+        var effects = GetEffects().ToList();
+        var validationResult = AbilityValidator
+            .With([new AbilityValidator.EffectsValidatorsPass { Effects = effects }])
+            .Validate();
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(InstantNode), nameof(ExecuteFocus), 
+                $"{this} executing focus '{JsonConvert.SerializeObject(focus)}' effects with validation " +
+                $"result '{JsonConvert.SerializeObject(validationResult)}'");
+        
+        if (validationResult.IsValid)
+        {
+            foreach (var effect in effects)
+            {
+                effect.ExecuteLast();
+            }
+            
+            RemainingCooldown.ResetDuration();
+        }
     }
     
+    private IEnumerable<Effects> GetEffects() => Effects
+        .Select(effectId => new Effects(effectId, [OwnerActor], OwnerActor.Player, OwnerActor));
+
     public class ActivationRequest : IConsumableAbilityActivationRequest
     {
         public bool IsRequeued { get; init; }
@@ -80,17 +146,19 @@ public partial class InstantNode : ActiveAbilityNode<
         public required AbilityReservationResult Reservation { get; set; }
         public IList<Payment> NonConsumableResourcesPaidSoFar { get; set; } = [];
         
-        public IConsumableAbilityActivationRequest ToActivationRequest()
+        public IConsumableAbilityActivationRequest ToActivationRequest() => new ActivationRequest
         {
-            throw new System.NotImplementedException();
-        }
+            IsRequeued = false,
+            UseConsumableResources = true,
+        };
 
-        public IConsumableAbilityActivationRequest ToActivationRequestForRequeue()
+        public IConsumableAbilityActivationRequest ToActivationRequestForRequeue() => new ActivationRequest
         {
-            throw new System.NotImplementedException();
-        }
+            IsRequeued = true,
+            UseConsumableResources = true,
+        };
 
-        private bool Equals(Focus other) => throw new System.NotImplementedException();
+        private bool Equals(Focus other) => true;
 
         public bool Equals(IActiveAbilityFocus? other) => Equals((object?)other);
 
@@ -102,6 +170,6 @@ public partial class InstantNode : ActiveAbilityNode<
             return Equals((Focus)obj);
         }
 
-        public override int GetHashCode() => throw new System.NotImplementedException();
+        public override int GetHashCode() => 0.GetHashCode();
     }
 }

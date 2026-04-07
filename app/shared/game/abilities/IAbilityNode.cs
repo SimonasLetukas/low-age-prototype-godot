@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Researches;
 
 public interface IAbilityNode
 {

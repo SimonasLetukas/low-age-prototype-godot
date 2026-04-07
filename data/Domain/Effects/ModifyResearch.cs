@@ -1,11 +1,12 @@
 ﻿using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Logic;
+using LowAgeData.Domain.Researches;
 
 namespace LowAgeData.Domain.Effects
 {
     /// <summary>
-    /// To be used when <see cref="ResearchId"/> should be activated separate from <see cref="Research"/>
+    /// To be used when <see cref="ResearchId"/> should be activated separate from <see cref="Abilities.Research"/>
     /// <see cref="Ability"/> or if some <see cref="ResearchId"/> should be removed.
     /// </summary>
     public class ModifyResearch : Effect

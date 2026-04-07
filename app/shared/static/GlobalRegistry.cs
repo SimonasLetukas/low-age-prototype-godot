@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using LowAgeCommon;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Researches;
 using LowAgeData.Domain.Resources;
 using MultipurposePathfinding;
 
@@ -45,6 +46,8 @@ public partial class GlobalRegistry : Node
     public Func<IList<Payment>, IList<Payment>, bool> IsPaymentComplete { get; private set; } = null!;
     public Func<IList<Payment>, IList<Payment>, bool> CanSubtractResources { get; private set; } = null!;
     public Func<IList<Payment>, IList<Payment>, bool, IList<Payment>> SubtractResources { get; private set; } = null!;
+    public Func<Player, HashSet<ResearchId>> GetResearchByPlayer { get; private set; } = null!;
+    public Func<ResearchId, Research> GetResearchById { get; private set; } = null!;
     
     #endregion Resolvers
 
@@ -75,6 +78,8 @@ public partial class GlobalRegistry : Node
     public void ProvideIsPaymentComplete(Func<IList<Payment>, IList<Payment>, bool> isPaymentComplete) => IsPaymentComplete = isPaymentComplete;
     public void ProvideCanSubtractResources(Func<IList<Payment>, IList<Payment>, bool> canSubtractResources) => CanSubtractResources = canSubtractResources;
     public void ProvideSubtractResources(Func<IList<Payment>, IList<Payment>, bool, IList<Payment>> subtractResources) => SubtractResources = subtractResources;
+    public void ProvideGetResearchByPlayer(Func<Player, HashSet<ResearchId>> getResearchByPlayer) => GetResearchByPlayer = getResearchByPlayer;
+    public void ProvideGetResearchById(Func<ResearchId, Research> getResearchById) => GetResearchById = getResearchById;
     
     #endregion Providers
 }

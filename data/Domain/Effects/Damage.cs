@@ -13,7 +13,7 @@ namespace LowAgeData.Domain.Effects
             ActorAttribute? bonusTo = null,
             Amount? bonusAmount = null,
             Location? target = null,
-            bool? ignoresArmor = null,
+            bool? ignoresArmour = null,
             bool? ignoresShield = null,
             IList<IFilterItem>? filters = null,
             IList<Validator>? validators = null) 
@@ -26,7 +26,7 @@ namespace LowAgeData.Domain.Effects
             Amount = amount ?? new Amount(0);
             BonusTo = bonusTo;
             BonusAmount = bonusAmount ?? new Amount(0);
-            IgnoresArmor = ignoresArmor ?? false;
+            IgnoresArmour = ignoresArmour ?? false;
             IgnoresShield = ignoresShield ?? false;
             Filters = filters ?? new List<IFilterItem>();
         }
@@ -35,7 +35,7 @@ namespace LowAgeData.Domain.Effects
         public Amount Amount { get; }
         public ActorAttribute? BonusTo { get; }
         public Amount BonusAmount { get; }
-        public bool IgnoresArmor { get; }
+        public bool IgnoresArmour { get; }
         public bool IgnoresShield { get; }
         public IList<IFilterItem> Filters { get; }
     }

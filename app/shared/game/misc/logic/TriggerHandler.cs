@@ -24,15 +24,17 @@ public sealed class TriggerHandler : IDisposable
         _event = trigger.Event;
         _validationHandler = ValidationHandler.Validate(trigger.Validators);
 
+        EventBus.Instance.PhaseStarted += OnPhaseStarted;
         EventBus.Instance.EntityDestroyed += OnEntityDestroyed;
         EventBus.Instance.PlayerResourcesUpdated += OnPlayerResourcesUpdated;
     }
-    
+
     public void Dispose()
     {
         if (_disposed)
             return;
         
+        EventBus.Instance.PhaseStarted -= OnPhaseStarted;
         EventBus.Instance.EntityDestroyed -= OnEntityDestroyed;
         EventBus.Instance.PlayerResourcesUpdated -= OnPlayerResourcesUpdated;
         
@@ -65,7 +67,16 @@ public sealed class TriggerHandler : IDisposable
         return this;
     }
     
-    private void OnEntityDestroyed(EntityNode entity, EntityNode? source)
+    private void OnPhaseStarted(int turn, TurnPhase phase)
+    {
+        if (_event.Equals(Event.EntityStartedActionPhase) && phase.Equals(TurnPhase.Action))
+            Triggered();
+
+        if (_event.Equals(Event.EntityStartedPlanningPhase) && phase.Equals(TurnPhase.Planning))
+            Triggered();
+    }
+    
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
     {
         var gotOriginEntity = _event.Equals(Event.OriginIsDestroyed)
                               && entity.Equals(_effectHistoryListener?.OriginEntityOrNull);

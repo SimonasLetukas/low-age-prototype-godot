@@ -1,12 +1,12 @@
-using LowAgeData.Domain.Abilities;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Researches;
 
 namespace LowAgeData.Domain.Logic;
 
 /// <summary>
-/// <see cref="Condition"/> to target a specific <see cref="Research"/>ed item.
+/// <see cref="Condition"/> to target a specific <see cref="Abilities.Research"/>ed item.
 /// </summary>
 public class ResearchCondition : Condition
 {
@@ -25,7 +25,7 @@ public class ResearchCondition : Condition
     public ResearchId ConditionedResearchId { get; }
     
     /// <summary>
-    /// Controls the condition target: checks the <see cref="Entity"/>'s player's current <see cref="Research"/>.
+    /// Controls the condition target: checks the <see cref="Entity"/>'s player's current <see cref="Abilities.Research"/>.
     /// </summary>
     public Location ResearchOwner { get; }
 }

@@ -1,13 +1,14 @@
-[gd_scene load_steps=32 format=3 uid="uid://c06ip2burr08v"]
+[gd_scene load_steps=33 format=3 uid="uid://c06ip2burr08v"]
 
 [ext_resource type="Script" uid="uid://itc8aq70pbev" path="res://app/client/game/interface/panels/entity/display/AbilitySubtitle.cs" id="1"]
 [ext_resource type="Script" uid="uid://hkohgs5mx1mr" path="res://app/client/game/interface/panels/entity/display/TopText.cs" id="2"]
+[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/ResearchLabel.cs" id="2_j47o4"]
 [ext_resource type="Script" uid="uid://uchxnib00hm1" path="res://app/client/game/interface/panels/entity/display/ActorAttributes.cs" id="3"]
-[ext_resource type="Script" uid="uid://b5bjt0p24bku6" path="res://app/client/game/interface/panels/entity/display/Research.cs" id="4"]
 [ext_resource type="Script" uid="uid://f23sakt83hpv" path="res://app/client/game/interface/panels/entity/display/InfoDisplay.cs" id="5"]
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="6"]
 [ext_resource type="Texture2D" uid="uid://ci76xk3frme78" path="res://assets/icons/icon_shields_big.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://du7sdgqeqyxgj" path="res://assets/icons/icon_initiative_big.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://dq764uyhtfyis" path="res://assets/icons/icon_accept_simplified.png" id="8_j47o4"]
 [ext_resource type="Texture2D" uid="uid://bdda2j7jdkbiq" path="res://assets/icons/icon_x_simplified.png" id="8_olcnq"]
 [ext_resource type="FontFile" uid="uid://bufso40qbg61j" path="res://assets/fonts/Karla-SemiBold.ttf" id="9"]
 [ext_resource type="FontFile" uid="uid://cgipi4wcusibp" path="res://assets/fonts/Karla-Italic.ttf" id="10"]
@@ -139,13 +140,13 @@ void fragment()
 	COLOR = final_color; 
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j47o4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v83ir"]
 resource_local_to_scene = true
 shader = SubResource("3")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v83ir"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jc84s"]
 resource_local_to_scene = true
 shader = SubResource("3")
 shader_parameter/outline_color = Color(0, 0, 0, 1)
@@ -189,15 +190,15 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Research" type="MarginContainer" parent="VBoxContainer/TopPart/AbilityTitle/Top"]
+[node name="ResearchLabel" type="MarginContainer" parent="VBoxContainer/TopPart/AbilityTitle/Top"]
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "Research: Hardened Matrix"
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_right = -4
-script = ExtResource("4")
+script = ExtResource("2_j47o4")
 
-[node name="Label" type="Label" parent="VBoxContainer/TopPart/AbilityTitle/Top/Research"]
+[node name="Label" type="Label" parent="VBoxContainer/TopPart/AbilityTitle/Top/ResearchLabel"]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 1
@@ -224,6 +225,13 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 tooltip_text = "Cancel activation of this ability."
 Icon = ExtResource("8_olcnq")
+
+[node name="ActivateAbility" parent="VBoxContainer/TopPart/AbilityTitle/Top" instance=ExtResource("19")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+tooltip_text = "Activate ability."
+Icon = ExtResource("8_j47o4")
 
 [node name="NavigationBox" parent="VBoxContainer/TopPart/AbilityTitle/Top" instance=ExtResource("19")]
 layout_mode = 2
@@ -364,11 +372,11 @@ layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="Melee" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource("11")]
-material = SubResource("ShaderMaterial_j47o4")
+material = SubResource("ShaderMaterial_v83ir")
 layout_mode = 2
 
 [node name="Ranged" parent="VBoxContainer/TopPart/RightSide/Attacks" instance=ExtResource("11")]
-material = SubResource("ShaderMaterial_v83ir")
+material = SubResource("ShaderMaterial_jc84s")
 layout_mode = 2
 Icon = ExtResource("15")
 

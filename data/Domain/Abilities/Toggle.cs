@@ -1,6 +1,7 @@
 ﻿using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Durations;
 using LowAgeData.Domain.Effects;
+using LowAgeData.Domain.Researches;
 
 namespace LowAgeData.Domain.Abilities
 {

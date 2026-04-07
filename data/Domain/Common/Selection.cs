@@ -1,5 +1,6 @@
 ﻿using LowAgeData.Domain.Entities;
 using LowAgeCommon;
+using LowAgeData.Domain.Researches;
 
 namespace LowAgeData.Domain.Common
 {
