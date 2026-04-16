@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Researches;
 
 public sealed class AbilityValidator
 {
@@ -32,6 +32,26 @@ public sealed class AbilityValidator
         }
         
         return ValidationResult.Valid;
+    }
+    
+    public sealed class PlayerHasResearch : IAbilityValidatorItem
+    {
+        public required Player Player { get; init; }
+        public required IList<ResearchId> ResearchNeeded { get; init; }
+
+        public ValidationResult Validate()
+        {
+            var missingResearch = ResearchNeeded
+                .Where(research => GlobalRegistry.Instance.GetResearchByPlayer(Player).Contains(research) is false)
+                .Select(research => GlobalRegistry.Instance.GetResearchById(research).DisplayName)
+                .ToList();
+
+            if (missingResearch.Count > 0)
+                return ValidationResult.Invalid($"Ability cannot be activated due to missing research: " + 
+                                                $"{string.Join(", ", missingResearch)}.");
+
+            return ValidationResult.Valid;
+        }
     }
     
     public sealed class CooldownCompleted : IAbilityValidatorItem

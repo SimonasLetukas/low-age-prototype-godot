@@ -42,7 +42,7 @@ public partial class Game : Node2D
         if (LoadingSavedGame is false)
             return;
 
-        IterateLoadingSavedGame(delta);
+        IterateLoadingSavedGame();
     }
 
     protected virtual void ExecuteGameEvent(IGameEvent gameEvent) { }
@@ -55,13 +55,12 @@ public partial class Game : Node2D
         LoadingSavedGame = true;
     }
 
-    private void IterateLoadingSavedGame(double deltaTime)
+    private void IterateLoadingSavedGame()
     {
-        var deltaMs = (int)(deltaTime * 1000);
         _stopwatch.Reset();
         _stopwatch.Start();
 
-        while (_stopwatch.ElapsedMilliseconds < deltaMs && _eventsToLoad.Count != 0)
+        while (Iterate.Allowed(_stopwatch.ElapsedMilliseconds) && _eventsToLoad.Count != 0)
         {
             var eventToExecute = _eventsToLoad.First();
             ExecuteGameEvent(eventToExecute);

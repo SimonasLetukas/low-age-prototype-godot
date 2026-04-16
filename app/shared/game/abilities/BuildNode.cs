@@ -103,7 +103,7 @@ public partial class BuildNode : ActiveAbilityNode<
         var research = string.Empty;
         if (item.ResearchNeeded.Any())
         {
-            research += "\nResearch needed to unlock: ";
+            research += "\nResearch needed: ";
             research = item.ResearchNeeded.Aggregate(research, (current, researchId) 
                 => current + $"{Registry.GetResearchById(researchId).DisplayName}, ");
             research = research.Remove(research.Length - 2);
@@ -168,7 +168,11 @@ public partial class BuildNode : ActiveAbilityNode<
     }
     
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
-            // TODO missing validations: research
+            new AbilityValidator.PlayerHasResearch
+            {
+                Player = OwnerActor.Player,
+                ResearchNeeded = Blueprint.ResearchNeeded,
+            },
             new AbilityValidator.CorrectTurnPhase
             {
                 CurrentTurnPhase = Registry.GetCurrentPhase(),
@@ -306,6 +310,8 @@ public partial class BuildNode : ActiveAbilityNode<
 
     protected override void ExecuteFocus(Focus focus)
     {
+        // Real execution happens during UpdateProgress, so this method is used for cleaning up.
+        
         var entity = Registry.GetEntityById(focus.EntityToBuildId);
         
         if (entity is null)

@@ -69,9 +69,13 @@ public partial class AbilityButton : BaseButton
         _cooldown.Text = "[b]" + Ability.RemainingCooldown.GetCounterOrEmpty();
 
         Ability.RemainingCooldown.Updated += OnRemainingCooldownUpdated;
+
+        var hasRequiredResearch = Ability.ResearchNeeded.All(r
+            => GlobalRegistry.Instance.GetResearchByPlayer(Ability.OwnerActor.Player).Contains(r));
         
-        DisableVisually(Ability.TurnPhase.Equals(TurnPhase.Passive) is false 
-                        && GlobalRegistry.Instance.GetCurrentPhase().Equals(Ability.TurnPhase) is false);
+        DisableVisually(hasRequiredResearch is false
+                        || (Ability.TurnPhase.Equals(TurnPhase.Passive) is false 
+                            && GlobalRegistry.Instance.GetCurrentPhase().Equals(Ability.TurnPhase) is false));
         
         SetTint(Ability.OwnerActor.WorkingOn.Any(w => w.Ability.Equals(Ability)));
     }

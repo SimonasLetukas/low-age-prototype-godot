@@ -247,12 +247,11 @@ public partial class Tiles : Node2D
             return;
         
         CheckInitialization();
-        
-        var deltaMs = (int)(delta * 1000);
+
         _stopwatch.Reset();
         _stopwatch.Start();
 
-        while (_stopwatch.ElapsedMilliseconds < deltaMs)
+        while (Iterate.Allowed(_stopwatch.ElapsedMilliseconds))
         {
             if (_dataInitialized is false)
             {

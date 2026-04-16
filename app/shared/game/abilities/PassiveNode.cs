@@ -74,7 +74,11 @@ public partial class PassiveNode : AbilityNode<
     }
     
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
-            // TODO missing validations: research
+            new AbilityValidator.PlayerHasResearch
+            {
+                Player = OwnerActor.Player,
+                ResearchNeeded = Blueprint.ResearchNeeded,
+            },
             new AbilityValidator.EffectsValidatorsPass
             {
                 Effects = [GetEffect(request)]

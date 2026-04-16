@@ -109,7 +109,11 @@ public partial class EntityPanel : Control
             var name = _selectedAbility.DisplayName;
             var turnPhase = _selectedAbility.TurnPhase;
             var text = _selectedAbility.Description;
-            var research = _selectedAbility.ResearchNeeded;
+            var currentResearch = GlobalRegistry.Instance.GetResearchByPlayer(
+                _selectedAbility.OwnerActor.Player);
+            var research = _selectedAbility.ResearchNeeded
+                .Where(r => currentResearch.Contains(r) is false)
+                .ToList();
             var cooldown = _selectedAbility.RemainingCooldown;
             var hasAbilityToCancel = _selectedAbility is IActiveAbilityNode { IsActivated: true };
             var hasAbilityToActivate = _selectedAbility is InstantNode instant 

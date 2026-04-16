@@ -1,9 +1,55 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdnwt6x7ftrs1"]
+[gd_scene load_steps=11 format=3 uid="uid://bdnwt6x7ftrs1"]
 
 [ext_resource type="Texture2D" uid="uid://doimx2uu8i3fs" path="res://assets/sprites/interface/selection-panel.png" id="1"]
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="2"]
 [ext_resource type="Script" uid="uid://b015y8ow43une" path="res://app/client/game/interface/panels/selection/SelectionPanel.cs" id="3"]
 [ext_resource type="PackedScene" uid="uid://dax8eksfbotqw" path="res://app/client/game/interface/shared/Text.tscn" id="4_fcdsc"]
+[ext_resource type="PackedScene" uid="uid://dr2lf4wh6a7b0" path="res://app/client/game/interface/panels/selection/SelectionButton.tscn" id="4_mpfiq"]
+[ext_resource type="Shader" uid="uid://e66q7q18rgeq" path="res://app/shared/shaders/InterfaceSelectionShader.tres" id="5_ab054"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_45eeu"]
+resource_local_to_scene = true
+shader = ExtResource("5_ab054")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = false
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q8jkw"]
+resource_local_to_scene = true
+shader = ExtResource("5_ab054")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = false
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g1liq"]
+resource_local_to_scene = true
+shader = ExtResource("5_ab054")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = false
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lv0bg"]
+resource_local_to_scene = true
+shader = ExtResource("5_ab054")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/draw_outline = false
+shader_parameter/intensity = 250
+shader_parameter/disabled = false
+shader_parameter/disabled_saturation = 0.2
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_effect_factor = 0.0
 
 [node name="SelectionPanel" type="Control"]
 layout_mode = 3
@@ -13,7 +59,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -648.0
-offset_top = -184.0
+offset_top = -96.0
 offset_right = -332.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -24,7 +70,7 @@ script = ExtResource("3")
 custom_minimum_size = Vector2(48, 24)
 layout_mode = 0
 offset_right = 79.0
-offset_bottom = 46.0
+offset_bottom = 20.0
 scale = Vector2(4, 4)
 mouse_filter = 1
 texture = ExtResource("1")
@@ -39,18 +85,33 @@ axis_stretch_vertical = 2
 layout_mode = 0
 offset_left = 72.0
 offset_top = 24.0
-offset_right = -72.0
-offset_bottom = -28.0
+offset_right = 244.0
+offset_bottom = 64.0
 columns = 4
 
+[node name="SelectionButton" parent="GridContainer" instance=ExtResource("4_mpfiq")]
+material = SubResource("ShaderMaterial_45eeu")
+layout_mode = 2
+
+[node name="SelectionButton2" parent="GridContainer" instance=ExtResource("4_mpfiq")]
+material = SubResource("ShaderMaterial_q8jkw")
+layout_mode = 2
+
+[node name="SelectionButton3" parent="GridContainer" instance=ExtResource("4_mpfiq")]
+material = SubResource("ShaderMaterial_g1liq")
+layout_mode = 2
+
+[node name="SelectionButton4" parent="GridContainer" instance=ExtResource("4_mpfiq")]
+material = SubResource("ShaderMaterial_lv0bg")
+layout_mode = 2
+
 [node name="Text" parent="." instance=ExtResource("4_fcdsc")]
-custom_minimum_size = Vector2(178, 128)
+custom_minimum_size = Vector2(178, 0)
 layout_mode = 0
 offset_left = 72.0
-offset_top = 28.0
+offset_top = 25.0
 offset_right = 250.0
-offset_bottom = 156.0
+offset_bottom = 67.0
 text = "This building can only be placed on the low ground Celestium tiles."
-fit_content = false
 text_direction = 0
 IsBrighter = true

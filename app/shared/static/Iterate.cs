@@ -60,4 +60,6 @@ public static class Iterate
             }
         }
     }
+
+    public static bool Allowed(long msIterated) => msIterated <= Constants.MaxIterationLengthMs;
 }

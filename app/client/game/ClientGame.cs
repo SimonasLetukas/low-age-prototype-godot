@@ -63,6 +63,7 @@ public partial class ClientGame : Game
         _interface.MouseEntered += _mouse.OnInterfaceMouseEntered;
         _interface.MouseExited += _mouse.OnInterfaceMouseExited;
         _interface.SelectedToBuild += _map.OnInterfaceSelectedToBuild;
+        _interface.SelectedToResearch += _map.OnInterfaceSelectedToResearch;
         _interface.AttackSelected += _map.OnInterfaceAttackSelected;
         _interface.NextTurnClicked += Turns.OnNextTurnButtonClicked;
         _interface.InitiativePanelActorHovered += _map.OnInitiativePanelActorHovered;
@@ -97,6 +98,7 @@ public partial class ClientGame : Game
         _interface.MouseEntered -= _mouse.OnInterfaceMouseEntered;
         _interface.MouseExited -= _mouse.OnInterfaceMouseExited;
         _interface.SelectedToBuild -= _map.OnInterfaceSelectedToBuild;
+        _interface.SelectedToResearch -= _map.OnInterfaceSelectedToResearch;
         _interface.AttackSelected -= _map.OnInterfaceAttackSelected;
         _interface.NextTurnClicked -= Turns.OnNextTurnButtonClicked;
         _interface.InitiativePanelActorHovered -= _map.OnInitiativePanelActorHovered;

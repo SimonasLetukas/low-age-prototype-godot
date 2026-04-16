@@ -85,4 +85,6 @@ public static class Constants
     public const int FlattenedHighGroundHeight = 2;
 
     public const int MaxTooltipCharCount = 40;
+    
+    public const long MaxIterationLengthMs = 40;
 }

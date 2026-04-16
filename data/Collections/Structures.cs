@@ -255,7 +255,7 @@ namespace LowAgeData.Collections
                     abilities: new List<AbilityId>
                     {
                         AbilityId.Shared.Revelators.BuildingStructure,
-                        //AbilityId.Workshop.Research
+                        AbilityId.Workshop.Research
                     },
                     size: new Vector2Int(x: 2, y: 2)),
                 

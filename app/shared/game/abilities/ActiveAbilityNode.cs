@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Godot;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Common;
 using Newtonsoft.Json;
@@ -18,6 +17,7 @@ public abstract partial class ActiveAbilityNode<
     where TPreProcessingResult : IActiveAbilityActivationPreProcessingResult
     where TFocus : IActiveAbilityFocus
 {
+    public event Action<IActiveAbilityNode> ActivationsCancelled = delegate { };
     public event Action<IActiveAbilityFocus> FocusRemoved = delegate { };
     
     public bool IsActivated => FocusQueue.Any();
@@ -49,6 +49,8 @@ public abstract partial class ActiveAbilityNode<
             var request = focus.ToActivationRequest();
             CancelActivation(request);
         }
+
+        ActivationsCancelled(this);
     }
 
     public void CancelActivation(IAbilityActivationRequest request)
@@ -148,7 +150,7 @@ public abstract partial class ActiveAbilityNode<
     {
         SpendActionAndConsumableResources(focus);
 
-        ExecuteNonConsumablePayment(focus);
+        ExecuteNonConsumablePayment(focus, null);
 
         var paymentCompleted = ExecutePostPaymentAndDetermineIfPaymentCompleted(focus);
 
@@ -177,14 +179,15 @@ public abstract partial class ActiveAbilityNode<
         HandleReservation(typedRequest);
     }
 
-    private void ExecuteNonConsumablePayment(TFocus focus)
+    protected void ExecuteNonConsumablePayment(TFocus focus, IList<Payment>? nonConsumableCost)
     {
-        if (NonConsumableCost.IsEmpty())
+        nonConsumableCost ??= NonConsumableCost;
+        if (nonConsumableCost.IsEmpty())
             return;
         
         var currentPlayerStockpile = Registry.GetCurrentPlayerStockpile(OwnerActor.Player);
         var nonConsumableStockpile = Registry.GetNonConsumableResources(currentPlayerStockpile);
-        var (_, updatedPaidSoFar) = Registry.SimulatePayment(NonConsumableCost,
+        var (_, updatedPaidSoFar) = Registry.SimulatePayment(nonConsumableCost,
             nonConsumableStockpile, focus.NonConsumableResourcesPaidSoFar, 1f);
 
         focus.NonConsumableResourcesPaidSoFar = updatedPaidSoFar;

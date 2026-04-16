@@ -55,7 +55,11 @@ public partial class InstantNode : ActiveAbilityNode<
     }
 
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
-            // TODO missing validations: research
+            new AbilityValidator.PlayerHasResearch
+            {
+                Player = OwnerActor.Player,
+                ResearchNeeded = Blueprint.ResearchNeeded,
+            },
             new AbilityValidator.CorrectTurnPhase
             {
                 CurrentTurnPhase = Registry.GetCurrentPhase(),
@@ -94,7 +98,7 @@ public partial class InstantNode : ActiveAbilityNode<
     };
     
     protected override Focus CreateFocus(ActivationRequest activationRequest, PreProcessingResult preProcessingResult)
-        => new Focus
+        => new()
         {
             Requeued = false,
             Reservation = preProcessingResult.Reservation

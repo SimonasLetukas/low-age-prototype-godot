@@ -216,85 +216,155 @@
       "id": "research-revelators-poisoned-slits",
       "displayName": "Poisoned Slits",
       "description": "Unlocks Cripple ability for Quickdraw.",
-      "faction": "faction-revelators"
+      "faction": "faction-revelators",
+      "sprite": "res://assets/icons/icon_ability_cripple.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-revelators-radioactive-chyme",
       "displayName": "Radioactive Chyme",
       "description": "Unlocks Disease ability for Gorger.",
-      "faction": "faction-revelators"
+      "faction": "faction-revelators",
+      "sprite": "res://assets/icons/icon_ability_disease.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-revelators-spiked-rope",
       "displayName": "Spiked Rope",
       "description": "Unlocks Infiltration ability for Camou.",
-      "faction": "faction-revelators"
+      "faction": "faction-revelators",
+      "sprite": "res://assets/icons/icon_ability_climb.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-revelators-questionable-cargo",
       "displayName": "Questionable Cargo",
       "description": "Unlocks Phantom Menace ability for Pyre.",
-      "faction": "faction-revelators"
+      "faction": "faction-revelators",
+      "sprite": "res://assets/icons/icon_ability_phantom_menace.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-revelators-humanflesh-rations",
       "displayName": "Humanflesh Rations",
       "description": "Unlocks Leap Of Hunger ability for Mummy.",
-      "faction": "faction-revelators"
+      "faction": "faction-revelators",
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-revelators-adaptive-digestion",
       "displayName": "Adaptive Digestion",
       "description": "Unlocks Corrosive Spit ability for Roach.",
-      "faction": "faction-revelators"
+      "faction": "faction-revelators",
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-uee-fusion-core-upgrade",
       "displayName": "Fusion Core Upgrade",
       "description": "Upgrades Battery Core to Fusion Core.",
-      "faction": "faction-uee"
+      "faction": "faction-uee",
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-uee-celestium-core-upgrade",
       "displayName": "Celestium Core Upgrade",
       "description": "Upgrades Fusion Core to Celestium Core.",
-      "faction": "faction-uee"
+      "faction": "faction-uee",
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-uee-heightened-conductivity",
       "displayName": "Heightened Conductivity",
       "description": "Unlocks Improved Power Grid ability for Power Pole.",
-      "faction": "faction-uee"
+      "faction": "faction-uee",
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-uee-hoverboard-reignition",
       "displayName": "Hoverboard Reignition",
       "description": "Unlocks Mount ability for Horrior.",
-      "faction": "faction-uee"
+      "faction": "faction-uee",
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-uee-explosive-shrapnel",
       "displayName": "Explosive Shrapnel",
       "description": "Unlocks Piercing Blast ability for Mortar.",
-      "faction": "faction-uee"
+      "faction": "faction-uee",
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-uee-md-practice",
       "displayName": "Md Practice",
       "description": "Unlocks Health Kit ability for Hawk.",
-      "faction": "faction-uee"
+      "faction": "faction-uee",
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-uee-celestium-coated-materials",
       "displayName": "Celestium Coated Materials",
       "description": "Unlocks Radio Location ability for Radar.",
-      "faction": "faction-uee"
+      "faction": "faction-uee",
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": "research-uee-hardened-matrix",
       "displayName": "Hardened Matrix",
       "description": "Unlocks Fortify ability for Vessel.",
-      "faction": "faction-uee"
+      "faction": "faction-uee",
+      "sprite": "res://assets/icons/icon_ability_build.png",
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      }
     }
   ],
   "entities": {
@@ -2771,7 +2841,8 @@
           "ActorAttribute.Structure"
         ],
         "abilities": [
-          "ability-shared-revelators-building-structure"
+          "ability-shared-revelators-building-structure",
+          "ability-workshop-research"
         ],
         "displayName": "Workshop",
         "description": "Workshop can be used to research various upgrades.",
@@ -10187,7 +10258,7 @@
               "$type": "ResearchCondition",
               "conditionedResearchId": "research-revelators-radioactive-chyme",
               "researchOwner": "Location.Origin",
-              "conditionFlag": "ConditionFlag.DoesNotExist"
+              "conditionFlag": "ConditionFlag.Exists"
             }
           ],
           "filters": []
@@ -14634,7 +14705,7 @@
       "restoreChangesOnEnd": true,
       "displayName": "Menacing Presence Buff",
       "description": "Melee and Range Damage for this unit is reduced by 2 because of a nearby Leader.",
-      "endsAt": "EndsAt.EndOfThisAction",
+      "endsAt": "EndsAt.EndOfNextAction",
       "alignment": "Alignment.Negative",
       "canStack": false,
       "canResetDuration": true,

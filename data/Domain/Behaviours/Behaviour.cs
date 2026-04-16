@@ -29,7 +29,7 @@ namespace LowAgeData.Domain.Behaviours
             DisplayName = displayName;
             Description = description;
             Sprite = sprite;
-            CenterOffset = new Vector2Int(0, 0);
+            CenterOffset = Vector2Int.Zero;
             EndsAt = endsAt;
             Alignment = alignment;
             CanStack = canStack ?? false;

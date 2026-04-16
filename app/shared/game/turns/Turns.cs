@@ -182,7 +182,7 @@ public partial class Turns : Node2D
 		if (Phase.Equals(TurnPhase.Planning))
 			Turn++;
 		
-		EventBus.Instance.RaisePhaseStarted(Turn, Phase);
+		Callable.From(() => EventBus.Instance.RaisePhaseStarted(Turn, Phase)).CallDeferred();
 	}
 	
 	private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)

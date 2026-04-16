@@ -57,17 +57,8 @@ namespace LowAgeData
             typeof(Faction),
             
             // Logic:
-            typeof(BehaviourCondition), typeof(EntityCondition), typeof(MaskCondition), typeof(ResourceCondition), 
-            typeof(ResultValidator), typeof(TargetedAbilityCondition), typeof(TileCondition), 
-            
-            // Researches:
-            typeof(Domain.Researches.Research),
-            
-            // Resources:
-            typeof(Resource),
-            
-            // Tiles:
-            typeof(Tile),
+            typeof(BehaviourCondition), typeof(EntityCondition), typeof(MaskCondition), typeof(ResearchCondition), 
+            typeof(ResourceCondition), typeof(ResultValidator), typeof(TargetedAbilityCondition), typeof(TileCondition), 
             
             // EnumValueObjects:
             typeof(ActorAttribute), typeof(Alignment), typeof(AmountMultiplyOfFlag), typeof(AttackAttribute), 

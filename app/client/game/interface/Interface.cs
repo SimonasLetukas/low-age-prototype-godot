@@ -3,12 +3,14 @@ using System.Linq;
 using Godot;
 using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Entities;
+using LowAgeData.Domain.Researches;
 
 public partial class Interface : CanvasLayer
 {
     public event Action MouseEntered = delegate { };
     public event Action MouseExited = delegate { };
     public event Action<BuildNode, EntityId> SelectedToBuild = delegate { };
+    public event Action<ResearchNode, ResearchId> SelectedToResearch = delegate { };
     public event Action<bool, AttackType?> AttackSelected = delegate { };
     public event Action NextTurnClicked = delegate { };
     public event Action<ActorNode?> InitiativePanelActorHovered = delegate { };
@@ -53,6 +55,7 @@ public partial class Interface : CanvasLayer
         _entityPanel.AttackSelected += OnEntityPanelAttackSelected;
         _entityPanel.CandidatePlacementCancelled += OnCandidatePlacementCancelled;
         _selectionPanel.SelectedToBuild += OnSelectionPanelSelectedToBuild;
+        _selectionPanel.SelectedToResearch += OnSelectionPanelSelectedToResearch;
         _turnPanel.NextTurnClicked += OnTurnPanelNextTurnClicked;
         _initiativePanel.ActorHovered += OnInitiativePanelActorHovered;
         _initiativePanel.ActorSelected += OnInitiativePanelActorSelected;
@@ -67,6 +70,7 @@ public partial class Interface : CanvasLayer
         _entityPanel.AttackSelected -= OnEntityPanelAttackSelected;
         _entityPanel.CandidatePlacementCancelled -= OnCandidatePlacementCancelled;
         _selectionPanel.SelectedToBuild -= OnSelectionPanelSelectedToBuild;
+        _selectionPanel.SelectedToResearch -= OnSelectionPanelSelectedToResearch;
         _turnPanel.NextTurnClicked -= OnTurnPanelNextTurnClicked;
         _initiativePanel.ActorHovered -= OnInitiativePanelActorHovered;
         _initiativePanel.ActorSelected -= OnInitiativePanelActorSelected;
@@ -132,10 +136,11 @@ public partial class Interface : CanvasLayer
         _initiativePanel.OnEntityDeselected(entity);
     }
 
-    private void OnSelectionPanelSelectedToBuild(BuildNode buildAbility, EntityId entityId)
-    {
-        SelectedToBuild(buildAbility, entityId);
-    }
+    private void OnSelectionPanelSelectedToBuild(BuildNode buildAbility, EntityId entityId) 
+        => SelectedToBuild(buildAbility, entityId);
+    
+    private void OnSelectionPanelSelectedToResearch(ResearchNode buildAbility, ResearchId entityId) 
+        => SelectedToResearch(buildAbility, entityId);
 
     private void OnAbilityViewOpened(AbilityButton button)
     {

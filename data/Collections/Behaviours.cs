@@ -1123,7 +1123,7 @@ namespace LowAgeData.Collections
                             attackType: AttackType.Ranged,
                             attribute: AttackAttribute.MaxAmount)
                     },
-                    endsAt: EndsAt.EndOf.This.Action,
+                    endsAt: EndsAt.EndOf.Next.Action,
                     canStack: false,
                     canResetDuration: true,
                     alignment: Alignment.Negative,

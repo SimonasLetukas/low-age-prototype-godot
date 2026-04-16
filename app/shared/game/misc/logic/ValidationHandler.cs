@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using LowAgeCommon.Extensions;
+using LowAgeData.Domain.Common;
 using LowAgeData.Domain.Common.Flags;
 using LowAgeData.Domain.Logic;
+using Newtonsoft.Json;
 
 public class ValidationHandler
 {
@@ -66,6 +69,7 @@ public class ValidationHandler
         {
             BehaviourCondition behaviourCondition => Handle(behaviourCondition),
             MaskCondition maskCondition => ValidationResult.Valid, // TODO
+            ResearchCondition researchCondition => Handle(researchCondition),
             ResourceCondition resourceCondition => Handle(resourceCondition),
             TargetedAbilityCondition targetedAbilityCondition => Handle(targetedAbilityCondition),
             TileCondition tileCondition => Handle(tileCondition),
@@ -98,6 +102,60 @@ public class ValidationHandler
                 : ValidationResult.Invalid($"Found {data.DisplayName} which cannot exist.");
         
         return ValidationResult.Invalid("Behaviour condition failed.");
+    }
+    
+    private ValidationResult Handle(ResearchCondition researchCondition)
+    {
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(ValidationHandler), $"{nameof(Handle)}.{nameof(ResearchCondition)}", 
+                string.Empty);
+
+        var location = researchCondition.ResearchOwner;
+        HashSet<Player?>? players = location switch
+        {
+            _ when location.Equals(Location.Inherited) => [_playerSource],
+            _ when location.Equals(Location.Self) => [_effectHistorySource?.Last.InitiatorPlayer],
+            _ when location.Equals(Location.Entity) => _effectHistorySource?.Last.FoundTargets
+                .Where(t => t is EntityNode)
+                .Cast<EntityNode>()
+                .Select(e => e.Player)
+                .ToHashSet(),
+            _ when location.Equals(Location.Source) => [_effectHistorySource?.SourceEntityOrNull?.Player],
+            _ when location.Equals(Location.Origin) => [_effectHistorySource?.OriginEntityOrNull?.Player],
+            _ => null
+        };
+
+        var nonNullPlayers = players?.WhereNotNull().ToList();
+        if (nonNullPlayers is null || nonNullPlayers.IsEmpty())
+            return ValidationResult.Invalid("Research condition failed: found no eligible players.");
+
+        var hasRequiredResearchByPlayer = nonNullPlayers.ToDictionary(p => p, p 
+            => GlobalRegistry.Instance.GetResearchByPlayer(p).Contains(researchCondition.ConditionedResearchId));
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(ValidationHandler), $"{nameof(Handle)}.{nameof(ResearchCondition)}", 
+                $"Found {researchCondition.ConditionedResearchId} research: '{string.Join(", ", 
+                    hasRequiredResearchByPlayer.Select(kvp => $"Player '{kvp.Key.StableId}' is {kvp.Value}"))}'." +
+                $"Condition '{researchCondition.ConditionFlag}'.");
+
+        var conditionedResearchDisplayName = GlobalRegistry.Instance.GetResearchById(
+            researchCondition.ConditionedResearchId);
+        
+        if (researchCondition.ConditionFlag.Equals(ConditionFlag.Exists))
+            return hasRequiredResearchByPlayer.Values.All(v => v)
+                ? ValidationResult.Valid 
+                : ValidationResult.Invalid($"Required research {conditionedResearchDisplayName} was not found for " +
+                                           $"players: {string.Join(", ", hasRequiredResearchByPlayer.Where(kvp => 
+                                               kvp.Value is false).Select(kvp => kvp.Key.Name))}.");
+
+        if (researchCondition.ConditionFlag.Equals(ConditionFlag.DoesNotExist))
+            return hasRequiredResearchByPlayer.Values.All(v => v is false)
+                ? ValidationResult.Valid 
+                : ValidationResult.Invalid($"Found forbidden research {conditionedResearchDisplayName} for " +
+                                           $"players: {string.Join(", ", hasRequiredResearchByPlayer.Where(kvp => 
+                                               kvp.Value).Select(kvp => kvp.Key.Name))}.");
+
+        return ValidationResult.Invalid("Research condition failed.");
     }
 
     private ValidationResult Handle(ResourceCondition resourceCondition)

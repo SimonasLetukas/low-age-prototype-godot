@@ -35,6 +35,9 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
 
     protected override void EndBehaviour(bool triggersOnDeathBehaviours)
     {
+        if (IsBeingDestroyed)
+            return;
+        
         if (Log.DebugEnabled)
             Log.Info(nameof(BuffNode), nameof(EndBehaviour), ToString());
         
@@ -102,25 +105,5 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
         
         foreach (var modification in Blueprint.FinalModifications)
             modification.Accept(applier);
-    }
-
-    private void HandleEffects(IList<EffectId> effects)
-    {
-        foreach (var effectId in effects)
-        {
-            var chain = new Effects(History, effectId, [Parent], Parent.Player, Parent);
-            var validationResult = chain.ValidateLast();
-
-            if (validationResult.IsValid is false)
-            {
-                if (Log.DebugEnabled)
-                    Log.Info(nameof(BuffNode), nameof(HandleEffects), 
-                        $"{this} failed to execute effect '{effectId}' because '{validationResult.Message}'.");
-                
-                continue;
-            }
-            
-            chain.ExecuteLast();
-        }
     }
 }

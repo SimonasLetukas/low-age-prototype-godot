@@ -2,6 +2,7 @@ using System;
 using Godot;
 using LowAgeData.Domain.Entities;
 using LowAgeCommon;
+using LowAgeData.Domain.Researches;
 
 public partial class SelectionButton : BaseButton
 {
@@ -40,9 +41,18 @@ public partial class SelectionButton : BaseButton
         
         TooltipText = ability.GetSelectableItemText(selectionId);
 
-        var entity = Data.Instance.GetEntityBlueprintById((EntityId)selectionId);
-        if (entity?.Sprite != null)
-            SetIcon(GD.Load<Texture2D>(entity.Sprite));
+        if (selectionId is EntityId entityId)
+        {
+            var entity = Data.Instance.GetEntityBlueprintById(entityId);
+            if (entity?.Sprite != null)
+                SetIcon(GD.Load<Texture2D>(entity.Sprite));
+        }
+        else
+        {
+            var research = GlobalRegistry.Instance.GetResearchById((ResearchId)selectionId);
+            if (research?.Sprite != null)
+                SetIcon(GD.Load<Texture2D>(research.Sprite));
+        }
         
         // Need to call this after the new node had time to become _Ready
         Callable.From(() => SetDisabled(ability.IsSelectableItemDisabled(selectionId))).CallDeferred();

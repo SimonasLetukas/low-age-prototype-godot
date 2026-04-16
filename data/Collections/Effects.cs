@@ -1140,7 +1140,7 @@ namespace LowAgeData.Collections
                         new Validator(conditions: new List<Condition>
                         {
                             new ResearchCondition(
-                                conditionFlag: ConditionFlag.DoesNotExist, 
+                                conditionFlag: ConditionFlag.Exists, 
                                 conditionedResearchId: ResearchId.Revelators.RadioactiveChyme,
                                 researchOwner: Location.Origin)
                         }),

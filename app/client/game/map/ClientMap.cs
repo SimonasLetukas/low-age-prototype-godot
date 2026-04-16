@@ -7,6 +7,7 @@ using LowAgeData.Domain.Entities;
 using LowAgeData.Domain.Tiles;
 using LowAgeCommon;
 using LowAgeCommon.Extensions;
+using LowAgeData.Domain.Researches;
 using MultipurposePathfinding;
 using Area = LowAgeCommon.Area;
 
@@ -1039,6 +1040,21 @@ public partial class ClientMap : Map
 		_selectedAbility = buildAbility;
 		_selectionOverlay = SelectionOverlay.Placement;
 		EntityIsBeingPlaced(entity);
+	}
+
+	internal void OnInterfaceSelectedToResearch(ResearchNode buildAbility, ResearchId researchId)
+	{
+		var result = buildAbility.Activate(new ResearchNode.ActivationRequest
+		{
+			IsRequeued = false,
+			UseConsumableResources = true,
+			ResearchId = researchId
+		});
+
+		if (result.IsValid is false) 
+			EventBus.Instance.RaiseValidationError(result.Message);
+		
+		ExecuteCancellation();
 	}
 
 	internal void OnEntityPlaced()

@@ -5,6 +5,7 @@ using System.Linq;
 using LowAgeCommon.Extensions;
 using LowAgeData.Domain.Behaviours;
 using LowAgeData.Domain.Common;
+using LowAgeData.Domain.Effects;
 
 public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBehaviour
 {
@@ -22,6 +23,7 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     public Effects History { get; protected set; } = null!;
 
     protected EntityNode Parent { get; set; } = null!;
+    protected bool IsBeingDestroyed { get; private set; } 
     
     private Behaviour Blueprint { get; set; } = null!;
     
@@ -71,9 +73,30 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
         {
             stackedBehaviour.Destroyed -= OnStackedBehaviourDestroyed;
         }
-        
+
+        IsBeingDestroyed = true;
         Destroyed(this);
         QueueFree();
+    }
+    
+    protected void HandleEffects(IList<EffectId> effects)
+    {
+        foreach (var effectId in effects)
+        {
+            var chain = new Effects(History, effectId, [Parent], Parent.Player, Parent);
+            var validationResult = chain.ValidateLast();
+
+            if (validationResult.IsValid is false)
+            {
+                if (Log.DebugEnabled)
+                    Log.Info(nameof(BuffNode), nameof(HandleEffects), 
+                        $"{this} failed to execute effect '{effectId}' because '{validationResult.Message}'.");
+                
+                continue;
+            }
+            
+            chain.ExecuteLast();
+        }
     }
 
     private void InitializeTriggers()
@@ -146,6 +169,9 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     
     public void OnBehaviourAdded(BehaviourNode addedBehaviour)
     {
+        if (IsBeingDestroyed)
+            return;
+        
         if (Log.VerboseDebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(OnBehaviourAdded), 
                 $"Current: '{this}', added: '{addedBehaviour}'.");
@@ -187,6 +213,9 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     
     protected virtual void OnDurationEnded(EndsAtNode duration)
     {
+        if (IsBeingDestroyed)
+            return;
+        
         if (Log.DebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(OnDurationEnded), ToString());
         
@@ -195,11 +224,16 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     
     private void OnTriggered()
     {
+        if (IsBeingDestroyed)
+            return;
+        
         var removeOnConditionsMet = Blueprint.RemoveOnConditionsMet;
         
         if (Log.DebugEnabled)
             Log.Info(nameof(BehaviourNode), nameof(OnTriggered), 
                 $"{this} conditions triggered ({nameof(removeOnConditionsMet)}: '{removeOnConditionsMet}').");
+        
+        HandleEffects(Blueprint.ConditionalEffects);
         
         if (removeOnConditionsMet)
             Destroy();
@@ -208,6 +242,9 @@ public partial class BehaviourNode : Node2D, INodeFromBlueprint<Behaviour>, IBeh
     private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
     {
         if (entity.Equals(Parent) is false)
+            return;
+     
+        if (IsBeingDestroyed)
             return;
         
         if (Log.DebugEnabled)

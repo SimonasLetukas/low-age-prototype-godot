@@ -88,7 +88,12 @@ public partial class ServerGame : Game
     private void UnpausePlayersAfterLoadingSave()
     {
         if (LoadingSavedGame || _notLoadedPlayers.Count > 0)
+        {
+            GD.Print($"{nameof(ServerGame)}.{nameof(UnpausePlayersAfterLoadingSave)}: cannot unpause. " +
+                     $"{nameof(LoadingSavedGame)} '{LoadingSavedGame}', {nameof(_notLoadedPlayers)}.Count " +
+                     $"'{_notLoadedPlayers.Count}'");
             return;
+        }
         
         GD.Print($"{nameof(ServerGame)}.{nameof(UnpausePlayersAfterLoadingSave)}: all clients (and server) " +
                  $"have loaded a saved game, unpausing the game for all players");
@@ -274,7 +279,9 @@ public partial class ServerGame : Game
     
     private void HandleEvent(AbilityExecutionCompletedEvent @event)
     {
-        _pendingPlayersByAbilityExecutions[@event.AbilityExecutionRequestedEventId].Remove(@event.PlayerStableId);
+        _pendingPlayersByAbilityExecutions
+            .GetValueOrDefault(@event.AbilityExecutionRequestedEventId)? // In niche cases could already be cleared
+            .Remove(@event.PlayerStableId);
 
         if (_planningPhaseResolved)
         {
