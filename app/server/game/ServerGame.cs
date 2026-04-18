@@ -282,7 +282,7 @@ public partial class ServerGame : Game
         _pendingPlayersByAbilityExecutions
             .GetValueOrDefault(@event.AbilityExecutionRequestedEventId)? // In niche cases could already be cleared
             .Remove(@event.PlayerStableId);
-
+        
         if (_planningPhaseResolved)
         {
             StartNextAction();

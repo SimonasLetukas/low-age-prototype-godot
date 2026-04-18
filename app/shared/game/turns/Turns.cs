@@ -142,7 +142,7 @@ public partial class Turns : Node2D
 			Log.Info(nameof(Turns), $"{nameof(HandleEvent)}.{nameof(ActionEndedResponseEvent)}", 
 				$"Initiative queue '{JsonConvert.SerializeObject(InitiativeQueue
 					.Select(a => new {a.InstanceId, a.Initiative?.CurrentAmount}))}'");
-
+		
 		if (InitiativeQueue.IsEmpty())
 		{
 			EventBus.Instance.RaiseInitiativeQueueUpdated([]);
@@ -181,8 +181,13 @@ public partial class Turns : Node2D
 
 		if (Phase.Equals(TurnPhase.Planning))
 			Turn++;
+
+		// Local variables are needed to capture current value in closure, otherwise it'd do `this.Turn, this.Phase`
+		// and misbehave when multiple RaisePhaseStarted are called in one frame.
+		var turn = Turn;
+		var phase = Phase;
 		
-		Callable.From(() => EventBus.Instance.RaisePhaseStarted(Turn, Phase)).CallDeferred();
+		Callable.From(() => EventBus.Instance.RaisePhaseStarted(turn, phase)).CallDeferred();
 	}
 	
 	private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
