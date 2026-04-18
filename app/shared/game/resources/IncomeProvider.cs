@@ -13,6 +13,7 @@ public class IncomeProvider : IEquatable<IncomeProvider>
     public required int DiminishingReturn { get; init; }
     public required bool InstantUpdate { get; init; }
     public required IList<Payment> Cost { get; init; }
+    public required bool OverflowPayment { get; init; }
     public required bool WaitForAvailableStorage { get; init; }
 
     public bool Equals(IncomeProvider? other)

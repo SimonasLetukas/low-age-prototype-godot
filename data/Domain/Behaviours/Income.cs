@@ -24,6 +24,7 @@ namespace LowAgeData.Domain.Behaviours
             EndsAt? endsAt = null,
             Alignment? alignment = null,
             IList<Payment>? cost = null,
+            bool? overflowPayment = null,
             bool? waitForAvailableStorage = null,
             IList<Trigger>? triggers = null,
             bool? removeOnConditionsMet = null,
@@ -43,6 +44,7 @@ namespace LowAgeData.Domain.Behaviours
             DiminishingReturn = diminishingReturn ?? 0;
             InstantUpdate = instantUpdate ?? false;
             Cost = cost ?? new List<Payment>();
+            OverflowPayment = overflowPayment ?? false;
             WaitForAvailableStorage = waitForAvailableStorage ?? false;
         }
 
@@ -81,6 +83,18 @@ namespace LowAgeData.Domain.Behaviours
         /// accumulates until it is fulfilled.
         /// </summary>
         public IList<Payment> Cost { get; }
+        
+        /// <summary>
+        /// <para>
+        /// If true, any non-consumable income that is paid to the remaining <see cref="Cost"/> that would go
+        /// over the limit is instead retained for the next <see cref="Cost"/> calculation. E.g. income is 5,
+        /// current cost paid is 3/7, after payment current cost is 1/7 instead of 0/7.
+        /// </para>
+        /// <para>
+        /// Default = false.
+        /// </para>
+        /// </summary>
+        public bool OverflowPayment { get; }
         
         /// <summary>
         /// If true, <see cref="Resources"/> are not gained and <see cref="Cost"/> is paused if there is not enough

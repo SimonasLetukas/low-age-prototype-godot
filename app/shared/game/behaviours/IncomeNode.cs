@@ -58,6 +58,7 @@ public partial class IncomeNode : BehaviourNode, INodeFromBlueprint<Income>
         DiminishingReturn = Blueprint.DiminishingReturn,
         InstantUpdate = Blueprint.InstantUpdate,
         Cost = Blueprint.Cost,
+        OverflowPayment = Blueprint.OverflowPayment,
         WaitForAvailableStorage = Blueprint.WaitForAvailableStorage
     };
 

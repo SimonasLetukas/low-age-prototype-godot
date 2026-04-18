@@ -27,8 +27,10 @@ public static class ResourceCalculator
             IReadOnlyDictionary<ResourceId, int> cost, 
             IReadOnlyDictionary<ResourceId, int> stockpile, 
             IReadOnlyDictionary<ResourceId, int> paidSoFar,
-            float efficiencyFactor)
+            float efficiencyFactor,
+            HashSet<ResourceId>? overflowableResources = null)
     {
+        overflowableResources ??= [];
         var resourcesSpent = new Dictionary<ResourceId, int>();
         var updatedPayment = paidSoFar.ToDictionary();
 
@@ -39,7 +41,9 @@ public static class ResourceCalculator
             if (amountRemaining <= 0) continue;
 
             var amountAvailable = (int)Math.Ceiling(stockpile.GetValueOrDefault(resource) * efficiencyFactor);
-            var amountUsed = Math.Min(amountRemaining, amountAvailable);
+            var amountUsed = overflowableResources.Contains(resource) 
+                ? amountAvailable
+                : Math.Min(amountRemaining, amountAvailable);
 
             resourcesSpent[resource] = amountUsed;
             updatedPayment[resource] = amountPaid + amountUsed;

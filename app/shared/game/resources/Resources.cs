@@ -244,8 +244,11 @@ public partial class Resources : Node2D
             if (ResourceCalculator.IsPaymentComplete(cost, paidSoFar))
                 continue;
 
+            var overflowableResources = provider.OverflowPayment 
+                ? GetNonConsumableResources(provider.Cost).Select(x => x.Resource).ToHashSet()
+                : [];
             var (resourcesSpent, updatedPayment) = ResourceCalculator
-                .SimulatePayment(cost, stockpile, paidSoFar, 1);
+                .SimulatePayment(cost, stockpile, paidSoFar, 1, overflowableResources);
 
             if (ResourceCalculator.TrySubtractResources(stockpile, resourcesSpent, _resourceBlueprints, 
                     false, out var resultingStockpile) is false)
@@ -280,7 +283,16 @@ public partial class Resources : Node2D
         
         foreach (var usedIncomeProvider in usedIncomeProviders.Keys)
         {
-            _currentPaymentByIncomeProvider[usedIncomeProvider] = new Dictionary<ResourceId, int>();
+            _currentPaymentByIncomeProvider[usedIncomeProvider] = usedIncomeProvider.OverflowPayment
+                ? ResourceCalculator.SubtractResources(
+                    _currentPaymentByIncomeProvider[usedIncomeProvider]
+                        .Where(r => _resourceBlueprints[r.Key].IsConsumable is false)
+                        .ToDictionary(),
+                    ResourceCalculator.ToDictionary(usedIncomeProvider.Cost),
+                    _resourceBlueprints,
+                    false,
+                    true)
+                : new Dictionary<ResourceId, int>();
             EventBus.Instance.RaiseIncomeProviderPaymentUpdated(usedIncomeProvider, 
                 ResourceCalculator.ToList(_currentPaymentByIncomeProvider[usedIncomeProvider]));
         }

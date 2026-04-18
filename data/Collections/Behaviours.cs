@@ -490,6 +490,7 @@ namespace LowAgeData.Collections
                         new Payment(resource: ResourceId.Celestium,
                             amount: 20)
                     },
+                    overflowPayment: true,
                     waitForAvailableStorage: true),
 
                 new Income(
@@ -509,6 +510,7 @@ namespace LowAgeData.Collections
                         new Payment(resource: ResourceId.Celestium,
                             amount: 25)
                     },
+                    overflowPayment: true,
                     waitForAvailableStorage: true),
 
                 new Income(
@@ -528,6 +530,7 @@ namespace LowAgeData.Collections
                         new Payment(resource: ResourceId.Celestium,
                             amount: 30)
                     },
+                    overflowPayment: true,
                     waitForAvailableStorage: true),
 
                 new Income(
