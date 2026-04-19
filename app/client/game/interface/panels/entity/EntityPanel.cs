@@ -85,7 +85,6 @@ public partial class EntityPanel : Control
         _entityName.SetValue(selectedEntity.DisplayName);
         ChangeDisplay();
         MovePanel();
-        AbilityViewClosed();
     }
 
     public void OnEntityDeselected()

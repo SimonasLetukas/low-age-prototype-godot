@@ -304,6 +304,7 @@ public partial class ClientMap : Map
 		_tileMap.Elevatable.ClearTargetTiles(false);
 		_tileMap.Elevatable.ClearPath();
 		ClearArrows();
+		_selectedAbility = null;
 		Entities.DeselectEntity();
 		_selectionOverlay = SelectionOverlay.None;
 	}
@@ -356,9 +357,12 @@ public partial class ClientMap : Map
 
 		_focusedTile.UpdateTile();
 
-		if (_selectionOverlay is SelectionOverlay.None or SelectionOverlay.Movement or SelectionOverlay.Attack)
+		var hoveredEntity = UpdateHoveredEntity(GetGlobalMousePosition());
+		if (hoveredEntity is not null 
+			|| _selectionOverlay is SelectionOverlay.None or SelectionOverlay.Movement or SelectionOverlay.Attack)
 		{
-			ExecuteEntitySelection();
+			_tileMap.Elevatable.ClearTargetTiles(false);
+			ExecuteEntitySelection(hoveredEntity);
 			return;
 		}
 
@@ -1137,5 +1141,5 @@ public partial class ClientMap : Map
 		_selectedAbility = ability;
 	}
 
-	internal void OnInterfaceAbilityDeselected() => _selectedAbility = null;
+	internal void OnInterfaceAbilityDeselected() => ExecuteCancellation();
 }
