@@ -202,14 +202,15 @@ public partial class Turns : Node2D
 		var currentActorInActionWasDestroyed = InitiativeQueue.First().Equals(actor);
 		if (currentActorInActionWasDestroyed)
 		{
-			ResolveActionEnd();
-
-			if (InitiativeQueue.Any()) 
-				return;
+			if (actor.Player.Equals(Players.Instance.Current) is false)
+				return; 
 			
-			EventBus.Instance.RaiseInitiativeQueueUpdated([]);
-			AdvanceToNextPhase();
-
+			var actionEndedEvent = new ActionEndedRequestEvent
+			{
+				ActorInAction = actor.InstanceId,
+			};
+				
+			ActionEnded(actionEndedEvent);
 			return;
 		}
 		

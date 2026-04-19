@@ -116,7 +116,7 @@ public partial class EntityPanel : Control
             var cooldown = _selectedAbility.RemainingCooldown;
             var hasAbilityToCancel = _selectedAbility is IActiveAbilityNode { IsActivated: true };
             var hasAbilityToActivate = _selectedAbility is InstantNode instant 
-                                       && instant.TurnPhase.Equals(GlobalRegistry.Instance.GetCurrentPhase)
+                                       && instant.TurnPhase.Equals(GlobalRegistry.Instance.GetCurrentPhase())
                                        && hasAbilityToCancel is false;
             
             _display.SetAbilityStats(name, turnPhase, text, cooldown, research, hasAbilityToCancel, hasAbilityToActivate);
@@ -260,6 +260,22 @@ public partial class EntityPanel : Control
         _selectedAbility = null;
     }
 
+    private bool AbilityActivationAllowed(IActiveAbilityNode activeAbility)
+    {
+        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(activeAbility.OwnerActor) is false)
+            return false;
+        
+        var currentPhase = GlobalRegistry.Instance.GetCurrentPhase();
+        if (currentPhase.Equals(activeAbility.TurnPhase) is false)
+            return false;
+
+        if (activeAbility.TurnPhase.Equals(TurnPhase.Action) 
+            && activeAbility.OwnerActor.Equals(GlobalRegistry.Instance.GetActorInAction()) is false)
+            return false;
+
+        return true;
+    }
+
     private void OnAbilityFocusRemoved(IActiveAbilityFocus focus) => ChangeDisplay();
 
     private void OnCancelButtonClicked()
@@ -324,11 +340,7 @@ public partial class EntityPanel : Control
         if (_selectedAbility is not IActiveAbilityNode activeAbility)
             return;
 
-        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(activeAbility.OwnerActor) is false)
-            return;
-        
-        var currentPhase = GlobalRegistry.Instance.GetCurrentPhase();
-        if (currentPhase.Equals(activeAbility.TurnPhase) is false)
+        if (AbilityActivationAllowed(activeAbility) is false)
             return;
         
         activeAbility.CancelActivations();
@@ -339,11 +351,7 @@ public partial class EntityPanel : Control
         if (_selectedAbility is not InstantNode instantAbility)
             return;
 
-        if (Players.Instance.IsActionAllowedForCurrentPlayerOn(instantAbility.OwnerActor) is false)
-            return;
-        
-        var currentPhase = GlobalRegistry.Instance.GetCurrentPhase();
-        if (currentPhase.Equals(instantAbility.TurnPhase) is false)
+        if (AbilityActivationAllowed(instantAbility) is false)
             return;
         
         instantAbility.Activate(new InstantNode.ActivationRequest
@@ -351,5 +359,7 @@ public partial class EntityPanel : Control
             IsRequeued = false,
             UseConsumableResources = true
         });
+        
+        ChangeDisplay();
     }
 }

@@ -1235,7 +1235,6 @@ namespace LowAgeData.Collections
                     sprite: "res://assets/icons/icon_ability_fanatic_suicide.png",
                     effects: new List<EffectId>
                     {
-                        EffectId.Gorger.FanaticDetonationSearch,
                         EffectId.Gorger.FanaticDetonationDestroy
                     }),
                 

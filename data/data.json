@@ -7163,7 +7163,6 @@
       "turnPhase": "TurnPhase.Action",
       "researchNeeded": [],
       "effects": [
-        "effect-gorger-fanatic-detonation-search",
         "effect-gorger-fanatic-detonation-destroy"
       ],
       "hasButton": true,
@@ -10162,6 +10161,17 @@
             {
               "$type": "SpecificFlag",
               "value": "FilterFlag.Structure"
+            }
+          ]
+        },
+        {
+          "$type": "FilterGroup",
+          "policy": "Exclude",
+          "quantifier": "Any",
+          "filters": [
+            {
+              "$type": "SpecificFlag",
+              "value": "FilterFlag.Self"
             }
           ]
         }

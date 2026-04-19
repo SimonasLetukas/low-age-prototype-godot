@@ -1090,6 +1090,13 @@ namespace LowAgeData.Collections
                                 new SpecificFlag(value: FilterFlag.Unit),
                                 new SpecificFlag(value: FilterFlag.Structure),
                             }),
+                        new FilterGroup(
+                            policy: Policy.Exclude, 
+                            quantifier: Quantifier.Any, 
+                            filters: new List<IFilterItem>
+                            {
+                                new SpecificFlag(value: FilterFlag.Self),
+                            }),
                     },
                     effects: new List<EffectId>
                     {
