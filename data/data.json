@@ -6808,9 +6808,7 @@
               "amount": 40
             }
           ],
-          "researchNeeded": [
-            "research-revelators-humanflesh-rations"
-          ],
+          "researchNeeded": [],
           "grayOutIfAlreadyExists": false
         },
         {
