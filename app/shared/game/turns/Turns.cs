@@ -169,7 +169,11 @@ public partial class Turns : Node2D
 
 	private void AdvanceToNextAction()
 	{
-		EventBus.Instance.RaiseActionStarted(InitiativeQueue.First());
+		// Local variables are needed to capture current value in closure, otherwise it'd do
+		// `this.InitiativeQueue.First()` and misbehave when multiple RaiseActionStarted are
+		// called in one frame.
+		var actor = InitiativeQueue.First();
+		Callable.From(() => EventBus.Instance.RaiseActionStarted(actor)).CallDeferred();
 	}
 
 	private void AdvanceToNextPhase(bool raiseEndTurnEvent = true)
