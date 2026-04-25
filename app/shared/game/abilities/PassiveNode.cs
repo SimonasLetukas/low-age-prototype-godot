@@ -33,7 +33,7 @@ public partial class PassiveNode : AbilityNode<
     private Passive Blueprint { get; set; } = null!;
 
     private IShape? _targetArea;
-    private HashSet<EntityNode> _periodicEffectTrackedEntities = [];
+    private readonly HashSet<EntityNode> _periodicEffectTrackedEntities = [];
     
     public void SetBlueprint(Passive blueprint)
     {
@@ -41,6 +41,10 @@ public partial class PassiveNode : AbilityNode<
         Blueprint = blueprint;
         _targetArea = GetPeriodicSearchEffect()?.Shape;
 
+        if (Blueprint.PeriodicSearchEffect is not null)
+            Registry.TrackedEntitiesByPassiveAbility[this] = _periodicEffectTrackedEntities;
+
+        EventBus.Instance.EntityDestroyed += OnEntityDestroyed;
         EventBus.Instance.UnitMoved += OnUnitMoved;
         EventBus.Instance.ActionEnded += OnActionEnded;
         EventBus.Instance.PhaseStarted += OnPhaseStarted;
@@ -49,14 +53,18 @@ public partial class PassiveNode : AbilityNode<
 
     public override void _ExitTree()
     {
+        EventBus.Instance.EntityDestroyed -= OnEntityDestroyed;
         EventBus.Instance.UnitMoved -= OnUnitMoved;
         EventBus.Instance.ActionEnded -= OnActionEnded;
         EventBus.Instance.PhaseStarted -= OnPhaseStarted;
         EventBus.Instance.PhaseEnded -= OnPhaseEnded;
+
+        if (Registry.TrackedEntitiesByPassiveAbility.ContainsKey(this))
+            Registry.TrackedEntitiesByPassiveAbility.Remove(this);
         
         base._ExitTree();
     }
-    
+
     public bool WholeMapIsTargeted() => _targetArea is LowAgeData.Domain.Common.Shape.Map;
     
     public IEnumerable<Vector2Int> GetTargetPositions(EntityNode caster)
@@ -73,6 +81,52 @@ public partial class PassiveNode : AbilityNode<
         return Blueprint.OnBuildBehaviour;
     }
     
+    public IList<DamageNode> GetValidOnHitDamageEffects(AttackType attackType, EntityNode targetEntity)
+    {
+        if (Blueprint.OnHitAttackTypes.Contains(attackType) is false)
+            return [];
+
+        var result = new List<DamageNode>();
+        foreach (var effectId in Blueprint.OnHitEffects)
+        {
+            var activationRequest = new ActivationRequest
+            {
+                Targets = [targetEntity],
+                EffectToExecute = effectId
+            };
+            
+            var effect = GetEffect(activationRequest);
+            
+            if (effect.Last is not DamageNode damage)
+                continue;
+            
+            if (effect.ValidateLast().IsValid is false)
+                continue;
+            
+            result.Add(damage);
+        }
+        
+        return result;
+    }
+
+    public override void SetDisabled(bool disabled)
+    {
+        var previousState = Disabled;
+        
+        base.SetDisabled(disabled);
+
+        if (previousState == Disabled)
+            return;
+
+        if (Disabled)
+        {
+            HandlePeriodicEffectReset();
+            return;
+        }
+
+        HandlePeriodicEffectActivation();
+    }
+
     protected override ValidationResult ValidateActivation(ActivationRequest request) => AbilityValidator.With([
             new AbilityValidator.PlayerHasResearch
             {
@@ -125,10 +179,10 @@ public partial class PassiveNode : AbilityNode<
         
         effect.ExecuteLast();
 
-        HandlePeriodicEffectExecution(effect);
+        HandlePostPeriodicEffectExecution(effect);
     }
 
-    private void HandlePeriodicEffectExecution(Effects effect)
+    private void HandlePostPeriodicEffectExecution(Effects effect)
     {
         if (effect.Last.Id.Equals(Blueprint.PeriodicSearchEffect) is false
             || effect.Last is not SearchNode searchNode)
@@ -144,21 +198,28 @@ public partial class PassiveNode : AbilityNode<
         }
         
         if (Log.DebugEnabled)
-            Log.Info(nameof(PassiveNode), nameof(HandlePeriodicEffectExecution), 
+            Log.Info(nameof(PassiveNode), nameof(HandlePostPeriodicEffectExecution), 
                 $"Found new tracked entities '{string.Join(", ", newTrackedEntities.Select(e => 
                     e.ToString()))}', current tracked entities '{string.Join(", ", _periodicEffectTrackedEntities
                     .Select(e => e.ToString()))}'.");
 
+        UpdatePeriodicEffectTrackedEntities(newTrackedEntities, searchNode);
+    }
+
+    private void UpdatePeriodicEffectTrackedEntities(HashSet<EntityNode> newTrackedEntities, SearchNode searchNode)
+    {
         foreach (var trackedEntity in _periodicEffectTrackedEntities)
         {
-            if (newTrackedEntities.Contains(trackedEntity)) 
+            if (newTrackedEntities.Contains(trackedEntity) 
+                || EntityIsTrackedByAnotherPassive(trackedEntity)) 
                 continue;
             
             var behavioursToRemove = trackedEntity.Behaviours.GetAll()
-                .Where(b => b.History.First.Id.Equals(searchNode.Id));
+                .Where(b => b.History.First.Id.Equals(searchNode.Id))
+                .ToList();
             
             if (Log.DebugEnabled)
-                Log.Info(nameof(PassiveNode), nameof(HandlePeriodicEffectExecution), 
+                Log.Info(nameof(PassiveNode), nameof(HandlePostPeriodicEffectExecution), 
                     $"Removing behaviours: {string.Join(", ", behavioursToRemove.Select(b => 
                         b.ToString()))}");
                 
@@ -166,7 +227,38 @@ public partial class PassiveNode : AbilityNode<
                 behaviour.Remove();
         }
 
-        _periodicEffectTrackedEntities = newTrackedEntities;
+        _periodicEffectTrackedEntities.Clear();
+        _periodicEffectTrackedEntities.UnionWith(newTrackedEntities);
+    }
+
+    private bool EntityIsTrackedByAnotherPassive(EntityNode entity)
+    {
+        var passivesAlsoTrackingEntity = Registry.TrackedEntitiesByPassiveAbility
+            .Where(kvp => kvp.Value.Contains(entity))
+            .Select(kvp => kvp.Key)
+            .ToList();
+
+        if (passivesAlsoTrackingEntity.IsEmpty())
+            return false;
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(PassiveNode), nameof(EntityIsTrackedByAnotherPassive), 
+                $"Entity '{entity}' is tracked by '{string.Join(", ", passivesAlsoTrackingEntity
+                    .Select(p => JsonConvert.SerializeObject(new
+                    {
+                        p.Id, p.InstanceId, OwnerActor = p.OwnerActor.ToString() 
+                    })))}'.");
+
+        return passivesAlsoTrackingEntity
+            .Any(passiveNode => passiveNode.Id.Equals(Id) 
+                                && passiveNode.InstanceId.Equals(InstanceId) is false);
+    }
+
+    private void HandlePeriodicEffectReset()
+    {
+        var searchEffect = GetPeriodicSearchEffect();
+        if (searchEffect is not null)
+            UpdatePeriodicEffectTrackedEntities([], searchEffect);
     }
 
     private void HandlePeriodicEffectActivation()
@@ -180,9 +272,10 @@ public partial class PassiveNode : AbilityNode<
             Targets = [OwnerActor],
             EffectToExecute = effectId
         };
-            
-        if (Activate(activationRequest).IsValid) 
-            RequestExecution();
+        
+        var (activationResult, focus) = Activate(activationRequest);
+        if (activationResult.IsValid && focus is not null) 
+            RequestExecution(focus);
     }
 
     private SearchNode? GetPeriodicSearchEffect()
@@ -198,10 +291,11 @@ public partial class PassiveNode : AbilityNode<
         => new(request.EffectToExecute, request.Targets, OwnerActor.Player, OwnerActor);
 
     private bool PassiveCanBeTriggered() => GlobalRegistry.Instance.GetLoadingSavedGame() is false
-                                            && IsActorOwnedByCurrentPlayer();
+                                            && IsActorOwnedByCurrentPlayer()
+                                            && Disabled is false;
 
     private bool IsActorOwnedByCurrentPlayer() => OwnerActor.Player.Equals(Players.Instance.Current);
-
+    
     public void OnAttackExecuted(AttackType attackType, EntityNode targetEntity)
     {
         if (PassiveCanBeTriggered() is false)
@@ -222,8 +316,15 @@ public partial class PassiveNode : AbilityNode<
                 EffectToExecute = effectId
             };
             
-            if (Activate(activationRequest).IsValid) 
-                RequestExecution();
+            var (activationResult, focus) = Activate(activationRequest);
+            
+            if (Log.DebugEnabled)
+                Log.Info(nameof(PassiveNode), nameof(OnAttackExecuted), 
+                    $"Activating on-hit effect '{effectId}', source '{OwnerActor}', target '{targetEntity}', " +
+                    $"result '{activationResult.IsValid}', message '{activationResult.Message}'.");
+            
+            if (activationResult.IsValid && focus is not null) 
+                RequestExecution(focus);
         }
     }
     
@@ -244,9 +345,18 @@ public partial class PassiveNode : AbilityNode<
                 EffectToExecute = effectId
             };
             
-            if (Activate(activationRequest).IsValid) 
-                RequestExecution();
+            var (activationResult, focus) = Activate(activationRequest);
+            if (activationResult.IsValid && focus is not null) 
+                RequestExecution(focus);
         }
+    }
+    
+    private void OnEntityDestroyed(EntityNode entity, EntityNode? source, bool triggersOnDeathBehaviours)
+    {
+        if (entity.Equals(OwnerActor) is false)
+            return;
+        
+        HandlePeriodicEffectReset();
     }
     
     private void OnUnitMoved(UnitNode unit, float movementSpent)

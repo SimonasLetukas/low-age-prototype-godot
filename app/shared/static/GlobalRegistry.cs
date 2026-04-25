@@ -48,6 +48,7 @@ public partial class GlobalRegistry : Node
     public Func<IList<Payment>, IList<Payment>, bool, IList<Payment>> SubtractResources { get; private set; } = null!;
     public Func<Player, HashSet<ResearchId>> GetResearchByPlayer { get; private set; } = null!;
     public Func<ResearchId, Research> GetResearchById { get; private set; } = null!;
+    public Dictionary<PassiveNode, HashSet<EntityNode>> TrackedEntitiesByPassiveAbility { get; } = [];
     
     #endregion Resolvers
 

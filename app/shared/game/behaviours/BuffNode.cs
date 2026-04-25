@@ -59,7 +59,7 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
     {
         foreach (var flag in Blueprint.ModificationFlags)
         {
-            Parent.Flags.Add(flag);
+            Parent.AddModificationFlag(flag);
         }
     }
 
@@ -67,11 +67,7 @@ public partial class BuffNode : BehaviourNode, INodeFromBlueprint<Buff>
     {
         foreach (var flag in Blueprint.ModificationFlags)
         {
-            var foundFlag = Parent.Flags.FirstOrDefault(f => f.Equals(flag));
-            if (foundFlag is null)
-                continue;
-            
-            Parent.Flags.Remove(foundFlag);
+            Parent.RemoveModificationFlag(flag);
         }
     }
 

@@ -20,6 +20,10 @@ public partial class Abilities : Node2D
     public IAbilityNode? GetById(AbilityId id) => GetChildren()
         .OfType<IAbilityNode>()
         .FirstOrDefault(a => a.Id.Equals(id));
+    
+    public IList<IAbilityNode> GetAll() => GetChildren()
+        .OfType<IAbilityNode>()
+        .ToList();
 
     public IList<IAbilityNode> GetForPlanningPhase() => GetChildren()
         .OfType<IAbilityNode>()

@@ -12,7 +12,7 @@ public class ValidationHandler
     
     private readonly IList<Validator> _validators;
     private Player? _playerSource;
-    private IList<ITargetable> _targetSource = [];
+    private IList<ITargetable>? _targetSource = null;
     private Effects? _effectHistorySource;
 
     private ValidationHandler(IList<Validator> validators)
@@ -42,20 +42,44 @@ public class ValidationHandler
     {
         foreach (var validator in _validators) // ALL
         {
-            var result = Handle(validator);
-            if (result.IsValid is false)
-                return result;
+            if (validator is ResultValidator resultValidator)
+            {
+                var result = Handle(resultValidator);
+                if (result.IsValid is false)
+                    return result;
+
+                continue;
+            }
+            
+            var validationResult = Handle(validator);
+            if (validationResult.IsValid is false)
+                return validationResult;
         }
         
         return ValidationResult.Valid;
     }
 
-    private ValidationResult Handle(Validator validator)
+    private ValidationResult Handle(ResultValidator validator)
     {
-        ValidationResult result = ValidationResult.Invalid("Condition failed.");
+        if (_effectHistorySource is null)
+            return ValidationResult.Invalid("Result could not be validated.");
+        
+        var effect = new Effects(
+            _effectHistorySource, 
+            validator.SearchEffect, 
+            _targetSource ?? [], 
+            _effectHistorySource.Last.InitiatorPlayer, 
+            _effectHistorySource.Last.InitiatorEntity).Last;
+        
+        if (effect is not SearchNode searchEffect || searchEffect.UsedForValidator is false)
+            return ValidationResult.Invalid("Result could not be validated: incorrect configuration.");
+
+        var targetSource = searchEffect.FoundTargets;
+        
+        var result = ValidationResult.Invalid("Condition failed.");
         foreach (var condition in validator.Conditions) // ANY
         {
-            result = Handle(condition);
+            result = Handle(condition, targetSource);
             if (result.IsValid)
                 return result;
         }
@@ -63,26 +87,40 @@ public class ValidationHandler
         return result;
     }
 
-    private ValidationResult Handle(Condition condition)
+    private ValidationResult Handle(Validator validator)
+    {
+        var result = ValidationResult.Invalid("Condition failed.");
+        foreach (var condition in validator.Conditions) // ANY
+        {
+            result = Handle(condition, null);
+            if (result.IsValid)
+                return result;
+        }
+        
+        return result;
+    }
+
+    private ValidationResult Handle(Condition condition, IList<ITargetable>? targetSource)
     {
         return condition switch
         {
-            BehaviourCondition behaviourCondition => Handle(behaviourCondition),
+            BehaviourCondition behaviourCondition => Handle(behaviourCondition, targetSource),
             MaskCondition maskCondition => ValidationResult.Valid, // TODO
             ResearchCondition researchCondition => Handle(researchCondition),
             ResourceCondition resourceCondition => Handle(resourceCondition),
-            TargetedAbilityCondition targetedAbilityCondition => Handle(targetedAbilityCondition),
-            TileCondition tileCondition => Handle(tileCondition),
-            _ => Handle(condition.ConditionFlag)
+            TargetedAbilityCondition targetedAbilityCondition => Handle(targetedAbilityCondition, targetSource),
+            TileCondition tileCondition => Handle(tileCondition, targetSource),
+            _ => Handle(condition.ConditionFlag, targetSource)
         };
     }
 
-    private ValidationResult Handle(BehaviourCondition behaviourCondition)
+    private ValidationResult Handle(BehaviourCondition behaviourCondition, IList<ITargetable>? targetSource)
     {
-        if (_targetSource.Count == 0)
+        targetSource ??= _targetSource;
+        if (targetSource is null || targetSource.Count == 0)
             return ValidationResult.Invalid("Behaviour condition failed: no found targets.");
 
-        var behaviours = _targetSource
+        var behaviours = targetSource
             .Where(target => target is EntityNode)
             .Cast<EntityNode>()
             .SelectMany(e => e.Behaviours.GetAll())
@@ -193,12 +231,13 @@ public class ValidationHandler
         return ValidationResult.Invalid("Resource condition failed.");
     }
 
-    private ValidationResult Handle(TargetedAbilityCondition targetedAbilityCondition)
+    private ValidationResult Handle(TargetedAbilityCondition targetedAbilityCondition, IList<ITargetable>? targetSource)
     {
-        if (_targetSource.Count == 0)
+        targetSource ??= _targetSource;
+        if (targetSource is null || targetSource.Count == 0)
             return ValidationResult.Invalid("Targeted ability condition failed: no found targets.");
 
-        var abilities = _targetSource
+        var abilities = targetSource
             .SelectMany(e => e.TargetedBy)
             .ToHashSet();
         var targetedByAbilityId = targetedAbilityCondition.TargetedBy;
@@ -218,10 +257,12 @@ public class ValidationHandler
         return ValidationResult.Invalid("Targeted ability condition failed.");
     }
 
-    private ValidationResult Handle(TileCondition tileCondition)
+    private ValidationResult Handle(TileCondition tileCondition, IList<ITargetable>? targetSource)
     {
-        var counter = _targetSource.Count(target => target is Tiles.TileInstance tile
-                                                    && tile.Blueprint.Equals(tileCondition.ConditionedTile));
+        targetSource ??= _targetSource;
+        var counter = targetSource?.Count(target 
+                          => target is Tiles.TileInstance tile && tile.Blueprint.Equals(tileCondition.ConditionedTile)) 
+                      ?? 0;
         
         if (tileCondition.ConditionFlag.Equals(ConditionFlag.Exists))
             return counter >= tileCondition.AmountOfTilesRequired 
@@ -236,29 +277,35 @@ public class ValidationHandler
         return ValidationResult.Invalid("Tile condition failed.");
     }
 
-    private ValidationResult Handle(ConditionFlag conditionFlag)
+    private ValidationResult Handle(ConditionFlag conditionFlag, IList<ITargetable>? targetSource)
     {
+        targetSource ??= _targetSource;
         return conditionFlag switch
         {
-            _ when _targetSource.Any() is false => ValidationResult.Invalid("No valid targets."),
+            _ when targetSource is null => ValidationResult.Invalid("No valid targets."),
             
             _ when conditionFlag.Equals(ConditionFlag.TargetIsCompleted)
-                => _targetSource.All(TargetIsCompleted)
+                => targetSource.All(TargetIsCompleted)
                     ? ValidationResult.Valid 
                     : ValidationResult.Invalid("Target is not yet completed."),
             
             _ when conditionFlag.Equals(ConditionFlag.TargetDoesNotHaveFullHealth) 
-                => _targetSource.All(TargetDoesNotHaveFullHealth) 
+                => targetSource.All(TargetDoesNotHaveFullHealth) 
                     ? ValidationResult.Valid 
                     : ValidationResult.Invalid("Target has full health."),
             
+            _ when conditionFlag.Equals(ConditionFlag.NoActorTargetsFound) 
+                => targetSource.Any(t => t is ActorNode) 
+                    ? ValidationResult.Invalid("Found forbidden targets.")
+                    : ValidationResult.Valid,
+            
             _ when conditionFlag.Equals(ConditionFlag.TargetIsLowGround) 
-                => _targetSource.All(TargetIsLowGround) 
+                => targetSource.All(TargetIsLowGround) 
                     ? ValidationResult.Valid 
                     : ValidationResult.Invalid("Target was not low ground."),
             
             _ when conditionFlag.Equals(ConditionFlag.TargetIsUnoccupied) 
-                => _targetSource.All(TargetIsUnoccupied) 
+                => targetSource.All(TargetIsUnoccupied) 
                     ? ValidationResult.Valid 
                     : ValidationResult.Invalid("Target was not unoccupied."),
             

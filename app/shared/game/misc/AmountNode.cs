@@ -17,7 +17,15 @@ public class AmountNode
     {
         var flat = Amount.Flat;
         var multiplied = GetMultipliedDamage(currentAmount, history, initiatorEntity, targetEntity);
-        return flat + multiplied;
+        var result = flat + multiplied;
+        
+        if (Log.DebugEnabled)
+            Log.Info(nameof(AmountNode), nameof(GetResolvedAmount), 
+                $"Resolved {nameof(result)} '{result}', {nameof(flat)} '{flat}', {nameof(multiplied)} " +
+                $"'{multiplied}', {nameof(currentAmount)} '{currentAmount}', {nameof(initiatorEntity)} " +
+                $"'{initiatorEntity}', {nameof(targetEntity)} '{targetEntity}'.");
+        
+        return result;
     }
     
     private float GetMultipliedDamage(float currentAmount, Effects history, EntityNode? initiatorEntity, 
@@ -45,21 +53,36 @@ public class AmountNode
 
         var baseValue = multiplierOf switch
         {
-            _ when multiplierOf.Equals(AmountMultiplyOfFlag.Health) => actor.Health?.CurrentAmount ?? 0,
+            _ when multiplierOf.Equals(AmountMultiplyOfFlag.Health) => (actor.Health?.CurrentAmount ?? 0),
             
             _ when multiplierOf.Equals(AmountMultiplyOfFlag.Vitals)
-                => actor.Health?.CurrentAmount ?? 0 + actor.Shields?.CurrentAmount ?? 0,
+                => (actor.Health?.CurrentAmount ?? 0) + (actor.Shields?.CurrentAmount ?? 0),
             
             _ when multiplierOf.Equals(AmountMultiplyOfFlag.MissingHealth)
-                => actor.Health?.MaxAmount ?? 0 - actor.Health?.CurrentAmount ?? 0,
+                => (actor.Health?.MaxAmount ?? 0) - (actor.Health?.CurrentAmount ?? 0),
             
             _ when multiplierOf.Equals(AmountMultiplyOfFlag.MissingVitals)
-                => (actor.Health?.MaxAmount ?? 0 + actor.Shields?.MaxAmount ?? 0) -
-                   (actor.Health?.CurrentAmount ?? 0 + actor.Shields?.CurrentAmount ?? 0),
+                => ((actor.Health?.MaxAmount ?? 0) + (actor.Shields?.MaxAmount ?? 0)) -
+                   ((actor.Health?.CurrentAmount ?? 0) + (actor.Shields?.CurrentAmount ?? 0)),
             
             _ => 0
         };
 
-        return baseValue * Amount.Multiplier.Value;
+        var result = baseValue * Amount.Multiplier.Value;
+        
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(AmountNode), nameof(GetMultipliedDamage), 
+                $"{nameof(Amount.MultiplyTarget)} '{Amount.MultiplyTarget}', targeted {nameof(actor)} " +
+                $"'{actor}', max health '{actor.Health?.MaxAmount ?? 0}', " +
+                $"current health '{actor.Health?.CurrentAmount ?? 0}', max vitals " +
+                $"'{(actor.Health?.MaxAmount ?? 0) + (actor.Shields?.MaxAmount ?? 0)}', current vitals " +
+                $"'{(actor.Health?.CurrentAmount ?? 0) + (actor.Shields?.CurrentAmount ?? 0)}', missing health " +
+                $"'{(actor.Health?.MaxAmount ?? 0) - (actor.Health?.CurrentAmount ?? 0)}', missing vitals " +
+                $"'{((actor.Health?.MaxAmount ?? 0) + (actor.Shields?.MaxAmount ?? 0)) - 
+                    ((actor.Health?.CurrentAmount ?? 0) + (actor.Shields?.CurrentAmount ?? 0))}', " +
+                $"{nameof(multiplierOf)} '{multiplierOf}', {nameof(baseValue)} '{baseValue}', " +
+                $"{nameof(Amount.Multiplier)} '{Amount.Multiplier.Value}'.");
+        
+        return result;
     }
 }

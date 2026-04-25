@@ -16,7 +16,9 @@ public interface IAbilityNode
     ActorNode OwnerActor { get; }
     EndsAtNode RemainingCooldown { get; } 
     bool HasButton { get; }
+    bool Disabled { get; }
 
-    public ValidationResult Activate(IAbilityActivationRequest request);
+    void SetDisabled(bool disabled);
+    ValidationResult Activate(IAbilityActivationRequest request);
     void OnExecutionRequested(IAbilityFocus focus);
 }

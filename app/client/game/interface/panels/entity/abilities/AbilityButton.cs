@@ -75,7 +75,8 @@ public partial class AbilityButton : BaseButton
         
         DisableVisually(hasRequiredResearch is false
                         || (Ability.TurnPhase.Equals(TurnPhase.Passive) is false 
-                            && GlobalRegistry.Instance.GetCurrentPhase().Equals(Ability.TurnPhase) is false));
+                            && GlobalRegistry.Instance.GetCurrentPhase().Equals(Ability.TurnPhase) is false)
+                        || Ability.OwnerActor.AbilitiesDisabled);
         
         SetTint(Ability.OwnerActor.WorkingOn.Any(w => w.Ability.Equals(Ability)));
     }

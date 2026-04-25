@@ -1203,23 +1203,19 @@ namespace LowAgeData.Collections
 
                 new Damage(
                     id: EffectId.Camou.SilentAssassinOnHitDamage,
-                    damageType: DamageType.CurrentMelee,
+                    damageType: DamageType.Melee,
                     amount: new Amount(
                         flat: 0,
                         multiplier: 0.5f,
                         multiplierOf: AmountMultiplyOfFlag.MissingVitals,
                         multiplyTarget: Location.Entity),
-                    bonusTo: null,
-                    bonusAmount: null,
-                    target: null,
-                    filters: null,
                     validators: new List<Validator>
                     {
                         new ResultValidator(
                             searchEffect: EffectId.Camou.SilentAssassinSearchFriendly,
                             conditions: new List<Condition>
                             {
-                                new Condition(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
+                                new Condition(conditionFlag: ConditionFlag.NoActorTargetsFound)
                             })
                     }),
 
@@ -1235,21 +1231,20 @@ namespace LowAgeData.Collections
                         new SpecificFlag(value: FilterFlag.Enemy),
                         new SpecificFlag(value: FilterFlag.Unit)
                     },
-                    behaviourOwner: null,
                     validators: new List<Validator>
                     {
                         new ResultValidator(
                             searchEffect: EffectId.Camou.SilentAssassinSearchFriendly,
                             conditions: new List<Condition>
                             {
-                                new Condition(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
+                                new Condition(conditionFlag: ConditionFlag.NoActorTargetsFound)
                             }),
 
                         new ResultValidator(
                             searchEffect: EffectId.Camou.SilentAssassinSearchEnemy,
                             conditions: new List<Condition>
                             {
-                                new Condition(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
+                                new Condition(conditionFlag: ConditionFlag.NoActorTargetsFound)
                             })
                     }),
 

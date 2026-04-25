@@ -15,8 +15,8 @@ namespace LowAgeData.Collections
                 new Doodad(
                     id: DoodadId.ShamanWondrousGoo,
                     displayName: nameof(DoodadId.ShamanWondrousGoo).CamelCaseToWords(),
-                    description: "Any unit in this area is contaminated: has its vision and Distance " +
-                                 "reduced by 3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn.",
+                    description: "Any unit in this area is contaminated: has its vision and Distance reduced by " +
+                                 "3 (total minimum of 1) and receives 1 Pure Damage at the start of its turn.",
                     sprite: "res://assets/sprites/structures/uee/wall bottom indexed 1x1.png", // TODO
                     centerOffset: new Vector2Int(0, 0),
                     onCollisionEffect: EffectId.Shaman.WondrousGooSearch,

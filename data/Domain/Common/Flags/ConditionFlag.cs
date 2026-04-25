@@ -21,7 +21,7 @@ namespace LowAgeData.Domain.Common.Flags
 
         public static ConditionFlag TargetIsCompleted => new ConditionFlag(ConditionFlags.TargetIsCompleted);
         public static ConditionFlag TargetDoesNotHaveFullHealth => new ConditionFlag(ConditionFlags.TargetDoesNotHaveFullHealth);
-        public static ConditionFlag NoActorsFoundFromEffect => new ConditionFlag(ConditionFlags.NoActorsFoundFromEffect);
+        public static ConditionFlag NoActorTargetsFound => new ConditionFlag(ConditionFlags.NoActorTargetsFound);
         public static ConditionFlag TargetIsLowGround => new ConditionFlag(ConditionFlags.TargetIsLowGround);
         public static ConditionFlag TargetIsHighGround => new ConditionFlag(ConditionFlags.TargetIsHighGround);
         public static ConditionFlag TargetIsUnoccupied => new ConditionFlag(ConditionFlags.TargetIsUnoccupied);
@@ -37,7 +37,7 @@ namespace LowAgeData.Domain.Common.Flags
             DoesNotExist,
             TargetIsCompleted,
             TargetDoesNotHaveFullHealth,
-            NoActorsFoundFromEffect,
+            NoActorTargetsFound,
             TargetIsLowGround,
             TargetIsHighGround,
             TargetIsUnoccupied,

@@ -19,7 +19,7 @@ namespace LowAgeData.Domain.Effects
             IList<Validator>? validators = null) 
             : base(
                 id, 
-                target ?? Location.Inherited, 
+                target ?? Location.Entity, 
                 validators ?? new List<Validator>())
         {
             DamageType = damageType;

@@ -66,6 +66,14 @@ public abstract partial class ActiveAbilityNode<
         CancelActivation(typedRequest);
     }
     
+    public override void SetDisabled(bool disabled)
+    {
+        base.SetDisabled(disabled);
+
+        if (Disabled)
+            CancelActivations();
+    }
+    
     protected abstract void CancelActivation(TActivationRequest request);
 
     protected void RefundAction()

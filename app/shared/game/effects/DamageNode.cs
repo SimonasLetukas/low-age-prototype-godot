@@ -22,6 +22,24 @@ public class DamageNode : EffectNode, INodeFromBlueprint<Damage>
         base.SetBlueprint(blueprint);
     }
 
+    public int ApplyDamage(ActorNode source, ActorNode target, bool isSimulation)
+    {
+        var damage = (int)Math.Floor(AmountNode
+            .Build(Blueprint.Amount)
+            .GetResolvedAmount(0, History, InitiatorEntity, target));
+        var bonusDamage = (int)Math.Floor(AmountNode
+            .Build(Blueprint.BonusAmount)
+            .GetResolvedAmount(0, History, InitiatorEntity, target));
+        var applyBonus = Blueprint.BonusTo is not null 
+                         && target.Attributes.Any(x => x.Equals(Blueprint.BonusTo));
+        var finalDamage = applyBonus ? damage + bonusDamage : damage;
+            
+        var (appliedDamage, _) = target.ReceiveDamage(source, finalDamage, Blueprint.DamageType, 
+            Blueprint.IgnoresArmour, Blueprint.IgnoresShield, isSimulation);
+
+        return appliedDamage;
+    }
+
     public override bool Execute()
     {
         if (IsValidated is false)
@@ -44,23 +62,14 @@ public class DamageNode : EffectNode, INodeFromBlueprint<Damage>
         
         foreach (var target in FoundTargets)
         {
-            if (target is not ActorNode actor || actor.IsBeingDestroyed)
+            if (target is not ActorNode targetActor || targetActor.IsBeingDestroyed)
                 continue;
 
             if (Log.DebugEnabled)
                 Log.Info(nameof(DamageNode), nameof(Execute), 
-                    $"{sourceActor} is damaging {actor} by '{Blueprint.Id}'.");
-            
-            var damage = (int)Math.Round(AmountNode.Build(Blueprint.Amount)
-                .GetResolvedAmount(0, History, InitiatorEntity, actor));
-            var bonusDamage = (int)Math.Round(AmountNode.Build(Blueprint.BonusAmount)
-                .GetResolvedAmount(0, History, InitiatorEntity, actor));
-            var applyBonus = Blueprint.BonusTo is not null 
-                             && actor.Attributes.Any(x => x.Equals(Blueprint.BonusTo));
-            var finalDamage = applyBonus ? damage + bonusDamage : damage;
-            
-            actor.ReceiveDamage(sourceActor, finalDamage, Blueprint.DamageType, Blueprint.IgnoresArmour, 
-                Blueprint.IgnoresShield, false);
+                    $"{sourceActor} is damaging {targetActor} by '{Blueprint.Id}'.");
+
+            ApplyDamage(sourceActor, targetActor, false);
         }
         
         return true;

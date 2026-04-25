@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://itc8aq70pbev" path="res://app/client/game/interface/panels/entity/display/AbilitySubtitle.cs" id="1"]
 [ext_resource type="Script" uid="uid://hkohgs5mx1mr" path="res://app/client/game/interface/panels/entity/display/TopText.cs" id="2"]
-[ext_resource type="Script" path="res://app/client/game/interface/panels/entity/display/ResearchLabel.cs" id="2_j47o4"]
+[ext_resource type="Script" uid="uid://dvg54td7rjyqa" path="res://app/client/game/interface/panels/entity/display/AbilityAttributeLabel.cs" id="2_j47o4"]
 [ext_resource type="Script" uid="uid://uchxnib00hm1" path="res://app/client/game/interface/panels/entity/display/ActorAttributes.cs" id="3"]
 [ext_resource type="Script" uid="uid://f23sakt83hpv" path="res://app/client/game/interface/panels/entity/display/InfoDisplay.cs" id="5"]
 [ext_resource type="Theme" uid="uid://dp1nuutqxoubu" path="res://app/shared/theme/Theme.tres" id="6"]
@@ -206,6 +206,26 @@ theme = ExtResource("6")
 theme_override_colors/font_color = Color(0.662745, 0.203922, 0.0117647, 1)
 theme_override_fonts/font = SubResource("1")
 text = "[R]"
+
+[node name="DisabledLabel" type="MarginContainer" parent="VBoxContainer/TopPart/AbilityTitle/Top"]
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Research: Hardened Matrix"
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = -4
+script = ExtResource("2_j47o4")
+TooltipPrefixText = "Disabled"
+DisplayedValue = "[D]"
+Text = ""
+
+[node name="Label" type="Label" parent="VBoxContainer/TopPart/AbilityTitle/Top/DisabledLabel"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+theme = ExtResource("6")
+theme_override_colors/font_color = Color(0.662745, 0.203922, 0.0117647, 1)
+theme_override_fonts/font = SubResource("1")
+text = "[D]"
 
 [node name="Name" type="MarginContainer" parent="VBoxContainer/TopPart/AbilityTitle/Top"]
 layout_mode = 2

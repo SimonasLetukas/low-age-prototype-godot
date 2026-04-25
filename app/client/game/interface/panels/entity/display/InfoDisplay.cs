@@ -48,6 +48,7 @@ public partial class InfoDisplay : MarginContainer
     private ActorAttribute? _valueRangedBonusType = ActorAttribute.Armoured;
     
     private string _valueAbilityName = "Build";
+    private bool _abilityIsDisabled = false;
     private bool _hasAbilityToCancel = false;
     private bool _hasAbilityToActivate = false;
     private TurnPhase _valueAbilityTurnPhase = TurnPhase.Planning;
@@ -56,7 +57,8 @@ public partial class InfoDisplay : MarginContainer
     private string _valueResearchText = "Hardened Matrix";
 
     private Control _abilityTitle = null!;
-    private ResearchLabel _researchText = null!;
+    private AbilityAttributeLabel _researchAbilityLabel = null!;
+    private AbilityAttributeLabel _disabledAbilityLabel = null!;
     private NavigationBox _cancelAbility = null!;
     private NavigationBox _activateAbility = null!;
     private NavigationBox _navigationBack = null!;
@@ -84,7 +86,8 @@ public partial class InfoDisplay : MarginContainer
     public override void _Ready()
     {
         _abilityTitle = GetNode<Control>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle");
-        _researchText = GetNode<ResearchLabel>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/{nameof(ResearchLabel)}");
+        _researchAbilityLabel = GetNode<AbilityAttributeLabel>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/ResearchLabel");
+        _disabledAbilityLabel = GetNode<AbilityAttributeLabel>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/DisabledLabel");
         _cancelAbility = GetNode<NavigationBox>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/CancelAbility");
         _activateAbility = GetNode<NavigationBox>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/ActivateAbility");
         _navigationBack = GetNode<NavigationBox>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/{nameof(NavigationBox)}");
@@ -281,6 +284,7 @@ public partial class InfoDisplay : MarginContainer
         string abilityName,
         TurnPhase turnPhase,
         string text,
+        bool abilityIsDisabled,
         EndsAtNode cooldown,
         IList<ResearchId> research,
         bool hasAbilityToCancel,
@@ -289,6 +293,7 @@ public partial class InfoDisplay : MarginContainer
         _valueAbilityName = abilityName;
         _valueAbilityTurnPhase = turnPhase;
         _valueAbilityText = text;
+        _abilityIsDisabled = abilityIsDisabled;
         _hasAbilityToCancel = hasAbilityToCancel;
         _hasAbilityToActivate = hasAbilityToActivate;
         _valueResearchText = string.Join(", ", research.Select(x => 
@@ -305,7 +310,8 @@ public partial class InfoDisplay : MarginContainer
     public void Reset(bool fullReset = true)
     {
         _abilityTitle.Visible = false;
-        _researchText.Visible = false;
+        _researchAbilityLabel.Visible = false;
+        _disabledAbilityLabel.Visible = false;
         _cancelAbility.Visible = false;
         _activateAbility.Visible = false;
         _navigationBack.Visible = false;
@@ -445,14 +451,15 @@ public partial class InfoDisplay : MarginContainer
     {
         GetNode<Text>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/Top/Name/Text").Text = 
             "[b]" + _valueAbilityName;
-        _researchText.SetResearch(_valueResearchText);
+        _researchAbilityLabel.SetText(_valueResearchText);
         GetNode<AbilitySubtitle>($"{nameof(VBoxContainer)}/TopPart/AbilityTitle/{nameof(AbilitySubtitle)}")
             .SetAbilitySubtitle(_valueAbilityTurnPhase, _valueAbilityCooldown);
         _abilityText.Text = _valueAbilityText;
         _abilityText.ResetSize();
 
         _abilityTitle.Visible = true;
-        _researchText.Visible = string.IsNullOrEmpty(_valueResearchText) is false;
+        _researchAbilityLabel.Visible = string.IsNullOrEmpty(_valueResearchText) is false;
+        _disabledAbilityLabel.Visible = _abilityIsDisabled;
         _cancelAbility.Visible = _hasAbilityToCancel;
         _activateAbility.Visible = _hasAbilityToActivate;
         _navigationBack.Visible = true;

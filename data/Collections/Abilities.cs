@@ -1256,10 +1256,11 @@ namespace LowAgeData.Collections
                 new Passive(
                     id: AbilityId.Camou.SilentAssassin,
                     displayName: nameof(AbilityId.Camou.SilentAssassin).CamelCaseToWords(),
-                    description: "Deals bonus Melee Damage equal to 50% of the target's missing Health if there are " +
-                                 "no friendly units in 4 Distance around Camou. If the target also has no " +
-                                 "allies within that Distance, it is silenced for its next 2 actions, disabling " +
-                                 "abilities and passives.",
+                    description: "Before the melee attack hits the target, it deals additional Melee Damage " +
+                                 "equal to 50% (rounded down) of the target's missing Health and Shields if " +
+                                 "there are no friendly units in 4 Distance around Camou. If the target " +
+                                 "also has no allies within that Distance, it is silenced for its next 2 actions, " +
+                                 "disabling abilities and passives.",
                     hasButton: true,
                     sprite: "res://assets/icons/icon_ability_silent_assassin.png",
                     onHitEffects: new List<EffectId>

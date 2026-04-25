@@ -210,7 +210,7 @@ namespace LowAgeData.Collections
                     {
                         AbilityId.Shared.UnitInProduction,
                         AbilityId.Shared.Revelators.PopulationCost,
-                        //AbilityId.Camou.SilentAssassin,
+                        AbilityId.Camou.SilentAssassin,
                         //AbilityId.Camou.Infiltration
                     }),
 
@@ -218,7 +218,7 @@ namespace LowAgeData.Collections
                     id: UnitId.Shaman, 
                     displayName: nameof(UnitId.Shaman),
                     description: "A specialized anti-ranged unit. Shamans contaminate areas that expand over " +
-                                 "time and reduce enemy vision as well as attack range.",
+                                 "time, reducing enemy vision as well as attack range.",
                     sprite: "res://assets/sprites/units/revs/shaman indexed 1x1.png",
                     centerOffset: new Vector2Int(5, 17),
                     statistics: new List<Stat>

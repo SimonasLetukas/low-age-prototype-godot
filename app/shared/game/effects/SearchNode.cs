@@ -12,6 +12,7 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
 {
     public IShape Shape { get; private set; } = null!;
     public IList<SearchTriggerFlag> TriggerFlags { get; private set; } = [];
+    public bool UsedForValidator { get; private set; }
     
     private Search Blueprint { get; set; } = null!;
     
@@ -27,6 +28,7 @@ public class SearchNode : EffectNode, INodeFromBlueprint<Search>
         Blueprint = blueprint;
         Shape = Blueprint.Shape;
         TriggerFlags = Blueprint.TriggerFlags;
+        UsedForValidator = Blueprint.UsedForValidator;
         
         base.SetBlueprint(blueprint);
     }

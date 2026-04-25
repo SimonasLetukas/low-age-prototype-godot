@@ -33,6 +33,7 @@ public abstract partial class AbilityNode<
     public ActorNode OwnerActor { get; protected set; } = null!;
     public EndsAtNode RemainingCooldown { get; private set; } = null!;
     public bool HasButton { get; private set; }
+    public bool Disabled { get; private set; }
 
     protected bool Loops { get; private set; }
     protected IList<Payment> ConsumableCost { get; private set; } = null!;
@@ -65,6 +66,8 @@ public abstract partial class AbilityNode<
         base._ExitTree();
     }
 
+    public virtual void SetDisabled(bool disabled) => Disabled = disabled;
+
     public ValidationResult Activate(IAbilityActivationRequest request)
     {
         if (request is not TActivationRequest typedRequest)
@@ -75,14 +78,17 @@ public abstract partial class AbilityNode<
             return ValidationResult.Invalid("Error in ability activation!");
         }
 
-        return Activate(typedRequest);
+        return Activate(typedRequest).ActivationResult;
     }
     
-    protected ValidationResult Activate(TActivationRequest request)
+    protected (ValidationResult ActivationResult, TFocus? Focus) Activate(TActivationRequest request)
     {
+        if (Disabled)
+            return (ValidationResult.Invalid("Ability is disabled."), default);
+        
         var validationResult = ValidateActivation(request);
         if (validationResult.IsValid is false)
-            return validationResult;
+            return (validationResult, default);
 
         var preProcessingResult = PreProcessActivation(request);
 
@@ -90,7 +96,7 @@ public abstract partial class AbilityNode<
         FocusQueue.Add(focus);
         
         RaiseActivated();
-        return ValidationResult.Valid;
+        return (ValidationResult.Valid, focus);
     }
     
     protected abstract ValidationResult ValidateActivation(TActivationRequest request);

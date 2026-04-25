@@ -108,6 +108,7 @@ public partial class EntityPanel : Control
             var name = _selectedAbility.DisplayName;
             var turnPhase = _selectedAbility.TurnPhase;
             var text = _selectedAbility.Description;
+            var abilityIsDisabled = _selectedAbility.Disabled;
             var currentResearch = GlobalRegistry.Instance.GetResearchByPlayer(
                 _selectedAbility.OwnerActor.Player);
             var research = _selectedAbility.ResearchNeeded
@@ -119,7 +120,8 @@ public partial class EntityPanel : Control
                                        && instant.TurnPhase.Equals(GlobalRegistry.Instance.GetCurrentPhase())
                                        && hasAbilityToCancel is false;
             
-            _display.SetAbilityStats(name, turnPhase, text, cooldown, research, hasAbilityToCancel, hasAbilityToActivate);
+            _display.SetAbilityStats(name, turnPhase, text, abilityIsDisabled, cooldown, research, 
+                hasAbilityToCancel, hasAbilityToActivate);
             _display.ShowView(View.Ability);
             return;
         }

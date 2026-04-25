@@ -1335,17 +1335,10 @@ namespace LowAgeData.Collections
                     {
                         EntityModificationFlag.AbilitiesDisabled
                     },
-                    initialModifications: null,
-                    initialEffects: null,
-                    finalModifications: null,
-                    finalEffects: null,
                     endsAt: EndsAt.EndOf.Second.Action,
                     canStack: false,
                     canResetDuration: true,
                     alignment: Alignment.Negative,
-                    triggers: null,
-                    removeOnConditionsMet: false,
-                    conditionalEffects: null,
                     restoreChangesOnEnd: true),
 
                 new Wait(
@@ -1697,7 +1690,7 @@ namespace LowAgeData.Collections
                                 {
                                     new Condition(conditionFlag: ConditionFlag.TargetIsDifferentTypeThanOrigin)
                                 },
-                                filters: new List<IFilterItem>
+                                filters: new List<IFilterItem> // TODO not implemented
                                 {
                                     new SpecificFlag(value: FilterFlag.Enemy),
                                     new SpecificFlag(value: FilterFlag.Unit)
@@ -2183,7 +2176,7 @@ namespace LowAgeData.Collections
                                 searchEffect: EffectId.Ballista.AimSearch,
                                 conditions: new List<Condition>
                                 {
-                                    new Condition(conditionFlag: ConditionFlag.NoActorsFoundFromEffect)
+                                    new Condition(conditionFlag: ConditionFlag.NoActorTargetsFound)
                                 })
                         }),
                         new Trigger(@event: Event.OriginIsDestroyed)

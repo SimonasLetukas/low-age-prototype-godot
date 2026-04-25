@@ -132,7 +132,7 @@ public partial class BuildNode : ActiveAbilityNode<
         var item = Selection.First(x => x.Name.Equals(selectableItemId));
         return (item.ResearchNeeded.Any() && researchEnabled) || item.GrayOutIfAlreadyExists;
     }
-    
+
     protected override void CancelActivation(ActivationRequest request)
     {
         var buildableEntity = request.EntityToBuild;

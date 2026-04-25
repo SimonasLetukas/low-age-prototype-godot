@@ -69,8 +69,8 @@ namespace LowAgeData.Domain.Effects
         public Location Location { get; }
 
         /// <summary>
-        /// If true, this <see cref="Search"/> can only be used inside the <see cref="ResultValidator"/>. False
-        /// by default.
+        /// If true, this <see cref="Search"/> can only be used inside the <see cref="ResultValidator"/>.
+        /// <see cref="Effect.Validators"/> of this effect are skipped. False by default.
         /// </summary>
         public bool UsedForValidator { get; }
     }

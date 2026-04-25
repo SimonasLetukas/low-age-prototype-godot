@@ -50,11 +50,11 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
     public BuildableNode? CreationProgress { get; protected set; }
     public HashSet<IAbilityNode> TargetedBy { get; } = [];
     public Behaviours Behaviours { get; protected set; } = null!;
-    public IList<EntityModificationFlag> Flags { get; } = [];
     public bool IsBeingDestroyed { get; private set; }
     
     protected Func<IList<Vector2Int>, IList<Tiles.TileInstance?>> GetHighestTiles { get; } = GlobalRegistry.Instance.GetHighestTiles;
     protected Func<Vector2Int, bool, Tiles.TileInstance?> GetTile { get; } = GlobalRegistry.Instance.GetTile;
+    protected IList<EntityModificationFlag> ModificationFlags { get; } = [];
     protected bool Selected { get; private set; } = false;
     protected bool Hovered { get; private set; } = false;
     protected State EntityState { get; private set; }
@@ -247,6 +247,17 @@ public partial class EntityNode : Node2D, INodeFromBlueprint<Entity>, ITargetabl
         }
         
         CreationProgress.SetTotalCost(cost);
+    }
+    
+    public virtual void AddModificationFlag(EntityModificationFlag flag) => ModificationFlags.Add(flag);
+
+    public virtual void RemoveModificationFlag(EntityModificationFlag flag)
+    {
+        var foundFlag = ModificationFlags.FirstOrDefault(f => f.Equals(flag));
+        if (foundFlag is null)
+            return;
+            
+        ModificationFlags.Remove(foundFlag);
     }
 
     public virtual void DropDownToLowGround()

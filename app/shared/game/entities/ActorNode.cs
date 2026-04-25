@@ -35,6 +35,9 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     public bool HasRangedAttack => Attacks.Any(x => x.IsRanged);
     public AttackStatNode? MeleeAttack => Attacks.FirstOrDefault(x => x.IsMelee);
     public AttackStatNode? RangedAttack => Attacks.FirstOrDefault(x => x.IsRanged);
+
+    public bool CannotBeHealed => ModificationFlags.Contains(EntityModificationFlag.CannotBeHealed);
+    public bool AbilitiesDisabled => ModificationFlags.Contains(EntityModificationFlag.AbilitiesDisabled);
     
     public ActionEconomy ActionEconomy { get; protected set; } = null!;
     public IList<AttackStatNode> Attacks { get; protected set; } = null!;
@@ -171,11 +174,32 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         UpdateVitalsValuesForDisplay();
     }
 
+    public override void AddModificationFlag(EntityModificationFlag flag)
+    {
+        base.AddModificationFlag(flag);
+
+        foreach (var ability in Abilities.GetAll())
+        {
+            ability.SetDisabled(AbilitiesDisabled);
+        }
+    }
+
+    public override void RemoveModificationFlag(EntityModificationFlag flag)
+    {
+        base.RemoveModificationFlag(flag);
+
+        foreach (var ability in Abilities.GetAll())
+        {
+            ability.SetDisabled(AbilitiesDisabled);
+        }
+    }
+
     public bool IsOriginallyFrom(FactionId faction) => Blueprint.OriginalFaction.Equals(faction);
 
     public void RestoreActionEconomy(TurnPhase phase, bool restoringOnlyAbilityAction)
     {
-        var restoreActionAllowed = IsCompleted() && WorkingOn.All(x => x.ConsumesAction is false);
+        var restoreActionAllowed = IsCompleted()
+                                   && WorkingOn.All(x => x.ConsumesAction is false);
         
         if (Log.DebugEnabled)
             Log.Info(nameof(ActorNode), nameof(RestoreActionEconomy), 
@@ -230,7 +254,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
 
     public void Heal(int amount, bool isShields = false)
     {
-        if (Flags.Contains(EntityModificationFlag.CannotBeHealed))
+        if (CannotBeHealed)
             return;
         
         var stat = isShields ? Shields : Health;
@@ -260,20 +284,29 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         if (source is not ActorNode attacker)
             return (0, false);
 
-        var (damage, _) = GetAttackDamage(attacker, attackType, isSimulation);
-        return ReceiveDamage(source, damage, false, isSimulation);
+        var simulatedOnHitDamage = isSimulation ? GetSimulatedOnHitDamage(attacker, attackType) : 0;
+        var (attackDamage, _) = GetAttackDamage(attacker, attackType, isSimulation);
+        var summedDamage = attackDamage + simulatedOnHitDamage;
+        
+        return ReceiveDamage(source, summedDamage, false, isSimulation);
     }
 
     public (int Damage, bool IsLethal) ReceiveDamage(ActorNode source, int amount, DamageType type,
         bool ignoreArmour, bool ignoreShields, bool isSimulation)
     {
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(ActorNode), nameof(ReceiveDamage), 
+                $"{nameof(source)} '{source}', {nameof(amount)} '{amount}', {nameof(type)} '{type}', " +
+                $"{nameof(ignoreArmour)} '{ignoreArmour}', {nameof(ignoreShields)} '{ignoreShields}', " +
+                $"{nameof(isSimulation)} '{isSimulation}'.");
+        
         var (finalAmount, finalType) = GetDamage(source, amount, type, ignoreArmour, isSimulation);
         
         if (isSimulation is false)
         {
             var currentVitals = ignoreShields 
-                ? Health?.CurrentAmount ?? 0 
-                : Shields?.CurrentAmount ?? 0 + Health?.CurrentAmount ?? 0;
+                ? (Health?.CurrentAmount ?? 0) 
+                : (Shields?.CurrentAmount ?? 0) + (Health?.CurrentAmount ?? 0);
             var finalDamageAmount = amount > currentVitals ? currentVitals : amount;
             EventBus.Instance.RaiseFinalDamageDone(this, source, (int)finalDamageAmount, finalType);
         }
@@ -290,7 +323,7 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
             return (0, false);
         
         if (isSimulation)
-            return GetSimulatedResult(amount);
+            return GetSimulatedResult(amount, ignoreShields);
 
         if (ignoreShields is false && HasShields && Shields!.CurrentAmount > 0)
         {
@@ -372,16 +405,28 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
     {
         var (initialAmount, initialType) = ResolveDamageType(damage, type, from, isSimulation);
         
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(ActorNode), nameof(GetDamage), 
+                $"After resolving: amount '{initialAmount}', type '{type}'.");
+        
         var (interceptedAmount, interceptedType) = Behaviours.InterceptDamage(initialAmount, initialType, 
             from, isSimulation);
         
         var (adjustedAmount, adjustedType) = ResolveDamageType(interceptedAmount, interceptedType, from, 
             isSimulation);
         
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(ActorNode), nameof(GetDamage), 
+                $"After second resolving: amount '{adjustedAmount}', type '{adjustedType}'.");
+        
         if (isSimulation is false)
             EventBus.Instance.RaiseRawDamageDone(this, from, adjustedAmount, adjustedType);
         
         var amountAfterArmour = ResolveDamageArmour(adjustedAmount, adjustedType, ignoreArmour);
+        
+        if (Log.VerboseDebugEnabled)
+            Log.Info(nameof(ActorNode), nameof(GetDamage), 
+                $"Amount after armour '{amountAfterArmour}'.");
         
         return (amountAfterArmour, adjustedType);
     }
@@ -422,6 +467,13 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         _ => 0,
     };
     
+    private int GetSimulatedOnHitDamage(ActorNode attacker, AttackType attackType) => attacker.Abilities.GetPassives()
+        .Select(passive => passive.GetValidOnHitDamageEffects(attackType, this))
+        .Select(damageEffects => 
+            damageEffects.Sum(damageEffect => 
+                damageEffect.ApplyDamage(attacker, this, true)))
+        .Sum();
+    
     private List<Tiles.TileInstance> GetAttackTargetTiles(AttackType attackType, Vector2Int mapSize)
     {
         var positions = GetPotentialAttackPositions(attackType, mapSize);
@@ -458,10 +510,12 @@ public partial class ActorNode : EntityNode, INodeFromBlueprint<Actor>
         return new Circle(radius, skip).ToPositions(EntityPrimaryPosition, mapSize, this);
     }
 
-    private (int Damage, bool IsLethal) GetSimulatedResult(int damage)
+    private (int Damage, bool IsLethal) GetSimulatedResult(int damage, bool ignoreShields)
     {
-        var healthAndShields = (int)(Health?.CurrentAmount ?? 0) + (int)(Shields?.CurrentAmount ?? 0);
-        var isLethal = HasHealth && healthAndShields - damage <= 0;
+        var vitals = ignoreShields 
+            ? (int)(Health?.CurrentAmount ?? 0) 
+            : (int)(Health?.CurrentAmount ?? 0) + (int)(Shields?.CurrentAmount ?? 0);
+        var isLethal = HasHealth && vitals - damage <= 0;
         return (damage, isLethal);
     }
     

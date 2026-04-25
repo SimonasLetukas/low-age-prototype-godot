@@ -762,7 +762,8 @@
         ],
         "abilities": [
           "ability-shared-unit-in-production",
-          "ability-shared-revelators-population-cost"
+          "ability-shared-revelators-population-cost",
+          "ability-camou-silent-assassin"
         ],
         "displayName": "Camou",
         "description": "A silent assassin. Camous excel when operating alone, picking off isolated armoured enemies and exploiting weak points in enemy defenses. Their infiltration capabilities can be upgraded to climb walls.",
@@ -854,7 +855,7 @@
           "ability-shared-revelators-population-cost"
         ],
         "displayName": "Shaman",
-        "description": "A specialized anti-ranged unit. Shamans contaminate areas that expand over time and reduce enemy vision as well as attack range.",
+        "description": "A specialized anti-ranged unit. Shamans contaminate areas that expand over time, reducing enemy vision as well as attack range.",
         "sprite": "res://assets/sprites/units/revs/shaman indexed 1x1.png",
         "centerOffset": {
           "x": 5,
@@ -7219,7 +7220,7 @@
       "cooldown": "EndsAt.Instant",
       "cost": [],
       "displayName": "Silent Assassin",
-      "description": "Deals bonus Melee Damage equal to 50% of the target's missing Health if there are no friendly units in 4 Distance around Camou. If the target also has no allies within that Distance, it is silenced for its next 2 actions, disabling abilities and passives.",
+      "description": "Before the melee attack hits the target, it deals additional Melee Damage equal to 50% (rounded down) of the target's missing Health and Shields if there are no friendly units in 4 Distance around Camou. If the target also has no allies within that Distance, it is silenced for its next 2 actions, disabling abilities and passives.",
       "sprite": "res://assets/icons/icon_ability_silent_assassin.png",
       "centerOffset": {
         "x": 0,
@@ -8592,7 +8593,7 @@
       "ignoresArmour": false,
       "ignoresShield": true,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     },
     {
@@ -9043,7 +9044,7 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     },
     {
@@ -10204,7 +10205,7 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     },
     {
@@ -10371,7 +10372,7 @@
     {
       "$type": "Damage",
       "id": "effect-camou-silent-assassin-on-hit-damage",
-      "damageType": "DamageType.CurrentMelee",
+      "damageType": "DamageType.Melee",
       "amount": {
         "flat": 0,
         "multiplier": 0.5,
@@ -10388,14 +10389,14 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": [
         {
           "$type": "ResultValidator",
           "searchEffect": "effect-camou-silent-assassin-search-friendly",
           "conditions": [
             {
-              "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
+              "conditionFlag": "ConditionFlag.NoActorTargetsFound"
             }
           ],
           "filters": []
@@ -10427,7 +10428,7 @@
           "searchEffect": "effect-camou-silent-assassin-search-friendly",
           "conditions": [
             {
-              "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
+              "conditionFlag": "ConditionFlag.NoActorTargetsFound"
             }
           ],
           "filters": []
@@ -10437,7 +10438,7 @@
           "searchEffect": "effect-camou-silent-assassin-search-enemy",
           "conditions": [
             {
-              "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
+              "conditionFlag": "ConditionFlag.NoActorTargetsFound"
             }
           ],
           "filters": []
@@ -10639,7 +10640,7 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     },
     {
@@ -10690,7 +10691,7 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     },
     {
@@ -10769,7 +10770,7 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     },
     {
@@ -10803,7 +10804,7 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     },
     {
@@ -10867,7 +10868,7 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     },
     {
@@ -11240,7 +11241,7 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     },
     {
@@ -11773,7 +11774,7 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     },
     {
@@ -12389,7 +12390,7 @@
       "ignoresArmour": false,
       "ignoresShield": false,
       "filters": [],
-      "target": "Location.Inherited",
+      "target": "Location.Entity",
       "validators": []
     }
   ],
@@ -16450,7 +16451,7 @@
               "searchEffect": "effect-ballista-aim-search",
               "conditions": [
                 {
-                  "conditionFlag": "ConditionFlag.NoActorsFoundFromEffect"
+                  "conditionFlag": "ConditionFlag.NoActorTargetsFound"
                 }
               ],
               "filters": []
